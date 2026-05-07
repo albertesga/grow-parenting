@@ -1023,16 +1023,49 @@
   .soft-actions { margin-top: 10px; display: flex; gap: 12px; color: var(--ink-muted); font-size: 12px; }
   .soft-actions button { border: 0; background: transparent; color: inherit; padding: 0; cursor: pointer; }
 
+  .screen[data-screen="calendario"] .content {
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 0;
+    padding-top: 8px;
+  }
+
+  .screen[data-screen="calendario"] .top-row {
+    margin-bottom: 8px;
+    align-items: center;
+  }
+
+  .screen[data-screen="calendario"] .eyebrow {
+    margin-bottom: 2px;
+  }
+
+  .screen[data-screen="calendario"] h2.screen-title {
+    font-size: 22px;
+    margin-bottom: 20px;
+  }
+
+  .screen[data-screen="calendario"] .header-avatar {
+    width: 56px;
+    height: 56px;
+    flex: 0 0 56px;
+  }
+
+  .screen[data-screen="calendario"] .header-avatar img {
+    width: 56px;
+    height: 56px;
+  }
+
   .calendar-flow {
-    display: grid;
-    gap: 14px;
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
   }
 
   .calendar-flow,
   .month-selector,
-  .calendar-rail-shell,
-  .calendar-rail,
-  .month-chip,
   .month-carousel-shell,
   .month-carousel,
   .month-page,
@@ -1046,198 +1079,97 @@
 
   .month-selector {
     position: relative;
-    margin: -2px -22px 10px;
-    overflow: hidden;
+    flex: 0 0 auto;
   }
 
-  .calendar-rail-shell {
-    position: relative;
-    overflow-x: auto;
-    overflow-y: hidden;
-    padding: 8px 0 18px;
-    scroll-snap-type: x mandatory;
-    scrollbar-width: none;
-    -webkit-overflow-scrolling: touch;
-    overscroll-behavior-x: contain;
-    touch-action: pan-x pan-y;
-    -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 9%, #000 91%, transparent 100%);
-    mask-image: linear-gradient(90deg, transparent 0, #000 9%, #000 91%, transparent 100%);
-  }
-
-  .calendar-rail-shell::-webkit-scrollbar { display: none; }
-
-  .calendar-rail-shell::before,
-  .calendar-rail-shell::after {
-    display: none;
-  }
-
-  .calendar-rail {
-    position: relative;
+  .phase-progress-bar {
     display: flex;
     align-items: stretch;
-    gap: 12px;
-    width: max-content;
-    max-width: none;
-    padding: 0 22px 8px;
-    overflow: visible;
+    border-radius: 14px;
+    overflow: hidden;
+    height: 40px;
+    gap: 3px;
   }
 
-  .month-chip {
-    --phase-base: var(--mint-base);
-    --phase-ink: var(--ink-soft);
-    --phase-tint: rgba(250,247,240,0.78);
-    --avatar-scale: 1;
+  .phase-segment {
     position: relative;
-    flex: 0 0 124px;
-    height: 106px;
-    border: 0;
-    border-radius: 25px;
-    background:
-      radial-gradient(circle at 84% 12%, rgba(232,201,122,0.42), transparent 32%),
-      linear-gradient(135deg, var(--phase-tint), rgba(250,247,240,0.86));
-    color: var(--phase-ink);
-    padding: 12px;
-    display: block;
-    text-align: left;
-    font-family: "Lenia";
-    cursor: pointer;
-    scroll-snap-align: center;
-    box-shadow:
-      inset 0 1px 0 rgba(255,255,255,0.72),
-      0 10px 22px rgba(42,33,27,0.055);
-    transition:
-      transform 220ms var(--ease),
-      background 220ms var(--ease),
-      color 220ms var(--ease),
-      opacity 220ms var(--ease),
-      box-shadow 220ms var(--ease);
-  }
-
-  .month-chip.pregnancy {
-    --phase-base: var(--coral-base);
-    --phase-ink: var(--coral-strong);
-    --phase-tint: var(--coral-subtle);
-  }
-
-  .month-chip.baby {
-    --phase-base: var(--blush-strong);
-    --phase-ink: #7A4A3A;
-    --phase-tint: var(--blush-subtle);
-  }
-
-  .month-chip.parenting {
-    --phase-base: var(--mint-strong);
-    --phase-ink: #4F6647;
-    --phase-tint: var(--mint-subtle);
-  }
-
-  .month-chip.active {
-    transform: translateY(-4px);
-    background:
-      radial-gradient(circle at 86% 10%, rgba(232,201,122,0.72), transparent 34%),
-      linear-gradient(135deg, color-mix(in srgb, var(--phase-base) 25%, var(--paper)), rgba(250,247,240,0.96));
-    color: var(--ink);
-    box-shadow:
-      inset 0 1px 0 rgba(255,255,255,0.86),
-      0 17px 30px rgba(42,33,27,0.16);
-    z-index: 3;
-  }
-
-  .month-chip-tag {
-    position: absolute;
-    top: 13px;
-    left: 13px;
-    z-index: 2;
-    display: inline-flex;
+    display: flex;
+    flex-direction: column;
     align-items: center;
-    max-width: 72px;
-    border-radius: 999px;
-    background: rgba(250,247,240,0.82);
-    box-shadow: inset 0 0 0 1px rgba(226,221,209,0.7);
-    color: var(--phase-ink);
-    padding: 5px 8px;
+    justify-content: center;
+    border: 0;
+    border-radius: 10px;
+    padding: 0 6px;
+    cursor: pointer;
+    gap: 2px;
+    overflow: hidden;
+    transition: opacity 200ms var(--ease), filter 200ms var(--ease);
+    opacity: 0.55;
+    filter: saturate(0.7);
+  }
+
+  .phase-segment.active {
+    opacity: 1;
+    filter: saturate(1);
+  }
+
+  .phase-segment.pregnancy {
+    background: var(--coral-subtle);
+  }
+
+  .phase-segment.baby {
+    background: var(--blush-subtle);
+  }
+
+  .phase-segment.parenting {
+    background: var(--mint-subtle);
+  }
+
+  .phase-seg-label {
+    font-family: "Lenia";
+    font-size: 11px;
+    font-weight: 600;
+    line-height: 1;
+    letter-spacing: -0.01em;
+    white-space: nowrap;
+    color: var(--ink);
+  }
+
+  .phase-seg-dur {
     font-family: "Lenia";
     font-size: 10px;
-    font-weight: 500;
+    font-weight: 400;
     line-height: 1;
+    color: var(--ink-muted);
     white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
   }
 
-  .month-chip.active .month-chip-tag {
-    background: rgba(250,247,240,0.9);
-    color: var(--ink-soft);
-  }
-
-  .month-chip-avatar {
+  .phase-seg-today {
     position: absolute;
-    right: 2px;
-    bottom: -2px;
-    width: 74px;
-    height: 74px;
+    bottom: 7px;
+    width: 5px;
+    height: 5px;
     border-radius: 999px;
-    display: grid;
-    place-items: center;
-    background: transparent;
-    overflow: visible;
+    background: var(--ink);
+    transform: translateX(-50%);
+    opacity: 0.28;
   }
 
-  .month-chip-avatar::before {
-    display: none;
-  }
-
-  .month-chip.active .month-chip-avatar {
-    background: transparent;
-  }
-
-  .month-chip.active .month-chip-avatar::before {
-    display: none;
-  }
-
-  .month-chip-avatar img {
-    position: relative;
-    z-index: 1;
-    width: 78px;
-    height: 78px;
-    object-fit: contain;
-    transform: translateY(0) scale(var(--avatar-scale));
-    transform-origin: 50% 78%;
-    filter: drop-shadow(0 7px 10px rgba(42,33,27,0.13));
-  }
-
-  .month-chip-month {
+  .phase-seg-cursor {
     position: absolute;
-    left: 13px;
-    bottom: 12px;
-    z-index: 2;
-    color: var(--ink);
-    display: grid;
-    gap: 2px;
+    bottom: 7px;
+    width: 5px;
+    height: 5px;
+    border-radius: 999px;
+    transform: translateX(-50%);
+    transition: left 200ms var(--ease);
+    opacity: 0.62;
+    display: none;
   }
 
-  .month-chip-month .month-word {
-    font-family: "Lenia";
-    font-size: 12px;
-    line-height: 1;
-    font-weight: 500;
-    letter-spacing: -0.02em;
-    text-transform: none;
-    color: var(--ink-soft);
-  }
-
-  .month-chip-month .month-number {
-    font-family: "Helvena";
-    font-size: 34px;
-    line-height: 0.88;
-    font-weight: 600;
-    letter-spacing: -0.04em;
-    color: var(--ink);
-  }
-
-  .month-chip.active .month-chip-month {
-    color: var(--ink);
-  }
+  .phase-segment.pregnancy .phase-seg-cursor  { background: var(--coral-strong, #b84040); }
+  .phase-segment.baby .phase-seg-cursor       { background: #7A4A3A; }
+  .phase-segment.parenting .phase-seg-cursor  { background: #4F6647; }
 
   .month-section-head {
     display: flex;
@@ -1247,12 +1179,15 @@
     font-weight: 500;
     font-size: 13px;
     margin: 2px 2px -2px;
+    flex: 0 0 auto;
   }
   .month-section-head [data-calendar-current-title] { color: var(--ink); font-family: "Lenia"; font-size: 13px; }
   .month-section-head [data-calendar-counter] { color: var(--ink-muted); font-family: "Helvena"; font-size: 12px; }
 
   .month-carousel-shell {
     position: relative;
+    flex: 1;
+    min-height: 0;
     margin: 0 -22px;
     overflow: hidden;
   }
@@ -1260,6 +1195,7 @@
   .month-carousel {
     position: relative;
     display: flex;
+    height: 100%;
     gap: 12px;
     overflow-x: auto;
     overflow-y: hidden;
@@ -1284,6 +1220,8 @@
     transition: opacity 260ms var(--ease), transform 260ms var(--ease), filter 260ms var(--ease);
     filter: saturate(0.86);
     scroll-snap-align: center;
+    overflow-y: auto;
+    min-height: 0;
   }
 
   .month-page.active {
@@ -5776,15 +5714,6 @@
     --avatar-shadow: drop-shadow(0 10px 12px rgba(42,33,27,0.14));
   }
 
-  .month-chip-avatar img {
-    --avatar-float-y: -3px;
-    --avatar-speed: 5.2s;
-    --avatar-rotate-a: -0.5deg;
-    --avatar-rotate-b: 0.5deg;
-    --avatar-shadow: drop-shadow(0 9px 11px rgba(42,33,27,0.16));
-  }
-
-  .month-chip:nth-child(2n) .month-chip-avatar img,
   .stage-btn:nth-child(2n) .stage-btn-avatar,
   .phase-card:nth-child(2n) .phase-avatar img {
     animation-delay: -1.8s;
@@ -5875,7 +5804,6 @@
   .shelf-plank,
   .feed-card,
   .calendar-card,
-  .month-chip,
   .stage-btn,
   .month-highlight-card,
   .month-page-intro,
@@ -5892,7 +5820,6 @@
   }
 
   .shelf-book,
-  .month-chip,
   .stage-btn,
   .chip,
   .cal-chip,
@@ -5931,7 +5858,6 @@
   .qlog-sheet { --gradient-speed: 22s; }
 
   .shelf-book:nth-child(2n),
-  .month-chip:nth-child(2n),
   .feed-card:nth-of-type(2n),
   .cat-card:nth-of-type(2n),
   .sleep-nav-card:nth-child(2n),
@@ -6023,7 +5949,6 @@
     .shelf-plank,
     .feed-card,
     .calendar-card,
-    .month-chip,
     .month-highlight-card,
     .month-page-intro,
     .cat-card,
@@ -6338,19 +6263,16 @@
             <div class="top-row">
               <div>
                 <div class="eyebrow">Lola 18m</div>
-                <h2 class="screen-title">Calendario</h2>
+                <h2 class="screen-title">Detalles mes a mes.</h2>
               </div>
               <div class="header-avatar" aria-hidden="true"><img src="design/assets/avatar-mint.png" alt="" data-calendar-hero-avatar></div>
             </div>
 
             <div class="calendar-flow">
-              <div class="month-selector" aria-label="Selector de mes">
-                <div class="calendar-rail-shell">
-                  <div class="calendar-rail" data-calendar-timeline></div>
-                </div>
+              <div class="month-selector" aria-label="Selector de fases">
+                <div data-calendar-timeline></div>
               </div>
 
-              <div class="month-section-head"><span data-calendar-current-title>Crianza · mes 18</span><span data-calendar-counter>Highlights</span></div>
               <div class="month-carousel-shell">
                 <div class="month-carousel" data-calendar-cards aria-label="Highlights de cada mes"></div>
               </div>
@@ -6783,9 +6705,6 @@
   const calendarTodayId = 'crianza-18';
   let calendarActiveMonth = calendarTodayId;
   let calendarAnimationTimer = null;
-  let calendarTimelineProgrammatic = false;
-  let calendarTimelineProgrammaticTimer = null;
-  let calendarTimelineSyncTimer = null;
   let calendarCardsProgrammatic = false;
   let calendarCardsProgrammaticTimer = null;
   let calendarCardsSyncTimer = null;
@@ -10289,18 +10208,6 @@ Grow
     return 0.94 + progress * 0.12;
   }
 
-  function getCalendarMonthLabel(phase, month) {
-    return String(month);
-  }
-
-  function getCalendarPhaseTag(phase) {
-    return {
-      embarazo: 'Embarazo',
-      bebe: 'Bebe',
-      crianza: 'Crianza'
-    }[phase.id] || phase.name;
-  }
-
   function getPregnancyHighlight(month) {
     if (month <= 2) return {
       period: 'Semanas 1-8',
@@ -10421,7 +10328,7 @@ Grow
   function renderMonthHighlightCard(phase, month, monthId) {
     const highlight = getCalendarHighlightForMonth(phase, month);
     const bullets = highlight.highlights.slice(0, 4).map((item) => `<li>${escapeHtml(item)}</li>`).join('');
-    const title = `${phase.name} · ${highlight.period}`;
+    const title = phase.name;
 
     return `
       <article class="month-highlight-card ${phase.className}">
@@ -10434,24 +10341,34 @@ Grow
     `;
   }
 
-  function renderMonthSelector(activeMonthId) {
-    return getCalendarMonths().map(({ phase, month, id }) => {
-      const stateClasses = [
-        phase.className,
-        isCalendarMonthDone(id) ? 'done' : '',
-        id === calendarTodayId ? 'today' : '',
-        id === activeMonthId ? 'active' : ''
-      ].filter(Boolean).join(' ');
-      const avatar = getCalendarAvatar(phase.id);
-      const scale = getCalendarAvatarScale(phase, month).toFixed(3);
+  function renderPhaseProgressBar(activeMonthId) {
+    const activeMonthData = getCalendarMonths().find(m => m.id === activeMonthId);
+    const activePhaseId = activeMonthData?.phase.id || '';
+    const activeMonthInPhase = activeMonthData?.month || 1;
+
+    const todayPhaseId = getCalendarMonths().find(m => m.id === calendarTodayId)?.phase.id || '';
+    const todayMonthInPhase = getCalendarMonths().find(m => m.id === calendarTodayId)?.month || 1;
+
+    const segments = calendarPhases.map((phase) => {
+      const isActive = phase.id === activePhaseId;
+      const todayDot = phase.id === todayPhaseId
+        ? `<span class="phase-seg-today" style="left: ${((todayMonthInPhase - 0.5) / phase.months * 100).toFixed(1)}%"></span>`
+        : '';
+      const cursorLeft = isActive ? ((activeMonthInPhase - 0.5) / phase.months * 100).toFixed(1) : '0';
+      const cursorDot = `<span class="phase-seg-cursor" style="left: ${cursorLeft}%; display: ${isActive ? 'block' : 'none'}"></span>`;
       return `
-        <button class="month-chip ${stateClasses}" type="button" data-calendar-month="${id}" style="--avatar-scale: ${scale}" aria-label="${phase.name}, mes ${month}">
-          <span class="month-chip-tag">${escapeHtml(getCalendarPhaseTag(phase))}</span>
-          <span class="month-chip-avatar"><img src="${avatar}" alt=""></span>
-          <span class="month-chip-month"><span class="month-word">Mes</span><span class="month-number">${escapeHtml(getCalendarMonthLabel(phase, month))}</span></span>
+        <button class="phase-segment ${phase.className}${isActive ? ' active' : ''}" type="button"
+          data-phase-segment="${phase.id}" style="flex: ${phase.months}"
+          aria-label="${phase.name}, ${phase.duration}${isActive ? ', activo' : ''}">
+          <span class="phase-seg-label">${escapeHtml(phase.name)}</span>
+          <span class="phase-seg-dur">${escapeHtml(phase.duration)}</span>
+          ${todayDot}
+          ${cursorDot}
         </button>
       `;
     }).join('');
+
+    return `<div class="phase-progress-bar">${segments}</div>`;
   }
 
   function animateCalendarCards(direction) {
@@ -10476,7 +10393,7 @@ Grow
     const cards = document.querySelector('[data-calendar-cards]');
     if (!timeline || !cards || timeline.dataset.rendered === 'true') return;
 
-    timeline.innerHTML = renderMonthSelector(calendarActiveMonth);
+    timeline.innerHTML = renderPhaseProgressBar(calendarActiveMonth);
 
     cards.innerHTML = getCalendarMonths().map(({ phase, month, id }) => {
       const activeClass = id === calendarTodayId ? ' active today' : '';
@@ -10491,64 +10408,43 @@ Grow
     const counter = document.querySelector('[data-calendar-counter]');
     if (counter) counter.textContent = 'Highlights';
 
+    timeline.querySelectorAll('[data-phase-segment]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const phaseId = btn.dataset.phaseSegment;
+        const months = getCalendarMonths();
+        const activeMonthData = months.find(m => m.id === calendarActiveMonth);
+        if (activeMonthData && activeMonthData.phase.id === phaseId) {
+          setCalendarMonth(calendarActiveMonth);
+        } else {
+          const firstOfPhase = months.find(m => m.phase.id === phaseId);
+          if (firstOfPhase) setCalendarMonth(firstOfPhase.id);
+        }
+      });
+    });
+
     timeline.dataset.rendered = 'true';
     bindCalendarGestures();
   }
 
-  function centerTimelineMonth(monthId, behavior = 'smooth') {
-    const viewport = document.querySelector('.calendar-rail-shell');
-    const marker = viewport?.querySelector(`[data-calendar-month="${monthId}"]`);
-    if (!viewport || !marker || !viewport.clientWidth) return;
+  function updatePhaseBarActive(activeMonthId) {
+    const activeMonthData = getCalendarMonths().find(m => m.id === activeMonthId);
+    const activePhaseId = activeMonthData?.phase.id || '';
+    const activeMonthInPhase = activeMonthData?.month || 1;
 
-    const viewportRect = viewport.getBoundingClientRect();
-    const markerRect = marker.getBoundingClientRect();
-    const delta = markerRect.left - viewportRect.left - (viewport.clientWidth - markerRect.width) / 2;
-    const maxLeft = Math.max(0, viewport.scrollWidth - viewport.clientWidth);
-    const left = Math.max(0, Math.min(maxLeft, viewport.scrollLeft + delta));
+    document.querySelectorAll('[data-phase-segment]').forEach((btn) => {
+      const isActive = btn.dataset.phaseSegment === activePhaseId;
+      btn.classList.toggle('active', isActive);
 
-    calendarTimelineProgrammatic = true;
-    clearTimeout(calendarTimelineProgrammaticTimer);
-    calendarTimelineProgrammaticTimer = setTimeout(() => {
-      calendarTimelineProgrammatic = false;
-    }, behavior === 'auto' ? 100 : 620);
-
-    if (behavior === 'auto') {
-      viewport.scrollLeft = left;
-      return;
-    }
-    viewport.scrollTo({ left, behavior });
-  }
-
-  function getClosestTimelineMonth() {
-    const viewport = document.querySelector('.calendar-rail-shell');
-    if (!viewport) return null;
-    const viewportRect = viewport.getBoundingClientRect();
-    const center = viewportRect.left + viewport.clientWidth / 2;
-    let closest = null;
-    let closestDistance = Number.POSITIVE_INFINITY;
-
-    viewport.querySelectorAll('[data-calendar-month]').forEach((marker) => {
-      const rect = marker.getBoundingClientRect();
-      const distance = Math.abs(rect.left + rect.width / 2 - center);
-      if (distance < closestDistance) {
-        closestDistance = distance;
-        closest = marker.dataset.calendarMonth;
+      const cursor = btn.querySelector('.phase-seg-cursor');
+      if (cursor) {
+        const phase = calendarPhases.find(p => p.id === btn.dataset.phaseSegment);
+        if (phase) {
+          const left = ((activeMonthInPhase - 0.5) / phase.months * 100).toFixed(1);
+          cursor.style.left = `${left}%`;
+          cursor.style.display = isActive ? 'block' : 'none';
+        }
       }
     });
-
-    return closest;
-  }
-
-  function scheduleTimelineSync() {
-    if (calendarTimelineProgrammatic) return;
-    clearTimeout(calendarTimelineSyncTimer);
-    calendarTimelineSyncTimer = setTimeout(() => {
-      if (calendarTimelineProgrammatic) return;
-      const monthId = getClosestTimelineMonth();
-      if (monthId && monthId !== calendarActiveMonth) {
-        setCalendarMonth(monthId, { syncTimeline: false });
-      }
-    }, 120);
   }
 
   function centerCalendarCard(monthId, behavior = 'smooth') {
@@ -10614,7 +10510,7 @@ Grow
     const currentCounter = document.querySelector('[data-calendar-counter]');
     const heroAvatar = document.querySelector('[data-calendar-hero-avatar]');
     if (monthData && currentTitle) {
-      currentTitle.textContent = `${monthData.phase.name} · mes ${monthData.month}`;
+      currentTitle.textContent = `Mes ${monthData.month}`;
     }
     if (monthData && currentCounter) {
       currentCounter.textContent = 'Highlights';
@@ -10623,9 +10519,7 @@ Grow
       heroAvatar.src = getCalendarAvatar(monthData.phase.id);
       heroAvatar.style.setProperty('--calendar-avatar-scale', getCalendarAvatarScale(monthData.phase, monthData.month).toFixed(3));
     }
-    document.querySelectorAll('[data-calendar-month]').forEach((button) => {
-      button.classList.toggle('active', button.dataset.calendarMonth === monthId);
-    });
+    updatePhaseBarActive(monthId);
     document.querySelectorAll('[data-calendar-card]').forEach((card) => {
       card.classList.toggle('active', card.dataset.calendarCard === monthId);
     });
@@ -10634,16 +10528,10 @@ Grow
   function setCalendarMonth(monthId, options = {}) {
     renderCalendar();
     const behavior = options.behavior || 'smooth';
-    const button = document.querySelector(`[data-calendar-month="${monthId}"]`);
     const card = document.querySelector(`[data-calendar-card="${monthId}"]`);
-    if (!button || !card) return;
-
-    const previousIndex = getCalendarIndex(calendarActiveMonth);
-    const nextIndex = getCalendarIndex(monthId);
-    const direction = nextIndex > previousIndex ? 'next' : nextIndex < previousIndex ? 'prev' : '';
+    if (!card) return;
 
     markCalendarMonth(monthId);
-    if (options.syncTimeline !== false) centerTimelineMonth(monthId, behavior);
     if (options.syncCards !== false) centerCalendarCard(monthId, behavior);
   }
 
@@ -10656,7 +10544,6 @@ Grow
 
   function bindCalendarGestures() {
     const cards = document.querySelector('[data-calendar-cards]');
-    const timelineViewport = document.querySelector('.calendar-rail-shell');
 
     if (cards && cards.dataset.gestureBound !== 'true') {
       cards.dataset.gestureBound = 'true';
@@ -10668,14 +10555,44 @@ Grow
       }, { passive: false });
     }
 
-    if (timelineViewport && timelineViewport.dataset.gestureBound !== 'true') {
-      timelineViewport.dataset.gestureBound = 'true';
-      timelineViewport.addEventListener('scroll', scheduleTimelineSync, { passive: true });
-      timelineViewport.addEventListener('wheel', (event) => {
-        if (Math.abs(event.deltaY) <= Math.abs(event.deltaX)) return;
-        event.preventDefault();
-        timelineViewport.scrollLeft += event.deltaY;
-      }, { passive: false });
+    const bar = document.querySelector('.phase-progress-bar');
+    if (bar && bar.dataset.scrubBound !== 'true') {
+      bar.dataset.scrubBound = 'true';
+
+      function monthFromX(clientX) {
+        const rect = bar.getBoundingClientRect();
+        const ratio = Math.max(0, Math.min(0.9999, (clientX - rect.left) / rect.width));
+        const months = getCalendarMonths();
+        return months[Math.floor(ratio * months.length)].id;
+      }
+
+      function disableCursorTransition(off) {
+        document.querySelectorAll('.phase-seg-cursor').forEach(el => {
+          el.style.transition = off ? 'none' : '';
+        });
+      }
+
+      let scrubbing = false;
+
+      bar.addEventListener('touchstart', () => { scrubbing = true; disableCursorTransition(true); }, { passive: true });
+      bar.addEventListener('touchmove', (e) => {
+        if (!scrubbing) return;
+        const id = monthFromX(e.touches[0].clientX);
+        if (id !== calendarActiveMonth) setCalendarMonth(id, { behavior: 'auto' });
+      }, { passive: true });
+      bar.addEventListener('touchend', () => { scrubbing = false; disableCursorTransition(false); }, { passive: true });
+
+      bar.addEventListener('mousedown', (e) => {
+        scrubbing = true;
+        disableCursorTransition(true);
+        setCalendarMonth(monthFromX(e.clientX), { behavior: 'auto' });
+      });
+      bar.addEventListener('mousemove', (e) => {
+        if (!scrubbing || e.buttons === 0) { scrubbing = false; return; }
+        const id = monthFromX(e.clientX);
+        if (id !== calendarActiveMonth) setCalendarMonth(id, { behavior: 'auto' });
+      });
+      document.addEventListener('mouseup', () => { scrubbing = false; disableCursorTransition(false); }, { passive: true });
     }
   }
 
@@ -11748,12 +11665,6 @@ Grow
 
     if (event.target.closest('[data-close-celebration]')) {
       closeCelebration();
-      return;
-    }
-
-    const calendarMonthButton = event.target.closest('[data-calendar-month]');
-    if (calendarMonthButton) {
-      setCalendarMonth(calendarMonthButton.dataset.calendarMonth);
       return;
     }
 
