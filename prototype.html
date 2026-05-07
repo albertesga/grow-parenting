@@ -5414,51 +5414,42 @@
     margin-top: 12px;
   }
 
-  .bottom-nav {
+  .phone-nav {
     position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    height: 86px;
-    padding: 9px 8px 8px;
-    background: rgba(250,247,240,0.92);
-    border-top: 1px solid var(--line);
-    backdrop-filter: blur(18px);
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
+    left: 14px; right: 14px; bottom: 14px;
+    height: 76px;
+    background: var(--paper);
+    border-radius: 0 0 32px 32px;
+    display: grid; grid-template-columns: repeat(5, 1fr);
+    align-items: center;
+    padding: 0 12px;
+    box-shadow: 0 -1px 0 var(--line);
     z-index: 15;
   }
-  .nav-item {
+  .nav-tab {
     border: 0;
     background: transparent;
+    padding: 0;
+    display: flex; flex-direction: column; align-items: center; gap: 4px;
     color: var(--ink-muted);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 4px;
     cursor: pointer;
-    font-family: "Lenia";
-    font-weight: 500;
-    font-size: 10px;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
+    font-family: "Lenia"; font-size: 9px; font-weight: 500;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    transition: color 220ms;
   }
-  .nav-item svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
-  .nav-item.active { color: var(--ink); }
-  .nav-item.disabled { opacity: 0.45; cursor: default; }
-  .nav-item.fab { transform: translateY(-17px); gap: 2px; color: var(--ink); }
-  .fab-circle {
-    width: 56px;
-    height: 56px;
-    border-radius: 999px;
-    display: grid;
-    place-items: center;
-    background: var(--coral-base);
-    color: #4A2510;
-    box-shadow: 0 12px 24px rgba(214,119,66,0.28);
-    border: 1px solid rgba(214,119,66,0.32);
+  .nav-tab svg { width: 22px; height: 22px; stroke: currentColor; fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+  .nav-tab.active { color: var(--ink-warm); }
+  .nav-tab.disabled { opacity: 0.45; cursor: default; }
+  .nav-tab.fab-cell { transform: translateY(-22px); gap: 0; }
+  .nav-tab.fab-cell .lbl { margin-top: 6px; }
+  .fab {
+    width: 60px; height: 60px; border-radius: 999px;
+    background: var(--coral-base); color: #4A2510;
+    display: grid; place-items: center;
+    box-shadow: 0 6px 18px rgba(214,119,66,0.28);
+    border: none; cursor: pointer;
   }
+  .fab svg { width: 26px; height: 26px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
 
   .sheet {
     position: absolute;
@@ -6330,12 +6321,15 @@
               <button class="card-button" type="button" data-goto="hitos">Empezar cribado</button>
             </article>
           </div>
-          <nav class="bottom-nav" aria-label="Navegacion principal">
-            <button class="nav-item active" type="button" data-goto="hoy"><svg viewBox="0 0 24 24"><path d="M3 12 12 3l9 9"></path><path d="M5 10v10h14V10"></path></svg><span>Hoy</span></button>
-            <button class="nav-item" type="button" data-goto="calendario"><svg viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="16" rx="2"></rect><path d="M4 10h16"></path></svg><span>Calendario</span></button>
-            <button class="nav-item fab" type="button" data-log-open data-log-source="hoy"><span class="fab-circle"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"></path></svg></span><span>Log</span></button>
-            <button class="nav-item disabled" type="button"><svg viewBox="0 0 24 24"><path d="M21 15a4 4 0 0 1-4 4H8l-5 4V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4z"></path></svg><span>Chat</span></button>
-            <button class="nav-item disabled" type="button"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"></circle><path d="M4 21c0-4 4-7 8-7s8 3 8 7"></path></svg><span>Yo</span></button>
+          <nav class="phone-nav" aria-label="Navegacion principal">
+            <button class="nav-tab active" type="button" data-goto="hoy"><svg viewBox="0 0 24 24"><path d="M3 12 12 3l9 9"/><path d="M5 10v10h14V10"/></svg><span>Hoy</span></button>
+            <button class="nav-tab" type="button" data-goto="calendario"><svg viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="16" rx="2"/><line x1="4" y1="10" x2="20" y2="10"/></svg><span>Calendario</span></button>
+            <div class="nav-tab fab-cell">
+              <button class="fab" type="button" data-log-open data-log-source="hoy"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></button>
+              <span class="lbl">Log</span>
+            </div>
+            <button class="nav-tab" type="button" data-goto="hitos"><svg viewBox="0 0 24 24"><path d="M5 21V4"/><path d="M5 4h12l-3 4 3 4H5"/></svg><span>Hitos</span></button>
+            <button class="nav-tab disabled" type="button"><svg viewBox="0 0 24 24"><path d="M21 15a4 4 0 0 1-4 4H8l-5 4V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4z"/></svg><span>Chat</span></button>
           </nav>
         </section>
 
@@ -6363,12 +6357,15 @@
               </div>
             </div>
           </div>
-          <nav class="bottom-nav" aria-label="Navegacion principal">
-            <button class="nav-item" type="button" data-goto="hoy"><svg viewBox="0 0 24 24"><path d="M3 12 12 3l9 9"></path><path d="M5 10v10h14V10"></path></svg><span>Hoy</span></button>
-            <button class="nav-item active" type="button" data-goto="calendario"><svg viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="16" rx="2"></rect><path d="M4 10h16"></path></svg><span>Calendario</span></button>
-            <button class="nav-item fab" type="button" data-log-open data-log-source="calendario"><span class="fab-circle"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"></path></svg></span><span>Log</span></button>
-            <button class="nav-item disabled" type="button"><svg viewBox="0 0 24 24"><path d="M21 15a4 4 0 0 1-4 4H8l-5 4V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4z"></path></svg><span>Chat</span></button>
-            <button class="nav-item disabled" type="button"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"></circle><path d="M4 21c0-4 4-7 8-7s8 3 8 7"></path></svg><span>Yo</span></button>
+          <nav class="phone-nav" aria-label="Navegacion principal">
+            <button class="nav-tab" type="button" data-goto="hoy"><svg viewBox="0 0 24 24"><path d="M3 12 12 3l9 9"/><path d="M5 10v10h14V10"/></svg><span>Hoy</span></button>
+            <button class="nav-tab active" type="button" data-goto="calendario"><svg viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="16" rx="2"/><line x1="4" y1="10" x2="20" y2="10"/></svg><span>Calendario</span></button>
+            <div class="nav-tab fab-cell">
+              <button class="fab" type="button" data-log-open data-log-source="calendario"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></button>
+              <span class="lbl">Log</span>
+            </div>
+            <button class="nav-tab" type="button" data-goto="hitos"><svg viewBox="0 0 24 24"><path d="M5 21V4"/><path d="M5 4h12l-3 4 3 4H5"/></svg><span>Hitos</span></button>
+            <button class="nav-tab disabled" type="button"><svg viewBox="0 0 24 24"><path d="M21 15a4 4 0 0 1-4 4H8l-5 4V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4z"/></svg><span>Chat</span></button>
           </nav>
         </section>
 
@@ -6532,12 +6529,15 @@
         <section class="screen" data-screen="log">
           <div class="status"><span>9:43</span><div class="status-dots"><span></span><span></span><span></span></div></div>
           <div class="content log-book" data-log-screen-root></div>
-          <nav class="bottom-nav" aria-label="Navegacion principal">
-            <button class="nav-item" type="button" data-goto="hoy"><svg viewBox="0 0 24 24"><path d="M3 12 12 3l9 9"></path><path d="M5 10v10h14V10"></path></svg><span>Hoy</span></button>
-            <button class="nav-item" type="button" data-goto="calendario"><svg viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="16" rx="2"></rect><path d="M4 10h16"></path></svg><span>Calendario</span></button>
-            <button class="nav-item fab active" type="button" data-log-open data-log-source="log"><span class="fab-circle"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"></path></svg></span><span>Log</span></button>
-            <button class="nav-item disabled" type="button"><svg viewBox="0 0 24 24"><path d="M21 15a4 4 0 0 1-4 4H8l-5 4V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4z"></path></svg><span>Chat</span></button>
-            <button class="nav-item disabled" type="button"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"></circle><path d="M4 21c0-4 4-7 8-7s8 3 8 7"></path></svg><span>Yo</span></button>
+          <nav class="phone-nav" aria-label="Navegacion principal">
+            <button class="nav-tab" type="button" data-goto="hoy"><svg viewBox="0 0 24 24"><path d="M3 12 12 3l9 9"/><path d="M5 10v10h14V10"/></svg><span>Hoy</span></button>
+            <button class="nav-tab" type="button" data-goto="calendario"><svg viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="16" rx="2"/><line x1="4" y1="10" x2="20" y2="10"/></svg><span>Calendario</span></button>
+            <div class="nav-tab fab-cell active">
+              <button class="fab" type="button" data-log-open data-log-source="log"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></button>
+              <span class="lbl">Log</span>
+            </div>
+            <button class="nav-tab" type="button" data-goto="hitos"><svg viewBox="0 0 24 24"><path d="M5 21V4"/><path d="M5 4h12l-3 4 3 4H5"/></svg><span>Hitos</span></button>
+            <button class="nav-tab disabled" type="button"><svg viewBox="0 0 24 24"><path d="M21 15a4 4 0 0 1-4 4H8l-5 4V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4z"/></svg><span>Chat</span></button>
           </nav>
         </section>
 
