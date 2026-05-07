@@ -235,6 +235,23 @@
   .content::-webkit-scrollbar { display: none; }
   .screen.no-nav .content { padding-bottom: 28px; }
 
+  .book-close-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 6px 14px 6px 10px;
+    margin-bottom: 16px;
+    background: var(--surface-warm, #F5F2EC);
+    border: 1px solid var(--line, #E2DDD1);
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--ink-warm, #8B7355);
+    cursor: pointer;
+    letter-spacing: 0.01em;
+  }
+  .book-close-pill:hover { background: var(--line, #E2DDD1); }
+
   .top-row {
     display: flex;
     justify-content: space-between;
@@ -8129,7 +8146,8 @@
   function renderSleepHome() {
     const ageRange = getSleepAge();
     return `
-      <section class="sleep-hero">
+      <button class="book-close-pill" type="button" data-goto="hoy">← Cerrar libro</button>
+          <section class="sleep-hero">
         <div class="sleep-kicker">Sueño · Lola · ${escapeHtml(ageRange.title)}</div>
         <h3>Cuando duerme bien, descansáis mejor.</h3>
         <p>Sin coaching agresivo. Sin juicio. Los horarios se adaptan a edad, estación y salida del sol local.</p>
@@ -8431,7 +8449,8 @@ Grow
     const age = getFoodAge();
     const inProcess = allergenCanon.filter((item) => item.state === 'process').length;
     return `
-      <section class="food-hero">
+      <button class="book-close-pill" type="button" data-goto="hoy">← Cerrar libro</button>
+          <section class="food-hero">
         <div class="food-kicker">Alimentación · Lola · ${escapeHtml(age.label)}</div>
         <h3>Comer sin listas infinitas.</h3>
         <p>Alimentos, cortes por edad y alérgenos en un solo libro. Cero juicio. Seguridad, variedad y ritmo familiar.</p>
@@ -8760,7 +8779,8 @@ Grow
   function renderLactationHome() {
     updateLactationLatchScore();
     return `
-      <section class="lactation-hero">
+      <button class="book-close-pill" type="button" data-goto="hoy">← Cerrar libro</button>
+          <section class="lactation-hero">
         <div class="lactation-kicker">Lactancia · Lola · 6 semanas</div>
         <h3>Como salga. Y si no sale, también.</h3>
         <p>Lactancia materna, mixta o biberón. Cero juicio. Aquí estamos para que duela menos y dudes menos.</p>
@@ -9138,7 +9158,8 @@ Grow
 
   function renderPregnancyHome() {
     return `
-      ${renderPregnancyHero()}
+      <button class="book-close-pill" type="button" data-goto="hoy">← Cerrar libro</button>
+          ${renderPregnancyHero()}
       ${renderPregnancyNav()}
       <section class="pregnancy-status-card">
         <div class="pregnancy-status-grid">
@@ -9517,7 +9538,8 @@ Grow
 
   function renderVaccineHome() {
     return `
-      ${renderVaccineHero()}
+      <button class="book-close-pill" type="button" data-goto="hoy">← Cerrar libro</button>
+          ${renderVaccineHero()}
       ${renderVaccineNav()}
       <section class="vaccine-status-card">
         <div class="vaccine-status-grid">
