@@ -1,0 +1,2370 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Grow · Session 04 — Product components</title>
+<style>
+  @font-face { font-family: "Lenia"; src: url("assets/fonts/LeniaSans-Light.ttf") format("truetype"); font-weight: 300; font-display: swap; }
+  @font-face { font-family: "Lenia"; src: url("assets/fonts/LeniaSans-Regular.ttf") format("truetype"); font-weight: 400; font-display: swap; }
+  @font-face { font-family: "Lenia"; src: url("assets/fonts/LeniaSans-Medium.ttf") format("truetype"); font-weight: 500; font-display: swap; }
+  @font-face { font-family: "Lenia"; src: url("assets/fonts/LeniaSans-Bold.ttf") format("truetype"); font-weight: 700; font-display: swap; }
+  @font-face { font-family: "Lenia"; src: url("assets/fonts/LeniaSans-Italic.ttf") format("truetype"); font-weight: 400; font-style: italic; font-display: swap; }
+  @font-face { font-family: "Helvena"; src: url("assets/fonts/Helvena-Regular.ttf") format("truetype"); font-weight: 400; font-display: swap; }
+  @font-face { font-family: "Helvena"; src: url("assets/fonts/Helvena-Medium.ttf") format("truetype"); font-weight: 500; font-display: swap; }
+  @font-face { font-family: "Helvena"; src: url("assets/fonts/Helvena-Semibold.ttf") format("truetype"); font-weight: 600; font-display: swap; }
+
+  :root {
+    --paper: #FAF7F0;
+    --paper-soft: #F2EDE0;
+    --paper-deep: #E8E1CF;
+    --ink: #1A1A1A;
+    --ink-soft: #4D4D4D;
+    --ink-muted: #888888;
+    --ink-faint: #BFBAA8;
+    --line: #E2DDD1;
+    --line-strong: #C9C2B2;
+    --coral-subtle: #FBE5D6; --coral-base: #F2A57A; --coral-strong: #D67742;
+    --blush-subtle: #F8E4DD; --blush-base: #EFC2B5; --blush-strong: #D89A89;
+    --mint-subtle:  #E5EDDF; --mint-base:  #BFD2B0; --mint-strong:  #8FAE85;
+    --gold-subtle:  #F6EBC9; --gold-base:  #E8C97A; --gold-strong:  #B8973F;
+    /* ── Category color system (8 cats · soft tints + ink) ── */
+    /* 4 use the brand palette · 4 are new */
+    --cat-embarazo-tint:    #FBE5D6; --cat-embarazo-ink:    #B45F2F;  /* coral */
+    --cat-alimentacion-tint:#F8E4DD; --cat-alimentacion-ink:#B47465;  /* blush */
+    --cat-sueno-tint:       #E5EDDF; --cat-sueno-ink:       #6E8A66;  /* mint */
+    --cat-vacunas-tint:     #F6EBC9; --cat-vacunas-ink:     #8E7222;  /* gold */
+    --cat-salud-tint:       #E6E2D6; --cat-salud-ink:       #5C5648;  /* paper-deep / ink-soft */
+    --cat-medicacion-tint:  #DDE6E8; --cat-medicacion-ink:  #4D6770;  /* sky */
+    --cat-desarrollo-tint:  #E6DFE9; --cat-desarrollo-ink:  #6A5A7E;  /* lilac */
+    --cat-bienestar-tint:   #EBE0D2; --cat-bienestar-ink:   #846238;  /* ochre */
+    --night-bg: #1A1D24; --night-surface: #2A2E36; --night-surface-2: #353A44;
+    --night-fg: #E8E6DF; --night-muted: #908A7E;
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; }
+  body {
+    font-family: "Helvena", "Helvetica Neue", system-ui, sans-serif;
+    background: var(--paper); color: var(--ink); font-size: 15px; line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .page { max-width: 1180px; margin: 0 auto; padding: 64px 40px 160px; }
+
+  .page-meta {
+    display: flex; justify-content: space-between; align-items: baseline;
+    border-top: 1px solid var(--ink); border-bottom: 1px solid var(--line-strong);
+    padding: 14px 0 12px; font-size: 11px; text-transform: uppercase;
+    letter-spacing: 0.14em; color: var(--ink-soft); font-weight: 500;
+  }
+  .page-meta .left { display: flex; gap: 20px; align-items: baseline; }
+  .page-meta .symbol { width: 16px; height: 16px; background: var(--coral-base); border-radius: 50%; display: inline-block; transform: translateY(3px); }
+
+  .hero { padding: 80px 0 56px; border-bottom: 1px solid var(--line); }
+  .hero .eyebrow { font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-muted); font-weight: 500; margin-bottom: 24px; }
+  .hero h1 { font-family: "Lenia"; font-weight: 500; font-size: 64px; line-height: 1.05; letter-spacing: -0.015em; margin: 0 0 22px; max-width: 16ch; text-wrap: balance; }
+  .hero h1 em { font-style: italic; color: var(--ink-soft); }
+  .hero .lede { max-width: 56ch; font-size: 17px; line-height: 1.6; color: var(--ink-soft); }
+
+  .section { padding: 80px 0 24px; border-bottom: 1px solid var(--line); }
+  .section:last-of-type { border-bottom: none; }
+  .section-head {
+    display: grid; grid-template-columns: 180px 1fr; gap: 40px; align-items: baseline;
+    margin-bottom: 40px;
+  }
+  .section-num {
+    font-family: "Lenia"; font-size: 12px; font-weight: 500;
+    letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-muted);
+    padding-top: 10px; border-top: 1px solid var(--ink);
+  }
+  .section-head h2 {
+    font-family: "Lenia"; font-weight: 500; font-size: 38px; line-height: 1.1;
+    letter-spacing: -0.015em; margin: 0 0 14px; max-width: 22ch;
+  }
+  .section-head .desc { font-size: 15px; line-height: 1.6; color: var(--ink-soft); max-width: 56ch; }
+
+  /* Specimen */
+  .spec {
+    background: var(--paper-soft); border-radius: 28px; padding: 40px;
+    position: relative; margin-bottom: 24px;
+  }
+  .spec.dark { background: var(--night-bg); color: var(--night-fg); }
+  .spec.gold { background: var(--gold-subtle); }
+  .spec.mint { background: var(--mint-subtle); }
+  .spec.coral { background: var(--coral-subtle); }
+  .spec.blush { background: var(--blush-subtle); }
+  .spec.paper-dark { background: var(--paper-deep); }
+  .spec-head {
+    display: flex; justify-content: space-between; align-items: baseline;
+    margin-bottom: 24px; gap: 20px;
+  }
+  .spec-head h3 { font-family: "Lenia"; font-weight: 500; font-size: 22px; margin: 0; letter-spacing: -0.005em; }
+  .spec-head .meta-r { font-size: 10.5px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-muted); font-weight: 500; }
+  .spec.dark .spec-head .meta-r { color: var(--night-muted); }
+
+  /* Stage card frame */
+  .stage {
+    background: var(--paper); border-radius: 22px; padding: 28px;
+  }
+  .spec.dark .stage { background: var(--night-surface); }
+  .stage-row { display: flex; gap: 24px; align-items: flex-start; flex-wrap: wrap; }
+  .stage-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  .stage-grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; }
+
+  .caption {
+    margin-top: 14px; font-size: 11px; letter-spacing: 0.04em;
+    color: var(--ink-muted); font-style: italic;
+  }
+  .lbl-tag {
+    display: inline-block;
+    font-family: "Lenia"; font-size: 9.5px; letter-spacing: 0.18em;
+    text-transform: uppercase; color: var(--ink-muted); font-weight: 500;
+    margin-bottom: 10px;
+  }
+
+  .footnote {
+    border-top: 1px solid var(--line); margin-top: 24px; padding-top: 16px;
+    font-size: 12px; color: var(--ink-soft); line-height: 1.6;
+    display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 28px;
+  }
+  .footnote .ttl {
+    font-family: "Lenia"; font-size: 10px; letter-spacing: 0.16em;
+    text-transform: uppercase; color: var(--ink-muted); margin-bottom: 4px;
+  }
+
+  /* ╔═══════════════════════ CATEGORIZED HOY CARD (§H) ═══════════════════════╗ */
+  /* Mini hero contextual — sits below avatar-hero in Hoy */
+  .mini-hero {
+    display: flex; align-items: center; gap: 12px;
+    padding: 12px 14px; background: var(--paper);
+    border-radius: 16px; border: 1px solid var(--line);
+    margin-bottom: 16px;
+  }
+  .mini-hero .dot {
+    width: 30px; height: 30px; border-radius: 999px; flex: 0 0 30px;
+    background: var(--coral-subtle); display: grid; place-items: center;
+    color: var(--coral-strong);
+  }
+  .mini-hero .dot.mint { background: var(--mint-subtle); color: var(--mint-strong); }
+  .mini-hero .dot.blush { background: var(--blush-subtle); color: var(--blush-strong); }
+  .mini-hero .dot.gold { background: var(--gold-subtle); color: var(--gold-strong); }
+  .mini-hero .dot svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+  .mini-hero .who {
+    font-family: "Lenia"; font-weight: 500; font-size: 13px; letter-spacing: -0.005em;
+  }
+  .mini-hero .who .meta { color: var(--ink-muted); font-weight: 400; }
+  .mini-hero .affect {
+    margin-top: 2px; font-size: 11.5px; color: var(--ink-soft); line-height: 1.4;
+  }
+
+  /* Chip strip — categoría filters */
+  .chip-strip {
+    display: flex; gap: 6px; overflow-x: auto; padding-bottom: 4px;
+    margin: 0 -14px 16px; padding-left: 14px; padding-right: 14px;
+    scrollbar-width: none;
+  }
+  .chip-strip::-webkit-scrollbar { display: none; }
+  .chip {
+    flex: 0 0 auto;
+    display: flex; align-items: center; gap: 5px;
+    padding: 6px 12px; border-radius: 999px;
+    background: var(--paper-soft); border: 1.5px solid transparent;
+    font-family: "Lenia"; font-weight: 500; font-size: 12px;
+    color: var(--ink-soft);
+    cursor: pointer; white-space: nowrap;
+    letter-spacing: -0.005em;
+  }
+  .chip svg { width: 12px; height: 12px; stroke: currentColor; fill: none; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+  /* default active = coral */
+  .chip.active { background: var(--coral-subtle); color: #8E4A22; border-color: var(--coral-base); }
+  /* category-aware actives */
+  .chip.active.alimentacion { background: var(--cat-alimentacion-tint); color: var(--cat-alimentacion-ink); border-color: var(--cat-alimentacion-ink); }
+  .chip.active.sueno        { background: var(--cat-sueno-tint);        color: var(--cat-sueno-ink);        border-color: var(--cat-sueno-ink); }
+  .chip.active.vacunas      { background: var(--cat-vacunas-tint);      color: var(--cat-vacunas-ink);      border-color: var(--cat-vacunas-ink); }
+  .chip.active.salud        { background: var(--cat-salud-tint);        color: var(--cat-salud-ink);        border-color: var(--cat-salud-ink); }
+  .chip.active.desarrollo   { background: var(--cat-desarrollo-tint);   color: var(--cat-desarrollo-ink);   border-color: var(--cat-desarrollo-ink); }
+  .chip.active.bienestar    { background: var(--cat-bienestar-tint);    color: var(--cat-bienestar-ink);    border-color: var(--cat-bienestar-ink); }
+  .chip.active.embarazo     { background: var(--cat-embarazo-tint);     color: var(--cat-embarazo-ink);     border-color: var(--cat-embarazo-ink); }
+  .chip.active.medicacion   { background: var(--cat-medicacion-tint);   color: var(--cat-medicacion-ink);   border-color: var(--cat-medicacion-ink); }
+
+  /* Section eyebrow inside Hoy feed (HOY · ESTA SEMANA) */
+  .feed-eyb {
+    font-family: "Lenia"; font-weight: 500; font-size: 11px;
+    letter-spacing: 0.20em; text-transform: uppercase; color: var(--ink-muted);
+    margin: 18px 2px 12px;
+  }
+
+  /* Categorized card — the canon */
+  .cat-card {
+    background: var(--paper-soft); border-radius: 18px;
+    border: 1px solid var(--line); padding: 16px 16px 12px;
+    margin-bottom: 12px; position: relative;
+    --cc-tint: var(--paper-soft);
+    --cc-ink: var(--ink-soft);
+  }
+  /* Category modifiers — soft tint background + ink color for tag/icon */
+  .cat-card.cat-embarazo     { background: var(--cat-embarazo-tint);     --cc-ink: var(--cat-embarazo-ink);     border-color: rgba(180,95,47,0.14); }
+  .cat-card.cat-alimentacion { background: var(--cat-alimentacion-tint); --cc-ink: var(--cat-alimentacion-ink); border-color: rgba(180,116,101,0.16); }
+  .cat-card.cat-sueno        { background: var(--cat-sueno-tint);        --cc-ink: var(--cat-sueno-ink);        border-color: rgba(110,138,102,0.18); }
+  .cat-card.cat-vacunas      { background: var(--cat-vacunas-tint);      --cc-ink: var(--cat-vacunas-ink);      border-color: rgba(142,114,34,0.18); }
+  .cat-card.cat-salud        { background: var(--cat-salud-tint);        --cc-ink: var(--cat-salud-ink);        border-color: rgba(92,86,72,0.16); }
+  .cat-card.cat-medicacion   { background: var(--cat-medicacion-tint);   --cc-ink: var(--cat-medicacion-ink);   border-color: rgba(77,103,112,0.16); }
+  .cat-card.cat-desarrollo   { background: var(--cat-desarrollo-tint);   --cc-ink: var(--cat-desarrollo-ink);   border-color: rgba(106,90,126,0.16); }
+  .cat-card.cat-bienestar    { background: var(--cat-bienestar-tint);    --cc-ink: var(--cat-bienestar-ink);    border-color: rgba(132,98,56,0.16); }
+  .cat-card .cc-tag {
+    display: flex; align-items: center; gap: 6px;
+    font-family: "Lenia"; font-weight: 500; font-size: 10.5px;
+    letter-spacing: 0.18em; text-transform: uppercase; color: var(--cc-ink);
+    margin-bottom: 10px;
+  }
+  .cat-card .cc-tag svg {
+    width: 14px; height: 14px; stroke: currentColor; fill: none;
+    stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round;
+  }
+  .cat-card .cc-title {
+    font-family: "Lenia"; font-weight: 500; font-size: 16px;
+    line-height: 1.25; letter-spacing: -0.005em; color: var(--ink);
+    margin-bottom: 3px;
+  }
+  .cat-card .cc-meta {
+    font-size: 12.5px; color: var(--ink-soft); line-height: 1.4;
+    margin-bottom: 10px;
+  }
+  .cat-card .cc-context {
+    font-family: "Lenia"; font-style: italic; font-size: 11.5px;
+    color: var(--ink-muted); line-height: 1.4; margin-bottom: 14px;
+  }
+  .cat-card .cc-cta {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--ink); color: var(--paper);
+    font-family: "Lenia"; font-weight: 500; font-size: 12.5px;
+    padding: 9px 14px; border-radius: 999px;
+    border: none; cursor: pointer; letter-spacing: -0.005em;
+  }
+  .cat-card .cc-cta svg { width: 13px; height: 13px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .cat-card .cc-soft {
+    display: flex; gap: 14px; margin-top: 12px; padding-top: 10px;
+    border-top: 1px dashed var(--line-strong);
+    font-family: "Lenia"; font-size: 10.5px; letter-spacing: 0.10em;
+    text-transform: uppercase; color: var(--ink-muted); font-weight: 500;
+  }
+  .cat-card .cc-soft span { cursor: pointer; }
+  .cat-card .cc-soft span:hover { color: var(--ink-soft); }
+
+  /* States */
+  .cat-card.state-doing { background: var(--paper); border-color: var(--ink-faint); }
+  .cat-card.state-doing .cc-tag::after {
+    content: "● activo"; margin-left: auto; font-size: 9.5px; letter-spacing: 0.10em;
+    color: var(--coral-strong); animation: cc-pulse 2s ease-in-out infinite;
+  }
+  @keyframes cc-pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.55; } }
+
+  .cat-card.state-done { border-style: dashed; opacity: 0.85; }
+  .cat-card.state-done .cc-title,
+  .cat-card.state-done .cc-meta { color: var(--ink-muted); }
+  .cat-card.state-done .cc-tag::after {
+    content: "✓ hecho"; margin-left: auto; font-size: 9.5px; letter-spacing: 0.10em;
+    color: var(--mint-strong);
+  }
+
+  .cat-card.state-snoozed { opacity: 0.55; }
+  .cat-card.state-snoozed .cc-tag::after {
+    content: "snoozed · mañana"; margin-left: auto; font-size: 9.5px; letter-spacing: 0.10em;
+    color: var(--ink-muted); text-transform: lowercase;
+  }
+
+  .cat-card.state-attention {
+    border-width: 2px; border-color: var(--ink); background: var(--paper);
+  }
+  .cat-card.state-attention .cc-tag::before {
+    content: "[!]"; margin-right: 2px; font-family: "Helvena"; font-weight: 600;
+    color: var(--ink); letter-spacing: 0;
+  }
+  .cat-card.state-attention .cc-tag {
+    color: var(--ink); font-weight: 500;
+  }
+
+  /* Annotation marks for the anatomy diagram */
+  .anat-card { position: relative; }
+  .anat-mark {
+    position: absolute; left: -28px;
+    width: 22px; height: 22px; border-radius: 999px;
+    background: var(--ink); color: var(--paper);
+    display: grid; place-items: center;
+    font-family: "Lenia"; font-weight: 500; font-size: 10.5px;
+  }
+  .anat-card .cc-tag      .anat-mark { top: 0; }
+  .anat-card .cc-title    .anat-mark { top: 2px; }
+  .anat-card .cc-meta     .anat-mark { top: 0; }
+  .anat-card .cc-context  .anat-mark { top: 0; }
+  .anat-card .cc-cta-row  .anat-mark { top: 6px; left: -32px; }
+  .anat-card .cc-soft     .anat-mark { top: 12px; }
+
+  /* Anatomy legend */
+  .anat-legend {
+    display: grid; gap: 10px; font-size: 12.5px; line-height: 1.4;
+  }
+  .anat-legend li {
+    display: grid; grid-template-columns: 26px 1fr; gap: 10px; align-items: baseline;
+    color: var(--ink-soft);
+  }
+  .anat-legend li::before {
+    content: counter(anat); counter-increment: anat;
+    width: 22px; height: 22px; border-radius: 999px;
+    background: var(--ink); color: var(--paper);
+    display: grid; place-items: center;
+    font-family: "Lenia"; font-weight: 500; font-size: 10.5px;
+  }
+  .anat-legend { counter-reset: anat; list-style: none; padding: 0; margin: 0; }
+  .anat-legend strong {
+    color: var(--ink); font-family: "Lenia"; font-weight: 500;
+    text-transform: uppercase; font-size: 10.5px; letter-spacing: 0.16em;
+    margin-right: 6px;
+  }
+
+  /* Compact phone preview wrapper */
+  .feed-preview {
+    background: var(--paper); border-radius: 22px; padding: 18px 14px;
+    max-width: 320px;
+  }
+  .feed-preview .av-mini {
+    aspect-ratio: 1.4 / 1; background: var(--coral-subtle);
+    border-radius: 18px; display: grid; place-items: center;
+    margin-bottom: 12px; position: relative;
+  }
+  .feed-preview .av-mini img { width: 70%; height: auto; display: block; }
+  .feed-preview .av-mini .pill-st {
+    position: absolute; top: 10px; left: 10px;
+    background: var(--paper); border-radius: 999px;
+    padding: 4px 8px; font-family: "Lenia"; font-size: 9.5px;
+    letter-spacing: 0.10em; text-transform: uppercase; color: var(--ink-soft);
+    transform: rotate(-2deg);
+  }
+  .feed-preview .av-mini .pill-st.tr {
+    left: auto; right: 10px; transform: rotate(3deg);
+    background: var(--mint-subtle); color: var(--mint-strong);
+  }
+
+  /* Variant grid for the 8 categories */
+  .cat-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 14px;
+  }
+  .cat-grid .cat-card { margin-bottom: 0; }
+
+  /* ╔═══════════════════════ TIMELINE TRACK ═══════════════════════╗ */
+  .timeline {
+    position: relative; padding: 16px 0 4px 28px;
+  }
+  .timeline::before {
+    content: ""; position: absolute; left: 8px; top: 16px; bottom: 12px;
+    width: 1.5px; background: var(--line-strong);
+  }
+  .tl-item { position: relative; padding-bottom: 18px; }
+  .tl-item::before {
+    content: ""; position: absolute; left: -24px; top: 8px; width: 9px; height: 9px;
+    border-radius: 999px; background: var(--paper); border: 1.5px solid var(--ink-faint);
+  }
+  .tl-item.now::before { background: var(--coral-base); border-color: var(--coral-strong); }
+  .tl-item.done::before { background: var(--mint-base); border-color: var(--mint-strong); }
+  .tl-time {
+    font-family: "Lenia"; font-size: 11px; letter-spacing: 0.06em;
+    color: var(--ink-muted); font-weight: 500; margin-bottom: 2px;
+  }
+  .tl-item.now .tl-time { color: var(--coral-strong); font-weight: 600; }
+  .tl-card {
+    background: var(--paper); border-radius: 14px; padding: 12px 14px;
+    border: 1px solid var(--line);
+  }
+  .tl-item.now .tl-card { border: 1.5px solid var(--coral-base); background: var(--coral-subtle); }
+  .tl-item.done .tl-card { background: var(--paper-soft); border-color: var(--line); opacity: 0.85; }
+  .tl-row { display: flex; align-items: center; gap: 10px; }
+  .tl-row svg {
+    width: 16px; height: 16px; stroke: currentColor; fill: none;
+    stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; flex: 0 0 16px;
+    color: var(--ink-soft);
+  }
+  .tl-ttl { font-family: "Lenia"; font-weight: 500; font-size: 14px; }
+  .tl-meta { font-size: 11.5px; color: var(--ink-muted); margin-top: 2px; }
+  .tl-by { font-size: 10.5px; letter-spacing: 0.06em; color: var(--ink-muted); margin-top: 4px; }
+
+  /* ╔═══════════════════════ LIBRARY · horizontal book scroll ═══════════════════════╗ */
+  .library {
+    position: relative;
+    margin: 0 -40px;  /* bleed into spec padding */
+  }
+  .library-rail {
+    display: flex; gap: 18px;
+    padding: 8px 40px 28px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+  .library-rail::-webkit-scrollbar { display: none; }
+  .library-rail::before,
+  .library-rail::after {
+    content: ""; flex: 0 0 1px;
+  }
+  .library-fade-l, .library-fade-r {
+    position: absolute; top: 0; bottom: 28px; width: 40px;
+    pointer-events: none; z-index: 2;
+  }
+  .library-fade-l { left: 0;  background: linear-gradient(to right, var(--paper-soft), transparent); }
+  .library-fade-r { right: 0; background: linear-gradient(to left,  var(--paper-soft), transparent); }
+  .spec.coral .library-fade-l { background: linear-gradient(to right, var(--coral-subtle), transparent); }
+  .spec.coral .library-fade-r { background: linear-gradient(to left,  var(--coral-subtle), transparent); }
+
+  .book {
+    flex: 0 0 200px;
+    height: 280px;
+    scroll-snap-align: start;
+    border-radius: 6px 14px 14px 6px;
+    position: relative;
+    padding: 22px 20px 20px 26px;
+    display: flex; flex-direction: column;
+    background: var(--paper);
+    color: var(--ink);
+    box-shadow:
+      0 1px 0 rgba(26,26,26,0.04),
+      0 6px 18px rgba(26,26,26,0.06);
+    cursor: pointer;
+    transition: transform 0.18s ease, box-shadow 0.18s ease;
+    overflow: hidden;
+    --b-tint: var(--paper-soft);
+    --b-ink: var(--ink-soft);
+  }
+  .book:hover {
+    transform: translateY(-3px) rotate(-0.4deg);
+    box-shadow: 0 2px 0 rgba(26,26,26,0.06), 0 14px 30px rgba(26,26,26,0.10);
+  }
+  /* spine: 6px stripe on the left edge */
+  .book::before {
+    content: "";
+    position: absolute; left: 0; top: 0; bottom: 0; width: 8px;
+    background: var(--b-ink);
+    border-radius: 6px 0 0 6px;
+    opacity: 0.85;
+  }
+  /* page-stack illusion: thin lines on the right edge */
+  .book::after {
+    content: "";
+    position: absolute; right: 3px; top: 14px; bottom: 14px; width: 4px;
+    background:
+      linear-gradient(to right,
+        transparent 0,
+        rgba(26,26,26,0.06) 1px,
+        transparent 2px,
+        rgba(26,26,26,0.10) 3px,
+        transparent 4px);
+    border-radius: 2px;
+  }
+
+  .book .b-eyb {
+    font-family: "Lenia"; font-weight: 500; font-size: 9.5px;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--b-ink); opacity: 0.85;
+    margin-bottom: 10px;
+  }
+  .book .b-icon {
+    width: 32px; height: 32px; border-radius: 999px;
+    background: var(--b-tint); display: grid; place-items: center;
+    color: var(--b-ink);
+    margin-bottom: 14px;
+    border: 1px solid rgba(0,0,0,0.05);
+  }
+  .book .b-icon svg {
+    width: 16px; height: 16px; stroke: currentColor; fill: none;
+    stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round;
+  }
+  .book .b-ttl {
+    font-family: "Lenia"; font-weight: 500; font-size: 22px;
+    line-height: 1.05; letter-spacing: -0.01em;
+    margin: 0 0 6px;
+  }
+  .book .b-ttl em { font-style: italic; color: var(--b-ink); }
+  .book .b-sub {
+    font-size: 11.5px; color: var(--ink-muted); line-height: 1.4;
+    margin-bottom: auto;
+    padding-bottom: 12px;
+  }
+  .book .b-foot {
+    display: flex; justify-content: space-between; align-items: baseline;
+    border-top: 1px solid var(--line); padding-top: 10px;
+    font-family: "Lenia"; font-size: 10.5px; letter-spacing: 0.10em;
+    text-transform: uppercase; color: var(--ink-muted); font-weight: 500;
+  }
+  .book .b-foot .count {
+    color: var(--b-ink); font-weight: 500;
+  }
+
+  /* per-book tints, using the established cat palette */
+  .book.b-vacunas      { background: var(--cat-vacunas-tint);     --b-ink: var(--cat-vacunas-ink);     --b-tint: #FBF0CD; }
+  .book.b-desarrollo   { background: var(--cat-desarrollo-tint);  --b-ink: var(--cat-desarrollo-ink);  --b-tint: #EFE5F1; }
+  .book.b-embarazo     { background: var(--cat-embarazo-tint);    --b-ink: var(--cat-embarazo-ink);    --b-tint: #FDEEDF; }
+  .book.b-diario       { background: var(--paper);                --b-ink: var(--ink);                 --b-tint: var(--paper-soft); }
+  .book.b-alimentacion { background: var(--cat-alimentacion-tint);--b-ink: var(--cat-alimentacion-ink);--b-tint: #FBEDE7; }
+  .book.b-sueno        { background: var(--cat-sueno-tint);       --b-ink: var(--cat-sueno-ink);       --b-tint: #EEF3E8; }
+  .book.b-salud        { background: var(--cat-salud-tint);       --b-ink: var(--cat-salud-ink);       --b-tint: #EDEADF; }
+  .book.b-medicacion   { background: var(--cat-medicacion-tint);  --b-ink: var(--cat-medicacion-ink);  --b-tint: #E5EDEF; }
+  .book.b-colicos      { background: var(--blush-subtle);         --b-ink: var(--blush-strong);        --b-tint: #FBEEE8; }
+
+  .book.b-diario .b-foot { border-color: var(--line); }
+  .book.b-diario::before { background: var(--ink); opacity: 1; }
+
+  /* "create new" tail */
+  .book.b-new {
+    background: transparent;
+    border: 1.5px dashed var(--line-strong);
+    color: var(--ink-muted);
+    box-shadow: none;
+    align-items: flex-start; justify-content: center;
+    padding: 22px 20px;
+  }
+  .book.b-new::before, .book.b-new::after { display: none; }
+  .book.b-new:hover {
+    border-color: var(--ink-soft); color: var(--ink-soft);
+    transform: translateY(-1px);
+  }
+  .book.b-new .plus {
+    width: 36px; height: 36px; border-radius: 999px;
+    border: 1.5px dashed currentColor; display: grid; place-items: center;
+    margin: 0 0 14px;
+  }
+  .book.b-new .plus svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 1.6; stroke-linecap: round; }
+  .book.b-new .b-ttl {
+    font-family: "Lenia"; font-weight: 500; font-size: 16px;
+    color: var(--ink-soft); margin-bottom: 4px;
+  }
+  .book.b-new .b-sub { font-size: 11.5px; color: var(--ink-muted); }
+
+  /* Library header chip strip (filters above the rail) */
+  .lib-tabs {
+    display: flex; gap: 6px; padding: 0 4px; margin-bottom: 14px;
+    overflow-x: auto; scrollbar-width: none;
+  }
+  .lib-tabs::-webkit-scrollbar { display: none; }
+  .lib-tab {
+    flex: 0 0 auto;
+    font-family: "Lenia"; font-weight: 500; font-size: 11.5px;
+    letter-spacing: 0.04em;
+    padding: 6px 12px; border-radius: 999px;
+    background: transparent; color: var(--ink-muted);
+    border: 1px solid transparent;
+    cursor: pointer; white-space: nowrap;
+  }
+  .lib-tab.active { background: var(--ink); color: var(--paper); }
+  .lib-tab:hover:not(.active) { color: var(--ink-soft); border-color: var(--line); }
+
+  /* ╔═══════════════════════ LIBRARY · shelf with parallax ═══════════════════════╗ */
+  .shelf-scene {
+    position: relative;
+    margin: 0 -40px;
+    padding: 64px 0 44px;
+    background:
+      radial-gradient(ellipse 70% 60% at 50% 35%, rgba(255,255,255,0.55), transparent 70%),
+      linear-gradient(180deg, #EFE8DA 0%, #E6DDC9 100%);
+    border-radius: 22px;
+    overflow: hidden;
+  }
+  /* tonal vertical pinstripe wallpaper */
+  .shelf-scene::before {
+    content: ""; position: absolute; inset: 0;
+    background-image:
+      repeating-linear-gradient(90deg,
+        rgba(120,95,60,0.025) 0 1px,
+        transparent 1px 22px);
+    pointer-events: none;
+  }
+  /* faint horizontal seam line above shelf */
+  .shelf-scene .seam {
+    position: absolute; left: 8%; right: 8%; top: 36px; height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(80,60,30,0.10), transparent);
+    pointer-events: none; z-index: 1;
+  }
+  .shelf-rail {
+    display: flex; gap: 22px; align-items: flex-end;
+    padding: 12px 64px 0;
+    overflow-x: auto;
+    scroll-snap-type: x proximity;
+    scrollbar-width: none;
+    perspective: 1400px;
+    position: relative; z-index: 2;
+  }
+  .shelf-rail::-webkit-scrollbar { display: none; }
+
+  /* The shelf plank — stylized, low-contrast tonal band */
+  .shelf-plank {
+    position: relative; z-index: 1;
+    height: 14px;
+    margin: 0 32px 0;
+    background: linear-gradient(180deg, #D9CBA9 0%, #C5B58F 100%);
+    border-radius: 2px;
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,0.35),
+      inset 0 -1px 0 rgba(80,60,30,0.10);
+  }
+  /* big diffuse cast shadow under the shelf, flush against it */
+  .shelf-shadow {
+    position: absolute; left: 5%; right: 5%;
+    top: calc(100% - 30px); height: 36px;
+    z-index: 0;
+    background: radial-gradient(ellipse at 50% 0%,
+      rgba(70,50,20,0.32) 0%,
+      rgba(70,50,20,0.18) 30%,
+      rgba(70,50,20,0.06) 60%,
+      transparent 80%);
+    filter: blur(6px);
+    pointer-events: none;
+  }
+  .shelf-plank::before {
+    content: ""; position: absolute; inset: 0;
+    background-image:
+      repeating-linear-gradient(90deg,
+        rgba(80,60,30,0.04) 0 1px,
+        transparent 1px 28px);
+    border-radius: inherit;
+    opacity: 0.7;
+  }
+  .shelf-plank::after {
+    content: ""; position: absolute; left: 0; right: 0; bottom: -3px; height: 3px;
+    background: #B8A57F;
+    border-radius: 0 0 2px 2px;
+    opacity: 0.85;
+    box-shadow: 0 4px 6px -2px rgba(80,60,30,0.25);
+  }
+  /* tiny brass dots on the plank */
+  .shelf-plank-dot {
+    position: absolute; top: 4px;
+    width: 5px; height: 5px; border-radius: 999px;
+    background: radial-gradient(circle at 35% 30%, #E8D9B0, #9C8657 70%);
+    box-shadow: 0 1px 1px rgba(80,60,30,0.30);
+  }
+  .shelf-plank-dot.l { left: 14px; }
+  .shelf-plank-dot.r { right: 14px; }
+
+  /* Books on the shelf — front-cover orientation, lower contrast */
+  .shelf-book {
+    flex: 0 0 138px;
+    height: 210px;
+    scroll-snap-align: center;
+    position: relative;
+    border-radius: 3px 5px 5px 3px;
+    padding: 22px 14px 16px 18px;
+    color: var(--ink);
+    background: var(--paper);
+    box-shadow:
+      inset 2px 0 0 rgba(0,0,0,0.06),
+      inset -1px 0 0 rgba(0,0,0,0.04),
+      0 1px 0 rgba(80,60,30,0.06),
+      0 10px 16px -8px rgba(80,60,30,0.32);
+    transform-origin: 50% 100%;
+    transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+                box-shadow 0.4s ease;
+    cursor: pointer;
+    display: flex; flex-direction: column;
+    overflow: hidden;
+    --b-ink: var(--ink-soft);
+    --lean: 0deg;
+    --lift: 0px;
+    --scroll-tilt: 0deg;
+    --scroll-y: 0px;
+    transform:
+      rotate(calc(var(--lean) + var(--scroll-tilt)))
+      translateY(calc(var(--lift) + var(--scroll-y)));
+  }
+  .shelf-book:hover {
+    transform: rotate(0deg) translateY(-22px);
+    box-shadow:
+      inset 2px 0 0 rgba(0,0,0,0.08),
+      0 1px 0 rgba(80,60,30,0.08),
+      0 32px 42px -12px rgba(80,60,30,0.50),
+      0 8px 14px -6px rgba(80,60,30,0.30);
+    z-index: 3;
+  }
+  .shelf-book::after {
+    content: ""; position: absolute; right: 0; top: 4px; bottom: 4px; width: 3px;
+    background:
+      linear-gradient(to right,
+        rgba(0,0,0,0.06),
+        rgba(255,255,255,0.20) 50%,
+        rgba(0,0,0,0.05));
+    border-radius: 0 4px 4px 0;
+  }
+  .shelf-book::before {
+    content: ""; position: absolute; left: 6px; top: 12px; bottom: 12px; width: 1px;
+    background: rgba(0,0,0,0.06);
+  }
+  .shelf-book .sb-eyb {
+    font-family: "Lenia"; font-weight: 500; font-size: 8px;
+    letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--b-ink); opacity: 0.70;
+    margin-bottom: 8px;
+  }
+  .shelf-book .sb-icon {
+    width: 22px; height: 22px; border-radius: 999px;
+    background: rgba(255,255,255,0.55); display: grid; place-items: center;
+    color: var(--b-ink);
+    margin-bottom: 10px;
+    border: 1px solid rgba(0,0,0,0.04);
+  }
+  .shelf-book .sb-icon svg { width: 12px; height: 12px; stroke: currentColor; fill: none; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+  .shelf-book .sb-ttl {
+    font-family: "Lenia"; font-weight: 500; font-size: 18px;
+    line-height: 1.0; letter-spacing: -0.015em;
+    margin: auto 0 0; color: var(--b-ink);
+  }
+  .shelf-book .sb-ttl em { font-style: italic; color: var(--ink); opacity: 0.80; }
+  .shelf-book .sb-foot {
+    margin-top: 8px;
+    font-family: "Lenia"; font-size: 9px; letter-spacing: 0.10em;
+    text-transform: uppercase; color: var(--ink-muted); font-weight: 500;
+    display: flex; justify-content: space-between;
+  }
+  .shelf-book .sb-foot .count { color: var(--b-ink); }
+
+  /* per-book theming — muted, single tonal direction */
+  .shelf-book.b-vacunas      { background: linear-gradient(170deg, #F4E5BA 0%, #E6D29A 100%); --b-ink: #7C6429; }
+  .shelf-book.b-desarrollo   { background: linear-gradient(170deg, #E2D7E5 0%, #C9BCD0 100%); --b-ink: #5A4970; }
+  .shelf-book.b-embarazo     { background: linear-gradient(170deg, #F5D6BE 0%, #E6B393 100%); --b-ink: #8B4621; }
+  .shelf-book.b-diario       {
+    background:
+      repeating-linear-gradient(0deg, rgba(0,0,0,0.018) 0 1px, transparent 1px 22px),
+      linear-gradient(170deg, #F6EFD9 0%, #ECE0BD 100%);
+    --b-ink: #3D362A;
+  }
+  .shelf-book.b-alimentacion { background: linear-gradient(170deg, #F1D8CE 0%, #DFB6A8 100%); --b-ink: #7E4438; }
+  .shelf-book.b-sueno        { background: linear-gradient(170deg, #D4DFC6 0%, #B0C09F 100%); --b-ink: #4F6745; }
+  .shelf-book.b-salud        { background: linear-gradient(170deg, #DCD5C0 0%, #BDB498 100%); --b-ink: #4D4636; }
+  .shelf-book.b-medicacion   { background: linear-gradient(170deg, #C8D4D7 0%, #A2B5BB 100%); --b-ink: #3A555E; }
+  .shelf-book.b-colicos      { background: linear-gradient(170deg, #ECCABC 0%, #D29B86 100%); --b-ink: #793726; }
+
+  .shelf-book.b-diario .sb-ttl { color: var(--b-ink); }
+
+  /* New book stub */
+  .shelf-book.b-new {
+    background: rgba(255,255,255,0.35);
+    border: 1.5px dashed rgba(80,60,30,0.30);
+    box-shadow: none;
+    color: rgba(80,60,30,0.6);
+    align-items: center; justify-content: center;
+    text-align: center;
+  }
+  .shelf-book.b-new .plus {
+    width: 30px; height: 30px; border-radius: 999px;
+    border: 1.5px dashed currentColor; display: grid; place-items: center;
+    margin: auto auto 10px;
+  }
+  .shelf-book.b-new .plus svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 1.7; stroke-linecap: round; }
+  .shelf-book.b-new .sb-ttl {
+    font-size: 14px; color: rgba(80,60,30,0.75);
+    margin: 0 0 auto;
+  }
+
+  /* organic lean variations */
+  .shelf-rail .shelf-book:nth-child(3n)   { --lean: -2.8deg; }
+  .shelf-rail .shelf-book:nth-child(3n+1) { --lean:  1.6deg; }
+  .shelf-rail .shelf-book:nth-child(3n+2) { --lean: -0.8deg; }
+  .shelf-rail .shelf-book:nth-child(5n)   { --lift: -3px; }
+  .shelf-rail .shelf-book:nth-child(7n)   { --lift:  3px; }
+
+  /* edge ambient lights, softer */
+  .shelf-scene .light-l, .shelf-scene .light-r {
+    position: absolute; top: 0; bottom: 0; width: 100px; pointer-events: none; z-index: 4;
+  }
+  .shelf-scene .light-l { left: 0;  background: linear-gradient(to right, rgba(230,221,201,0.92), transparent); }
+  .shelf-scene .light-r { right: 0; background: linear-gradient(to left,  rgba(230,221,201,0.92), transparent); }
+
+  /* small etched label on back wall */
+  .shelf-label {
+    position: absolute; left: 64px; top: 22px;
+    font-family: "Lenia"; font-weight: 500; font-size: 10px;
+    letter-spacing: 0.22em; text-transform: uppercase;
+    color: rgba(80,60,30,0.40);
+    z-index: 2;
+  }
+  .shelf-label::before {
+    content: ""; display: inline-block; width: 18px; height: 1px;
+    background: rgba(80,60,30,0.30);
+    vertical-align: middle; margin-right: 10px;
+    transform: translateY(-1px);
+  }
+  .shelf-counter {
+    position: absolute; right: 64px; top: 22px;
+    font-family: "Lenia"; font-weight: 500; font-size: 10px;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    color: rgba(80,60,30,0.40);
+    z-index: 2;
+  }
+
+  /* ╔═══════════════════════ MONTH CARD ═══════════════════════╗ */
+  .month-card {
+    background: var(--paper); border-radius: 22px; overflow: hidden;
+    border: 1px solid var(--line);
+  }
+  .month-head {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 18px 22px 12px;
+  }
+  .month-head h4 {
+    font-family: "Lenia"; font-weight: 500; font-size: 22px; margin: 0;
+    letter-spacing: -0.005em;
+  }
+  .month-head .age {
+    font-size: 10.5px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--ink-muted); font-weight: 500;
+  }
+  .month-body { padding: 0 22px 18px; }
+  .month-section { padding: 14px 0; border-top: 1px solid var(--line); }
+  .month-section:first-child { border-top: none; }
+  .month-section .head {
+    display: flex; align-items: center; gap: 8px; margin-bottom: 10px;
+  }
+  .month-section .head svg {
+    width: 16px; height: 16px; stroke: currentColor; fill: none;
+    stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round;
+  }
+  .month-section .head .ttl {
+    font-family: "Lenia"; font-size: 12px; letter-spacing: 0.14em;
+    text-transform: uppercase; color: var(--ink-soft); font-weight: 500;
+  }
+  .month-section .body p {
+    margin: 0; font-size: 13.5px; line-height: 1.55; color: var(--ink-soft);
+  }
+  .month-section.vacuna {
+    background: var(--gold-subtle); margin: 0 -22px;
+    padding: 16px 22px; border: none; border-top: 1px solid var(--gold-base);
+  }
+  .month-section.vacuna .head .ttl { color: #6E5A2A; }
+  .month-section.vacuna .head svg { color: #6E5A2A; }
+  .month-section.vacuna .body p { color: #5A4720; }
+  .month-section.vacuna .vacuna-row {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-top: 8px; gap: 10px;
+  }
+  .month-section.vacuna .vacuna-name {
+    font-family: "Lenia"; font-weight: 500; font-size: 15px; color: #5A4720;
+  }
+  .month-section.vacuna .pill-st {
+    background: var(--gold-base); color: #4A3C18;
+    font-family: "Lenia"; font-size: 10.5px; padding: 4px 10px;
+    border-radius: 999px; letter-spacing: 0.04em;
+  }
+
+  /* ╔═══════════════════════ OMS CURVE ═══════════════════════╗ */
+  .oms-card {
+    background: var(--paper); border-radius: 22px; padding: 24px;
+    border: 1px solid var(--line);
+  }
+  .oms-head { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 14px; gap: 12px; }
+  .oms-head .ttl { font-family: "Lenia"; font-weight: 500; font-size: 18px; }
+  .oms-head .meta { font-size: 11px; color: var(--ink-muted); letter-spacing: 0.04em; }
+  .oms-tabs { display: flex; gap: 4px; margin-bottom: 16px; padding: 4px; background: var(--paper-soft); border-radius: 12px; width: fit-content; }
+  .oms-tab {
+    font-family: "Lenia"; font-size: 11.5px; padding: 6px 12px;
+    border-radius: 8px; color: var(--ink-soft); cursor: pointer; font-weight: 500;
+  }
+  .oms-tab.active { background: var(--paper); color: var(--ink); box-shadow: 0 1px 2px rgba(0,0,0,0.06); }
+  .oms-chart {
+    background: var(--paper-soft); border-radius: 14px; padding: 12px;
+    position: relative;
+  }
+  .oms-chart svg { width: 100%; display: block; }
+  .oms-legend {
+    display: flex; gap: 16px; margin-top: 14px; flex-wrap: wrap;
+    font-size: 11px; color: var(--ink-soft);
+  }
+  .oms-legend .leg-item { display: flex; align-items: center; gap: 6px; }
+  .oms-legend .swatch { width: 14px; height: 3px; border-radius: 2px; background: var(--ink-faint); }
+  .oms-legend .swatch.line { background: var(--coral-strong); height: 2px; }
+  .oms-legend .swatch.dot {
+    width: 8px; height: 8px; border-radius: 999px; background: var(--coral-base);
+    border: 2px solid var(--coral-strong);
+  }
+  .oms-stats { display: flex; gap: 24px; margin-top: 14px; font-size: 12px; color: var(--ink-soft); }
+  .oms-stats b { font-family: "Lenia"; font-weight: 500; color: var(--ink); font-size: 16px; display: block; margin-bottom: 2px; }
+
+  /* ╔═══════════════════════ CHAT BUBBLES ═══════════════════════╗ */
+  .chat-stage { display: flex; flex-direction: column; gap: 12px; padding: 18px; }
+  .chat-stage.dark { background: var(--night-bg); border-radius: 22px; }
+  .bubble-row { display: flex; gap: 10px; align-items: flex-end; }
+  .bubble-row.right { justify-content: flex-end; }
+  .bubble-avatar {
+    width: 32px; height: 32px; border-radius: 999px; flex: 0 0 32px;
+    display: grid; place-items: center; overflow: hidden;
+  }
+  .bubble-avatar.pediatra { background: var(--gold-subtle); color: #6E5A2A; }
+  .bubble-avatar.companion { background: var(--mint-subtle); }
+  .bubble-avatar.companion img { width: 100%; height: 100%; object-fit: contain; transform: scale(1.4) translateY(15%); }
+  .bubble-avatar svg { width: 18px; height: 18px; stroke: currentColor; fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+  .bubble {
+    max-width: 280px; padding: 12px 16px; border-radius: 18px;
+    background: var(--paper); border: 1px solid var(--line);
+    font-size: 13.5px; line-height: 1.5;
+  }
+  .bubble.you {
+    background: var(--ink); color: var(--paper); border-color: var(--ink);
+    border-bottom-right-radius: 6px;
+  }
+  .bubble.pediatra {
+    background: var(--gold-subtle); border-color: rgba(176,138,60,0.18);
+    border-bottom-left-radius: 6px;
+  }
+  .bubble.companion {
+    background: var(--mint-subtle); border-color: rgba(143,174,133,0.25);
+    border-bottom-left-radius: 6px;
+  }
+  .chat-stage.dark .bubble {
+    background: var(--night-surface); color: var(--night-fg);
+    border-color: var(--night-surface-2);
+  }
+  .chat-stage.dark .bubble.you { background: var(--night-surface-2); color: var(--night-fg); }
+  .bubble .role {
+    font-family: "Lenia"; font-size: 9.5px; letter-spacing: 0.16em;
+    text-transform: uppercase; opacity: 0.6; margin-bottom: 4px; font-weight: 500;
+  }
+  .bubble .time {
+    font-size: 10px; color: var(--ink-muted); margin-top: 6px;
+    letter-spacing: 0.04em; text-align: right;
+  }
+  .bubble.you .time { color: rgba(250,247,240,0.5); }
+  .bubble-quote {
+    border-left: 2px solid currentColor; padding: 4px 0 4px 10px;
+    margin: 6px 0; font-style: italic; opacity: 0.75; font-size: 12.5px;
+  }
+  .bubble-cta {
+    display: inline-flex; align-items: center; gap: 6px;
+    margin-top: 8px; padding: 6px 12px; border-radius: 999px;
+    background: rgba(255,255,255,0.6); font-size: 12px;
+    font-family: "Lenia"; font-weight: 500;
+  }
+  .bubble.you .bubble-cta { background: rgba(250,247,240,0.15); color: var(--paper); }
+  .typing { display: inline-flex; gap: 4px; padding: 4px 0; }
+  .typing span {
+    width: 6px; height: 6px; border-radius: 999px; background: currentColor;
+    opacity: 0.4; animation: typing 1.2s infinite;
+  }
+  .typing span:nth-child(2) { animation-delay: 0.15s; }
+  .typing span:nth-child(3) { animation-delay: 0.3s; }
+  @keyframes typing { 0%, 60%, 100% { opacity: 0.3; transform: translateY(0); } 30% { opacity: 0.9; transform: translateY(-2px); } }
+
+  /* ╔═══════════════════════ QUICK LOG GRID ═══════════════════════╗ */
+  .qlog-sheet {
+    background: var(--paper); border-radius: 28px; padding: 22px;
+    width: 360px; box-shadow: 0 10px 40px rgba(0,0,0,0.06);
+    border: 1px solid var(--line);
+  }
+  .qlog-grabber {
+    width: 38px; height: 4px; background: var(--ink-faint);
+    border-radius: 999px; margin: 0 auto 14px;
+  }
+  .qlog-head {
+    display: flex; justify-content: space-between; align-items: baseline;
+    margin-bottom: 16px;
+  }
+  .qlog-head h4 { font-family: "Lenia"; font-weight: 500; font-size: 18px; margin: 0; }
+  .qlog-head .meta { font-size: 11px; color: var(--ink-muted); }
+  .qlog-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
+  .qlog-tile {
+    aspect-ratio: 1/1; background: var(--paper-soft); border-radius: 16px;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 6px; padding: 10px; cursor: pointer; transition: transform 0.15s;
+    border: 1px solid transparent;
+  }
+  .qlog-tile:hover { transform: translateY(-1px); border-color: var(--line); }
+  .qlog-tile svg {
+    width: 26px; height: 26px; stroke: currentColor; fill: none;
+    stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round;
+    color: var(--ink-soft);
+  }
+  .qlog-tile .label {
+    font-family: "Lenia"; font-size: 12px; font-weight: 500;
+  }
+  .qlog-tile .sub { font-size: 9.5px; color: var(--ink-muted); letter-spacing: 0.04em; }
+  .qlog-tile.active { background: var(--mint-subtle); border-color: var(--mint-base); }
+  .qlog-tile.active svg { color: #4F6647; }
+  .qlog-tile.gold { background: var(--gold-subtle); }
+  .qlog-tile.gold svg { color: #6E5A2A; }
+  .qlog-tile.coral { background: var(--coral-subtle); }
+  .qlog-tile.coral svg { color: var(--coral-strong); }
+  .qlog-foot {
+    margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--line);
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: 12px; color: var(--ink-muted);
+  }
+
+  /* ╔═══════════════════════ 5S CHECKLIST ═══════════════════════╗ */
+  .fives {
+    background: var(--paper); border-radius: 22px; padding: 22px;
+    border: 1px solid var(--line); width: 320px;
+  }
+  .fives.dark { background: var(--night-surface); border-color: var(--night-surface-2); color: var(--night-fg); }
+  .fives h4 {
+    font-family: "Lenia"; font-weight: 500; font-size: 18px; margin: 0 0 4px;
+  }
+  .fives .lede { font-size: 12.5px; color: var(--ink-muted); margin: 0 0 16px; line-height: 1.5; }
+  .fives.dark .lede { color: var(--night-muted); }
+  .step {
+    display: flex; gap: 12px; align-items: flex-start;
+    padding: 12px 0; border-bottom: 1px solid var(--line);
+  }
+  .fives.dark .step { border-color: var(--night-surface-2); }
+  .step:last-child { border-bottom: none; }
+  .step .num {
+    width: 26px; height: 26px; flex: 0 0 26px;
+    border-radius: 999px; background: var(--paper-soft);
+    display: grid; place-items: center;
+    font-family: "Lenia"; font-weight: 500; font-size: 12px;
+  }
+  .fives.dark .step .num { background: var(--night-surface-2); }
+  .step.done .num { background: var(--mint-base); color: #2F4029; }
+  .step.active .num { background: var(--coral-base); color: #4A2510; }
+  .step .body { flex: 1; }
+  .step .ttl { font-family: "Lenia"; font-weight: 500; font-size: 14px; margin-bottom: 2px; }
+  .step .meta { font-size: 12px; color: var(--ink-muted); line-height: 1.4; }
+  .fives.dark .step .meta { color: var(--night-muted); }
+  .step.done { opacity: 0.6; }
+  .step.done .ttl { text-decoration: line-through; text-decoration-color: var(--ink-faint); text-decoration-thickness: 1px; }
+
+  /* ╔═══════════════════════ CRY CLASSIFIER ═══════════════════════╗ */
+  .cry {
+    background: var(--paper); border-radius: 22px; padding: 24px;
+    border: 1px solid var(--line); width: 320px;
+  }
+  .cry.dark { background: var(--night-surface); color: var(--night-fg); border-color: var(--night-surface-2); }
+  .cry h4 { font-family: "Lenia"; font-weight: 500; font-size: 18px; margin: 0 0 4px; }
+  .cry .lede { font-size: 12.5px; color: var(--ink-muted); margin: 0 0 16px; line-height: 1.5; }
+  .cry.dark .lede { color: var(--night-muted); }
+  .cry-mic {
+    display: flex; align-items: center; gap: 14px;
+    padding: 16px; background: var(--paper-soft); border-radius: 18px;
+    margin-bottom: 16px;
+  }
+  .cry.dark .cry-mic { background: var(--night-surface-2); }
+  .cry-mic-circle {
+    width: 48px; height: 48px; border-radius: 999px;
+    background: var(--coral-base); display: grid; place-items: center;
+    color: #4A2510;
+    box-shadow: 0 0 0 6px rgba(242,165,122,0.25);
+    animation: pulse 1.6s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(242,165,122,0.5); }
+    50% { box-shadow: 0 0 0 10px rgba(242,165,122,0); }
+  }
+  .cry-mic-circle svg { width: 22px; height: 22px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .cry-mic-meta .ttl { font-family: "Lenia"; font-weight: 500; font-size: 14px; }
+  .cry-mic-meta .sub { font-size: 11.5px; color: var(--ink-muted); margin-top: 2px; }
+  .cry.dark .cry-mic-meta .sub { color: var(--night-muted); }
+  .cry-bars { display: flex; align-items: end; gap: 3px; height: 26px; margin-top: 6px; }
+  .cry-bars span { display: block; flex: 1; background: var(--coral-strong); border-radius: 2px; opacity: 0.8; }
+  .cry.dark .cry-bars span { background: var(--coral-base); }
+  .cry-result { padding: 0 4px; }
+  .cry-result .conf {
+    display: flex; align-items: baseline; gap: 8px; margin-bottom: 12px;
+  }
+  .cry-result .conf .num {
+    font-family: "Lenia"; font-weight: 500; font-size: 28px;
+  }
+  .cry-result .conf .lbl {
+    font-size: 12px; letter-spacing: 0.06em; color: var(--ink-muted);
+    text-transform: uppercase;
+  }
+  .cry.dark .cry-result .conf .lbl { color: var(--night-muted); }
+  .cry-tag {
+    display: inline-block; padding: 6px 14px;
+    background: var(--coral-subtle); color: var(--coral-strong);
+    border-radius: 999px; font-family: "Lenia"; font-weight: 500; font-size: 13px;
+    margin-bottom: 12px;
+  }
+  .cry-bar { height: 3px; border-radius: 2px; background: var(--paper-soft); position: relative; margin: 8px 0; overflow: hidden; }
+  .cry.dark .cry-bar { background: var(--night-surface-2); }
+  .cry-bar-row { display: flex; align-items: center; gap: 8px; font-size: 11.5px; margin-top: 6px; }
+  .cry-bar-row .name { width: 80px; color: var(--ink-soft); }
+  .cry.dark .cry-bar-row .name { color: var(--night-muted); }
+  .cry-bar-row .num { width: 32px; text-align: right; font-family: "Lenia"; font-size: 11px; color: var(--ink-muted); }
+  .cry-bar-fill { height: 100%; background: var(--coral-strong); border-radius: 2px; }
+  .cry-bar-fill.low { background: var(--gold-base); }
+  .cry-bar-fill.lower { background: var(--ink-faint); }
+
+  /* ╔═══════════════════════ MODE 3AM ROUTE ═══════════════════════╗ */
+  .m3am {
+    background: var(--night-bg); border-radius: 28px; padding: 22px;
+    color: var(--night-fg); width: 320px;
+  }
+  .m3am-head {
+    display: flex; align-items: center; gap: 10px;
+    font-family: "Lenia"; font-size: 11px; letter-spacing: 0.16em;
+    text-transform: uppercase; color: var(--night-muted);
+    font-weight: 500; margin-bottom: 18px;
+  }
+  .m3am-head svg {
+    width: 14px; height: 14px; stroke: currentColor; fill: none;
+    stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round;
+  }
+  .m3am h3 {
+    font-family: "Lenia"; font-weight: 500; font-size: 26px; margin: 0 0 6px;
+    letter-spacing: -0.005em;
+  }
+  .m3am .sub { font-size: 13px; color: var(--night-muted); margin-bottom: 18px; }
+  .route { background: var(--night-surface); border-radius: 16px; padding: 14px 16px; margin-bottom: 8px; cursor: pointer; }
+  .route:hover { background: var(--night-surface-2); }
+  .route .ttl { font-family: "Lenia"; font-weight: 500; font-size: 15px; }
+  .route .meta { font-size: 11.5px; color: var(--night-muted); margin-top: 4px; line-height: 1.4; }
+  .route.urgent { background: #3A1F1A; }
+  .route.urgent .ttl { color: #F2A57A; }
+  .route.urgent .meta { color: #C49080; }
+
+  /* ╔═══════════════════════ LESSON CARD ═══════════════════════╗ */
+  .lesson {
+    background: var(--paper); border-radius: 22px; overflow: hidden;
+    border: 1px solid var(--line); display: flex; flex-direction: column;
+  }
+  .lesson-cover {
+    aspect-ratio: 16/10; background: var(--mint-subtle);
+    display: grid; place-items: center; position: relative;
+    border-bottom: 1px solid var(--line);
+  }
+  .lesson-cover.gold { background: var(--gold-subtle); }
+  .lesson-cover.blush { background: var(--blush-subtle); }
+  .lesson-cover.coral { background: var(--coral-subtle); }
+  .lesson-cover svg.glyph {
+    width: 56px; height: 56px; stroke: var(--ink); fill: none;
+    stroke-width: 1.4; stroke-linecap: round; stroke-linejoin: round;
+    opacity: 0.5;
+  }
+  .lesson-cover .duration {
+    position: absolute; top: 12px; right: 12px;
+    background: rgba(250,247,240,0.85); border-radius: 999px;
+    padding: 4px 10px; font-size: 10.5px; letter-spacing: 0.06em;
+    font-family: "Lenia"; font-weight: 500;
+  }
+  .lesson-cover .pill-cat {
+    position: absolute; top: 12px; left: 12px;
+    background: var(--paper); border-radius: 999px;
+    padding: 4px 10px; font-size: 9.5px; letter-spacing: 0.16em;
+    text-transform: uppercase; font-weight: 500; color: var(--ink-soft);
+  }
+  .lesson-body { padding: 16px 18px 20px; }
+  .lesson-body h5 { font-family: "Lenia"; font-weight: 500; font-size: 17px; margin: 0 0 6px; line-height: 1.25; letter-spacing: -0.005em; }
+  .lesson-body p { font-size: 12.5px; line-height: 1.5; color: var(--ink-soft); margin: 0; }
+  .lesson-foot {
+    margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--line);
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: 11px; color: var(--ink-muted); letter-spacing: 0.04em;
+  }
+  .lesson-foot .author {
+    font-family: "Lenia"; font-weight: 500; color: var(--ink-soft); font-size: 11.5px;
+  }
+
+  /* ── Footer ── */
+  footer { padding: 60px 0 40px; text-align: center; }
+  footer .mark { font-family: "Lenia"; font-style: italic; font-size: 16px; color: var(--ink-soft); }
+  footer .meta { margin-top: 8px; font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-muted); }
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <div class="page-meta">
+    <div class="left">
+      <span class="symbol"></span>
+      <span><b style="font-family:'Lenia'; letter-spacing:0; text-transform:none; font-size:13px; font-weight:500;">grow</b></span>
+      <span>· Design System v0.1</span>
+      <span>· Session 04 — Product components</span>
+    </div>
+    <div>26 Apr 2026</div>
+  </div>
+
+  <header class="hero">
+    <div class="eyebrow">Issue Nº 04 — Product</div>
+    <h1>The components<br>that <em>do the work</em>.</h1>
+    <p class="lede">Foundations gave us tone. Avatars and Vocab gave us a face. Primitives gave us the alphabet. Session 04 is the alphabet composing into sentences: the MonthCard with its gold vacuna section. OMS curves drawn calm. Chat with three voices. QuickLog in 9 tiles. Klaus Minde's 5 S's, Dunstan's classifier, the 3AM route. Lessons that look like spreads, not tiles.</p>
+  </header>
+
+  <!-- §A — LIBRARY · horizontal book scroll -->
+  <section class="section">
+    <div class="section-head">
+      <div class="section-num">§ A — Library</div>
+      <div>
+        <h2>One shelf. Nine books. The whole life of the family.</h2>
+        <div class="desc">Library is the entry point — a horizontal shelf of bound books, one per dominio. Each book has its own color, its own count, its own voice. Tap a spine, the book opens into its own world (mes a mes, hito a hito, página a página). Nothing here is a list of features. Everything here is a <em>libro</em>.</div>
+      </div>
+    </div>
+
+    <div class="spec">
+      <div class="spec-head">
+        <h3>Mi biblioteca · Lola, 18 m</h3>
+        <span class="meta-r">9 libros · paralaje al hacer scroll</span>
+      </div>
+
+      <div class="shelf-scene" id="shelfScene">
+        <div class="seam"></div>
+        <div class="shelf-label">Mi biblioteca</div>
+        <div class="shelf-shadow"></div>
+        <div class="shelf-counter">9 libros</div>
+        <div class="light-l"></div>
+        <div class="light-r"></div>
+
+        <div class="shelf-rail" id="shelfRail">
+          <div class="shelf-book b-vacunas">
+            <div class="sb-eyb">Vacunas · AEP</div>
+            <div class="sb-icon"><svg viewBox="0 0 24 24"><path d="m18 2 4 4-1.5 1.5"/><path d="m13 7 4 4"/><path d="m11 9 4 4"/><path d="m8 12 4 4"/><path d="m6 14 4 4"/><path d="M19 5 7 17l-3 1 1-3L17 3z"/></svg></div>
+            <h4 class="sb-ttl">Libro de<br><em>vacunas</em></h4>
+            <div class="sb-foot"><span class="count">12 / 14</span><span>Próx 12m</span></div>
+          </div>
+
+          <div class="shelf-book b-desarrollo">
+            <div class="sb-eyb">Desarrollo · Haizea</div>
+            <div class="sb-icon"><svg viewBox="0 0 24 24"><path d="M12 2v6"/><path d="M12 22v-6"/><path d="m4.93 4.93 4.24 4.24"/><path d="m14.83 14.83 4.24 4.24"/><path d="M2 12h6"/><path d="M22 12h-6"/></svg></div>
+            <h4 class="sb-ttl">Libro de<br><em>desarrollo</em></h4>
+            <div class="sb-foot"><span class="count">38 hitos</span><span>5 mes</span></div>
+          </div>
+
+          <div class="shelf-book b-embarazo">
+            <div class="sb-eyb">Embarazo · 40 sem</div>
+            <div class="sb-icon"><svg viewBox="0 0 24 24"><path d="M12 21s-8-4.5-8-11a5 5 0 0 1 8-4 5 5 0 0 1 8 4c0 6.5-8 11-8 11z"/><circle cx="12" cy="9" r="1.5"/></svg></div>
+            <h4 class="sb-ttl">Libro de<br><em>embarazo</em></h4>
+            <div class="sb-foot"><span class="count">Archivado</span><span>2024</span></div>
+          </div>
+
+          <div class="shelf-book b-diario">
+            <div class="sb-eyb">Diario · privado</div>
+            <div class="sb-icon"><svg viewBox="0 0 24 24"><path d="M4 4h12a4 4 0 0 1 4 4v12H8a4 4 0 0 1-4-4z"/><path d="M8 8h8"/><path d="M8 12h6"/></svg></div>
+            <h4 class="sb-ttl">El<br><em>diario</em></h4>
+            <div class="sb-foot"><span class="count">142</span><span>Hoy</span></div>
+          </div>
+
+          <div class="shelf-book b-alimentacion">
+            <div class="sb-eyb">Alimentación · BLW</div>
+            <div class="sb-icon"><svg viewBox="0 0 24 24"><path d="M4 11a8 8 0 0 1 16 0v8H4z"/><path d="M8 11V7"/><path d="M12 11V5"/><path d="M16 11V7"/></svg></div>
+            <h4 class="sb-ttl">Libro de<br><em>alimentación</em></h4>
+            <div class="sb-foot"><span class="count">3 hoy</span><span>m6+</span></div>
+          </div>
+
+          <div class="shelf-book b-sueno">
+            <div class="sb-eyb">Sueño · ventanas</div>
+            <div class="sb-icon"><svg viewBox="0 0 24 24"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg></div>
+            <h4 class="sb-ttl">Libro del<br><em>sueño</em></h4>
+            <div class="sb-foot"><span class="count">11h 24m</span><span>media</span></div>
+          </div>
+
+          <div class="shelf-book b-salud">
+            <div class="sb-eyb">Salud · curvas WHO</div>
+            <div class="sb-icon"><svg viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M7 14l3-4 4 3 5-7"/></svg></div>
+            <h4 class="sb-ttl">Libro de<br><em>salud</em></h4>
+            <div class="sb-foot"><span class="count">9.4 kg</span><span>P52</span></div>
+          </div>
+
+          <div class="shelf-book b-medicacion">
+            <div class="sb-eyb">Familia · medicación</div>
+            <div class="sb-icon"><svg viewBox="0 0 24 24"><rect x="3" y="8" width="18" height="12" rx="2"/><path d="M7 8V6a3 3 0 0 1 3-3h4a3 3 0 0 1 3 3v2"/><path d="M12 12v4"/><path d="M10 14h4"/></svg></div>
+            <h4 class="sb-ttl">Familia &amp;<br><em>medicación</em></h4>
+            <div class="sb-foot"><span class="count">2 act.</span><span>4 pers.</span></div>
+          </div>
+
+          <div class="shelf-book b-colicos">
+            <div class="sb-eyb">Cólicos · 5 S</div>
+            <div class="sb-icon"><svg viewBox="0 0 24 24"><path d="M9 11.5a4 4 0 1 0 6 0V8a3 3 0 0 0-6 0z"/><path d="M12 18v3"/><path d="M9 21h6"/></svg></div>
+            <h4 class="sb-ttl">Libro de<br><em>cólicos</em></h4>
+            <div class="sb-foot"><span class="count">Cerrado</span><span>m0–4</span></div>
+          </div>
+
+          <div class="shelf-book b-new">
+            <div class="plus"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></div>
+            <h4 class="sb-ttl">Libro nuevo</h4>
+          </div>
+        </div>
+
+        <div class="shelf-plank">
+          <span class="shelf-plank-dot l"></span>
+          <span class="shelf-plank-dot r"></span>
+        </div>
+      </div>
+
+      <div class="footnote">
+        <div><div class="ttl">Estante de madera</div>Tabla de roble warm con sombra propia bajo. La pared del fondo tiene textura sutil. Los libros se apoyan ligeramente inclinados — cada uno con su lean propio (-1.4°, 0.8°, -0.4°) para sentirse colocados a mano.</div>
+        <div><div class="ttl">Paralaje al hacer scroll</div>Mientras desplazas, cada libro se inclina y eleva según su posición en el viewport. El que pasa por el centro se endereza; los de los extremos se inclinan hacia su lado. Suave, casi imperceptible — no es un truco, es física.</div>
+        <div><div class="ttl">Hover = sacar del estante</div>Toca un libro y se endereza, levantando 10 px con sombra más profunda. Como si lo extrajeras para hojearlo. Tap → abre el libro, fade a su universo propio.</div>
+      </div>
+    </div>
+
+    <script>
+      (function() {
+        const rail = document.getElementById('shelfRail');
+        if (!rail) return;
+        const books = rail.querySelectorAll('.shelf-book');
+
+        function update() {
+          const railRect = rail.getBoundingClientRect();
+          const center = railRect.left + railRect.width / 2;
+          const maxDist = railRect.width / 2;
+          books.forEach(b => {
+            const r = b.getBoundingClientRect();
+            const bc = r.left + r.width / 2;
+            const dist = (bc - center) / maxDist; // -1 .. 1
+            const clamped = Math.max(-1.2, Math.min(1.2, dist));
+            const tilt = clamped * 9;            // degrees — more pronounced
+            const lift = Math.abs(clamped) * 16;  // px down toward edges
+            b.style.setProperty('--scroll-tilt', tilt.toFixed(2) + 'deg');
+            b.style.setProperty('--scroll-y', lift.toFixed(1) + 'px');
+          });
+        }
+
+        let raf = null;
+        function schedule() {
+          if (raf) return;
+          raf = requestAnimationFrame(() => { raf = null; update(); });
+        }
+
+        rail.addEventListener('scroll', schedule, { passive: true });
+        window.addEventListener('resize', schedule);
+        window.addEventListener('load', update);
+        update();
+      })();
+    </script>
+  </section>
+
+  <!-- §B — MONTH CARD with vacuna inline -->
+  <section class="section">
+    <div class="section-head">
+      <div class="section-num">§ B — Month card</div>
+      <div>
+        <h2>Each month is a page in a book — with the vacuna in gold.</h2>
+        <div class="desc">Calendario shows months as cards. Each carries the development pillars (sueño · alimentación · hitos) and the vacuna section in gold subtle, never in coral or red. The book is the canon.</div>
+      </div>
+    </div>
+
+    <div class="stage-grid-2" style="margin-bottom: 20px;">
+      <div class="spec">
+        <div class="spec-head">
+          <h3>Mes 12 · with vacuna</h3>
+          <span class="meta-r">Triple vírica</span>
+        </div>
+        <div class="month-card">
+          <div class="month-head">
+            <h4>Mes 12</h4>
+            <div class="age">12 m · edad real</div>
+          </div>
+          <div class="month-body">
+            <div class="month-section">
+              <div class="head">
+                <svg viewBox="0 0 24 24"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+                <span class="ttl">Sueño</span>
+              </div>
+              <div class="body"><p>11–14 h totales. Una siesta larga al medio día y otra corta al final de la tarde.</p></div>
+            </div>
+            <div class="month-section">
+              <div class="head">
+                <svg viewBox="0 0 24 24"><path d="m12 3 2.4 6 6.6.6-5 4.5 1.5 6.4L12 17l-5.5 3.4 1.5-6.4-5-4.5 6.6-.6z"/></svg>
+                <span class="ttl">Hitos</span>
+              </div>
+              <div class="body"><p>Da pasos sola. Dice 1–3 palabras con sentido. Bebe del vaso si la ayudas.</p></div>
+            </div>
+            <div class="month-section vacuna">
+              <div class="head">
+                <svg viewBox="0 0 24 24"><path d="m18 2 4 4-1.5 1.5"/><path d="m13 7 4 4"/><path d="m11 9 4 4"/><path d="m8 12 4 4"/><path d="m6 14 4 4"/><path d="M19 5 7 17l-3 1 1-3L17 3z"/></svg>
+                <span class="ttl">Vacuna · esta dosis</span>
+              </div>
+              <div class="vacuna-row">
+                <div class="vacuna-name">Triple vírica · 1ª dosis</div>
+                <span class="pill-st">14 mayo</span>
+              </div>
+              <div class="body" style="margin-top: 6px;"><p>Se administra en CAP. Puede haber décimas las 24 h siguientes — paracetamol si lo indica el médico.</p></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="spec gold">
+        <div class="spec-head">
+          <h3>Vacuna detail · the canonical card</h3>
+          <span class="meta-r">Gold-subtle background, never coral</span>
+        </div>
+        <div class="month-card" style="background: var(--paper); border-color: var(--gold-base);">
+          <div class="month-head">
+            <h4>Triple vírica</h4>
+            <div class="age" style="color: #6E5A2A;">Dosis 1 · 12 m</div>
+          </div>
+          <div class="month-body">
+            <div class="month-section vacuna" style="margin-top:0; border-top: none;">
+              <div class="head">
+                <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="3" y1="10" x2="21" y2="10"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="16" y1="2" x2="16" y2="6"/></svg>
+                <span class="ttl">Cuándo</span>
+              </div>
+              <div class="vacuna-row">
+                <div class="vacuna-name">Mar · 14 mayo · 10:30</div>
+                <span class="pill-st">En 18 días</span>
+              </div>
+              <p style="font-size:12.5px; color: #5A4720; margin: 6px 0 0;">Recordatorio 48 h antes. Te avisamos otra vez la mañana del día.</p>
+            </div>
+            <div class="month-section">
+              <div class="head"><span class="ttl" style="font-size: 11px;">Dónde</span></div>
+              <div class="body"><p>CAP Marbella · Dr. Antonio Méndez (pediatra).</p></div>
+            </div>
+            <div class="month-section">
+              <div class="head"><span class="ttl" style="font-size: 11px;">Después de la vacuna</span></div>
+              <div class="body"><p>Décimas las primeras 24 h. Paracetamol sólo si > 38°C. Si llora más de 3 h, llama.</p></div>
+            </div>
+            <div class="month-section">
+              <div class="head"><span class="ttl" style="font-size: 11px;">Dosis siguiente</span></div>
+              <div class="body" style="display:flex; justify-content: space-between; align-items: center;"><p style="margin:0;">Triple vírica · 2ª</p><span style="font-family:'Lenia'; font-size: 12px; color: var(--ink-muted);">4 años</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footnote">
+      <div><div class="ttl">Trauma-informed contract</div>Vacunas live in gold-subtle. The differentiation from a regular section is border-color + ttl-color, not background red. Never alarm.</div>
+      <div><div class="ttl">Information density</div>What · Cuándo · Dónde · Después · Siguiente. Nothing else. No ingredient list, no controversy debunks unless the user asks.</div>
+      <div><div class="ttl">Calendar source</div>AEP 2025. Each card states its source in tiny meta. We do not invent vaccines or schedules.</div>
+    </div>
+  </section>
+
+  <!-- §C — OMS CURVE -->
+  <section class="section">
+    <div class="section-head">
+      <div class="section-num">§ C — OMS curve</div>
+      <div>
+        <h2>Growth, drawn calm. The percentile is a band, not a verdict.</h2>
+        <div class="desc">WHO percentile lines for weight, length, BMI. We render the 3rd–97th band as paper-deep, the 50th as a faint dashed line, and your child's measurements as a coral-strong path with dotted markers. The number on the side is a percentile, not a grade.</div>
+      </div>
+    </div>
+
+    <div class="spec">
+      <div class="spec-head">
+        <h3>Curva peso · niñas · 0–24 m</h3>
+        <span class="meta-r">WHO 2006 · Lola measurements</span>
+      </div>
+
+      <div class="oms-card">
+        <div class="oms-head">
+          <div class="ttl">Peso</div>
+          <div class="meta">9.4 kg · P52 · WHO niñas</div>
+        </div>
+        <div class="oms-tabs">
+          <span class="oms-tab active">Peso</span>
+          <span class="oms-tab">Talla</span>
+          <span class="oms-tab">PC</span>
+          <span class="oms-tab">IMC</span>
+        </div>
+        <div class="oms-chart">
+          <svg viewBox="0 0 600 280" preserveAspectRatio="none">
+            <!-- horizontal grid -->
+            <line x1="40" y1="40" x2="580" y2="40" stroke="#E2DDD1" stroke-width="0.5"/>
+            <line x1="40" y1="100" x2="580" y2="100" stroke="#E2DDD1" stroke-width="0.5"/>
+            <line x1="40" y1="160" x2="580" y2="160" stroke="#E2DDD1" stroke-width="0.5"/>
+            <line x1="40" y1="220" x2="580" y2="220" stroke="#E2DDD1" stroke-width="0.5"/>
+            <!-- y axis labels -->
+            <text x="32" y="44" font-family="Lenia" font-size="10" fill="#888" text-anchor="end">14kg</text>
+            <text x="32" y="104" font-family="Lenia" font-size="10" fill="#888" text-anchor="end">11kg</text>
+            <text x="32" y="164" font-family="Lenia" font-size="10" fill="#888" text-anchor="end">8kg</text>
+            <text x="32" y="224" font-family="Lenia" font-size="10" fill="#888" text-anchor="end">5kg</text>
+            <!-- x axis labels -->
+            <text x="40" y="265" font-family="Lenia" font-size="10" fill="#888">0m</text>
+            <text x="175" y="265" font-family="Lenia" font-size="10" fill="#888">6m</text>
+            <text x="310" y="265" font-family="Lenia" font-size="10" fill="#888">12m</text>
+            <text x="445" y="265" font-family="Lenia" font-size="10" fill="#888">18m</text>
+            <text x="580" y="265" font-family="Lenia" font-size="10" fill="#888" text-anchor="end">24m</text>
+
+            <!-- WHO percentile band 3-97 -->
+            <path d="M40 215 Q150 180 250 130 T580 60 L580 100 Q400 130 250 175 T40 240 Z"
+                  fill="#E8E1CF" opacity="0.6"/>
+            <!-- 50th dashed line -->
+            <path d="M40 230 Q150 195 250 150 T580 80"
+                  stroke="#888" stroke-width="1" stroke-dasharray="3 4" fill="none"/>
+            <text x="585" y="80" font-family="Lenia" font-size="9" fill="#888">P50</text>
+            <text x="585" y="60" font-family="Lenia" font-size="9" fill="#888">P97</text>
+            <text x="585" y="245" font-family="Lenia" font-size="9" fill="#888">P3</text>
+
+            <!-- child path - coral strong -->
+            <path d="M40 235 L130 200 L220 165 L310 145 L400 130 L490 118 L580 105"
+                  stroke="#D67742" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+            <!-- markers -->
+            <circle cx="40" cy="235" r="4" fill="#FBE5D6" stroke="#D67742" stroke-width="2"/>
+            <circle cx="130" cy="200" r="4" fill="#FBE5D6" stroke="#D67742" stroke-width="2"/>
+            <circle cx="220" cy="165" r="4" fill="#FBE5D6" stroke="#D67742" stroke-width="2"/>
+            <circle cx="310" cy="145" r="4" fill="#FBE5D6" stroke="#D67742" stroke-width="2"/>
+            <circle cx="400" cy="130" r="4" fill="#FBE5D6" stroke="#D67742" stroke-width="2"/>
+            <circle cx="490" cy="118" r="5" fill="#F2A57A" stroke="#D67742" stroke-width="2"/>
+            <!-- "you are here" label -->
+            <line x1="490" y1="118" x2="490" y2="40" stroke="#D67742" stroke-width="0.5" stroke-dasharray="2 2"/>
+            <rect x="455" y="22" width="70" height="16" rx="8" fill="#D67742"/>
+            <text x="490" y="33" font-family="Lenia" font-size="10" fill="white" text-anchor="middle" font-weight="500">9.4 kg · 18m</text>
+          </svg>
+        </div>
+
+        <div class="oms-legend">
+          <div class="leg-item"><span class="swatch dot"></span><span>Lola · 6 mediciones</span></div>
+          <div class="leg-item"><span class="swatch line" style="background:#888;"></span><span>P50 · WHO niñas</span></div>
+          <div class="leg-item"><span class="swatch" style="background:#E8E1CF;"></span><span>Banda P3–P97</span></div>
+        </div>
+
+        <div class="oms-stats">
+          <div><b>9.4 kg</b><span>actual</span></div>
+          <div><b>P52</b><span>percentil</span></div>
+          <div><b>+0.3 kg</b><span>vs. mes pasado</span></div>
+          <div><b>+5.1 kg</b><span>desde nacimiento</span></div>
+        </div>
+      </div>
+
+      <div class="footnote">
+        <div><div class="ttl">No grading</div>P3 and P97 are equally healthy. The card never says "low" or "high" — only "donde está".</div>
+        <div><div class="ttl">Source visible</div>"WHO 2006" is on the card. If the user is in Spain we offer Carrascosa/AEP as alt — toggle, not default.</div>
+        <div><div class="ttl">Quick log</div>Tap the band to add a measurement. Auto-imports from BL Bluetooth scale if linked.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- §D — CHAT BUBBLES -->
+  <section class="section">
+    <div class="section-head">
+      <div class="section-num">§ D — Chat bubbles</div>
+      <div>
+        <h2>Three voices: you, Companion (mint), and Pediatra (gold).</h2>
+        <div class="desc">The Companion is the AI — mint, gentle, slightly italic in tone. Pediatra is the human professional — gold, formal, with a verified mark. You are ink — a quiet bottom-right whisper. Modo 3AM flips the canvas to night.</div>
+      </div>
+    </div>
+
+    <div class="stage-grid-2">
+      <div class="spec">
+        <div class="spec-head">
+          <h3>Daytime conversation · Companion</h3>
+          <span class="meta-r">3 turns · 1 quote · 1 CTA</span>
+        </div>
+        <div class="chat-stage" style="background: var(--paper); border-radius: 22px;">
+
+          <div class="bubble-row">
+            <div class="bubble-avatar companion"><img src="assets/avatar-mint.png" alt=""></div>
+            <div class="bubble companion">
+              <div class="role">Companion</div>
+              Hola María. ¿Cómo está Lola hoy con la regresión?
+              <div class="time">09:14</div>
+            </div>
+          </div>
+
+          <div class="bubble-row right">
+            <div class="bubble you">
+              <div class="role">Tú</div>
+              Cuesta más dormirla. Anoche se despertó tres veces.
+              <div class="time">09:18</div>
+            </div>
+          </div>
+
+          <div class="bubble-row">
+            <div class="bubble-avatar companion"><img src="assets/avatar-mint.png" alt=""></div>
+            <div class="bubble companion">
+              <div class="role">Companion</div>
+              La regresión de los 18 m suele durar 2–3 semanas. No estás haciendo nada mal.
+              <div class="bubble-quote">"Cuando duerme bien, todos dormimos mejor. Cuando no, no eres tú."</div>
+              <span class="bubble-cta">
+                <svg width="12" height="12" viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="1.6"><path d="M21 15a4 4 0 0 1-4 4H8l-5 4V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4z"/></svg>
+                Pasar al pediatra
+              </span>
+              <div class="time">09:20</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="spec dark">
+        <div class="spec-head">
+          <h3 style="color:var(--night-fg);">Modo 3AM · Pediatra de guardia</h3>
+          <span class="meta-r" style="color:var(--night-muted);">Verified human · gold</span>
+        </div>
+        <div class="chat-stage dark">
+
+          <div class="bubble-row right">
+            <div class="bubble you">
+              <div class="role">Tú</div>
+              38.4°C · le di paracetamol hace 1 h. ¿Espero o vamos a urgencias?
+              <div class="time">03:14</div>
+            </div>
+          </div>
+
+          <div class="bubble-row">
+            <div class="bubble-avatar pediatra">
+              <svg viewBox="0 0 24 24"><path d="M9 3v6a4 4 0 0 0 4 4 4 4 0 0 1 4 4v4"/><circle cx="13" cy="18" r="3"/></svg>
+            </div>
+            <div class="bubble pediatra">
+              <div class="role">Pediatra · Dra. Méndez</div>
+              <div class="typing"><span></span><span></span><span></span></div>
+            </div>
+          </div>
+
+          <div class="bubble-row">
+            <div class="bubble-avatar pediatra">
+              <svg viewBox="0 0 24 24"><path d="M9 3v6a4 4 0 0 0 4 4 4 4 0 0 1 4 4v4"/><circle cx="13" cy="18" r="3"/></svg>
+            </div>
+            <div class="bubble pediatra">
+              <div class="role">Pediatra · Dra. Méndez</div>
+              Espera 2 h más, vigila si pasa de 38.5 o aparecen otros síntomas. Si vomita o se pone muy quietita, llámame.
+              <div class="time">03:18 · 4 min después</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="footnote">
+      <div><div class="ttl">Voice rules</div>Companion = "tú" · italic for tone · ≤ 2 frases · 1 quote allowed. Pediatra = "tú" formal · datos clínicos · sin metáforas.</div>
+      <div><div class="ttl">Identity badge</div>Pediatra always shows name + license. Companion always says "Companion" — never pretends to be human.</div>
+      <div><div class="ttl">Modo 3AM</div>Same layout, dark canvas, larger touch targets. Companion is more terse — closer to triage.</div>
+    </div>
+  </section>
+
+  <!-- §E — QUICK LOG GRID -->
+  <section class="section">
+    <div class="section-head">
+      <div class="section-num">§ E — Quick log</div>
+      <div>
+        <h2>Nine tiles. Less than five seconds. One thumb.</h2>
+        <div class="desc">From bottom sheet (FAB +) or widget. Tile = icon + label + last-time meta. Active tile (running timer) gets mint. Vacuna lives in gold. Deletable + editable from timeline afterwards.</div>
+      </div>
+    </div>
+
+    <div class="stage-row" style="justify-content: center;">
+
+      <div class="spec" style="padding: 32px 28px; flex: 0 0 auto;">
+        <div class="spec-head"><h3>Sheet · 9 tiles</h3><span class="meta-r">Bottom sheet · 360 px</span></div>
+        <div class="qlog-sheet">
+          <div class="qlog-grabber"></div>
+          <div class="qlog-head">
+            <h4>¿Qué pasó?</h4>
+            <span class="meta">9:23 · ahora</span>
+          </div>
+          <div class="qlog-grid">
+            <div class="qlog-tile active">
+              <svg viewBox="0 0 24 24"><path d="M12 21s-8-4.5-8-11a5 5 0 0 1 8-4 5 5 0 0 1 8 4c0 6.5-8 11-8 11z"/><circle cx="12" cy="9" r="1.5"/></svg>
+              <span class="label">Toma</span>
+              <span class="sub">⏱ 4:32</span>
+            </div>
+            <div class="qlog-tile">
+              <svg viewBox="0 0 24 24"><path d="M9 2h6"/><path d="M10 2v3"/><path d="M14 2v3"/><path d="M8 7h8v12a3 3 0 0 1-3 3h-2a3 3 0 0 1-3-3z"/><path d="M8 12h8"/></svg>
+              <span class="label">Biberón</span>
+              <span class="sub">120 ml</span>
+            </div>
+            <div class="qlog-tile">
+              <svg viewBox="0 0 24 24"><path d="M12 22a3 3 0 0 0 3-3v-1H9v1a3 3 0 0 0 3 3z"/><path d="M9 18h6V8a3 3 0 0 0-6 0z"/></svg>
+              <span class="label">Pañal</span>
+              <span class="sub">hace 32m</span>
+            </div>
+            <div class="qlog-tile">
+              <svg viewBox="0 0 24 24"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+              <span class="label">Sueño</span>
+              <span class="sub">durmiendo</span>
+            </div>
+            <div class="qlog-tile coral">
+              <svg viewBox="0 0 24 24"><path d="M14 2a3 3 0 0 0-3 3v13a4 4 0 0 0 8 0V5a3 3 0 0 0-3-3h-2z"/><path d="M11 8h7"/><path d="M11 14h7"/></svg>
+              <span class="label">Síntoma</span>
+              <span class="sub">fiebre · llanto</span>
+            </div>
+            <div class="qlog-tile">
+              <svg viewBox="0 0 24 24"><path d="M14 4V2h-4v2"/><path d="M5 8a3 3 0 0 1 3-3h8a3 3 0 0 1 3 3v9a5 5 0 0 1-5 5h-4a5 5 0 0 1-5-5z"/><path d="M9 12h6"/></svg>
+              <span class="label">Med.</span>
+              <span class="sub">Vit. D</span>
+            </div>
+            <div class="qlog-tile gold">
+              <svg viewBox="0 0 24 24"><path d="m18 2 4 4-1.5 1.5"/><path d="m13 7 4 4"/><path d="m11 9 4 4"/><path d="m8 12 4 4"/><path d="m6 14 4 4"/><path d="M19 5 7 17l-3 1 1-3L17 3z"/></svg>
+              <span class="label">Vacuna</span>
+              <span class="sub">en 18 días</span>
+            </div>
+            <div class="qlog-tile">
+              <svg viewBox="0 0 24 24"><path d="m12 3 2.4 6 6.6.6-5 4.5 1.5 6.4L12 17l-5.5 3.4 1.5-6.4-5-4.5 6.6-.6z"/></svg>
+              <span class="label">Hito</span>
+              <span class="sub">+ nuevo</span>
+            </div>
+            <div class="qlog-tile">
+              <svg viewBox="0 0 24 24"><path d="M3 6.2C3 5 4 4 5.2 4h13.6C20 4 21 5 21 6.2v11.6c0 1.2-1 2.2-2.2 2.2H5.2C4 20 3 19 3 17.8z"/><path d="M3 8h18"/><path d="m7 14 3-3 3 3 4-4"/></svg>
+              <span class="label">Nota</span>
+              <span class="sub">texto libre</span>
+            </div>
+          </div>
+          <div class="qlog-foot">
+            <span>Última: Toma · 9:18</span>
+            <span style="color: var(--coral-strong); font-family: 'Lenia'; font-weight: 500;">Apple Watch ✓</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="spec mint" style="flex: 1; min-width: 280px;">
+        <div class="spec-head"><h3>Toma · timer running</h3><span class="meta-r">Active state</span></div>
+        <div class="stage" style="background: var(--paper);">
+          <div class="lbl-tag">Tile expanded</div>
+          <div style="background: var(--mint-subtle); border-radius: 18px; padding: 22px; text-align:center;">
+            <div style="font-size:11px; letter-spacing:0.16em; color:#4F6647; text-transform:uppercase; font-family:'Lenia'; font-weight:500; margin-bottom:8px;">Toma · pecho izq</div>
+            <div style="font-family:'Lenia'; font-size: 44px; font-weight: 500; letter-spacing: -0.02em; color: #2F4029;">04 : 32</div>
+            <div style="font-size: 12px; color:#4F6647; margin-top: 6px;">Empezada a las 9:18</div>
+            <div style="display:flex; gap:8px; justify-content:center; margin-top: 18px;">
+              <button style="border:none; padding:10px 22px; border-radius: 999px; background: var(--mint-base); color: #2F4029; font-family:'Lenia'; font-weight: 500; font-size: 13px;">Cambiar lado</button>
+              <button style="border:none; padding:10px 22px; border-radius: 999px; background: var(--ink); color: var(--paper); font-family:'Lenia'; font-weight: 500; font-size: 13px;">Terminar</button>
+            </div>
+          </div>
+          <div class="caption">When a Toma is running, the FAB on Hoy shows ⏱ 04:32 instead of +.</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- §F — 5S CHECKLIST + CRY CLASSIFIER -->
+  <section class="section">
+    <div class="section-head">
+      <div class="section-num">§ F — Crisis tools</div>
+      <div>
+        <h2>The 5 S's of Klaus Minde and the Dunstan-style cry classifier.</h2>
+        <div class="desc">When the baby cries, the Companion offers two paths: a guided 5-step routine (swaddle, side, shush, swing, suck) — or a 6-second microphone listen that proposes a probability over 5 cry meanings. Both live in the cólicos / Modo 3AM module.</div>
+      </div>
+    </div>
+
+    <div class="stage-row" style="align-items: stretch; gap: 24px;">
+
+      <div class="spec coral" style="flex: 1;">
+        <div class="spec-head">
+          <h3>5 S's · routine</h3>
+          <span class="meta-r">Step 3 active · 2 done</span>
+        </div>
+        <div style="display: flex; gap: 24px; align-items: flex-start; flex-wrap: wrap;">
+          <div class="fives">
+            <h4>5 S's · cólico de las 18:00</h4>
+            <p class="lede">Empezamos por <em>envolver</em>. Vamos paso a paso.</p>
+
+            <div class="step done">
+              <div class="num">1</div>
+              <div class="body">
+                <div class="ttl">Swaddle · envolver</div>
+                <div class="meta">Manta firme, brazos pegados al cuerpo.</div>
+              </div>
+            </div>
+            <div class="step done">
+              <div class="num">2</div>
+              <div class="body">
+                <div class="ttl">Side · de lado</div>
+                <div class="meta">Sobre tu antebrazo, cara hacia abajo o de lado.</div>
+              </div>
+            </div>
+            <div class="step active">
+              <div class="num">3</div>
+              <div class="body">
+                <div class="ttl">Shush · shhhh</div>
+                <div class="meta">Ruido blanco fuerte, junto al oído. Como un secador.</div>
+              </div>
+            </div>
+            <div class="step">
+              <div class="num">4</div>
+              <div class="body">
+                <div class="ttl">Swing · mecer</div>
+                <div class="meta">Movimientos cortos y rápidos. Sostén la cabeza.</div>
+              </div>
+            </div>
+            <div class="step">
+              <div class="num">5</div>
+              <div class="body">
+                <div class="ttl">Suck · succión</div>
+                <div class="meta">Chupete, dedo limpio o pecho — lo que tengas.</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="fives dark">
+            <h4>Modo 3AM · misma rutina</h4>
+            <p class="lede">Sin teoría. Solo lo siguiente.</p>
+            <div class="step done">
+              <div class="num">1</div>
+              <div class="body"><div class="ttl">Envolver</div></div>
+            </div>
+            <div class="step done">
+              <div class="num">2</div>
+              <div class="body"><div class="ttl">De lado</div></div>
+            </div>
+            <div class="step active">
+              <div class="num">3</div>
+              <div class="body">
+                <div class="ttl">Shhhhh</div>
+                <div class="meta">Acerca el móvil. Reproducimos ruido blanco.</div>
+              </div>
+            </div>
+            <div class="step">
+              <div class="num">4</div>
+              <div class="body"><div class="ttl">Mecer</div></div>
+            </div>
+            <div class="step">
+              <div class="num">5</div>
+              <div class="body"><div class="ttl">Succión</div></div>
+            </div>
+          </div>
+        </div>
+        <p style="margin: 18px 0 0; font-size: 12px; color: #5C3923; font-style: italic;">Adaptado del trabajo de Harvey Karp y Klaus Minde — referencia interna, no es prescripción.</p>
+      </div>
+
+    </div>
+
+    <div class="stage-row" style="align-items: stretch; gap: 24px; margin-top: 24px;">
+      <div class="spec" style="flex: 1;">
+        <div class="spec-head">
+          <h3>Cry classifier · listening</h3>
+          <span class="meta-r">Day mode · 6 s sample</span>
+        </div>
+        <div class="cry">
+          <h4>¿Qué tipo de llanto es?</h4>
+          <p class="lede">Acerca el móvil. Escuchamos 6 segundos.</p>
+
+          <div class="cry-mic">
+            <div class="cry-mic-circle">
+              <svg viewBox="0 0 24 24"><path d="M12 2a3 3 0 0 0-3 3v6a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"/><path d="M19 10a7 7 0 0 1-14 0"/><path d="M12 17v4"/></svg>
+            </div>
+            <div class="cry-mic-meta">
+              <div class="ttl">Escuchando · 4 s</div>
+              <div class="sub">Mic activado · audio se queda en el dispositivo</div>
+              <div class="cry-bars">
+                <span style="height: 30%"></span><span style="height: 60%"></span><span style="height: 80%"></span><span style="height: 50%"></span><span style="height: 70%"></span><span style="height: 90%"></span><span style="height: 40%"></span><span style="height: 65%"></span><span style="height: 75%"></span><span style="height: 55%"></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="cry-result">
+            <div class="conf"><span class="num">68%</span><span class="lbl">Probabilidad</span></div>
+            <span class="cry-tag">Hambre · "Neh"</span>
+            <div class="cry-bar-row"><span class="name">Hambre · Neh</span><div class="cry-bar" style="flex:1;"><div class="cry-bar-fill" style="width: 68%"></div></div><span class="num">68</span></div>
+            <div class="cry-bar-row"><span class="name">Gas · Eairh</span><div class="cry-bar" style="flex:1;"><div class="cry-bar-fill low" style="width: 21%"></div></div><span class="num">21</span></div>
+            <div class="cry-bar-row"><span class="name">Sueño · Owh</span><div class="cry-bar" style="flex:1;"><div class="cry-bar-fill lower" style="width: 8%"></div></div><span class="num">8</span></div>
+            <div class="cry-bar-row"><span class="name">Eructo · Eh</span><div class="cry-bar" style="flex:1;"><div class="cry-bar-fill lower" style="width: 2%"></div></div><span class="num">2</span></div>
+            <div class="cry-bar-row"><span class="name">Incómodo · Heh</span><div class="cry-bar" style="flex:1;"><div class="cry-bar-fill lower" style="width: 1%"></div></div><span class="num">1</span></div>
+          </div>
+
+          <p style="font-size: 11px; color: var(--ink-muted); margin: 16px 0 0; line-height:1.5;"><em>Inspirado en Dunstan Baby Language. No es diagnóstico — es una hipótesis para empezar.</em></p>
+        </div>
+      </div>
+
+      <div class="spec dark" style="flex: 1;">
+        <div class="spec-head">
+          <h3 style="color: var(--night-fg);">Cry classifier · Modo 3AM</h3>
+          <span class="meta-r" style="color: var(--night-muted);">Same logic, night canvas</span>
+        </div>
+        <div class="cry dark">
+          <h4>¿Qué llanto es?</h4>
+          <p class="lede">Acerca el móvil. Escuchamos 6 s.</p>
+
+          <div class="cry-mic">
+            <div class="cry-mic-circle">
+              <svg viewBox="0 0 24 24"><path d="M12 2a3 3 0 0 0-3 3v6a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"/><path d="M19 10a7 7 0 0 1-14 0"/><path d="M12 17v4"/></svg>
+            </div>
+            <div class="cry-mic-meta">
+              <div class="ttl">Escuchando · 6 s</div>
+              <div class="sub">Modo 3AM · más quieta</div>
+            </div>
+          </div>
+
+          <div class="cry-result">
+            <div class="conf"><span class="num" style="color: #F2A57A;">82%</span><span class="lbl">Probabilidad</span></div>
+            <span class="cry-tag" style="background: rgba(242,165,122,0.15); color: #F2A57A;">Sueño · "Owh"</span>
+            <p style="font-size: 12.5px; color: var(--night-muted); margin: 8px 0 0;">5 S's · empieza por <em>shush</em>. ¿Te las paso?</p>
+            <button style="margin-top: 14px; width: 100%; border:none; padding:12px; border-radius: 14px; background: var(--coral-base); color: #4A2510; font-family:'Lenia'; font-weight: 500; font-size: 14px;">Empezar 5 S's</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footnote">
+      <div><div class="ttl">Reference, not prescription</div>Both tools cite their source. Companion never says "el bebé tiene X" — siempre "podría ser X, empieza por Y".</div>
+      <div><div class="ttl">Audio privacy</div>Mic audio stays on-device. We send the classifier label only, never raw waveform — and only with explicit consent.</div>
+      <div><div class="ttl">Bridge to action</div>Result links to the next step: Hambre → Toma timer · Sueño → 5 S's · Gas → masaje guide · Incómodo → pañal/temperatura.</div>
+    </div>
+  </section>
+
+  <!-- §G — MODE 3AM ROUTE + LESSON -->
+  <section class="section">
+    <div class="section-head">
+      <div class="section-num">§ G — Modo 3AM &amp; Lesson</div>
+      <div>
+        <h2>The night route, and the lesson that reads like a spread.</h2>
+        <div class="desc">Modo 3AM activates 22:00–06:00 (or manual). It collapses Hoy into four routes, each in a dark surface tile. Lessons are 16:10 cards with a tinted cover and a single iconographic glyph — never a stock photo. They live in Cólicos, Sueño, Lactancia and Postparto modules.</div>
+      </div>
+    </div>
+
+    <div class="stage-grid-2">
+
+      <div class="spec dark">
+        <div class="spec-head">
+          <h3 style="color: var(--night-fg);">Modo 3AM · 4 rutas</h3>
+          <span class="meta-r" style="color: var(--night-muted);">Single screen · no scroll</span>
+        </div>
+        <div class="m3am">
+          <div class="m3am-head">
+            <svg viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+            <span>Modo 3AM · 03:14</span>
+          </div>
+          <h3>¿Qué pasa?</h3>
+          <p class="sub">Sin prisa. Empieza por lo más cercano.</p>
+
+          <div class="route urgent">
+            <div class="ttl">Le pasa algo</div>
+            <div class="meta">Termómetro · llanto inconsolable · va a urgencias.</div>
+          </div>
+          <div class="route">
+            <div class="ttl">No duerme</div>
+            <div class="meta">Cry classifier · 5 S's · regresiones.</div>
+          </div>
+          <div class="route">
+            <div class="ttl">Quiero acompañarme</div>
+            <div class="meta">Respira conmigo · 2 minutos · audio guiado.</div>
+          </div>
+          <div class="route">
+            <div class="ttl">Apuntar algo</div>
+            <div class="meta">Quick log · sin pensarlo.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="spec">
+        <div class="spec-head">
+          <h3>Lesson card · Sueño</h3>
+          <span class="meta-r">Cover · iconographic glyph</span>
+        </div>
+        <div class="stage-grid-2">
+          <div class="lesson">
+            <div class="lesson-cover">
+              <svg class="glyph" viewBox="0 0 24 24"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+              <span class="pill-cat">Sueño · 4–6 m</span>
+              <span class="duration">5 min · lectura</span>
+            </div>
+            <div class="lesson-body">
+              <h5>Regresión de los 4 meses, sin alarma.</h5>
+              <p>No es un retroceso. Su cerebro está reorganizando los ciclos. Dura 2–4 semanas y pasa.</p>
+              <div class="lesson-foot">
+                <span class="author">Dra. M. Ruiz · neuroped.</span>
+                <span>Cap. 03 · 4 lecturas</span>
+              </div>
+            </div>
+          </div>
+          <div class="lesson">
+            <div class="lesson-cover gold">
+              <svg class="glyph" viewBox="0 0 24 24"><path d="m18 2 4 4-1.5 1.5"/><path d="m13 7 4 4"/><path d="m11 9 4 4"/><path d="m8 12 4 4"/><path d="m6 14 4 4"/><path d="M19 5 7 17l-3 1 1-3L17 3z"/></svg>
+              <span class="pill-cat" style="background: rgba(255,255,255,0.85);">Vacunas · 12 m</span>
+              <span class="duration">3 min · lectura</span>
+            </div>
+            <div class="lesson-body">
+              <h5>Triple vírica, antes de la cita.</h5>
+              <p>Qué le van a poner, qué hacer en las 24 horas siguientes, cuándo es normal preocuparse.</p>
+              <div class="lesson-foot">
+                <span class="author">AEP · libro de vacunas</span>
+                <span>Cap. 12 · 12 lecturas</span>
+              </div>
+            </div>
+          </div>
+          <div class="lesson">
+            <div class="lesson-cover blush">
+              <svg class="glyph" viewBox="0 0 24 24"><path d="M9 11.5a4 4 0 1 0 6 0V8a3 3 0 0 0-6 0z"/><path d="M12 18v3"/><path d="M9 21h6"/></svg>
+              <span class="pill-cat">Postparto</span>
+              <span class="duration">7 min · lectura</span>
+            </div>
+            <div class="lesson-body">
+              <h5>EPDS, sin el peso del test.</h5>
+              <p>No es un examen. Son 10 preguntas para ti, no para el bebé. Las respondes en 2 minutos.</p>
+              <div class="lesson-foot">
+                <span class="author">Edinburgh · validado AEP</span>
+                <span>Cap. 02 · 6 lecturas</span>
+              </div>
+            </div>
+          </div>
+          <div class="lesson">
+            <div class="lesson-cover coral">
+              <svg class="glyph" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><path d="M9 9h.01"/><path d="M15 9h.01"/><path d="M12 16v3"/></svg>
+              <span class="pill-cat">Cólicos · 0–4 m</span>
+              <span class="duration">4 min · lectura</span>
+            </div>
+            <div class="lesson-body">
+              <h5>Las tres horas más largas del día.</h5>
+              <p>Dr. Karp llamó al cuarto trimestre "el cuarto trimestre" por una razón. Aquí están las cinco S's.</p>
+              <div class="lesson-foot">
+                <span class="author">Harvey Karp · adaptado</span>
+                <span>Cap. 01 · 21 lecturas</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="footnote">
+      <div><div class="ttl">Lesson covers</div>Solo iconography on tinted backgrounds. No stock photos. The icon = the topic. The tint = the module.</div>
+      <div><div class="ttl">Author attribution</div>Every lesson has a real author or canonical source. AEP, Karp, Edinburgh, Minde. Never anonymous content.</div>
+      <div><div class="ttl">Duration estimate</div>Reading time in minutes, plus a "lecturas" count to signal what others found useful — never a star rating.</div>
+    </div>
+  </section>
+
+  <!-- §H — CATEGORIZED HOY CARD (canon v2) -->
+  <section class="section">
+    <div class="section-head">
+      <div class="section-num">§ H — Hoy card · v2</div>
+      <div>
+        <h2>One pattern, eight categories. The feed becomes legible.</h2>
+        <div class="desc">The Hoy feed is now categorized: a chip strip filters by topic, sections divide HOY from ESTA SEMANA, and every actionable item is the same six-part card. One CTA primary. "luego · ya hecho" always available, never as guilt. The avatar-hero stays — the categorized cards live below it, after a small contextual hero (peque · edad · peso + an affective line that names without celebrating).</div>
+      </div>
+    </div>
+
+    <!-- H.0 — color system per category -->
+    <div class="spec">
+      <div class="spec-head">
+        <h3>H.0 · Color system — 8 categorías, 8 tintes</h3>
+        <span class="meta-r">Tinte muy bajo · ink solo en tag/icono</span>
+      </div>
+      <div class="stage" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; padding: 32px;">
+        <div class="cat-card cat-embarazo" style="margin: 0;">
+          <div class="cc-tag"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/></svg>Embarazo</div>
+          <div class="cc-title" style="font-size: 13px;">tint #FBE5D6</div>
+          <div class="cc-meta" style="margin-bottom: 0;">ink #B45F2F · coral</div>
+        </div>
+        <div class="cat-card cat-alimentacion" style="margin: 0;">
+          <div class="cc-tag"><svg viewBox="0 0 24 24"><path d="M8 2h8"/><path d="M9 2v3a4 4 0 0 0 6 0V2"/><path d="M12 9v13"/></svg>Alimentación</div>
+          <div class="cc-title" style="font-size: 13px;">tint #F8E4DD</div>
+          <div class="cc-meta" style="margin-bottom: 0;">ink #B47465 · blush</div>
+        </div>
+        <div class="cat-card cat-sueno" style="margin: 0;">
+          <div class="cc-tag"><svg viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>Sueño</div>
+          <div class="cc-title" style="font-size: 13px;">tint #E5EDDF</div>
+          <div class="cc-meta" style="margin-bottom: 0;">ink #6E8A66 · mint</div>
+        </div>
+        <div class="cat-card cat-vacunas" style="margin: 0;">
+          <div class="cc-tag"><svg viewBox="0 0 24 24"><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/></svg>Vacunas</div>
+          <div class="cc-title" style="font-size: 13px;">tint #F6EBC9</div>
+          <div class="cc-meta" style="margin-bottom: 0;">ink #8E7222 · gold</div>
+        </div>
+        <div class="cat-card cat-salud" style="margin: 0;">
+          <div class="cc-tag"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/></svg>Salud</div>
+          <div class="cc-title" style="font-size: 13px;">tint #E6E2D6</div>
+          <div class="cc-meta" style="margin-bottom: 0;">ink #5C5648 · paper-deep</div>
+        </div>
+        <div class="cat-card cat-medicacion" style="margin: 0;">
+          <div class="cc-tag"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>Medicación</div>
+          <div class="cc-title" style="font-size: 13px;">tint #DDE6E8</div>
+          <div class="cc-meta" style="margin-bottom: 0;">ink #4D6770 · sky</div>
+        </div>
+        <div class="cat-card cat-desarrollo" style="margin: 0;">
+          <div class="cc-tag"><svg viewBox="0 0 24 24"><path d="M12 2a4 4 0 0 0-4 4v2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8a2 2 0 0 0-2-2h-2V6a4 4 0 0 0-4-4z"/></svg>Desarrollo</div>
+          <div class="cc-title" style="font-size: 13px;">tint #E6DFE9</div>
+          <div class="cc-meta" style="margin-bottom: 0;">ink #6A5A7E · lilac</div>
+        </div>
+        <div class="cat-card cat-bienestar" style="margin: 0;">
+          <div class="cc-tag"><svg viewBox="0 0 24 24"><path d="M9 11.5a4 4 0 1 0 6 0V8a3 3 0 0 0-6 0z"/></svg>Bienestar</div>
+          <div class="cc-title" style="font-size: 13px;">tint #EBE0D2</div>
+          <div class="cc-meta" style="margin-bottom: 0;">ink #846238 · ochre</div>
+        </div>
+      </div>
+      <div class="caption">8 tokens <code>--cat-{name}-tint</code> + <code>--cat-{name}-ink</code>. Tinte cubre el bg de la card; ink colorea solo tag + icono. Title, meta, context y CTA permanecen ink negro/soft.</div>
+    </div>
+
+    <!-- H.1 anatomy -->
+    <div class="spec">
+      <div class="spec-head">
+        <h3>H.1 · Card anatomy — six parts, one CTA</h3>
+        <span class="meta-r">Tag · title · meta · context · cta · soft</span>
+      </div>
+      <div class="stage" style="display: grid; grid-template-columns: 320px 1fr; gap: 56px; padding: 36px 40px 32px 56px;">
+        <div class="anat-card cat-card cat-vacunas" style="margin-bottom: 0;">
+          <div class="cc-tag"><span class="anat-mark">1</span><svg viewBox="0 0 24 24"><path d="M12 2v4"/><path d="m4.93 4.93 2.83 2.83"/><path d="M2 12h4"/><path d="m4.93 19.07 2.83-2.83"/><path d="M12 18v4"/><path d="m19.07 19.07-2.83-2.83"/><path d="M18 12h4"/><path d="m19.07 4.93-2.83 2.83"/><circle cx="12" cy="12" r="3"/></svg>Vacunas</div>
+          <div class="cc-title"><span class="anat-mark">2</span>Hexavalente 2ª · mañana</div>
+          <div class="cc-meta"><span class="anat-mark">3</span>11:30 · CAP Sant Gervasi</div>
+          <div class="cc-context"><span class="anat-mark">4</span>Lola está al día · 3 de 9 hitos</div>
+          <div class="cc-cta-row" style="position: relative;">
+            <span class="anat-mark">5</span>
+            <button class="cc-cta">Abrir libro de vacunas <svg viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></button>
+          </div>
+          <div class="cc-soft"><span class="anat-mark">6</span><span>luego</span><span>ya hecho</span></div>
+        </div>
+        <ol class="anat-legend">
+          <li><div><strong>Tag</strong>icono SVG + label uppercase. Categoría siempre primero. Sin color brand fuerte.</div></li>
+          <li><div><strong>Título</strong>una línea. Qué es. Lenia 16 px. Sin signos de exclamación.</div></li>
+          <li><div><strong>Meta</strong>cuándo · dónde · cuánto. Helvena 12.5 px ink-soft.</div></li>
+          <li><div><strong>Context</strong>estado o dato relevante. Lenia italic 11.5 px ink-muted. Sin "¡bien!".</div></li>
+          <li><div><strong>CTA</strong>una sola acción primaria. Pill ink → paper. Nunca dos botones.</div></li>
+          <li><div><strong>Soft</strong>"luego" siempre · "ya hecho" si es dispatchable fuera de Grow. Línea discontinua arriba.</div></li>
+        </ol>
+      </div>
+      <div class="caption">Tap en cualquier parte de la card abre el detalle. Swipe derecha = ya hecho. Swipe izquierda = snooze.</div>
+    </div>
+
+    <!-- H.2 states -->
+    <div class="spec">
+      <div class="spec-head">
+        <h3>H.2 · Five states</h3>
+        <span class="meta-r">Default · doing · done · snoozed · attention</span>
+      </div>
+      <div class="cat-grid" style="grid-template-columns: 1fr 1fr 1fr;">
+        <div>
+          <div class="lbl-tag">Default</div>
+          <div class="cat-card cat-vacunas">
+            <div class="cc-tag"><svg viewBox="0 0 24 24"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/></svg>Vacunas</div>
+            <div class="cc-title">Hexavalente 2ª · mañana</div>
+            <div class="cc-meta">11:30 · CAP Sant Gervasi</div>
+            <div class="cc-context">Lola está al día · 3 de 9</div>
+            <button class="cc-cta">Abrir libro <svg viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></button>
+            <div class="cc-soft"><span>luego</span><span>ya hecho</span></div>
+          </div>
+          <div class="caption">Recién aparece · paper-soft · CTA negra.</div>
+        </div>
+
+        <div>
+          <div class="lbl-tag">En curso</div>
+          <div class="cat-card cat-alimentacion state-doing">
+            <div class="cc-tag"><svg viewBox="0 0 24 24"><path d="M12 22V8"/><path d="M5 12V8a7 7 0 0 1 14 0v4"/><path d="M19 16v4a2 2 0 0 1-2 2h-2v-6"/><path d="M5 16v4a2 2 0 0 0 2 2h2v-6"/></svg>Alimentación</div>
+            <div class="cc-title">Toma en curso · 04:32</div>
+            <div class="cc-meta">Pecho derecho · empezó 13:00</div>
+            <div class="cc-context">Llevas 3 tomas hoy · ok</div>
+            <button class="cc-cta">Pausar timer <svg viewBox="0 0 24 24"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg></button>
+            <div class="cc-soft"><span>cambiar pecho</span><span>terminar</span></div>
+          </div>
+          <div class="caption">Indicador "● activo" pulsa lento. Coral-strong.</div>
+        </div>
+
+        <div>
+          <div class="lbl-tag">Hecho hoy</div>
+          <div class="cat-card cat-sueno state-done">
+            <div class="cc-tag"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>Sueño</div>
+            <div class="cc-title">Siesta de mañana · 1 h 12</div>
+            <div class="cc-meta">10:18 → 11:30</div>
+            <div class="cc-context">Ventana cumplida · estable</div>
+            <button class="cc-cta" style="background: var(--paper-deep); color: var(--ink-muted);">Ver registro <svg viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></button>
+            <div class="cc-soft"><span>editar</span><span>siguiente siesta</span></div>
+          </div>
+          <div class="caption">Border discontinuo · ink-muted · ✓ hecho.</div>
+        </div>
+
+        <div>
+          <div class="lbl-tag">Snoozed</div>
+          <div class="cat-card cat-bienestar state-snoozed">
+            <div class="cc-tag"><svg viewBox="0 0 24 24"><path d="M9 11.5a4 4 0 1 0 6 0V8a3 3 0 0 0-6 0z"/><path d="M12 18v3"/><path d="M9 21h6"/></svg>Bienestar</div>
+            <div class="cc-title">¿Cómo te has sentido esta semana?</div>
+            <div class="cc-meta">5 preguntas · 2 minutos</div>
+            <div class="cc-context">Pablo también lo recibe</div>
+            <button class="cc-cta">Empezar <svg viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></button>
+            <div class="cc-soft"><span>luego</span><span>ya hecho</span></div>
+          </div>
+          <div class="caption">Opacity 0.55 · "snoozed · mañana".</div>
+        </div>
+
+        <div>
+          <div class="lbl-tag">Atención</div>
+          <div class="cat-card cat-salud state-attention">
+            <div class="cc-tag"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M9 13h6"/><path d="M9 17h4"/></svg>Salud</div>
+            <div class="cc-title">Fiebre detectada · 38.4°</div>
+            <div class="cc-meta">Última toma 13:00 · 130 ml</div>
+            <div class="cc-context">Vigilar 6 horas · paracetamol disponible</div>
+            <button class="cc-cta">Abrir guía fiebre <svg viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></button>
+            <div class="cc-soft"><span>llamar pediatra</span><span>registrar dosis</span></div>
+          </div>
+          <div class="caption">Border 2 px sólido ink · [!] tag. Sin rojo médico.</div>
+        </div>
+
+        <div>
+          <div class="lbl-tag">Vacío · esta semana</div>
+          <div class="cat-card cat-desarrollo" style="border-style: dashed;">
+            <div class="cc-tag"><svg viewBox="0 0 24 24"><path d="M12 2v20"/><path d="m4.22 4.22 15.56 15.56"/><path d="M2 12h20"/><path d="m4.22 19.78 15.56-15.56"/></svg>Desarrollo</div>
+            <div class="cc-title">Sin cribados pendientes</div>
+            <div class="cc-meta">Próximo · ASQ-3 · 6 meses</div>
+            <div class="cc-context">Te avisaremos sin prisa</div>
+            <button class="cc-cta" style="background: var(--paper-soft); color: var(--ink-soft);">Ver hitos <svg viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></button>
+          </div>
+          <div class="caption">Empty state · sin presión, sin badge rojo.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- H.3 — eight category variants -->
+    <div class="spec">
+      <div class="spec-head">
+        <h3>H.3 · Eight categories</h3>
+        <span class="meta-r">One pattern · eight families · zero color</span>
+      </div>
+      <div class="cat-grid">
+        <div class="cat-card cat-embarazo">
+          <div class="cc-tag"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8a3 3 0 0 1 3 3c0 1.5-1 2-1.5 2.5"/></svg>Embarazo</div>
+          <div class="cc-title">Semana 18 · ya escucha tu voz</div>
+          <div class="cc-meta">Tamaño de un pimiento · 14,2 cm</div>
+          <div class="cc-context">Pronto sentirás los primeros movimientos</div>
+          <button class="cc-cta">Ver cambios de la semana <svg viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></button>
+          <div class="cc-soft"><span>luego</span></div>
+        </div>
+
+        <div class="cat-card cat-alimentacion">
+          <div class="cc-tag"><svg viewBox="0 0 24 24"><path d="M8 2h8"/><path d="M9 2v3a4 4 0 0 0 6 0V2"/><path d="M12 9v13"/><path d="M9 22h6"/></svg>Alimentación</div>
+          <div class="cc-title">Tomas hoy · 3 de ~6</div>
+          <div class="cc-meta">Última 13:00 · 130 ml · ok</div>
+          <div class="cc-context">Patrón estable estos 3 días</div>
+          <button class="cc-cta">Registrar siguiente <svg viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></button>
+          <div class="cc-soft"><span>luego</span><span>ya hecho</span></div>
+        </div>
+
+        <div class="cat-card cat-vacunas">
+          <div class="cc-tag"><svg viewBox="0 0 24 24"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/></svg>Vacunas</div>
+          <div class="cc-title">Hexavalente 2ª · mañana 11:30</div>
+          <div class="cc-meta">CAP Sant Gervasi · Dr. Méndez</div>
+          <div class="cc-context">3 de 9 hitos · al día</div>
+          <button class="cc-cta">Abrir libro de vacunas <svg viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></button>
+          <div class="cc-soft"><span>luego</span><span>ya hecho</span></div>
+        </div>
+
+        <div class="cat-card cat-sueno">
+          <div class="cc-tag"><svg viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>Sueño</div>
+          <div class="cc-title">Última siesta hace 2 h 40</div>
+          <div class="cc-meta">Ventana ideal · empieza a relajarla</div>
+          <div class="cc-context">Patrón típico de la tarde</div>
+          <button class="cc-cta">Activar rutina noche <svg viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></button>
+          <div class="cc-soft"><span>luego</span></div>
+        </div>
+
+        <div class="cat-card cat-salud">
+          <div class="cc-tag"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M9 13h6"/><path d="M9 17h4"/></svg>Salud</div>
+          <div class="cc-title">Heads-up · síntomas a vigilar</div>
+          <div class="cc-meta">3 cosas en estas próximas semanas</div>
+          <div class="cc-context">Sin alarma · sólo para tenerlas a mano</div>
+          <button class="cc-cta">Ver lista <svg viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></button>
+          <div class="cc-soft"><span>luego</span></div>
+        </div>
+
+        <div class="cat-card cat-medicacion">
+          <div class="cc-tag"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/><path d="M11 8v6"/><path d="M8 11h6"/></svg>Medicación</div>
+          <div class="cc-title">Post-vacuna · ventana paracetamol</div>
+          <div class="cc-meta">Próxima dosis · 20:00 (4 h)</div>
+          <div class="cc-context">Lola · 6,4 kg · 80 mg</div>
+          <button class="cc-cta">Registrar dosis <svg viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></button>
+          <div class="cc-soft"><span>luego</span><span>ya hecho</span></div>
+        </div>
+
+        <div class="cat-card cat-desarrollo">
+          <div class="cc-tag"><svg viewBox="0 0 24 24"><path d="M12 2a4 4 0 0 0-4 4v2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8a2 2 0 0 0-2-2h-2V6a4 4 0 0 0-4-4z"/></svg>Desarrollo</div>
+          <div class="cc-title">ASQ-3 · 4 meses disponible</div>
+          <div class="cc-meta">30 preguntas · 10 min · cuando quieras</div>
+          <div class="cc-context">Sin comparativas · sin tabla de percentiles</div>
+          <button class="cc-cta">Empezar cribado <svg viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></button>
+          <div class="cc-soft"><span>luego</span></div>
+        </div>
+
+        <div class="cat-card cat-bienestar">
+          <div class="cc-tag"><svg viewBox="0 0 24 24"><path d="M9 11.5a4 4 0 1 0 6 0V8a3 3 0 0 0-6 0z"/><path d="M12 18v3"/><path d="M9 21h6"/></svg>Bienestar</div>
+          <div class="cc-title">¿Cómo te has sentido esta semana?</div>
+          <div class="cc-meta">5 preguntas · 2 minutos</div>
+          <div class="cc-context">Pablo también lo recibe</div>
+          <button class="cc-cta">Empezar <svg viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></button>
+          <div class="cc-soft"><span>luego</span><span>ya hecho</span></div>
+        </div>
+      </div>
+      <div class="caption">Cada categoría tiene su tinte y su ink. Tinte muy bajo (8–10% sat) para no romper el papel. Ink solo en tag · icono. CTA y title se mantienen ink negro.</div>
+    </div>
+
+    <!-- H.4 — full feed preview -->
+    <div class="spec">
+      <div class="spec-head">
+        <h3>H.4 · Feed preview — Lola · 18 m</h3>
+        <span class="meta-r">Avatar · mini hero · chips · sections · cards</span>
+      </div>
+      <div class="stage" style="display: grid; grid-template-columns: 360px 1fr; gap: 40px;">
+        <div class="feed-preview">
+          <div style="font-family: 'Lenia'; font-size: 9.5px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-muted); font-weight: 500; margin-bottom: 6px;">Hoy · martes 12 jul</div>
+          <h4 style="font-family: 'Lenia'; font-weight: 500; font-size: 22px; margin: 0 0 14px;">Lola · 18 m</h4>
+
+          <div class="av-mini">
+            <span class="pill-st">Crianza · 18m</span>
+            <span class="pill-st tr">EPDS · 0/30</span>
+            <img src="assets/avatar-mint.png?v=2" alt="">
+          </div>
+
+          <div class="mini-hero">
+            <div class="dot mint"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><path d="M9 9h.01"/><path d="M15 9h.01"/></svg></div>
+            <div>
+              <div class="who">Lola · 18 meses · 9,4 kg</div>
+              <div class="affect">Esta semana toca su triple vírica · estás cuidando muy bien.</div>
+            </div>
+          </div>
+
+          <div class="chip-strip">
+            <div class="chip active">Todo</div>
+            <div class="chip"><svg viewBox="0 0 24 24"><path d="M8 2h8"/><path d="M9 2v3a4 4 0 0 0 6 0V2"/><path d="M12 9v13"/></svg>Alimentación</div>
+            <div class="chip"><svg viewBox="0 0 24 24"><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/></svg>Vacunas</div>
+            <div class="chip"><svg viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>Sueño</div>
+            <div class="chip"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/></svg>Salud</div>
+            <div class="chip"><svg viewBox="0 0 24 24"><path d="M9 11.5a4 4 0 1 0 6 0V8a3 3 0 0 0-6 0z"/></svg>Bienestar</div>
+          </div>
+
+          <div class="feed-eyb">Hoy</div>
+
+          <div class="cat-card cat-vacunas">
+            <div class="cc-tag"><svg viewBox="0 0 24 24"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/></svg>Vacunas</div>
+            <div class="cc-title">Triple vírica · mañana 10:30</div>
+            <div class="cc-meta">CAP Sant Gervasi · Dr. Méndez</div>
+            <div class="cc-context">3 de 9 hitos · al día</div>
+            <button class="cc-cta">Abrir libro <svg viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></button>
+            <div class="cc-soft"><span>luego</span><span>ya hecho</span></div>
+          </div>
+
+          <div class="cat-card cat-sueno">
+            <div class="cc-tag"><svg viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>Sueño</div>
+            <div class="cc-title">Última siesta hace 2 h 40</div>
+            <div class="cc-meta">Ventana ideal · empieza a relajarla</div>
+            <div class="cc-context">Patrón típico de la tarde</div>
+            <button class="cc-cta">Activar rutina noche <svg viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></button>
+            <div class="cc-soft"><span>luego</span></div>
+          </div>
+
+          <div class="feed-eyb">Esta semana</div>
+
+          <div class="cat-card cat-desarrollo">
+            <div class="cc-tag"><svg viewBox="0 0 24 24"><path d="M12 2a4 4 0 0 0-4 4v2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8a2 2 0 0 0-2-2h-2V6a4 4 0 0 0-4-4z"/></svg>Desarrollo</div>
+            <div class="cc-title">ASQ-3 · 18 meses</div>
+            <div class="cc-meta">30 preguntas · 10 min</div>
+            <div class="cc-context">Disponible cuando quieras</div>
+            <button class="cc-cta">Empezar cribado <svg viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></button>
+            <div class="cc-soft"><span>luego</span></div>
+          </div>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 20px; padding-top: 8px;">
+          <div>
+            <div class="lbl-tag">Bridge copy — el mini hero</div>
+            <p style="margin: 0; font-size: 14px; line-height: 1.55; color: var(--ink-soft);">Bajo el avatar-hero (que sigue siendo la cara de la fase) aparece una línea de paso: <em style="color: var(--ink);">nombre · edad real · peso · una frase afectiva discreta</em>. Sin "¡Felicidades!", sí "estás cuidando muy bien". En modo arcoíris, esta línea se atempera (sin "esta semana toca…").</p>
+          </div>
+
+          <div>
+            <div class="lbl-tag">Chip strip — sticky filters</div>
+            <p style="margin: 0; font-size: 14px; line-height: 1.55; color: var(--ink-soft);">Las 8 categorías + "Todo" como chips scroll horizontal. Sticky al hacer scroll del feed. Tap chip → filtra. Tap chip activo → vuelve a "Todo".</p>
+          </div>
+
+          <div>
+            <div class="lbl-tag">Sections — Hoy · Esta semana</div>
+            <p style="margin: 0; font-size: 14px; line-height: 1.55; color: var(--ink-soft);">El feed se parte en dos eyebrows: <strong style="color:var(--ink); font-family:'Lenia'; font-weight:500;">HOY</strong> (lo que toca ahora) y <strong style="color:var(--ink); font-family:'Lenia'; font-weight:500;">ESTA SEMANA</strong> (lo que se acerca, sin urgencia). Modo 3 AM colapsa todo lo que no es Salud o Bienestar bajo "no urgente · mañana lo vemos".</p>
+          </div>
+
+          <div>
+            <div class="lbl-tag">Hoy ↔ Calendario</div>
+            <p style="margin: 0; font-size: 14px; line-height: 1.55; color: var(--ink-soft);">Las 8 categorías son los mismos sub-bloques que aparecen dentro de las MonthCards del Calendario. Tap categoría desde el calendario → feed filtrado. Vacunas mantiene su tratamiento gold; las otras 7 viven planas.</p>
+          </div>
+
+          <div>
+            <div class="lbl-tag">Settings · notificaciones</div>
+            <p style="margin: 0; font-size: 14px; line-height: 1.55; color: var(--ink-soft);">Toggle por cada una de las 8. Si comparar te da ansiedad, silencias 🚫 Desarrollo y dejas Vacunas activo. La app sigue funcionando, solo deja de avisarte.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footnote">
+      <div><div class="ttl">One CTA</div>Una sola acción primaria por card. La acción "luego/ya hecho" no compite — es texto uppercase 10.5 px, no un botón.</div>
+      <div><div class="ttl">No celebration</div>Sin "¡bien hecho!", sin confetti, sin medallas. El context line nombra el estado, no premia.</div>
+      <div><div class="ttl">Color por categoría</div>Cada categoría tiene su tinte (8–10% sat) + su ink. El feed deja de ser gris uniforme — cada card se reconoce por familia. Tinte solo en bg + tag/icono. Title y CTA siguen ink negro.</div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="mark">grow · Issue Nº 04</div>
+    <div class="meta">Session 04 — Product components — v0.1 — 26 Apr 2026</div>
+  </footer>
+
+</div>
+
+</body>
+</html>

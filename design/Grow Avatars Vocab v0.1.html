@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Grow · Session 02 — Avatar, Iconography &amp; Stickers</title>
+<style>
+  @font-face { font-family: "Lenia"; src: url("assets/fonts/LeniaSans-Light.ttf") format("truetype"); font-weight: 300; font-style: normal; font-display: swap; }
+  @font-face { font-family: "Lenia"; src: url("assets/fonts/LeniaSans-Regular.ttf") format("truetype"); font-weight: 400; font-style: normal; font-display: swap; }
+  @font-face { font-family: "Lenia"; src: url("assets/fonts/LeniaSans-Medium.ttf") format("truetype"); font-weight: 500; font-style: normal; font-display: swap; }
+  @font-face { font-family: "Lenia"; src: url("assets/fonts/LeniaSans-Bold.ttf") format("truetype"); font-weight: 700; font-style: normal; font-display: swap; }
+  @font-face { font-family: "Lenia"; src: url("assets/fonts/LeniaSans-Italic.ttf") format("truetype"); font-weight: 400; font-style: italic; font-display: swap; }
+  @font-face { font-family: "Helvena"; src: url("assets/fonts/Helvena-Light.ttf") format("truetype"); font-weight: 300; font-display: swap; }
+  @font-face { font-family: "Helvena"; src: url("assets/fonts/Helvena-Regular.ttf") format("truetype"); font-weight: 400; font-display: swap; }
+  @font-face { font-family: "Helvena"; src: url("assets/fonts/Helvena-Medium.ttf") format("truetype"); font-weight: 500; font-display: swap; }
+  @font-face { font-family: "Helvena"; src: url("assets/fonts/Helvena-Semibold.ttf") format("truetype"); font-weight: 600; font-display: swap; }
+  @font-face { font-family: "Helvena"; src: url("assets/fonts/Helvena-Bold.ttf") format("truetype"); font-weight: 700; font-display: swap; }
+
+  :root {
+    --paper: #FAF7F0;
+    --paper-soft: #F2EDE0;
+    --paper-deep: #E8E1CF;
+    --ink: #1A1A1A;
+    --ink-soft: #4D4D4D;
+    --ink-muted: #888888;
+    --ink-faint: #BFBAA8;
+    --line: #E2DDD1;
+    --line-strong: #C9C2B2;
+
+    /* Categories — 8 tints + ink (synced with Foundations) */
+    --cat-embarazo-tint:    #FBE5D6; --cat-embarazo-ink:    #B45F2F;
+    --cat-alimentacion-tint:#F8E4DD; --cat-alimentacion-ink:#B47465;
+    --cat-sueno-tint:       #E5EDDF; --cat-sueno-ink:       #6E8A66;
+    --cat-vacunas-tint:     #F6EBC9; --cat-vacunas-ink:     #8E7222;
+    --cat-salud-tint:       #E6E2D6; --cat-salud-ink:       #5C5648;
+    --cat-medicacion-tint:  #DDE6E8; --cat-medicacion-ink:  #4D6770;
+    --cat-desarrollo-tint:  #E6DFE9; --cat-desarrollo-ink:  #6A5A7E;
+    --cat-bienestar-tint:   #EBE0D2; --cat-bienestar-ink:   #846238;
+
+    --coral-subtle: #FBE5D6;
+    --coral-base:   #F2A57A;
+    --coral-strong: #D67742;
+    --blush-subtle: #F8E4DD;
+    --blush-base:   #EFC2B5;
+    --blush-strong: #D89A89;
+    --mint-subtle:  #E5EDDF;
+    --mint-base:    #BFD2B0;
+    --mint-strong:  #8FAE85;
+    --gold-subtle:  #F6EBC9;
+    --gold-base:    #E8C97A;
+    --gold-strong:  #B8973F;
+
+    --night-bg: #1A1D24;
+    --night-surface: #2A2E36;
+    --night-fg: #E8E6DF;
+    --night-muted: #908A7E;
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; }
+  body {
+    font-family: "Helvena", "Helvetica Neue", system-ui, sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    font-size: 15px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .page {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 64px 40px 160px;
+  }
+
+  /* ── Top meta ─────────────────────────────────────────────── */
+  .meta {
+    display: flex; justify-content: space-between; align-items: baseline;
+    border-top: 1px solid var(--ink);
+    border-bottom: 1px solid var(--line-strong);
+    padding: 14px 0 12px;
+    font-size: 11px; text-transform: uppercase; letter-spacing: 0.14em;
+    color: var(--ink-soft); font-weight: 500;
+  }
+  .meta .left { display: flex; gap: 20px; align-items: baseline; }
+  .meta .symbol { width: 16px; height: 16px; background: var(--mint-base); border-radius: 50%; display: inline-block; transform: translateY(3px); }
+
+  /* ── Hero ──────────────────────────────────────────────────── */
+  .hero {
+    padding: 80px 0 56px;
+    border-bottom: 1px solid var(--line);
+  }
+  .hero .eyebrow { font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-muted); font-weight: 500; margin-bottom: 24px; }
+  .hero h1 { font-family: "Lenia"; font-weight: 500; font-size: 64px; line-height: 1.05; letter-spacing: -0.015em; margin: 0 0 22px; max-width: 16ch; text-wrap: balance; }
+  .hero h1 em { font-style: italic; color: var(--ink-soft); }
+  .hero .lede { max-width: 56ch; font-size: 17px; line-height: 1.6; color: var(--ink-soft); }
+
+  /* ── Section frame ─────────────────────────────────────────── */
+  .section { padding: 80px 0 24px; border-bottom: 1px solid var(--line); }
+  .section:last-of-type { border-bottom: none; }
+  .section-head {
+    display: grid; grid-template-columns: 180px 1fr; gap: 40px; align-items: baseline;
+    margin-bottom: 40px;
+  }
+  .section-num {
+    font-family: "Lenia"; font-size: 12px; font-weight: 500;
+    letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-muted);
+    padding-top: 10px; border-top: 1px solid var(--ink);
+  }
+  .section-head h2 {
+    font-family: "Lenia"; font-weight: 500; font-size: 38px; line-height: 1.1;
+    letter-spacing: -0.015em; margin: 0 0 14px; max-width: 20ch;
+  }
+  .section-head .desc { font-size: 15px; line-height: 1.6; color: var(--ink-soft); max-width: 56ch; }
+
+  /* ── Sticker / pill primitives ─────────────────────────────── */
+  .pill {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: var(--paper);
+    border-radius: 999px; padding: 6px 14px;
+    font-family: "Helvena"; font-size: 11px; font-weight: 500;
+    color: var(--ink-soft); letter-spacing: 0.04em;
+    box-shadow: 0 1px 0 rgba(0,0,0,0.04);
+  }
+  .pill.gold  { background: var(--gold-subtle); color: #6E5A2A; }
+  .pill.coral { background: var(--coral-subtle); color: #8E4A22; }
+  .pill.mint  { background: var(--mint-subtle); color: #4F6647; }
+  .pill.blush { background: var(--blush-subtle); color: #7E4F44; }
+  .pill.ink   { background: var(--ink); color: var(--paper); }
+
+  .rot-l { transform: rotate(-3deg); }
+  .rot-r { transform: rotate(3deg); }
+  .rot-l5 { transform: rotate(-5deg); }
+  .rot-r5 { transform: rotate(5deg); }
+
+  /* ── Tinted boxes ──────────────────────────────────────────── */
+  .box-grid {
+    display: grid; gap: 18px;
+  }
+  .box {
+    border: none;
+    background: var(--paper);
+    padding: 32px;
+    position: relative;
+    overflow: hidden;
+    border-radius: 28px;
+  }
+  .box.coral { background: var(--coral-subtle); }
+  .box.blush { background: var(--blush-subtle); }
+  .box.mint  { background: var(--mint-subtle); }
+  .box.gold  { background: var(--gold-subtle); }
+  .box.paper-soft { background: var(--paper-soft); }
+  .box.dark { background: var(--night-bg); color: var(--night-fg); }
+
+  .box .eyebrow {
+    font-family: "Helvena"; font-size: 10px; letter-spacing: 0.18em;
+    text-transform: uppercase; color: var(--ink-muted); font-weight: 500;
+    margin-bottom: 14px;
+  }
+  .box.dark .eyebrow { color: var(--night-muted); }
+  .box .title {
+    font-family: "Lenia"; font-weight: 500; font-size: 26px; line-height: 1.2;
+    margin: 0 0 12px; letter-spacing: -0.005em; max-width: 22ch;
+  }
+  .box .copy { font-size: 14px; line-height: 1.55; color: var(--ink-soft); max-width: 44ch; }
+  .box.dark .copy { color: var(--night-muted); }
+
+  /* ── §A — Avatar hero box ──────────────────────────────────── */
+  .avatar-hero {
+    display: grid;
+    grid-template-columns: 1.05fr 0.95fr;
+    gap: 18px;
+  }
+  .ah-left {
+    background: var(--coral-subtle);
+    padding: 44px 40px;
+    position: relative;
+    border-radius: 32px;
+    min-height: 480px;
+    overflow: hidden;
+  }
+  .ah-right {
+    background: var(--mint-subtle);
+    padding: 44px 40px;
+    position: relative;
+    border-radius: 32px;
+    min-height: 480px;
+    display: flex; flex-direction: column; justify-content: space-between;
+  }
+  .ah-left .stage {
+    position: absolute; right: -10px; bottom: -10px;
+    width: 70%; aspect-ratio: 1/1;
+    display: grid; place-items: center;
+  }
+  .ah-left .stage img { width: 100%; height: 100%; object-fit: contain; }
+  .ah-left h3 {
+    font-family: "Lenia"; font-weight: 500; font-size: 30px; line-height: 1.2;
+    margin: 0 0 12px; max-width: 12ch; position: relative; z-index: 2;
+  }
+  .ah-left p { font-size: 14px; color: #5C3923; line-height: 1.55; max-width: 30ch; position: relative; z-index: 2; }
+  .ah-left .float-pill { position: absolute; z-index: 3; }
+  .ah-left .fp1 { top: 22px; right: 22px; }
+  .ah-left .fp2 { bottom: 90px; left: 30px; }
+
+  .ah-right .specs-list { display: flex; flex-direction: column; gap: 14px; }
+  .ah-right .specs-list .row { display: grid; grid-template-columns: 70px 1fr; gap: 14px; align-items: baseline; padding-bottom: 10px; border-bottom: 1px solid rgba(143,174,133,0.4); }
+  .ah-right .specs-list .row:last-child { border-bottom: none; }
+  .ah-right .specs-list .lbl { font-family: "Lenia"; font-weight: 500; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: #4F6647; }
+  .ah-right .specs-list .val { font-size: 13px; color: var(--ink); line-height: 1.5; }
+
+  /* ── §A — sizes ladder ─────────────────────────────────────── */
+  .sizes-box {
+    background: var(--paper-soft);
+    padding: 40px 36px 32px;
+    border-radius: 32px;
+    position: relative;
+  }
+  .sizes-row {
+    display: flex; align-items: flex-end; justify-content: space-between;
+    gap: 24px; margin-top: 28px;
+  }
+  .size-cell { display: flex; flex-direction: column; align-items: center; gap: 12px; flex: 1; }
+  .size-cell .frame {
+    background: var(--paper);
+    display: grid; place-items: center;
+    border-radius: 50%;
+  }
+  .size-cell .frame img { width: 88%; height: 88%; object-fit: contain; }
+  .size-cell .name { font-family: "Lenia"; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 500; color: var(--ink); }
+  .size-cell .px   { font-family: "Lenia"; font-size: 10px; color: var(--ink-muted); letter-spacing: 0.08em; }
+  .size-cell.xs .frame { width: 36px; height: 36px; }
+  .size-cell.sm .frame { width: 60px; height: 60px; }
+  .size-cell.md .frame { width: 100px; height: 100px; }
+  .size-cell.lg .frame { width: 160px; height: 160px; }
+  .size-cell.xl .frame { width: 220px; height: 220px; }
+
+  /* ── §A — states grid ──────────────────────────────────────── */
+  .states-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+    margin-top: 18px;
+  }
+  .state-card {
+    background: var(--paper-soft);
+    padding: 24px 22px 22px; border-radius: 24px;
+    position: relative;
+  }
+  .state-card.dark { background: var(--night-bg); color: var(--night-fg); }
+  .state-card .stage {
+    aspect-ratio: 1/1;
+    background: var(--mint-subtle);
+    border-radius: 18px;
+    display: grid; place-items: center;
+    margin-bottom: 14px;
+    position: relative;
+    overflow: hidden;
+  }
+  .state-card.alert .stage  { background: var(--coral-subtle); }
+  .state-card.celeb .stage  { background: var(--gold-subtle); }
+  .state-card.night .stage  { background: #2A2E36; }
+  .state-card .stage img { width: 70%; height: 70%; object-fit: contain; }
+
+  .state-card.celeb .stage::before {
+    content: ""; position: absolute; inset: 0;
+    background: radial-gradient(circle at 50% 35%, rgba(255,255,255,0.55) 0%, transparent 55%);
+    pointer-events: none;
+  }
+  .state-card.night .stage::before {
+    content: ""; position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 50% 0%, rgba(232,201,122,0.18) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .state-card.alert .stage::after {
+    content: ""; position: absolute; inset: 6px;
+    border: 1.5px dashed var(--coral-strong);
+    border-radius: 14px;
+    pointer-events: none;
+    opacity: 0.5;
+  }
+
+  .state-card .name { font-family: "Lenia"; font-weight: 500; font-size: 15px; margin-bottom: 4px; }
+  .state-card .role { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-muted); margin-bottom: 8px; font-weight: 500; }
+  .state-card.dark .role { color: var(--night-muted); }
+  .state-card p { font-size: 12px; line-height: 1.5; color: var(--ink-soft); margin: 0; }
+  .state-card.dark p { color: var(--night-muted); }
+
+  /* ── §B — Icon set in tinted box ───────────────────────────── */
+  .icon-box {
+    background: var(--gold-subtle);
+    padding: 40px;
+    border-radius: 32px;
+    position: relative;
+  }
+  .icon-box .head {
+    display: flex; justify-content: space-between; align-items: baseline;
+    margin-bottom: 24px;
+  }
+  .icon-box .head h3 {
+    font-family: "Lenia"; font-weight: 500; font-size: 22px; margin: 0;
+    letter-spacing: -0.005em;
+  }
+  .icon-box .head .specs {
+    font-family: "Lenia"; font-size: 11px; letter-spacing: 0.14em;
+    text-transform: uppercase; color: #6E5A2A;
+  }
+  .icon-grid {
+    display: grid; grid-template-columns: repeat(9, 1fr);
+    background: var(--paper);
+    border-radius: 22px;
+    overflow: hidden;
+  }
+  .icon-cell {
+    aspect-ratio: 1/1;
+    display: grid; place-items: center;
+    border-right: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    position: relative;
+  }
+  .icon-cell:nth-child(9n) { border-right: none; }
+  .icon-cell:nth-last-child(-n+9) { border-bottom: none; }
+  .icon-cell svg { width: 26px; height: 26px; stroke: var(--ink); fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; margin-bottom: 14px; }
+  .icon-cell .lbl { position: absolute; bottom: 6px; font-size: 8.5px; letter-spacing: 0.04em; text-transform: uppercase; color: var(--ink-muted); font-weight: 500; }
+
+  /* icon usage — large vs small */
+  .icon-usage {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 18px;
+    margin-top: 18px;
+  }
+  .icon-usage .demo {
+    background: var(--paper); padding: 24px;
+    border-radius: 22px;
+  }
+  .icon-usage .demo .lbl { font-family: "Lenia"; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: #6E5A2A; margin-bottom: 14px; }
+  .icon-usage .demo .stack { display: flex; gap: 16px; align-items: center; flex-wrap: wrap; }
+  .icon-usage .demo .stack svg { stroke: var(--ink); fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+  .icon-usage .demo .label-row { display: flex; gap: 10px; align-items: center; font-size: 13px; color: var(--ink-soft); }
+
+  /* ── §C — stickers stage ───────────────────────────────────── */
+  .sticker-stage {
+    background: var(--blush-subtle);
+    padding: 84px 56px;
+    border-radius: 32px;
+    position: relative;
+    min-height: 360px;
+    overflow: hidden;
+  }
+  .sticker-stage .center {
+    text-align: center; max-width: 36ch; margin: 0 auto;
+    position: relative; z-index: 1;
+  }
+  .sticker-stage .center .eyb {
+    font-family: "Helvena"; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase;
+    color: #7E4F44; font-weight: 500; margin-bottom: 14px;
+  }
+  .sticker-stage .center h3 {
+    font-family: "Lenia"; font-weight: 500; font-size: 32px; line-height: 1.3;
+    margin: 0; color: var(--ink); letter-spacing: -0.005em;
+  }
+  .sticker-stage .center .underline-hand {
+    background-image: linear-gradient(transparent 88%, var(--coral-strong) 88%, var(--coral-strong) 96%, transparent 96%);
+    padding: 0 2px;
+  }
+
+  .sticker-stage .float { position: absolute; }
+  .sticker-stage .f1 { top: 32px; left: 44px; transform: rotate(-4deg); }
+  .sticker-stage .f2 { top: 24px; right: 56px; transform: rotate(3deg); }
+  .sticker-stage .f3 { bottom: 56px; left: 36px; transform: rotate(-2deg); }
+  .sticker-stage .f4 { bottom: 32px; right: 88px; transform: rotate(5deg); }
+  .sticker-stage .f5 { top: 50%; left: 14%; transform: rotate(-6deg); }
+  .sticker-stage .f6 { top: 56%; right: 12%; transform: rotate(4deg); }
+
+  .post-it {
+    background: var(--gold-subtle);
+    padding: 16px 20px;
+    border-radius: 18px;
+    max-width: 200px;
+    box-shadow: 1px 2px 0 rgba(0,0,0,0.04);
+  }
+  .post-it .body {
+    font-family: "Lenia"; font-style: italic; font-weight: 400; font-size: 14px;
+    line-height: 1.4; color: var(--ink);
+  }
+  .post-it .src {
+    margin-top: 6px; font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: #6E5A2A; font-weight: 500;
+  }
+
+  .badge-circle {
+    width: 64px; height: 64px;
+    border-radius: 50%;
+    background: var(--paper-soft);
+    display: grid; place-items: center; text-align: center;
+    font-family: "Lenia"; font-weight: 500; font-size: 11px;
+    line-height: 1.15; color: var(--ink-soft); letter-spacing: 0.06em;
+    padding: 6px;
+  }
+  .badge-circle.gold { background: var(--gold-subtle); color: #6E5A2A; }
+  .badge-circle.mint { background: var(--mint-subtle); color: #4F6647; }
+
+  /* ── §D — Tags & taxonomy box ──────────────────────────────── */
+  .tags-grid {
+    display: grid; grid-template-columns: 1.2fr 1fr; gap: 18px;
+    margin-top: 18px;
+  }
+  .tags-card {
+    background: var(--paper-soft);
+    padding: 32px; border-radius: 28px;
+  }
+  .tags-card.coral { background: var(--coral-subtle); }
+  .tags-card .head {
+    display: flex; justify-content: space-between; align-items: baseline;
+    margin-bottom: 18px;
+  }
+  .tags-card .head h3 {
+    font-family: "Lenia"; font-weight: 500; font-size: 18px; margin: 0;
+    letter-spacing: -0.005em;
+  }
+  .tags-card .head .meta { font-family: "Lenia"; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-muted); }
+  .tag-cloud { display: flex; gap: 8px 10px; flex-wrap: wrap; align-items: center; }
+
+  /* ── §E — Avatar in real composition ───────────────────────── */
+  .composition {
+    background: var(--paper-soft);
+    padding: 0;
+    display: grid; grid-template-columns: 1fr 1fr;
+    border-radius: 32px;
+    overflow: hidden;
+    gap: 4px;
+  }
+  .comp-left {
+    padding: 48px 40px 40px;
+    background: var(--paper-soft);
+  }
+  .comp-left .eyb {
+    font-family: "Helvena"; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--ink-muted); font-weight: 500; margin-bottom: 18px;
+    display: flex; gap: 8px; align-items: center;
+  }
+  .comp-left .eyb .dot { width: 8px; height: 8px; background: var(--mint-strong); border-radius: 50%; }
+  .comp-left h3 {
+    font-family: "Lenia"; font-weight: 500; font-size: 30px; line-height: 1.2;
+    margin: 0 0 16px; max-width: 18ch;
+  }
+  .comp-left p { font-size: 14px; line-height: 1.6; color: var(--ink-soft); margin: 0 0 14px; }
+
+  .comp-right {
+    background: var(--mint-subtle);
+    padding: 40px;
+    position: relative;
+    min-height: 360px;
+    display: grid; place-items: center;
+  }
+  .comp-right .avatar-stack {
+    width: 70%; aspect-ratio: 1/1;
+    display: grid; place-items: center;
+  }
+  .comp-right .avatar-stack img { width: 100%; height: 100%; object-fit: contain; }
+  .comp-right .float { position: absolute; }
+  .comp-right .float-tl { top: 22px; left: 22px; transform: rotate(-3deg); }
+  .comp-right .float-br { bottom: 26px; right: 26px; transform: rotate(2deg); }
+
+  /* ── §F — list-row mini avatars ────────────────────────────── */
+  .list-rows {
+    background: var(--paper-soft);
+    border-radius: 28px;
+    overflow: hidden;
+  }
+  .list-rows .head {
+    padding: 22px 28px; background: var(--paper-deep);
+    display: flex; justify-content: space-between; align-items: baseline;
+  }
+  .list-rows .head h3 { font-family: "Lenia"; font-weight: 500; font-size: 18px; margin: 0; }
+  .list-rows .head .meta { font-family: "Lenia"; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-muted); }
+  .list-row {
+    display: grid; grid-template-columns: 60px 1fr auto;
+    gap: 18px; align-items: center;
+    padding: 20px 28px;
+    background: var(--paper-soft);
+    margin-top: 2px;
+  }
+  .list-row .av {
+    width: 44px; height: 44px;
+    border-radius: 50%; display: grid; place-items: center;
+    background: var(--coral-subtle);
+  }
+  .list-row .av.blush { background: var(--blush-subtle); }
+  .list-row .av.mint { background: var(--mint-subtle); }
+  .list-row .av img { width: 80%; height: 80%; object-fit: contain; }
+  .list-row .who { font-family: "Lenia"; font-weight: 500; font-size: 15px; }
+  .list-row .when { font-size: 12px; color: var(--ink-muted); margin-top: 2px; }
+  .list-row .meta-r { font-family: "Lenia"; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-muted); }
+
+  /* ── Footer ───────────────────────────────────────────────── */
+  .footer-rule {
+    margin-top: 96px; padding-top: 24px;
+    border-top: 1px solid var(--ink);
+    display: flex; justify-content: space-between; align-items: baseline;
+    font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--ink-muted); font-weight: 500;
+  }
+
+  /* ── Decision prompt (reused) ──────────────────────────────── */
+  .prompt {
+    background: var(--paper-soft);
+    padding: 40px; margin-top: 24px; position: relative;
+    border-radius: 28px;
+  }
+  .prompt .marker {
+    font-family: "Lenia"; font-weight: 500; font-size: 11px;
+    letter-spacing: 0.18em; color: var(--ink-muted); margin-bottom: 14px; text-transform: uppercase;
+  }
+  .prompt h3 { font-family: "Lenia"; font-weight: 500; font-size: 22px; margin: 0 0 10px; letter-spacing: -0.005em; }
+  .prompt p { font-size: 14px; color: var(--ink-soft); line-height: 1.6; margin: 0; max-width: 60ch; }
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <!-- META STRIP -->
+  <div class="meta">
+    <div class="left">
+      <span><span class="symbol"></span> Grow · The Child Lens</span>
+      <span>Design System v0.1 · Session 02</span>
+    </div>
+    <div>Avatar · Iconography · Stickers</div>
+  </div>
+
+  <!-- HERO -->
+  <header class="hero">
+    <div class="eyebrow">Issue Nº 02 — Vocabulary</div>
+    <h1>The character,<br>the alphabet,<br><em>the marginalia.</em></h1>
+    <p class="lede">With your decisions confirmed (mapping ✓ · palette intensity ✓ · italic discipline ✓), Session 02 builds the visual vocabulary: the avatar component with sizes and states, a 16-glyph icon set, and the editorial decoration — stickers, tags, post-its, hand-underlines.</p>
+  </header>
+
+  <!-- §A — AVATAR HERO BOX -->
+  <section class="section">
+    <div class="section-head">
+      <div class="section-num">§ A — Avatar</div>
+      <div>
+        <h2>The character, in a colored room.</h2>
+        <div class="desc">The avatar lives inside tinted boxes the way a portrait lives inside a frame — not as a mascot. The room sets the phase; the character is just present.</div>
+      </div>
+    </div>
+
+    <div class="avatar-hero">
+      <div class="ah-left">
+        <div class="float-pill fp1"><span class="pill ink">Phase 01 · Embarazo</span></div>
+        <div class="float-pill fp2"><span class="pill rot-l5">−40 w → 0 w</span></div>
+        <h3>Coral.<br>The one that holds the light.</h3>
+        <p>The egg-light in the belly is the metaphor: warm, present, attentive. Used during pregnancy weeks, fertility, and the rainbow-pregnancy mode (in its calm state).</p>
+        <div class="stage"><img src="assets/avatar-coral.png?v=2" alt="Coral character"></div>
+      </div>
+      <div class="ah-right">
+        <div>
+          <div class="pill mint" style="margin-bottom: 24px;">Component spec</div>
+          <h3 style="font-family:'Lenia'; font-weight:500; font-size:24px; margin: 0 0 24px; line-height:1.25; letter-spacing:-0.005em;">Avatar — props in plain language.</h3>
+        </div>
+        <div class="specs-list">
+          <div class="row"><div class="lbl">Phase</div><div class="val">coral · blush · mint <span style="color:var(--ink-muted)">(canon, immutable)</span></div></div>
+          <div class="row"><div class="lbl">Size</div><div class="val">xs 36 · sm 60 · md 100 · lg 160 · xl 220</div></div>
+          <div class="row"><div class="lbl">State</div><div class="val">calm · alert-soft · celebration-quiet · night</div></div>
+          <div class="row"><div class="lbl">Frame</div><div class="val">none · circle · square · tinted-room</div></div>
+          <div class="row"><div class="lbl">Light</div><div class="val">ambient · top-down (only in night state)</div></div>
+        </div>
+        <div style="margin-top: 24px;">
+          <span class="pill rot-l">Cute, but adult</span>
+          <span class="pill rot-r" style="margin-left: 6px;">Smile is the whole emotion</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- SIZES LADDER -->
+    <div class="sizes-box" style="margin-top: 18px;">
+      <div style="display: flex; justify-content: space-between; align-items: baseline;">
+        <h3 style="font-family:'Lenia'; font-weight:500; font-size:18px; margin:0; letter-spacing:-0.005em;">Sizes — five steps, one character.</h3>
+        <span class="pill">Mint · phase 03 shown</span>
+      </div>
+      <div class="sizes-row">
+        <div class="size-cell xs"><div class="frame"><img src="assets/avatar-mint.png?v=2" alt=""></div><span class="name">xs</span><span class="px">36 px</span></div>
+        <div class="size-cell sm"><div class="frame"><img src="assets/avatar-mint.png?v=2" alt=""></div><span class="name">sm</span><span class="px">60 px</span></div>
+        <div class="size-cell md"><div class="frame"><img src="assets/avatar-mint.png?v=2" alt=""></div><span class="name">md</span><span class="px">100 px</span></div>
+        <div class="size-cell lg"><div class="frame"><img src="assets/avatar-mint.png?v=2" alt=""></div><span class="name">lg</span><span class="px">160 px</span></div>
+        <div class="size-cell xl"><div class="frame"><img src="assets/avatar-mint.png?v=2" alt=""></div><span class="name">xl</span><span class="px">220 px</span></div>
+      </div>
+      <p style="font-size: 12px; color: var(--ink-soft); line-height:1.55; margin: 28px 0 0; max-width: 70ch; font-style:italic;">xs and sm use a simplified silhouette derived from the 3D render (cleaner edges, single-pass shading) so the character doesn't disappear in list rows. md and above use the full character.</p>
+    </div>
+
+    <!-- STATES -->
+    <h3 style="font-family:'Lenia'; font-weight:500; font-size:13px; letter-spacing:0.16em; text-transform:uppercase; color:var(--ink-soft); margin: 56px 0 0; padding-bottom:8px; border-bottom: 1px solid var(--line);">Four states · the whole emotional range</h3>
+
+    <div class="states-grid">
+      <div class="state-card calm">
+        <div class="stage"><img src="assets/avatar-mint.png?v=2" alt=""></div>
+        <div class="name">calm</div>
+        <div class="role">default · 95% of usage</div>
+        <p>Eyes-forward, soft smile. The base state for every screen that isn't doing something special.</p>
+      </div>
+      <div class="state-card alert">
+        <div class="stage"><img src="assets/avatar-mint.png?v=2" alt=""></div>
+        <div class="name">alert-soft</div>
+        <div class="role">attention · never alarm</div>
+        <p>Same face. The signal lives in the surrounding card: 1.5px dashed border, an icon, a textual tag. Color is the last cue.</p>
+      </div>
+      <div class="state-card celeb">
+        <div class="stage"><img src="assets/avatar-mint.png?v=2" alt=""></div>
+        <div class="name">celebration-quiet</div>
+        <div class="role">milestone · gentle 600 ms</div>
+        <p>A soft warm glow rises from above. No confetti, no shake. The character does not change — only the light around it.</p>
+      </div>
+      <div class="state-card night dark">
+        <div class="stage"><img src="assets/avatar-mint.png?v=2" alt=""></div>
+        <div class="name">night</div>
+        <div class="role">modo 3am · 22:00 → 06:00</div>
+        <p>Dark surface, a faint top-down warm light. Reads quietly at 03:14 without waking the room.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- §B — ICONOGRAPHY -->
+  <section class="section">
+    <div class="section-head">
+      <div class="section-num">§ B — Iconography</div>
+      <div>
+        <h2>Sixteen glyphs, one stroke weight, one mood.</h2>
+        <div class="desc">A caregiver's alphabet. 1.5px stroke, rounded joins. Reads like a modern obstetrics handbook — never like an emoji set.</div>
+      </div>
+    </div>
+
+    <div class="icon-box">
+      <div class="head">
+        <h3>The Grow icon set · v0.2</h3>
+        <span class="specs">36 glyphs · Lucide-derived · stroke 1.5 · 24 px grid</span>
+      </div>
+
+      <div class="icon-grid">
+        <!-- Row 1 — Cuidado primario -->
+        <div class="icon-cell"><svg viewBox="0 0 24 24"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg><div class="lbl">Sueño</div></div>
+        <div class="icon-cell"><svg viewBox="0 0 24 24"><path d="M9 2h6"/><path d="M10 2v3"/><path d="M14 2v3"/><path d="M9 7c0-1 .5-2 1-2h4c.5 0 1 1 1 2"/><path d="M8 7h8v12a3 3 0 0 1-3 3h-2a3 3 0 0 1-3-3z"/><path d="M8 12h8"/></svg><div class="lbl">Biberón</div></div>
+        <div class="icon-cell"><svg viewBox="0 0 24 24"><path d="M12 21s-8-4.5-8-11a5 5 0 0 1 8-4 5 5 0 0 1 8 4c0 6.5-8 11-8 11z"/><circle cx="12" cy="9" r="1.5"/></svg><div class="lbl">Lactancia</div></div>
+        <div class="icon-cell"><svg viewBox="0 0 24 24"><path d="m18 2 4 4-1.5 1.5"/><path d="m13 7 4 4"/><path d="m11 9 4 4"/><path d="m8 12 4 4"/><path d="m6 14 4 4"/><path d="M19 5 7 17l-3 1 1-3L17 3z"/></svg><div class="lbl">Vacuna</div></div>
+        <div class="icon-cell"><svg viewBox="0 0 24 24"><path d="M9 3v6a4 4 0 0 0 4 4 4 4 0 0 1 4 4v4"/><circle cx="13" cy="18" r="3"/></svg><div class="lbl">Embarazo</div></div>
+        <div class="icon-cell"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><path d="M9 9h.01"/><path d="M15 9h.01"/><path d="M12 16v3"/></svg><div class="lbl">Llanto</div></div>
+        <div class="icon-cell"><svg viewBox="0 0 24 24"><path d="M4.5 12.5 12 5l7.5 7.5"/><path d="M5 11v9a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-9"/><path d="M9 21v-6a3 3 0 0 1 6 0v6"/></svg><div class="lbl">Casa</div></div>
+        <div class="icon-cell"><svg viewBox="0 0 24 24"><path d="M14 2a3 3 0 0 0-3 3v13a4 4 0 0 0 8 0V5a3 3 0 0 0-3-3h-2z"/><path d="M11 8h7"/><path d="M11 14h7"/></svg><div class="lbl">Fiebre</div></div>
+
+        <!-- Row 2 — Datos & calendario -->
+        <div class="icon-cell"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="3" y1="10" x2="21" y2="10"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="16" y1="2" x2="16" y2="6"/></svg><div class="lbl">Calendario</div></div>
+        <div class="icon-cell"><svg viewBox="0 0 24 24"><path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/><path d="M11 6h6"/></svg><div class="lbl">Libro</div></div>
+        <div class="icon-cell"><svg viewBox="0 0 24 24"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2 2"/><path d="M9 2h6"/><path d="M12 2v3"/></svg><div class="lbl">Cronómetro</div></div>
+        <div class="icon-cell"><svg viewBox="0 0 24 24"><path d="M3 21V8l9-5 9 5v13"/><path d="M3 16l5-3 4 2 4-3 5 2"/></svg><div class="lbl">Curva OMS</div></div>
+        <div class="icon-cell"><svg viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="m7 14 3-3 3 3 5-5"/></svg><div class="lbl">Crecimiento</div></div>
+        <div class="icon-cell"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/></svg><div class="lbl">Respirar</div></div>
+        <div class="icon-cell"><svg viewBox="0 0 24 24"><path d="m12 3 2.4 6 6.6.6-5 4.5 1.5 6.4L12 17l-5.5 3.4 1.5-6.4-5-4.5 6.6-.6z"/></svg><div class="lbl">Hito</div></div>
+        <div class="icon-cell"><svg viewBox="0 0 24 24"><path d="M19 14c1.5-1.5 3-3.5 3-5.5a3.5 3.5 0 0 0-7 0 3.5 3.5 0 0 0-7 0c0 2 1.5 4 3 5.5l4 4z"/></svg><div class="lbl">Cuidado</div></div>
+
+        <!-- Row 3 — Cuerpo & vínculo -->
+        <div class="icon-cell"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg><div class="lbl">Persona</div></div>
+        <div class="icon-cell"><svg viewBox="0 0 24 24"><circle cx="9" cy="7" r="3"/><circle cx="17" cy="9" r="2"/><path d="M3 21a6 6 0 0 1 12 0"/><path d="M14 17a4 4 0 0 1 7 0"/></svg><div class="lbl">Pareja</div></div>
+        <div class="icon-cell"><svg viewBox="0 0 24 24"><path d="M21 11.5a8.4 8.4 0 0 1-9 8.4 8.4 8.4 0 0 1-9-8.4A8.4 8.4 0 0 1 12 3a8.4 8.4 0 0 1 9 8.5z"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg><div class="lbl">Bebé</div></div>
+        <div class="icon-cell"><svg viewBox="0 0 24 24"><path d="M20.84 4.6a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.07a5.5 5.5 0 0 0-7.78 7.78l1.06 1.07L12 21.23l7.78-7.78 1.06-1.07a5.5 5.5 0 0 0 0-7.78z"/></svg><div class="lbl">Vínculo</div></div>
+        <div class="icon-cell"><svg viewBox="0 0 24 24"><path d="M21 15a4 4 0 0 1-4 4H8l-5 4V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4z"/></svg><div class="lbl">Chat</div></div>
+        <div class="icon-cell"><svg viewBox="0 0 24 24"><path d="M9 11.5a4 4 0 1 0 6 0V8a3 3 0 0 0-6 0z"/><path d="M12 18v3"/><path d="M9 21h6"/></svg><div class="lbl">Mente</div></div>
+        <div class="icon-cell"><svg viewBox="0 0 24 24"><path d="M12 22a3 3 0 0 0 3-3v-1H9v1a3 3 0 0 0 3 3z"/><path d="M9 18h6V8a3 3 0 0 0-6 0z"/><path d="M5 8h2"/><path d="M17 8h2"/><path d="M5 4h2"/><path d="M17 4h2"/></svg><div class="lbl">Pañal</div></div>
+        <div class="icon-cell"><svg viewBox="0 0 24 24"><path d="M14 4V2h-4v2"/><path d="M5 8a3 3 0 0 1 3-3h8a3 3 0 0 1 3 3v9a5 5 0 0 1-5 5h-4a5 5 0 0 1-5-5z"/><path d="M9 12h6"/></svg><div class="lbl">Medicación</div></div>
+
+        <!-- Row 4 — Estados & sistema -->
+        <div class="icon-cell"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><line x1="12" y1="8" x2="12" y2="13"/><line x1="12" y1="16" x2="12" y2="16.01"/></svg><div class="lbl">Atención</div></div>
+        <div class="icon-cell"><svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg><div class="lbl">OK</div></div>
+        <div class="icon-cell"><svg viewBox="0 0 24 24"><path d="m10.29 3.86-8.16 14.14a2 2 0 0 0 1.71 3h16.32a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12" y2="17.01"/></svg><div class="lbl">Urgente</div></div>
+        <div class="icon-cell"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><div class="lbl">Buscar</div></div>
+        <div class="icon-cell"><svg viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 18 0 9 9 0 0 0-18 0z"/><line x1="12" y1="3" x2="12" y2="21"/><path d="M3 12c2.5-3 6-3 9-3s6.5 0 9 3"/><path d="M3 12c2.5 3 6 3 9 3s6.5 0 9-3"/></svg><div class="lbl">Idiomas</div></div>
+        <div class="icon-cell"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33h0a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51h0a1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82v0a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg><div class="lbl">Ajustes</div></div>
+        <div class="icon-cell"><svg viewBox="0 0 24 24"><path d="M18 8a6 6 0 0 0-9.33-5"/><path d="m10.67 21.33A6 6 0 0 0 18 16"/><path d="M18 8h-6V2"/><path d="M6 16h6v6"/></svg><div class="lbl">Sincr.</div></div>
+        <div class="icon-cell"><svg viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg><div class="lbl">Modo 3AM</div></div>
+        <div class="icon-cell"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg><div class="lbl">Día</div></div>
+        <div class="icon-cell"><svg viewBox="0 0 24 24"><path d="M12 2a8 8 0 0 0-8 8c0 6 8 12 8 12s8-6 8-12a8 8 0 0 0-8-8z"/><circle cx="12" cy="10" r="3"/></svg><div class="lbl">Pediatra</div></div>
+        <div class="icon-cell"><svg viewBox="0 0 24 24"><path d="M3 6.2C3 5 4 4 5.2 4h13.6C20 4 21 5 21 6.2v11.6c0 1.2-1 2.2-2.2 2.2H5.2C4 20 3 19 3 17.8z"/><path d="M3 8h18"/><path d="m7 14 3-3 3 3 4-4"/></svg><div class="lbl">Diario</div></div>
+      </div>
+
+      <div class="icon-usage">
+        <div class="demo">
+          <div class="lbl">Inline · 16 px alongside body</div>
+          <div class="label-row">
+            <svg width="16" height="16" viewBox="0 0 24 24"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+            <span>Anoche durmió 7 h y media — sin despertar.</span>
+          </div>
+          <div class="label-row" style="margin-top: 10px;">
+            <svg width="16" height="16" viewBox="0 0 24 24"><path d="M14 2a3 3 0 0 0-3 3v13a4 4 0 0 0 8 0V5a3 3 0 0 0-3-3h-2z"/><path d="M11 8h7"/><path d="M11 14h7"/></svg>
+            <span>38.4°C · hace 22 minutos · paracetamol pendiente.</span>
+          </div>
+        </div>
+        <div class="demo">
+          <div class="lbl">Stat · 24 px in module card</div>
+          <div class="stack">
+            <svg width="24" height="24" viewBox="0 0 24 24"><path d="m18 2 4 4-1.5 1.5"/><path d="m13 7 4 4"/><path d="m11 9 4 4"/><path d="m8 12 4 4"/><path d="m6 14 4 4"/><path d="M19 5 7 17l-3 1 1-3L17 3z"/></svg>
+            <div>
+              <div style="font-family:'Lenia'; font-weight:500; font-size: 16px;">Triple vírica · 12 m</div>
+              <div style="font-size: 11px; color:var(--ink-muted); letter-spacing: 0.04em;">Lote 23H7AC · Pediatra Dr. Méndez</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- §C — STICKERS / DECORATION -->
+  <section class="section">
+    <div class="section-head">
+      <div class="section-num">§ C — Decoration</div>
+      <div>
+        <h2>Stickers, post-its, badges, hand underlines.</h2>
+        <div class="desc">Editorial marginalia. One or two per section, never more. Slightly rotated, never cute, never decorative-for-decoration.</div>
+      </div>
+    </div>
+
+    <div class="sticker-stage">
+      <div class="float f1"><span class="pill rot-l5"><svg viewBox="0 0 24 24" style="width:1em;height:1em;stroke:currentColor;fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;display:inline-block;vertical-align:-0.15em;margin-right:4px;"><path d="M5 4h10a3 3 0 0 1 3 3v13H8a3 3 0 0 1 -3 -3z"/><path d="M5 17a3 3 0 0 1 3 -3h10"/></svg>Libro de vacunas</span></div>
+      <div class="float f2">
+        <div class="post-it">
+          <div class="body">"Acompañar, no diagnosticar."</div>
+          <div class="src">Manifiesto · canon</div>
+        </div>
+      </div>
+      <div class="float f3"><span class="pill mint">EPDS · 0/30 · ✓</span></div>
+      <div class="float f4">
+        <div class="badge-circle gold">Mes<br>18</div>
+      </div>
+      <div class="float f5"><span class="pill coral">Regresión 4 m</span></div>
+      <div class="float f6"><span class="pill rot-r">Lola · pediatra</span></div>
+
+      <div class="center">
+        <div class="eyb">A page should feel like</div>
+        <h3>reading a <span class="underline-hand">well-edited book</span> — not using a fitness app.</h3>
+      </div>
+    </div>
+
+    <!-- TAG TAXONOMY -->
+    <div class="tags-grid">
+      <div class="tags-card">
+        <div class="head"><h3>Pill · neutral</h3><span class="meta">UI label · meta</span></div>
+        <div class="tag-cloud">
+          <span class="pill">Mes 18</span>
+          <span class="pill">Edad corregida</span>
+          <span class="pill">Lola · pediatra</span>
+          <span class="pill">Última toma 4 h</span>
+          <span class="pill">9.4 kg</span>
+          <span class="pill">F2 · E4</span>
+        </div>
+      </div>
+      <div class="tags-card coral">
+        <div class="head"><h3>Pill · in context</h3><span class="meta">phase-tinted</span></div>
+        <div class="tag-cloud">
+          <span class="pill coral">Embarazo · 32w</span>
+          <span class="pill blush">Bebé · 4m</span>
+          <span class="pill mint">Crianza · 18m</span>
+          <span class="pill gold"><svg viewBox="0 0 24 24" style="width:1em;height:1em;stroke:currentColor;fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;display:inline-block;vertical-align:-0.15em;margin-right:4px;"><path d="M5 4h10a3 3 0 0 1 3 3v13H8a3 3 0 0 1 -3 -3z"/><path d="M5 17a3 3 0 0 1 3 -3h10"/></svg>Vacunas</span>
+          <span class="pill ink">Modo 3AM</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- §D — AVATAR IN COMPOSITION -->
+  <section class="section">
+    <div class="section-head">
+      <div class="section-num">§ D — Composition</div>
+      <div>
+        <h2>How a real screen will hold this together.</h2>
+        <div class="desc">A glimpse of how the avatar, the icons, and the marginalia compose on a Today screen. This is a preview — primitives arrive in Session 03, full screens in Session 05.</div>
+      </div>
+    </div>
+
+    <div class="composition">
+      <div class="comp-left">
+        <div class="eyb"><span class="dot"></span> Hoy · martes 27 abril</div>
+        <h3>Mes 18 — el día empieza despacio.</h3>
+        <p>Tu peque está aprendiendo a esperar. Hoy toca una toma menos y, si os apetece, un paseo corto al parque.</p>
+        <p>Sin presión. Si el día se rompe, lo arreglamos mañana.</p>
+        <div style="margin-top: 22px; display: flex; gap: 8px; flex-wrap: wrap;">
+          <span class="pill mint">Hito · espera turno ✓</span>
+          <span class="pill">Toma 4 h ago</span>
+          <span class="pill gold"><svg viewBox="0 0 24 24" style="width:1em;height:1em;stroke:currentColor;fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;display:inline-block;vertical-align:-0.15em;margin-right:4px;"><path d="M5 4h10a3 3 0 0 1 3 3v13H8a3 3 0 0 1 -3 -3z"/><path d="M5 17a3 3 0 0 1 3 -3h10"/></svg>Próxima vacuna</span>
+        </div>
+      </div>
+      <div class="comp-right">
+        <div class="float float-tl"><span class="pill ink">Crianza · 18m</span></div>
+        <div class="float float-br"><span class="pill rot-r">EPDS · 0/30 ✓</span></div>
+        <div class="avatar-stack"><img src="assets/avatar-mint.png?v=2" alt=""></div>
+      </div>
+    </div>
+
+    <!-- LIST ROWS -->
+    <div class="list-rows" style="margin-top: 18px;">
+      <div class="head">
+        <h3>Diario · últimos eventos</h3>
+        <span class="meta">Avatar · sm 60 · circle frame</span>
+      </div>
+      <div class="list-row">
+        <div class="av blush"><img src="assets/avatar-blush.png?v=2" alt=""></div>
+        <div>
+          <div class="who">Toma · 180 ml</div>
+          <div class="when">Hoy · 02:14 · Modo 3AM</div>
+        </div>
+        <div class="meta-r">Auto-log · ✓</div>
+      </div>
+      <div class="list-row">
+        <div class="av mint"><img src="assets/avatar-mint.png?v=2" alt=""></div>
+        <div>
+          <div class="who">Hito · "agua" como palabra</div>
+          <div class="when">Ayer · 18:32 · grabado por Marta</div>
+        </div>
+        <div class="meta-r">Mes 18</div>
+      </div>
+      <div class="list-row">
+        <div class="av"><img src="assets/avatar-coral.png?v=2" alt=""></div>
+        <div>
+          <div class="who">Cita · 32w eco</div>
+          <div class="when">Mañana · 10:00 · Dr. Méndez</div>
+        </div>
+        <div class="meta-r">Embarazo</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- §E — DECISIONS -->
+  <section class="section">
+    <div class="section-head">
+      <div class="section-num">§ E — Decisions</div>
+      <div>
+        <h2>Two small things to confirm before Session 03.</h2>
+        <div class="desc">Session 03 builds primitives (Button · Input · Card · Modal/Sheet · Bottom Nav · Phone frame). These two questions affect how those primitives are drawn.</div>
+      </div>
+    </div>
+
+    <div class="prompt">
+      <div class="marker">Decision · 04 · Tinted-room boxes</div>
+      <h3>Adopt the colored-box pattern as a primary section template?</h3>
+      <p>Like the boxes you see throughout this page — a tinted background (coral/blush/mint/gold subtle) with a 1px tinted border, holding a heading + body + occasional sticker. This becomes the ScreenSection / LandingSection. Default proceed if you say go.</p>
+    </div>
+
+    <div class="prompt">
+      <div class="marker">Decision · 05 · Avatar at sm/xs</div>
+      <h3>The 3D render or a 2D simplified silhouette for sizes ≤ 60 px?</h3>
+      <p>The current page uses the same 3D PNG for every size — at xs 36 it gets soft-edged. For Session 03 I can vectorize a flat 2D silhouette derived from each character (single fill, no shading) so list rows and chips stay crisp. Recommended.</p>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <div class="footer-rule">
+    <div>Grow · Design System v0.1 · Session 02 / 08</div>
+    <div>Made by humans, for humans.</div>
+  </div>
+
+</div>
+
+</body>
+</html>

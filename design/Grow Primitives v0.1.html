@@ -1,0 +1,1950 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Grow · Session 03 — Primitives</title>
+<style>
+  @font-face { font-family: "Lenia"; src: url("assets/fonts/LeniaSans-Light.ttf") format("truetype"); font-weight: 300; font-display: swap; }
+  @font-face { font-family: "Lenia"; src: url("assets/fonts/LeniaSans-Regular.ttf") format("truetype"); font-weight: 400; font-display: swap; }
+  @font-face { font-family: "Lenia"; src: url("assets/fonts/LeniaSans-Medium.ttf") format("truetype"); font-weight: 500; font-display: swap; }
+  @font-face { font-family: "Lenia"; src: url("assets/fonts/LeniaSans-Bold.ttf") format("truetype"); font-weight: 700; font-display: swap; }
+  @font-face { font-family: "Lenia"; src: url("assets/fonts/LeniaSans-Italic.ttf") format("truetype"); font-weight: 400; font-style: italic; font-display: swap; }
+  @font-face { font-family: "Helvena"; src: url("assets/fonts/Helvena-Regular.ttf") format("truetype"); font-weight: 400; font-display: swap; }
+  @font-face { font-family: "Helvena"; src: url("assets/fonts/Helvena-Medium.ttf") format("truetype"); font-weight: 500; font-display: swap; }
+  @font-face { font-family: "Helvena"; src: url("assets/fonts/Helvena-Semibold.ttf") format("truetype"); font-weight: 600; font-display: swap; }
+  @font-face { font-family: "Helvena"; src: url("assets/fonts/Helvena-Bold.ttf") format("truetype"); font-weight: 700; font-display: swap; }
+
+  :root {
+    --paper: #FAF7F0;
+    --paper-soft: #F2EDE0;
+    --paper-deep: #E8E1CF;
+    --ink: #1A1A1A;
+    --ink-warm: #2A211B;
+    --ink-soft: #4D4D4D;
+    --ink-muted: #888888;
+    --ink-faint: #BFBAA8;
+    --line: #E2DDD1;
+    --line-strong: #C9C2B2;
+
+    /* Categories — 8 tints + ink (synced with Foundations) */
+    --cat-embarazo-tint:    #FBE5D6; --cat-embarazo-ink:    #B45F2F;
+    --cat-alimentacion-tint:#F8E4DD; --cat-alimentacion-ink:#B47465;
+    --cat-sueno-tint:       #E5EDDF; --cat-sueno-ink:       #6E8A66;
+    --cat-vacunas-tint:     #F6EBC9; --cat-vacunas-ink:     #8E7222;
+    --cat-salud-tint:       #E6E2D6; --cat-salud-ink:       #5C5648;
+    --cat-medicacion-tint:  #DDE6E8; --cat-medicacion-ink:  #4D6770;
+    --cat-desarrollo-tint:  #E6DFE9; --cat-desarrollo-ink:  #6A5A7E;
+    --cat-bienestar-tint:   #EBE0D2; --cat-bienestar-ink:   #846238;
+
+    --coral-subtle: #FBE5D6;
+    --coral-base:   #F2A57A;
+    --coral-strong: #D67742;
+    --blush-subtle: #F8E4DD;
+    --blush-base:   #EFC2B5;
+    --blush-strong: #D89A89;
+    --mint-subtle:  #E5EDDF;
+    --mint-base:    #BFD2B0;
+    --mint-strong:  #8FAE85;
+    --gold-subtle:  #F6EBC9;
+    --gold-base:    #E8C97A;
+    --gold-strong:  #B8973F;
+
+    --night-bg: #1A1D24;
+    --night-surface: #2A2E36;
+    --night-surface-2: #353A44;
+    --night-fg: #E8E6DF;
+    --night-muted: #908A7E;
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; }
+  body {
+    font-family: "Helvena", "Helvetica Neue", system-ui, sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    font-size: 15px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .page { max-width: 1180px; margin: 0 auto; padding: 64px 40px 160px; }
+
+  /* ── Top meta ─────────────────────────────────────────────── */
+  .meta {
+    display: flex; justify-content: space-between; align-items: baseline;
+    border-top: 1px solid var(--ink);
+    border-bottom: 1px solid var(--line-strong);
+    padding: 14px 0 12px;
+    font-size: 11px; text-transform: uppercase; letter-spacing: 0.14em;
+    color: var(--ink-soft); font-weight: 500;
+  }
+  .meta .left { display: flex; gap: 20px; align-items: baseline; }
+  .meta .symbol { width: 16px; height: 16px; background: var(--mint-base); border-radius: 50%; display: inline-block; transform: translateY(3px); }
+
+  /* ── Hero ──────────────────────────────────────────────────── */
+  .hero { padding: 80px 0 56px; border-bottom: 1px solid var(--line); }
+  .hero .eyebrow { font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-muted); font-weight: 500; margin-bottom: 24px; }
+  .hero h1 { font-family: "Lenia"; font-weight: 500; font-size: 64px; line-height: 1.05; letter-spacing: -0.015em; margin: 0 0 22px; max-width: 16ch; text-wrap: balance; }
+  .hero h1 em { font-style: italic; color: var(--ink-soft); }
+  .hero .lede { max-width: 56ch; font-size: 17px; line-height: 1.6; color: var(--ink-soft); }
+
+  /* ── Section frame ─────────────────────────────────────────── */
+  .section { padding: 80px 0 24px; border-bottom: 1px solid var(--line); }
+  .section:last-of-type { border-bottom: none; }
+  .section-head {
+    display: grid; grid-template-columns: 180px 1fr; gap: 40px; align-items: baseline;
+    margin-bottom: 40px;
+  }
+  .section-num {
+    font-family: "Lenia"; font-size: 12px; font-weight: 500;
+    letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-muted);
+    padding-top: 10px; border-top: 1px solid var(--ink);
+  }
+  .section-head h2 {
+    font-family: "Lenia"; font-weight: 500; font-size: 38px; line-height: 1.1;
+    letter-spacing: -0.015em; margin: 0 0 14px; max-width: 22ch;
+  }
+  .section-head .desc { font-size: 15px; line-height: 1.6; color: var(--ink-soft); max-width: 56ch; }
+
+  /* ── Specimen frame (no borders, big radii) ─────────────────── */
+  .spec {
+    background: var(--paper-soft);
+    border-radius: 28px;
+    padding: 40px;
+    position: relative;
+  }
+  .spec.dark { background: var(--night-bg); color: var(--night-fg); }
+  .spec.coral { background: var(--coral-subtle); }
+  .spec.mint  { background: var(--mint-subtle); }
+  .spec.gold  { background: var(--gold-subtle); }
+  .spec.blush { background: var(--blush-subtle); }
+
+  .spec-head {
+    display: flex; justify-content: space-between; align-items: baseline;
+    margin-bottom: 24px;
+  }
+  .spec-head h3 {
+    font-family: "Lenia"; font-weight: 500; font-size: 22px; margin: 0;
+    letter-spacing: -0.005em;
+  }
+  .spec-head .meta-r {
+    font-family: "Lenia"; font-size: 11px; letter-spacing: 0.14em;
+    text-transform: uppercase; color: var(--ink-muted);
+  }
+  .spec.dark .spec-head .meta-r { color: var(--night-muted); }
+  .spec-row {
+    display: flex; gap: 14px; flex-wrap: wrap; align-items: center;
+  }
+  .spec-row + .spec-row { margin-top: 18px; }
+  .spec-label {
+    font-family: "Lenia"; font-size: 10px; letter-spacing: 0.16em;
+    text-transform: uppercase; color: var(--ink-muted);
+    width: 100%; margin-bottom: 4px; font-weight: 500;
+  }
+  .spec.dark .spec-label { color: var(--night-muted); }
+
+  /* ╔════════════════════════════════════════════════════════════╗
+     ║  BUTTON                                                    ║
+     ╚════════════════════════════════════════════════════════════╝ */
+  .btn {
+    --h: 44px;
+    display: inline-flex; align-items: center; justify-content: center;
+    gap: 8px; height: var(--h); padding: 0 22px;
+    font-family: "Helvena"; font-size: 14px; font-weight: 500;
+    border-radius: 999px;
+    border: none; cursor: pointer;
+    transition: transform 220ms cubic-bezier(0.2,0.8,0.2,1), background 220ms, color 220ms, box-shadow 220ms;
+    letter-spacing: -0.005em;
+    white-space: nowrap;
+  }
+  .btn:active { transform: translateY(1px); }
+  .btn.sm { --h: 36px; padding: 0 16px; font-size: 13px; }
+  .btn.lg { --h: 52px; padding: 0 28px; font-size: 15px; }
+  .btn.pill { border-radius: 999px; }
+
+  .btn-primary { background: var(--ink-warm); color: var(--paper); }
+  .btn-primary:hover { background: #3A2E25; }
+  .btn-primary[disabled] { background: var(--ink-faint); color: var(--paper-soft); cursor: not-allowed; }
+
+  .btn-secondary { background: var(--paper); color: var(--ink-warm); box-shadow: inset 0 0 0 1.5px var(--ink-warm); }
+  .btn-secondary:hover { background: var(--paper-deep); }
+
+  .btn-ghost { background: transparent; color: var(--ink); }
+  .btn-ghost:hover { background: rgba(26,26,26,0.06); }
+
+  .btn-coral { background: var(--coral-base); color: #4A2510; }
+  .btn-coral:hover { background: var(--coral-strong); color: var(--paper); }
+
+  .btn-mint { background: var(--mint-base); color: #2F4029; }
+  .btn-mint:hover { background: var(--mint-strong); color: var(--paper); }
+
+  .btn-soft { background: var(--paper); color: var(--ink); }
+  .btn-soft:hover { background: var(--paper-deep); }
+
+  .btn-link {
+    background: transparent; color: var(--ink); padding: 0; height: auto;
+    border-radius: 0;
+    font-weight: 500;
+    background-image: linear-gradient(transparent 86%, var(--coral-strong) 86%, var(--coral-strong) 96%, transparent 96%);
+  }
+  .btn-link:hover { color: var(--coral-strong); }
+
+  .btn-danger-soft { background: var(--coral-subtle); color: #8E4A22; }
+  .btn-danger-soft:hover { background: var(--coral-base); color: #4A2510; }
+
+  /* dark mode buttons */
+  .spec.dark .btn-primary { background: var(--paper); color: var(--ink); }
+  .spec.dark .btn-secondary { background: transparent; color: var(--night-fg); box-shadow: inset 0 0 0 1.5px var(--night-fg); }
+  .spec.dark .btn-ghost { color: var(--night-fg); }
+  .spec.dark .btn-ghost:hover { background: rgba(255,255,255,0.06); }
+
+  /* IconButton */
+  .icon-btn {
+    display: inline-grid; place-items: center;
+    width: 44px; height: 44px; border-radius: 999px;
+    background: var(--paper); color: var(--ink);
+    border: none; cursor: pointer;
+    transition: background 220ms, transform 220ms;
+  }
+  .icon-btn:active { transform: scale(0.96); }
+  .icon-btn.sm { width: 36px; height: 36px; }
+  .icon-btn.lg { width: 52px; height: 52px; }
+  .icon-btn.coral { background: var(--coral-subtle); color: var(--coral-strong); }
+  .icon-btn.mint { background: var(--mint-subtle); color: #4F6647; }
+  .icon-btn.ink { background: var(--ink-warm); color: var(--paper); }
+  .icon-btn svg { width: 20px; height: 20px; stroke: currentColor; fill: none; stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round; }
+  .icon-btn.lg svg { width: 24px; height: 24px; }
+
+  /* FAB — central in bottom nav */
+  .fab {
+    width: 60px; height: 60px; border-radius: 999px;
+    background: var(--coral-base); color: #4A2510;
+    display: grid; place-items: center;
+    box-shadow: 0 6px 18px rgba(214,119,66,0.28);
+    border: none; cursor: pointer;
+  }
+  .fab svg { width: 26px; height: 26px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+  /* ╔════════════════════════════════════════════════════════════╗
+     ║  INPUT                                                     ║
+     ╚════════════════════════════════════════════════════════════╝ */
+  .field { display: flex; flex-direction: column; gap: 8px; min-width: 240px; flex: 1; }
+  .field label {
+    font-family: "Lenia"; font-size: 10px; font-weight: 500;
+    letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-muted);
+  }
+  .input, .textarea, .select {
+    font-family: "Helvena"; font-size: 15px; line-height: 1.4;
+    background: var(--paper);
+    border: none; border-radius: 16px;
+    padding: 14px 18px;
+    color: var(--ink);
+    box-shadow: inset 0 0 0 1.5px transparent;
+    transition: box-shadow 220ms, background 220ms;
+    width: 100%;
+  }
+  .input::placeholder, .textarea::placeholder { color: var(--ink-faint); }
+  .input:focus, .textarea:focus, .select:focus {
+    outline: none;
+    box-shadow: inset 0 0 0 1.5px var(--ink);
+  }
+  .input.error { box-shadow: inset 0 0 0 1.5px var(--coral-strong); }
+  .field .err {
+    font-size: 12px; color: var(--coral-strong); display: flex; align-items: center; gap: 6px;
+  }
+  .field .help { font-size: 12px; color: var(--ink-muted); }
+  .textarea { min-height: 110px; resize: vertical; }
+
+  /* search */
+  .search-wrap { position: relative; }
+  .search-wrap svg {
+    position: absolute; left: 18px; top: 50%; transform: translateY(-50%);
+    width: 18px; height: 18px; stroke: var(--ink-muted);
+    fill: none; stroke-width: 1.5; stroke-linecap: round;
+  }
+  .search-wrap .input { padding-left: 44px; }
+
+  /* toggle — coral default · family modifiers (.mint .gold .blush .ink) */
+  .toggle {
+    position: relative; width: 44px; height: 26px;
+    background: var(--paper-deep); border-radius: 999px;
+    cursor: pointer; transition: background 220ms;
+    border: 1px solid var(--line);
+  }
+  .toggle::after {
+    content: ""; position: absolute; top: 2px; left: 2px;
+    width: 20px; height: 20px; background: var(--paper);
+    border-radius: 999px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.18);
+    transition: left 220ms cubic-bezier(0.2,0.8,0.2,1);
+  }
+  .toggle.on {
+    background: linear-gradient(180deg, var(--coral-base) 0%, var(--coral-strong) 100%);
+    border-color: var(--coral-strong);
+  }
+  .toggle.on::after { left: 21px; }
+  .toggle.mint.on  { background: linear-gradient(180deg, var(--mint-base) 0%, var(--mint-strong) 100%); border-color: var(--mint-strong); }
+  .toggle.gold.on  { background: linear-gradient(180deg, var(--gold-base) 0%, var(--gold-strong) 100%); border-color: var(--gold-strong); }
+  .toggle.blush.on { background: linear-gradient(180deg, var(--blush-base) 0%, var(--blush-strong) 100%); border-color: var(--blush-strong); }
+  .toggle.ink.on   { background: var(--ink-warm); border-color: var(--ink-warm); }
+
+  /* checkbox / radio — coral default · family modifiers */
+  .check, .radio {
+    width: 22px; height: 22px;
+    background: var(--paper);
+    border-radius: 6px;
+    display: inline-grid; place-items: center;
+    box-shadow: inset 0 0 0 1.5px var(--line-strong);
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: background 200ms, box-shadow 200ms;
+  }
+  .radio { border-radius: 999px; }
+  .check.on {
+    background: linear-gradient(180deg, var(--coral-base) 0%, var(--coral-strong) 100%);
+    box-shadow: inset 0 0 0 1.5px var(--coral-strong), 0 1px 3px rgba(214,119,66,0.20);
+  }
+  .check.on::after {
+    content: ""; width: 10px; height: 6px;
+    border-left: 1.5px solid #4A2510;
+    border-bottom: 1.5px solid #4A2510;
+    transform: rotate(-45deg) translate(1px, -1px);
+  }
+  .check.mint.on  { background: linear-gradient(180deg, var(--mint-base) 0%, var(--mint-strong) 100%); box-shadow: inset 0 0 0 1.5px var(--mint-strong), 0 1px 3px rgba(118,162,105,0.22); }
+  .check.mint.on::after  { border-color: #2E3F26; }
+  .check.gold.on  { background: linear-gradient(180deg, var(--gold-base) 0%, var(--gold-strong) 100%); box-shadow: inset 0 0 0 1.5px var(--gold-strong), 0 1px 3px rgba(214,178,96,0.22); }
+  .check.gold.on::after  { border-color: #4A3A12; }
+  .check.blush.on { background: linear-gradient(180deg, var(--blush-base) 0%, var(--blush-strong) 100%); box-shadow: inset 0 0 0 1.5px var(--blush-strong), 0 1px 3px rgba(214,162,152,0.22); }
+  .check.blush.on::after { border-color: #5A2A2A; }
+  .check.ink.on   { background: var(--ink-warm); box-shadow: inset 0 0 0 1.5px var(--ink-warm); }
+  .check.ink.on::after { border-color: var(--paper); }
+
+  .radio.on {
+    box-shadow: inset 0 0 0 1.5px var(--coral-strong);
+    background: var(--coral-subtle);
+  }
+  .radio.on::after {
+    content: "";
+    width: 10px; height: 10px;
+    background: linear-gradient(180deg, var(--coral-base) 0%, var(--coral-strong) 100%);
+    border-radius: 999px;
+    box-shadow: 0 1px 2px rgba(214,119,66,0.30);
+  }
+  .radio.mint.on  { box-shadow: inset 0 0 0 1.5px var(--mint-strong); background: var(--mint-subtle); }
+  .radio.mint.on::after  { background: linear-gradient(180deg, var(--mint-base) 0%, var(--mint-strong) 100%); box-shadow: 0 1px 2px rgba(118,162,105,0.30); }
+  .radio.gold.on  { box-shadow: inset 0 0 0 1.5px var(--gold-strong); background: var(--gold-subtle); }
+  .radio.gold.on::after  { background: linear-gradient(180deg, var(--gold-base) 0%, var(--gold-strong) 100%); box-shadow: 0 1px 2px rgba(214,178,96,0.30); }
+  .radio.blush.on { box-shadow: inset 0 0 0 1.5px var(--blush-strong); background: var(--blush-subtle); }
+  .radio.blush.on::after { background: linear-gradient(180deg, var(--blush-base) 0%, var(--blush-strong) 100%); box-shadow: 0 1px 2px rgba(214,162,152,0.30); }
+  .radio.ink.on   { box-shadow: inset 0 0 0 1.5px var(--ink-warm); background: var(--paper); }
+  .radio.ink.on::after   { background: var(--ink-warm); }
+  .control-row { display: flex; gap: 12px; align-items: center; font-size: 14px; color: var(--ink); }
+
+  /* chip — selectable · removable · category-aware
+     Default unselected: paper-soft pill, ink-soft text.
+     Selected: category tint + ink, with 1.5px ink-color border.
+     Variants .embarazo .alimentacion .sueno .vacunas .salud .medicacion .desarrollo .bienestar
+     map directly to the 8 category tokens. Plus brand variants .coral .mint .gold .blush. */
+  .chip {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: var(--paper-soft);
+    border: 1.5px solid transparent;
+    border-radius: 999px; padding: 6px 14px;
+    font-family: "Lenia"; font-size: 12px; font-weight: 500;
+    color: var(--ink-soft); letter-spacing: -0.005em;
+    cursor: pointer; transition: background 200ms, color 200ms, border-color 200ms;
+    user-select: none;
+  }
+  .chip .emoji { font-size: 13px; line-height: 1; }
+  .chip:hover { background: var(--paper-deep); color: var(--ink-warm); }
+  .chip.selected {
+    background: var(--coral-subtle);
+    color: #8E4A22;
+    border-color: var(--coral-base);
+  }
+
+  /* category variants — all selectable, picking up cat-* tokens */
+  .chip.embarazo.selected     { background: var(--cat-embarazo-tint);     color: var(--cat-embarazo-ink);     border-color: var(--cat-embarazo-ink); }
+  .chip.alimentacion.selected { background: var(--cat-alimentacion-tint); color: var(--cat-alimentacion-ink); border-color: var(--cat-alimentacion-ink); }
+  .chip.sueno.selected        { background: var(--cat-sueno-tint);        color: var(--cat-sueno-ink);        border-color: var(--cat-sueno-ink); }
+  .chip.vacunas.selected      { background: var(--cat-vacunas-tint);      color: var(--cat-vacunas-ink);      border-color: var(--cat-vacunas-ink); }
+  .chip.salud.selected        { background: var(--cat-salud-tint);        color: var(--cat-salud-ink);        border-color: var(--cat-salud-ink); }
+  .chip.medicacion.selected   { background: var(--cat-medicacion-tint);   color: var(--cat-medicacion-ink);   border-color: var(--cat-medicacion-ink); }
+  .chip.desarrollo.selected   { background: var(--cat-desarrollo-tint);   color: var(--cat-desarrollo-ink);   border-color: var(--cat-desarrollo-ink); }
+  .chip.bienestar.selected    { background: var(--cat-bienestar-tint);    color: var(--cat-bienestar-ink);    border-color: var(--cat-bienestar-ink); }
+
+  /* unselected category preview — soft tint without border */
+  .chip.embarazo     { background: color-mix(in oklab, var(--cat-embarazo-tint) 35%, var(--paper)); color: var(--cat-embarazo-ink); }
+  .chip.alimentacion { background: color-mix(in oklab, var(--cat-alimentacion-tint) 35%, var(--paper)); color: var(--cat-alimentacion-ink); }
+  .chip.sueno        { background: color-mix(in oklab, var(--cat-sueno-tint) 35%, var(--paper)); color: var(--cat-sueno-ink); }
+  .chip.vacunas      { background: color-mix(in oklab, var(--cat-vacunas-tint) 35%, var(--paper)); color: var(--cat-vacunas-ink); }
+  .chip.salud        { background: color-mix(in oklab, var(--cat-salud-tint) 35%, var(--paper)); color: var(--cat-salud-ink); }
+  .chip.medicacion   { background: color-mix(in oklab, var(--cat-medicacion-tint) 35%, var(--paper)); color: var(--cat-medicacion-ink); }
+  .chip.desarrollo   { background: color-mix(in oklab, var(--cat-desarrollo-tint) 35%, var(--paper)); color: var(--cat-desarrollo-ink); }
+  .chip.bienestar    { background: color-mix(in oklab, var(--cat-bienestar-tint) 35%, var(--paper)); color: var(--cat-bienestar-ink); }
+
+  /* state variants (legacy, keep) */
+  .chip.gold  { background: var(--gold-subtle);  color: #6E5A2A; }
+  .chip.mint  { background: var(--mint-subtle);  color: #4F6647; }
+  .chip.coral { background: var(--coral-subtle); color: #8E4A22; }
+  .chip.blush { background: var(--blush-subtle); color: #8E4A4A; }
+  .chip.mono {
+    font-family: "JetBrains Mono", "SF Mono", monospace;
+    background: var(--paper-deep); color: var(--ink-warm); letter-spacing: 0.04em;
+    font-size: 11px;
+  }
+  .chip .x {
+    opacity: 0.5; margin-left: 2px;
+    width: 14px; height: 14px; border-radius: 999px;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-size: 11px; line-height: 1;
+  }
+  .chip:hover .x { opacity: 0.85; }
+
+  /* segmented selector — single-pick from 2–4 short options
+     Track is gentle paper-soft. Selected thumb pulls the family color
+     (.coral default, .mint, .gold, .blush). Inner gradient + soft drop
+     shadow tinted to the family. Small dot on the active label. */
+  .seg-group {
+    display: inline-flex;
+    background: var(--paper-soft);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 4px;
+    gap: 0;
+    width: 100%;
+  }
+  .seg-group.cols-2 .seg-opt,
+  .seg-group.cols-3 .seg-opt,
+  .seg-group.cols-4 .seg-opt { flex: 1; }
+  .seg-opt {
+    position: relative;
+    padding: 9px 12px;
+    border-radius: 10px;
+    background: transparent;
+    border: 0;
+    font-family: "Lenia"; font-weight: 500; font-size: 13px;
+    color: var(--ink-soft); letter-spacing: -0.005em;
+    text-align: center;
+    cursor: pointer;
+    user-select: none;
+    transition: color 200ms ease, background 240ms ease;
+    display: flex; align-items: center; justify-content: center; gap: 7px;
+  }
+  .seg-opt::before {
+    content: "";
+    width: 5px; height: 5px;
+    border-radius: 50%;
+    background: currentColor;
+    opacity: 0;
+    transform: scale(0.4);
+    transition: opacity 220ms ease, transform 240ms cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  .seg-opt:hover { color: var(--ink-warm); }
+  .seg-opt.selected::before { opacity: 1; transform: scale(1); }
+
+  /* default = coral family */
+  .seg-opt.selected {
+    background: linear-gradient(180deg, var(--coral-base) 0%, var(--coral-strong) 100%);
+    color: #4A2510;
+    box-shadow:
+      0 2px 6px rgba(214, 119, 66, 0.30),
+      inset 0 1px 0 rgba(255,255,255,0.40);
+  }
+  /* family modifiers on the GROUP */
+  .seg-group.mint .seg-opt.selected {
+    background: linear-gradient(180deg, var(--mint-base) 0%, var(--mint-strong) 100%);
+    color: #2E3F26;
+    box-shadow:
+      0 2px 6px rgba(118, 162, 105, 0.32),
+      inset 0 1px 0 rgba(255,255,255,0.40);
+  }
+  .seg-group.gold .seg-opt.selected {
+    background: linear-gradient(180deg, var(--gold-base) 0%, var(--gold-strong) 100%);
+    color: #4A3A12;
+    box-shadow:
+      0 2px 6px rgba(214, 178, 96, 0.32),
+      inset 0 1px 0 rgba(255,255,255,0.40);
+  }
+  .seg-group.blush .seg-opt.selected {
+    background: linear-gradient(180deg, var(--blush-base) 0%, var(--blush-strong) 100%);
+    color: #5A2A2A;
+    box-shadow:
+      0 2px 6px rgba(214, 162, 152, 0.32),
+      inset 0 1px 0 rgba(255,255,255,0.40);
+  }
+  /* ink-warm family — quiet, neutral */
+  .seg-group.ink .seg-opt.selected {
+    background: var(--ink-warm);
+    color: var(--paper);
+    box-shadow:
+      0 2px 6px rgba(0,0,0,0.18),
+      inset 0 1px 0 rgba(255,255,255,0.10);
+  }
+
+  /* ╔════════════════════════════════════════════════════════════╗
+     ║  CARD                                                      ║
+     ╚════════════════════════════════════════════════════════════╝ */
+  .cards-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+  .card-base {
+    background: var(--paper);
+    border-radius: 24px;
+    padding: 28px 26px;
+  }
+  .card-base h4 {
+    font-family: "Lenia"; font-weight: 500; font-size: 18px; margin: 0 0 8px;
+    letter-spacing: -0.005em;
+  }
+  .card-base .body { font-size: 13px; line-height: 1.55; color: var(--ink-soft); margin: 0; }
+  .card-base .eyb {
+    font-family: "Lenia"; font-size: 10px; letter-spacing: 0.16em;
+    text-transform: uppercase; color: var(--ink-muted);
+    margin-bottom: 14px; font-weight: 500;
+  }
+  .card-base .meta-row {
+    display: flex; justify-content: space-between; align-items: baseline;
+    margin-top: 18px; padding-top: 16px;
+    border-top: 1px dashed var(--line-strong);
+    font-size: 11px; color: var(--ink-muted); letter-spacing: 0.06em;
+  }
+
+  .card-elevated { box-shadow: 0 1px 0 rgba(0,0,0,0.02), 0 8px 24px rgba(26,26,26,0.04); }
+  .card-dashed {
+    background: transparent;
+    box-shadow: inset 0 0 0 1.5px var(--line-strong);
+  }
+  .card-alert {
+    background: var(--coral-subtle);
+    box-shadow: inset 0 0 0 1.5px var(--coral-base);
+  }
+  .card-alert .eyb { color: #8E4A22; }
+  .card-alert .body { color: #5C3923; }
+  .card-vacuna {
+    background: var(--gold-subtle);
+  }
+  .card-vacuna .eyb { color: #6E5A2A; }
+  .card-vacuna .body { color: #5A4720; }
+  .card-vacuna .meta-row { border-top-color: var(--gold-base); color: #6E5A2A; }
+
+  /* ╔════════════════════════════════════════════════════════════╗
+     ║  MODAL & SHEET                                             ║
+     ╚════════════════════════════════════════════════════════════╝ */
+  .surfaces { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 18px; }
+  .surface-stage {
+    background: var(--paper-deep);
+    border-radius: 28px;
+    padding: 36px;
+    min-height: 420px;
+    position: relative;
+    display: grid; place-items: center;
+  }
+  .modal {
+    background: var(--paper);
+    border-radius: 22px;
+    padding: 32px 30px 26px;
+    max-width: 360px;
+    box-shadow: 0 20px 60px rgba(26,26,26,0.16);
+  }
+  .modal h4 {
+    font-family: "Lenia"; font-weight: 500; font-size: 22px; margin: 0 0 8px; line-height: 1.25;
+    letter-spacing: -0.005em;
+  }
+  .modal p { font-size: 14px; color: var(--ink-soft); line-height: 1.55; margin: 0 0 22px; }
+  .modal .actions { display: flex; gap: 10px; justify-content: flex-end; }
+
+  .sheet-stage {
+    background: var(--paper-deep);
+    border-radius: 28px;
+    padding: 0;
+    min-height: 420px;
+    overflow: hidden;
+    position: relative;
+  }
+  .sheet-stage::before {
+    content: ""; position: absolute; inset: 0;
+    background:
+      linear-gradient(transparent 0%, transparent 60%, rgba(0,0,0,0.08) 100%);
+  }
+  .sheet {
+    position: absolute; left: 0; right: 0; bottom: 0;
+    background: var(--paper);
+    border-radius: 24px 24px 0 0;
+    padding: 18px 24px 28px;
+  }
+  .sheet .grabber {
+    width: 40px; height: 4px;
+    background: var(--line-strong);
+    border-radius: 999px;
+    margin: 0 auto 18px;
+  }
+  .sheet h4 {
+    font-family: "Lenia"; font-weight: 500; font-size: 18px;
+    margin: 0 0 14px; letter-spacing: -0.005em;
+  }
+  .quick-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px;
+  }
+  .quick-cell {
+    background: var(--paper-soft);
+    border-radius: 16px;
+    padding: 14px 8px;
+    text-align: center;
+    cursor: pointer;
+  }
+  .quick-cell svg {
+    width: 22px; height: 22px; stroke: var(--ink); fill: none;
+    stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round;
+  }
+  .quick-cell .lbl { font-size: 11px; margin-top: 6px; color: var(--ink); font-weight: 500; }
+
+  /* ╔════════════════════════════════════════════════════════════╗
+     ║  TOAST / BANNER                                            ║
+     ╚════════════════════════════════════════════════════════════╝ */
+  .toast {
+    display: flex; gap: 12px; align-items: flex-start;
+    background: var(--paper);
+    border-radius: 16px;
+    padding: 14px 18px;
+    max-width: 420px;
+    box-shadow: 0 6px 24px rgba(26,26,26,0.06);
+  }
+  .toast .ico { width: 24px; height: 24px; flex-shrink: 0; display: grid; place-items: center; border-radius: 999px; background: var(--paper-deep); }
+  .toast .ico svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .toast .body { flex: 1; }
+  .toast .body strong { display: block; font-family: "Lenia"; font-weight: 500; font-size: 14px; margin-bottom: 2px; }
+  .toast .body span { font-size: 12px; color: var(--ink-soft); line-height: 1.45; }
+  .toast.ok { background: var(--mint-subtle); }
+  .toast.ok .ico { background: var(--mint-base); color: #2F4029; }
+  .toast.attention { background: var(--coral-subtle); }
+  .toast.attention .ico { background: var(--coral-base); color: #4A2510; }
+  .toast.info { background: var(--gold-subtle); }
+  .toast.info .ico { background: var(--gold-base); color: #5A4720; }
+  .toast.urgent { background: var(--ink-warm); color: var(--paper); }
+  .toast.urgent .ico { background: var(--paper); color: var(--ink-warm); }
+  .toast.urgent .body span { color: var(--ink-faint); }
+
+  /* ╔════════════════════════════════════════════════════════════╗
+     ║  PHONE FRAME + BOTTOM NAV                                  ║
+     ╚════════════════════════════════════════════════════════════╝ */
+  .phones-row {
+    display: grid; grid-template-columns: repeat(2, 1fr); gap: 32px;
+    align-items: start;
+  }
+  .phone-wrap {
+    display: flex; flex-direction: column; align-items: center; gap: 14px;
+  }
+  .phone {
+    width: 360px; height: 720px;
+    background: var(--paper);
+    border-radius: 44px;
+    padding: 14px;
+    box-shadow: 0 1px 0 rgba(0,0,0,0.04), 0 18px 40px rgba(26,26,26,0.08);
+    position: relative;
+  }
+  .phone.dark { background: var(--night-bg); }
+  .phone-screen {
+    width: 100%; height: 100%;
+    background: var(--paper);
+    border-radius: 32px;
+    overflow: hidden;
+    position: relative;
+  }
+  .phone.dark .phone-screen { background: var(--night-bg); color: var(--night-fg); }
+  .phone-status {
+    position: absolute; top: 14px; left: 0; right: 0;
+    height: 28px;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 0 28px;
+    font-family: "Lenia"; font-size: 12px; font-weight: 500;
+    color: var(--ink); z-index: 5;
+  }
+  .phone.dark .phone-status { color: var(--night-fg); }
+  .phone-status .indicators { display: flex; gap: 6px; align-items: center; }
+  .phone-status .indicators span { display: inline-block; width: 14px; height: 8px; background: currentColor; border-radius: 2px; opacity: 0.85; }
+
+  .phone-content {
+    padding: 60px 22px 110px;
+    height: 100%; overflow: hidden;
+  }
+  .phone-content .eyb {
+    font-family: "Lenia"; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--ink-muted); font-weight: 500; margin-bottom: 8px;
+  }
+  .phone.dark .phone-content .eyb { color: var(--night-muted); }
+  .phone-content h2 {
+    font-family: "Lenia"; font-weight: 500; font-size: 28px; line-height: 1.15;
+    margin: 0 0 14px; letter-spacing: -0.01em; max-width: 14ch;
+  }
+  .phone-content p { font-size: 13px; line-height: 1.5; color: var(--ink-soft); margin: 0 0 14px; }
+  .phone.dark .phone-content p { color: var(--night-muted); }
+  .phone-content .mini-card {
+    background: var(--paper-soft);
+    border-radius: 18px; padding: 14px 16px; margin-top: 12px;
+    position: relative;
+  }
+  .phone.dark .phone-content .mini-card { background: var(--night-surface); }
+  .phone-content .mini-card .ttl {
+    font-family: "Lenia"; font-weight: 500; font-size: 14px;
+    margin-bottom: 4px; line-height: 1.2;
+  }
+  .phone-content .mini-card .meta {
+    font-size: 11px; color: var(--ink-muted); letter-spacing: 0.04em;
+  }
+  .phone.dark .phone-content .mini-card .meta { color: var(--night-muted); }
+
+  /* Module variants — different widths, different palettes */
+  .phone-content .mini-card.gold {
+    background: var(--gold-subtle, #F4ECD8);
+    border: 1px solid rgba(176, 138, 60, 0.18);
+  }
+  .phone-content .mini-card.coral { background: #F8E4DD; }
+  .phone-content .mini-card.mint  { background: #E5EDDF; }
+  .phone-content .mini-card.blush { background: #FBE5D6; }
+  .phone-content .mini-card.dashed {
+    background: transparent; border: 1.5px dashed rgba(26,26,26,0.2);
+  }
+
+  .phone-content .mini-card .icn {
+    position: absolute; top: 12px; right: 14px;
+    width: 28px; height: 28px;
+    display: grid; place-items: center;
+    color: rgba(26,26,26,0.55);
+  }
+  .phone-content .mini-card .icn svg {
+    width: 22px; height: 22px;
+    stroke: currentColor; fill: none;
+    stroke-width: 1.4; stroke-linecap: round; stroke-linejoin: round;
+  }
+  .phone-content .mini-card .eyb-mini {
+    font-family: "Lenia"; font-size: 9px; letter-spacing: 0.18em;
+    text-transform: uppercase; color: rgba(26,26,26,0.55);
+    font-weight: 500; margin-bottom: 6px;
+  }
+
+  /* Module row — for paired cards */
+  .phone-content .mod-row {
+    display: flex; gap: 10px; margin-top: 12px;
+  }
+  .phone-content .mod-row .mini-card { margin-top: 0; flex: 1; }
+  .phone-content .mod-row .mini-card.w60 { flex: 0 0 58%; }
+  .phone-content .mod-row .mini-card.w40 { flex: 0 0 calc(42% - 10px); }
+  .phone-content .mod-row .mini-card.tall { padding: 16px 16px 18px; }
+  /* Today avatar — hero treatment, fills the screen */
+  .phone-content .avatar-hero {
+    background: var(--mint-subtle);
+    border-radius: 28px;
+    margin: 16px 0 14px;
+    position: relative;
+    aspect-ratio: 1 / 1.05;
+    overflow: hidden;
+  }
+  .phone-content .avatar-hero .av-img {
+    position: absolute; inset: 0;
+    display: grid; place-items: center;
+  }
+  .phone-content .avatar-hero .av-img img {
+    width: 100%; height: 100%;
+    object-fit: contain;
+    object-position: center 60%;
+    transform: scale(1.18);
+  }
+  .phone-content .avatar-hero .av-meta {
+    position: absolute; left: 18px; bottom: 16px; right: 18px;
+    z-index: 2;
+    display: flex; justify-content: space-between; align-items: flex-end;
+    pointer-events: none;
+  }
+  .phone-content .avatar-hero .av-meta .who-block .who {
+    font-family: "Lenia"; font-weight: 500; font-size: 22px;
+    line-height: 1.1; color: var(--ink); letter-spacing: -0.005em;
+  }
+  .phone-content .avatar-hero .av-meta .who-block .meta {
+    font-size: 11px; color: #4F6647; letter-spacing: 0.06em;
+    text-transform: uppercase; font-weight: 500; margin-top: 4px;
+  }
+  .phone-content .avatar-hero .float-tag {
+    position: absolute; z-index: 2;
+  }
+  .phone-content .avatar-hero .float-tag.tl { top: 14px; left: 14px; transform: rotate(-3deg); }
+  .phone-content .avatar-hero .float-tag.tr { top: 14px; right: 14px; transform: rotate(3deg); }
+
+  /* phone bottom nav */
+  .phone-nav {
+    position: absolute; left: 14px; right: 14px; bottom: 14px;
+    height: 76px;
+    background: var(--paper);
+    border-radius: 0 0 32px 32px;
+    display: grid; grid-template-columns: repeat(5, 1fr);
+    align-items: center;
+    padding: 0 12px;
+    box-shadow: 0 -1px 0 var(--line);
+  }
+  .phone.dark .phone-nav { background: var(--night-bg); box-shadow: 0 -1px 0 var(--night-surface); }
+  .nav-tab {
+    display: flex; flex-direction: column; align-items: center; gap: 4px;
+    color: var(--ink-muted);
+    cursor: pointer;
+    font-family: "Lenia"; font-size: 9px; font-weight: 500;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    transition: color 220ms;
+  }
+  .phone.dark .nav-tab { color: var(--night-muted); }
+  .nav-tab.active { color: var(--ink-warm); }
+  .phone.dark .nav-tab.active { color: var(--night-fg); }
+  .nav-tab svg { width: 22px; height: 22px; stroke: currentColor; fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+  .nav-tab.fab-cell { transform: translateY(-22px); gap: 0; }
+  .nav-tab.fab-cell .lbl { margin-top: 6px; }
+
+  .phone-caption {
+    font-family: "Lenia"; font-size: 11px; letter-spacing: 0.14em;
+    text-transform: uppercase; color: var(--ink-muted); font-weight: 500;
+  }
+
+  /* nav alone */
+  .navbar-stage {
+    background: var(--paper-deep);
+    border-radius: 28px;
+    padding: 32px 22px;
+  }
+  .navbar {
+    height: 76px; max-width: 360px; margin: 0 auto;
+    background: var(--paper);
+    border-radius: 28px;
+    display: grid; grid-template-columns: repeat(5, 1fr);
+    align-items: center;
+    padding: 0 12px;
+    box-shadow: 0 6px 18px rgba(26,26,26,0.06);
+  }
+
+  /* ╔════════════════════════════════════════════════════════════╗
+     ║  STICKER / TAG / PULL-QUOTE                                ║
+     ╚════════════════════════════════════════════════════════════╝ */
+  .pull-quote {
+    background: var(--paper);
+    border-radius: 24px;
+    padding: 32px 36px;
+    position: relative;
+    max-width: 540px;
+  }
+  .pull-quote .glyph {
+    font-family: "Lenia"; font-size: 56px;
+    color: var(--coral-base);
+    position: absolute; top: 6px; left: 28px;
+    line-height: 1;
+  }
+  .pull-quote blockquote {
+    font-family: "Lenia"; font-style: italic; font-weight: 400;
+    font-size: 22px; line-height: 1.45;
+    color: var(--ink); margin: 14px 0 14px; padding-top: 10px;
+    text-wrap: balance;
+  }
+  .pull-quote .attrib {
+    font-family: "Helvena"; font-size: 11px; letter-spacing: 0.14em;
+    text-transform: uppercase; color: var(--ink-muted); font-weight: 500;
+  }
+
+  .pill-st {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: var(--paper);
+    border-radius: 999px; padding: 6px 14px;
+    font-family: "Helvena"; font-size: 11px; font-weight: 500;
+    color: var(--ink-soft); letter-spacing: 0.04em;
+    box-shadow: 0 1px 0 rgba(0,0,0,0.04);
+  }
+  .pill-st.gold { background: var(--gold-subtle); color: #6E5A2A; }
+  .pill-st.coral { background: var(--coral-subtle); color: #8E4A22; }
+  .pill-st.mint { background: var(--mint-subtle); color: #4F6647; }
+  .pill-st.ink { background: var(--ink-warm); color: var(--paper); }
+
+  .post-it-st {
+    background: var(--gold-subtle);
+    padding: 16px 20px;
+    border-radius: 18px;
+    max-width: 220px;
+    box-shadow: 1px 2px 0 rgba(0,0,0,0.05);
+  }
+  .post-it-st .body {
+    font-family: "Lenia"; font-style: italic; font-weight: 400; font-size: 14px;
+    line-height: 1.4; color: var(--ink);
+  }
+  .post-it-st .src {
+    margin-top: 6px; font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: #6E5A2A; font-weight: 500;
+  }
+  .badge-st {
+    width: 64px; height: 64px;
+    border-radius: 50%;
+    background: var(--paper-soft);
+    display: grid; place-items: center; text-align: center;
+    font-family: "Lenia"; font-weight: 500; font-size: 11px;
+    line-height: 1.15; color: var(--ink-soft); letter-spacing: 0.06em;
+    padding: 6px;
+  }
+  .badge-st.mint { background: var(--mint-subtle); color: #4F6647; }
+  .badge-st.gold { background: var(--gold-subtle); color: #6E5A2A; }
+
+  /* ── §H Calendar primitives ───────────────────────────────── */
+  /* Sub-tabs (underline sub-nav) */
+  .calp-subtabs {
+    display: flex; gap: 0; width: 100%;
+    border-bottom: 1px solid var(--line);
+    align-items: center;
+  }
+  .calp-subtab {
+    flex: 1; text-align: center; padding: 11px 12px 12px;
+    font-family: "Lenia"; font-weight: 500; font-size: 12px;
+    color: var(--ink-soft); cursor: pointer; position: relative;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    border-bottom: 2px solid transparent; margin-bottom: -1px;
+  }
+  .calp-subtab.active { color: var(--ink-warm); border-bottom-color: var(--ink-warm); }
+  .calp-subtab .badge {
+    display: inline-block; width: 6px; height: 6px; border-radius: 999px;
+    background: var(--gold-base); margin-left: 4px; vertical-align: middle;
+  }
+
+  /* Filter chips strip */
+  .calp-chips {
+    display: flex; gap: 6px; overflow-x: auto;
+    padding: 4px 0; -ms-overflow-style: none; scrollbar-width: none;
+  }
+  .calp-chips::-webkit-scrollbar { display: none; }
+  .calp-chip {
+    flex-shrink: 0;
+    padding: 6px 12px; border-radius: 999px;
+    background: var(--paper-soft); border: 1px solid transparent;
+    font-family: "Lenia"; font-size: 12px; color: var(--ink-soft); font-weight: 500;
+    cursor: pointer; white-space: nowrap;
+  }
+  .calp-chip.active { background: var(--ink-warm); color: var(--paper); }
+
+  /* Horizontal timeline scrubber */
+  .calp-timeline {
+    display: flex; align-items: center; gap: 8px;
+    padding: 16px 12px 12px;
+    background: linear-gradient(to bottom, transparent, var(--paper-soft) 60%);
+    border-radius: 16px;
+    overflow-x: auto; -ms-overflow-style: none; scrollbar-width: none;
+  }
+  .calp-timeline::-webkit-scrollbar { display: none; }
+  .calp-tl-tick {
+    flex-shrink: 0; display: flex; flex-direction: column; align-items: center;
+    gap: 6px; min-width: 44px; cursor: pointer;
+  }
+  .calp-tl-dot {
+    width: 14px; height: 14px; border-radius: 999px;
+    border: 1.5px solid var(--line-strong); background: transparent;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .calp-tl-tick.past .calp-tl-dot { background: var(--ink-warm); border-color: var(--ink-warm); }
+  .calp-tl-tick.past .calp-tl-dot::after { content: "✓"; color: var(--paper); font-size: 9px; font-weight: 700; }
+  .calp-tl-tick.now .calp-tl-dot {
+    width: 28px; height: 28px; background: var(--coral-base); border: 2.5px solid var(--coral-strong);
+    box-shadow: 0 0 0 4px var(--coral-subtle);
+  }
+  .calp-tl-tick.now .calp-tl-dot::after { content: ""; }
+  .calp-tl-lbl {
+    font-family: "Lenia", monospace; font-size: 9px;
+    color: var(--ink-muted); letter-spacing: 0.06em; text-transform: uppercase;
+  }
+  .calp-tl-tick.now .calp-tl-lbl { color: var(--coral-strong); font-weight: 700; }
+
+  /* Section caption (group heading inside calendario) */
+  .calp-section-h {
+    font-family: "Lenia", monospace; font-size: 9px;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--ink-muted); margin: 14px 0 8px;
+  }
+
+  /* Categorized card (calendar variant) — extends cat-card with state */
+  .calp-cc {
+    background: var(--paper); border-radius: 14px; padding: 12px 14px;
+    border: 1px solid var(--line); position: relative;
+  }
+  .calp-cc + .calp-cc { margin-top: 8px; }
+  .calp-cc.state-past { opacity: 0.6; }
+  .calp-cc.state-today { border-color: var(--coral-base); border-width: 1.5px; }
+  .calp-cc.attention { border-color: var(--gold-base); background: linear-gradient(to right, var(--gold-subtle), var(--paper) 40%); }
+  .calp-cc-state {
+    width: 6px; height: 6px; border-radius: 999px;
+    position: absolute; top: 14px; right: 14px;
+  }
+  .calp-cc-state.live { background: var(--coral-base); }
+  .calp-cc-state.done { background: var(--mint-base); }
+  .calp-cc-state.up   { background: var(--ink-faint); }
+
+  /* Hito range bar (Haizea-Llevant range) */
+  .calp-hito-range {
+    background: var(--paper-soft); border-radius: 12px;
+    padding: 14px; margin-top: 8px;
+  }
+  .calp-hito-range .bar {
+    height: 8px; background: var(--paper-deep); border-radius: 999px;
+    position: relative; margin: 12px 0 8px;
+  }
+  .calp-hito-range .fill {
+    position: absolute; height: 100%; border-radius: 999px;
+    background: var(--mint-strong);
+  }
+  .calp-hito-range .marker-now {
+    position: absolute; width: 2px; height: 14px; top: -3px;
+    background: var(--coral-strong);
+  }
+  .calp-hito-range .axis {
+    display: flex; justify-content: space-between;
+    font-family: "Lenia", monospace; font-size: 9px; color: var(--ink-muted);
+  }
+
+  /* Canon option pills + cards (clinical canon UI) */
+  .calp-canon-pill {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 4px 10px; border-radius: 999px;
+    background: var(--gold-subtle); color: var(--gold-strong);
+    font-family: "Lenia"; font-size: 10px; font-weight: 600;
+    letter-spacing: 0.04em; text-transform: uppercase;
+  }
+  .calp-canon-opt {
+    display: flex; align-items: flex-start; gap: 12px;
+    padding: 12px; border-radius: 12px;
+    border: 1px solid var(--line); background: var(--paper);
+    cursor: pointer;
+  }
+  .calp-canon-opt + .calp-canon-opt { margin-top: 6px; }
+  .calp-canon-opt.selected { border-color: var(--ink-warm); background: var(--paper-soft); }
+  .calp-canon-opt .radio {
+    width: 16px; height: 16px; border-radius: 999px;
+    border: 1.5px solid var(--line-strong); flex-shrink: 0; margin-top: 2px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .calp-canon-opt.selected .radio { border-color: var(--ink-warm); }
+  .calp-canon-opt.selected .radio::after { content: ""; width: 7px; height: 7px; border-radius: 999px; background: var(--ink-warm); }
+
+  /* Diary entry */
+  .calp-diary-e {
+    display: grid; grid-template-columns: 56px 1fr;
+    gap: 12px; padding: 12px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .calp-diary-e:last-child { border-bottom: 0; }
+  .calp-diary-e .when {
+    font-family: "Lenia", monospace; font-size: 10px;
+    color: var(--ink-muted); letter-spacing: 0.04em;
+  }
+  .calp-diary-mh {
+    font-family: "Lenia", monospace; font-size: 9px;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--ink-muted); margin: 16px 0 4px;
+  }
+
+  /* Stat / "kept" block — confirmation copy */
+  .calp-stat-bk {
+    background: var(--mint-subtle); border-radius: 12px;
+    padding: 12px 14px; display: flex; gap: 10px; align-items: flex-start;
+  }
+  .calp-stat-bk .icon {
+    width: 18px; height: 18px; border-radius: 999px;
+    background: var(--mint-strong); color: var(--paper);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; flex-shrink: 0; margin-top: 1px;
+  }
+  .calp-stat-bk .copy {
+    font-family: "Lenia"; font-size: 13px; color: var(--ink-warm);
+    line-height: 1.45;
+  }
+
+  /* Education sub-section heading + body (Qué es / Cómo reconocer / Cuándo consultar) */
+  .calp-ed-h {
+    font-family: "Lenia"; font-weight: 600; font-size: 13px;
+    color: var(--ink-warm); margin: 14px 0 4px;
+    letter-spacing: -0.005em;
+  }
+  .calp-ed-body {
+    font-family: "Helvena"; font-size: 13px; color: var(--ink-soft);
+    line-height: 1.55;
+  }
+
+  /* Unified pill-shaped ink button (replaces 3 ad-hoc copies) */
+  .btn-pill-ink {
+    display: inline-flex; align-items: center; justify-content: center;
+    gap: 6px;
+    padding: 10px 18px; border-radius: 999px;
+    background: var(--ink-warm); color: var(--paper);
+    font-family: "Lenia"; font-weight: 500; font-size: 13px;
+    border: 0; cursor: pointer; letter-spacing: -0.005em;
+    text-decoration: none;
+  }
+  .btn-pill-ink.coral { background: var(--coral-base); color: #4A2510; }
+  .btn-pill-ink.ghost {
+    background: transparent; color: var(--ink-warm);
+    box-shadow: inset 0 0 0 1.5px var(--ink-warm);
+  }
+  .btn-pill-ink.sm { padding: 7px 14px; font-size: 12px; }
+
+  /* ── Footer ───────────────────────────────────────────────── */
+  .footer-rule {
+    margin-top: 96px; padding-top: 24px;
+    border-top: 1px solid var(--ink);
+    display: flex; justify-content: space-between; align-items: baseline;
+    font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--ink-muted); font-weight: 500;
+  }
+
+  /* decision prompt */
+  .prompt {
+    background: var(--paper-soft);
+    padding: 40px; margin-top: 24px;
+    border-radius: 28px;
+  }
+  .prompt .marker {
+    font-family: "Lenia"; font-weight: 500; font-size: 11px;
+    letter-spacing: 0.18em; color: var(--ink-muted); margin-bottom: 14px; text-transform: uppercase;
+  }
+  .prompt h3 { font-family: "Lenia"; font-weight: 500; font-size: 22px; margin: 0 0 10px; letter-spacing: -0.005em; }
+  .prompt p { font-size: 14px; color: var(--ink-soft); line-height: 1.6; margin: 0; max-width: 60ch; }
+
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <!-- META -->
+  <div class="meta">
+    <div class="left">
+      <span><span class="symbol"></span> Grow · The Child Lens</span>
+      <span>Design System v0.1 · Session 03</span>
+    </div>
+    <div>Primitives</div>
+  </div>
+
+  <!-- HERO -->
+  <header class="hero">
+    <div class="eyebrow">Issue Nº 03 — Primitives</div>
+    <h1>The fourteen building blocks <em>everything else is made of.</em></h1>
+    <p class="lede">Buttons, inputs, cards, modal, sheet, toast, phone frame, bottom nav with the central FAB, sticker, tag, pull-quote. No borders, generous radii. Each primitive on its own tinted page so you can see how it feels at rest.</p>
+  </header>
+
+  <!-- §A — BUTTON -->
+  <section class="section">
+    <div class="section-head">
+      <div class="section-num">§ A — Button</div>
+      <div>
+        <h2>One shape, eight roles, three sizes.</h2>
+        <div class="desc">Always pill-shaped. Hierarchy is built with fill (ink → paper → ghost) and tinted fills for context (coral for primary CTA, mint for confirmation). The link variant carries the hand-underline.</div>
+      </div>
+    </div>
+
+    <div class="spec">
+      <div class="spec-head">
+        <h3>Variants — light surface</h3>
+        <span class="meta-r">8 variants · sm·md·lg</span>
+      </div>
+
+      <div class="spec-row">
+        <span class="spec-label">Primary · Secondary · Ghost</span>
+      </div>
+      <div class="spec-row">
+        <button class="btn btn-primary">Guardar el día</button>
+        <button class="btn btn-secondary">Cancelar</button>
+        <button class="btn btn-ghost">Más tarde</button>
+        <button class="btn btn-primary" disabled>Guardado · ✓</button>
+      </div>
+
+      <div class="spec-row" style="margin-top: 24px;">
+        <span class="spec-label">Tinted CTAs</span>
+      </div>
+      <div class="spec-row">
+        <button class="btn btn-coral"><svg viewBox="0 0 24 24" style="width:1em;height:1em;stroke:currentColor;fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;display:inline-block;vertical-align:-0.15em;margin-right:4px;"><path d="M5 4h10a3 3 0 0 1 3 3v13H8a3 3 0 0 1 -3 -3z"/><path d="M5 17a3 3 0 0 1 3 -3h10"/></svg>Abrir libro de vacunas</button>
+        <button class="btn btn-mint">Marcar como hito</button>
+        <button class="btn btn-soft">Soft</button>
+        <button class="btn btn-danger-soft">Borrar entrada</button>
+      </div>
+
+      <div class="spec-row" style="margin-top: 24px;">
+        <span class="spec-label">Link · with hand underline</span>
+      </div>
+      <div class="spec-row">
+        <a class="btn btn-link">Lee la evidencia clínica</a>
+        <a class="btn btn-link">Cambiar de pediatra</a>
+      </div>
+
+      <div class="spec-row" style="margin-top: 24px;">
+        <span class="spec-label">Sizes — sm · md · lg</span>
+      </div>
+      <div class="spec-row">
+        <button class="btn btn-primary sm">sm · 36</button>
+        <button class="btn btn-primary">md · 44</button>
+        <button class="btn btn-primary lg">lg · 52</button>
+      </div>
+
+      <div class="spec-row" style="margin-top: 24px;">
+        <span class="spec-label">IconButton — 36 · 44 · 52</span>
+      </div>
+      <div class="spec-row">
+        <button class="icon-btn sm"><svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></button>
+        <button class="icon-btn"><svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></button>
+        <button class="icon-btn lg coral"><svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></button>
+        <button class="icon-btn ink"><svg viewBox="0 0 24 24"><path d="M19 12H5M12 5l-7 7 7 7"/></svg></button>
+        <button class="icon-btn mint"><svg viewBox="0 0 24 24"><polyline points="5 13 9 17 19 7"/></svg></button>
+
+        <div style="flex: 1;"></div>
+        <span class="spec-label" style="width: auto; margin: 0 12px 0 0;">FAB — 60</span>
+        <button class="fab"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></button>
+      </div>
+    </div>
+
+    <div class="spec dark" style="margin-top: 18px;">
+      <div class="spec-head">
+        <h3 style="color: var(--night-fg);">Variants — Modo 3AM (dark)</h3>
+        <span class="meta-r">night surface · contrast inverted</span>
+      </div>
+      <div class="spec-row">
+        <button class="btn btn-primary">Le paso algo</button>
+        <button class="btn btn-secondary">Sólo quiero acompañarme</button>
+        <button class="btn btn-ghost">Ya está</button>
+        <button class="btn btn-coral"><svg viewBox="0 0 24 24" style="width:1em;height:1em;stroke:currentColor;fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;display:inline-block;vertical-align:-0.15em;margin-right:4px;"><path d="M5 4h10a3 3 0 0 1 3 3v13H8a3 3 0 0 1 -3 -3z"/><path d="M5 17a3 3 0 0 1 3 -3h10"/></svg>Vacunas</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- §B — INPUT -->
+  <section class="section">
+    <div class="section-head">
+      <div class="section-num">§ B — Input</div>
+      <div>
+        <h2>Inputs that look like notes, not forms.</h2>
+        <div class="desc">No outer border in rest state. Focus draws a 1.5px ink stroke. Labels are uppercase Lenia caption. Placeholders fade. Editorial — not enterprise.</div>
+      </div>
+    </div>
+
+    <div class="spec">
+      <div class="spec-head">
+        <h3>Text · email · search · select · textarea</h3>
+        <span class="meta-r">7 controls · radius 16</span>
+      </div>
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 18px;">
+        <div class="field">
+          <label>Nombre del peque</label>
+          <input class="input" type="text" value="Lola">
+          <span class="help">Lo usaremos sólo dentro de Grow. No sale de aquí.</span>
+        </div>
+        <div class="field">
+          <label>Email · login mágico</label>
+          <input class="input" type="email" placeholder="marta@ejemplo.com">
+        </div>
+
+        <div class="field">
+          <label>Buscar en el libro de vacunas</label>
+          <div class="search-wrap">
+            <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+            <input class="input" type="search" placeholder="Triple vírica, lote, fecha…">
+          </div>
+        </div>
+        <div class="field">
+          <label>Pediatra</label>
+          <select class="select">
+            <option>Dr. Méndez · CAP Sant Gervasi</option>
+            <option>Dra. Rovira · privada</option>
+            <option>Sin asignar todavía</option>
+          </select>
+        </div>
+
+        <div class="field" style="grid-column: span 2;">
+          <label>Notas — diario libre</label>
+          <textarea class="textarea" placeholder="Hoy ha dicho «agua» por primera vez. Sin presión, sin foto. Sólo apuntarlo."></textarea>
+        </div>
+
+        <div class="field">
+          <label>Peso · gramos</label>
+          <input class="input error" type="text" value="9400 g">
+          <span class="err">El último valor era 9.380 g. ¿Quieres confirmarlo?</span>
+        </div>
+        <div class="field">
+          <label>Fecha de la próxima cita</label>
+          <input class="input" type="text" value="Mar · 14 mayo · 10:30">
+        </div>
+      </div>
+
+      <div class="spec-row" style="margin-top: 28px;">
+        <span class="spec-label">Toggle · Checkbox · Radio — coral default · family modifiers</span>
+      </div>
+      <div class="spec-row" style="gap: 36px; flex-wrap: wrap;">
+        <div class="control-row"><span class="toggle on"></span> Modo 3AM automático</div>
+        <div class="control-row"><span class="toggle"></span> Recordatorios push</div>
+        <div class="control-row"><span class="check on"></span> Acepto la política trauma-informed</div>
+        <div class="control-row"><span class="check"></span> Recibir digest semanal</div>
+        <div class="control-row"><span class="radio on"></span> Edad real</div>
+        <div class="control-row"><span class="radio"></span> Edad corregida</div>
+      </div>
+      <div class="spec-row" style="gap: 36px; margin-top: 12px; flex-wrap: wrap;">
+        <div class="control-row"><span class="toggle mint on"></span> <span style="color: #6E8A66;">Mint · time/growth</span></div>
+        <div class="control-row"><span class="toggle gold on"></span> <span style="color: #8E7222;">Gold · clinical</span></div>
+        <div class="control-row"><span class="toggle blush on"></span> <span style="color: #B47465;">Blush · relational</span></div>
+        <div class="control-row"><span class="toggle ink on"></span> <span style="color: var(--ink-warm);">Ink · neutral</span></div>
+      </div>
+      <div class="spec-row" style="gap: 36px; margin-top: 8px; flex-wrap: wrap;">
+        <div class="control-row"><span class="check mint on"></span> <span style="color: #6E8A66;">Mint check</span></div>
+        <div class="control-row"><span class="check gold on"></span> <span style="color: #8E7222;">Gold check</span></div>
+        <div class="control-row"><span class="check blush on"></span> <span style="color: #B47465;">Blush check</span></div>
+        <div class="control-row"><span class="radio mint on"></span> <span style="color: #6E8A66;">Mint radio</span></div>
+        <div class="control-row"><span class="radio gold on"></span> <span style="color: #8E7222;">Gold radio</span></div>
+        <div class="control-row"><span class="radio blush on"></span> <span style="color: #B47465;">Blush radio</span></div>
+      </div>
+      <p style="font-size: 11px; color: var(--ink-muted); margin: 14px 0 0; line-height: 1.55; font-style: italic; max-width: 560px;">All form controls share the family system: default coral (warm primary). Use mint for time/growth fields, gold for clinical opt-ins, blush for relational, ink for system-level neutral toggles.</p>
+
+      <div class="spec-row" style="margin-top: 28px;">
+        <span class="spec-label">Segmented selector — single pick · 2–4 options · family modifier on group</span>
+      </div>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 8px;">
+        <div>
+          <div style="font-size: 11px; color: var(--ink-muted); letter-spacing: 0.10em; text-transform: uppercase; font-family: 'Lenia'; font-weight: 500; margin-bottom: 8px;">Sexo registrado <span style="color: var(--coral-strong); margin-left: 4px;">· coral</span></div>
+          <div class="seg-group cols-3">
+            <div class="seg-opt selected">Niña</div>
+            <div class="seg-opt">Niño</div>
+            <div class="seg-opt">Otro</div>
+          </div>
+          <p style="font-size: 11px; color: var(--ink-muted); margin: 8px 0 0; line-height: 1.5; font-style: italic;">Solo lo usamos para curvas WHO niñas/niños.</p>
+        </div>
+        <div>
+          <div style="font-size: 11px; color: var(--ink-muted); letter-spacing: 0.10em; text-transform: uppercase; font-family: 'Lenia'; font-weight: 500; margin-bottom: 8px;">Edad mostrada <span style="color: #6E8A66; margin-left: 4px;">· mint</span></div>
+          <div class="seg-group mint cols-2">
+            <div class="seg-opt selected">Real</div>
+            <div class="seg-opt">Corregida</div>
+          </div>
+        </div>
+      </div>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 18px;">
+        <div>
+          <div style="font-size: 11px; color: var(--ink-muted); letter-spacing: 0.10em; text-transform: uppercase; font-family: 'Lenia'; font-weight: 500; margin-bottom: 8px;">Vacunas — pauta <span style="color: #8E7222; margin-left: 4px;">· gold</span></div>
+          <div class="seg-group gold cols-3">
+            <div class="seg-opt">Privada</div>
+            <div class="seg-opt selected">Pública</div>
+            <div class="seg-opt">Mixta</div>
+          </div>
+        </div>
+        <div>
+          <div style="font-size: 11px; color: var(--ink-muted); letter-spacing: 0.10em; text-transform: uppercase; font-family: 'Lenia'; font-weight: 500; margin-bottom: 8px;">Cuidador principal <span style="color: #8E4A4A; margin-left: 4px;">· blush</span></div>
+          <div class="seg-group blush cols-4">
+            <div class="seg-opt">Madre</div>
+            <div class="seg-opt selected">Padre</div>
+            <div class="seg-opt">Compartido</div>
+            <div class="seg-opt">Otro</div>
+          </div>
+        </div>
+      </div>
+      <p style="font-size: 11px; color: var(--ink-muted); margin: 14px 0 0; line-height: 1.55; font-style: italic; max-width: 560px;">The family modifier is a deliberate signal: each context gets a color that ladders back to the avatars. Default = coral. Use mint for time/growth, gold for clinical, blush for relational, ink for neutral.</p>
+
+      <div class="spec-row" style="margin-top: 28px;">
+        <span class="spec-label">Chips — selectable · removable · category-aware</span>
+      </div>
+      <div class="spec-row">
+        <span class="chip alimentacion selected"><span class="emoji">🍼</span>Alimentación</span>
+        <span class="chip sueno"><span class="emoji">🌙</span>Sueño</span>
+        <span class="chip vacunas"><span class="emoji">💉</span>Vacunas</span>
+        <span class="chip salud"><span class="emoji">🌡</span>Salud</span>
+        <span class="chip desarrollo"><span class="emoji">🌱</span>Desarrollo</span>
+        <span class="chip bienestar"><span class="emoji">💛</span>Bienestar</span>
+      </div>
+      <p style="font-size: 11px; color: var(--ink-muted); margin: 8px 0 0; line-height: 1.55; font-style: italic;">Category chips — each picks up its tint + ink token. Selected adds a 1.5px ink-color border.</p>
+
+      <div class="spec-row" style="margin-top: 16px;">
+        <span class="chip selected">Sueño</span>
+        <span class="chip">Alimentación</span>
+        <span class="chip">Lactancia</span>
+        <span class="chip">Cólicos <span class="x">×</span></span>
+        <span class="chip mint">Hito · ✓</span>
+        <span class="chip coral">Regresión 4m <span class="x">×</span></span>
+        <span class="chip gold"><svg viewBox="0 0 24 24" style="width:1em;height:1em;stroke:currentColor;fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;display:inline-block;vertical-align:-0.15em;margin-right:4px;"><path d="M5 4h10a3 3 0 0 1 3 3v13H8a3 3 0 0 1 -3 -3z"/><path d="M5 17a3 3 0 0 1 3 -3h10"/></svg>Vacunas</span>
+        <span class="chip blush">Pareja</span>
+        <span class="chip mono">F2 · E4</span>
+        <span class="chip mono">EPDS 0/30</span>
+      </div>
+      <p style="font-size: 11px; color: var(--ink-muted); margin: 8px 0 0; line-height: 1.55; font-style: italic;">State variants — coral/mint/gold/blush/mono — and the basic ink selected default. Removable chips get an ×-button on the right.</p>
+    </div>
+  </section>
+
+  <!-- §C — CARD -->
+  <section class="section">
+    <div class="section-head">
+      <div class="section-num">§ C — Card</div>
+      <div>
+        <h2>Five card variants for five different conversations.</h2>
+        <div class="desc">Base for content. Elevated for the page-anchor moment. Dashed for empty states / placeholders. Alert-soft for caregiving attention. Vacuna for the gold-tinted clinical record.</div>
+      </div>
+    </div>
+
+    <div class="spec">
+      <div class="spec-head">
+        <h3>Variants</h3>
+        <span class="meta-r">5 variants · radius 24</span>
+      </div>
+
+      <div class="cards-grid">
+        <div class="card-base">
+          <div class="eyb">Base</div>
+          <h4>Anoche durmió 7 h y media</h4>
+          <p class="body">Sin despertares registrados. Si te apetece, podemos guardarlo como hito.</p>
+          <div class="meta-row"><span>Hoy · 07:14</span><span>Auto-log</span></div>
+        </div>
+
+        <div class="card-base card-elevated">
+          <div class="eyb">Elevated</div>
+          <h4>Hito guardado · primera palabra</h4>
+          <p class="body">"Agua" — Marta lo grabó ayer a las 18:32. Lo ponemos en el libro.</p>
+          <div class="meta-row"><span>Mes 18</span><span>Compartir →</span></div>
+        </div>
+
+        <div class="card-base card-dashed">
+          <div class="eyb">Dashed · empty</div>
+          <h4>Aún no has anotado nada hoy</h4>
+          <p class="body">No hay presión. Si quieres, prueba con el botón coral del centro.</p>
+          <div class="meta-row" style="border-top-style: dashed;"><span>Toca para empezar</span><span>+</span></div>
+        </div>
+
+        <div class="card-base card-alert">
+          <div class="eyb">Attention · soft</div>
+          <h4>El último peso fue hace 6 semanas</h4>
+          <p class="body">No es urgente. Cuando paséis por la pediatra, lo actualizamos sin más.</p>
+          <div class="meta-row" style="border-top-color: var(--coral-base); color: #8E4A22;"><span>Lola · 9.4 kg</span><span>Recordar</span></div>
+        </div>
+
+        <div class="card-base card-vacuna">
+          <div class="eyb">Vacuna</div>
+          <h4>Triple vírica · 12 m</h4>
+          <p class="body">Próxima dosis: 4 años. Lote 23H7AC, administrada por Dr. Méndez.</p>
+          <div class="meta-row"><span><svg viewBox="0 0 24 24" style="width:1em;height:1em;stroke:currentColor;fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;display:inline-block;vertical-align:-0.15em;margin-right:4px;"><path d="M5 4h10a3 3 0 0 1 3 3v13H8a3 3 0 0 1 -3 -3z"/><path d="M5 17a3 3 0 0 1 3 -3h10"/></svg>Libro</span><span>14 abril 2025</span></div>
+        </div>
+
+        <div class="card-base">
+          <div class="eyb">Lesson · editorial</div>
+          <h4>Por qué no hay que alternar antitérmicos</h4>
+          <p class="body">Una pequeña lección del módulo Cólicos &amp; Fiebre. Tres minutos de lectura.</p>
+          <div class="meta-row"><span>3 min · Helena V.</span><span>Leer →</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- §D — MODAL & SHEET -->
+  <section class="section">
+    <div class="section-head">
+      <div class="section-num">§ D — Modal &amp; Sheet</div>
+      <div>
+        <h2>Two surfaces for two intensities.</h2>
+        <div class="desc">Modal for a question that requires a clear answer. Bottom Sheet for tools — Quick Log, filters, picks. Both float on a soft dimmed paper, never on a hard scrim.</div>
+      </div>
+    </div>
+
+    <div class="surfaces">
+      <div class="surface-stage">
+        <div class="modal">
+          <h4>¿Marcamos esto como hito?</h4>
+          <p>"Agua" como primera palabra. Si lo guardas, aparecerá en el libro de Lola y podrás compartirlo si quieres.</p>
+          <div class="actions">
+            <button class="btn btn-ghost sm">Más tarde</button>
+            <button class="btn btn-primary sm">Guardar hito</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="sheet-stage">
+        <div class="sheet">
+          <div class="grabber"></div>
+          <h4>Quick log</h4>
+          <div class="quick-grid">
+            <div class="quick-cell"><svg viewBox="0 0 32 32"><path d="M22 20 A 10 10 0 1 1 12 10 a 8 8 0 0 0 10 10 z"/></svg><div class="lbl">Sueño</div></div>
+            <div class="quick-cell"><svg viewBox="0 0 32 32"><path d="M12 6 h8 M11 12 h10 v13 a3 3 0 0 1 -3 3 h-4 a3 3 0 0 1 -3 -3 z"/></svg><div class="lbl">Toma</div></div>
+            <div class="quick-cell"><svg viewBox="0 0 32 32"><path d="M6 14 q4 -8 10 -8 t10 8 q0 6 -10 12 q-10 -6 -10 -12 z"/><circle cx="16" cy="14" r="2"/></svg><div class="lbl">Lactancia</div></div>
+            <div class="quick-cell"><svg viewBox="0 0 32 32"><path d="M14 5 a3 3 0 0 1 6 0 v15 a4 4 0 1 1 -6 0 z"/><line x1="17" y1="9" x2="17" y2="20"/></svg><div class="lbl">Fiebre</div></div>
+            <div class="quick-cell"><svg viewBox="0 0 32 32"><path d="M16 5 q-7 9 -7 15 a7 7 0 0 0 14 0 q0 -6 -7 -15 z"/></svg><div class="lbl">Llanto</div></div>
+            <div class="quick-cell"><svg viewBox="0 0 32 32"><path d="M16 5 l3 8 l8 1 l-6 6 l2 8 l-7 -4 l-7 4 l2 -8 l-6 -6 l8 -1 z"/></svg><div class="lbl">Hito</div></div>
+            <div class="quick-cell"><svg viewBox="0 0 32 32"><path d="M21 7 l4 4 M22 11 L13 20 l-2 4 l-2 -2 l-2 -2 l4 -2 l9 -9 z"/></svg><div class="lbl">Vacuna</div></div>
+            <div class="quick-cell"><svg viewBox="0 0 32 32"><rect x="6" y="8" width="20" height="18" rx="2"/><line x1="6" y1="13" x2="26" y2="13"/></svg><div class="lbl">Cita</div></div>
+            <div class="quick-cell"><svg viewBox="0 0 32 32"><path d="M9 25 l16 -16 a6 6 0 0 0 -8 -3 l-7 7 a6 6 0 0 0 -1 12 z"/></svg><div class="lbl">Diario</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Toasts -->
+    <div class="spec" style="margin-top: 18px; background: var(--paper-deep);">
+      <div class="spec-head">
+        <h3>Toast · Banner</h3>
+        <span class="meta-r">4 tones · top-anchored</span>
+      </div>
+      <div class="spec-row" style="flex-direction: column; align-items: flex-start;">
+        <div class="toast ok">
+          <div class="ico"><svg viewBox="0 0 24 24"><polyline points="5 13 9 17 19 7"/></svg></div>
+          <div class="body"><strong>Hito guardado</strong><span>"Agua" añadido al libro de Lola.</span></div>
+        </div>
+        <div class="toast attention">
+          <div class="ico"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><line x1="12" y1="8" x2="12" y2="13"/><line x1="12" y1="16" x2="12" y2="16.01"/></svg></div>
+          <div class="body"><strong>El último peso fue hace 6 semanas</strong><span>Sin urgencia. La pediatra lo actualizará en la siguiente cita.</span></div>
+        </div>
+        <div class="toast info">
+          <div class="ico"><svg viewBox="0 0 24 24"><line x1="12" y1="8" x2="12" y2="13"/><line x1="12" y1="16" x2="12" y2="16.01"/><circle cx="12" cy="12" r="9"/></svg></div>
+          <div class="body"><strong>Próxima vacuna en 3 semanas</strong><span>Triple vírica · 12m. Te avisamos otra vez 48 h antes.</span></div>
+        </div>
+        <div class="toast urgent">
+          <div class="ico"><svg viewBox="0 0 24 24"><line x1="12" y1="8" x2="12" y2="13"/><line x1="12" y1="16" x2="12" y2="16.01"/><circle cx="12" cy="12" r="9"/></svg></div>
+          <div class="body"><strong>112 — emergencias</strong><span>Sólo aparece en el modo 3AM si pulsas "Le paso algo".</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- §E — PHONE FRAME + BOTTOM NAV -->
+  <section class="section">
+    <div class="section-head">
+      <div class="section-num">§ E — Phone frame &amp; Bottom Nav</div>
+      <div>
+        <h2>The container, with the navigation that lives at its feet.</h2>
+        <div class="desc">360 px wide, radius 44 outer / 32 inner. The bottom nav is 5 tabs with a coral FAB lifting the centre. Same skeleton in light and Modo 3AM.</div>
+      </div>
+    </div>
+
+    <div class="phones-row">
+      <div class="phone-wrap">
+        <div class="phone">
+          <div class="phone-screen">
+            <div class="phone-status">
+              <span>9:41</span>
+              <div class="indicators"><span></span><span></span><span style="opacity:0.4"></span></div>
+            </div>
+            <div class="phone-content">
+              <div class="eyb">Hoy · martes</div>
+              <h2 style="font-size: 22px; margin-bottom: 10px;">El día empieza despacio.</h2>
+
+              <div class="avatar-hero">
+                <div class="av-img"><img src="assets/avatar-mint.png?v=2" alt="Lola, 18 meses"></div>
+                <div class="float-tag tl"><span class="pill-st">Crianza · 18m</span></div>
+                <div class="float-tag tr"><span class="pill-st mint">EPDS · 0/30</span></div>
+                <div class="av-meta">
+                  <div class="who-block">
+                    <div class="who">Lola</div>
+                    <div class="meta">18 meses · edad real</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="mini-card gold">
+                <div class="icn">
+                  <svg viewBox="0 0 24 24"><path d="M14 4l6 6"/><path d="M17 7l-9 9-3 1 1-3 9-9z"/><path d="M10.5 13.5l3 3"/><path d="M8 16l-3 3"/><path d="M16 10l1.5-1.5"/></svg>
+                </div>
+                <div class="eyb-mini">Próxima vacuna</div>
+                <div class="ttl">Triple vírica · 12 m</div>
+                <div class="meta">14 mayo · 10:30 · Dr. Méndez</div>
+              </div>
+
+              <div class="mod-row">
+                <div class="mini-card mint w60">
+                  <div class="eyb-mini">Anoche</div>
+                  <div class="ttl">7 h 32 min</div>
+                  <div class="meta">Sin despertares</div>
+                </div>
+                <div class="mini-card blush w40">
+                  <div class="eyb-mini">EPDS</div>
+                  <div class="ttl">0 / 30</div>
+                  <div class="meta">Hace 3 días</div>
+                </div>
+              </div>
+
+              <div class="mini-card dashed">
+                <div class="ttl" style="color: rgba(26,26,26,0.65);">Apuntar la merienda</div>
+                <div class="meta">Quick log · &lt; 5 segundos</div>
+              </div>
+            </div>
+
+            <div class="phone-nav">
+              <div class="nav-tab active">
+                <svg viewBox="0 0 24 24"><path d="M3 12 12 3l9 9"/><path d="M5 10v10h14V10"/></svg>
+                <span>Hoy</span>
+              </div>
+              <div class="nav-tab">
+                <svg viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="16" rx="2"/><line x1="4" y1="10" x2="20" y2="10"/></svg>
+                <span>Calendario</span>
+              </div>
+              <div class="nav-tab fab-cell">
+                <button class="fab"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></button>
+                <span class="lbl">Log</span>
+              </div>
+              <div class="nav-tab">
+                <svg viewBox="0 0 24 24"><path d="M5 21V4"/><path d="M5 4h12l-3 4 3 4H5"/></svg>
+                <span>Hitos</span>
+              </div>
+              <div class="nav-tab">
+                <svg viewBox="0 0 24 24"><path d="M21 15a4 4 0 0 1-4 4H8l-5 4V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4z"/></svg>
+                <span>Chat</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <span class="phone-caption">Phone frame · 360 × 720 · light</span>
+      </div>
+
+      <div class="phone-wrap">
+        <div class="phone dark">
+          <div class="phone-screen">
+            <div class="phone-status">
+              <span>03:14</span>
+              <div class="indicators"><span></span><span></span><span style="opacity:0.4"></span></div>
+            </div>
+            <div class="phone-content">
+              <div class="eyb">Modo 3AM · 22:00 → 06:00</div>
+              <h2 style="color: var(--night-fg);">¿Qué pasa?</h2>
+              <p>Sin prisa. Empieza por lo que más se acerque.</p>
+
+              <div class="mini-card" style="background: var(--night-surface);">
+                <div class="ttl" style="color: var(--night-fg);">Le paso algo</div>
+                <div class="meta" style="color: var(--night-muted);">Termómetro, fiebre, llanto inconsolable</div>
+              </div>
+              <div class="mini-card" style="background: var(--night-surface);">
+                <div class="ttl" style="color: var(--night-fg);">No duerme</div>
+                <div class="meta" style="color: var(--night-muted);">5 S's, regresiones, despertares</div>
+              </div>
+              <div class="mini-card" style="background: var(--night-surface);">
+                <div class="ttl" style="color: var(--night-fg);">Quiero acompañarme</div>
+                <div class="meta" style="color: var(--night-muted);">Respira conmigo · 2 minutos</div>
+              </div>
+              <div class="mini-card" style="background: var(--night-surface);">
+                <div class="ttl" style="color: var(--night-fg);">Apuntar algo</div>
+                <div class="meta" style="color: var(--night-muted);">Quick log · sin pensarlo</div>
+              </div>
+            </div>
+
+            <div class="phone-nav">
+              <div class="nav-tab active">
+                <svg viewBox="0 0 24 24"><path d="M3 12 12 3l9 9"/><path d="M5 10v10h14V10"/></svg>
+                <span>Hoy</span>
+              </div>
+              <div class="nav-tab">
+                <svg viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="16" rx="2"/><line x1="4" y1="10" x2="20" y2="10"/></svg>
+                <span>Calendario</span>
+              </div>
+              <div class="nav-tab fab-cell">
+                <button class="fab"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></button>
+                <span class="lbl">Log</span>
+              </div>
+              <div class="nav-tab">
+                <svg viewBox="0 0 24 24"><path d="M5 21V4"/><path d="M5 4h12l-3 4 3 4H5"/></svg>
+                <span>Hitos</span>
+              </div>
+              <div class="nav-tab">
+                <svg viewBox="0 0 24 24"><path d="M21 15a4 4 0 0 1-4 4H8l-5 4V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4z"/></svg>
+                <span>Chat</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <span class="phone-caption">Phone frame · 360 × 720 · Modo 3AM</span>
+      </div>
+    </div>
+
+    <!-- nav alone -->
+    <div class="navbar-stage" style="margin-top: 32px;">
+      <div class="navbar">
+        <div class="nav-tab active">
+          <svg viewBox="0 0 24 24"><path d="M3 12 12 3l9 9"/><path d="M5 10v10h14V10"/></svg>
+          <span>Hoy</span>
+        </div>
+        <div class="nav-tab">
+          <svg viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="16" rx="2"/><line x1="4" y1="10" x2="20" y2="10"/></svg>
+          <span>Calendario</span>
+        </div>
+        <div class="nav-tab fab-cell">
+          <button class="fab"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></button>
+          <span class="lbl">Log</span>
+        </div>
+        <div class="nav-tab">
+                <svg viewBox="0 0 24 24"><path d="M5 21V4"/><path d="M5 4h12l-3 4 3 4H5"/></svg>
+                <span>Hitos</span>
+              </div>
+              <div class="nav-tab">
+                <svg viewBox="0 0 24 24"><path d="M21 15a4 4 0 0 1-4 4H8l-5 4V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4z"/></svg>
+                <span>Chat</span>
+              </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- §F — STICKER · TAG · PULL-QUOTE -->
+  <section class="section">
+    <div class="section-head">
+      <div class="section-num">§ F — Sticker · Tag · Pull-quote</div>
+      <div>
+        <h2>Three editorial pieces, reusable everywhere.</h2>
+        <div class="desc">A pill-tag for metadata. A post-it for asides and citations. A pull-quote for the moments worth a paragraph break.</div>
+      </div>
+    </div>
+
+    <div class="spec blush">
+      <div class="spec-head">
+        <h3>Sticker · Tag</h3>
+        <span class="meta-r">pill-st · post-it-st · badge-st</span>
+      </div>
+      <div class="spec-row">
+        <span class="pill-st">Mes 18</span>
+        <span class="pill-st">Edad corregida</span>
+        <span class="pill-st mint">EPDS · 0/30 ✓</span>
+        <span class="pill-st coral">Regresión 4m</span>
+        <span class="pill-st gold"><svg viewBox="0 0 24 24" style="width:1em;height:1em;stroke:currentColor;fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;display:inline-block;vertical-align:-0.15em;margin-right:4px;"><path d="M5 4h10a3 3 0 0 1 3 3v13H8a3 3 0 0 1 -3 -3z"/><path d="M5 17a3 3 0 0 1 3 -3h10"/></svg>Vacunas</span>
+        <span class="pill-st ink">Modo 3AM</span>
+      </div>
+
+      <div class="spec-row" style="margin-top: 24px; gap: 32px; align-items: flex-start;">
+        <div class="post-it-st" style="transform: rotate(-2deg);">
+          <div class="body">"Acompañar, no diagnosticar."</div>
+          <div class="src">Manifiesto · canon</div>
+        </div>
+        <div class="post-it-st" style="background: var(--mint-subtle); transform: rotate(2deg);">
+          <div class="body" style="color: #2F4029;">"Cero rojo médico. La diferencia se resuelve con borde + tag, no con color."</div>
+          <div class="src" style="color: #4F6647;">Trauma-informed · §6.3</div>
+        </div>
+        <div class="badge-st gold" style="transform: rotate(-3deg);">Mes<br>18</div>
+        <div class="badge-st mint" style="transform: rotate(4deg);">EPDS<br>✓</div>
+      </div>
+    </div>
+
+    <div class="spec" style="margin-top: 18px;">
+      <div class="spec-head">
+        <h3>Pull-quote</h3>
+        <span class="meta-r">editorial · italic Lenia</span>
+      </div>
+      <div class="pull-quote">
+        <span class="glyph">"</span>
+        <blockquote>No hay una manera correcta. Hay la tuya. Y la tuya nace del amor.</blockquote>
+        <div class="attrib">Manifiesto · canon Fase 0</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- §G — DECISIONS -->
+  <section class="section">
+    <div class="section-head">
+      <div class="section-num">§ H — Calendar primitives</div>
+      <div>
+        <h2>The temporal vocabulary — sub-tabs, scrubber, range bars, canon UI.</h2>
+        <div class="desc">Eleven new primitives introduced by the Calendario rebuild. Promoted here so any future temporal surface (medication timeline, sleep history, school year) inherits the same vocabulary instead of re-inventing it.</div>
+      </div>
+    </div>
+
+    <!-- Sub-tabs -->
+    <div class="spec">
+      <div class="spec-head"><h3>Underline sub-tabs</h3><div class="meta-r">.calp-subtabs · .calp-subtab</div></div>
+      <div class="spec-row" style="display:block;">
+        <div class="spec-label">4-tab underline control · no filled background · active state uses ink underline</div>
+        <div class="calp-subtabs" style="max-width: 380px;">
+          <div class="calp-subtab active">Hitos</div>
+          <div class="calp-subtab">Curvas</div>
+          <div class="calp-subtab">Diario</div>
+          <div class="calp-subtab">Vacunas <span class="badge"></span></div>
+        </div>
+      </div>
+      <div class="spec-row" style="display:block; margin-top: 18px;">
+        <div class="spec-label">Optional gold dot badge for sections with new content</div>
+      </div>
+    </div>
+
+    <!-- Filter chips -->
+    <div class="spec">
+      <div class="spec-head"><h3>Filter chips</h3><div class="meta-r">.calp-chips · .calp-chip</div></div>
+      <div class="spec-row" style="display:block;">
+        <div class="spec-label">Horizontal scroll strip · ink-warm fill on active</div>
+        <div class="calp-chips">
+          <div class="calp-chip active">Todos</div>
+          <div class="calp-chip">🍼 Alimentación</div>
+          <div class="calp-chip">💉 Vacunas</div>
+          <div class="calp-chip">🌙 Sueño</div>
+          <div class="calp-chip">🌡 Salud</div>
+          <div class="calp-chip">🌱 Desarrollo</div>
+          <div class="calp-chip">💛 Bienestar</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Timeline scrubber -->
+    <div class="spec">
+      <div class="spec-head"><h3>Horizontal timeline scrubber</h3><div class="meta-r">.calp-timeline · .calp-tl-tick</div></div>
+      <div class="spec-row" style="display:block;">
+        <div class="spec-label">Past ✓ · Today (coral, scaled, glow ring) · Future (empty stroke)</div>
+        <div class="calp-timeline">
+          <div class="calp-tl-tick past"><div class="calp-tl-dot"></div><div class="calp-tl-lbl">m12</div></div>
+          <div class="calp-tl-tick past"><div class="calp-tl-dot"></div><div class="calp-tl-lbl">m13</div></div>
+          <div class="calp-tl-tick past"><div class="calp-tl-dot"></div><div class="calp-tl-lbl">m14</div></div>
+          <div class="calp-tl-tick past"><div class="calp-tl-dot"></div><div class="calp-tl-lbl">m15</div></div>
+          <div class="calp-tl-tick past"><div class="calp-tl-dot"></div><div class="calp-tl-lbl">m16</div></div>
+          <div class="calp-tl-tick past"><div class="calp-tl-dot"></div><div class="calp-tl-lbl">m17</div></div>
+          <div class="calp-tl-tick now"><div class="calp-tl-dot"></div><div class="calp-tl-lbl">m18 · hoy</div></div>
+          <div class="calp-tl-tick"><div class="calp-tl-dot"></div><div class="calp-tl-lbl">m19</div></div>
+          <div class="calp-tl-tick"><div class="calp-tl-dot"></div><div class="calp-tl-lbl">m20</div></div>
+          <div class="calp-tl-tick"><div class="calp-tl-dot"></div><div class="calp-tl-lbl">m21</div></div>
+          <div class="calp-tl-tick"><div class="calp-tl-dot"></div><div class="calp-tl-lbl">m22</div></div>
+          <div class="calp-tl-tick"><div class="calp-tl-dot"></div><div class="calp-tl-lbl">m23</div></div>
+          <div class="calp-tl-tick"><div class="calp-tl-dot"></div><div class="calp-tl-lbl">m24</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section caption + categorized cards -->
+    <div class="spec">
+      <div class="spec-head"><h3>Categorized card · with state</h3><div class="meta-r">.calp-cc · state-{past,today,up} · .attention</div></div>
+      <div class="spec-row" style="display:block;">
+        <div class="calp-section-h">Este mes · 3</div>
+        <div class="calp-cc state-today">
+          <div class="calp-cc-state live"></div>
+          <div style="font-family:'Lenia';font-weight:500;font-size:14px;">Lenguaje · primeras palabras</div>
+          <div style="font-family:'Helvena';font-size:12px;color:var(--ink-soft);margin-top:4px;">Mes 18 · Haizea-Llevant rango 12-24</div>
+        </div>
+        <div class="calp-cc attention">
+          <div class="calp-cc-state up"></div>
+          <div style="font-family:'Lenia';font-weight:500;font-size:14px;">Cribado del desarrollo · 18m</div>
+          <div style="font-family:'Helvena';font-size:12px;color:var(--ink-soft);margin-top:4px;">Canon clínico · pediatría</div>
+        </div>
+        <div class="calp-cc state-past">
+          <div class="calp-cc-state done"></div>
+          <div style="font-family:'Lenia';font-weight:500;font-size:14px;">Caminar sin apoyo</div>
+          <div style="font-family:'Helvena';font-size:12px;color:var(--ink-soft);margin-top:4px;">Conquistado · mes 13</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Hito range bar -->
+    <div class="spec">
+      <div class="spec-head"><h3>Hito range bar</h3><div class="meta-r">.calp-hito-range</div></div>
+      <div class="spec-row" style="display:block;">
+        <div class="spec-label">Haizea-Llevant range visualization · mint fill = canonical window · coral marker = today</div>
+        <div class="calp-hito-range" style="max-width: 380px;">
+          <div style="font-family:'Lenia';font-size:12px;color:var(--ink-soft);">Aparición esperada</div>
+          <div class="bar">
+            <div class="fill" style="left: 25%; width: 50%;"></div>
+            <div class="marker-now" style="left: 50%;"></div>
+          </div>
+          <div class="axis"><span>m12</span><span>m18 · hoy</span><span>m24</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Canon UI -->
+    <div class="spec">
+      <div class="spec-head"><h3>Canon clínico — pill + option cards</h3><div class="meta-r">.calp-canon-pill · .calp-canon-opt</div></div>
+      <div class="spec-row" style="display:block;">
+        <div class="calp-canon-pill">📖 Canon clínico</div>
+        <div style="margin-top: 14px; max-width: 380px;">
+          <div class="calp-canon-opt selected">
+            <div class="radio"></div>
+            <div>
+              <div style="font-family:'Lenia';font-weight:500;font-size:13px;">Haizea-Llevant</div>
+              <div style="font-family:'Helvena';font-size:12px;color:var(--ink-soft);margin-top:2px;">Tabla canónica usada por pediatría en España.</div>
+            </div>
+          </div>
+          <div class="calp-canon-opt">
+            <div class="radio"></div>
+            <div>
+              <div style="font-family:'Lenia';font-weight:500;font-size:13px;">Denver II</div>
+              <div style="font-family:'Helvena';font-size:12px;color:var(--ink-soft);margin-top:2px;">Alternativa internacional.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Diary entries -->
+    <div class="spec">
+      <div class="spec-head"><h3>Diary entry · timeline list</h3><div class="meta-r">.calp-diary-e · .calp-diary-mh</div></div>
+      <div class="spec-row" style="display:block;">
+        <div class="calp-diary-mh">14 oct · martes</div>
+        <div class="calp-diary-e">
+          <div class="when">07:30</div>
+          <div>
+            <div style="font-family:'Lenia';font-weight:500;font-size:13px;">Toma · biberón</div>
+            <div style="font-family:'Helvena';font-size:12px;color:var(--ink-soft);margin-top:2px;">120ml · terminó entera</div>
+          </div>
+        </div>
+        <div class="calp-diary-e">
+          <div class="when">11:15</div>
+          <div>
+            <div style="font-family:'Lenia';font-weight:500;font-size:13px;">Siesta</div>
+            <div style="font-family:'Helvena';font-size:12px;color:var(--ink-soft);margin-top:2px;">1h 40m · cuna</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Stat-bk + ed-h -->
+    <div class="spec">
+      <div class="spec-head"><h3>Confirmación + sub-secciones educacionales</h3><div class="meta-r">.calp-stat-bk · .calp-ed-h · .calp-ed-body</div></div>
+      <div class="spec-row" style="display:block;">
+        <div class="calp-stat-bk">
+          <div class="icon">✓</div>
+          <div class="copy">Conquistado el mes 13. Quedará en tu Diario, no se pierde ningún dato.</div>
+        </div>
+        <div class="calp-ed-h" style="margin-top: 18px;">¿Qué es?</div>
+        <div class="calp-ed-body">Capacidad de mantenerse de pie sin sujetarse a nada durante varios segundos.</div>
+        <div class="calp-ed-h">Cómo reconocerlo</div>
+        <div class="calp-ed-body">El peque suelta el sofá, da uno o dos segundos, y se sienta o cae sin alarma.</div>
+        <div class="calp-ed-h">Cuándo consultar</div>
+        <div class="calp-ed-body">Si más allá del mes 18 sigue sin lograrlo, comenta con tu pediatra en la próxima revisión.</div>
+      </div>
+    </div>
+
+    <!-- Unified pill button -->
+    <div class="spec">
+      <div class="spec-head"><h3>Pill ink button — unified</h3><div class="meta-r">.btn-pill-ink · .coral · .ghost · .sm</div></div>
+      <div class="spec-row">
+        <a class="btn-pill-ink" href="#">Marcar conquistado</a>
+        <a class="btn-pill-ink coral" href="#">Pedir hora</a>
+        <a class="btn-pill-ink ghost" href="#">Ver detalle</a>
+        <a class="btn-pill-ink sm" href="#">Editar</a>
+      </div>
+      <div class="spec-row" style="display:block; margin-top: 14px;">
+        <div class="spec-label" style="margin: 0;">Replaces three ad-hoc copies (mini-hero CTA · cat-card CTA · cc-cta) — same visual, one source.</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-head">
+      <div class="section-num">§ G — Decisions</div>
+      <div>
+        <h2>Two checks before Session 04.</h2>
+        <div class="desc">Session 04 builds product components: TimelineTrack, MonthCard with VacunaSection, OMSCurve, ChatBubble, QuickLogGrid, 5SChecklist, CryClassifier, Mode3AMRoute, LessonCard.</div>
+      </div>
+    </div>
+
+    <div class="prompt">
+      <div class="marker">Decision · 06 · Pill-shape buttons</div>
+      <h3>Adopt fully pill-shaped buttons (radius 999) as default?</h3>
+      <p>Editorially they read softer than rounded-rectangles and they pair well with the tinted-box pattern. The alternative would be radius 16 (still rounded, more "app-like"). Pill is recommended.</p>
+    </div>
+
+    <div class="prompt">
+      <div class="marker">Decision · 07 · Bottom Nav central FAB</div>
+      <h3>Coral FAB (60 px) lifted from the centre, with "Log" label below — keep it?</h3>
+      <p>It's the only place coral-base appears in the chrome. The intent: Quick Log is the single most-frequent caregiver action. If you'd rather have a sixth tab without lifting, say so.</p>
+    </div>
+
+    <div class="prompt">
+      <div class="marker">Decision · 08 · Status bar + FAB sizes — frozen</div>
+      <h3>Adopt one canonical status bar (10/16/6 px padding · 9px font) and two FAB sizes (60 px standalone · 35 px in-navbar)?</h3>
+      <p>Currently each Flow file is re-implementing the status bar with slightly different padding. The standalone FAB has the coral shadow; the in-navbar FAB doesn't (it lives in a tinted strip and the shadow would compete). Recommendation: freeze both here as <code>.status</code> and <code>.fab-standalone</code> / <code>.fab-nav</code>, then any flow file imports rather than redefines.</p>
+    </div>
+
+    <div class="prompt">
+      <div class="marker">Decision · 09 · Calendar primitives in §H</div>
+      <h3>Promote the eleven new components from the Calendario rebuild into Primitives?</h3>
+      <p>The horizontal scrubber, sub-tabs, range bar, canon-opt selector, diary-entry list and confirmation block were all introduced in one session inside Flows. They're general-purpose temporal vocabulary — any future module (medication timeline, school year, custody calendar) should use them. Promoted above as §H so the next session inherits the language.</p>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <div class="footer-rule">
+    <div>Grow · Design System v0.1 · Session 03 / 08</div>
+    <div>Made by humans, for humans.</div>
+  </div>
+
+</div>
+
+</body>
+</html>
