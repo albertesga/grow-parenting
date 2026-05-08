@@ -830,45 +830,57 @@
     font-size: var(--fs-h4); line-height: 1.2;
     margin: 0 0 14px; letter-spacing: -0.01em;
   }
+  /* Variant A-style phase cards · tone-tinted backgrounds, sleep ALWAYS cream (never black) */
   .sleep-day-rhythm {
     display: flex; flex-direction: column;
+    gap: 4px;
   }
   .sleep-day-phase {
-    display: grid;
-    grid-template-columns: 36px 1fr auto;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     gap: 14px;
-    align-items: start;
-    padding: 8px 0;
+    padding: 14px 16px;
     border-radius: var(--radius-md);
-    transition: background 200ms;
+    color: var(--ink);
+    background: var(--paper);
   }
   .sleep-day-phase .icon {
-    width: 36px; height: 36px;
+    width: 38px; height: 38px;
     border-radius: var(--radius-pill);
     display: grid; place-items: center;
-    background: var(--paper-soft);
     flex-shrink: 0;
+    background: var(--paper);
+    color: var(--ink-soft);
   }
   .sleep-day-phase .icon svg {
-    width: 18px; height: 18px;
+    width: 20px; height: 20px;
     stroke: currentColor; fill: none;
-    stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round;
+    stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round;
   }
-  .sleep-day-phase.morning .icon { background: var(--gold-subtle); color: #6E5A2A; }
-  /* sleep moments share the same color (siesta + night) */
-  .sleep-day-phase.nap .icon { background: var(--module-dark); color: var(--paper); }
+  /* tone-tinted card backgrounds · sleep is always cream/paper, never dark */
+  .sleep-day-phase.morning {
+    background: linear-gradient(120deg, var(--paper) 0%, var(--gold-subtle) 110%);
+  }
+  .sleep-day-phase.morning .icon { background: var(--gold-base); color: #4A3A12; }
+  /* sleep moments (nap + night) share cream paper-deep — never module-dark */
+  .sleep-day-phase.nap,
+  .sleep-day-phase.night {
+    background: linear-gradient(120deg, var(--paper-soft) 0%, var(--paper-deep) 100%);
+  }
+  .sleep-day-phase.nap .icon,
+  .sleep-day-phase.night .icon { background: var(--paper); color: var(--ink-soft); }
+  .sleep-day-phase.bedtime {
+    background: linear-gradient(120deg, var(--paper) 0%, var(--blush-base) 110%);
+  }
   .sleep-day-phase.bedtime .icon { background: var(--blush-base); color: #6B3D2A; }
-  .sleep-day-phase.night .icon { background: var(--module-dark); color: var(--paper); }
-  .sleep-day-phase.now {
-    background: rgba(242,165,122,0.06);
-    margin: 0 -10px; padding: 8px 10px;
-    box-shadow: inset 0 0 0 1px rgba(242,165,122,0.20);
-  }
-  .sleep-day-phase.now .icon { box-shadow: 0 0 0 2px var(--coral-base); }
+  .sleep-day-phase.now { box-shadow: 0 0 0 2px var(--coral-base); }
+  .sleep-day-phase .body { flex: 1; min-width: 0; }
   .sleep-day-phase .body strong {
     display: block;
     font-family: 'Lenia'; font-weight: 500;
-    font-size: var(--fs-body-lg); line-height: 1.2;
+    font-size: var(--fs-h4); line-height: 1.2;
     letter-spacing: -0.005em;
   }
   .sleep-day-phase .body p {
@@ -878,44 +890,45 @@
     line-height: 1.5;
   }
   .sleep-day-phase .time {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: var(--fs-caption);
-    color: var(--ink-soft);
+    font-family: 'Lenia';
+    font-size: var(--fs-body-sm);
+    color: var(--ink-muted);
     white-space: nowrap;
-    align-self: start; padding-top: 4px;
     text-align: right;
+    flex-shrink: 0;
   }
 
+  /* Wake interludes · paper bg with dashed connector dot */
   .sleep-day-wake {
-    display: grid;
-    grid-template-columns: 36px 1fr auto;
-    gap: 14px;
-    padding: 6px 0;
-    position: relative;
+    display: flex;
     align-items: center;
+    gap: 14px;
+    padding: 8px 16px;
+    margin: 2px 0;
   }
   .sleep-day-wake .icon {
-    width: 36px; height: 36px;
-    display: grid; place-items: center;
+    width: 38px; flex-shrink: 0;
     position: relative;
+    display: grid; place-items: center;
   }
   .sleep-day-wake .icon::before {
     content: '';
     width: 2px;
     background: var(--line);
     position: absolute;
-    top: -6px; bottom: -6px;
+    top: -10px; bottom: -10px;
     left: 50%; transform: translateX(-50%);
   }
   .sleep-day-wake .icon::after {
     content: '';
-    width: 8px; height: 8px;
+    width: 9px; height: 9px;
     border-radius: 50%;
     background: var(--paper);
     border: 1.5px dashed var(--line-strong);
     position: relative; z-index: 1;
   }
   .sleep-day-wake .label {
+    flex: 1;
     font-family: 'Lenia'; font-weight: 500;
     font-size: var(--fs-body-sm); color: var(--ink-soft);
     line-height: 1.3;
@@ -926,15 +939,16 @@
     font-weight: 400;
   }
   .sleep-day-wake .dur {
-    font-family: 'JetBrains Mono', monospace;
+    font-family: 'Lenia';
     font-size: var(--fs-meta);
     color: var(--ink-muted);
     background: var(--paper-soft);
     border-radius: var(--radius-pill);
     padding: 4px 10px;
     white-space: nowrap;
+    flex-shrink: 0;
   }
-  .sleep-day-wake.now { background: rgba(242,165,122,0.06); border-radius: var(--radius-md); }
+  .sleep-day-wake.now { background: rgba(242,165,122,0.06); border-radius: var(--radius-md); padding: 8px 16px; }
   .sleep-day-wake.now .icon::after { border-color: var(--coral-base); border-style: solid; background: var(--coral-base); }
 
   /* .sleep-day-summary deprecated · use .callout instead */
@@ -987,7 +1001,7 @@
     cursor: pointer;
     position: relative;
   }
-  .timeline-seg.sleep   { background: var(--module-dark); }
+  .timeline-seg.sleep   { background: var(--paper-deep); }
   .timeline-seg.wake    { background: var(--gold-subtle); }
   .timeline-seg.routine { background: var(--blush-base); }
   .timeline-seg.coral   { background: var(--coral-subtle); }
@@ -1082,7 +1096,7 @@
     border-radius: 3px;
     border: 1px solid rgba(0,0,0,0.05);
   }
-  .timeline-legend .swatch.sleep   { background: var(--module-dark); border-color: var(--module-dark); }
+  .timeline-legend .swatch.sleep   { background: var(--paper-deep); border-color: var(--line-strong); }
   .timeline-legend .swatch.wake    { background: var(--gold-subtle); border-color: rgba(184,151,63,0.30); }
   .timeline-legend .swatch.routine { background: var(--blush-base); border-color: var(--blush-strong); }
   .timeline-legend .swatch.coral   { background: var(--coral-subtle); }
@@ -1098,6 +1112,7 @@
     justify-content: space-between;
     gap: 14px;
   }
+  .top-header > div:first-child { flex: 1; min-width: 0; }
   .top-header .eyebrow {
     font-family: "Lenia";
     font-size: var(--fs-meta);
@@ -1108,22 +1123,24 @@
     margin: 0 0 8px;
     display: block;
   }
+  .top-header h1,
   .top-header h2,
   .top-header h3 {
     font-family: "Lenia";
     font-weight: 500;
-    font-size: var(--fs-h2);
-    line-height: 1.05;
-    letter-spacing: -0.01em;
+    line-height: 1.1;
+    letter-spacing: -0.015em;
     margin: 0;
   }
+  .top-header h2 { font-size: var(--fs-h1); }
+  .top-header h3 { font-size: var(--fs-h2); }
   .top-header .sub {
     font-family: "Helvena";
     font-size: var(--fs-body-sm);
     color: var(--ink-muted);
     line-height: 1.5;
-    margin: 6px 0 0;
-    max-width: 38ch;
+    margin: 8px 0 0;
+    max-width: 42ch;
   }
   .top-header .actions {
     flex-shrink: 0;
@@ -1131,23 +1148,8 @@
     align-items: center;
     gap: 8px;
   }
-  /* Stack variant · centered title with close action absolute top-right */
-  .top-header.stack {
-    position: relative;
-    display: block;
-    text-align: center;
-  }
-  .top-header.stack .eyebrow { letter-spacing: 0.22em; margin-bottom: 12px; }
-  .top-header.stack h2,
-  .top-header.stack h3 { font-size: var(--fs-h1); line-height: 1.1; letter-spacing: -0.015em; }
-  .top-header.stack .sub { margin: 6px auto 0; }
-  .top-header.stack .actions {
-    position: absolute;
-    top: 0;
-    right: 0;
-  }
   /* Compact variant · smaller title for cards inside flows */
-  .top-header.compact h2,
+  .top-header.compact h2 { font-size: var(--fs-h2); }
   .top-header.compact h3 { font-size: var(--fs-h3); }
 
   /* ═════════════════ CALLOUT — § L ═════════════════ */
@@ -2102,10 +2104,10 @@
     </div>
 
     <div class="spec">
-      <div class="spec-head"><h3>Top header — eyebrow · title · sub · close X</h3><span class="meta-r">.top-header · .top-header.stack · .icon-btn.ink</span></div>
+      <div class="spec-head"><h3>Top header — eyebrow · title · sub · close X</h3><span class="meta-r">.top-header · .top-header.compact · .icon-btn.ink</span></div>
       <div class="spec-row col" style="margin-bottom: 12px">
-        <span class="spec-label">Default · left-aligned (book home)</span>
-        <div style="background:var(--paper-soft);padding:18px;border-radius:18px;width:360px">
+        <span class="spec-label">Default · left-aligned (book home / sheet / Rutina ideal)</span>
+        <div style="background:var(--paper-soft);padding:18px;border-radius:18px;width:380px">
           <div class="top-header">
             <div>
               <span class="eyebrow">Vacunas · AEPED CAV 2026</span>
@@ -2117,15 +2119,31 @@
           </div>
         </div>
       </div>
-      <div class="spec-row col">
-        <span class="spec-label">Stack · centered with sub (modal / sheet / Rutina ideal)</span>
+      <div class="spec-row col" style="margin-bottom: 12px">
+        <span class="spec-label">Default · with optional sub paragraph (Rutina ideal pattern)</span>
         <div style="background:var(--paper);padding:24px;border-radius:18px;width:380px;border:1px solid var(--line)">
-          <div class="top-header stack">
-            <span class="eyebrow">Lola · 18 m</span>
-            <h2>Rutina ideal</h2>
-            <p class="sub">Según su edad, localización y estación del año.</p>
+          <div class="top-header">
+            <div>
+              <span class="eyebrow">Lola · 18 m</span>
+              <h2>Rutina ideal</h2>
+              <p class="sub">Según su edad, localización y estación del año.</p>
+            </div>
             <div class="actions">
               <button class="icon-btn sm ink" aria-label="Cerrar"><svg viewBox="0 0 24 24"><use href="#i-x"/></svg></button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="spec-row col">
+        <span class="spec-label">Compact · smaller title for nested cards</span>
+        <div style="background:var(--paper-soft);padding:14px;border-radius:14px;width:380px">
+          <div class="top-header compact">
+            <div>
+              <span class="eyebrow">Sueño · semana</span>
+              <h3>Patrón estable</h3>
+            </div>
+            <div class="actions">
+              <button class="icon-btn sm" aria-label="Más"><svg viewBox="0 0 24 24"><use href="#i-arrow"/></svg></button>
             </div>
           </div>
         </div>
@@ -2600,10 +2618,12 @@
       </div>
       <div class="spec-row" style="padding: 16px 0; align-items: flex-start; gap: 24px">
         <div class="sleep-day">
-          <div class="top-header stack" style="margin-bottom: 16px">
-            <span class="eyebrow">Lola · 18 m</span>
-            <h2>Rutina ideal</h2>
-            <p class="sub">Según su edad, localización y estación del año.</p>
+          <div class="top-header" style="margin-bottom: 16px">
+            <div>
+              <span class="eyebrow">Lola · 18 m</span>
+              <h2>Rutina ideal</h2>
+              <p class="sub">Según su edad, localización y estación del año.</p>
+            </div>
             <div class="actions">
               <button class="icon-btn sm ink" aria-label="Cerrar"><svg viewBox="0 0 24 24"><use href="#i-x"/></svg></button>
             </div>
@@ -2770,10 +2790,12 @@
       </div>
       <div class="spec-row" style="padding: 16px 0">
         <div class="sleep-day" style="max-width: 460px">
-          <div class="top-header stack" style="margin-bottom: 16px">
-            <span class="eyebrow">Mateo · 5 m</span>
-            <h2>Rutina ideal</h2>
-            <p class="sub">Según su edad, localización y estación del año.</p>
+          <div class="top-header" style="margin-bottom: 16px">
+            <div>
+              <span class="eyebrow">Mateo · 5 m</span>
+              <h2>Rutina ideal</h2>
+              <p class="sub">Según su edad, localización y estación del año.</p>
+            </div>
             <div class="actions">
               <button class="icon-btn sm ink" aria-label="Cerrar"><svg viewBox="0 0 24 24"><use href="#i-x"/></svg></button>
             </div>
