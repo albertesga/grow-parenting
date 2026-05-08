@@ -695,20 +695,39 @@
     color: var(--ink-soft);
     transform: translateX(2px);
   }
+  /* Marker · 18px circle that carries the state symbol inside, replacing
+     the old solid-ink dot + inline ✓ on the date. Done = mint with check,
+     Next = gold with inner dot, Future = hollow ring. */
   .dose-row .marker {
-    width: 14px; height: 14px;
+    width: 18px; height: 18px;
     border-radius: var(--radius-pill);
-    margin-top: 5px;
+    margin-top: 3px;
     flex-shrink: 0;
     box-sizing: border-box;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Lenia';
+    font-size: 11px; line-height: 1; font-weight: 600;
   }
-  .dose-row.done .marker { background: var(--ink); }
-  .dose-row.next .marker { background: var(--ink); }
+  .dose-row.done .marker {
+    background: var(--mint-strong);
+    color: var(--paper);
+  }
+  .dose-row.done .marker::after { content: '✓'; }
+  .dose-row.next .marker {
+    background: transparent;
+    border: 1.5px solid var(--gold-base);
+  }
+  .dose-row.next .marker::after {
+    content: '';
+    width: 6px; height: 6px;
+    border-radius: var(--radius-pill);
+    background: var(--gold-base);
+  }
   .dose-row.future .marker {
     background: transparent;
     border: 1.5px solid var(--line-strong);
   }
-  /* next dose · highlighted with gold ring + subtle gold tint */
+  /* next dose · subtle gold tint + ring on the row itself */
   .dose-row.next {
     background: var(--gold-subtle);
     box-shadow: inset 0 0 0 1.5px var(--gold-base);
@@ -732,18 +751,34 @@
     letter-spacing: 0.04em;
     margin-left: 4px;
   }
+  /* Meta · two-line stacked date for clarity. .tag on top (próxima / hace x),
+     .date below in stronger ink-soft. No more inline ✓ — moved to marker. */
   .dose-row .meta {
+    display: flex; flex-direction: column; align-items: flex-end;
+    gap: 2px;
     font-family: 'Lenia';
-    font-size: var(--fs-caption);
-    color: var(--ink-muted);
-    white-space: nowrap;
     flex-shrink: 0;
+    align-self: center;
     text-align: right;
-    align-self: flex-start;
-    padding-top: 6px;
   }
-  .dose-row.done .meta::after { content: ' ✓'; color: var(--mint-strong); font-weight: 600; }
-  .dose-row.next .meta { color: #6E5A2A; font-weight: 500; }
+  .dose-row .meta .tag {
+    font-size: var(--fs-eyebrow);
+    color: var(--ink-muted);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+  .dose-row .meta .date {
+    font-size: var(--fs-body-sm);
+    color: var(--ink);
+    font-weight: 500;
+    letter-spacing: -0.005em;
+    white-space: nowrap;
+  }
+  .dose-row.done .meta .date    { color: var(--ink-soft); font-weight: 400; }
+  .dose-row.future .meta .date  { color: var(--ink-muted); font-weight: 400; }
+  .dose-row.next .meta .date    { color: #6E5A2A; }
+  .dose-row.next .meta .tag     { color: #8A6E2E; }
 
   .vax-calendar-footer {
     margin-top: 14px;
@@ -2942,7 +2977,7 @@
                 <strong>2 meses</strong>
                 <p>Hexavalente · Neumococo · MenB · Rotavirus</p>
               </div>
-              <div class="meta">12 may</div>
+              <div class="meta"><span class="date">12 may</span></div>
               <span class="chevron"><svg viewBox="0 0 24 24"><use href="#i-arrow"/></svg></span>
             </button>
 
@@ -2952,7 +2987,7 @@
                 <strong>3 meses</strong>
                 <p>Rotavirus 2ª</p>
               </div>
-              <div class="meta">12 jun</div>
+              <div class="meta"><span class="date">12 jun</span></div>
               <span class="chevron"><svg viewBox="0 0 24 24"><use href="#i-arrow"/></svg></span>
             </button>
 
@@ -2962,7 +2997,7 @@
                 <strong>4 meses</strong>
                 <p>Hexavalente · Neumococo · MenB · MenACWY</p>
               </div>
-              <div class="meta">12 jul</div>
+              <div class="meta"><span class="date">12 jul</span></div>
               <span class="chevron"><svg viewBox="0 0 24 24"><use href="#i-arrow"/></svg></span>
             </button>
 
@@ -2972,7 +3007,7 @@
                 <strong>11 meses</strong>
                 <p>Hexavalente · Neumococo · MenB</p>
               </div>
-              <div class="meta">12 feb 2027</div>
+              <div class="meta"><span class="date">12 feb 2027</span></div>
               <span class="chevron"><svg viewBox="0 0 24 24"><use href="#i-arrow"/></svg></span>
             </button>
 
@@ -2982,7 +3017,7 @@
                 <strong>12 meses</strong>
                 <p>MenACWY · Triple vírica · Hepatitis A <span class="new-badge">Nuevo 2026</span></p>
               </div>
-              <div class="meta">próxima · 12 mar 2027</div>
+              <div class="meta"><span class="tag">próxima</span><span class="date">12 mar 2027</span></div>
               <span class="chevron"><svg viewBox="0 0 24 24"><use href="#i-arrow"/></svg></span>
             </button>
 
@@ -2992,7 +3027,7 @@
                 <strong>15 meses</strong>
                 <p>Varicela</p>
               </div>
-              <div class="meta">12 jun 2027</div>
+              <div class="meta"><span class="date">12 jun 2027</span></div>
               <span class="chevron"><svg viewBox="0 0 24 24"><use href="#i-arrow"/></svg></span>
             </button>
 
@@ -3002,7 +3037,7 @@
                 <strong>3 - 4 años</strong>
                 <p>Triple vírica 2ª · Varicela 2ª · Hepatitis A 2ª</p>
               </div>
-              <div class="meta">2029</div>
+              <div class="meta"><span class="date">2029</span></div>
               <span class="chevron"><svg viewBox="0 0 24 24"><use href="#i-arrow"/></svg></span>
             </button>
 
@@ -3012,7 +3047,7 @@
                 <strong>6 años</strong>
                 <p>DTPa-VPI · Varicela refuerzo</p>
               </div>
-              <div class="meta">2032</div>
+              <div class="meta"><span class="date">2032</span></div>
               <span class="chevron"><svg viewBox="0 0 24 24"><use href="#i-arrow"/></svg></span>
             </button>
 
@@ -3022,7 +3057,7 @@
                 <strong>12 - 14 años</strong>
                 <p>VPH · MenACWY refuerzo · Td</p>
               </div>
-              <div class="meta">2038 - 2040</div>
+              <div class="meta"><span class="date">2038 - 2040</span></div>
               <span class="chevron"><svg viewBox="0 0 24 24"><use href="#i-arrow"/></svg></span>
             </button>
           </div>
@@ -3051,7 +3086,7 @@
               <strong>2 meses</strong>
               <p>Hexavalente · Neumococo · MenB · Rotavirus</p>
             </div>
-            <div class="meta">12 may</div>
+            <div class="meta"><span class="date">12 may</span></div>
             <span class="chevron"><svg viewBox="0 0 24 24"><use href="#i-arrow"/></svg></span>
           </button>
           <button class="dose-row next" type="button">
@@ -3060,7 +3095,7 @@
               <strong>12 meses</strong>
               <p>MenACWY · Triple vírica · Hepatitis A</p>
             </div>
-            <div class="meta">próxima · 12 mar</div>
+            <div class="meta"><span class="tag">próxima</span><span class="date">12 mar</span></div>
             <span class="chevron"><svg viewBox="0 0 24 24"><use href="#i-arrow"/></svg></span>
           </button>
           <button class="dose-row future" type="button">
@@ -3069,7 +3104,7 @@
               <strong>15 meses</strong>
               <p>Varicela</p>
             </div>
-            <div class="meta">12 jun 2027</div>
+            <div class="meta"><span class="date">12 jun 2027</span></div>
             <span class="chevron"><svg viewBox="0 0 24 24"><use href="#i-arrow"/></svg></span>
           </button>
         </div>
@@ -3121,7 +3156,7 @@
 
           <div class="vax-detail-stat-wrap">
             <div class="callout stat">
-              <p>Lleva <strong>1 / 4</strong> dosis · 1ª puesta el <strong>12 may 2026</strong>.</p>
+              <p>Lleva <strong>1</strong> de <strong>4</strong> dosis. Administrada el <strong>12 may 2026</strong>.</p>
             </div>
           </div>
 
@@ -3183,7 +3218,7 @@
                 <strong>2 meses</strong>
                 <p>1ª dosis</p>
               </div>
-              <div class="meta">12 may 2026</div>
+              <div class="meta"><span class="date">12 may 2026</span></div>
               <span class="chevron"><svg viewBox="0 0 24 24"><use href="#i-arrow"/></svg></span>
             </button>
             <button class="dose-row next" type="button">
@@ -3192,7 +3227,7 @@
                 <strong>4 meses</strong>
                 <p>2ª dosis</p>
               </div>
-              <div class="meta">próxima · 12 jul 2026</div>
+              <div class="meta"><span class="tag">próxima</span><span class="date">12 jul 2026</span></div>
               <span class="chevron"><svg viewBox="0 0 24 24"><use href="#i-arrow"/></svg></span>
             </button>
             <button class="dose-row future" type="button">
@@ -3201,7 +3236,7 @@
                 <strong>11 meses</strong>
                 <p>3ª dosis · refuerzo</p>
               </div>
-              <div class="meta">12 feb 2027</div>
+              <div class="meta"><span class="date">12 feb 2027</span></div>
               <span class="chevron"><svg viewBox="0 0 24 24"><use href="#i-arrow"/></svg></span>
             </button>
             <button class="dose-row future" type="button">
@@ -3210,7 +3245,7 @@
                 <strong>6 años</strong>
                 <p>DTPa-VPI · refuerzo (sin Hib · sin HepB)</p>
               </div>
-              <div class="meta">2032</div>
+              <div class="meta"><span class="date">2032</span></div>
               <span class="chevron"><svg viewBox="0 0 24 24"><use href="#i-arrow"/></svg></span>
             </button>
           </div>
