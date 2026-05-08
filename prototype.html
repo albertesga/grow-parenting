@@ -60,7 +60,18 @@
     --night-bg: #1A1D24;
     --night-surface: #2A2E36;
     --shadow: 0 26px 80px rgba(42, 33, 27, 0.22);
+
+    /* ─── motion · § R canon ─── */
+    --duration-instant: 80ms;
+    --duration-fast: 150ms;
+    --duration-base: 220ms;
+    --duration-slow: 400ms;
+    --duration-breath: 5400ms;
     --ease: cubic-bezier(0.2, 0.8, 0.2, 1);
+    --ease-standard: cubic-bezier(0.2, 0.8, 0.2, 1);
+    --ease-emphasized: cubic-bezier(0.34, 1.1, 0.4, 1);
+    --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+    --ease-soft: cubic-bezier(0.4, 0, 0.6, 1);
 
     /* font scale */
     --fs-eyebrow: 9px;
@@ -98,6 +109,47 @@
   }
 
   * { box-sizing: border-box; }
+
+  /* ═════════════════ ANIMATIONS — § R canon ═════════════════ */
+  @keyframes fy-fade-in   { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes fy-slide-up  { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+  @keyframes fy-slide-down{ from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: none; } }
+  @keyframes fy-pop-in    { from { opacity: 0; transform: scale(0.92); } to { opacity: 1; transform: scale(1); } }
+  @keyframes fy-breath    { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.018); } }
+
+  .fy-anim-fade       { animation: fy-fade-in   var(--duration-base) var(--ease-standard) both; }
+  .fy-anim-slide-up   { animation: fy-slide-up  var(--duration-base) var(--ease-emphasized) both; }
+  .fy-anim-slide-down { animation: fy-slide-down var(--duration-base) var(--ease-emphasized) both; }
+  .fy-anim-pop-in     { animation: fy-pop-in    var(--duration-fast) var(--ease-spring) both; }
+  .fy-anim-breath     { animation: fy-breath    var(--duration-breath) ease-in-out infinite; }
+
+  .fy-stagger > *:nth-child(1) { animation-delay: 30ms; }
+  .fy-stagger > *:nth-child(2) { animation-delay: 80ms; }
+  .fy-stagger > *:nth-child(3) { animation-delay: 130ms; }
+  .fy-stagger > *:nth-child(4) { animation-delay: 180ms; }
+  .fy-stagger > *:nth-child(5) { animation-delay: 230ms; }
+  .fy-stagger > *:nth-child(6) { animation-delay: 280ms; }
+  .fy-stagger > *:nth-child(n+7) { animation-delay: 320ms; }
+
+  .fy-lift {
+    transition:
+      transform var(--duration-fast) var(--ease-standard),
+      filter    var(--duration-fast) var(--ease-standard),
+      box-shadow var(--duration-fast) var(--ease-standard);
+  }
+  .fy-lift:hover  { transform: translateY(-1px); filter: brightness(0.985); }
+  .fy-lift:active { transform: translateY(0);    filter: brightness(0.95);  }
+
+  .fy-press { transition: transform var(--duration-instant) var(--ease-standard); }
+  .fy-press:active { transform: scale(0.97); }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
 
   /* keyboard-only focus ring (mouse users see no outline) */
   :focus { outline: 0; }
@@ -242,13 +294,96 @@
     display: flex;
     opacity: 1;
     transform: translateY(0);
-    animation: screenIn 260ms var(--ease) forwards;
+    animation: screenIn var(--duration-base) var(--ease-emphasized) forwards;
   }
 
   @keyframes screenIn {
     from { opacity: 0; transform: translateY(10px); }
     to { opacity: 1; transform: translateY(0); }
   }
+
+  /* Screen entry stagger · only the active screen animates its content blocks
+     so non-visible screens never repaint. Targets the main scrollable content. */
+  .screen.active .feed-card,
+  .screen.active .growth-oms-card,
+  .screen.active .vax-section,
+  .screen.active .vax-detail,
+  .screen.active .sleep-day,
+  .screen.active .milestone-stage-head,
+  .screen.active .ready-card {
+    animation: fy-slide-up var(--duration-base) var(--ease-emphasized) both;
+  }
+  .screen.active .feed-card:nth-child(1) { animation-delay: 40ms; }
+  .screen.active .feed-card:nth-child(2) { animation-delay: 90ms; }
+  .screen.active .feed-card:nth-child(3) { animation-delay: 140ms; }
+  .screen.active .feed-card:nth-child(4) { animation-delay: 190ms; }
+  .screen.active .feed-card:nth-child(5) { animation-delay: 240ms; }
+  .screen.active .feed-card:nth-child(n+6) { animation-delay: 290ms; }
+
+  .screen.active .callout,
+  .screen.active .insight {
+    animation: fy-fade-in var(--duration-base) var(--ease-standard) both;
+    animation-delay: 80ms;
+  }
+
+  .screen.active .chip,
+  .screen.active .filter-chip,
+  .screen.active .module-chip,
+  .screen.active .module-tab,
+  .screen.active .scale-btn,
+  .screen.active .age-toggle button {
+    animation: fy-pop-in var(--duration-fast) var(--ease-spring) both;
+  }
+  /* Chip-specific entry preserves the per-child tilt (--chip-tilt). */
+  .screen.active .chip {
+    animation: fy-chip-pop-in var(--duration-fast) var(--ease-spring) both;
+  }
+  @keyframes fy-chip-pop-in {
+    from { opacity: 0; transform: rotate(var(--chip-tilt, 0deg)) scale(0.92); }
+    to   { opacity: 1; transform: rotate(var(--chip-tilt, 0deg)) scale(1); }
+  }
+  .screen.active .chip:nth-child(1),
+  .screen.active .filter-chip:nth-child(1) { animation-delay: 30ms; }
+  .screen.active .chip:nth-child(2),
+  .screen.active .filter-chip:nth-child(2) { animation-delay: 60ms; }
+  .screen.active .chip:nth-child(3),
+  .screen.active .filter-chip:nth-child(3) { animation-delay: 90ms; }
+  .screen.active .chip:nth-child(4),
+  .screen.active .filter-chip:nth-child(4) { animation-delay: 120ms; }
+  .screen.active .chip:nth-child(n+5),
+  .screen.active .filter-chip:nth-child(n+5) { animation-delay: 150ms; }
+
+  .screen.active .shelf-book {
+    animation: fy-pop-in var(--duration-base) var(--ease-spring) both;
+  }
+  .screen.active .shelf-book:nth-child(1) { animation-delay: 60ms; }
+  .screen.active .shelf-book:nth-child(2) { animation-delay: 110ms; }
+  .screen.active .shelf-book:nth-child(3) { animation-delay: 160ms; }
+  .screen.active .shelf-book:nth-child(4) { animation-delay: 210ms; }
+  .screen.active .shelf-book:nth-child(n+5) { animation-delay: 260ms; }
+
+  /* Press feedback on all interactive controls (additive — does not replace
+     existing hover transitions). */
+  .primary, .secondary, .ghost-link,
+  .btn-primary, .btn-secondary, .btn-ghost,
+  .chip, .filter-chip, .module-chip, .module-tab,
+  .module-action, .module-pill,
+  .shelf-book, .feed-card[role="button"], .feed-card a, .feed-card button,
+  .scale-btn, .phase-card, .care-card, .nav-tab, .fab,
+  .dose-row, .vax-list .dose-row {
+    transition-property: transform, filter, background, border-color, color, box-shadow;
+    transition-duration: var(--duration-fast);
+    transition-timing-function: var(--ease-standard);
+  }
+  .primary:active, .secondary:active, .ghost-link:active,
+  .btn-primary:active, .btn-secondary:active, .btn-ghost:active,
+  .filter-chip:active, .module-chip:active, .module-tab:active,
+  .module-action:active, .scale-btn:active, .nav-tab:active,
+  .dose-row:active {
+    transform: scale(0.97);
+  }
+  /* Chip press preserves the per-child tilt. */
+  .chip:active { transform: rotate(var(--chip-tilt, 0deg)) scale(0.97); }
 
   .status {
     height: 38px;
@@ -1022,12 +1157,14 @@
       color 180ms var(--ease);
   }
   .chip:hover, .cal-chip:hover { filter: brightness(0.97); }
-  .chip:nth-child(1) { transform: rotate(-3deg); }
-  .chip:nth-child(2) { --chip-bg: var(--coral-subtle); --chip-ink: #8E4A22; transform: rotate(2deg); }
-  .chip:nth-child(3) { --chip-bg: var(--mint-subtle);  --chip-ink: #4F6647; transform: rotate(-2deg); }
-  .chip:nth-child(4) { --chip-bg: var(--blush-subtle); --chip-ink: #7A4A3A; transform: rotate(3deg); }
-  .chip:nth-child(5) { --chip-bg: var(--gold-subtle);  --chip-ink: #6E5A2A; transform: rotate(-1deg); }
-  .chip:nth-child(6) { --chip-bg: var(--paper-soft);   --chip-ink: var(--ink); transform: rotate(2deg); }
+  /* Tilts via CSS var so the pop-in animation + :active scale preserve them. */
+  .chip { transform: rotate(var(--chip-tilt, 0deg)); }
+  .chip:nth-child(1) { --chip-tilt: -3deg; }
+  .chip:nth-child(2) { --chip-bg: var(--coral-subtle); --chip-ink: #8E4A22; --chip-tilt:  2deg; }
+  .chip:nth-child(3) { --chip-bg: var(--mint-subtle);  --chip-ink: #4F6647; --chip-tilt: -2deg; }
+  .chip:nth-child(4) { --chip-bg: var(--blush-subtle); --chip-ink: #7A4A3A; --chip-tilt:  3deg; }
+  .chip:nth-child(5) { --chip-bg: var(--gold-subtle);  --chip-ink: #6E5A2A; --chip-tilt: -1deg; }
+  .chip:nth-child(6) { --chip-bg: var(--paper-soft);   --chip-ink: var(--ink); --chip-tilt:  2deg; }
   .chip.active,
   .cal-chip.active {
     background: var(--paper);
@@ -6514,8 +6651,8 @@
           <div class="content">
             <img class="logo-lockup" src="design/assets/grow-logo.png" alt="Grow">
             <div class="hero-blob">
-              <h2>Criar no es llevarlo todo en la cabeza.</h2>
-              <p>Calendario, log y peque&ntilde;as pistas en un lugar tranquilo.</p>
+              <h2>Tú cuidas a tu peque y Grow te cuida a ti.</h2>
+              <p>Te apoyamos durante los 1000 primeros días con tu peque.</p>
               <img src="design/assets/avatar-mint.png" alt="Avatar Grow mint">
             </div>
             <div class="button-stack">
@@ -7123,9 +7260,9 @@
   const milestoneCelebration = document.getElementById('milestone-celebration');
   const scrim = document.querySelector('.scrim');
   /* Cached static node lists (computed once · used by repeated handlers) */
-  const milestoneWitnessButtons = milestoneWitnessButtons;
-  const measureContextButtons = measureContextButtons;
-  const shelfRails = shelfRails;
+  const milestoneWitnessButtons = document.querySelectorAll('[data-milestone-witness]');
+  const measureContextButtons = document.querySelectorAll('[data-measure-context]');
+  const shelfRails = document.querySelectorAll('.shelf-rail');
   const sheetTitle = document.getElementById('sheet-title');
   const sheetCopy = document.getElementById('sheet-copy');
   const logSheetRoot = document.querySelector('[data-log-sheet-root]');
@@ -10513,7 +10650,7 @@ Grow
     const gridRatios = [0, 0.333, 0.666, 1];
     const grid = gridRatios.map((ratio) => {
       const y = geometry.top + (geometry.bottom - geometry.top) * ratio;
-      return `<line x1="${geometry.left}" y1="${y.toFixed(1)}" x2="${geometry.right}" y2="${y.toFixed(1)}" stroke="#E2DDD1" stroke-width="0.5"/>`;
+      return `<line x1="${geometry.left}" y1="${y.toFixed(1)}" x2="${geometry.right}" y2="${y.toFixed(1)}" stroke="#E2DDD1" stroke-width="1"/>`;
     }).join('');
 
     /* X-axis: 0/6/12/18/24m (DS canon). */
@@ -10521,24 +10658,24 @@ Grow
     const axis = axisMonths.map((month) => {
       const x = geometry.left + (month / GROWTH_AXIS_MAX) * (geometry.right - geometry.left);
       const anchor = month === 0 ? 'start' : month === GROWTH_AXIS_MAX ? 'end' : 'middle';
-      return `<text x="${x.toFixed(1)}" y="265" font-family="Lenia" font-size="10" fill="#888" text-anchor="${anchor}">${month}m</text>`;
+      return `<text x="${x.toFixed(1)}" y="285" font-family="Lenia" font-size="22" fill="#5C5448" text-anchor="${anchor}">${month}m</text>`;
     }).join('');
 
     /* 4 Y-axis labels matching the 4 grid lines. */
     const yLabels = gridRatios.map((ratio) => {
       const value = metric.maxValue - ratio * (metric.maxValue - metric.minValue);
-      const y = geometry.top + (geometry.bottom - geometry.top) * ratio + 4;
-      return `<text x="32" y="${y.toFixed(1)}" font-family="Lenia" font-size="10" fill="#888" text-anchor="end">${formatNumber(value, metric.precision)}${metric.unit}</text>`;
+      const y = geometry.top + (geometry.bottom - geometry.top) * ratio + 7;
+      return `<text x="34" y="${y.toFixed(1)}" font-family="Lenia" font-size="22" fill="#5C5448" text-anchor="end">${formatNumber(value, metric.precision)}${metric.unit}</text>`;
     }).join('');
 
     const pointNodes = points.map((point, index) => {
       const isSelected = index === selectedIndex;
-      const r = isSelected ? 5 : 4;
+      const r = isSelected ? 8 : 6;
       const fill = isSelected ? '#F2A57A' : '#FBE5D6';
       return `
         <g data-growth-point="${metric.id}:${index}" tabindex="0" role="button" aria-label="${escapeHtml(formatMetricValue(metric, point.value))} · ${Math.round(point.ageMonths)}m">
-          <circle cx="${point.x.toFixed(1)}" cy="${point.y.toFixed(1)}" r="14" fill="transparent"/>
-          <circle class="growth-chart-point" cx="${point.x.toFixed(1)}" cy="${point.y.toFixed(1)}" r="${r}" fill="${fill}" stroke="#D67742" stroke-width="2"/>
+          <circle cx="${point.x.toFixed(1)}" cy="${point.y.toFixed(1)}" r="18" fill="transparent"/>
+          <circle class="growth-chart-point" cx="${point.x.toFixed(1)}" cy="${point.y.toFixed(1)}" r="${r}" fill="${fill}" stroke="#D67742" stroke-width="2.5"/>
         </g>
       `;
     }).join('');
@@ -10546,23 +10683,24 @@ Grow
     const tooltipX = selectedPoint.x;
     const tooltipY = geometry.top;
     const labelText = `${escapeHtml(formatMetricValue(metric, selectedPoint.value))} · ${Math.round(selectedPoint.ageMonths)}m`;
-    const pillW = labelText.length * 5.4 + 16;
+    const pillW = labelText.length * 10.5 + 32;
+    const pillH = 30;
     const pillX = clamp(tooltipX - pillW / 2, geometry.left, geometry.right - pillW);
 
     return `
-      <svg viewBox="0 0 ${geometry.width} ${geometry.height}" preserveAspectRatio="xMidYMid meet" aria-label="Curva ${escapeHtml(metric.label)}">
+      <svg viewBox="-40 0 670 330" preserveAspectRatio="xMidYMid meet" aria-label="Curva ${escapeHtml(metric.label)}">
         ${grid}
         ${yLabels}
         ${axis}
         <path d="${GROWTH_BAND_PATH}" fill="#E8E1CF" opacity="0.6"/>
-        <path d="${GROWTH_P50_PATH}" stroke="#888" stroke-width="1" stroke-dasharray="3 4" fill="none"/>
-        <text x="585" y="60" font-family="Lenia" font-size="9" fill="#888">P97</text>
-        <text x="585" y="80" font-family="Lenia" font-size="9" fill="#888">P50</text>
-        <text x="585" y="245" font-family="Lenia" font-size="9" fill="#888">P3</text>
-        ${childPath ? `<path class="growth-chart-path" d="${childPath}" stroke="#D67742" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>` : ''}
-        <line x1="${tooltipX.toFixed(1)}" y1="${selectedPoint.y.toFixed(1)}" x2="${tooltipX.toFixed(1)}" y2="${tooltipY}" stroke="#D67742" stroke-width="0.5" stroke-dasharray="2 2"/>
-        <rect x="${pillX.toFixed(1)}" y="${(tooltipY - 2).toFixed(1)}" width="${pillW.toFixed(1)}" height="16" rx="8" fill="#D67742"/>
-        <text x="${(pillX + pillW / 2).toFixed(1)}" y="${(tooltipY + 11).toFixed(1)}" font-family="Lenia" font-size="10" fill="white" text-anchor="middle" font-weight="500">${labelText}</text>
+        <path d="${GROWTH_P50_PATH}" stroke="#888" stroke-width="2" stroke-dasharray="6 8" fill="none"/>
+        <text x="590" y="56" font-family="Lenia" font-size="19" fill="#5C5448">P97</text>
+        <text x="590" y="86" font-family="Lenia" font-size="19" fill="#5C5448">P50</text>
+        <text x="590" y="250" font-family="Lenia" font-size="19" fill="#5C5448">P3</text>
+        ${childPath ? `<path class="growth-chart-path" d="${childPath}" stroke="#D67742" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>` : ''}
+        <line x1="${tooltipX.toFixed(1)}" y1="${selectedPoint.y.toFixed(1)}" x2="${tooltipX.toFixed(1)}" y2="${tooltipY}" stroke="#D67742" stroke-width="1" stroke-dasharray="4 4"/>
+        <rect x="${pillX.toFixed(1)}" y="${(tooltipY - 6).toFixed(1)}" width="${pillW.toFixed(1)}" height="${pillH}" rx="15" fill="#D67742"/>
+        <text x="${(pillX + pillW / 2).toFixed(1)}" y="${(tooltipY + 14).toFixed(1)}" font-family="Lenia" font-size="19" fill="white" text-anchor="middle" font-weight="500">${labelText}</text>
         ${pointNodes}
       </svg>
     `;
@@ -10608,9 +10746,9 @@ Grow
     `;
   }
 
-  function renderGrowthOmsCard() {
+  function renderGrowthOmsCard(metricId) {
     const ageMonths = getGrowthAgeMonths();
-    const metric = growthMetricConfig[growthActiveMetric] || growthMetricConfig.weight;
+    const metric = growthMetricConfig[metricId] || growthMetricConfig[growthActiveMetric] || growthMetricConfig.weight;
     const measurements = getMetricMeasurements(metric.id);
     const latest = measurements[measurements.length - 1];
     const selectedIndex = getGrowthSelectedIndex(metric.id, measurements);
@@ -10639,7 +10777,6 @@ Grow
           <div class="ttl">${escapeHtml(metric.label)}</div>
           <div class="meta">${escapeHtml(formatMetricValue(metric, currentValue))} · P${percentile} · OMS niñas</div>
         </div>
-        <div class="mark-selector oms-tabs-wrap">${renderGrowthMetricTabs()}</div>
         <div class="oms-chart">${measurements.length ? renderGrowthChart(metric, measurements, selectedIndex) : '<p style="font-size:12px;color:var(--ink-muted);padding:24px 0;text-align:center;">Sin medidas registradas</p>'}</div>
         <div class="oms-legend">
           <div class="leg-item"><span class="swatch dot"></span><span>${escapeHtml(growthProfile.childName)} · ${measurements.length} med.</span></div>
@@ -10686,7 +10823,9 @@ Grow
       growthActiveMetric = 'weight';
     }
 
-    root.innerHTML = `<div class="growth-stack">${renderGrowthOmsCard()}</div>`;
+    const metricsToShow = ['weight', 'height']
+      .concat(ageMonths <= growthMetricConfig.head.hideAfterMonths ? ['head'] : []);
+    root.innerHTML = `<div class="growth-stack">${metricsToShow.map((id) => renderGrowthOmsCard(id)).join('')}</div>`;
   }
 
   function setGrowthAgeMode(mode) {

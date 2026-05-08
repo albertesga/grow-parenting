@@ -69,7 +69,96 @@
     /* module-dark — neutral near-black for sleep · routine · accents */
     --module-dark: #1B1A18;
 
+    /* ─── motion · § R canon ─────────────────────────────
+       durations · short = micro-interactions, base = card/screen entry,
+       slow = sheets/scrubs, breath = ambient loops. */
+    --duration-instant: 80ms;
+    --duration-fast: 150ms;
+    --duration-base: 220ms;
+    --duration-slow: 400ms;
+    --duration-breath: 5400ms;
+
+    /* easings · standard = default, emphasized = strong arrivals,
+       spring = playful bounces, soft = ambient/loop tweens. */
     --ease: cubic-bezier(0.2, 0.8, 0.2, 1);
+    --ease-standard: cubic-bezier(0.2, 0.8, 0.2, 1);
+    --ease-emphasized: cubic-bezier(0.34, 1.1, 0.4, 1);
+    --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+    --ease-soft: cubic-bezier(0.4, 0, 0.6, 1);
+  }
+
+  /* ═════════════════ ANIMATIONS — § R ═════════════════ */
+  @keyframes fy-fade-in {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+  @keyframes fy-slide-up {
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: none; }
+  }
+  @keyframes fy-slide-down {
+    from { opacity: 0; transform: translateY(-8px); }
+    to   { opacity: 1; transform: none; }
+  }
+  @keyframes fy-pop-in {
+    from { opacity: 0; transform: scale(0.92); }
+    to   { opacity: 1; transform: scale(1); }
+  }
+  @keyframes fy-breath {
+    0%, 100% { transform: scale(1); }
+    50%      { transform: scale(1.018); }
+  }
+  @keyframes fy-pulse-halo {
+    0%, 100% { transform: scale(1); opacity: 0.55; }
+    50%      { transform: scale(1.08); opacity: 0.85; }
+  }
+  @keyframes fy-shimmer {
+    0%   { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+  }
+  @keyframes fy-gradient-drift {
+    0%, 100% { background-position: 0% 50%; }
+    50%      { background-position: 100% 50%; }
+  }
+
+  /* utility classes · prefer these over ad-hoc keyframes */
+  .fy-anim-fade      { animation: fy-fade-in  var(--duration-base) var(--ease-standard) both; }
+  .fy-anim-slide-up  { animation: fy-slide-up var(--duration-base) var(--ease-emphasized) both; }
+  .fy-anim-slide-down{ animation: fy-slide-down var(--duration-base) var(--ease-emphasized) both; }
+  .fy-anim-pop-in    { animation: fy-pop-in   var(--duration-fast) var(--ease-spring) both; }
+  .fy-anim-breath    { animation: fy-breath   var(--duration-breath) ease-in-out infinite; }
+
+  /* stagger helpers · apply on parent or per-item */
+  .fy-stagger > *:nth-child(1) { animation-delay: 30ms; }
+  .fy-stagger > *:nth-child(2) { animation-delay: 80ms; }
+  .fy-stagger > *:nth-child(3) { animation-delay: 130ms; }
+  .fy-stagger > *:nth-child(4) { animation-delay: 180ms; }
+  .fy-stagger > *:nth-child(5) { animation-delay: 230ms; }
+  .fy-stagger > *:nth-child(6) { animation-delay: 280ms; }
+  .fy-stagger > *:nth-child(n+7) { animation-delay: 320ms; }
+
+  /* hover/press patterns · interactive elements */
+  .fy-lift {
+    transition:
+      transform var(--duration-fast) var(--ease-standard),
+      filter    var(--duration-fast) var(--ease-standard),
+      box-shadow var(--duration-fast) var(--ease-standard);
+  }
+  .fy-lift:hover  { transform: translateY(-1px); filter: brightness(0.985); }
+  .fy-lift:active { transform: translateY(0);    filter: brightness(0.95);  }
+
+  .fy-press {
+    transition: transform var(--duration-instant) var(--ease-standard);
+  }
+  .fy-press:active { transform: scale(0.97); }
+
+  /* respect reduced-motion preference (honor system setting) */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
   }
 
   * { box-sizing: border-box; }
@@ -3307,6 +3396,154 @@
           <li><strong>"Nuevo 2026" badge</strong> · señala adiciones recientes a la pauta sin alarmar.</li>
           <li><strong>Footer editorial</strong> · explica la personalización (CCAA, historial) en el mismo tono "rutina circadiana" del sleep tracker.</li>
         </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ╔═════════════════════════════════════════════════════════╗
+       ║  § R — ANIMATIONS                                        ║
+       ╚═════════════════════════════════════════════════════════╝ -->
+  <section class="section">
+    <div class="section-head">
+      <div class="section-num">§ R — Animations</div>
+      <div>
+        <h2>Movement that breathes — never demands.</h2>
+        <div class="desc">
+          Cinco duraciones, cuatro curvas y un puñado de utilidades cubren
+          todas las transiciones de la app. La regla: micro-interacciones
+          usan <code>--duration-fast</code>; entradas de pantalla y cards
+          usan <code>--duration-base</code>; sheets y scrub-gestures
+          <code>--duration-slow</code>. El sistema respeta
+          <code>prefers-reduced-motion</code>.
+        </div>
+      </div>
+    </div>
+
+    <!-- duration tokens -->
+    <div class="spec">
+      <div class="spec-head">
+        <h3>Duration tokens</h3>
+        <span class="meta-r">--duration-* · ms</span>
+      </div>
+      <div class="token-grid cols-3" style="grid-template-columns: repeat(5, 1fr);">
+        <div class="token"><div class="swatch" style="background: var(--coral-subtle); display:flex; align-items:center; justify-content:center; font-family:Lenia; font-size:18px; color: var(--ink);">80ms</div><strong>--duration-instant</strong><span style="display:block; font-size:11px; color: var(--ink-muted); margin-top:4px;">press / state echo</span></div>
+        <div class="token"><div class="swatch" style="background: var(--coral-base); display:flex; align-items:center; justify-content:center; font-family:Lenia; font-size:18px; color: var(--ink-warm);">150ms</div><strong>--duration-fast</strong><span style="display:block; font-size:11px; color: var(--ink-muted); margin-top:4px;">hover / chip / pill</span></div>
+        <div class="token"><div class="swatch" style="background: var(--mint-base); display:flex; align-items:center; justify-content:center; font-family:Lenia; font-size:18px; color: var(--ink-warm);">220ms</div><strong>--duration-base</strong><span style="display:block; font-size:11px; color: var(--ink-muted); margin-top:4px;">screen / card entry</span></div>
+        <div class="token"><div class="swatch" style="background: var(--blush-base); display:flex; align-items:center; justify-content:center; font-family:Lenia; font-size:18px; color: var(--ink-warm);">400ms</div><strong>--duration-slow</strong><span style="display:block; font-size:11px; color: var(--ink-muted); margin-top:4px;">sheet / scrub</span></div>
+        <div class="token"><div class="swatch" style="background: var(--gold-subtle); display:flex; align-items:center; justify-content:center; font-family:Lenia; font-size:18px; color: var(--ink-warm);">5400ms</div><strong>--duration-breath</strong><span style="display:block; font-size:11px; color: var(--ink-muted); margin-top:4px;">ambient loop</span></div>
+      </div>
+    </div>
+
+    <!-- easing tokens -->
+    <div class="spec">
+      <div class="spec-head">
+        <h3>Easing curves</h3>
+        <span class="meta-r">--ease-* · cubic-bezier</span>
+      </div>
+      <div class="token-grid">
+        <div class="token"><div class="swatch" style="background: var(--paper-soft); display:flex; align-items:center; justify-content:center; font-family:JetBrains Mono, monospace; font-size:11px; color: var(--ink-soft); padding: 8px; text-align: center; line-height: 1.4;">cubic-bezier(<br>0.2, 0.8, 0.2, 1)</div><strong>--ease-standard</strong><span style="display:block; font-size:11px; color: var(--ink-muted); margin-top:4px;">default for everything</span></div>
+        <div class="token"><div class="swatch" style="background: var(--paper-soft); display:flex; align-items:center; justify-content:center; font-family:JetBrains Mono, monospace; font-size:11px; color: var(--ink-soft); padding: 8px; text-align: center; line-height: 1.4;">cubic-bezier(<br>0.34, 1.1, 0.4, 1)</div><strong>--ease-emphasized</strong><span style="display:block; font-size:11px; color: var(--ink-muted); margin-top:4px;">screen / card arrivals</span></div>
+        <div class="token"><div class="swatch" style="background: var(--paper-soft); display:flex; align-items:center; justify-content:center; font-family:JetBrains Mono, monospace; font-size:11px; color: var(--ink-soft); padding: 8px; text-align: center; line-height: 1.4;">cubic-bezier(<br>0.34, 1.56, 0.64, 1)</div><strong>--ease-spring</strong><span style="display:block; font-size:11px; color: var(--ink-muted); margin-top:4px;">chips / stickers / pop</span></div>
+        <div class="token"><div class="swatch" style="background: var(--paper-soft); display:flex; align-items:center; justify-content:center; font-family:JetBrains Mono, monospace; font-size:11px; color: var(--ink-soft); padding: 8px; text-align: center; line-height: 1.4;">cubic-bezier(<br>0.4, 0, 0.6, 1)</div><strong>--ease-soft</strong><span style="display:block; font-size:11px; color: var(--ink-muted); margin-top:4px;">ambient / breath loops</span></div>
+      </div>
+    </div>
+
+    <!-- keyframe + utility classes -->
+    <div class="spec">
+      <div class="spec-head">
+        <h3>Keyframes &amp; utility classes</h3>
+        <span class="meta-r">@keyframes fy-* · .fy-anim-*</span>
+      </div>
+      <div class="spec-row">
+        <button class="fy-anim-pop-in" style="padding: 12px 18px; border-radius: 999px; background: var(--coral-base); color: var(--ink-warm); border: 0; font-family: Lenia; font-weight: 500; cursor: pointer;" onclick="this.style.animation='none'; void this.offsetWidth; this.style.animation='';">.fy-anim-pop-in · click to replay</button>
+        <button class="fy-anim-slide-up" style="padding: 12px 18px; border-radius: 14px; background: var(--paper-soft); border: 1px solid var(--line); font-family: Lenia; cursor: pointer;" onclick="this.style.animation='none'; void this.offsetWidth; this.style.animation='';">.fy-anim-slide-up</button>
+        <button class="fy-anim-fade" style="padding: 12px 18px; border-radius: 14px; background: var(--mint-subtle); border: 1px solid var(--mint-base); font-family: Lenia; cursor: pointer;" onclick="this.style.animation='none'; void this.offsetWidth; this.style.animation='';">.fy-anim-fade</button>
+        <div class="fy-anim-breath" style="width: 56px; height: 56px; border-radius: 50%; background: radial-gradient(circle, var(--coral-base), var(--coral-strong));"></div>
+      </div>
+      <div class="spec-row col">
+        <span class="spec-label">Snippet</span>
+        <pre style="background: var(--paper-soft); padding: 14px 16px; border-radius: 10px; font-family: JetBrains Mono, SF Mono, monospace; font-size: 12px; color: var(--ink-soft); margin: 0; overflow-x: auto;">/* utilities — apply directly */
+.fy-anim-fade      { animation: fy-fade-in  var(--duration-base) var(--ease-standard) both; }
+.fy-anim-slide-up  { animation: fy-slide-up var(--duration-base) var(--ease-emphasized) both; }
+.fy-anim-pop-in    { animation: fy-pop-in   var(--duration-fast) var(--ease-spring) both; }
+.fy-anim-breath    { animation: fy-breath   var(--duration-breath) ease-in-out infinite; }
+
+/* keyframes registered globally */
+@keyframes fy-slide-up { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+@keyframes fy-pop-in   { from { opacity: 0; transform: scale(0.92); }    to { opacity: 1; transform: scale(1); } }
+@keyframes fy-breath   { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.018); } }</pre>
+      </div>
+    </div>
+
+    <!-- hover / press patterns -->
+    <div class="spec">
+      <div class="spec-head">
+        <h3>Hover &amp; press patterns</h3>
+        <span class="meta-r">.fy-lift · .fy-press</span>
+      </div>
+      <div class="spec-row">
+        <button class="fy-lift" style="padding: 14px 22px; border-radius: 999px; background: var(--coral-base); color: var(--ink-warm); border: 0; font-family: Lenia; font-weight: 500; cursor: pointer;">.fy-lift · hover me</button>
+        <button class="fy-press fy-lift" style="padding: 14px 22px; border-radius: 14px; background: var(--paper-soft); border: 1px solid var(--line); font-family: Lenia; cursor: pointer;">.fy-press + .fy-lift · click me</button>
+        <span style="font-size: 13px; color: var(--ink-muted);">Lift = -1px translate + brightness · Press = scale 0.97 on active</span>
+      </div>
+    </div>
+
+    <!-- stagger helper -->
+    <div class="spec">
+      <div class="spec-head">
+        <h3>Stagger helper</h3>
+        <span class="meta-r">.fy-stagger &gt; *</span>
+      </div>
+      <div class="spec-row">
+        <div class="fy-stagger" style="display: flex; gap: 10px; flex-wrap: wrap;" onclick="Array.from(this.children).forEach(c => { c.style.animation='none'; void c.offsetWidth; c.style.animation=''; })">
+          <span class="fy-anim-pop-in" style="padding: 8px 14px; border-radius: 999px; background: var(--coral-subtle); border: 1px solid var(--line); font-size: 12px; font-family: Lenia;">Vacunas</span>
+          <span class="fy-anim-pop-in" style="padding: 8px 14px; border-radius: 999px; background: var(--mint-subtle); border: 1px solid var(--line); font-size: 12px; font-family: Lenia;">Sueño</span>
+          <span class="fy-anim-pop-in" style="padding: 8px 14px; border-radius: 999px; background: var(--blush-subtle); border: 1px solid var(--line); font-size: 12px; font-family: Lenia;">Comida</span>
+          <span class="fy-anim-pop-in" style="padding: 8px 14px; border-radius: 999px; background: var(--gold-subtle); border: 1px solid var(--line); font-size: 12px; font-family: Lenia;">Hitos</span>
+          <span class="fy-anim-pop-in" style="padding: 8px 14px; border-radius: 999px; background: var(--paper-soft); border: 1px solid var(--line); font-size: 12px; font-family: Lenia;">Diario</span>
+        </div>
+      </div>
+      <div class="spec-row col">
+        <p style="font-size: 13px; color: var(--ink-soft); margin: 0; max-width: 60ch;">Click el grupo para reproducir. Cada hijo recibe <code>animation-delay: 30ms · 80ms · 130ms ...</code> hasta el sexto, después constante en 320ms para evitar carreras largas.</p>
+      </div>
+    </div>
+
+    <!-- application matrix -->
+    <div class="spec">
+      <div class="spec-head">
+        <h3>Application matrix</h3>
+        <span class="meta-r">cuándo usar cada utility</span>
+      </div>
+      <div class="spec-row col">
+        <table style="width: 100%; border-collapse: collapse; font-size: 13px;">
+          <thead>
+            <tr style="border-bottom: 1px solid var(--line); text-align: left;">
+              <th style="padding: 10px 12px; font-family: Lenia; font-weight: 500; letter-spacing: 0.04em; color: var(--ink-soft);">Componente</th>
+              <th style="padding: 10px 12px; font-family: Lenia; font-weight: 500; letter-spacing: 0.04em; color: var(--ink-soft);">Utility</th>
+              <th style="padding: 10px 12px; font-family: Lenia; font-weight: 500; letter-spacing: 0.04em; color: var(--ink-soft);">Trigger</th>
+            </tr>
+          </thead>
+          <tbody style="color: var(--ink-soft);">
+            <tr style="border-bottom: 1px dashed var(--line);"><td style="padding: 10px 12px;">.screen entry</td><td style="padding: 10px 12px;"><code>.fy-anim-slide-up</code></td><td style="padding: 10px 12px;">on <code>.active</code></td></tr>
+            <tr style="border-bottom: 1px dashed var(--line);"><td style="padding: 10px 12px;">.feed-card / .shelf-book</td><td style="padding: 10px 12px;"><code>.fy-anim-slide-up</code> + <code>.fy-stagger</code></td><td style="padding: 10px 12px;">on parent enter</td></tr>
+            <tr style="border-bottom: 1px dashed var(--line);"><td style="padding: 10px 12px;">.callout</td><td style="padding: 10px 12px;"><code>.fy-anim-fade</code></td><td style="padding: 10px 12px;">on render</td></tr>
+            <tr style="border-bottom: 1px dashed var(--line);"><td style="padding: 10px 12px;">.chip / .pill / .sticker</td><td style="padding: 10px 12px;"><code>.fy-anim-pop-in</code></td><td style="padding: 10px 12px;">on render / filter change</td></tr>
+            <tr style="border-bottom: 1px dashed var(--line);"><td style="padding: 10px 12px;">.btn-primary / .btn-secondary</td><td style="padding: 10px 12px;"><code>.fy-lift</code> + <code>.fy-press</code></td><td style="padding: 10px 12px;">hover / active</td></tr>
+            <tr style="border-bottom: 1px dashed var(--line);"><td style="padding: 10px 12px;">.avatar-hero · radial blob</td><td style="padding: 10px 12px;"><code>.fy-anim-breath</code></td><td style="padding: 10px 12px;">infinite</td></tr>
+            <tr><td style="padding: 10px 12px;">.scrim / sheet</td><td style="padding: 10px 12px;"><code>.fy-anim-fade</code> · <code>--duration-slow</code></td><td style="padding: 10px 12px;">on open</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- reduced motion -->
+    <div class="spec">
+      <div class="spec-head">
+        <h3>Reduced motion</h3>
+        <span class="meta-r">@media (prefers-reduced-motion: reduce)</span>
+      </div>
+      <div class="spec-row col">
+        <p style="font-size: 13px; color: var(--ink-soft); margin: 0; max-width: 64ch;">El sistema honra automáticamente la preferencia del usuario. Cuando el OS pide reducción de movimiento, todas las animaciones se cortan a 0.01ms — el componente aparece en su estado final sin intermedio. <strong>No</strong> hay opción in-app: el control vive en accesibilidad del sistema operativo, donde el usuario ya lo configuró.</p>
       </div>
     </div>
   </section>
