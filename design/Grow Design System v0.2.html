@@ -575,13 +575,17 @@
     background: linear-gradient(120deg, var(--paper) 0%, var(--gold-subtle) 110%);
   }
   .sleep-day-phase.morning .icon { background: var(--gold-base); color: #4A3A12; }
-  /* sleep moments (nap + night) share mint green tone — never black, never cream */
+  /* sleep moments (nap + night) share muted mint tone (matches use case 3 lifecycle) */
   .sleep-day-phase.nap,
   .sleep-day-phase.night {
     background: linear-gradient(120deg, var(--paper) 0%, var(--mint-subtle) 110%);
   }
   .sleep-day-phase.nap .icon,
-  .sleep-day-phase.night .icon { background: var(--mint-base); color: #2F4029; }
+  .sleep-day-phase.night .icon {
+    background: var(--paper);
+    color: var(--mint-strong);
+    box-shadow: 0 0 0 1px rgba(143,174,133,0.28);
+  }
   .sleep-day-phase.bedtime {
     background: linear-gradient(120deg, var(--paper) 0%, var(--blush-base) 110%);
   }
@@ -712,7 +716,7 @@
     cursor: pointer;
     position: relative;
   }
-  .timeline-seg.sleep   { background: var(--mint-base); }
+  .timeline-seg.sleep   { background: var(--mint-subtle); }
   .timeline-seg.wake    { background: var(--gold-subtle); }
   .timeline-seg.routine { background: var(--blush-base); }
   .timeline-seg.coral   { background: var(--coral-subtle); }
@@ -807,7 +811,7 @@
     border-radius: 3px;
     border: 1px solid rgba(0,0,0,0.05);
   }
-  .timeline-legend .swatch.sleep   { background: var(--mint-base); border-color: var(--mint-strong); }
+  .timeline-legend .swatch.sleep   { background: var(--mint-subtle); border-color: rgba(143,174,133,0.32); }
   .timeline-legend .swatch.wake    { background: var(--gold-subtle); border-color: rgba(184,151,63,0.30); }
   .timeline-legend .swatch.routine { background: var(--blush-base); border-color: var(--blush-strong); }
   .timeline-legend .swatch.coral   { background: var(--coral-subtle); }
