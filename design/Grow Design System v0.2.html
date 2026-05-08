@@ -772,30 +772,11 @@
   }
   .vax-detail .top-header { margin-bottom: 16px; }
 
-  .vax-detail-status-bar {
-    display: flex; align-items: center; gap: 10px;
-    flex-wrap: wrap; margin-bottom: 16px;
-  }
-  .status-pill {
-    display: inline-flex; align-items: center; gap: 6px;
-    font-family: 'Lenia'; font-size: var(--fs-meta);
-    font-weight: 500; letter-spacing: 0.04em;
-    padding: 6px 12px; border-radius: var(--radius-pill);
-  }
-  .status-pill::before {
-    content: ''; width: 6px; height: 6px;
-    border-radius: var(--radius-pill);
-    background: currentColor;
-  }
-  .status-pill.done   { background: var(--mint-subtle); color: #4F6647; }
-  .status-pill.next   { background: var(--gold-subtle); color: #6E5A2A; }
-  .status-pill.future { background: var(--paper-soft); color: var(--ink-soft); }
-
-  .dose-progress {
-    font-family: 'Lenia'; font-size: var(--fs-meta);
-    color: var(--ink-muted); letter-spacing: 0.04em;
-  }
-  .dose-progress strong { color: var(--ink); font-weight: 500; }
+  /* Mirrors .sleep-day-stat-wrap — single hero stat callout
+     replaces the old .vax-detail-status-bar (status-pill + dose-progress)
+     so the visual rhythm matches the Rutina ideal. */
+  .vax-detail-stat-wrap,
+  .sleep-day-stat-wrap { margin: 0 0 18px; }
 
   .vax-section-title {
     font-family: 'Lenia'; font-weight: 500;
@@ -3114,9 +3095,11 @@
       <div class="spec-row col" style="margin-bottom: 14px">
         <p style="font-size:13px;color:var(--ink-soft);max-width:64ch;line-height:1.55;margin:0">
           Cada fila del calendario es ahora un <code>&lt;button&gt;</code>
-          tappable que abre el detalle. La página de detalle reusa los mismos
-          primitives (top-header, callout, status-pill) y añade tres bloques
-          editoriales propios de la pauta médica: <strong>qué previene</strong>,
+          tappable que abre el detalle. La página de detalle sigue el mismo
+          ritmo visual que la <strong>Rutina ideal</strong> del libro de Sueño
+          (top-header con eyebrow corto + h2 + sub, y un único <code>.callout.stat</code>
+          con el dato fuerte) y añade tres bloques editoriales propios de la
+          pauta médica: <strong>qué previene</strong>,
           <strong>detalles de administración</strong> (centro, lote, marca,
           vía) y <strong>efectos secundarios típicos</strong> con su propio
           callout coral para "cuándo llamar al pediatra".
@@ -3125,9 +3108,9 @@
       <div class="spec-row" style="padding: 16px 0; align-items: flex-start">
         <div class="vax-detail" style="max-width: 460px">
 
-          <div class="top-header">
+          <div class="top-header" style="margin-bottom: 16px">
             <div>
-              <span class="eyebrow">2 meses · Lola · 12 may 2026</span>
+              <span class="eyebrow">Lola · 2 m</span>
               <h2>Hexavalente</h2>
               <p class="sub">Difteria · Tétanos · Tos ferina · Polio · Hib · Hepatitis B</p>
             </div>
@@ -3136,9 +3119,10 @@
             </div>
           </div>
 
-          <div class="vax-detail-status-bar">
-            <span class="status-pill done">Puesta · 12 may 2026</span>
-            <span class="dose-progress">Dosis <strong>1 / 4</strong></span>
+          <div class="vax-detail-stat-wrap">
+            <div class="callout stat">
+              <p>Lleva <strong>1 / 4</strong> dosis · 1ª puesta el <strong>12 may 2026</strong>.</p>
+            </div>
           </div>
 
           <div class="callout">
@@ -3239,8 +3223,8 @@
         <div style="flex: 1; min-width: 280px">
           <div class="spec-label">Anatomy of .vax-detail</div>
           <ul style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--ink-soft); line-height: 1.7; padding-left: 18px; margin: 0">
-            <li><strong>.top-header</strong> · "{age} · {child} · {date}" eyebrow + {vaccine name} h2 + sub list</li>
-            <li><strong>.vax-detail-status-bar</strong> · .status-pill (done | next | future) + .dose-progress "{n} / {total}"</li>
+            <li><strong>.top-header</strong> · "{child} · {age at this dose}" eyebrow + {vaccine name} h2 + sub list of diseases</li>
+            <li><strong>.vax-detail-stat-wrap &gt; .callout.stat</strong> · hero stat "Lleva {n}/{total} dosis · 1ª puesta el {date}" — mirrors Rutina ideal</li>
             <li><strong>.callout</strong> default · "Próxima dosis a los X meses"</li>
             <li><strong>.vax-section-title</strong> · h4 section heading</li>
             <li><strong>.vax-protection</strong> · ul with coral dots · "{Disease}." + body</li>
@@ -3253,9 +3237,9 @@
 
           <div class="spec-label" style="margin-top: 18px">State variants</div>
           <p style="font-size:12.5px;color:var(--ink-soft);line-height:1.6;margin:0;max-width:60ch">
-            <strong>Done</strong> · full admin details visible (centro, lote, marca, vía).<br>
-            <strong>Next</strong> · admin details replaced by "Marcar como puesta" CTA in <code>.btn-coral</code>.<br>
-            <strong>Future</strong> · admin details replaced by "Avísame cuando se acerque" CTA in <code>.btn-soft</code>.
+            <strong>Done</strong> · stat dice "Lleva n/total · 1ª puesta el {date}". Admin details visibles (centro, lote, marca, vía).<br>
+            <strong>Next</strong> · stat dice "Toca esta semana · estimada {date}". Admin details reemplazados por "Marcar como puesta" CTA en <code>.btn-coral</code>.<br>
+            <strong>Future</strong> · stat dice "Próxima a los {age}". Admin details reemplazados por "Avísame cuando se acerque" CTA en <code>.btn-soft</code>.
           </p>
         </div>
       </div>
