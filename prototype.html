@@ -2429,22 +2429,45 @@
     cursor: pointer;
     justify-self: center;
   }
-  .growth-note {
-    margin-top: 10px;
+  /* Callout · DS § H canon · paper card with optional ornamental marker */
+  .callout {
+    --accent: var(--coral-base);
+    --accent-strong: var(--coral-strong);
+    background: var(--paper-soft);
     border-radius: var(--radius-md);
-    padding: 12px;
-    background:
-      radial-gradient(circle at 84% 6%, rgba(232,201,122,0.22), transparent 34%),
-      linear-gradient(135deg, var(--paper-soft), rgba(250,247,240,0.84));
-    color: var(--ink-soft);
-    font-size: var(--fs-caption);
-    line-height: 1.4;
+    padding: 18px 20px;
+    text-align: left;
+    position: relative;
   }
-  .growth-note strong {
-    font-family: "Lenia";
+  .callout p {
+    margin: 0;
+    font-family: "Helvena";
+    font-size: var(--fs-body-sm);
     color: var(--ink);
-    font-weight: 500;
+    line-height: 1.55;
+    letter-spacing: -0.005em;
+    max-width: 64ch;
   }
+  .callout strong { color: var(--ink); font-weight: 600; }
+  .callout.coral { background: var(--coral-subtle); }
+  .callout.mint  { background: var(--mint-subtle); }
+  .callout.gold  { background: var(--gold-subtle); }
+  .callout.blush { background: var(--blush-subtle); }
+  /* with-asterisk · centered italic + coral asterisk above */
+  .callout.with-asterisk { text-align: center; padding: 22px 24px 20px; }
+  .callout.with-asterisk::before {
+    content: "✶"; display: block;
+    color: var(--accent-strong);
+    font-size: 14px; line-height: 1; margin-bottom: 10px;
+  }
+  .callout.with-asterisk p { margin: 0 auto; line-height: 1.6; font-style: italic; max-width: 54ch; }
+  .callout.with-asterisk strong { color: var(--accent-strong); font-weight: 500; }
+  .callout.with-asterisk.mint  { --accent-strong: #4F6647; }
+  .callout.with-asterisk.gold  { --accent-strong: #6E5A2A; }
+  .callout.with-asterisk.blush { --accent-strong: #7A4A3A; }
+
+  /* growth-note now an alias of .callout (kept for backward compat) */
+  .growth-note { margin-top: 10px; }
 
   /* Mark selector canon (DS v0.2 § F) — "el punto fuera".
      The selection indicator lives OUTSIDE the option as a small dot
@@ -6791,8 +6814,8 @@
                 </div>
               </section>
 
-              <section class="growth-note">
-                <strong>Sin alarmismo.</strong> Te avisamos sin alarmismo y te ayudamos a hablar con el pediatra.
+              <section class="callout gold growth-note">
+                <p><strong>Sin alarmismo.</strong> Te avisamos sin alarmismo y te ayudamos a hablar con el pediatra.</p>
               </section>
 
               <div data-growth-root></div>
