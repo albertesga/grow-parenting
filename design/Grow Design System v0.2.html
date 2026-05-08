@@ -754,32 +754,43 @@
     font-size: var(--fs-h4); line-height: 1.2;
     margin: 0 0 14px; letter-spacing: -0.01em;
   }
-  .vax-list { display: flex; flex-direction: column; gap: 4px; }
+  /* ─── Medical-record list pattern ───
+     The whole .vax-list is ONE bordered container with internal hairlines
+     between rows. No per-row tinted backgrounds (gradient washes were
+     creating per-card "containers" that competed visually). State signal
+     is a small marker dot on the left and font weight on the date. The
+     single .next dose breaks the rhythm with a gold-tinted callout-row. */
+  .vax-list {
+    display: flex; flex-direction: column;
+    background: var(--paper);
+    border: 1px solid var(--line-soft);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+  }
 
-  /* Default base = soft paper with neutral tone wash. State variants
-     below override .dose-row background using the shared paper → tone-subtle
-     110% pattern (same as .sleep-day-phase) so phase + dose cards share the
-     same quiet visual language. */
   .dose-row {
     position: relative;
-    display: flex; align-items: flex-start;
+    display: grid;
+    grid-template-columns: auto 1fr auto auto;
+    align-items: center;
     gap: 14px;
-    padding: 14px 16px;
-    border-radius: var(--radius-md);
-    background: linear-gradient(120deg, var(--paper) 0%, var(--paper-soft) 110%);
+    padding: 16px 18px;
+    background: transparent;
     color: var(--ink);
     cursor: pointer;
     border: 0;
+    border-top: 1px solid var(--line-soft);
     text-align: left;
     width: 100%;
     font: inherit;
-    transition: transform 150ms var(--ease), filter 150ms var(--ease);
+    transition: background 150ms var(--ease);
   }
-  .dose-row:hover { transform: translateY(-1px); filter: brightness(0.99); }
+  .dose-row:first-child { border-top: 0; }
+  .dose-row:hover { background: var(--paper-soft); }
+
   .dose-row .chevron {
-    width: 18px; height: 18px;
+    width: 16px; height: 16px;
     flex-shrink: 0;
-    align-self: center;
     color: var(--ink-faint);
     transition: color 150ms var(--ease), transform 150ms var(--ease);
   }
@@ -792,59 +803,50 @@
     color: var(--ink-soft);
     transform: translateX(2px);
   }
-  /* Marker · 18px circle that carries the state symbol inside, replacing
-     the old solid-ink dot + inline ✓ on the date. Done = mint with check,
-     Next = gold with inner dot, Future = hollow ring. */
+
+  /* Marker · small tonal dot, state-coded only by color. Quieter than
+     the old 18px circle with ✓ inside. */
   .dose-row .marker {
-    width: 18px; height: 18px;
-    border-radius: var(--radius-pill);
-    margin-top: 3px;
+    width: 10px; height: 10px;
+    border-radius: 50%;
     flex-shrink: 0;
     box-sizing: border-box;
-    display: flex; align-items: center; justify-content: center;
-    font-family: 'Lenia';
-    font-size: 11px; line-height: 1; font-weight: 600;
   }
-  .dose-row.done .marker {
-    background: var(--mint-strong);
-    color: var(--paper);
-  }
-  .dose-row.done .marker::after { content: '✓'; }
+  .dose-row.done .marker { background: var(--mint-strong); }
   .dose-row.next .marker {
-    background: transparent;
-    border: 1.5px solid var(--gold-base);
-  }
-  .dose-row.next .marker::after {
-    content: '';
-    width: 6px; height: 6px;
-    border-radius: var(--radius-pill);
     background: var(--gold-base);
+    box-shadow: 0 0 0 4px var(--gold-subtle);
   }
   .dose-row.future .marker {
     background: transparent;
     border: 1.5px solid var(--line-strong);
   }
-  /* State backgrounds · paper → tone-subtle 110% (shared with .sleep-day-phase) */
-  .dose-row.done {
-    background: linear-gradient(120deg, var(--paper) 0%, var(--mint-subtle) 110%);
-  }
+
+  /* Only .next breaks the rhythm with a tinted callout row */
   .dose-row.next {
     background: linear-gradient(120deg, var(--paper) 0%, var(--gold-subtle) 110%);
-    box-shadow: inset 0 0 0 1.5px var(--gold-base);
+    border-top-color: var(--gold-base);
   }
-  .dose-row.future {
-    background: var(--paper);
-    border: 1px solid var(--line);
+  .dose-row.next + .dose-row { border-top-color: var(--gold-base); }
+  .dose-row.next:hover {
+    background: linear-gradient(120deg, var(--paper) 0%, var(--gold-subtle) 95%);
   }
 
-  .dose-row .body { flex: 1; min-width: 0; }
+  .dose-row .body { min-width: 0; }
   .dose-row .body strong {
     display: block;
     font-family: 'Lenia'; font-weight: 500;
-    font-size: var(--fs-body-lg);
-    line-height: 1.35;
+    font-size: var(--fs-body);
+    line-height: 1.3;
     letter-spacing: -0.005em;
     color: var(--ink);
+  }
+  .dose-row .body p {
+    margin: 3px 0 0;
+    font-family: 'Helvena';
+    font-size: var(--fs-body-sm);
+    color: var(--ink-soft);
+    line-height: 1.5;
   }
   .dose-row .body .new-badge {
     display: inline-block;
@@ -854,34 +856,40 @@
     letter-spacing: 0.04em;
     margin-left: 4px;
   }
-  /* Meta · two-line stacked date for clarity. .tag on top (próxima / hace x),
-     .date below in stronger ink-soft. No more inline ✓ — moved to marker. */
+
+  /* Meta · explicit reset of the global .meta rule (line 195) which was
+     bleeding `border-top: 1px solid var(--ink)` + `border-bottom: 1px
+     solid var(--line-strong)` + `text-transform: uppercase` into every
+     dose row → those mystery horizontal lines and the "12 JUL" rendering. */
   .dose-row .meta {
     display: flex; flex-direction: column; align-items: flex-end;
     gap: 2px;
     font-family: 'Lenia';
     flex-shrink: 0;
-    align-self: center;
     text-align: right;
+    /* explicit resets vs the global .meta rule */
+    border: 0;
+    padding: 0;
+    text-transform: none;
+    letter-spacing: 0;
   }
   .dose-row .meta .tag {
     font-size: var(--fs-eyebrow);
-    color: var(--ink-muted);
-    letter-spacing: 0.12em;
+    color: #8A6E2E;
+    letter-spacing: 0.14em;
     text-transform: uppercase;
     font-weight: 500;
   }
   .dose-row .meta .date {
     font-size: var(--fs-body-sm);
-    color: var(--ink);
-    font-weight: 500;
-    letter-spacing: -0.005em;
+    color: var(--ink-soft);
+    font-weight: 400;
+    letter-spacing: 0;
+    text-transform: none;
     white-space: nowrap;
   }
-  .dose-row.done .meta .date    { color: var(--ink-soft); font-weight: 400; }
-  .dose-row.future .meta .date  { color: var(--ink-muted); font-weight: 400; }
-  .dose-row.next .meta .date    { color: #6E5A2A; }
-  .dose-row.next .meta .tag     { color: #8A6E2E; }
+  .dose-row.next .meta .date { color: var(--ink); font-weight: 500; }
+  .dose-row.future .meta .date { color: var(--ink-muted); }
 
   .vax-calendar-footer {
     margin-top: 14px;
