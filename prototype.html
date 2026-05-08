@@ -7119,6 +7119,10 @@
   const milestoneForm = document.querySelector('[data-milestone-form]');
   const milestoneCelebration = document.getElementById('milestone-celebration');
   const scrim = document.querySelector('.scrim');
+  /* Cached static node lists (computed once · used by repeated handlers) */
+  const milestoneWitnessButtons = milestoneWitnessButtons;
+  const measureContextButtons = measureContextButtons;
+  const shelfRails = shelfRails;
   const sheetTitle = document.getElementById('sheet-title');
   const sheetCopy = document.getElementById('sheet-copy');
   const logSheetRoot = document.querySelector('[data-log-sheet-root]');
@@ -8414,7 +8418,7 @@
     if (titleInput) titleInput.value = '';
     if (noteInput) noteInput.value = milestone.note || '';
     if (milestoneError) milestoneError.textContent = '';
-    document.querySelectorAll('[data-milestone-witness]').forEach((button) => {
+    milestoneWitnessButtons.forEach((button) => {
       button.classList.toggle('active', button.dataset.milestoneWitness === milestoneWitness);
     });
 
@@ -8446,7 +8450,7 @@
     if (noteInput) noteInput.value = '';
     if (milestoneError) milestoneError.textContent = '';
     updateMilestoneCustomAreaButtons();
-    document.querySelectorAll('[data-milestone-witness]').forEach((button) => {
+    milestoneWitnessButtons.forEach((button) => {
       button.classList.toggle('active', button.dataset.milestoneWitness === milestoneWitness);
     });
 
@@ -10696,7 +10700,7 @@ Grow
     milestoneCelebration.classList.remove('active');
     measureError.textContent = '';
     measureContext = 'Pediatra';
-    document.querySelectorAll('[data-measure-context]').forEach((button) => button.classList.toggle('active', button.dataset.measureContext === measureContext));
+    measureContextButtons.forEach((button) => button.classList.toggle('active', button.dataset.measureContext === measureContext));
     document.getElementById('measure-date').value = '2026-06-12';
 
     Object.values(growthMetricConfig).forEach((metric) => {
@@ -11797,7 +11801,7 @@ Grow
 
   let shelfRaf = null;
   function updateShelves() {
-    document.querySelectorAll('.shelf-rail').forEach((rail) => {
+    shelfRails.forEach((rail) => {
       const railRect = rail.getBoundingClientRect();
       const center = railRect.left + railRect.width / 2;
       const maxDist = railRect.width / 2 || 1;
@@ -12141,7 +12145,7 @@ Grow
     const measureContextButton = event.target.closest('[data-measure-context]');
     if (measureContextButton) {
       measureContext = measureContextButton.dataset.measureContext;
-      document.querySelectorAll('[data-measure-context]').forEach((button) => button.classList.toggle('active', button === measureContextButton));
+      measureContextButtons.forEach((button) => button.classList.toggle('active', button === measureContextButton));
       return;
     }
 
@@ -12313,7 +12317,7 @@ Grow
     const milestoneWitnessButton = event.target.closest('[data-milestone-witness]');
     if (milestoneWitnessButton) {
       milestoneWitness = milestoneWitnessButton.dataset.milestoneWitness;
-      document.querySelectorAll('[data-milestone-witness]').forEach((button) => button.classList.toggle('active', button === milestoneWitnessButton));
+      milestoneWitnessButtons.forEach((button) => button.classList.toggle('active', button === milestoneWitnessButton));
       return;
     }
 
@@ -12388,7 +12392,7 @@ Grow
     milestoneForm.addEventListener('submit', saveMilestone);
   }
 
-  document.querySelectorAll('.shelf-rail').forEach((rail) => {
+  shelfRails.forEach((rail) => {
     rail.addEventListener('scroll', scheduleShelfUpdate, { passive: true });
   });
   window.addEventListener('resize', scheduleShelfUpdate);
