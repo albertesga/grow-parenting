@@ -1953,520 +1953,11 @@
   </section>
 
   <!-- ╔═════════════════════════════════════════════════════════╗
-       ║  § K — SLEEP SCHEDULE                                    ║
+       ║  § K — TIMELINE                                          ║
        ╚═════════════════════════════════════════════════════════╝ -->
   <section class="section">
     <div class="section-head">
-      <div class="section-num">§ K — Sleep schedule</div>
-      <div>
-        <h2>The day, drawn calm. Wake windows as visible as sleep blocks.</h2>
-        <div class="desc">
-          Esquema diario por edad (12 - 18 m, 18 - 24 m, etc.). Reemplaza la card
-          actual de "Esquema del día" — los wake windows pasan a ser interludios
-          visualmente equivalentes a los bloques de sueño, no notas marginales.
-          Iconografía clara, colores tonales por fase, ribbon de 24 h en cabecera
-          para escaneo rápido.
-        </div>
-      </div>
-    </div>
-
-    <div class="spec">
-      <div class="spec-head">
-        <h3>Research notes — what other products do</h3>
-        <span class="meta-r">precedent · UX patterns</span>
-      </div>
-      <div class="spec-row col">
-        <ul style="font-size:13px;color:var(--ink-soft);line-height:1.65;padding-left:20px;max-width:64ch;margin:0">
-          <li><strong>Huckleberry · Wonder Weeks</strong> · prioritizan los <em>wake windows</em> como métrica clave (más que la duración del sueño en sí). El parent-friendly framing es "ventana antes de la próxima siesta", no "horas dormidas".</li>
-          <li><strong>Apple Health · Sleep</strong> · barra horizontal de 24 h con segmentos coloreados (asleep / in bed / awake). Excelente para escaneo, pero pierde el detalle de timing exacto.</li>
-          <li><strong>Nanit · Owlet</strong> · dial circular de 24 h con arcos. Visualmente intuitivo pero requiere zoom para tiempos precisos. No encaja en card pequeña.</li>
-          <li><strong>Smart Sleep Coach (Pampers)</strong> · timeline vertical con cards apiladas, cada una con time + label. Wake windows como labels secundarios entre cards.</li>
-          <li><strong>Whoop · Oura</strong> · gráficos de fases (REM / deep / light) — más para adultos, menos para padres.</li>
-          <li><strong>Calm · Headspace Sleep</strong> · narrativa más que dato — rutinas para conciliar sueño, no esquemas.</li>
-        </ul>
-      </div>
-      <div class="spec-row col" style="margin-top: 18px">
-        <span class="spec-label">Decisiones para Grow</span>
-        <ul style="font-size:13px;color:var(--ink-soft);line-height:1.65;padding-left:20px;max-width:64ch;margin:0">
-          <li><strong>Vertical proportional</strong> · escaneable y mantiene el flow editorial. Mejor que radial.</li>
-          <li><strong>Wake windows visibles</strong> · interludios con duración explícita ("Despierta · 5 h"), no nota marginal.</li>
-          <li><strong>Iconos reales</strong> · sun · moon · zZ · bed (registry de DS) en lugar de placeholders ASCII <code>[☀]</code>.</li>
-          <li><strong>Ribbon 24 h</strong> · cabecera opcional para escaneo de proporción noche / siesta / despierta.</li>
-          <li><strong>"You are here" indicator</strong> · pill coral con "ahora" sobre el bloque actual cuando el usuario está en Hoy.</li>
-          <li><strong>Color coding por fase</strong> · gold (mañana / sun) · mint (siesta) · blush (rutina noche / wind-down) · ink (dormido). Coral solo para "ahora".</li>
-          <li><strong>Editorial copy intacta</strong> · "Esto es una orientación. Cada peque tiene su ritmo. Sin juicio." — la voz de Grow no compite con el dato.</li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="spec">
-      <div class="spec-head">
-        <h3>Variant D · Mixed — pie + timeline + educational copy</h3>
-        <span class="meta-r">.sleep-day · the unified one</span>
-      </div>
-      <div class="spec-row col" style="margin-bottom: 14px">
-        <p style="font-size:13px;color:var(--ink-soft);max-width:64ch;line-height:1.55;margin:0">
-          Combina las tres variantes:
-          <strong>(1)</strong> pie de 24 h compacto arriba para escaneo de
-          proporción · <strong>(2)</strong> timeline vertical con fases y wake
-          windows como nodos diferenciados · <strong>(3)</strong> copy educativa
-          breve por cada fase (qué pasa, no recetas). El "ahora" se refleja en
-          ambas zonas: dot en el pie y row destacado en la timeline.
-        </p>
-      </div>
-      <div class="spec-row" style="padding: 16px 0; align-items: flex-start; gap: 24px">
-        <div class="sleep-day">
-          <div class="top-header" style="margin-bottom: 16px">
-            <div>
-              <span class="eyebrow">Lola · 18 m</span>
-              <h2>Rutina ideal</h2>
-              <p class="sub">Según su edad, localización y estación del año.</p>
-            </div>
-            <div class="actions">
-              <button class="icon-btn sm ink" aria-label="Cerrar"><svg viewBox="0 0 24 24"><use href="#i-x"/></svg></button>
-            </div>
-          </div>
-
-          <div class="sleep-day-stat-wrap">
-            <div class="callout stat">
-              <p>Tu peque debe dormir <strong>13 h</strong> al día.</p>
-            </div>
-          </div>
-
-          <!-- ─── Horizontal 24h timeline · uses § M canonical .timeline ─── -->
-          <div class="timeline">
-            <div class="timeline-row">
-              <div class="timeline-row-label">
-                <span>Hoy · 24 h</span>
-                <span class="stats">13 h sueño · 10 h 30 m despierta</span>
-              </div>
-              <div class="timeline-track">
-                <!-- 24 h split into 6 segments anchored at midnight.
-                     flex values match phase durations (in hours). -->
-                <span class="timeline-seg sleep"   style="flex: 7.25" title="Noche · 0:00 — 7:15"></span>
-                <span class="timeline-seg wake"    style="flex: 5"    title="Despierta mañana · 7:15 — 12:15"></span>
-                <span class="timeline-seg sleep"   style="flex: 1.5"  title="Siesta · 12:15 — 13:45"></span>
-                <span class="timeline-seg wake"    style="flex: 5.5"  title="Despierta tarde · 13:45 — 19:15"></span>
-                <span class="timeline-seg routine" style="flex: 0.5"  title="Rutina noche · 19:15 — 19:45"></span>
-                <span class="timeline-seg sleep"   style="flex: 4.25" title="Noche · 19:45 — 24:00"></span>
-                <!-- now marker @ 14:32 = 14.533/24 = 60.56% -->
-                <div class="timeline-now" style="left: 60.56%" data-now="Ahora · 14:32"></div>
-              </div>
-              <div class="timeline-axis">
-                <span>0</span>
-                <span>6</span>
-                <span>12</span>
-                <span>18</span>
-                <span>24</span>
-              </div>
-            </div>
-            <div class="timeline-legend">
-              <span class="item"><span class="swatch sleep"></span> Sueño · 13 h</span>
-              <span class="item"><span class="swatch wake"></span> Despierta · 10 h 30 m</span>
-              <span class="item"><span class="swatch routine"></span> Rutina · 30 m</span>
-            </div>
-          </div>
-
-          <div class="sleep-day-divider"></div>
-
-          <h4 class="sleep-day-section-title">Cómo es tu día</h4>
-
-          <!-- ─── Vertical timeline with educational copy ─── -->
-          <div class="sleep-day-rhythm">
-
-            <div class="sleep-day-phase morning">
-              <div class="icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4 12H2M22 12h-2M5 5l1.5 1.5M17.5 17.5L19 19M5 19l1.5-1.5M17.5 6.5L19 5"/></svg>
-              </div>
-              <div class="body">
-                <strong>Despertar</strong>
-                <p>Empieza con luz natural. 11 - 12 h de noche regulan el reloj interno.</p>
-              </div>
-              <div class="time">7:15</div>
-            </div>
-
-            <div class="sleep-day-wake">
-              <div class="icon" aria-hidden="true"></div>
-              <div class="label">
-                Despierta · ventana de mañana
-                <p>Juego activo, primera comida, paseo.</p>
-              </div>
-              <div class="dur">5 h</div>
-            </div>
-
-            <div class="sleep-day-phase nap">
-              <div class="icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24"><path d="M3 16h6"/><path d="M5 16v-3a3 3 0 0 1 3-3h0a3 3 0 0 1 3 3v3"/><path d="M14 9l3-3 3 3"/></svg>
-              </div>
-              <div class="body">
-                <strong>Siesta del mediodía</strong>
-                <p>Una siesta es típica a esta edad. En cuna, oscura, después de comer.</p>
-              </div>
-              <div class="time">12:15<br>— 13:45</div>
-            </div>
-
-            <div class="sleep-day-wake now">
-              <div class="icon" aria-hidden="true"></div>
-              <div class="label">
-                Despierta · ventana de tarde
-                <p>Tarde activa, cena ligera 1 h antes de la rutina.</p>
-              </div>
-              <div class="dur">5 h 30 m</div>
-            </div>
-
-            <div class="sleep-day-phase bedtime">
-              <div class="icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9z"/></svg>
-              </div>
-              <div class="body">
-                <strong>Rutina de noche</strong>
-                <p>Baño, pijama, cuento, abrazo. Misma secuencia cada noche.</p>
-              </div>
-              <div class="time">19:15<br>~30 min</div>
-            </div>
-
-            <div class="sleep-day-phase night">
-              <div class="icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24"><path d="M3 18h18"/><path d="M5 18v-4a4 4 0 0 1 4-4h6a4 4 0 0 1 4 4v4"/><path d="M3 14h18"/></svg>
-              </div>
-              <div class="body">
-                <strong>Dormido</strong>
-                <p>Sin estímulos. Despertares nocturnos son normales — la consistencia enseña.</p>
-              </div>
-              <div class="time">19:45<br>11 h 30 m</div>
-            </div>
-
-          </div>
-
-          <div class="callout">
-            <p>Esta rutina se adapta a tu peque, a su edad, a tu localidad y a la estación del año para saber cuándo amanece / anochece y respetar sus ritmos circadianos.</p>
-          </div>
-        </div>
-
-        <div style="flex: 1; min-width: 280px">
-          <div class="spec-label">What this mix achieves</div>
-          <ul style="font-size:12.5px;color:var(--ink-soft);line-height:1.65;padding-left:18px;margin:0">
-            <li><strong>Pie + timeline</strong> · jerarquía dual — el pie da la forma del día, la timeline da los detalles. Mismo dato, dos lenguajes visuales.</li>
-            <li><strong>Wake como nodos</strong> · ventanas de vigilia tienen ya icono dashed + duración pill, no son notas marginales.</li>
-            <li><strong>Copy educativa breve</strong> · 1 línea por fase (no párrafo como en C) — orientación sin saturar.</li>
-            <li><strong>"Ahora" doble</strong> · coral dot en el pie + row destacada en la timeline.</li>
-            <li><strong>Tonos consistentes</strong> · gold mañana · mint nap · blush wind-down · ink noche en pie y timeline.</li>
-            <li><strong>Stats de cabecera</strong> · noche / siesta / ahora bajo el pie como números legibles.</li>
-          </ul>
-
-          <div class="spec-label" style="margin-top: 18px">Cuándo usarla</div>
-          <p style="font-size:12.5px;color:var(--ink-soft);line-height:1.6;margin:0">
-            <strong>Pantalla principal del libro de Sueño</strong> — la única vista
-            necesaria. Reemplaza A + B + C en la mayoría de superficies. Para
-            sidebar o weekly aún se usa <code>.sleep-card.compact</code>.
-          </p>
-
-          <div class="spec-label" style="margin-top: 18px">Trade-offs vs A · B · C</div>
-          <p style="font-size:12.5px;color:var(--ink-soft);line-height:1.6;margin:0">
-            Más alta verticalmente (~720 px vs 580 A). Pero a cambio responde
-            a 3 preguntas en una card: "¿qué forma tiene el día?", "¿cuándo
-            pasa cada cosa?", "¿qué significa cada fase?".
-          </p>
-        </div>
-      </div>
-    </div>
-
-    <div class="spec">
-      <div class="spec-head">
-        <h3>Variant D · 2-line split — when there are more than 6 phases</h3>
-        <span class="meta-r">e.g. bebé 4 - 6 m con 3 siestas · day + night row</span>
-      </div>
-      <div class="spec-row col" style="margin-bottom: 14px">
-        <p style="font-size:13px;color:var(--ink-soft);max-width:64ch;line-height:1.55;margin:0">
-          Para edades con muchas siestas (0 - 9 m) la timeline única se satura.
-          Regla: si hay <strong>más de 6 fases</strong>, dividimos en dos líneas
-          — <strong>día</strong> (despierta, siestas, rutina, primer tramo de
-          noche) y <strong>noche</strong> (resto). Mismos colores, misma
-          tipografía. La regla del color de sueño se mantiene: todo dormir es
-          el mismo tono oscuro.
-        </p>
-      </div>
-      <div class="spec-row" style="padding: 16px 0">
-        <div class="sleep-day" style="max-width: 460px">
-          <div class="top-header" style="margin-bottom: 16px">
-            <div>
-              <span class="eyebrow">Mateo · 5 m</span>
-              <h2>Rutina ideal</h2>
-              <p class="sub">Según su edad, localización y estación del año.</p>
-            </div>
-            <div class="actions">
-              <button class="icon-btn sm ink" aria-label="Cerrar"><svg viewBox="0 0 24 24"><use href="#i-x"/></svg></button>
-            </div>
-          </div>
-
-          <div class="sleep-day-stat-wrap">
-            <div class="callout stat">
-              <p>Tu peque debe dormir <strong>14 h 30 m</strong> al día.</p>
-            </div>
-          </div>
-
-          <div class="timeline">
-            <!-- DAY · 6:30 → 20:00 = 13.5 h, 9 segments -->
-            <div class="timeline-row">
-              <div class="timeline-row-label">
-                <span>Día · 6:30 → 20:00</span>
-                <span class="stats">3 siestas · 8 h despierta</span>
-              </div>
-              <div class="timeline-track">
-                <span class="timeline-seg wake"    style="flex: 1"   title="Despierta · 6:30 — 7:30"></span>
-                <span class="timeline-seg sleep"   style="flex: 1"   title="Siesta 1 · 7:30 — 8:30"></span>
-                <span class="timeline-seg wake"    style="flex: 2"   title="Despierta · 8:30 — 10:30"></span>
-                <span class="timeline-seg sleep"   style="flex: 1.5" title="Siesta 2 · 10:30 — 12:00"></span>
-                <span class="timeline-seg wake"    style="flex: 2"   title="Despierta · 12:00 — 14:00"></span>
-                <span class="timeline-seg sleep"   style="flex: 1.5" title="Siesta 3 · 14:00 — 15:30"></span>
-                <span class="timeline-seg wake"    style="flex: 3"   title="Despierta · 15:30 — 18:30"></span>
-                <span class="timeline-seg routine" style="flex: 0.5" title="Rutina · 18:30 — 19:00"></span>
-                <span class="timeline-seg sleep"   style="flex: 1"   title="Sueño nocturno · 19:00 — 20:00"></span>
-                <!-- now @ 14:32 = (14.533 - 6.5) / 13.5 = 59.5% -->
-                <div class="timeline-now" style="left: 59.5%" data-now="Ahora · 14:32"></div>
-              </div>
-              <div class="timeline-axis">
-                <span>6:30</span>
-                <span>10</span>
-                <span>13</span>
-                <span>16</span>
-                <span>20:00</span>
-              </div>
-            </div>
-
-            <!-- NIGHT · 20:00 → 6:30 = 10.5 h, 1 segment -->
-            <div class="timeline-row">
-              <div class="timeline-row-label">
-                <span>Noche · 20:00 → 6:30</span>
-                <span class="stats">10 h 30 m sueño</span>
-              </div>
-              <div class="timeline-track">
-                <span class="timeline-seg sleep" style="flex: 10.5" title="Noche · 20:00 — 6:30"></span>
-              </div>
-              <div class="timeline-axis">
-                <span>20:00</span>
-                <span>22</span>
-                <span>0</span>
-                <span>3</span>
-                <span>6:30</span>
-              </div>
-            </div>
-
-            <div class="timeline-legend">
-              <span class="item"><span class="swatch sleep"></span> Sueño · 14 h 30 m</span>
-              <span class="item"><span class="swatch wake"></span> Despierta · 9 h</span>
-              <span class="item"><span class="swatch routine"></span> Rutina · 30 m</span>
-            </div>
-          </div>
-
-          <div class="callout">
-            <p>Esta rutina se adapta a tu peque, a su edad, a tu localidad y a la estación del año para saber cuándo amanece / anochece y respetar sus ritmos circadianos.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="spec">
-      <div class="spec-head">
-        <h3>Anatomy</h3>
-      </div>
-      <div class="spec-row col">
-        <ul style="font-size:13px;color:var(--ink);line-height:1.7;padding-left:20px;max-width:64ch;margin:0;font-family:'JetBrains Mono', monospace">
-          <li><strong>.sleep-card</strong> · gradient background con tonos mint → paper → gold (matching el día)</li>
-          <li><strong>.sleep-card-head</strong> · eyebrow + título de edad + CTA "Ver esquema"</li>
-          <li><strong>.sleep-ribbon</strong> · barra de 24 h con <code>flex: 0 0 X%</code> proporcional. Negro = noche, mint = siesta, transparente = despierta</li>
-          <li><strong>.sleep-now</strong> · badge coral "Ahora · HH:MM" si el componente está activo en Hoy</li>
-          <li><strong>.sleep-phase</strong> · bloque por fase con tono (morning gold, nap mint, bedtime blush, night ink)</li>
-          <li><strong>.sleep-phase.now</strong> · ring coral 2 px alrededor del bloque actual</li>
-          <li><strong>.sleep-wake</strong> · interludio entre fases con guión y duración en peso 600</li>
-          <li><strong>.sleep-total</strong> · resumen + copy editorial "Sin juicio"</li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="spec">
-      <div class="spec-head">
-        <h3>Variants</h3>
-        <span class="meta-r">.compact · age ranges · without ribbon · without now</span>
-      </div>
-      <div class="spec-row col">
-        <ul style="font-size:13px;color:var(--ink-soft);line-height:1.65;padding-left:20px;max-width:64ch;margin:0">
-          <li><strong>Compact</strong> · 280 px max-width, padding reducido, label de fase en 18 px. Para sidebar o vista semanal con 7 cards en grid.</li>
-          <li><strong>Sin ribbon</strong> · cuando el contexto ya implica "hoy" y la barra 24 h sería redundante.</li>
-          <li><strong>Sin now</strong> · esquemas de referencia ("típico para esta edad") sin overlay temporal.</li>
-          <li><strong>Range adaptable</strong> · 0 - 3 m, 4 - 6 m, 7 - 9 m, 10 - 12 m, 13 - 18 m, 18 - 24 m, 2 - 3 a — el componente es agnóstico al número de siestas.</li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="spec">
-      <div class="spec-head">
-        <h3>UX rationale — vs current implementation</h3>
-        <span class="meta-r">comparison with screenshot</span>
-      </div>
-      <div class="spec-row col">
-        <table style="border-collapse:collapse;font-size:13px;color:var(--ink-soft);line-height:1.6;width:100%">
-          <thead style="font-family:'Lenia';font-weight:500;color:var(--ink);text-align:left">
-            <tr>
-              <th style="padding:10px 12px;border-bottom:1px solid var(--line)">Antes (v0.1)</th>
-              <th style="padding:10px 12px;border-bottom:1px solid var(--line)">Ahora (v0.2)</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td style="padding:10px 12px;border-bottom:1px dashed var(--line)">Wake windows como texto italic flotante a la derecha</td>
-              <td style="padding:10px 12px;border-bottom:1px dashed var(--line)">Interludios visibles entre fases con guión + duración en bold</td>
-            </tr>
-            <tr>
-              <td style="padding:10px 12px;border-bottom:1px dashed var(--line)">Iconos como placeholders ASCII <code>[☀] [zZ] [☾]</code></td>
-              <td style="padding:10px 12px;border-bottom:1px dashed var(--line)">SVG iconography real, color por fase</td>
-            </tr>
-            <tr>
-              <td style="padding:10px 12px;border-bottom:1px dashed var(--line)">Bloques de altura fija — no comunican proporción</td>
-              <td style="padding:10px 12px;border-bottom:1px dashed var(--line)">Ribbon de 24 h opcional muestra proporción noche / siesta / despierta de un vistazo</td>
-            </tr>
-            <tr>
-              <td style="padding:10px 12px;border-bottom:1px dashed var(--line)">Sin "you are here"</td>
-              <td style="padding:10px 12px;border-bottom:1px dashed var(--line)">Pill coral "Ahora · HH:MM" + ring coral en bloque actual</td>
-            </tr>
-            <tr>
-              <td style="padding:10px 12px;border-bottom:1px dashed var(--line)">Tono uniforme por bloque (mint, gold genérico)</td>
-              <td style="padding:10px 12px;border-bottom:1px dashed var(--line)">Color semántico: gold mañana, mint siesta, blush wind-down, ink dormido</td>
-            </tr>
-            <tr>
-              <td style="padding:10px 12px">Fija a 13 - 18 m, sin compactación posible</td>
-              <td style="padding:10px 12px">Variant compact + agnóstica al número de siestas (0-24 meses)</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </section>
-
-  <!-- ╔═════════════════════════════════════════════════════════╗
-       ║  § L — CALLOUT / NOTE                                    ║
-       ╚═════════════════════════════════════════════════════════╝ -->
-  <section class="section">
-    <div class="section-head">
-      <div class="section-num">§ L — Callout</div>
-      <div>
-        <h2>One editorial card for tips, footnotes, and adaptive copy.</h2>
-        <div class="desc">
-          Reemplaza los cuadros ad-hoc que aparecían en sleep-day, milestone,
-          calendar y otras superficies (paper-soft + texto centrado en italic).
-          Ahora un único primitive con variantes tonales y un modo "stat" para
-          afirmaciones cortas con número grande.
-        </div>
-      </div>
-    </div>
-
-    <div class="spec">
-      <div class="spec-head">
-        <h3>Default · editorial italic note</h3>
-        <span class="meta-r">.callout · with ✶ asterisk</span>
-      </div>
-      <div class="spec-row" style="padding: 12px 0">
-        <div class="callout" style="max-width: 460px">
-          <p>Esta rutina se adapta a tu peque, a su edad, a tu localidad y a la estación del año para saber cuándo amanece / anochece y respetar sus ritmos circadianos.</p>
-        </div>
-      </div>
-      <div class="spec-row" style="padding: 8px 0">
-        <div class="callout" style="max-width: 460px">
-          <p>Despertares nocturnos a esta edad son normales. La consistencia en cómo respondes es lo que enseña, no el método específico que uses.</p>
-        </div>
-      </div>
-    </div>
-
-    <div class="spec">
-      <div class="spec-head">
-        <h3>Tone variants</h3>
-        <span class="meta-r">.callout.{coral,mint,gold,blush}</span>
-      </div>
-      <div class="spec-row col" style="gap: 10px; padding: 12px 0">
-        <div class="callout coral" style="max-width: 460px">
-          <p>Cuidado con la <strong>fiebre &gt; 38.5 °C</strong> después de la vacuna. Llama al pediatra si dura más de 24 h.</p>
-        </div>
-        <div class="callout mint" style="max-width: 460px">
-          <p><strong>3 ventanas de despertar</strong> esta noche. Patrón normal a esta edad — no estás haciendo nada mal.</p>
-        </div>
-        <div class="callout gold" style="max-width: 460px">
-          <p>Próxima dosis de <strong>Triple vírica</strong> en 12 meses. Te avisamos.</p>
-        </div>
-        <div class="callout blush" style="max-width: 460px">
-          <p>El paso de 2 → 1 siesta suele ocurrir entre los <strong>12 y 18 meses</strong>. Llamamos al cambio "transición de siestas".</p>
-        </div>
-      </div>
-    </div>
-
-    <div class="spec">
-      <div class="spec-head">
-        <h3>Stat variant — short statement with large coral number</h3>
-        <span class="meta-r">.callout.stat · transparent · no asterisk</span>
-      </div>
-      <div class="spec-row" style="padding: 12px 0; flex-direction: column; align-items: center; gap: 6px">
-        <div class="callout stat" style="max-width: 460px">
-          <p>Tu peque debe dormir <strong>13 h</strong> al día.</p>
-        </div>
-        <div class="callout stat" style="max-width: 460px">
-          <p>Lleva <strong>3 / 9</strong> hitos al día.</p>
-        </div>
-        <div class="callout stat" style="max-width: 460px">
-          <p>Próxima vacuna en <strong>12 meses</strong>.</p>
-        </div>
-      </div>
-    </div>
-
-    <div class="spec">
-      <div class="spec-head">
-        <h3>Plain variant — no asterisk</h3>
-        <span class="meta-r">.callout.plain</span>
-      </div>
-      <div class="spec-row" style="padding: 12px 0">
-        <div class="callout plain" style="max-width: 460px">
-          <p>Para cuando el contexto ya implica el énfasis (e.g., debajo de un icono propio o un header con asterisco propio).</p>
-        </div>
-      </div>
-    </div>
-
-    <div class="spec">
-      <div class="spec-head">
-        <h3>Anatomy</h3>
-      </div>
-      <div class="spec-row col">
-        <ul style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--ink-soft); line-height: 1.7; padding-left: 18px; margin: 0">
-          <li><strong>.callout</strong> · paper-soft bg, radius-md, padding 16/18, text-align center</li>
-          <li><strong>::before</strong> · ✶ asterisco coral 14px arriba</li>
-          <li><strong>p</strong> · italic, fs-body-sm, color ink-soft, max-width 56ch, line-height 1.55</li>
-          <li><strong>strong dentro de p</strong> · color ink, weight 500, font-style normal (rompe la cursiva)</li>
-          <li><strong>.coral / .mint / .gold / .blush</strong> · cambia el bg al *-subtle correspondiente y el color del asterisco</li>
-          <li><strong>.stat</strong> · bg transparent, sin asterisco, p en peso normal, strong como número h2 coral</li>
-          <li><strong>.plain</strong> · sin asterisco, padding-top reducido</li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="spec">
-      <div class="spec-head">
-        <h3>Where this replaces ad-hoc summaries</h3>
-      </div>
-      <div class="spec-row col">
-        <ul style="font-size: 13px; color: var(--ink-soft); line-height: 1.65; padding-left: 18px; margin: 0">
-          <li><code>.sleep-day-summary</code> en § K Sleep schedule (deprecado)</li>
-          <li><code>.growth-empty</code> + cualquier nota lateral en libro de Desarrollo</li>
-          <li>"Sin alarmismo" notes en cada libro</li>
-          <li>"Esto es una orientación" footnotes que estaban duplicadas</li>
-          <li>Tip parental en § K Variant C — ahora pueden ser <code>.callout.plain</code> dentro del paso</li>
-        </ul>
-      </div>
-    </div>
-  </section>
-
-  <!-- ╔═════════════════════════════════════════════════════════╗
-       ║  § M — TIMELINE                                          ║
-       ╚═════════════════════════════════════════════════════════╝ -->
-  <section class="section">
-    <div class="section-head">
-      <div class="section-num">§ M — Timeline</div>
+      <div class="section-num">§ K — Timeline</div>
       <div>
         <h2>One horizontal timeline · day, year, lifecycle.</h2>
         <div class="desc">
@@ -2695,6 +2186,515 @@
             </tr>
           </tbody>
         </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ╔═════════════════════════════════════════════════════════╗
+       ║  § L — SLEEP SCHEDULE                                    ║
+       ╚═════════════════════════════════════════════════════════╝ -->
+  <section class="section">
+    <div class="section-head">
+      <div class="section-num">§ L — Sleep schedule</div>
+      <div>
+        <h2>The day, drawn calm. Wake windows as visible as sleep blocks.</h2>
+        <div class="desc">
+          Esquema diario por edad (12 - 18 m, 18 - 24 m, etc.). Reemplaza la card
+          actual de "Esquema del día" — los wake windows pasan a ser interludios
+          visualmente equivalentes a los bloques de sueño, no notas marginales.
+          Iconografía clara, colores tonales por fase, ribbon de 24 h en cabecera
+          para escaneo rápido.
+        </div>
+      </div>
+    </div>
+
+    <div class="spec">
+      <div class="spec-head">
+        <h3>Research notes — what other products do</h3>
+        <span class="meta-r">precedent · UX patterns</span>
+      </div>
+      <div class="spec-row col">
+        <ul style="font-size:13px;color:var(--ink-soft);line-height:1.65;padding-left:20px;max-width:64ch;margin:0">
+          <li><strong>Huckleberry · Wonder Weeks</strong> · prioritizan los <em>wake windows</em> como métrica clave (más que la duración del sueño en sí). El parent-friendly framing es "ventana antes de la próxima siesta", no "horas dormidas".</li>
+          <li><strong>Apple Health · Sleep</strong> · barra horizontal de 24 h con segmentos coloreados (asleep / in bed / awake). Excelente para escaneo, pero pierde el detalle de timing exacto.</li>
+          <li><strong>Nanit · Owlet</strong> · dial circular de 24 h con arcos. Visualmente intuitivo pero requiere zoom para tiempos precisos. No encaja en card pequeña.</li>
+          <li><strong>Smart Sleep Coach (Pampers)</strong> · timeline vertical con cards apiladas, cada una con time + label. Wake windows como labels secundarios entre cards.</li>
+          <li><strong>Whoop · Oura</strong> · gráficos de fases (REM / deep / light) — más para adultos, menos para padres.</li>
+          <li><strong>Calm · Headspace Sleep</strong> · narrativa más que dato — rutinas para conciliar sueño, no esquemas.</li>
+        </ul>
+      </div>
+      <div class="spec-row col" style="margin-top: 18px">
+        <span class="spec-label">Decisiones para Grow</span>
+        <ul style="font-size:13px;color:var(--ink-soft);line-height:1.65;padding-left:20px;max-width:64ch;margin:0">
+          <li><strong>Vertical proportional</strong> · escaneable y mantiene el flow editorial. Mejor que radial.</li>
+          <li><strong>Wake windows visibles</strong> · interludios con duración explícita ("Despierta · 5 h"), no nota marginal.</li>
+          <li><strong>Iconos reales</strong> · sun · moon · zZ · bed (registry de DS) en lugar de placeholders ASCII <code>[☀]</code>.</li>
+          <li><strong>Ribbon 24 h</strong> · cabecera opcional para escaneo de proporción noche / siesta / despierta.</li>
+          <li><strong>"You are here" indicator</strong> · pill coral con "ahora" sobre el bloque actual cuando el usuario está en Hoy.</li>
+          <li><strong>Color coding por fase</strong> · gold (mañana / sun) · mint (siesta) · blush (rutina noche / wind-down) · ink (dormido). Coral solo para "ahora".</li>
+          <li><strong>Editorial copy intacta</strong> · "Esto es una orientación. Cada peque tiene su ritmo. Sin juicio." — la voz de Grow no compite con el dato.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="spec">
+      <div class="spec-head">
+        <h3>Sleep schedule · single line (≤ 6 phases)</h3>
+        <span class="meta-r">.sleep-day · uses § K Timeline</span>
+      </div>
+      <div class="spec-row col" style="margin-bottom: 14px">
+        <p style="font-size:13px;color:var(--ink-soft);max-width:64ch;line-height:1.55;margin:0">
+          Combina las tres variantes:
+          <strong>(1)</strong> pie de 24 h compacto arriba para escaneo de
+          proporción · <strong>(2)</strong> timeline vertical con fases y wake
+          windows como nodos diferenciados · <strong>(3)</strong> copy educativa
+          breve por cada fase (qué pasa, no recetas). El "ahora" se refleja en
+          ambas zonas: dot en el pie y row destacado en la timeline.
+        </p>
+      </div>
+      <div class="spec-row" style="padding: 16px 0; align-items: flex-start; gap: 24px">
+        <div class="sleep-day">
+          <div class="top-header" style="margin-bottom: 16px">
+            <div>
+              <span class="eyebrow">Lola · 18 m</span>
+              <h2>Rutina ideal</h2>
+              <p class="sub">Según su edad, localización y estación del año.</p>
+            </div>
+            <div class="actions">
+              <button class="icon-btn sm ink" aria-label="Cerrar"><svg viewBox="0 0 24 24"><use href="#i-x"/></svg></button>
+            </div>
+          </div>
+
+          <div class="sleep-day-stat-wrap">
+            <div class="callout stat">
+              <p>Tu peque debe dormir <strong>13 h</strong> al día.</p>
+            </div>
+          </div>
+
+          <!-- ─── Horizontal 24h timeline · uses § M canonical .timeline ─── -->
+          <div class="timeline">
+            <div class="timeline-row">
+              <div class="timeline-row-label">
+                <span>Hoy · 24 h</span>
+                <span class="stats">13 h sueño · 10 h 30 m despierta</span>
+              </div>
+              <div class="timeline-track">
+                <!-- 24 h split into 6 segments anchored at midnight.
+                     flex values match phase durations (in hours). -->
+                <span class="timeline-seg sleep"   style="flex: 7.25" title="Noche · 0:00 — 7:15"></span>
+                <span class="timeline-seg wake"    style="flex: 5"    title="Despierta mañana · 7:15 — 12:15"></span>
+                <span class="timeline-seg sleep"   style="flex: 1.5"  title="Siesta · 12:15 — 13:45"></span>
+                <span class="timeline-seg wake"    style="flex: 5.5"  title="Despierta tarde · 13:45 — 19:15"></span>
+                <span class="timeline-seg routine" style="flex: 0.5"  title="Rutina noche · 19:15 — 19:45"></span>
+                <span class="timeline-seg sleep"   style="flex: 4.25" title="Noche · 19:45 — 24:00"></span>
+                <!-- now marker @ 14:32 = 14.533/24 = 60.56% -->
+                <div class="timeline-now" style="left: 60.56%" data-now="Ahora · 14:32"></div>
+              </div>
+              <div class="timeline-axis">
+                <span>0</span>
+                <span>6</span>
+                <span>12</span>
+                <span>18</span>
+                <span>24</span>
+              </div>
+            </div>
+            <div class="timeline-legend">
+              <span class="item"><span class="swatch sleep"></span> Sueño · 13 h</span>
+              <span class="item"><span class="swatch wake"></span> Despierta · 10 h 30 m</span>
+              <span class="item"><span class="swatch routine"></span> Rutina · 30 m</span>
+            </div>
+          </div>
+
+          <div class="sleep-day-divider"></div>
+
+          <h4 class="sleep-day-section-title">Cómo es tu día</h4>
+
+          <!-- ─── Vertical timeline with educational copy ─── -->
+          <div class="sleep-day-rhythm">
+
+            <div class="sleep-day-phase morning">
+              <div class="icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4 12H2M22 12h-2M5 5l1.5 1.5M17.5 17.5L19 19M5 19l1.5-1.5M17.5 6.5L19 5"/></svg>
+              </div>
+              <div class="body">
+                <strong>Despertar</strong>
+                <p>Empieza con luz natural. 11 - 12 h de noche regulan el reloj interno.</p>
+              </div>
+              <div class="time">7:15</div>
+            </div>
+
+            <div class="sleep-day-wake">
+              <div class="icon" aria-hidden="true"></div>
+              <div class="label">
+                Despierta · ventana de mañana
+                <p>Juego activo, primera comida, paseo.</p>
+              </div>
+              <div class="dur">5 h</div>
+            </div>
+
+            <div class="sleep-day-phase nap">
+              <div class="icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><path d="M3 16h6"/><path d="M5 16v-3a3 3 0 0 1 3-3h0a3 3 0 0 1 3 3v3"/><path d="M14 9l3-3 3 3"/></svg>
+              </div>
+              <div class="body">
+                <strong>Siesta del mediodía</strong>
+                <p>Una siesta es típica a esta edad. En cuna, oscura, después de comer.</p>
+              </div>
+              <div class="time">12:15<br>— 13:45</div>
+            </div>
+
+            <div class="sleep-day-wake now">
+              <div class="icon" aria-hidden="true"></div>
+              <div class="label">
+                Despierta · ventana de tarde
+                <p>Tarde activa, cena ligera 1 h antes de la rutina.</p>
+              </div>
+              <div class="dur">5 h 30 m</div>
+            </div>
+
+            <div class="sleep-day-phase bedtime">
+              <div class="icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9z"/></svg>
+              </div>
+              <div class="body">
+                <strong>Rutina de noche</strong>
+                <p>Baño, pijama, cuento, abrazo. Misma secuencia cada noche.</p>
+              </div>
+              <div class="time">19:15<br>~30 min</div>
+            </div>
+
+            <div class="sleep-day-phase night">
+              <div class="icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><path d="M3 18h18"/><path d="M5 18v-4a4 4 0 0 1 4-4h6a4 4 0 0 1 4 4v4"/><path d="M3 14h18"/></svg>
+              </div>
+              <div class="body">
+                <strong>Dormido</strong>
+                <p>Sin estímulos. Despertares nocturnos son normales — la consistencia enseña.</p>
+              </div>
+              <div class="time">19:45<br>11 h 30 m</div>
+            </div>
+
+          </div>
+
+          <div class="callout">
+            <p>Esta rutina se adapta a tu peque, a su edad, a tu localidad y a la estación del año para saber cuándo amanece / anochece y respetar sus ritmos circadianos.</p>
+          </div>
+        </div>
+
+        <div style="flex: 1; min-width: 280px">
+          <div class="spec-label">What this mix achieves</div>
+          <ul style="font-size:12.5px;color:var(--ink-soft);line-height:1.65;padding-left:18px;margin:0">
+            <li><strong>Pie + timeline</strong> · jerarquía dual — el pie da la forma del día, la timeline da los detalles. Mismo dato, dos lenguajes visuales.</li>
+            <li><strong>Wake como nodos</strong> · ventanas de vigilia tienen ya icono dashed + duración pill, no son notas marginales.</li>
+            <li><strong>Copy educativa breve</strong> · 1 línea por fase (no párrafo como en C) — orientación sin saturar.</li>
+            <li><strong>"Ahora" doble</strong> · coral dot en el pie + row destacada en la timeline.</li>
+            <li><strong>Tonos consistentes</strong> · gold mañana · mint nap · blush wind-down · ink noche en pie y timeline.</li>
+            <li><strong>Stats de cabecera</strong> · noche / siesta / ahora bajo el pie como números legibles.</li>
+          </ul>
+
+          <div class="spec-label" style="margin-top: 18px">Cuándo usarla</div>
+          <p style="font-size:12.5px;color:var(--ink-soft);line-height:1.6;margin:0">
+            <strong>Pantalla principal del libro de Sueño</strong> — la única vista
+            necesaria. Reemplaza A + B + C en la mayoría de superficies. Para
+            sidebar o weekly aún se usa <code>.sleep-card.compact</code>.
+          </p>
+
+          <div class="spec-label" style="margin-top: 18px">Trade-offs vs A · B · C</div>
+          <p style="font-size:12.5px;color:var(--ink-soft);line-height:1.6;margin:0">
+            Más alta verticalmente (~720 px vs 580 A). Pero a cambio responde
+            a 3 preguntas en una card: "¿qué forma tiene el día?", "¿cuándo
+            pasa cada cosa?", "¿qué significa cada fase?".
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="spec">
+      <div class="spec-head">
+        <h3>Sleep schedule · day + night split (&gt; 6 phases)</h3>
+        <span class="meta-r">e.g. bebé 4 - 6 m con 3 siestas · two timeline rows</span>
+      </div>
+      <div class="spec-row col" style="margin-bottom: 14px">
+        <p style="font-size:13px;color:var(--ink-soft);max-width:64ch;line-height:1.55;margin:0">
+          Para edades con muchas siestas (0 - 9 m) la timeline única se satura.
+          Regla: si hay <strong>más de 6 fases</strong>, dividimos en dos líneas
+          — <strong>día</strong> (despierta, siestas, rutina, primer tramo de
+          noche) y <strong>noche</strong> (resto). Mismos colores, misma
+          tipografía. La regla del color de sueño se mantiene: todo dormir es
+          el mismo tono oscuro.
+        </p>
+      </div>
+      <div class="spec-row" style="padding: 16px 0">
+        <div class="sleep-day" style="max-width: 460px">
+          <div class="top-header" style="margin-bottom: 16px">
+            <div>
+              <span class="eyebrow">Mateo · 5 m</span>
+              <h2>Rutina ideal</h2>
+              <p class="sub">Según su edad, localización y estación del año.</p>
+            </div>
+            <div class="actions">
+              <button class="icon-btn sm ink" aria-label="Cerrar"><svg viewBox="0 0 24 24"><use href="#i-x"/></svg></button>
+            </div>
+          </div>
+
+          <div class="sleep-day-stat-wrap">
+            <div class="callout stat">
+              <p>Tu peque debe dormir <strong>14 h 30 m</strong> al día.</p>
+            </div>
+          </div>
+
+          <div class="timeline">
+            <!-- DAY · 6:30 → 20:00 = 13.5 h, 9 segments -->
+            <div class="timeline-row">
+              <div class="timeline-row-label">
+                <span>Día · 6:30 → 20:00</span>
+                <span class="stats">3 siestas · 8 h despierta</span>
+              </div>
+              <div class="timeline-track">
+                <span class="timeline-seg wake"    style="flex: 1"   title="Despierta · 6:30 — 7:30"></span>
+                <span class="timeline-seg sleep"   style="flex: 1"   title="Siesta 1 · 7:30 — 8:30"></span>
+                <span class="timeline-seg wake"    style="flex: 2"   title="Despierta · 8:30 — 10:30"></span>
+                <span class="timeline-seg sleep"   style="flex: 1.5" title="Siesta 2 · 10:30 — 12:00"></span>
+                <span class="timeline-seg wake"    style="flex: 2"   title="Despierta · 12:00 — 14:00"></span>
+                <span class="timeline-seg sleep"   style="flex: 1.5" title="Siesta 3 · 14:00 — 15:30"></span>
+                <span class="timeline-seg wake"    style="flex: 3"   title="Despierta · 15:30 — 18:30"></span>
+                <span class="timeline-seg routine" style="flex: 0.5" title="Rutina · 18:30 — 19:00"></span>
+                <span class="timeline-seg sleep"   style="flex: 1"   title="Sueño nocturno · 19:00 — 20:00"></span>
+                <!-- now @ 14:32 = (14.533 - 6.5) / 13.5 = 59.5% -->
+                <div class="timeline-now" style="left: 59.5%" data-now="Ahora · 14:32"></div>
+              </div>
+              <div class="timeline-axis">
+                <span>6:30</span>
+                <span>10</span>
+                <span>13</span>
+                <span>16</span>
+                <span>20:00</span>
+              </div>
+            </div>
+
+            <!-- NIGHT · 20:00 → 6:30 = 10.5 h, 1 segment -->
+            <div class="timeline-row">
+              <div class="timeline-row-label">
+                <span>Noche · 20:00 → 6:30</span>
+                <span class="stats">10 h 30 m sueño</span>
+              </div>
+              <div class="timeline-track">
+                <span class="timeline-seg sleep" style="flex: 10.5" title="Noche · 20:00 — 6:30"></span>
+              </div>
+              <div class="timeline-axis">
+                <span>20:00</span>
+                <span>22</span>
+                <span>0</span>
+                <span>3</span>
+                <span>6:30</span>
+              </div>
+            </div>
+
+            <div class="timeline-legend">
+              <span class="item"><span class="swatch sleep"></span> Sueño · 14 h 30 m</span>
+              <span class="item"><span class="swatch wake"></span> Despierta · 9 h</span>
+              <span class="item"><span class="swatch routine"></span> Rutina · 30 m</span>
+            </div>
+          </div>
+
+          <div class="callout">
+            <p>Esta rutina se adapta a tu peque, a su edad, a tu localidad y a la estación del año para saber cuándo amanece / anochece y respetar sus ritmos circadianos.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="spec">
+      <div class="spec-head">
+        <h3>Anatomy</h3>
+      </div>
+      <div class="spec-row col">
+        <ul style="font-size:13px;color:var(--ink);line-height:1.7;padding-left:20px;max-width:64ch;margin:0;font-family:'JetBrains Mono', monospace">
+          <li><strong>.sleep-card</strong> · gradient background con tonos mint → paper → gold (matching el día)</li>
+          <li><strong>.sleep-card-head</strong> · eyebrow + título de edad + CTA "Ver esquema"</li>
+          <li><strong>.sleep-ribbon</strong> · barra de 24 h con <code>flex: 0 0 X%</code> proporcional. Negro = noche, mint = siesta, transparente = despierta</li>
+          <li><strong>.sleep-now</strong> · badge coral "Ahora · HH:MM" si el componente está activo en Hoy</li>
+          <li><strong>.sleep-phase</strong> · bloque por fase con tono (morning gold, nap mint, bedtime blush, night ink)</li>
+          <li><strong>.sleep-phase.now</strong> · ring coral 2 px alrededor del bloque actual</li>
+          <li><strong>.sleep-wake</strong> · interludio entre fases con guión y duración en peso 600</li>
+          <li><strong>.sleep-total</strong> · resumen + copy editorial "Sin juicio"</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="spec">
+      <div class="spec-head">
+        <h3>Variants</h3>
+        <span class="meta-r">.compact · age ranges · without ribbon · without now</span>
+      </div>
+      <div class="spec-row col">
+        <ul style="font-size:13px;color:var(--ink-soft);line-height:1.65;padding-left:20px;max-width:64ch;margin:0">
+          <li><strong>Compact</strong> · 280 px max-width, padding reducido, label de fase en 18 px. Para sidebar o vista semanal con 7 cards en grid.</li>
+          <li><strong>Sin ribbon</strong> · cuando el contexto ya implica "hoy" y la barra 24 h sería redundante.</li>
+          <li><strong>Sin now</strong> · esquemas de referencia ("típico para esta edad") sin overlay temporal.</li>
+          <li><strong>Range adaptable</strong> · 0 - 3 m, 4 - 6 m, 7 - 9 m, 10 - 12 m, 13 - 18 m, 18 - 24 m, 2 - 3 a — el componente es agnóstico al número de siestas.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="spec">
+      <div class="spec-head">
+        <h3>UX rationale — vs current implementation</h3>
+        <span class="meta-r">comparison with screenshot</span>
+      </div>
+      <div class="spec-row col">
+        <table style="border-collapse:collapse;font-size:13px;color:var(--ink-soft);line-height:1.6;width:100%">
+          <thead style="font-family:'Lenia';font-weight:500;color:var(--ink);text-align:left">
+            <tr>
+              <th style="padding:10px 12px;border-bottom:1px solid var(--line)">Antes (v0.1)</th>
+              <th style="padding:10px 12px;border-bottom:1px solid var(--line)">Ahora (v0.2)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="padding:10px 12px;border-bottom:1px dashed var(--line)">Wake windows como texto italic flotante a la derecha</td>
+              <td style="padding:10px 12px;border-bottom:1px dashed var(--line)">Interludios visibles entre fases con guión + duración en bold</td>
+            </tr>
+            <tr>
+              <td style="padding:10px 12px;border-bottom:1px dashed var(--line)">Iconos como placeholders ASCII <code>[☀] [zZ] [☾]</code></td>
+              <td style="padding:10px 12px;border-bottom:1px dashed var(--line)">SVG iconography real, color por fase</td>
+            </tr>
+            <tr>
+              <td style="padding:10px 12px;border-bottom:1px dashed var(--line)">Bloques de altura fija — no comunican proporción</td>
+              <td style="padding:10px 12px;border-bottom:1px dashed var(--line)">Ribbon de 24 h opcional muestra proporción noche / siesta / despierta de un vistazo</td>
+            </tr>
+            <tr>
+              <td style="padding:10px 12px;border-bottom:1px dashed var(--line)">Sin "you are here"</td>
+              <td style="padding:10px 12px;border-bottom:1px dashed var(--line)">Pill coral "Ahora · HH:MM" + ring coral en bloque actual</td>
+            </tr>
+            <tr>
+              <td style="padding:10px 12px;border-bottom:1px dashed var(--line)">Tono uniforme por bloque (mint, gold genérico)</td>
+              <td style="padding:10px 12px;border-bottom:1px dashed var(--line)">Color semántico: gold mañana, mint siesta, blush wind-down, ink dormido</td>
+            </tr>
+            <tr>
+              <td style="padding:10px 12px">Fija a 13 - 18 m, sin compactación posible</td>
+              <td style="padding:10px 12px">Variant compact + agnóstica al número de siestas (0-24 meses)</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ╔═════════════════════════════════════════════════════════╗
+       ║  § M — CALLOUT / NOTE                                    ║
+       ╚═════════════════════════════════════════════════════════╝ -->
+  <section class="section">
+    <div class="section-head">
+      <div class="section-num">§ M — Callout</div>
+      <div>
+        <h2>One editorial card for tips, footnotes, and adaptive copy.</h2>
+        <div class="desc">
+          Reemplaza los cuadros ad-hoc que aparecían en sleep-day, milestone,
+          calendar y otras superficies (paper-soft + texto centrado en italic).
+          Ahora un único primitive con variantes tonales y un modo "stat" para
+          afirmaciones cortas con número grande.
+        </div>
+      </div>
+    </div>
+
+    <div class="spec">
+      <div class="spec-head">
+        <h3>Default · editorial italic note</h3>
+        <span class="meta-r">.callout · with ✶ asterisk</span>
+      </div>
+      <div class="spec-row" style="padding: 12px 0">
+        <div class="callout" style="max-width: 460px">
+          <p>Esta rutina se adapta a tu peque, a su edad, a tu localidad y a la estación del año para saber cuándo amanece / anochece y respetar sus ritmos circadianos.</p>
+        </div>
+      </div>
+      <div class="spec-row" style="padding: 8px 0">
+        <div class="callout" style="max-width: 460px">
+          <p>Despertares nocturnos a esta edad son normales. La consistencia en cómo respondes es lo que enseña, no el método específico que uses.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="spec">
+      <div class="spec-head">
+        <h3>Tone variants</h3>
+        <span class="meta-r">.callout.{coral,mint,gold,blush}</span>
+      </div>
+      <div class="spec-row col" style="gap: 10px; padding: 12px 0">
+        <div class="callout coral" style="max-width: 460px">
+          <p>Cuidado con la <strong>fiebre &gt; 38.5 °C</strong> después de la vacuna. Llama al pediatra si dura más de 24 h.</p>
+        </div>
+        <div class="callout mint" style="max-width: 460px">
+          <p><strong>3 ventanas de despertar</strong> esta noche. Patrón normal a esta edad — no estás haciendo nada mal.</p>
+        </div>
+        <div class="callout gold" style="max-width: 460px">
+          <p>Próxima dosis de <strong>Triple vírica</strong> en 12 meses. Te avisamos.</p>
+        </div>
+        <div class="callout blush" style="max-width: 460px">
+          <p>El paso de 2 → 1 siesta suele ocurrir entre los <strong>12 y 18 meses</strong>. Llamamos al cambio "transición de siestas".</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="spec">
+      <div class="spec-head">
+        <h3>Stat variant — short statement with large coral number</h3>
+        <span class="meta-r">.callout.stat · transparent · no asterisk</span>
+      </div>
+      <div class="spec-row" style="padding: 12px 0; flex-direction: column; align-items: center; gap: 6px">
+        <div class="callout stat" style="max-width: 460px">
+          <p>Tu peque debe dormir <strong>13 h</strong> al día.</p>
+        </div>
+        <div class="callout stat" style="max-width: 460px">
+          <p>Lleva <strong>3 / 9</strong> hitos al día.</p>
+        </div>
+        <div class="callout stat" style="max-width: 460px">
+          <p>Próxima vacuna en <strong>12 meses</strong>.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="spec">
+      <div class="spec-head">
+        <h3>Plain variant — no asterisk</h3>
+        <span class="meta-r">.callout.plain</span>
+      </div>
+      <div class="spec-row" style="padding: 12px 0">
+        <div class="callout plain" style="max-width: 460px">
+          <p>Para cuando el contexto ya implica el énfasis (e.g., debajo de un icono propio o un header con asterisco propio).</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="spec">
+      <div class="spec-head">
+        <h3>Anatomy</h3>
+      </div>
+      <div class="spec-row col">
+        <ul style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--ink-soft); line-height: 1.7; padding-left: 18px; margin: 0">
+          <li><strong>.callout</strong> · paper-soft bg, radius-md, padding 16/18, text-align center</li>
+          <li><strong>::before</strong> · ✶ asterisco coral 14px arriba</li>
+          <li><strong>p</strong> · italic, fs-body-sm, color ink-soft, max-width 56ch, line-height 1.55</li>
+          <li><strong>strong dentro de p</strong> · color ink, weight 500, font-style normal (rompe la cursiva)</li>
+          <li><strong>.coral / .mint / .gold / .blush</strong> · cambia el bg al *-subtle correspondiente y el color del asterisco</li>
+          <li><strong>.stat</strong> · bg transparent, sin asterisco, p en peso normal, strong como número h2 coral</li>
+          <li><strong>.plain</strong> · sin asterisco, padding-top reducido</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="spec">
+      <div class="spec-head">
+        <h3>Where this replaces ad-hoc summaries</h3>
+      </div>
+      <div class="spec-row col">
+        <ul style="font-size: 13px; color: var(--ink-soft); line-height: 1.65; padding-left: 18px; margin: 0">
+          <li><code>.sleep-day-summary</code> en § K Sleep schedule (deprecado)</li>
+          <li><code>.growth-empty</code> + cualquier nota lateral en libro de Desarrollo</li>
+          <li>"Sin alarmismo" notes en cada libro</li>
+          <li>"Esto es una orientación" footnotes que estaban duplicadas</li>
+          <li>Tip parental en § K Variant C — ahora pueden ser <code>.callout.plain</code> dentro del paso</li>
+        </ul>
       </div>
     </div>
   </section>
