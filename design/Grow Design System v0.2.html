@@ -1029,6 +1029,154 @@
   .sleep-day .callout { margin-top: 22px; }
   .sleep-day-stat-wrap { margin: 0 0 18px; }
 
+  /* ═════════════════ TIMELINE — § M ═════════════════ */
+  /* Unified horizontal timeline · supports day (24h sleep), year,
+     lifecycle, navigation. Same DNA as the calendar phase-bar in
+     prototype.html (.phase-progress-bar / .phase-segment). Two
+     height variants: thin (18px) for proportion, tall (40px) for
+     nav with labels. */
+  .timeline { display: flex; flex-direction: column; }
+  .timeline-row { display: flex; flex-direction: column; }
+  .timeline-row + .timeline-row { margin-top: 14px; }
+  .timeline-row-label {
+    display: flex; justify-content: space-between; align-items: baseline;
+    font-family: 'Lenia';
+    font-size: var(--fs-eyebrow);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    margin-bottom: 8px;
+    font-weight: 500;
+    gap: 12px;
+  }
+  .timeline-row-label .stats {
+    color: var(--ink); letter-spacing: 0.06em;
+    text-transform: none; font-size: var(--fs-meta);
+  }
+  .timeline-track {
+    position: relative;
+    display: flex;
+    height: 18px;
+    border-radius: var(--radius-pill);
+    overflow: hidden;
+    background: var(--paper-soft);
+  }
+  .timeline-track.tall {
+    height: 40px;
+    gap: 3px;
+    border-radius: var(--radius-sm);
+    overflow: visible;
+  }
+  .timeline-seg {
+    display: block;
+    height: 100%;
+    border: 0; padding: 0;
+    background: var(--paper-soft);
+    cursor: pointer;
+    position: relative;
+  }
+  .timeline-seg.sleep   { background: var(--module-dark); }
+  .timeline-seg.wake    { background: var(--gold-subtle); }
+  .timeline-seg.routine { background: var(--blush-base); }
+  .timeline-seg.coral   { background: var(--coral-subtle); }
+  .timeline-seg.mint    { background: var(--mint-subtle); }
+  .timeline-seg.blush   { background: var(--blush-subtle); }
+  .timeline-seg.gold    { background: var(--gold-subtle); }
+  .timeline-seg.ink     { background: var(--module-dark); color: var(--paper); }
+  .timeline-track.tall .timeline-seg {
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    border-radius: 10px;
+    padding: 0 6px;
+    gap: 2px;
+    overflow: hidden;
+    opacity: 0.55;
+    filter: saturate(0.7);
+    transition: opacity 200ms var(--ease), filter 200ms var(--ease);
+  }
+  .timeline-track.tall .timeline-seg.active {
+    opacity: 1; filter: saturate(1);
+  }
+  .timeline-track.tall .timeline-seg .seg-label {
+    font-family: 'Lenia';
+    font-size: var(--fs-meta);
+    font-weight: 600;
+    line-height: 1;
+    letter-spacing: -0.01em;
+    white-space: nowrap;
+    color: var(--ink);
+  }
+  .timeline-track.tall .timeline-seg .seg-dur {
+    font-family: 'Lenia';
+    font-size: 10px;
+    line-height: 1;
+    color: var(--ink-muted);
+    white-space: nowrap;
+  }
+  .timeline-seg .today-dot,
+  .timeline-seg .seg-cursor {
+    position: absolute;
+    bottom: 7px;
+    width: 5px; height: 5px;
+    border-radius: var(--radius-pill);
+    transform: translateX(-50%);
+  }
+  .timeline-seg .today-dot { background: var(--ink); opacity: 0.28; }
+  .timeline-seg .seg-cursor.coral { background: var(--coral-strong); opacity: 0.62; }
+  .timeline-seg .seg-cursor.mint  { background: #4F6647; opacity: 0.62; }
+  .timeline-seg .seg-cursor.blush { background: #7A4A3A; opacity: 0.62; }
+  .timeline-now {
+    position: absolute;
+    top: -6px; bottom: -6px;
+    width: 2.5px;
+    background: var(--coral-strong);
+    border-radius: 2px;
+    z-index: 2;
+    pointer-events: none;
+  }
+  .timeline-now::after {
+    content: attr(data-now);
+    position: absolute;
+    top: -28px;
+    left: 50%; transform: translateX(-50%);
+    background: var(--coral-base); color: #4A2614;
+    font-family: 'Lenia'; font-size: var(--fs-eyebrow); font-weight: 600;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    padding: 3px 8px 2px;
+    border-radius: var(--radius-pill);
+    white-space: nowrap;
+  }
+  .timeline-axis {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 6px;
+    font-family: 'Lenia';
+    font-size: var(--fs-eyebrow);
+    color: var(--ink-muted);
+    font-weight: 500;
+    letter-spacing: 0.04em;
+  }
+  .timeline-legend {
+    display: flex; gap: 18px; flex-wrap: wrap;
+    margin-top: 14px; justify-content: center;
+    font-family: 'Lenia'; font-size: var(--fs-caption);
+    color: var(--ink-soft);
+  }
+  .timeline-legend .item {
+    display: inline-flex; align-items: center; gap: 7px;
+  }
+  .timeline-legend .swatch {
+    width: 16px; height: 10px;
+    border-radius: 3px;
+    border: 1px solid rgba(0,0,0,0.05);
+  }
+  .timeline-legend .swatch.sleep   { background: var(--module-dark); border-color: var(--module-dark); }
+  .timeline-legend .swatch.wake    { background: var(--gold-subtle); border-color: rgba(184,151,63,0.30); }
+  .timeline-legend .swatch.routine { background: var(--blush-base); border-color: var(--blush-strong); }
+  .timeline-legend .swatch.coral   { background: var(--coral-subtle); }
+  .timeline-legend .swatch.mint    { background: var(--mint-subtle); }
+  .timeline-legend .swatch.blush   { background: var(--blush-subtle); }
+
   /* ═════════════════ CALLOUT — § L ═════════════════ */
   /* Editorial note card · used for adaptive copy, tips, footnotes.
      Replaces ad-hoc summary boxes scattered across components. */
@@ -2891,6 +3039,244 @@
           <li>"Esto es una orientación" footnotes que estaban duplicadas</li>
           <li>Tip parental en § K Variant C — ahora pueden ser <code>.callout.plain</code> dentro del paso</li>
         </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ╔═════════════════════════════════════════════════════════╗
+       ║  § M — TIMELINE                                          ║
+       ╚═════════════════════════════════════════════════════════╝ -->
+  <section class="section">
+    <div class="section-head">
+      <div class="section-num">§ M — Timeline</div>
+      <div>
+        <h2>One horizontal timeline · day, year, lifecycle.</h2>
+        <div class="desc">
+          Mismo primitive para los tres usos visuales del prototipo:
+          <strong>(1)</strong> el día (24 h en libro de Sueño) ·
+          <strong>(2)</strong> el año o etapas (selector de fases del Calendario)
+          · <strong>(3)</strong> cualquier eje temporal con segmentos
+          proporcionales. Dos alturas: <code>thin</code> (18 px, proporción) y
+          <code>tall</code> (40 px, navegación con labels).
+        </div>
+      </div>
+    </div>
+
+    <div class="spec">
+      <div class="spec-head">
+        <h3>Use case 1 · Day timeline (single row)</h3>
+        <span class="meta-r">.timeline · thin · ≤ 6 fases</span>
+      </div>
+      <div class="spec-row col" style="margin-bottom: 14px">
+        <p style="font-size:13px;color:var(--ink-soft);max-width:60ch;line-height:1.55;margin:0">
+          24 horas anclado a media noche. Sueño = mismo color
+          (<code>--module-dark</code>) en siesta y noche. Ahora se marca con
+          línea coral vertical sobre la barra.
+        </p>
+      </div>
+      <div class="spec-row" style="padding: 18px 0; max-width: 460px">
+        <div class="timeline" style="width: 100%">
+          <div class="timeline-row">
+            <div class="timeline-row-label">
+              <span>Hoy · 24 h</span>
+              <span class="stats">13 h sueño · 10 h 30 m despierta</span>
+            </div>
+            <div class="timeline-track">
+              <span class="timeline-seg sleep"   style="flex: 7.25" title="Noche · 0:00 — 7:15"></span>
+              <span class="timeline-seg wake"    style="flex: 5"    title="Despierta · 7:15 — 12:15"></span>
+              <span class="timeline-seg sleep"   style="flex: 1.5"  title="Siesta · 12:15 — 13:45"></span>
+              <span class="timeline-seg wake"    style="flex: 5.5"  title="Despierta · 13:45 — 19:15"></span>
+              <span class="timeline-seg routine" style="flex: 0.5"  title="Rutina · 19:15 — 19:45"></span>
+              <span class="timeline-seg sleep"   style="flex: 4.25" title="Noche · 19:45 — 24:00"></span>
+              <div class="timeline-now" style="left: 60.56%" data-now="Ahora · 14:32"></div>
+            </div>
+            <div class="timeline-axis">
+              <span>0</span><span>6</span><span>12</span><span>18</span><span>24</span>
+            </div>
+          </div>
+          <div class="timeline-legend">
+            <span class="item"><span class="swatch sleep"></span> Sueño</span>
+            <span class="item"><span class="swatch wake"></span> Despierta</span>
+            <span class="item"><span class="swatch routine"></span> Rutina</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="spec">
+      <div class="spec-head">
+        <h3>Use case 2 · Day + Night split (two rows)</h3>
+        <span class="meta-r">.timeline · thin · &gt; 6 fases</span>
+      </div>
+      <div class="spec-row col" style="margin-bottom: 14px">
+        <p style="font-size:13px;color:var(--ink-soft);max-width:60ch;line-height:1.55;margin:0">
+          Para edades con muchas siestas (0 - 9 m). Una fila <strong>día</strong>
+          y otra <strong>noche</strong>. Ejes diferentes por fila. Misma paleta.
+        </p>
+      </div>
+      <div class="spec-row" style="padding: 18px 0; max-width: 460px">
+        <div class="timeline" style="width: 100%">
+          <div class="timeline-row">
+            <div class="timeline-row-label">
+              <span>Día · 6:30 → 20:00</span>
+              <span class="stats">3 siestas</span>
+            </div>
+            <div class="timeline-track">
+              <span class="timeline-seg wake"    style="flex: 1"></span>
+              <span class="timeline-seg sleep"   style="flex: 1"></span>
+              <span class="timeline-seg wake"    style="flex: 2"></span>
+              <span class="timeline-seg sleep"   style="flex: 1.5"></span>
+              <span class="timeline-seg wake"    style="flex: 2"></span>
+              <span class="timeline-seg sleep"   style="flex: 1.5"></span>
+              <span class="timeline-seg wake"    style="flex: 3"></span>
+              <span class="timeline-seg routine" style="flex: 0.5"></span>
+              <span class="timeline-seg sleep"   style="flex: 1"></span>
+              <div class="timeline-now" style="left: 59.5%" data-now="14:32"></div>
+            </div>
+            <div class="timeline-axis">
+              <span>6:30</span><span>10</span><span>13</span><span>16</span><span>20</span>
+            </div>
+          </div>
+          <div class="timeline-row">
+            <div class="timeline-row-label">
+              <span>Noche · 20:00 → 6:30</span>
+              <span class="stats">10 h 30 m</span>
+            </div>
+            <div class="timeline-track">
+              <span class="timeline-seg sleep" style="flex: 10.5"></span>
+            </div>
+            <div class="timeline-axis">
+              <span>20:00</span><span>22</span><span>0</span><span>3</span><span>6:30</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="spec">
+      <div class="spec-head">
+        <h3>Use case 3 · Lifecycle / phase navigation (Calendar)</h3>
+        <span class="meta-r">.timeline-track.tall · .timeline-seg.active · cursor</span>
+      </div>
+      <div class="spec-row col" style="margin-bottom: 14px">
+        <p style="font-size:13px;color:var(--ink-soft);max-width:60ch;line-height:1.55;margin:0">
+          Es el <code>.phase-progress-bar</code> que ya existe en el prototipo
+          (Calendario · selector de fases). Tres etapas — embarazo · bebé ·
+          crianza — proporcionales a meses. Segmento activo con label, duración
+          y dot cursor de "ahora estás aquí". Today-dot fijo dentro de la
+          etapa actual del usuario.
+        </p>
+      </div>
+      <div class="spec-row" style="padding: 18px 0; max-width: 520px">
+        <div class="timeline" style="width: 100%">
+          <div class="timeline-track tall">
+            <button class="timeline-seg coral" type="button" style="flex: 9" aria-label="Embarazo, 9 meses">
+              <span class="seg-label">Embarazo</span>
+              <span class="seg-dur">9 meses</span>
+            </button>
+            <button class="timeline-seg blush active" type="button" style="flex: 24" aria-label="Bebé, 24 meses, activo">
+              <span class="seg-label">Bebé</span>
+              <span class="seg-dur">0 - 24 m</span>
+              <span class="today-dot" style="left: 75%"></span>
+              <span class="seg-cursor blush" style="left: 75%"></span>
+            </button>
+            <button class="timeline-seg mint" type="button" style="flex: 36" aria-label="Crianza, 24-60 meses">
+              <span class="seg-label">Crianza</span>
+              <span class="seg-dur">2 - 5 a</span>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="spec-row col">
+        <p style="font-size:12.5px;color:var(--ink-soft);line-height:1.6;margin:0;max-width:60ch">
+          <strong>Activo</strong> · opacity 1, saturation 1. <strong>Inactivo</strong>
+          · opacity 0.55, saturation 0.7. Click navega a la primera unidad de la
+          etapa. Cursor dot se posiciona via inline <code>left: X%</code>
+          calculado por el JS según el mes activo dentro de la etapa.
+        </p>
+      </div>
+    </div>
+
+    <div class="spec">
+      <div class="spec-head">
+        <h3>Use case 4 · Brand tones · proportional segments without labels</h3>
+        <span class="meta-r">.timeline-seg.{coral,mint,gold,blush}</span>
+      </div>
+      <div class="spec-row" style="padding: 18px 0; max-width: 460px">
+        <div class="timeline" style="width: 100%">
+          <div class="timeline-row">
+            <div class="timeline-row-label">
+              <span>Vacunas AEP</span>
+              <span class="stats">12 / 14 dosis</span>
+            </div>
+            <div class="timeline-track">
+              <span class="timeline-seg gold" style="flex: 12" title="Aplicadas"></span>
+              <span class="timeline-seg" style="flex: 2" title="Pendientes"></span>
+            </div>
+            <div class="timeline-axis">
+              <span>0 m</span><span>6 m</span><span>12 m</span><span>18 m</span><span>24 m</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="spec">
+      <div class="spec-head">
+        <h3>Anatomy &amp; conventions</h3>
+      </div>
+      <div class="spec-row col">
+        <ul style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--ink-soft); line-height: 1.7; padding-left: 18px; margin: 0">
+          <li><strong>.timeline</strong> · contenedor flex column</li>
+          <li><strong>.timeline-row</strong> · una fila completa (label + track + axis)</li>
+          <li><strong>.timeline-row-label</strong> · eyebrow uppercase + stats opcionales (right-aligned)</li>
+          <li><strong>.timeline-track</strong> · barra horizontal flex, 18 px height (default)</li>
+          <li><strong>.timeline-track.tall</strong> · 40 px height, gap 3 px, segmentos rounded individuales</li>
+          <li><strong>.timeline-seg</strong> · cada segmento; <code>flex: N</code> proporcional a duración</li>
+          <li><strong>.timeline-seg + tone</strong> · sleep | wake | routine | coral | mint | gold | blush | ink</li>
+          <li><strong>.timeline-seg.active</strong> · solo en track tall; opacity 1, saturation 1</li>
+          <li><strong>.timeline-seg .seg-label</strong> · label dentro del segmento (solo tall)</li>
+          <li><strong>.timeline-seg .seg-dur</strong> · duración pequeña debajo del label</li>
+          <li><strong>.timeline-seg .today-dot</strong> · ink dot 5 px, left% inline</li>
+          <li><strong>.timeline-seg .seg-cursor</strong> · cursor del usuario actual, color por familia</li>
+          <li><strong>.timeline-now</strong> · línea vertical coral con pill "Ahora · HH:MM" arriba (track thin)</li>
+          <li><strong>.timeline-axis</strong> · etiquetas debajo del track</li>
+          <li><strong>.timeline-legend</strong> · swatches coloreadas + nombres bajo la barra</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="spec">
+      <div class="spec-head">
+        <h3>Aliases in app</h3>
+      </div>
+      <div class="spec-row col">
+        <table style="border-collapse:collapse;font-size:12px;color:var(--ink-soft);width:100%;line-height:1.5">
+          <thead style="font-family:'Lenia';font-weight:500;color:var(--ink);text-align:left">
+            <tr>
+              <th style="padding:6px 8px;border-bottom:1px solid var(--line)">Surface</th>
+              <th style="padding:6px 8px;border-bottom:1px solid var(--line)">Existing class in prototype</th>
+              <th style="padding:6px 8px;border-bottom:1px solid var(--line)">DS canon</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="padding:6px 8px;border-bottom:1px dashed var(--line)">Calendar · phase selector</td>
+              <td style="padding:6px 8px;border-bottom:1px dashed var(--line)"><code>.phase-progress-bar / .phase-segment</code></td>
+              <td style="padding:6px 8px;border-bottom:1px dashed var(--line)"><code>.timeline-track.tall / .timeline-seg</code></td>
+            </tr>
+            <tr>
+              <td style="padding:6px 8px;border-bottom:1px dashed var(--line)">Sleep · 24h day</td>
+              <td style="padding:6px 8px;border-bottom:1px dashed var(--line)"><code>.sleep-day-line / .stl-*</code></td>
+              <td style="padding:6px 8px;border-bottom:1px dashed var(--line)"><code>.timeline / .timeline-track</code></td>
+            </tr>
+            <tr>
+              <td style="padding:6px 8px">Vacunas · progress</td>
+              <td style="padding:6px 8px"><code>(ad-hoc)</code></td>
+              <td style="padding:6px 8px"><code>.timeline-seg.gold</code></td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
   </section>
