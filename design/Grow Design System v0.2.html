@@ -671,6 +671,29 @@
     border-radius: var(--radius-md);
     background: var(--paper-soft);
     color: var(--ink);
+    cursor: pointer;
+    border: 0;
+    text-align: left;
+    width: 100%;
+    font: inherit;
+    transition: transform 150ms var(--ease), filter 150ms var(--ease);
+  }
+  .dose-row:hover { transform: translateY(-1px); filter: brightness(0.99); }
+  .dose-row .chevron {
+    width: 18px; height: 18px;
+    flex-shrink: 0;
+    align-self: center;
+    color: var(--ink-faint);
+    transition: color 150ms var(--ease), transform 150ms var(--ease);
+  }
+  .dose-row .chevron svg {
+    width: 100%; height: 100%;
+    stroke: currentColor; fill: none;
+    stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round;
+  }
+  .dose-row:hover .chevron {
+    color: var(--ink-soft);
+    transform: translateX(2px);
   }
   .dose-row .marker {
     width: 14px; height: 14px;
@@ -738,6 +761,115 @@
     transition: background 150ms var(--ease);
   }
   .vax-calendar-footer .more:hover { background: var(--paper-soft); }
+
+  /* ─── .vax-detail · per-vaccine deep view ─── */
+  .vax-detail {
+    background: var(--paper);
+    border-radius: var(--radius-xl);
+    padding: 24px;
+    border: 1px solid var(--line);
+    box-shadow: 0 18px 46px rgba(45,38,30,0.05);
+  }
+  .vax-detail .top-header { margin-bottom: 16px; }
+
+  .vax-detail-status-bar {
+    display: flex; align-items: center; gap: 10px;
+    flex-wrap: wrap; margin-bottom: 16px;
+  }
+  .status-pill {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-family: 'Lenia'; font-size: var(--fs-meta);
+    font-weight: 500; letter-spacing: 0.04em;
+    padding: 6px 12px; border-radius: var(--radius-pill);
+  }
+  .status-pill::before {
+    content: ''; width: 6px; height: 6px;
+    border-radius: var(--radius-pill);
+    background: currentColor;
+  }
+  .status-pill.done   { background: var(--mint-subtle); color: #4F6647; }
+  .status-pill.next   { background: var(--gold-subtle); color: #6E5A2A; }
+  .status-pill.future { background: var(--paper-soft); color: var(--ink-soft); }
+
+  .dose-progress {
+    font-family: 'Lenia'; font-size: var(--fs-meta);
+    color: var(--ink-muted); letter-spacing: 0.04em;
+  }
+  .dose-progress strong { color: var(--ink); font-weight: 500; }
+
+  .vax-section-title {
+    font-family: 'Lenia'; font-weight: 500;
+    font-size: var(--fs-h4); line-height: 1.2;
+    margin: 24px 0 12px;
+    letter-spacing: -0.01em;
+  }
+  .vax-section-title:first-of-type { margin-top: 18px; }
+
+  .vax-protection {
+    list-style: none; padding: 0; margin: 0;
+    display: flex; flex-direction: column; gap: 8px;
+  }
+  .vax-protection li {
+    display: grid;
+    grid-template-columns: 14px 1fr;
+    gap: 10px;
+    align-items: start;
+    font-size: var(--fs-body-sm);
+    color: var(--ink);
+    line-height: 1.55;
+  }
+  .vax-protection li::before {
+    content: ''; width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--coral-base);
+    margin-top: 8px;
+    margin-left: 4px;
+  }
+  .vax-protection strong { color: var(--ink); font-weight: 500; }
+
+  .vax-admin-details {
+    background: var(--paper-soft);
+    border-radius: var(--radius-md);
+    padding: 14px 18px;
+    display: flex; flex-direction: column;
+    gap: 10px;
+  }
+  .vax-admin-details .detail-row {
+    display: flex; justify-content: space-between;
+    gap: 12px; font-size: var(--fs-body-sm);
+  }
+  .vax-admin-details .label {
+    font-family: 'Lenia'; color: var(--ink-muted);
+    letter-spacing: 0.04em;
+  }
+  .vax-admin-details .value {
+    color: var(--ink); text-align: right; font-weight: 500;
+  }
+
+  .vax-side-effects {
+    list-style: none; padding: 0; margin: 0;
+    display: flex; flex-direction: column; gap: 6px;
+  }
+  .vax-side-effects li {
+    display: grid;
+    grid-template-columns: 14px 1fr;
+    gap: 10px;
+    align-items: start;
+    font-size: var(--fs-body-sm);
+    color: var(--ink-soft);
+    line-height: 1.55;
+  }
+  .vax-side-effects li::before {
+    content: ''; width: 4px; height: 4px;
+    border-radius: 50%;
+    background: var(--ink-muted);
+    margin-top: 9px;
+    margin-left: 5px;
+  }
+
+  .vax-detail-cta {
+    margin-top: 18px;
+  }
 
   /* ═════════════════ TIMELINE — § I ═════════════════ */
   /* Unified horizontal timeline · supports day (24h sleep), year,
@@ -2823,86 +2955,95 @@
 
           <div class="vax-list">
 
-            <div class="dose-row done">
+            <button class="dose-row done" type="button">
               <span class="marker"></span>
               <div class="body">
                 <strong>2 meses</strong>
                 <p>Hexavalente · Neumococo · MenB · Rotavirus</p>
               </div>
               <div class="meta">12 may</div>
-            </div>
+              <span class="chevron"><svg viewBox="0 0 24 24"><use href="#i-arrow"/></svg></span>
+            </button>
 
-            <div class="dose-row done">
+            <button class="dose-row done" type="button">
               <span class="marker"></span>
               <div class="body">
                 <strong>3 meses</strong>
                 <p>Rotavirus 2ª</p>
               </div>
               <div class="meta">12 jun</div>
-            </div>
+              <span class="chevron"><svg viewBox="0 0 24 24"><use href="#i-arrow"/></svg></span>
+            </button>
 
-            <div class="dose-row done">
+            <button class="dose-row done" type="button">
               <span class="marker"></span>
               <div class="body">
                 <strong>4 meses</strong>
                 <p>Hexavalente · Neumococo · MenB · MenACWY</p>
               </div>
               <div class="meta">12 jul</div>
-            </div>
+              <span class="chevron"><svg viewBox="0 0 24 24"><use href="#i-arrow"/></svg></span>
+            </button>
 
-            <div class="dose-row done">
+            <button class="dose-row done" type="button">
               <span class="marker"></span>
               <div class="body">
                 <strong>11 meses</strong>
                 <p>Hexavalente · Neumococo · MenB</p>
               </div>
               <div class="meta">12 feb 2027</div>
-            </div>
+              <span class="chevron"><svg viewBox="0 0 24 24"><use href="#i-arrow"/></svg></span>
+            </button>
 
-            <div class="dose-row next">
+            <button class="dose-row next" type="button">
               <span class="marker"></span>
               <div class="body">
                 <strong>12 meses</strong>
                 <p>MenACWY · Triple vírica · Hepatitis A <span class="new-badge">Nuevo 2026</span></p>
               </div>
               <div class="meta">próxima · 12 mar 2027</div>
-            </div>
+              <span class="chevron"><svg viewBox="0 0 24 24"><use href="#i-arrow"/></svg></span>
+            </button>
 
-            <div class="dose-row future">
+            <button class="dose-row future" type="button">
               <span class="marker"></span>
               <div class="body">
                 <strong>15 meses</strong>
                 <p>Varicela</p>
               </div>
               <div class="meta">12 jun 2027</div>
-            </div>
+              <span class="chevron"><svg viewBox="0 0 24 24"><use href="#i-arrow"/></svg></span>
+            </button>
 
-            <div class="dose-row future">
+            <button class="dose-row future" type="button">
               <span class="marker"></span>
               <div class="body">
                 <strong>3 - 4 años</strong>
                 <p>Triple vírica 2ª · Varicela 2ª · Hepatitis A 2ª</p>
               </div>
               <div class="meta">2029</div>
-            </div>
+              <span class="chevron"><svg viewBox="0 0 24 24"><use href="#i-arrow"/></svg></span>
+            </button>
 
-            <div class="dose-row future">
+            <button class="dose-row future" type="button">
               <span class="marker"></span>
               <div class="body">
                 <strong>6 años</strong>
                 <p>DTPa-VPI · Varicela refuerzo</p>
               </div>
               <div class="meta">2032</div>
-            </div>
+              <span class="chevron"><svg viewBox="0 0 24 24"><use href="#i-arrow"/></svg></span>
+            </button>
 
-            <div class="dose-row future">
+            <button class="dose-row future" type="button">
               <span class="marker"></span>
               <div class="body">
                 <strong>12 - 14 años</strong>
                 <p>VPH · MenACWY refuerzo · Td</p>
               </div>
               <div class="meta">2038 - 2040</div>
-            </div>
+              <span class="chevron"><svg viewBox="0 0 24 24"><use href="#i-arrow"/></svg></span>
+            </button>
           </div>
 
           <div class="vax-calendar-footer">
@@ -2923,30 +3064,33 @@
       </div>
       <div class="spec-row col" style="gap: 6px; padding: 12px 0">
         <div class="vax-list" style="max-width: 420px; width: 100%">
-          <div class="dose-row done">
+          <button class="dose-row done" type="button">
             <span class="marker"></span>
             <div class="body">
               <strong>2 meses</strong>
               <p>Hexavalente · Neumococo · MenB · Rotavirus</p>
             </div>
             <div class="meta">12 may</div>
-          </div>
-          <div class="dose-row next">
+            <span class="chevron"><svg viewBox="0 0 24 24"><use href="#i-arrow"/></svg></span>
+          </button>
+          <button class="dose-row next" type="button">
             <span class="marker"></span>
             <div class="body">
               <strong>12 meses</strong>
               <p>MenACWY · Triple vírica · Hepatitis A</p>
             </div>
             <div class="meta">próxima · 12 mar</div>
-          </div>
-          <div class="dose-row future">
+            <span class="chevron"><svg viewBox="0 0 24 24"><use href="#i-arrow"/></svg></span>
+          </button>
+          <button class="dose-row future" type="button">
             <span class="marker"></span>
             <div class="body">
               <strong>15 meses</strong>
               <p>Varicela</p>
             </div>
             <div class="meta">12 jun 2027</div>
-          </div>
+            <span class="chevron"><svg viewBox="0 0 24 24"><use href="#i-arrow"/></svg></span>
+          </button>
         </div>
       </div>
       <div class="spec-row col" style="margin-top: 8px">
@@ -2959,6 +3103,161 @@
           <li><strong>.body .new-badge</strong> · "Nuevo 2026" tag for newly-added doses</li>
           <li><strong>.meta</strong> · Lenia fs-caption ink-muted, right-aligned, top-aligned for multi-line bodies</li>
         </ul>
+      </div>
+    </div>
+
+    <div class="spec">
+      <div class="spec-head">
+        <h3>Vaccine detail · per-dose deep view</h3>
+        <span class="meta-r">.vax-detail · opens when a .dose-row is tapped</span>
+      </div>
+      <div class="spec-row col" style="margin-bottom: 14px">
+        <p style="font-size:13px;color:var(--ink-soft);max-width:64ch;line-height:1.55;margin:0">
+          Cada fila del calendario es ahora un <code>&lt;button&gt;</code>
+          tappable que abre el detalle. La página de detalle reusa los mismos
+          primitives (top-header, callout, status-pill) y añade tres bloques
+          editoriales propios de la pauta médica: <strong>qué previene</strong>,
+          <strong>detalles de administración</strong> (centro, lote, marca,
+          vía) y <strong>efectos secundarios típicos</strong> con su propio
+          callout coral para "cuándo llamar al pediatra".
+        </p>
+      </div>
+      <div class="spec-row" style="padding: 16px 0; align-items: flex-start">
+        <div class="vax-detail" style="max-width: 460px">
+
+          <div class="top-header">
+            <div>
+              <span class="eyebrow">2 meses · Lola · 12 may 2026</span>
+              <h2>Hexavalente</h2>
+              <p class="sub">Difteria · Tétanos · Tos ferina · Polio · Hib · Hepatitis B</p>
+            </div>
+            <div class="actions">
+              <button class="icon-btn sm ink" aria-label="Volver"><svg viewBox="0 0 24 24"><use href="#i-x"/></svg></button>
+            </div>
+          </div>
+
+          <div class="vax-detail-status-bar">
+            <span class="status-pill done">Puesta · 12 may 2026</span>
+            <span class="dose-progress">Dosis <strong>1 / 4</strong></span>
+          </div>
+
+          <div class="callout">
+            <p><strong>Próxima dosis a los 4 meses.</strong> Te avisaremos cuando se acerque.</p>
+          </div>
+
+          <h4 class="vax-section-title">¿Qué previene?</h4>
+          <ul class="vax-protection">
+            <li><span><strong>Difteria.</strong> Infección bacteriana respiratoria grave.</span></li>
+            <li><span><strong>Tétanos.</strong> Infección por toxina, contracciones musculares severas.</span></li>
+            <li><span><strong>Tos ferina.</strong> Infección respiratoria muy contagiosa, peligrosa en lactantes.</span></li>
+            <li><span><strong>Polio.</strong> Virus que puede causar parálisis.</span></li>
+            <li><span><strong>Hib.</strong> Haemophilus influenzae tipo b — meningitis bacteriana, neumonía, epiglotitis.</span></li>
+            <li><span><strong>Hepatitis B.</strong> Infección hepática vírica, transmisión vertical y por sangre.</span></li>
+          </ul>
+
+          <h4 class="vax-section-title">Detalles de administración</h4>
+          <div class="vax-admin-details">
+            <div class="detail-row">
+              <span class="label">Centro</span>
+              <span class="value">CAP Sant Pau · Madrid</span>
+            </div>
+            <div class="detail-row">
+              <span class="label">Profesional</span>
+              <span class="value">Dr. Méndez · enfermería</span>
+            </div>
+            <div class="detail-row">
+              <span class="label">Marca</span>
+              <span class="value">Hexyon® · Sanofi Pasteur</span>
+            </div>
+            <div class="detail-row">
+              <span class="label">Lote</span>
+              <span class="value">A8M3K</span>
+            </div>
+            <div class="detail-row">
+              <span class="label">Vía</span>
+              <span class="value">Intramuscular · muslo izq.</span>
+            </div>
+          </div>
+
+          <h4 class="vax-section-title">Efectos secundarios típicos</h4>
+          <ul class="vax-side-effects">
+            <li>Enrojecimiento, dolor o inflamación en la zona del pinchazo (1 - 3 días)</li>
+            <li>Fiebre baja (≤ 38.5 °C) en las 24 - 48 h siguientes</li>
+            <li>Irritabilidad o pérdida de apetito (24 h)</li>
+            <li>Llanto inconsolable, somnolencia (raros)</li>
+          </ul>
+
+          <div class="callout coral" style="margin-top: 12px">
+            <p><strong>Cuándo llamar al pediatra.</strong> Fiebre &gt; 39 °C, llanto inconsolable más de 3 h, convulsiones, o hinchazón en la zona &gt; 5 cm.</p>
+          </div>
+
+          <h4 class="vax-section-title">Calendario de Hexavalente</h4>
+          <div class="vax-list">
+            <button class="dose-row done" type="button">
+              <span class="marker"></span>
+              <div class="body">
+                <strong>2 meses</strong>
+                <p>1ª dosis</p>
+              </div>
+              <div class="meta">12 may 2026</div>
+              <span class="chevron"><svg viewBox="0 0 24 24"><use href="#i-arrow"/></svg></span>
+            </button>
+            <button class="dose-row next" type="button">
+              <span class="marker"></span>
+              <div class="body">
+                <strong>4 meses</strong>
+                <p>2ª dosis</p>
+              </div>
+              <div class="meta">próxima · 12 jul 2026</div>
+              <span class="chevron"><svg viewBox="0 0 24 24"><use href="#i-arrow"/></svg></span>
+            </button>
+            <button class="dose-row future" type="button">
+              <span class="marker"></span>
+              <div class="body">
+                <strong>11 meses</strong>
+                <p>3ª dosis · refuerzo</p>
+              </div>
+              <div class="meta">12 feb 2027</div>
+              <span class="chevron"><svg viewBox="0 0 24 24"><use href="#i-arrow"/></svg></span>
+            </button>
+            <button class="dose-row future" type="button">
+              <span class="marker"></span>
+              <div class="body">
+                <strong>6 años</strong>
+                <p>DTPa-VPI · refuerzo (sin Hib · sin HepB)</p>
+              </div>
+              <div class="meta">2032</div>
+              <span class="chevron"><svg viewBox="0 0 24 24"><use href="#i-arrow"/></svg></span>
+            </button>
+          </div>
+
+          <div class="callout with-rule" style="margin-top: 22px">
+            <p>Información médica adaptada de la <strong>Asociación Española de Pediatría · Comité Asesor de Vacunas (AEPED CAV) 2026</strong>. No sustituye la consulta con tu pediatra.</p>
+          </div>
+        </div>
+
+        <div style="flex: 1; min-width: 280px">
+          <div class="spec-label">Anatomy of .vax-detail</div>
+          <ul style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--ink-soft); line-height: 1.7; padding-left: 18px; margin: 0">
+            <li><strong>.top-header</strong> · "{age} · {child} · {date}" eyebrow + {vaccine name} h2 + sub list</li>
+            <li><strong>.vax-detail-status-bar</strong> · .status-pill (done | next | future) + .dose-progress "{n} / {total}"</li>
+            <li><strong>.callout</strong> default · "Próxima dosis a los X meses"</li>
+            <li><strong>.vax-section-title</strong> · h4 section heading</li>
+            <li><strong>.vax-protection</strong> · ul with coral dots · "{Disease}." + body</li>
+            <li><strong>.vax-admin-details</strong> · paper-soft card with .detail-row pairs (label / value)</li>
+            <li><strong>.vax-side-effects</strong> · ul with smaller ink-muted dots</li>
+            <li><strong>.callout.coral</strong> · "Cuándo llamar al pediatra" alert</li>
+            <li><strong>.vax-list</strong> reused · doses of THIS vaccine only</li>
+            <li><strong>.callout.with-rule</strong> · editorial source disclaimer</li>
+          </ul>
+
+          <div class="spec-label" style="margin-top: 18px">State variants</div>
+          <p style="font-size:12.5px;color:var(--ink-soft);line-height:1.6;margin:0;max-width:60ch">
+            <strong>Done</strong> · full admin details visible (centro, lote, marca, vía).<br>
+            <strong>Next</strong> · admin details replaced by "Marcar como puesta" CTA in <code>.btn-coral</code>.<br>
+            <strong>Future</strong> · admin details replaced by "Avísame cuando se acerque" CTA in <code>.btn-soft</code>.
+          </p>
+        </div>
       </div>
     </div>
 
