@@ -639,6 +639,106 @@
   .sleep-day .callout { margin-top: 22px; }
   .sleep-day-stat-wrap { margin: 0 0 18px; }
 
+  /* ═════════════════ VACCINE CALENDAR — § M ═════════════════ */
+  /* Mirrors the .sleep-day pattern: top-header + stat + timeline +
+     section title + rows of dose entries + editorial footer. The
+     dose-row primitive replaces the per-month vaccine list pattern
+     from the prototype. */
+  .vax-calendar {
+    background: var(--paper);
+    border-radius: var(--radius-xl);
+    padding: 24px;
+    border: 1px solid var(--line);
+    box-shadow: 0 18px 46px rgba(45,38,30,0.05);
+  }
+  .vax-calendar .top-header { margin-bottom: 16px; }
+  .vax-calendar-stat-wrap { margin: 0 0 18px; }
+  .vax-calendar .timeline { margin: 8px 0 0; }
+  .vax-calendar .timeline .timeline-row-label { margin-bottom: 14px; }
+  .vax-calendar-divider { height: 1px; background: var(--line); margin: 22px 0; }
+  .vax-calendar-section-title {
+    font-family: 'Lenia'; font-weight: 500;
+    font-size: var(--fs-h4); line-height: 1.2;
+    margin: 0 0 14px; letter-spacing: -0.01em;
+  }
+  .vax-list { display: flex; flex-direction: column; gap: 4px; }
+
+  .dose-row {
+    position: relative;
+    display: flex; align-items: flex-start;
+    gap: 14px;
+    padding: 14px 16px;
+    border-radius: var(--radius-md);
+    background: var(--paper-soft);
+    color: var(--ink);
+  }
+  .dose-row .marker {
+    width: 14px; height: 14px;
+    border-radius: var(--radius-pill);
+    margin-top: 5px;
+    flex-shrink: 0;
+    box-sizing: border-box;
+  }
+  .dose-row.done .marker { background: var(--ink); }
+  .dose-row.next .marker { background: var(--ink); }
+  .dose-row.future .marker {
+    background: transparent;
+    border: 1.5px solid var(--line-strong);
+  }
+  /* next dose · highlighted with gold ring + subtle gold tint */
+  .dose-row.next {
+    background: var(--gold-subtle);
+    box-shadow: inset 0 0 0 1.5px var(--gold-base);
+  }
+  .dose-row.future { background: var(--paper); border: 1px solid var(--line); }
+
+  .dose-row .body { flex: 1; min-width: 0; }
+  .dose-row .body strong {
+    display: block;
+    font-family: 'Lenia'; font-weight: 500;
+    font-size: var(--fs-body-lg);
+    line-height: 1.35;
+    letter-spacing: -0.005em;
+    color: var(--ink);
+  }
+  .dose-row .body .new-badge {
+    display: inline-block;
+    font-family: 'Lenia'; font-weight: 500;
+    font-size: var(--fs-meta);
+    color: var(--ink-muted);
+    letter-spacing: 0.04em;
+    margin-left: 4px;
+  }
+  .dose-row .meta {
+    font-family: 'Lenia';
+    font-size: var(--fs-caption);
+    color: var(--ink-muted);
+    white-space: nowrap;
+    flex-shrink: 0;
+    text-align: right;
+    align-self: flex-start;
+    padding-top: 6px;
+  }
+  .dose-row.done .meta::after { content: ' ✓'; color: var(--mint-strong); font-weight: 600; }
+  .dose-row.next .meta { color: #6E5A2A; font-weight: 500; }
+
+  .vax-calendar-footer {
+    margin-top: 14px;
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 10px;
+  }
+  .vax-calendar-footer .more {
+    flex: 1;
+    background: transparent; border: 0;
+    padding: 10px 0;
+    font-family: 'Lenia'; font-size: var(--fs-body-sm);
+    color: var(--ink-soft);
+    cursor: pointer; text-align: center;
+    border-radius: var(--radius-pill);
+    transition: background 150ms var(--ease);
+  }
+  .vax-calendar-footer .more:hover { background: var(--paper-soft); }
+
   /* ═════════════════ TIMELINE — § M ═════════════════ */
   /* Unified horizontal timeline · supports day (24h sleep), year,
      lifecycle, navigation. Same DNA as the calendar phase-bar in
@@ -2654,11 +2754,237 @@
   </section>
 
   <!-- ╔═════════════════════════════════════════════════════════╗
-       ║  § M — CHANGELOG                                         ║
+       ║  § M — VACCINE CALENDAR                                  ║
        ╚═════════════════════════════════════════════════════════╝ -->
   <section class="section">
     <div class="section-head">
-      <div class="section-num">§ M — v0.2 changelog</div>
+      <div class="section-num">§ M — Vaccine calendar</div>
+      <div>
+        <h2>Same shape as the sleep schedule. Different surface.</h2>
+        <div class="desc">
+          Reusa el patrón de § L Sleep schedule (Rutina ideal): top-header
+          + stat callout + timeline horizontal + section title + filas
+          verticales + callout footer. Aquí cada fila es una <em>dosis</em>
+          (medicamento + edad), no una fase del día. La consistencia de
+          patrón hace que el padre que ya entendió "Rutina ideal" entienda
+          esto a la primera.
+        </div>
+      </div>
+    </div>
+
+    <div class="spec">
+      <div class="spec-head">
+        <h3>Vaccine calendar · canon</h3>
+        <span class="meta-r">.vax-calendar · uses § H .top-header · § H Callout · § K Timeline · .dose-row</span>
+      </div>
+      <div class="spec-row" style="padding: 16px 0">
+        <div class="vax-calendar" style="max-width: 460px">
+
+          <div class="top-header">
+            <div>
+              <span class="eyebrow">Lola · 18 m</span>
+              <h2>Calendario de vacunas</h2>
+              <p class="sub">Pauta AEPED CAV 2026, ajustada a tu CCAA.</p>
+            </div>
+            <div class="actions">
+              <button class="icon-btn sm ink" aria-label="Cerrar"><svg viewBox="0 0 24 24"><use href="#i-x"/></svg></button>
+            </div>
+          </div>
+
+          <div class="vax-calendar-stat-wrap">
+            <div class="callout stat">
+              <p>Lola lleva <strong>12 / 14</strong> dosis.</p>
+            </div>
+          </div>
+
+          <!-- Timeline · 0 → 14 años con segmentos por etapa de pauta -->
+          <div class="timeline">
+            <div class="timeline-row">
+              <div class="timeline-row-label">
+                <span>Pauta · 0 → 14 a</span>
+                <span class="stats">12 puestas · 2 próximas</span>
+              </div>
+              <div class="timeline-track">
+                <span class="timeline-seg gold"  style="flex: 24" title="Lactante · 0 - 24 m"></span>
+                <span class="timeline-seg blush" style="flex: 36" title="Niñez temprana · 2 - 5 a"></span>
+                <span class="timeline-seg mint"  style="flex: 60" title="Escolar · 5 - 10 a"></span>
+                <span class="timeline-seg coral" style="flex: 48" title="Adolescente · 10 - 14 a"></span>
+                <!-- now marker @ 18 meses = 18/168 = 10.71% -->
+                <div class="timeline-now" style="left: 10.71%" data-now="Lola · 18 m"></div>
+              </div>
+              <div class="timeline-axis">
+                <span>0</span><span>2 a</span><span>5 a</span><span>10 a</span><span>14 a</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="vax-calendar-divider"></div>
+          <h4 class="vax-calendar-section-title">Calendario completo</h4>
+
+          <div class="vax-list">
+
+            <div class="dose-row done">
+              <span class="marker"></span>
+              <div class="body">
+                <strong>2 meses</strong>
+                <p>Hexavalente · Neumococo · MenB · Rotavirus</p>
+              </div>
+              <div class="meta">12 may</div>
+            </div>
+
+            <div class="dose-row done">
+              <span class="marker"></span>
+              <div class="body">
+                <strong>3 meses</strong>
+                <p>Rotavirus 2ª</p>
+              </div>
+              <div class="meta">12 jun</div>
+            </div>
+
+            <div class="dose-row done">
+              <span class="marker"></span>
+              <div class="body">
+                <strong>4 meses</strong>
+                <p>Hexavalente · Neumococo · MenB · MenACWY</p>
+              </div>
+              <div class="meta">12 jul</div>
+            </div>
+
+            <div class="dose-row done">
+              <span class="marker"></span>
+              <div class="body">
+                <strong>11 meses</strong>
+                <p>Hexavalente · Neumococo · MenB</p>
+              </div>
+              <div class="meta">12 feb 2027</div>
+            </div>
+
+            <div class="dose-row next">
+              <span class="marker"></span>
+              <div class="body">
+                <strong>12 meses</strong>
+                <p>MenACWY · Triple vírica · Hepatitis A <span class="new-badge">Nuevo 2026</span></p>
+              </div>
+              <div class="meta">próxima · 12 mar 2027</div>
+            </div>
+
+            <div class="dose-row future">
+              <span class="marker"></span>
+              <div class="body">
+                <strong>15 meses</strong>
+                <p>Varicela</p>
+              </div>
+              <div class="meta">12 jun 2027</div>
+            </div>
+
+            <div class="dose-row future">
+              <span class="marker"></span>
+              <div class="body">
+                <strong>3 - 4 años</strong>
+                <p>Triple vírica 2ª · Varicela 2ª · Hepatitis A 2ª</p>
+              </div>
+              <div class="meta">2029</div>
+            </div>
+
+            <div class="dose-row future">
+              <span class="marker"></span>
+              <div class="body">
+                <strong>6 años</strong>
+                <p>DTPa-VPI · Varicela refuerzo</p>
+              </div>
+              <div class="meta">2032</div>
+            </div>
+
+            <div class="dose-row future">
+              <span class="marker"></span>
+              <div class="body">
+                <strong>12 - 14 años</strong>
+                <p>VPH · MenACWY refuerzo · Td</p>
+              </div>
+              <div class="meta">2038 - 2040</div>
+            </div>
+          </div>
+
+          <div class="vax-calendar-footer">
+            <button class="more" type="button">+ ver pauta completa</button>
+          </div>
+
+          <div class="callout with-rule" style="margin-top: 22px">
+            <p>El calendario se adapta a la <strong>pauta AEPED CAV 2026</strong>, a tu Comunidad Autónoma y al historial de Lola. Te avisamos sin presión cuando se acerque cada dosis.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="spec">
+      <div class="spec-head">
+        <h3>.dose-row · 3 states</h3>
+        <span class="meta-r">.done · .next · .future</span>
+      </div>
+      <div class="spec-row col" style="gap: 6px; padding: 12px 0">
+        <div class="vax-list" style="max-width: 420px; width: 100%">
+          <div class="dose-row done">
+            <span class="marker"></span>
+            <div class="body">
+              <strong>2 meses</strong>
+              <p>Hexavalente · Neumococo · MenB · Rotavirus</p>
+            </div>
+            <div class="meta">12 may</div>
+          </div>
+          <div class="dose-row next">
+            <span class="marker"></span>
+            <div class="body">
+              <strong>12 meses</strong>
+              <p>MenACWY · Triple vírica · Hepatitis A</p>
+            </div>
+            <div class="meta">próxima · 12 mar</div>
+          </div>
+          <div class="dose-row future">
+            <span class="marker"></span>
+            <div class="body">
+              <strong>15 meses</strong>
+              <p>Varicela</p>
+            </div>
+            <div class="meta">12 jun 2027</div>
+          </div>
+        </div>
+      </div>
+      <div class="spec-row col" style="margin-top: 8px">
+        <ul style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--ink-soft); line-height: 1.7; padding-left: 18px; margin: 0">
+          <li><strong>.done</strong> · paper-soft bg, ink dot, "✓" appended to date in mint-strong</li>
+          <li><strong>.next</strong> · gold-subtle bg + 1.5px gold-base inset ring, ink dot, "próxima · " prefix in #6E5A2A weight 500</li>
+          <li><strong>.future</strong> · paper bg + 1px line border, hollow line-strong dot</li>
+          <li><strong>.body strong</strong> · Lenia 500 fs-body-lg (age label · "2 meses")</li>
+          <li><strong>.body p</strong> · Helvena fs-body-sm ink, vaccines listed with " · " separators</li>
+          <li><strong>.body .new-badge</strong> · "Nuevo 2026" tag for newly-added doses</li>
+          <li><strong>.meta</strong> · Lenia fs-caption ink-muted, right-aligned, top-aligned for multi-line bodies</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="spec">
+      <div class="spec-head">
+        <h3>Why this works</h3>
+      </div>
+      <div class="spec-row col">
+        <ul style="font-size: 13px; color: var(--ink-soft); line-height: 1.65; padding-left: 18px; margin: 0; max-width: 64ch">
+          <li><strong>Pattern reuse</strong> · misma estructura visual que la Rutina ideal del libro de Sueño. Padre que ya entendió la una entiende la otra a la primera.</li>
+          <li><strong>"Lleva 12 / 14"</strong> en stat tipográfico grande · da contexto inmediato sin tener que escanear la lista entera.</li>
+          <li><strong>Timeline 0 - 14 a</strong> con etapas de pauta (lactante, niñez, escolar, adolescente) muestra dónde estamos en el viaje. Ahora-marker en coral.</li>
+          <li><strong>Estado por dot + ring</strong> · 3 estados visualmente distintos sin sobrecargar (filled = puesta, gold-ring = próxima, hollow = futuro).</li>
+          <li><strong>"Nuevo 2026" badge</strong> · señala adiciones recientes a la pauta sin alarmar.</li>
+          <li><strong>Footer editorial</strong> · explica la personalización (CCAA, historial) en el mismo tono "rutina circadiana" del sleep tracker.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ╔═════════════════════════════════════════════════════════╗
+       ║  § N — CHANGELOG                                         ║
+       ╚═════════════════════════════════════════════════════════╝ -->
+  <section class="section">
+    <div class="section-head">
+      <div class="section-num">§ N — v0.2 changelog</div>
       <div>
         <h2>What changed since v0.1.</h2>
         <div class="desc">
