@@ -202,16 +202,16 @@
   .icon-btn.sm svg { width: 16px; height: 16px; }
   .icon-btn.lg svg { width: 22px; height: 22px; }
 
-  /* FAB */
+  /* FAB — single source, used in bottom nav + standalone */
   .fab {
-    width: 60px; height: 60px; border-radius: 999px; border: 0;
+    width: 60px; height: 60px; border-radius: var(--radius-pill); border: 0;
     background: var(--coral-base); color: #4A2510;
-    display: inline-flex; align-items: center; justify-content: center;
-    cursor: pointer; box-shadow: 0 12px 28px rgba(214,119,66,0.32);
+    display: grid; place-items: center;
+    cursor: pointer; box-shadow: 0 6px 18px rgba(214,119,66,0.28);
     transition: transform 150ms var(--ease), filter 150ms var(--ease);
   }
   .fab:hover { transform: translateY(-2px); filter: brightness(0.97); }
-  .fab svg { width: 24px; height: 24px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .fab svg { width: 26px; height: 26px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
 
   /* Chips — filter (Hoy nav style with tilt) */
   .chip {
@@ -415,25 +415,37 @@
   .card-button.ink { background: var(--ink); color: var(--paper); }
   .card-button:hover { transform: translateY(-1px); filter: brightness(0.97); }
 
-  /* Bottom nav */
+  /* Bottom nav — floating pill, 5 cols grid, FAB lifts up
+     Mirrors prototype.html exactly. In the DS demo we drop
+     position:absolute so it sits in flow inside the spec row. */
   .phone-nav {
-    display: flex; align-items: center; justify-content: space-around;
-    background: var(--paper); border: 1px solid var(--line);
-    border-radius: 26px 26px 0 0;
-    padding: 10px 16px 22px;
-    max-width: 380px;
+    width: 100%;
+    max-width: 360px;
+    height: 76px;
+    background: var(--paper);
+    border-radius: 32px;
+    display: grid; grid-template-columns: repeat(5, 1fr);
+    align-items: center;
+    padding: 0 12px;
+    box-shadow: 0 14px 36px rgba(42,33,27,0.10);
   }
   .nav-tab {
-    display: flex; flex-direction: column; align-items: center; gap: 2px;
-    background: transparent; border: 0; cursor: pointer;
-    color: var(--ink-muted); font-family: "Lenia"; font-size: var(--fs-meta);
-    padding: 8px 4px;
+    border: 0;
+    background: transparent;
+    padding: 0;
+    display: flex; flex-direction: column; align-items: center; gap: 4px;
+    color: var(--ink-muted);
+    cursor: pointer;
+    font-family: "Lenia"; font-size: var(--fs-eyebrow); font-weight: 500;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    transition: color 220ms;
   }
-  .nav-tab svg { width: 22px; height: 22px; stroke: currentColor; fill: none; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
-  .nav-tab.active { color: var(--ink); }
-  .nav-tab.fab-cell { padding: 0; }
-  .nav-tab.fab-cell .fab { transform: translateY(-14px); width: 56px; height: 56px; }
-  .nav-tab.fab-cell .lbl { font-size: var(--fs-eyebrow); letter-spacing: 0.04em; margin-top: -4px; }
+  .nav-tab svg { width: 22px; height: 22px; stroke: currentColor; fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+  .nav-tab.active { color: var(--ink-warm); }
+  .nav-tab.disabled { opacity: 0.45; cursor: default; }
+  .nav-tab.fab-cell { transform: translateY(-22px); gap: 0; }
+  .nav-tab.fab-cell .lbl { margin-top: 6px; }
+  /* FAB inside fab-cell uses canon .fab (defined elsewhere) — coral 60×60 */
 
   /* ═════════════════ SLEEP SCHEDULE — § K ═════════════════ */
 
@@ -1858,18 +1870,71 @@
     </div>
 
     <div class="spec">
-      <div class="spec-head"><h3>Bottom nav</h3><span class="meta-r">.phone-nav · .nav-tab · .fab-cell</span></div>
-      <div class="spec-row" style="padding:18px 0">
-        <nav class="phone-nav">
-          <button class="nav-tab active"><svg viewBox="0 0 24 24"><use href="#i-home"/></svg><span>Hoy</span></button>
-          <button class="nav-tab"><svg viewBox="0 0 24 24"><use href="#i-cal"/></svg><span>Calendario</span></button>
-          <div class="nav-tab fab-cell">
-            <button class="fab" aria-label="Abrir registro rápido"><svg viewBox="0 0 24 24"><use href="#i-plus"/></svg></button>
-            <span class="lbl">Log</span>
+      <div class="spec-head"><h3>Bottom nav · floating pill</h3><span class="meta-r">.phone-nav · .nav-tab · .fab-cell · .fab</span></div>
+      <div class="spec-row col" style="margin-bottom: 14px">
+        <p style="font-size:13px;color:var(--ink-soft);max-width:64ch;line-height:1.55;margin:0">
+          Pill flotante de 76 px de altura, ancorada con margin lateral
+          dentro del frame del teléfono. Grid de 5 columnas con un FAB que
+          eleva (translateY −22 px) en la celda central. Etiquetas en uppercase
+          letter-spacing 0.08 — fs-eyebrow 9 px. Active en <code>--ink-warm</code>.
+          Disabled con opacidad 0.45.
+        </p>
+      </div>
+      <div class="spec-row" style="padding:18px 0; align-items: flex-start; gap: 32px">
+        <!-- Phone-frame mock so the floating pill is shown in real context -->
+        <div style="position: relative; width: 360px; height: 280px; background: linear-gradient(180deg, var(--paper) 0%, var(--paper-soft) 100%); border-radius: 36px; border: 14px solid #161616; box-shadow: 0 26px 60px rgba(42,33,27,0.22); padding: 0; overflow: hidden;">
+          <!-- a faux content area to suggest 'screen behind nav' -->
+          <div style="position: absolute; top: 24px; left: 24px; right: 24px; display: flex; flex-direction: column; gap: 8px;">
+            <div style="font-family:Lenia;font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:var(--ink-muted)">Hoy · Lunes</div>
+            <div style="font-family:Lenia;font-size:24px;font-weight:500;color:var(--ink);line-height:1.05">El día empieza despacio.</div>
           </div>
-          <button class="nav-tab"><svg viewBox="0 0 24 24"><use href="#i-flag"/></svg><span>Hitos</span></button>
-          <button class="nav-tab"><svg viewBox="0 0 24 24"><use href="#i-chat"/></svg><span>Chat</span></button>
-        </nav>
+          <!-- floating pill nav anchored at bottom -->
+          <nav class="phone-nav" style="position: absolute; left: 14px; right: 14px; bottom: 14px; max-width: none; width: auto;">
+            <button class="nav-tab active" type="button"><svg viewBox="0 0 24 24"><use href="#i-home"/></svg><span>Hoy</span></button>
+            <button class="nav-tab" type="button"><svg viewBox="0 0 24 24"><use href="#i-cal"/></svg><span>Calendario</span></button>
+            <div class="nav-tab fab-cell">
+              <button class="fab" type="button" aria-label="Abrir registro rápido"><svg viewBox="0 0 24 24"><use href="#i-plus"/></svg></button>
+              <span class="lbl">Log</span>
+            </div>
+            <button class="nav-tab" type="button"><svg viewBox="0 0 24 24"><use href="#i-flag"/></svg><span>Hitos</span></button>
+            <button class="nav-tab disabled" type="button" aria-disabled="true"><svg viewBox="0 0 24 24"><use href="#i-chat"/></svg><span>Chat</span></button>
+          </nav>
+        </div>
+
+        <div style="flex: 1; min-width: 280px">
+          <div class="spec-label">Anatomy (mirrors prototype.html exactly)</div>
+          <ul style="font-size:12px;color:var(--ink-soft);line-height:1.65;padding-left:16px;margin:0;font-family:'JetBrains Mono', monospace">
+            <li><strong>.phone-nav</strong> · 76 h · radius 32 (4 corners) · grid 5×1 · padding 0 12 · paper bg</li>
+            <li><strong>position</strong> · absolute · left/right 14 · bottom 14 (floats above content)</li>
+            <li><strong>.nav-tab</strong> · flex col gap 4 · fs-eyebrow uppercase · color ink-muted</li>
+            <li><strong>.nav-tab svg</strong> · 22 × 22 · stroke-width 1.5</li>
+            <li><strong>.nav-tab.active</strong> · color ink-warm</li>
+            <li><strong>.nav-tab.disabled</strong> · opacity 0.45 · cursor default · aria-disabled="true"</li>
+            <li><strong>.nav-tab.fab-cell</strong> · transform translateY(−22) · gap 0</li>
+            <li><strong>.nav-tab.fab-cell .lbl</strong> · margin-top 6</li>
+            <li><strong>.fab</strong> · 60 × 60 · radius pill · coral-base · color #4A2510 · shadow 0 6 18 28%</li>
+            <li><strong>.fab svg</strong> · 26 × 26 · stroke-width 2</li>
+          </ul>
+
+          <div class="spec-label" style="margin-top: 18px">5 tabs · order is fixed</div>
+          <ol style="font-size:12.5px;color:var(--ink-soft);line-height:1.7;padding-left:18px;margin:0">
+            <li><strong>Hoy</strong> · home icon · default landing</li>
+            <li><strong>Calendario</strong> · cal icon</li>
+            <li><strong>Log (FAB)</strong> · plus icon · única superficie coral en chrome</li>
+            <li><strong>Hitos</strong> · flag icon</li>
+            <li><strong>Chat</strong> · chat icon · disabled hasta v1.0</li>
+          </ol>
+
+          <div class="spec-label" style="margin-top: 18px">Active state behaviour</div>
+          <p style="font-size:12.5px;color:var(--ink-soft);line-height:1.6;margin:0">
+            En cada screen, exactamente <strong>una</strong> tab tiene
+            <code>.active</code>. El FAB nunca se "selecciona" — abre una sheet
+            (qlog), no es destino de navegación. Cuando estás en
+            <code>data-screen="log"</code>, la celda del FAB sí lleva
+            <code>.fab-cell.active</code> opcionalmente para señalar contexto,
+            pero el visual del FAB no cambia.
+          </p>
+        </div>
       </div>
     </div>
 
