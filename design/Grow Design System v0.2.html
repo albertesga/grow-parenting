@@ -792,18 +792,25 @@
     box-shadow: 0 18px 46px rgba(45,38,30,0.05);
   }
   .sleep-day-head {
-    display: flex; justify-content: space-between; align-items: baseline;
-    margin-bottom: 14px; gap: 12px;
+    text-align: center;
+    margin-bottom: 16px;
   }
-  .sleep-day-head .eyb {
+  .sleep-day-head .meta {
     font-family: "Lenia"; font-size: var(--fs-meta);
-    letter-spacing: 0.18em; text-transform: uppercase;
-    color: var(--ink-muted); margin: 0 0 6px;
+    letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--ink-muted); font-weight: 500;
+    margin-bottom: 12px;
   }
   .sleep-day-head h3 {
     font-family: "Lenia"; font-weight: 500;
-    font-size: var(--fs-h2); line-height: 1;
-    margin: 0; letter-spacing: -0.015em;
+    font-size: var(--fs-h1); line-height: 1.1;
+    margin: 0 0 6px; letter-spacing: -0.015em;
+  }
+  .sleep-day-head .sub {
+    font-family: "Helvena"; font-size: var(--fs-body-sm);
+    color: var(--ink-muted); line-height: 1.5;
+    margin: 0 auto;
+    max-width: 38ch;
   }
   /* Horizontal timeline line — replaces the pie at the top of .sleep-day */
   .sleep-day-line { margin: 8px 0 0; }
@@ -1006,29 +1013,69 @@
   .sleep-day-wake.now { background: rgba(242,165,122,0.06); border-radius: var(--radius-md); }
   .sleep-day-wake.now .icon::after { border-color: var(--coral-base); border-style: solid; background: var(--coral-base); }
 
-  .sleep-day-summary {
-    margin-top: 22px;
-    padding: 16px 18px;
+  /* .sleep-day-summary deprecated · use .callout instead */
+  .sleep-day .callout { margin-top: 22px; }
+  .sleep-day-stat-wrap { margin: 0 0 18px; }
+
+  /* ═════════════════ CALLOUT — § L ═════════════════ */
+  /* Editorial note card · used for adaptive copy, tips, footnotes.
+     Replaces ad-hoc summary boxes scattered across components. */
+  .callout {
     background: var(--paper-soft);
     border-radius: var(--radius-md);
+    padding: 16px 18px;
+    text-align: center;
   }
-  .sleep-day-summary p {
-    margin: 0;
+  .callout::before {
+    content: "✶";
+    display: block;
+    color: var(--coral-strong);
+    margin-bottom: 6px;
+    font-size: 14px;
+    line-height: 1;
+  }
+  .callout p {
+    margin: 0 auto;
     font-size: var(--fs-body-sm);
     color: var(--ink-soft);
     line-height: 1.55;
     font-style: italic;
-    text-align: center;
     max-width: 56ch;
-    margin: 0 auto;
   }
-  .sleep-day-summary p::before {
-    content: "✶";
-    display: block;
-    color: var(--coral-strong);
+  .callout strong {
+    color: var(--ink);
+    font-weight: 500;
     font-style: normal;
-    margin-bottom: 6px;
-    font-size: 14px;
+  }
+  /* tone variants */
+  .callout.coral { background: var(--coral-subtle); }
+  .callout.coral::before { color: var(--coral-strong); }
+  .callout.mint { background: var(--mint-subtle); }
+  .callout.mint::before { color: #4F6647; }
+  .callout.gold { background: var(--gold-subtle); }
+  .callout.gold::before { color: #6E5A2A; }
+  .callout.blush { background: var(--blush-subtle); }
+  .callout.blush::before { color: #7A4A3A; }
+  /* without asterisk */
+  .callout.plain::before { content: none; }
+  .callout.plain { padding-top: 14px; }
+  /* stat variant — short statement with large coral number */
+  .callout.stat { background: transparent; padding: 8px 18px; }
+  .callout.stat::before { content: none; }
+  .callout.stat p {
+    font-style: normal;
+    font-size: var(--fs-body-lg);
+    color: var(--ink);
+  }
+  .callout.stat strong {
+    color: var(--coral-strong);
+    font-family: "Lenia";
+    font-weight: 500;
+    font-size: var(--fs-h2);
+    display: inline-block;
+    padding: 0 4px;
+    line-height: 1;
+    vertical-align: -2px;
   }
 
   /* Compact variant — for sidebar or weekly view */
@@ -2308,9 +2355,14 @@
       <div class="spec-row" style="padding: 16px 0; align-items: flex-start; gap: 24px">
         <div class="sleep-day">
           <div class="sleep-day-head">
-            <div>
-              <div class="eyb">Hoy · esquema</div>
-              <h3>13 - 18 meses</h3>
+            <div class="meta">Lola · 18 m</div>
+            <h3>Rutina ideal</h3>
+            <p class="sub">Según su edad, localización y estación del año.</p>
+          </div>
+
+          <div class="sleep-day-stat-wrap">
+            <div class="callout stat">
+              <p>Tu peque debe dormir <strong>13 h</strong> al día.</p>
             </div>
           </div>
 
@@ -2419,7 +2471,7 @@
 
           </div>
 
-          <div class="sleep-day-summary">
+          <div class="callout">
             <p>Esta rutina se adapta a tu peque, a su edad, a tu localidad y a la estación del año para saber cuándo amanece / anochece y respetar sus ritmos circadianos.</p>
           </div>
         </div>
@@ -2470,9 +2522,14 @@
       <div class="spec-row" style="padding: 16px 0">
         <div class="sleep-day" style="max-width: 460px">
           <div class="sleep-day-head">
-            <div>
-              <div class="eyb">Hoy · esquema</div>
-              <h3>4 - 6 meses</h3>
+            <div class="meta">Mateo · 5 m</div>
+            <h3>Rutina ideal</h3>
+            <p class="sub">Según su edad, localización y estación del año.</p>
+          </div>
+
+          <div class="sleep-day-stat-wrap">
+            <div class="callout stat">
+              <p>Tu peque debe dormir <strong>14 h 30 m</strong> al día.</p>
             </div>
           </div>
 
@@ -2530,7 +2587,7 @@
             </div>
           </div>
 
-          <div class="sleep-day-summary">
+          <div class="callout">
             <p>Esta rutina se adapta a tu peque, a su edad, a tu localidad y a la estación del año para saber cuándo amanece / anochece y respetar sus ritmos circadianos.</p>
           </div>
         </div>
@@ -2651,6 +2708,124 @@
             </tr>
           </tbody>
         </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ╔═════════════════════════════════════════════════════════╗
+       ║  § L — CALLOUT / NOTE                                    ║
+       ╚═════════════════════════════════════════════════════════╝ -->
+  <section class="section">
+    <div class="section-head">
+      <div class="section-num">§ L — Callout</div>
+      <div>
+        <h2>One editorial card for tips, footnotes, and adaptive copy.</h2>
+        <div class="desc">
+          Reemplaza los cuadros ad-hoc que aparecían en sleep-day, milestone,
+          calendar y otras superficies (paper-soft + texto centrado en italic).
+          Ahora un único primitive con variantes tonales y un modo "stat" para
+          afirmaciones cortas con número grande.
+        </div>
+      </div>
+    </div>
+
+    <div class="spec">
+      <div class="spec-head">
+        <h3>Default · editorial italic note</h3>
+        <span class="meta-r">.callout · with ✶ asterisk</span>
+      </div>
+      <div class="spec-row" style="padding: 12px 0">
+        <div class="callout" style="max-width: 460px">
+          <p>Esta rutina se adapta a tu peque, a su edad, a tu localidad y a la estación del año para saber cuándo amanece / anochece y respetar sus ritmos circadianos.</p>
+        </div>
+      </div>
+      <div class="spec-row" style="padding: 8px 0">
+        <div class="callout" style="max-width: 460px">
+          <p>Despertares nocturnos a esta edad son normales. La consistencia en cómo respondes es lo que enseña, no el método específico que uses.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="spec">
+      <div class="spec-head">
+        <h3>Tone variants</h3>
+        <span class="meta-r">.callout.{coral,mint,gold,blush}</span>
+      </div>
+      <div class="spec-row col" style="gap: 10px; padding: 12px 0">
+        <div class="callout coral" style="max-width: 460px">
+          <p>Cuidado con la <strong>fiebre &gt; 38.5 °C</strong> después de la vacuna. Llama al pediatra si dura más de 24 h.</p>
+        </div>
+        <div class="callout mint" style="max-width: 460px">
+          <p><strong>3 ventanas de despertar</strong> esta noche. Patrón normal a esta edad — no estás haciendo nada mal.</p>
+        </div>
+        <div class="callout gold" style="max-width: 460px">
+          <p>Próxima dosis de <strong>Triple vírica</strong> en 12 meses. Te avisamos.</p>
+        </div>
+        <div class="callout blush" style="max-width: 460px">
+          <p>El paso de 2 → 1 siesta suele ocurrir entre los <strong>12 y 18 meses</strong>. Llamamos al cambio "transición de siestas".</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="spec">
+      <div class="spec-head">
+        <h3>Stat variant — short statement with large coral number</h3>
+        <span class="meta-r">.callout.stat · transparent · no asterisk</span>
+      </div>
+      <div class="spec-row" style="padding: 12px 0; flex-direction: column; align-items: center; gap: 6px">
+        <div class="callout stat" style="max-width: 460px">
+          <p>Tu peque debe dormir <strong>13 h</strong> al día.</p>
+        </div>
+        <div class="callout stat" style="max-width: 460px">
+          <p>Lleva <strong>3 / 9</strong> hitos al día.</p>
+        </div>
+        <div class="callout stat" style="max-width: 460px">
+          <p>Próxima vacuna en <strong>12 meses</strong>.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="spec">
+      <div class="spec-head">
+        <h3>Plain variant — no asterisk</h3>
+        <span class="meta-r">.callout.plain</span>
+      </div>
+      <div class="spec-row" style="padding: 12px 0">
+        <div class="callout plain" style="max-width: 460px">
+          <p>Para cuando el contexto ya implica el énfasis (e.g., debajo de un icono propio o un header con asterisco propio).</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="spec">
+      <div class="spec-head">
+        <h3>Anatomy</h3>
+      </div>
+      <div class="spec-row col">
+        <ul style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--ink-soft); line-height: 1.7; padding-left: 18px; margin: 0">
+          <li><strong>.callout</strong> · paper-soft bg, radius-md, padding 16/18, text-align center</li>
+          <li><strong>::before</strong> · ✶ asterisco coral 14px arriba</li>
+          <li><strong>p</strong> · italic, fs-body-sm, color ink-soft, max-width 56ch, line-height 1.55</li>
+          <li><strong>strong dentro de p</strong> · color ink, weight 500, font-style normal (rompe la cursiva)</li>
+          <li><strong>.coral / .mint / .gold / .blush</strong> · cambia el bg al *-subtle correspondiente y el color del asterisco</li>
+          <li><strong>.stat</strong> · bg transparent, sin asterisco, p en peso normal, strong como número h2 coral</li>
+          <li><strong>.plain</strong> · sin asterisco, padding-top reducido</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="spec">
+      <div class="spec-head">
+        <h3>Where this replaces ad-hoc summaries</h3>
+      </div>
+      <div class="spec-row col">
+        <ul style="font-size: 13px; color: var(--ink-soft); line-height: 1.65; padding-left: 18px; margin: 0">
+          <li><code>.sleep-day-summary</code> en § K Sleep schedule (deprecado)</li>
+          <li><code>.growth-empty</code> + cualquier nota lateral en libro de Desarrollo</li>
+          <li>"Sin alarmismo" notes en cada libro</li>
+          <li>"Esto es una orientación" footnotes que estaban duplicadas</li>
+          <li>Tip parental en § K Variant C — ahora pueden ser <code>.callout.plain</code> dentro del paso</li>
+        </ul>
       </div>
     </div>
   </section>
