@@ -754,42 +754,98 @@
     font-size: var(--fs-h4); line-height: 1.2;
     margin: 0 0 14px; letter-spacing: -0.01em;
   }
-  /* ─── Medical-record list pattern ───
-     The whole .vax-list is ONE bordered container with internal hairlines
-     between rows. No per-row tinted backgrounds (gradient washes were
-     creating per-card "containers" that competed visually). State signal
-     is a small marker dot on the left and font weight on the date. The
-     single .next dose breaks the rhythm with a gold-tinted callout-row. */
-  .vax-list {
-    display: flex; flex-direction: column;
-    background: var(--paper);
-    border: 1px solid var(--line-soft);
-    border-radius: var(--radius-lg);
-    overflow: hidden;
-  }
+  .vax-list { display: flex; flex-direction: column; gap: 8px; }
 
+  /* ─── Editorial dose card pattern ───
+     3 columns · age (typographic anchor) · body (vaccines + state-specific
+     footline) · chevron. State communicates via tonal gradient (paper →
+     X-subtle 110%, same DNA as .sleep-day-phase) AND via the footline copy:
+       Done   → "✓ Puesta el {date} · {centro}"
+       Next   → "→ En {N} días · {date}"
+       Future → "Programada · {month/year} · {note}" */
   .dose-row {
     position: relative;
     display: grid;
-    grid-template-columns: auto 1fr auto auto;
+    grid-template-columns: 56px 1fr auto;
     align-items: center;
     gap: 14px;
     padding: 16px 18px;
-    background: transparent;
+    border-radius: var(--radius-md);
+    background: var(--paper-soft);
     color: var(--ink);
     cursor: pointer;
     border: 0;
-    border-top: 1px solid var(--line-soft);
     text-align: left;
     width: 100%;
     font: inherit;
-    transition: background 150ms var(--ease);
+    transition: filter 150ms var(--ease), transform 150ms var(--ease);
   }
-  .dose-row:first-child { border-top: 0; }
-  .dose-row:hover { background: var(--paper-soft); }
+  .dose-row:hover { filter: brightness(0.99); transform: translateY(-1px); }
 
+  /* AGE · big typographic anchor on the left (e.g. "2 m", "11 m", "6 a") */
+  .dose-row .age {
+    font-family: 'Lenia';
+    font-weight: 500;
+    font-size: var(--fs-h3);
+    line-height: 1;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    text-align: left;
+    white-space: nowrap;
+  }
+  .dose-row.future .age { color: var(--ink-soft); }
+
+  /* BODY · vaccines on top, state footline below */
+  .dose-row .body { min-width: 0; }
+  .dose-row .body .vaccines {
+    display: block;
+    margin: 0;
+    font-family: 'Lenia'; font-weight: 500;
+    font-size: var(--fs-body);
+    color: var(--ink);
+    line-height: 1.35;
+    letter-spacing: -0.005em;
+  }
+  .dose-row.future .body .vaccines { color: var(--ink-soft); font-weight: 400; }
+  .dose-row .body .vaccines .new-badge {
+    display: inline-block;
+    font-family: 'Lenia'; font-weight: 500;
+    font-size: var(--fs-eyebrow);
+    color: var(--ink-muted);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    margin-left: 6px;
+    padding: 2px 6px;
+    border-radius: var(--radius-sm);
+    background: var(--paper);
+  }
+
+  /* Footline · state-specific copy in fs-body-sm */
+  .dose-row .footline {
+    display: flex; align-items: center;
+    gap: 6px;
+    margin-top: 6px;
+    font-family: 'Helvena';
+    font-size: var(--fs-body-sm);
+    color: var(--ink-soft);
+    line-height: 1.4;
+  }
+  .dose-row .footline .state-icon {
+    font-family: 'Lenia';
+    font-weight: 600;
+    font-size: var(--fs-body-sm);
+    line-height: 1;
+    flex-shrink: 0;
+  }
+  .dose-row.done   .footline .state-icon { color: var(--mint-strong); }
+  .dose-row.next   .footline .state-icon { color: #B8973F; }
+  .dose-row.future .footline .state-icon { color: var(--ink-muted); }
+  .dose-row.next   .footline { color: #6E5A2A; font-weight: 500; }
+  .dose-row.future .footline { color: var(--ink-muted); }
+
+  /* Chevron */
   .dose-row .chevron {
-    width: 16px; height: 16px;
+    width: 18px; height: 18px;
     flex-shrink: 0;
     color: var(--ink-faint);
     transition: color 150ms var(--ease), transform 150ms var(--ease);
@@ -804,92 +860,18 @@
     transform: translateX(2px);
   }
 
-  /* Marker · small tonal dot, state-coded only by color. Quieter than
-     the old 18px circle with ✓ inside. */
-  .dose-row .marker {
-    width: 10px; height: 10px;
-    border-radius: 50%;
-    flex-shrink: 0;
-    box-sizing: border-box;
+  /* State backgrounds · tonal gradient (same DNA as .sleep-day-phase) */
+  .dose-row.done {
+    background: linear-gradient(120deg, var(--paper) 0%, var(--mint-subtle) 110%);
   }
-  .dose-row.done .marker { background: var(--mint-strong); }
-  .dose-row.next .marker {
-    background: var(--gold-base);
-    box-shadow: 0 0 0 4px var(--gold-subtle);
-  }
-  .dose-row.future .marker {
-    background: transparent;
-    border: 1.5px solid var(--line-strong);
-  }
-
-  /* Only .next breaks the rhythm with a tinted callout row */
   .dose-row.next {
     background: linear-gradient(120deg, var(--paper) 0%, var(--gold-subtle) 110%);
-    border-top-color: var(--gold-base);
+    box-shadow: inset 0 0 0 1.5px var(--gold-base);
   }
-  .dose-row.next + .dose-row { border-top-color: var(--gold-base); }
-  .dose-row.next:hover {
-    background: linear-gradient(120deg, var(--paper) 0%, var(--gold-subtle) 95%);
+  .dose-row.future {
+    background: var(--paper);
+    border: 1px solid var(--line);
   }
-
-  .dose-row .body { min-width: 0; }
-  .dose-row .body strong {
-    display: block;
-    font-family: 'Lenia'; font-weight: 500;
-    font-size: var(--fs-body);
-    line-height: 1.3;
-    letter-spacing: -0.005em;
-    color: var(--ink);
-  }
-  .dose-row .body p {
-    margin: 3px 0 0;
-    font-family: 'Helvena';
-    font-size: var(--fs-body-sm);
-    color: var(--ink-soft);
-    line-height: 1.5;
-  }
-  .dose-row .body .new-badge {
-    display: inline-block;
-    font-family: 'Lenia'; font-weight: 500;
-    font-size: var(--fs-meta);
-    color: var(--ink-muted);
-    letter-spacing: 0.04em;
-    margin-left: 4px;
-  }
-
-  /* Meta · explicit reset of the global .meta rule (line 195) which was
-     bleeding `border-top: 1px solid var(--ink)` + `border-bottom: 1px
-     solid var(--line-strong)` + `text-transform: uppercase` into every
-     dose row → those mystery horizontal lines and the "12 JUL" rendering. */
-  .dose-row .meta {
-    display: flex; flex-direction: column; align-items: flex-end;
-    gap: 2px;
-    font-family: 'Lenia';
-    flex-shrink: 0;
-    text-align: right;
-    /* explicit resets vs the global .meta rule */
-    border: 0;
-    padding: 0;
-    text-transform: none;
-    letter-spacing: 0;
-  }
-  .dose-row .meta .tag {
-    font-size: var(--fs-eyebrow);
-    color: #8A6E2E;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    font-weight: 500;
-  }
-  .dose-row .meta .date {
-    font-size: var(--fs-body-sm);
-    color: var(--ink-soft);
-    font-weight: 400;
-    letter-spacing: 0;
-    text-transform: none;
-    white-space: nowrap;
-  }
-  .dose-row.next .meta .date { color: var(--ink); font-weight: 500; }
-  .dose-row.future .meta .date { color: var(--ink-muted); }
 
   .vax-calendar-footer {
     margin-top: 14px;
@@ -3083,92 +3065,110 @@
           <div class="vax-list">
 
             <button class="dose-row done" type="button">
-              <span class="marker"></span>
+              <span class="age">2 m</span>
               <div class="body">
-                <strong>2 meses</strong>
-                <p>Hexavalente · Neumococo · MenB · Rotavirus</p>
+                <span class="vaccines">Hexavalente · Neumococo · MenB · Rotavirus</span>
+                <div class="footline">
+                  <span class="state-icon">✓</span>
+                  <span>Puesta el 12 may 2026 · CAP Sant Pau</span>
+                </div>
               </div>
-              <div class="meta"><span class="date">12 may</span></div>
               <span class="chevron"><svg viewBox="0 0 24 24"><use href="#i-arrow"/></svg></span>
             </button>
 
             <button class="dose-row done" type="button">
-              <span class="marker"></span>
+              <span class="age">3 m</span>
               <div class="body">
-                <strong>3 meses</strong>
-                <p>Rotavirus 2ª</p>
+                <span class="vaccines">Rotavirus 2ª</span>
+                <div class="footline">
+                  <span class="state-icon">✓</span>
+                  <span>Puesta el 12 jun 2026 · CAP Sant Pau</span>
+                </div>
               </div>
-              <div class="meta"><span class="date">12 jun</span></div>
               <span class="chevron"><svg viewBox="0 0 24 24"><use href="#i-arrow"/></svg></span>
             </button>
 
             <button class="dose-row done" type="button">
-              <span class="marker"></span>
+              <span class="age">4 m</span>
               <div class="body">
-                <strong>4 meses</strong>
-                <p>Hexavalente · Neumococo · MenB · MenACWY</p>
+                <span class="vaccines">Hexavalente · Neumococo · MenB · MenACWY</span>
+                <div class="footline">
+                  <span class="state-icon">✓</span>
+                  <span>Puesta el 12 jul 2026 · CAP Sant Pau</span>
+                </div>
               </div>
-              <div class="meta"><span class="date">12 jul</span></div>
               <span class="chevron"><svg viewBox="0 0 24 24"><use href="#i-arrow"/></svg></span>
             </button>
 
             <button class="dose-row done" type="button">
-              <span class="marker"></span>
+              <span class="age">11 m</span>
               <div class="body">
-                <strong>11 meses</strong>
-                <p>Hexavalente · Neumococo · MenB</p>
+                <span class="vaccines">Hexavalente · Neumococo · MenB</span>
+                <div class="footline">
+                  <span class="state-icon">✓</span>
+                  <span>Puesta el 12 feb 2027 · CAP Sant Pau</span>
+                </div>
               </div>
-              <div class="meta"><span class="date">12 feb 2027</span></div>
               <span class="chevron"><svg viewBox="0 0 24 24"><use href="#i-arrow"/></svg></span>
             </button>
 
             <button class="dose-row next" type="button">
-              <span class="marker"></span>
+              <span class="age">12 m</span>
               <div class="body">
-                <strong>12 meses</strong>
-                <p>MenACWY · Triple vírica · Hepatitis A <span class="new-badge">Nuevo 2026</span></p>
+                <span class="vaccines">MenACWY · Triple vírica · Hepatitis A <span class="new-badge">Nuevo 2026</span></span>
+                <div class="footline">
+                  <span class="state-icon">→</span>
+                  <span>En 12 días · 12 mar 2027 · CAP Sant Pau</span>
+                </div>
               </div>
-              <div class="meta"><span class="tag">próxima</span><span class="date">12 mar 2027</span></div>
               <span class="chevron"><svg viewBox="0 0 24 24"><use href="#i-arrow"/></svg></span>
             </button>
 
             <button class="dose-row future" type="button">
-              <span class="marker"></span>
+              <span class="age">15 m</span>
               <div class="body">
-                <strong>15 meses</strong>
-                <p>Varicela</p>
+                <span class="vaccines">Varicela</span>
+                <div class="footline">
+                  <span class="state-icon">·</span>
+                  <span>Programada · jun 2027</span>
+                </div>
               </div>
-              <div class="meta"><span class="date">12 jun 2027</span></div>
               <span class="chevron"><svg viewBox="0 0 24 24"><use href="#i-arrow"/></svg></span>
             </button>
 
             <button class="dose-row future" type="button">
-              <span class="marker"></span>
+              <span class="age">3-4 a</span>
               <div class="body">
-                <strong>3 - 4 años</strong>
-                <p>Triple vírica 2ª · Varicela 2ª · Hepatitis A 2ª</p>
+                <span class="vaccines">Triple vírica 2ª · Varicela 2ª · Hepatitis A 2ª</span>
+                <div class="footline">
+                  <span class="state-icon">·</span>
+                  <span>Programada · 2029 · refuerzo</span>
+                </div>
               </div>
-              <div class="meta"><span class="date">2029</span></div>
               <span class="chevron"><svg viewBox="0 0 24 24"><use href="#i-arrow"/></svg></span>
             </button>
 
             <button class="dose-row future" type="button">
-              <span class="marker"></span>
+              <span class="age">6 a</span>
               <div class="body">
-                <strong>6 años</strong>
-                <p>DTPa-VPI · Varicela refuerzo</p>
+                <span class="vaccines">DTPa-VPI · Varicela refuerzo</span>
+                <div class="footline">
+                  <span class="state-icon">·</span>
+                  <span>Programada · 2032 · refuerzo</span>
+                </div>
               </div>
-              <div class="meta"><span class="date">2032</span></div>
               <span class="chevron"><svg viewBox="0 0 24 24"><use href="#i-arrow"/></svg></span>
             </button>
 
             <button class="dose-row future" type="button">
-              <span class="marker"></span>
+              <span class="age">12-14 a</span>
               <div class="body">
-                <strong>12 - 14 años</strong>
-                <p>VPH · MenACWY refuerzo · Td</p>
+                <span class="vaccines">VPH · MenACWY refuerzo · Td</span>
+                <div class="footline">
+                  <span class="state-icon">·</span>
+                  <span>Programada · 2038-2040 · adolescencia</span>
+                </div>
               </div>
-              <div class="meta"><span class="date">2038 - 2040</span></div>
               <span class="chevron"><svg viewBox="0 0 24 24"><use href="#i-arrow"/></svg></span>
             </button>
           </div>
@@ -3192,30 +3192,36 @@
       <div class="spec-row col" style="gap: 6px; padding: 12px 0">
         <div class="vax-list" style="max-width: 420px; width: 100%">
           <button class="dose-row done" type="button">
-            <span class="marker"></span>
+            <span class="age">2 m</span>
             <div class="body">
-              <strong>2 meses</strong>
-              <p>Hexavalente · Neumococo · MenB · Rotavirus</p>
+              <span class="vaccines">Hexavalente · Neumococo · MenB · Rotavirus</span>
+              <div class="footline">
+                <span class="state-icon">✓</span>
+                <span>Puesta el 12 may 2026</span>
+              </div>
             </div>
-            <div class="meta"><span class="date">12 may</span></div>
             <span class="chevron"><svg viewBox="0 0 24 24"><use href="#i-arrow"/></svg></span>
           </button>
           <button class="dose-row next" type="button">
-            <span class="marker"></span>
+            <span class="age">12 m</span>
             <div class="body">
-              <strong>12 meses</strong>
-              <p>MenACWY · Triple vírica · Hepatitis A</p>
+              <span class="vaccines">MenACWY · Triple vírica · Hepatitis A</span>
+              <div class="footline">
+                <span class="state-icon">→</span>
+                <span>En 12 días · 12 mar 2027</span>
+              </div>
             </div>
-            <div class="meta"><span class="tag">próxima</span><span class="date">12 mar</span></div>
             <span class="chevron"><svg viewBox="0 0 24 24"><use href="#i-arrow"/></svg></span>
           </button>
           <button class="dose-row future" type="button">
-            <span class="marker"></span>
+            <span class="age">15 m</span>
             <div class="body">
-              <strong>15 meses</strong>
-              <p>Varicela</p>
+              <span class="vaccines">Varicela</span>
+              <div class="footline">
+                <span class="state-icon">·</span>
+                <span>Programada · jun 2027</span>
+              </div>
             </div>
-            <div class="meta"><span class="date">12 jun 2027</span></div>
             <span class="chevron"><svg viewBox="0 0 24 24"><use href="#i-arrow"/></svg></span>
           </button>
         </div>
@@ -3324,39 +3330,47 @@
           <h4 class="vax-section-title">Calendario de Hexavalente</h4>
           <div class="vax-list">
             <button class="dose-row done" type="button">
-              <span class="marker"></span>
+              <span class="age">2 m</span>
               <div class="body">
-                <strong>2 meses</strong>
-                <p>1ª dosis</p>
+                <span class="vaccines">1ª dosis</span>
+                <div class="footline">
+                  <span class="state-icon">✓</span>
+                  <span>Puesta el 12 may 2026 · Hexyon® · lote A8M3K</span>
+                </div>
               </div>
-              <div class="meta"><span class="date">12 may 2026</span></div>
               <span class="chevron"><svg viewBox="0 0 24 24"><use href="#i-arrow"/></svg></span>
             </button>
             <button class="dose-row next" type="button">
-              <span class="marker"></span>
+              <span class="age">4 m</span>
               <div class="body">
-                <strong>4 meses</strong>
-                <p>2ª dosis</p>
+                <span class="vaccines">2ª dosis</span>
+                <div class="footline">
+                  <span class="state-icon">→</span>
+                  <span>En 8 semanas · 12 jul 2026</span>
+                </div>
               </div>
-              <div class="meta"><span class="tag">próxima</span><span class="date">12 jul 2026</span></div>
               <span class="chevron"><svg viewBox="0 0 24 24"><use href="#i-arrow"/></svg></span>
             </button>
             <button class="dose-row future" type="button">
-              <span class="marker"></span>
+              <span class="age">11 m</span>
               <div class="body">
-                <strong>11 meses</strong>
-                <p>3ª dosis · refuerzo</p>
+                <span class="vaccines">3ª dosis · refuerzo</span>
+                <div class="footline">
+                  <span class="state-icon">·</span>
+                  <span>Programada · feb 2027</span>
+                </div>
               </div>
-              <div class="meta"><span class="date">12 feb 2027</span></div>
               <span class="chevron"><svg viewBox="0 0 24 24"><use href="#i-arrow"/></svg></span>
             </button>
             <button class="dose-row future" type="button">
-              <span class="marker"></span>
+              <span class="age">6 a</span>
               <div class="body">
-                <strong>6 años</strong>
-                <p>DTPa-VPI · refuerzo (sin Hib · sin HepB)</p>
+                <span class="vaccines">DTPa-VPI · refuerzo (sin Hib · sin HepB)</span>
+                <div class="footline">
+                  <span class="state-icon">·</span>
+                  <span>Programada · 2032</span>
+                </div>
               </div>
-              <div class="meta"><span class="date">2032</span></div>
               <span class="chevron"><svg viewBox="0 0 24 24"><use href="#i-arrow"/></svg></span>
             </button>
           </div>
