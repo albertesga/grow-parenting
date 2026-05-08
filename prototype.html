@@ -6338,23 +6338,25 @@
     stroke: currentColor; fill: none;
     stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round;
   }
+  /* tonal subtle → base gradient · matches DS § L (.sleep-day-phase) and
+     pairs with .timeline-seg palette: mint = sleep, gold = wake, blush = routine */
   .sleep-day-phase.morning {
-    background: linear-gradient(120deg, var(--paper) 0%, var(--gold-subtle) 110%);
+    background: linear-gradient(135deg, var(--gold-subtle) 0%, var(--gold-base) 160%);
   }
   .sleep-day-phase.morning .icon { background: var(--gold-base); color: #4A3A12; }
   .sleep-day-phase.nap,
   .sleep-day-phase.night {
-    background: linear-gradient(120deg, var(--paper) 0%, var(--mint-subtle) 110%);
+    background: linear-gradient(135deg, var(--mint-subtle) 0%, var(--mint-base) 160%);
   }
   .sleep-day-phase.nap .icon,
   .sleep-day-phase.night .icon {
     background: var(--paper); color: var(--mint-strong);
-    box-shadow: 0 0 0 1px rgba(143,174,133,0.28);
+    box-shadow: 0 0 0 1px rgba(143,174,133,0.32);
   }
   .sleep-day-phase.bedtime {
-    background: linear-gradient(120deg, var(--paper) 0%, var(--blush-base) 110%);
+    background: linear-gradient(135deg, var(--blush-subtle) 0%, var(--blush-base) 160%);
   }
-  .sleep-day-phase.bedtime .icon { background: var(--blush-base); color: #6B3D2A; }
+  .sleep-day-phase.bedtime .icon { background: var(--paper); color: #8C5A48; box-shadow: 0 0 0 1px rgba(216,154,137,0.40); }
   .sleep-day-phase.now { box-shadow: 0 0 0 2px var(--coral-base); }
   .sleep-day-phase .body { flex: 1; min-width: 0; }
   .sleep-day-phase .body strong {
