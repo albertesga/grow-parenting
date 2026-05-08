@@ -625,6 +625,8 @@
   }
   .sleep-dial-legend .swatch.night { background: var(--module-dark); border-color: var(--module-dark); }
   .sleep-dial-legend .swatch.nap { background: var(--mint-base); border-color: var(--mint-strong); }
+  .sleep-dial-legend .swatch.wake { background: var(--gold-subtle); border-color: var(--gold-base); }
+  .sleep-dial-legend .swatch.bedtime { background: var(--blush-base); border-color: var(--blush-strong); }
   .sleep-dial-legend .swatch.awake { background: var(--paper-soft); }
   .sleep-dial-legend .swatch.now { background: var(--coral-base); border-color: var(--coral-strong); }
   .sleep-dial-footnote {
@@ -633,6 +635,151 @@
     text-align: center;
     color: var(--ink-muted); font-size: var(--fs-caption);
     font-style: italic; line-height: 1.5;
+  }
+
+  /* ─── Variant C: Educational vertical guide ──────────── */
+  .sleep-guide {
+    background: var(--paper);
+    border-radius: var(--radius-xl);
+    padding: 28px 24px 24px;
+    max-width: 460px;
+    border: 1px solid var(--line);
+    box-shadow: 0 18px 46px rgba(45,38,30,0.04);
+  }
+  .sleep-guide-head { margin-bottom: 22px; }
+  .sleep-guide-head .eyb {
+    font-family: "Lenia"; font-size: var(--fs-meta);
+    letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--ink-muted); margin: 0 0 8px;
+  }
+  .sleep-guide-head h3 {
+    font-family: "Lenia"; font-weight: 500;
+    font-size: var(--fs-h2); line-height: 1.1;
+    margin: 0 0 10px; letter-spacing: -0.015em;
+  }
+  .sleep-guide-head p {
+    font-size: var(--fs-body-sm); color: var(--ink-soft);
+    line-height: 1.55; margin: 0; max-width: 42ch;
+  }
+  .sleep-guide-divider {
+    height: 1px; background: var(--line);
+    margin: 22px 0;
+  }
+  .sleep-guide-list {
+    list-style: none; padding: 0; margin: 0;
+    display: flex; flex-direction: column;
+  }
+  .sleep-guide-step {
+    display: grid;
+    grid-template-columns: 40px 1fr;
+    gap: 16px;
+    position: relative;
+    padding-bottom: 24px;
+  }
+  .sleep-guide-step:last-child { padding-bottom: 0; }
+  .sleep-guide-step::before {
+    content: '';
+    position: absolute;
+    left: 19px;
+    top: 44px;
+    bottom: 0;
+    width: 2px;
+    background: linear-gradient(to bottom, var(--line) 0%, var(--line) 70%, transparent 100%);
+  }
+  .sleep-guide-step:last-child::before { display: none; }
+  .sleep-guide-step .num {
+    width: 40px; height: 40px;
+    border-radius: var(--radius-pill);
+    display: grid; place-items: center;
+    font-family: 'Lenia'; font-weight: 600;
+    font-size: var(--fs-body-sm);
+    color: var(--ink);
+    background: var(--paper-soft);
+    border: 1px solid var(--line);
+    z-index: 1;
+  }
+  .sleep-guide-step.morning .num {
+    background: var(--gold-subtle); color: #6E5A2A;
+    border-color: rgba(184,151,63,0.28);
+  }
+  .sleep-guide-step.wake .num {
+    background: transparent; color: var(--ink-soft);
+    border: 1.5px dashed var(--line-strong);
+  }
+  .sleep-guide-step.nap .num {
+    background: var(--mint-subtle); color: #4F6647;
+    border-color: rgba(143,174,133,0.32);
+  }
+  .sleep-guide-step.bedtime .num {
+    background: var(--blush-base); color: #6B3D2A;
+    border-color: var(--blush-strong);
+  }
+  .sleep-guide-step.night .num {
+    background: var(--module-dark); color: var(--paper);
+    border-color: var(--module-dark);
+  }
+  .sleep-guide-step .body { padding-top: 4px; }
+  .sleep-guide-step .body .eyb {
+    font-family: 'Lenia'; font-weight: 500;
+    font-size: var(--fs-eyebrow);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    display: block;
+    margin-bottom: 4px;
+  }
+  .sleep-guide-step .body strong {
+    display: block;
+    font-family: 'Lenia'; font-weight: 500;
+    font-size: var(--fs-body-lg);
+    color: var(--ink);
+    margin-bottom: 6px;
+    line-height: 1.2;
+  }
+  .sleep-guide-step .body .when {
+    display: inline-block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: var(--fs-caption);
+    color: var(--ink-soft);
+    background: var(--paper-soft);
+    border-radius: var(--radius-pill);
+    padding: 3px 10px;
+    margin-bottom: 8px;
+  }
+  .sleep-guide-step .body p {
+    margin: 0;
+    font-size: var(--fs-body-sm);
+    color: var(--ink-soft);
+    line-height: 1.6;
+  }
+  .sleep-guide-step .body .tip {
+    margin-top: 8px;
+    padding-left: 10px;
+    border-left: 2px solid var(--line);
+    font-size: var(--fs-caption);
+    color: var(--ink-muted);
+    font-style: italic;
+    line-height: 1.5;
+  }
+  .sleep-guide-summary {
+    margin-top: 20px;
+    padding: 14px 16px;
+    background: var(--paper-soft);
+    border-radius: var(--radius-md);
+    text-align: center;
+  }
+  .sleep-guide-summary strong {
+    font-family: 'Lenia'; font-weight: 500;
+    font-size: var(--fs-body-lg);
+    color: var(--ink);
+    display: block;
+    margin-bottom: 4px;
+  }
+  .sleep-guide-summary p {
+    margin: 0;
+    font-size: var(--fs-caption);
+    color: var(--ink-muted);
+    font-style: italic;
   }
 
   /* Compact variant — for sidebar or weekly view */
@@ -1639,43 +1786,57 @@
             <div class="age">13 - 18 m</div>
           </div>
 
-          <svg class="sleep-dial-svg" viewBox="0 0 220 220" xmlns="http://www.w3.org/2000/svg" aria-label="Esquema 24 horas">
-            <!-- background ring (paper-soft = wake areas) -->
-            <circle cx="110" cy="110" r="80" stroke="rgba(201,194,178,0.32)" stroke-width="22" fill="none"/>
+          <svg class="sleep-dial-svg" viewBox="0 0 320 320" xmlns="http://www.w3.org/2000/svg" aria-label="Esquema 24 horas con fases de sueño y vigilia">
+            <!-- ALL 5 phases drawn as continuous arcs · together complete the 24h ring -->
 
-            <!-- night sleep arc · 19:45 → 7:15 (11h 30m) -->
-            <path d="M 38.25 74.61 A 80 80 0 0 1 185.73 135.71"
-                  stroke="var(--module-dark)" stroke-width="22" fill="none" stroke-linecap="round"/>
+            <!-- Wake morning · 7:15 → 12:15 (5h) -->
+            <path d="M 254.66 192.14 A 100 100 0 0 1 153.46 259.79"
+                  stroke="#F6EBC9" stroke-width="24" fill="none"/>
 
-            <!-- nap arc · 12:15 → 13:45 (1h 30m) -->
-            <path d="M 104.77 189.83 A 80 80 0 0 1 74.62 181.75"
-                  stroke="var(--mint-base)" stroke-width="22" fill="none" stroke-linecap="round"/>
+            <!-- Siesta · 12:15 → 13:45 (1h 30m) -->
+            <path d="M 153.46 259.79 A 100 100 0 0 1 115.76 249.69"
+                  stroke="var(--mint-base)" stroke-width="24" fill="none"/>
 
-            <!-- hour markers (0 / 6 / 12 / 18) -->
-            <text x="110" y="22" text-anchor="middle" font-family="Lenia" font-size="11" fill="#888" font-weight="500">0</text>
-            <text x="200" y="115" text-anchor="middle" font-family="Lenia" font-size="11" fill="#888" font-weight="500">6</text>
-            <text x="110" y="208" text-anchor="middle" font-family="Lenia" font-size="11" fill="#888" font-weight="500">12</text>
-            <text x="20" y="115" text-anchor="middle" font-family="Lenia" font-size="11" fill="#888" font-weight="500">18</text>
+            <!-- Wake afternoon · 13:45 → 19:15 (5h 30m) -->
+            <path d="M 115.76 249.69 A 100 100 0 0 1 65.34 127.86"
+                  stroke="#F6EBC9" stroke-width="24" fill="none"/>
 
-            <!-- minor tick marks at 3 / 9 / 15 / 21 -->
-            <line x1="166.57" y1="53.43" x2="170.10" y2="49.90" stroke="#bfbaa8" stroke-width="1.2" stroke-linecap="round"/>
-            <line x1="166.57" y1="166.57" x2="170.10" y2="170.10" stroke="#bfbaa8" stroke-width="1.2" stroke-linecap="round"/>
-            <line x1="53.43" y1="166.57" x2="49.90" y2="170.10" stroke="#bfbaa8" stroke-width="1.2" stroke-linecap="round"/>
-            <line x1="53.43" y1="53.43" x2="49.90" y2="49.90" stroke="#bfbaa8" stroke-width="1.2" stroke-linecap="round"/>
+            <!-- Rutina de noche · 19:15 → 19:45 (30 min) -->
+            <path d="M 65.34 127.86 A 100 100 0 0 1 70.31 115.76"
+                  stroke="var(--blush-base)" stroke-width="24" fill="none"/>
 
-            <!-- "now" indicator · 14:32 = 14.53 → angle 127.99° (between siesta end and rutina noche) -->
-            <circle cx="60.74" cy="173.04" r="6" fill="var(--coral-base)" stroke="#FAF7F0" stroke-width="2.5"/>
+            <!-- Night sleep · 19:45 → 7:15 (11h 30m) -->
+            <path d="M 70.31 115.76 A 100 100 0 0 1 254.66 192.14"
+                  stroke="var(--module-dark)" stroke-width="24" fill="none"/>
+
+            <!-- Phase boundary ticks (white dividers between segments for clarity) -->
+            <circle cx="254.66" cy="192.14" r="2.5" fill="var(--paper)"/>
+            <circle cx="153.46" cy="259.79" r="2.5" fill="var(--paper)"/>
+            <circle cx="115.76" cy="249.69" r="2.5" fill="var(--paper)"/>
+            <circle cx="65.34" cy="127.86" r="2.5" fill="var(--paper)"/>
+            <circle cx="70.31" cy="115.76" r="2.5" fill="var(--paper)"/>
+
+            <!-- Hour markers (0 / 6 / 12 / 18) inside the ring -->
+            <text x="160" y="84" text-anchor="middle" font-family="Lenia" font-size="13" fill="var(--ink-soft)" font-weight="500">0</text>
+            <text x="240" y="164" text-anchor="middle" font-family="Lenia" font-size="13" fill="var(--ink-soft)" font-weight="500">6</text>
+            <text x="160" y="244" text-anchor="middle" font-family="Lenia" font-size="13" fill="var(--ink-soft)" font-weight="500">12</text>
+            <text x="80" y="164" text-anchor="middle" font-family="Lenia" font-size="13" fill="var(--ink-soft)" font-weight="500">18</text>
+
+            <!-- "now" indicator · 14:32 = 14.53h → on ring at angle 127.99° from 12 -->
+            <line x1="160" y1="160" x2="98.43" y2="238.80" stroke="var(--coral-strong)" stroke-width="1.5" stroke-linecap="round"/>
+            <circle cx="98.43" cy="238.80" r="7" fill="var(--coral-base)" stroke="var(--paper)" stroke-width="3"/>
 
             <!-- center display -->
-            <text x="110" y="100" text-anchor="middle" font-family="Lenia" font-size="36" font-weight="500" fill="#1A1A1A" letter-spacing="-0.02em">13h</text>
-            <text x="110" y="120" text-anchor="middle" font-family="Lenia" font-size="9" fill="#888" letter-spacing="0.20em" font-weight="500">TOTAL SUEÑO</text>
-            <text x="110" y="138" text-anchor="middle" font-family="Lenia" font-size="11" fill="#4A2510" font-weight="600" letter-spacing="0.18em">AHORA · 14:32</text>
+            <text x="160" y="148" text-anchor="middle" font-family="Lenia" font-size="38" font-weight="500" fill="var(--ink)" letter-spacing="-0.02em">13h</text>
+            <text x="160" y="168" text-anchor="middle" font-family="Lenia" font-size="9" fill="var(--ink-muted)" letter-spacing="0.22em" font-weight="500">SUEÑO TOTAL</text>
+            <text x="160" y="190" text-anchor="middle" font-family="Lenia" font-size="11" fill="var(--coral-strong)" font-weight="600" letter-spacing="0.16em">AHORA · 14:32</text>
           </svg>
 
           <div class="sleep-dial-legend">
-            <span class="item"><span class="swatch night"></span> 11h 30m noche</span>
-            <span class="item"><span class="swatch nap"></span> 1h 30m siesta</span>
-            <span class="item"><span class="swatch awake"></span> Despierta</span>
+            <span class="item"><span class="swatch night"></span> Noche · 11h 30m</span>
+            <span class="item"><span class="swatch bedtime"></span> Rutina · 30m</span>
+            <span class="item"><span class="swatch wake"></span> Despierta · 10h 30m</span>
+            <span class="item"><span class="swatch nap"></span> Siesta · 1h 30m</span>
             <span class="item"><span class="swatch now"></span> Ahora</span>
           </div>
 
@@ -1739,6 +1900,143 @@
             confianza ("la noche es larga"), o un primer vistazo. Card en Hoy,
             preview en libro, dashboard.
           </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="spec">
+      <div class="spec-head">
+        <h3>Variant C · Educational guide — explains a typical day</h3>
+        <span class="meta-r">.sleep-guide · numbered steps · narrative</span>
+      </div>
+      <div class="spec-row col" style="margin-bottom: 14px">
+        <p style="font-size:13px;color:var(--ink-soft);max-width:64ch;line-height:1.55;margin:0">
+          Tercera aproximación: no es un esquema, es una <em>guía</em>. El padre
+          primerizo no sabe qué es un "wake window" ni por qué la siesta de
+          mediodía es importante. Esta variante numera los 6 momentos del día,
+          añade tiempos, descripción + tip parental. Más texto, más educativa.
+          Encaja en libro de Sueño · onboarding · "Entender el ritmo".
+        </p>
+      </div>
+      <div class="spec-row" style="padding: 16px 0; align-items: flex-start; gap: 24px">
+        <div class="sleep-guide">
+          <div class="sleep-guide-head">
+            <div class="eyb">Esquema educativo · 13 - 18 m</div>
+            <h3>Cómo es un día típico de sueño</h3>
+            <p>Esto no es una receta — es un patrón. Adáptalo a tu peque y a ti, sin presión.</p>
+          </div>
+
+          <ol class="sleep-guide-list">
+            <li class="sleep-guide-step morning">
+              <div class="num">1</div>
+              <div class="body">
+                <span class="eyb">Mañana</span>
+                <strong>Despertar</strong>
+                <span class="when">7:15 · típico 6:30 - 7:30</span>
+                <p>Empieza el día con luz natural — la mejor pista para regular el reloj interno. 11 - 12 h de sueño nocturno suelen bastar a esta edad para empezar con energía.</p>
+                <p class="tip">Si despierta antes de las 6:00, no es señal de "menos sueño nocturno necesario": probablemente la rutina anterior fue tarde.</p>
+              </div>
+            </li>
+
+            <li class="sleep-guide-step wake">
+              <div class="num">2</div>
+              <div class="body">
+                <span class="eyb">Despierta · ventana de mañana</span>
+                <strong>Actividad y desayuno</strong>
+                <span class="when">~5 h</span>
+                <p>Juego activo, primera comida, paseo. Actividad física favorece la siesta. Esta es la ventana más larga que aguanta despierto antes de necesitar dormir de nuevo.</p>
+                <p class="tip">Si se duerme en el coche o cochecito antes de las 11:00, puede arruinar la siesta del mediodía.</p>
+              </div>
+            </li>
+
+            <li class="sleep-guide-step nap">
+              <div class="num">3</div>
+              <div class="body">
+                <span class="eyb">Siesta</span>
+                <strong>Siesta del mediodía</strong>
+                <span class="when">12:15 - 13:45 · ~90 min</span>
+                <p>Una siesta es lo típico a esta edad (la transición de 2 → 1 siesta ocurre entre los 12 y 18 m). En cuna, oscuro, con la misma rutina corta de previo.</p>
+                <p class="tip">Si dura más de 2 h, despertar suave para no comprometer la noche. Si dura menos de 60 min, ofrecer otra ventana de descanso pasiva.</p>
+              </div>
+            </li>
+
+            <li class="sleep-guide-step wake">
+              <div class="num">4</div>
+              <div class="body">
+                <span class="eyb">Despierta · ventana de tarde</span>
+                <strong>Tarde activa, cena ligera</strong>
+                <span class="when">~5 h 30 m</span>
+                <p>Más larga que la mañana — esperable. Empieza con calma (juego tranquilo, parque) y va bajando intensidad. Última comida 60 - 90 min antes de la rutina.</p>
+                <p class="tip">Si la siesta fue corta, esta ventana se acorta naturalmente. No "estirar" hasta la rutina si hay señales de cansancio.</p>
+              </div>
+            </li>
+
+            <li class="sleep-guide-step bedtime">
+              <div class="num">5</div>
+              <div class="body">
+                <span class="eyb">Wind-down</span>
+                <strong>Rutina de noche</strong>
+                <span class="when">19:15 · ~30 min</span>
+                <p>Secuencia consistente y siempre en el mismo orden: baño → pijama → cuento → abrazo → cuna. Luz tenue. La consistencia es lo que enseña al cuerpo a prepararse, no el método específico.</p>
+                <p class="tip">Sin pantallas. La rutina debe poder hacerse en cualquier sitio (casa de los abuelos, viaje) — por eso es la secuencia, no el lugar.</p>
+              </div>
+            </li>
+
+            <li class="sleep-guide-step night">
+              <div class="num">6</div>
+              <div class="body">
+                <span class="eyb">Noche</span>
+                <strong>Dormido</strong>
+                <span class="when">19:45 - 7:15 · 11 h 30 m</span>
+                <p>Sin estímulos. Si se despierta, breve consuelo (mano, voz baja) y a dormir. Despertares nocturnos son normales — la consistencia en cómo respondes es lo que enseña, no el método.</p>
+                <p class="tip">Las regresiones a los 18 m son típicas y duran 2 - 3 semanas. No estás haciendo nada mal.</p>
+              </div>
+            </li>
+          </ol>
+
+          <div class="sleep-guide-summary">
+            <strong>Total 13 h · 11 h 30 m noche + 1 h 30 m siesta</strong>
+            <p>"Sin juicio. Cada peque tiene su ritmo."</p>
+          </div>
+        </div>
+
+        <div style="flex: 1; min-width: 300px">
+          <div class="spec-label">When this variant fits</div>
+          <ul style="font-size:12.5px;color:var(--ink-soft);line-height:1.65;padding-left:18px;margin:0">
+            <li><strong>Onboarding</strong> · explicar al padre primerizo qué es un wake window, por qué importa la rutina, qué es típico</li>
+            <li><strong>Libro de Sueño · sección "Entender el ritmo"</strong> · referencia educativa por edad</li>
+            <li><strong>Modal "Aprende más"</strong> · al pulsar "Ver esquema" desde el card compacto de Hoy</li>
+            <li><strong>Email / artículo</strong> · si Grow tuviera un newsletter, encaja como contenido editorial</li>
+          </ul>
+
+          <div class="spec-label" style="margin-top: 18px">Anatomy</div>
+          <ul style="font-size:12px;color:var(--ink-soft);line-height:1.6;padding-left:16px;margin:0;font-family:'JetBrains Mono', monospace">
+            <li><strong>.sleep-guide</strong> · paper, max-width 460</li>
+            <li><strong>.sleep-guide-head</strong> · eyebrow + h3 + intro p</li>
+            <li><strong>.sleep-guide-step</strong> · grid 40px (num) + body</li>
+            <li><strong>.num</strong> · pill 40 con tono por fase (morning gold, wake dashed, nap mint, bedtime blush, night ink)</li>
+            <li><strong>.eyb / strong / .when / p / .tip</strong> · jerarquía editorial dentro de cada paso</li>
+            <li><strong>connector line</strong> · ::before vertical entre nums, fade-out al último</li>
+            <li><strong>.sleep-guide-summary</strong> · paper-soft pill con totales</li>
+          </ul>
+
+          <div class="spec-label" style="margin-top: 18px">Decision matrix · A vs B vs C</div>
+          <table style="border-collapse:collapse;font-size:12px;color:var(--ink-soft);width:100%;line-height:1.5">
+            <thead style="font-family:'Lenia';font-weight:500;color:var(--ink);text-align:left">
+              <tr>
+                <th style="padding:6px 8px;border-bottom:1px solid var(--line)">Surface</th>
+                <th style="padding:6px 8px;border-bottom:1px solid var(--line)">Variant</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td style="padding:6px 8px;border-bottom:1px dashed var(--line)">Hoy · card</td><td style="padding:6px 8px;border-bottom:1px dashed var(--line)"><strong>B</strong> radial · glance</td></tr>
+              <tr><td style="padding:6px 8px;border-bottom:1px dashed var(--line)">Sueño · pantalla principal</td><td style="padding:6px 8px;border-bottom:1px dashed var(--line)"><strong>A</strong> timeline · datos exactos</td></tr>
+              <tr><td style="padding:6px 8px;border-bottom:1px dashed var(--line)">Sueño · "Entender el ritmo"</td><td style="padding:6px 8px;border-bottom:1px dashed var(--line)"><strong>C</strong> guide · educativo</td></tr>
+              <tr><td style="padding:6px 8px;border-bottom:1px dashed var(--line)">Onboarding</td><td style="padding:6px 8px;border-bottom:1px dashed var(--line)"><strong>C</strong> guide</td></tr>
+              <tr><td style="padding:6px 8px;border-bottom:1px dashed var(--line)">Sidebar · weekly grid</td><td style="padding:6px 8px;border-bottom:1px dashed var(--line)"><strong>A.compact</strong></td></tr>
+              <tr><td style="padding:6px 8px">Modal "Ver esquema"</td><td style="padding:6px 8px"><strong>A</strong> + opcional <strong>B</strong> al final</td></tr>
+            </tbody>
+          </table>
         </div>
       </div>
     </div>
