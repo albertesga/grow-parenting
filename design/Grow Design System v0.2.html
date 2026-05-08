@@ -289,6 +289,62 @@
   .sticker.coral { color: #8E4A22; }
   .sticker.gold { color: #6E5A2A; }
 
+  /* ─── Mark selector — "el punto fuera" ─────────
+     The selection indicator lives OUTSIDE the option as a small
+     dot below the label. No track, no fill, no pill — pure
+     editorial typography with one floating marker. */
+  .mark-selector {
+    display: inline-flex;
+    gap: 28px;
+    padding: 6px 0 10px;
+    align-items: flex-start;
+  }
+  .mark-selector .opt {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    background: transparent;
+    border: 0; padding: 4px 4px 0;
+    font-family: "Lenia"; font-weight: 500;
+    font-size: var(--fs-body); line-height: 1;
+    color: var(--ink-muted);
+    cursor: pointer;
+    letter-spacing: -0.005em;
+    transition: color 220ms var(--ease);
+  }
+  .mark-selector .opt:hover { color: var(--ink-soft); }
+  .mark-selector .opt::after {
+    content: "";
+    width: 8px;
+    height: 8px;
+    border-radius: 999px;
+    background: transparent;
+    border: 1.5px solid var(--line-strong);
+    transition:
+      background 240ms var(--ease),
+      border-color 240ms var(--ease),
+      transform 260ms cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  .mark-selector .opt.selected { color: var(--ink); }
+  .mark-selector .opt.selected::after {
+    background: var(--coral-base);
+    border-color: var(--coral-strong);
+    transform: scale(1.30);
+  }
+  /* family modifiers on the GROUP */
+  .mark-selector.mint  .opt.selected::after { background: var(--mint-base);  border-color: var(--mint-strong); }
+  .mark-selector.gold  .opt.selected::after { background: var(--gold-base);  border-color: var(--gold-strong); }
+  .mark-selector.blush .opt.selected::after { background: var(--blush-base); border-color: var(--blush-strong); }
+  .mark-selector.ink   .opt.selected::after { background: var(--ink-warm);   border-color: var(--ink-warm); }
+  /* full-width flow variant: justify between */
+  .mark-selector.full {
+    display: flex; gap: 0;
+    justify-content: space-between;
+    width: 100%;
+  }
+  .mark-selector.full .opt { flex: 1; }
+
   /* Segmented selector — flat tonal fill (matches v0.2 palette) */
   .seg-group {
     display: inline-flex;
@@ -815,7 +871,7 @@
     border: 1px solid var(--line);
     box-shadow: 0 18px 46px rgba(45,38,30,0.05);
   }
-  /* .sleep-day-head deprecated · markup uses canonical .top-header.stack */
+  /* .sleep-day-head deprecated · markup uses canonical .top-header */
   /* .sleep-day-line / .stl-* deprecated — markup migrated to canonical
      .timeline / .timeline-row / .timeline-track / .timeline-seg / etc.
      See § M Timeline for the full primitive. Sleep-specific spacing: */
