@@ -836,20 +836,43 @@
   .top-header.compact h2 { font-size: var(--fs-h2); }
   .top-header.compact h3 { font-size: var(--fs-h3); }
 
-  /* ═════════════════ CALLOUT — § L ═════════════════ */
-  /* Editorial note · paper-soft card with a short tone-coloured rule
-     at top + italic body + tone-coloured emphasis on <strong>. No
-     moving gradient — restrained, calm, book-like. */
+  /* ═════════════════ CALLOUT — § H (after Cards) ═════════════════ */
+  /* Default · left-aligned paper-soft card with inline <strong> heading
+     + body text · matches the "Sin alarmismo. Te avisamos sin
+     alarmismo y te ayudamos a hablar con el pediatra." pattern from
+     the existing books. Optional .with-rule or .with-asterisk modifiers
+     bring back the centered editorial form for adaptive copy. */
   .callout {
     --accent: var(--coral-base);
     --accent-strong: var(--coral-strong);
     background: var(--paper-soft);
     border-radius: var(--radius-md);
-    padding: 22px 24px 20px;
-    text-align: center;
+    padding: 18px 20px;
+    text-align: left;
     position: relative;
   }
-  .callout::before {
+  .callout p {
+    margin: 0;
+    font-family: "Helvena";
+    font-size: var(--fs-body-sm);
+    color: var(--ink);
+    line-height: 1.55;
+    letter-spacing: -0.005em;
+    max-width: 64ch;
+  }
+  .callout strong {
+    color: var(--ink);
+    font-weight: 600;
+  }
+  /* tone variants · change background only · strong stays ink */
+  .callout.coral { background: var(--coral-subtle); }
+  .callout.mint  { background: var(--mint-subtle); }
+  .callout.gold  { background: var(--gold-subtle); }
+  .callout.blush { background: var(--blush-subtle); }
+
+  /* with-rule · ornamental editorial form · short tone rule + centered italic */
+  .callout.with-rule { text-align: center; padding: 22px 24px 20px; }
+  .callout.with-rule::before {
     content: "";
     display: block;
     width: 28px;
@@ -858,42 +881,42 @@
     border-radius: 2px;
     margin: 0 auto 14px;
   }
-  .callout p {
-    margin: 0 auto;
-    font-family: "Helvena";
-    font-size: var(--fs-body-sm);
-    color: var(--ink);
-    line-height: 1.6;
-    font-style: italic;
-    max-width: 54ch;
-    letter-spacing: -0.005em;
-  }
-  .callout strong {
+  .callout.with-rule p { margin: 0 auto; line-height: 1.6; font-style: italic; max-width: 54ch; }
+  .callout.with-rule strong { color: var(--accent-strong); font-weight: 500; }
+  .callout.with-rule.coral { --accent: var(--coral-base); --accent-strong: var(--coral-strong); }
+  .callout.with-rule.mint  { --accent: var(--mint-base);  --accent-strong: #4F6647; }
+  .callout.with-rule.gold  { --accent: var(--gold-base);  --accent-strong: #6E5A2A; }
+  .callout.with-rule.blush { --accent: var(--blush-base); --accent-strong: #7A4A3A; }
+
+  /* with-asterisk · alternative ornamental marker (✶) · same centered italic */
+  .callout.with-asterisk { text-align: center; padding: 22px 24px 20px; }
+  .callout.with-asterisk::before {
+    content: "✶";
+    display: block;
     color: var(--accent-strong);
-    font-weight: 500;
-    font-style: normal;
+    font-size: 14px;
+    line-height: 1;
+    margin-bottom: 10px;
   }
-  /* tone variants — change accent rule + emphasis colour */
-  .callout.coral { --accent: var(--coral-base); --accent-strong: var(--coral-strong); }
-  .callout.mint  { --accent: var(--mint-base);  --accent-strong: #4F6647; }
-  .callout.gold  { --accent: var(--gold-base);  --accent-strong: #6E5A2A; }
-  .callout.blush { --accent: var(--blush-base); --accent-strong: #7A4A3A; }
+  .callout.with-asterisk p { margin: 0 auto; line-height: 1.6; font-style: italic; max-width: 54ch; }
+  .callout.with-asterisk strong { color: var(--accent-strong); font-weight: 500; }
+  .callout.with-asterisk.coral { --accent-strong: var(--coral-strong); }
+  .callout.with-asterisk.mint  { --accent-strong: #4F6647; }
+  .callout.with-asterisk.gold  { --accent-strong: #6E5A2A; }
+  .callout.with-asterisk.blush { --accent-strong: #7A4A3A; }
 
-  /* without rule */
-  .callout.plain::before { content: none; }
-  .callout.plain { padding-top: 18px; }
-
-  /* stat variant — short statement with large coral number, no rule */
+  /* stat variant — short centered statement with large coral number */
   .callout.stat {
     background: transparent;
     padding: 8px 18px;
+    text-align: center;
   }
-  .callout.stat::before { content: none; }
   .callout.stat p {
-    font-style: normal;
     font-size: var(--fs-body-lg);
     color: var(--ink);
     letter-spacing: 0;
+    margin: 0 auto;
+    max-width: none;
   }
   .callout.stat strong {
     color: var(--coral-strong);
@@ -1694,11 +1717,142 @@
   </section>
 
   <!-- ╔═════════════════════════════════════════════════════════╗
-       ║  § H — LAYOUT                                            ║
+       ║  § H — CALLOUT / NOTE                                    ║
        ╚═════════════════════════════════════════════════════════╝ -->
   <section class="section">
     <div class="section-head">
-      <div class="section-num">§ H — Layout</div>
+      <div class="section-num">§ H — Callout</div>
+      <div>
+        <h2>One editorial card for tips, footnotes, and adaptive copy.</h2>
+        <div class="desc">
+          Reemplaza los cuadros ad-hoc que aparecían en sleep-day, milestone,
+          calendar y otras superficies (paper-soft + texto centrado en italic).
+          Ahora un único primitive con variantes tonales y un modo "stat" para
+          afirmaciones cortas con número grande.
+        </div>
+      </div>
+    </div>
+
+    <div class="spec">
+      <div class="spec-head">
+        <h3>Default · left-aligned with inline strong heading</h3>
+        <span class="meta-r">.callout · paper-soft · no rule</span>
+      </div>
+      <div class="spec-row col" style="gap: 10px; padding: 12px 0">
+        <div class="callout" style="max-width: 460px">
+          <p><strong>Sin alarmismo.</strong> Te avisamos sin alarmismo y te ayudamos a hablar con el pediatra.</p>
+        </div>
+        <div class="callout" style="max-width: 460px">
+          <p><strong>Cero juicio.</strong> Lo importante es sueño seguro, no ortodoxia. Colecho, cuna, lactancia, biberón nocturno: lo miramos desde seguridad y descanso familiar.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="spec">
+      <div class="spec-head">
+        <h3>Tone variants · same default style with tinted background</h3>
+        <span class="meta-r">.callout.{coral,mint,gold,blush}</span>
+      </div>
+      <div class="spec-row col" style="gap: 10px; padding: 12px 0">
+        <div class="callout coral" style="max-width: 460px">
+          <p><strong>Cuidado con la fiebre &gt; 38.5 °C.</strong> Después de la vacuna, llama al pediatra si dura más de 24 h.</p>
+        </div>
+        <div class="callout mint" style="max-width: 460px">
+          <p><strong>Patrón normal.</strong> 3 ventanas de despertar esta noche son típicas a esta edad — no estás haciendo nada mal.</p>
+        </div>
+        <div class="callout gold" style="max-width: 460px">
+          <p><strong>Próxima dosis.</strong> Triple vírica en 12 meses. Te avisamos.</p>
+        </div>
+        <div class="callout blush" style="max-width: 460px">
+          <p><strong>Transición de siestas.</strong> El paso de 2 → 1 siesta suele ocurrir entre los 12 y 18 meses.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="spec">
+      <div class="spec-head">
+        <h3>Optional · with rule (ornamental editorial form)</h3>
+        <span class="meta-r">.callout.with-rule · centered italic</span>
+      </div>
+      <div class="spec-row col" style="gap: 10px; padding: 12px 0">
+        <div class="callout with-rule" style="max-width: 460px">
+          <p>Esta rutina se adapta a tu peque, a su edad, a tu localidad y a la estación del año para saber cuándo amanece / anochece y respetar sus ritmos circadianos.</p>
+        </div>
+        <div class="callout with-rule mint" style="max-width: 460px">
+          <p>Despertares nocturnos a esta edad son normales. La consistencia en cómo respondes es lo que enseña, no el método específico.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="spec">
+      <div class="spec-head">
+        <h3>Optional · with asterisk (alternative ornamental marker)</h3>
+        <span class="meta-r">.callout.with-asterisk · centered italic + ✶</span>
+      </div>
+      <div class="spec-row" style="padding: 12px 0">
+        <div class="callout with-asterisk" style="max-width: 460px">
+          <p>Tú cuidas a tu hij@, y Grow te cuida a ti.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="spec">
+      <div class="spec-head">
+        <h3>Stat · short centered statement with large coral number</h3>
+        <span class="meta-r">.callout.stat · transparent</span>
+      </div>
+      <div class="spec-row" style="padding: 12px 0; flex-direction: column; align-items: center; gap: 6px">
+        <div class="callout stat" style="max-width: 460px">
+          <p>Tu peque debe dormir <strong>13 h</strong> al día.</p>
+        </div>
+        <div class="callout stat" style="max-width: 460px">
+          <p>Lleva <strong>3 / 9</strong> hitos al día.</p>
+        </div>
+        <div class="callout stat" style="max-width: 460px">
+          <p>Próxima vacuna en <strong>12 meses</strong>.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="spec">
+      <div class="spec-head">
+        <h3>Anatomy</h3>
+      </div>
+      <div class="spec-row col">
+        <ul style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--ink-soft); line-height: 1.7; padding-left: 18px; margin: 0">
+          <li><strong>.callout</strong> · default · paper-soft bg, radius-md, padding 18/20, text-align <em>left</em></li>
+          <li><strong>p</strong> · Helvena fs-body-sm, ink, line-height 1.55, max 64ch (no italic by default)</li>
+          <li><strong>strong</strong> · ink colour, weight 600, normal style — used as inline heading "Sin alarmismo."</li>
+          <li><strong>.coral / .mint / .gold / .blush</strong> · changes bg to the *-subtle tone, strong stays ink</li>
+          <li><strong>.with-rule</strong> · adds short tone-coloured 28×1.5 rule at top, centers, italicises body, strong becomes tone-coloured</li>
+          <li><strong>.with-asterisk</strong> · same as .with-rule but the ornamental marker is "✶" instead of a horizontal rule</li>
+          <li><strong>.stat</strong> · transparent bg, centered, large coral number via &lt;strong&gt; (h2 size, Lenia 500)</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="spec">
+      <div class="spec-head">
+        <h3>Where this replaces ad-hoc summaries</h3>
+      </div>
+      <div class="spec-row col">
+        <ul style="font-size: 13px; color: var(--ink-soft); line-height: 1.65; padding-left: 18px; margin: 0">
+          <li><code>.sleep-day-summary</code> en § K Sleep schedule (deprecado)</li>
+          <li><code>.growth-empty</code> + cualquier nota lateral en libro de Desarrollo</li>
+          <li>"Sin alarmismo" notes en cada libro</li>
+          <li>"Esto es una orientación" footnotes que estaban duplicadas</li>
+          <li>Tip parental en § K Variant C — ahora pueden ser <code>.callout.plain</code> dentro del paso</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ╔═════════════════════════════════════════════════════════╗
+       ║  § I — LAYOUT                                            ║
+       ╚═════════════════════════════════════════════════════════╝ -->
+  <section class="section">
+    <div class="section-head">
+      <div class="section-num">§ I — Layout</div>
       <div>
         <h2>Bottom nav with FAB. Sheet & header patterns.</h2>
         <div class="desc">
@@ -1827,11 +1981,11 @@
   </section>
 
   <!-- ╔═════════════════════════════════════════════════════════╗
-       ║  § I — A11Y                                              ║
+       ║  § J — A11Y                                              ║
        ╚═════════════════════════════════════════════════════════╝ -->
   <section class="section">
     <div class="section-head">
-      <div class="section-num">§ I — Accessibility</div>
+      <div class="section-num">§ J — Accessibility</div>
       <div>
         <h2>Keyboard-only focus, aria-labels, tap targets ≥ 36 px.</h2>
         <div class="desc">
@@ -2500,129 +2654,11 @@
   </section>
 
   <!-- ╔═════════════════════════════════════════════════════════╗
-       ║  § M — CALLOUT / NOTE                                    ║
+       ║  § M — CHANGELOG                                         ║
        ╚═════════════════════════════════════════════════════════╝ -->
   <section class="section">
     <div class="section-head">
-      <div class="section-num">§ M — Callout</div>
-      <div>
-        <h2>One editorial card for tips, footnotes, and adaptive copy.</h2>
-        <div class="desc">
-          Reemplaza los cuadros ad-hoc que aparecían en sleep-day, milestone,
-          calendar y otras superficies (paper-soft + texto centrado en italic).
-          Ahora un único primitive con variantes tonales y un modo "stat" para
-          afirmaciones cortas con número grande.
-        </div>
-      </div>
-    </div>
-
-    <div class="spec">
-      <div class="spec-head">
-        <h3>Default · editorial italic note</h3>
-        <span class="meta-r">.callout · with ✶ asterisk</span>
-      </div>
-      <div class="spec-row" style="padding: 12px 0">
-        <div class="callout" style="max-width: 460px">
-          <p>Esta rutina se adapta a tu peque, a su edad, a tu localidad y a la estación del año para saber cuándo amanece / anochece y respetar sus ritmos circadianos.</p>
-        </div>
-      </div>
-      <div class="spec-row" style="padding: 8px 0">
-        <div class="callout" style="max-width: 460px">
-          <p>Despertares nocturnos a esta edad son normales. La consistencia en cómo respondes es lo que enseña, no el método específico que uses.</p>
-        </div>
-      </div>
-    </div>
-
-    <div class="spec">
-      <div class="spec-head">
-        <h3>Tone variants</h3>
-        <span class="meta-r">.callout.{coral,mint,gold,blush}</span>
-      </div>
-      <div class="spec-row col" style="gap: 10px; padding: 12px 0">
-        <div class="callout coral" style="max-width: 460px">
-          <p>Cuidado con la <strong>fiebre &gt; 38.5 °C</strong> después de la vacuna. Llama al pediatra si dura más de 24 h.</p>
-        </div>
-        <div class="callout mint" style="max-width: 460px">
-          <p><strong>3 ventanas de despertar</strong> esta noche. Patrón normal a esta edad — no estás haciendo nada mal.</p>
-        </div>
-        <div class="callout gold" style="max-width: 460px">
-          <p>Próxima dosis de <strong>Triple vírica</strong> en 12 meses. Te avisamos.</p>
-        </div>
-        <div class="callout blush" style="max-width: 460px">
-          <p>El paso de 2 → 1 siesta suele ocurrir entre los <strong>12 y 18 meses</strong>. Llamamos al cambio "transición de siestas".</p>
-        </div>
-      </div>
-    </div>
-
-    <div class="spec">
-      <div class="spec-head">
-        <h3>Stat variant — short statement with large coral number</h3>
-        <span class="meta-r">.callout.stat · transparent · no asterisk</span>
-      </div>
-      <div class="spec-row" style="padding: 12px 0; flex-direction: column; align-items: center; gap: 6px">
-        <div class="callout stat" style="max-width: 460px">
-          <p>Tu peque debe dormir <strong>13 h</strong> al día.</p>
-        </div>
-        <div class="callout stat" style="max-width: 460px">
-          <p>Lleva <strong>3 / 9</strong> hitos al día.</p>
-        </div>
-        <div class="callout stat" style="max-width: 460px">
-          <p>Próxima vacuna en <strong>12 meses</strong>.</p>
-        </div>
-      </div>
-    </div>
-
-    <div class="spec">
-      <div class="spec-head">
-        <h3>Plain variant — no asterisk</h3>
-        <span class="meta-r">.callout.plain</span>
-      </div>
-      <div class="spec-row" style="padding: 12px 0">
-        <div class="callout plain" style="max-width: 460px">
-          <p>Para cuando el contexto ya implica el énfasis (e.g., debajo de un icono propio o un header con asterisco propio).</p>
-        </div>
-      </div>
-    </div>
-
-    <div class="spec">
-      <div class="spec-head">
-        <h3>Anatomy</h3>
-      </div>
-      <div class="spec-row col">
-        <ul style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--ink-soft); line-height: 1.7; padding-left: 18px; margin: 0">
-          <li><strong>.callout</strong> · paper-soft bg, radius-md, padding 16/18, text-align center</li>
-          <li><strong>::before</strong> · ✶ asterisco coral 14px arriba</li>
-          <li><strong>p</strong> · italic, fs-body-sm, color ink-soft, max-width 56ch, line-height 1.55</li>
-          <li><strong>strong dentro de p</strong> · color ink, weight 500, font-style normal (rompe la cursiva)</li>
-          <li><strong>.coral / .mint / .gold / .blush</strong> · cambia el bg al *-subtle correspondiente y el color del asterisco</li>
-          <li><strong>.stat</strong> · bg transparent, sin asterisco, p en peso normal, strong como número h2 coral</li>
-          <li><strong>.plain</strong> · sin asterisco, padding-top reducido</li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="spec">
-      <div class="spec-head">
-        <h3>Where this replaces ad-hoc summaries</h3>
-      </div>
-      <div class="spec-row col">
-        <ul style="font-size: 13px; color: var(--ink-soft); line-height: 1.65; padding-left: 18px; margin: 0">
-          <li><code>.sleep-day-summary</code> en § K Sleep schedule (deprecado)</li>
-          <li><code>.growth-empty</code> + cualquier nota lateral en libro de Desarrollo</li>
-          <li>"Sin alarmismo" notes en cada libro</li>
-          <li>"Esto es una orientación" footnotes que estaban duplicadas</li>
-          <li>Tip parental en § K Variant C — ahora pueden ser <code>.callout.plain</code> dentro del paso</li>
-        </ul>
-      </div>
-    </div>
-  </section>
-
-  <!-- ╔═════════════════════════════════════════════════════════╗
-       ║  § J — CHANGELOG                                         ║
-       ╚═════════════════════════════════════════════════════════╝ -->
-  <section class="section">
-    <div class="section-head">
-      <div class="section-num">§ J — v0.2 changelog</div>
+      <div class="section-num">§ M — v0.2 changelog</div>
       <div>
         <h2>What changed since v0.1.</h2>
         <div class="desc">

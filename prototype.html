@@ -6403,40 +6403,57 @@
     border-color: var(--coral-base); border-style: solid; background: var(--coral-base);
   }
 
-  /* § M · Callout */
+  /* § H · Callout (after Cards in DS order) */
   .callout {
     --accent: var(--coral-base);
     --accent-strong: var(--coral-strong);
     background: var(--paper-soft);
     border-radius: var(--radius-md);
-    padding: 22px 24px 20px;
-    text-align: center; position: relative;
+    padding: 18px 20px;
+    text-align: left;
+    position: relative;
   }
-  .callout::before {
+  .callout p {
+    margin: 0;
+    font-family: "Helvena"; font-size: var(--fs-body-sm);
+    color: var(--ink); line-height: 1.55;
+    letter-spacing: -0.005em; max-width: 64ch;
+  }
+  .callout strong { color: var(--ink); font-weight: 600; }
+  .callout.coral { background: var(--coral-subtle); }
+  .callout.mint  { background: var(--mint-subtle); }
+  .callout.gold  { background: var(--gold-subtle); }
+  .callout.blush { background: var(--blush-subtle); }
+  /* with-rule · ornamental editorial · centered italic with top accent */
+  .callout.with-rule { text-align: center; padding: 22px 24px 20px; }
+  .callout.with-rule::before {
     content: ""; display: block;
     width: 28px; height: 1.5px;
     background: var(--accent); border-radius: 2px;
     margin: 0 auto 14px;
   }
-  .callout p {
-    margin: 0 auto;
-    font-family: "Helvena"; font-size: var(--fs-body-sm);
-    color: var(--ink); line-height: 1.6;
-    font-style: italic; max-width: 54ch;
-    letter-spacing: -0.005em;
+  .callout.with-rule p { margin: 0 auto; line-height: 1.6; font-style: italic; max-width: 54ch; }
+  .callout.with-rule strong { color: var(--accent-strong); font-weight: 500; }
+  .callout.with-rule.coral { --accent: var(--coral-base); --accent-strong: var(--coral-strong); }
+  .callout.with-rule.mint  { --accent: var(--mint-base);  --accent-strong: #4F6647; }
+  .callout.with-rule.gold  { --accent: var(--gold-base);  --accent-strong: #6E5A2A; }
+  .callout.with-rule.blush { --accent: var(--blush-base); --accent-strong: #7A4A3A; }
+  /* with-asterisk · ✶ instead of rule */
+  .callout.with-asterisk { text-align: center; padding: 22px 24px 20px; }
+  .callout.with-asterisk::before {
+    content: "✶"; display: block;
+    color: var(--accent-strong); font-size: 14px;
+    line-height: 1; margin-bottom: 10px;
   }
-  .callout strong {
-    color: var(--accent-strong); font-weight: 500; font-style: normal;
-  }
-  .callout.coral { --accent: var(--coral-base); --accent-strong: var(--coral-strong); }
-  .callout.mint  { --accent: var(--mint-base);  --accent-strong: #4F6647; }
-  .callout.gold  { --accent: var(--gold-base);  --accent-strong: #6E5A2A; }
-  .callout.blush { --accent: var(--blush-base); --accent-strong: #7A4A3A; }
-  .callout.plain::before { content: none; }
-  .callout.plain { padding-top: 18px; }
-  .callout.stat { background: transparent; padding: 8px 18px; }
-  .callout.stat::before { content: none; }
-  .callout.stat p { font-style: normal; font-size: var(--fs-body-lg); color: var(--ink); letter-spacing: 0; }
+  .callout.with-asterisk p { margin: 0 auto; line-height: 1.6; font-style: italic; max-width: 54ch; }
+  .callout.with-asterisk strong { color: var(--accent-strong); font-weight: 500; }
+  .callout.with-asterisk.coral { --accent-strong: var(--coral-strong); }
+  .callout.with-asterisk.mint  { --accent-strong: #4F6647; }
+  .callout.with-asterisk.gold  { --accent-strong: #6E5A2A; }
+  .callout.with-asterisk.blush { --accent-strong: #7A4A3A; }
+  /* stat · centered with large coral number */
+  .callout.stat { background: transparent; padding: 8px 18px; text-align: center; }
+  .callout.stat p { font-size: var(--fs-body-lg); color: var(--ink); letter-spacing: 0; margin: 0 auto; max-width: none; }
   .callout.stat strong {
     color: var(--coral-strong);
     font-family: "Lenia"; font-weight: 500;
@@ -8698,7 +8715,7 @@
         <h4 class="sleep-day-section-title">Cómo es tu día</h4>
         <div class="sleep-day-rhythm">${rhythmRows}</div>
 
-        <div class="callout" style="margin-top: 22px">
+        <div class="callout with-rule" style="margin-top: 22px">
           <p>Esta rutina se adapta a tu peque, a su edad, a tu localidad (${escapeHtml(sleepLocation.city)}) y a la estación del año para saber cuándo amanece / anochece y respetar sus ritmos circadianos.</p>
         </div>
       </div>
