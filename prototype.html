@@ -8548,29 +8548,160 @@
     `;
   }
 
+  // Sleep schedule canon · § L Sleep schedule (uses § K Timeline + § H Top header + § M Callout)
+  const SLEEP_DS_ICONS = {
+    rise: '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4 12H2M22 12h-2M5 5l1.5 1.5M17.5 17.5L19 19M5 19l1.5-1.5M17.5 6.5L19 5"/></svg>',
+    nap: '<svg viewBox="0 0 24 24"><path d="M3 16h6"/><path d="M5 16v-3a3 3 0 0 1 3-3h0a3 3 0 0 1 3 3v3"/><path d="M14 9l3-3 3 3"/></svg>',
+    routine: '<svg viewBox="0 0 24 24"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9z"/></svg>',
+    night: '<svg viewBox="0 0 24 24"><path d="M3 18h18"/><path d="M5 18v-4a4 4 0 0 1 4-4h6a4 4 0 0 1 4 4v4"/><path d="M3 14h18"/></svg>'
+  };
+  const SLEEP_PHASE_CLASS = { rise: 'morning', nap: 'nap', routine: 'bedtime', night: 'night' };
+
+  function buildSleepTimelineSegments(schedule, ageRange) {
+    // Build proportional segments (24h, anchored at midnight) of types: sleep / wake / routine.
+    const rise = getSunriseAdjustedRise(ageRange);
+    const segs = [];
+    if (rise > 0) segs.push({ type: 'sleep', mins: rise });
+    let cursor = rise;
+    for (const block of schedule.blocks) {
+      if (block.type === 'rise') continue;
+      if (block.type === 'nap') {
+        const a = rise + block.start, b = rise + block.end;
+        if (a > cursor) segs.push({ type: 'wake', mins: a - cursor });
+        segs.push({ type: 'sleep', mins: b - a });
+        cursor = b;
+      } else if (block.type === 'routine') {
+        const a = rise + block.at;
+        if (a > cursor) segs.push({ type: 'wake', mins: a - cursor });
+        cursor = a;
+      } else if (block.type === 'night') {
+        const a = rise + block.at;
+        if (a > cursor) segs.push({ type: 'routine', mins: a - cursor });
+        const rest = 1440 - a;
+        if (rest > 0) segs.push({ type: 'sleep', mins: rest });
+        cursor = 1440;
+      }
+    }
+    return segs;
+  }
+
+  function getSleepRecommendedHours(ageRange) {
+    // ageRange.total is like "13-14h" → return the lower bound as integer
+    const m = (ageRange.total || '').match(/(\d+)/);
+    return m ? parseInt(m[1], 10) : 13;
+  }
+
+  function getSleepPhaseCopy(type) {
+    switch (type) {
+      case 'rise':    return 'Empieza con luz natural.';
+      case 'nap':     return 'En cuna, oscura, después de comer.';
+      case 'routine': return 'Baño, pijama, cuento, abrazo.';
+      case 'night':   return 'Sin estímulos. Despertares normales.';
+      default:        return '';
+    }
+  }
+  function getSleepWakeCopy(nextType) {
+    if (nextType === 'nap')     return 'Juego activo, primera comida, paseo.';
+    if (nextType === 'routine') return 'Tarde activa, cena ligera 1 h antes.';
+    if (nextType === 'night')   return 'Calma progresiva. Última toma si aplica.';
+    return '';
+  }
+
   function renderSleepSchedule(ageId = sleepActiveAge, options = {}) {
     const ageRange = getSleepAge(ageId);
     const schedule = sleepSchedules[ageRange.id] || sleepSchedules['13-18m'];
-    const blocks = schedule.blocks.map((block, index) => `
-      <div class="sleep-block ${escapeHtml(block.type)}">
-        <div>
-          <strong>${escapeHtml(block.title)}</strong>
-          <small>${escapeHtml(getSleepBlockTime(block, ageRange))}</small>
-        </div>
-        <span class="sleep-block-icon">${escapeHtml(block.icon)}</span>
-      </div>
-      ${block.awakeAfter && index < schedule.blocks.length - 1 ? `<div class="sleep-awake">${escapeHtml(block.awakeAfter)}</div>` : ''}
-    `).join('');
-    const heading = options.compact
-      ? `<div class="sleep-section-head"><div><div class="sleep-mini-label">Hoy · esquema del día</div><h3>${escapeHtml(ageRange.title)}</h3></div><button class="sleep-back-view" type="button" data-sleep-view="schedule">Ver esquema</button></div>`
-      : `<div class="sleep-mini-label">Esquema típico · ${escapeHtml(ageRange.title)} · ${escapeHtml(ageRange.naps)} siestas</div>`;
+    const segs = buildSleepTimelineSegments(schedule, ageRange);
+
+    // Stats
+    const totalSleep = segs.filter(s => s.type === 'sleep').reduce((a, s) => a + s.mins, 0);
+    const totalWake  = segs.filter(s => s.type === 'wake').reduce((a, s) => a + s.mins, 0);
+    const totalRoutine = segs.filter(s => s.type === 'routine').reduce((a, s) => a + s.mins, 0);
+    const fmt = (m) => {
+      const h = Math.floor(m / 60), mm = m % 60;
+      return mm === 0 ? `${h} h` : `${h} h ${mm} m`;
+    };
+    const recommended = getSleepRecommendedHours(ageRange);
+
+    // Timeline segments
+    const segMarkup = segs.map(s =>
+      `<span class="timeline-seg ${s.type}" style="flex: ${s.mins};" title="${s.type} · ${fmt(s.mins)}"></span>`
+    ).join('');
+
+    // "Now" marker (current time of day as % of 24h)
+    const now = new Date();
+    const nowMins = now.getHours() * 60 + now.getMinutes();
+    const nowPct = (nowMins / 1440 * 100).toFixed(2);
+    const nowLabel = `Ahora · ${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
+
+    // Vertical "Cómo es tu día" rhythm list (phases + wake interludes)
+    const rhythmRows = schedule.blocks.map((block, i) => {
+      const next = schedule.blocks[i + 1];
+      const phaseClass = SLEEP_PHASE_CLASS[block.type] || '';
+      const phaseRow = `
+        <div class="sleep-day-phase ${phaseClass}">
+          <div class="icon" aria-hidden="true">${SLEEP_DS_ICONS[block.type] || ''}</div>
+          <div class="body">
+            <strong>${escapeHtml(block.title)}</strong>
+            <p>${escapeHtml(getSleepPhaseCopy(block.type))}</p>
+          </div>
+          <div class="time">${escapeHtml(getSleepBlockTime(block, ageRange))}</div>
+        </div>`;
+      const wakeRow = (block.awakeAfter && next) ? `
+        <div class="sleep-day-wake">
+          <div class="icon" aria-hidden="true"></div>
+          <div class="label">${escapeHtml(block.awakeAfter)}<p>${escapeHtml(getSleepWakeCopy(next.type))}</p></div>
+        </div>` : '';
+      return phaseRow + wakeRow;
+    }).join('');
+
+    // Profile name from milestone profile (fallback)
+    const childName = (typeof milestoneProfile !== 'undefined' && milestoneProfile.childName) ? milestoneProfile.childName : 'Lola';
 
     return `
-      <section class="sleep-section">
-        ${heading}
-        <div class="sleep-schedule">${blocks}</div>
-        <div class="sleep-total"><strong>${escapeHtml(schedule.summary)}</strong><br>Esto es una orientación. Cada peque tiene su ritmo. Sin juicio.</div>
-      </section>
+      <div class="sleep-day">
+        <div class="top-header" style="margin-bottom: 16px">
+          <div>
+            <span class="eyebrow">${escapeHtml(childName)} · ${escapeHtml(ageRange.label)}</span>
+            <h2>Rutina ideal</h2>
+            <p class="sub">Según su edad, localización y estación del año.</p>
+          </div>
+        </div>
+
+        <div class="sleep-day-stat-wrap">
+          <div class="callout stat">
+            <p>Tu peque debe dormir <strong>${recommended} h</strong> al día.</p>
+          </div>
+        </div>
+
+        <div class="timeline">
+          <div class="timeline-row">
+            <div class="timeline-row-label">
+              <span>Hoy · 24 h</span>
+              <span class="stats">${fmt(totalSleep)} sueño · ${fmt(totalWake)} despierta</span>
+            </div>
+            <div class="timeline-track">
+              ${segMarkup}
+              <div class="timeline-now" style="left: ${nowPct}%" data-now="${escapeHtml(nowLabel)}"></div>
+            </div>
+            <div class="timeline-axis">
+              <span>0</span><span>6</span><span>12</span><span>18</span><span>24</span>
+            </div>
+          </div>
+          <div class="timeline-legend">
+            <span class="item"><span class="swatch sleep"></span> Sueño · ${fmt(totalSleep)}</span>
+            <span class="item"><span class="swatch wake"></span> Despierta · ${fmt(totalWake)}</span>
+            ${totalRoutine > 0 ? `<span class="item"><span class="swatch routine"></span> Rutina · ${fmt(totalRoutine)}</span>` : ''}
+          </div>
+        </div>
+
+        <div class="sleep-day-divider"></div>
+        <h4 class="sleep-day-section-title">Cómo es tu día</h4>
+        <div class="sleep-day-rhythm">${rhythmRows}</div>
+
+        <div class="callout" style="margin-top: 22px">
+          <p>Esta rutina se adapta a tu peque, a su edad, a tu localidad (${escapeHtml(sleepLocation.city)}) y a la estación del año para saber cuándo amanece / anochece y respetar sus ritmos circadianos.</p>
+        </div>
+      </div>
     `;
   }
 
