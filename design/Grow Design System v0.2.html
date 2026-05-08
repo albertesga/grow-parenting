@@ -805,22 +805,91 @@
     font-size: var(--fs-h2); line-height: 1;
     margin: 0; letter-spacing: -0.015em;
   }
-  .sleep-day-pie {
-    display: flex; flex-direction: column; align-items: center;
-    margin: 6px 0 0;
+  /* Horizontal timeline line — replaces the pie at the top of .sleep-day */
+  .sleep-day-line { margin: 8px 0 0; }
+  .sleep-day-line .stl-row { margin-bottom: 14px; }
+  .sleep-day-line .stl-row:last-child { margin-bottom: 0; }
+  .sleep-day-line .stl-row-label {
+    display: flex; justify-content: space-between; align-items: baseline;
+    font-family: 'Lenia';
+    font-size: var(--fs-eyebrow);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    margin-bottom: 24px;
+    font-weight: 500;
   }
-  .sleep-day-pie svg { width: 220px; height: 220px; display: block; }
-  .sleep-day-totals {
-    display: flex; justify-content: center; gap: 28px;
+  .sleep-day-line .stl-row-label .stats {
+    color: var(--ink); letter-spacing: 0.06em; text-transform: none; font-size: var(--fs-meta);
+  }
+  .sleep-day-line .stl-track {
+    position: relative;
+    display: flex;
+    height: 18px;
+    border-radius: var(--radius-pill);
+    overflow: hidden;
+    background: var(--paper-soft);
+  }
+  .sleep-day-line .stl-seg { display: block; height: 100%; }
+  .sleep-day-line .stl-seg.sleep   { background: var(--module-dark); }
+  .sleep-day-line .stl-seg.wake    { background: var(--gold-subtle); }
+  .sleep-day-line .stl-seg.routine { background: var(--blush-base); }
+  .sleep-day-line .stl-now-marker {
+    position: absolute;
+    top: -6px; bottom: -6px;
+    width: 2.5px;
+    background: var(--coral-strong);
+    border-radius: 2px;
+    z-index: 2;
+    pointer-events: none;
+  }
+  .sleep-day-line .stl-now-marker::after {
+    content: attr(data-now);
+    position: absolute;
+    top: -28px;
+    left: 50%; transform: translateX(-50%);
+    background: var(--coral-base); color: #4A2614;
+    font-family: 'Lenia'; font-size: var(--fs-eyebrow); font-weight: 600;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    padding: 3px 8px 2px;
+    border-radius: var(--radius-pill);
+    white-space: nowrap;
+  }
+  .sleep-day-line .stl-now-marker::before {
+    content: '';
+    position: absolute;
+    top: -8px; left: 50%; transform: translateX(-50%);
+    width: 8px; height: 8px;
+    background: var(--coral-base);
+    transform: translateX(-50%) rotate(45deg);
+    z-index: -1;
+  }
+  .sleep-day-line .stl-axis {
+    display: flex; justify-content: space-between;
+    margin-top: 6px;
+    font-family: 'Lenia';
+    font-size: var(--fs-eyebrow);
+    color: var(--ink-muted);
+    font-weight: 500;
+    letter-spacing: 0.04em;
+  }
+  .sleep-day-line .stl-legend {
+    display: flex; gap: 18px; flex-wrap: wrap;
+    margin-top: 14px; justify-content: center;
     font-family: 'Lenia'; font-size: var(--fs-caption);
-    color: var(--ink-muted); margin-top: 8px;
-    letter-spacing: 0.02em;
+    color: var(--ink-soft);
   }
-  .sleep-day-totals strong {
-    color: var(--ink); font-weight: 500; font-size: var(--fs-body);
-    display: block; margin-bottom: 2px;
+  .sleep-day-line .stl-legend .item {
+    display: inline-flex; align-items: center; gap: 7px;
   }
-  .sleep-day-totals .stat { text-align: center; }
+  .sleep-day-line .stl-legend .swatch {
+    width: 16px; height: 10px;
+    border-radius: 3px;
+    border: 1px solid rgba(0,0,0,0.05);
+  }
+  .sleep-day-line .stl-legend .swatch.sleep   { background: var(--module-dark); border-color: var(--module-dark); }
+  .sleep-day-line .stl-legend .swatch.wake    { background: var(--gold-subtle); border-color: rgba(184,151,63,0.30); }
+  .sleep-day-line .stl-legend .swatch.routine { background: var(--blush-base); border-color: var(--blush-strong); }
   .sleep-day-divider {
     height: 1px; background: var(--line);
     margin: 22px 0;
@@ -855,7 +924,8 @@
     stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round;
   }
   .sleep-day-phase.morning .icon { background: var(--gold-subtle); color: #6E5A2A; }
-  .sleep-day-phase.nap .icon { background: var(--mint-subtle); color: #4F6647; }
+  /* sleep moments share the same color (siesta + night) */
+  .sleep-day-phase.nap .icon { background: var(--module-dark); color: var(--paper); }
   .sleep-day-phase.bedtime .icon { background: var(--blush-base); color: #6B3D2A; }
   .sleep-day-phase.night .icon { background: var(--module-dark); color: var(--paper); }
   .sleep-day-phase.now {
@@ -2244,52 +2314,38 @@
             </div>
           </div>
 
-          <!-- ─── Pie · 24h overview ─── -->
-          <div class="sleep-day-pie">
-            <svg viewBox="0 0 220 220" xmlns="http://www.w3.org/2000/svg" aria-label="Pie de 24 horas">
-              <!-- Wake morning · 7:15 → 12:15 -->
-              <path d="M 178.16 133.14 A 72 72 0 0 1 105.29 181.85"
-                    stroke="#F6EBC9" stroke-width="20" fill="none"/>
-              <!-- Siesta · 12:15 → 13:45 -->
-              <path d="M 105.29 181.85 A 72 72 0 0 1 78.15 174.58"
-                    stroke="var(--mint-base)" stroke-width="20" fill="none"/>
-              <!-- Wake afternoon · 13:45 → 19:15 -->
-              <path d="M 78.15 174.58 A 72 72 0 0 1 41.84 86.86"
-                    stroke="#F6EBC9" stroke-width="20" fill="none"/>
-              <!-- Rutina noche · 19:15 → 19:45 -->
-              <path d="M 41.84 86.86 A 72 72 0 0 1 45.42 78.15"
-                    stroke="var(--blush-base)" stroke-width="20" fill="none"/>
-              <!-- Night sleep · 19:45 → 7:15 -->
-              <path d="M 45.42 78.15 A 72 72 0 0 1 178.16 133.14"
-                    stroke="var(--module-dark)" stroke-width="20" fill="none"/>
-
-              <!-- phase boundary dots -->
-              <circle cx="178.16" cy="133.14" r="2" fill="var(--paper)"/>
-              <circle cx="105.29" cy="181.85" r="2" fill="var(--paper)"/>
-              <circle cx="78.15" cy="174.58" r="2" fill="var(--paper)"/>
-              <circle cx="41.84" cy="86.86" r="2" fill="var(--paper)"/>
-              <circle cx="45.42" cy="78.15" r="2" fill="var(--paper)"/>
-
-              <!-- hour markers -->
-              <text x="110" y="56" text-anchor="middle" font-family="Lenia" font-size="11" fill="var(--ink-soft)" font-weight="500">0</text>
-              <text x="170" y="114" text-anchor="middle" font-family="Lenia" font-size="11" fill="var(--ink-soft)" font-weight="500">6</text>
-              <text x="110" y="172" text-anchor="middle" font-family="Lenia" font-size="11" fill="var(--ink-soft)" font-weight="500">12</text>
-              <text x="50" y="114" text-anchor="middle" font-family="Lenia" font-size="11" fill="var(--ink-soft)" font-weight="500">18</text>
-
-              <!-- "now" indicator at 14:32 (in wake afternoon) -->
-              <line x1="110" y1="110" x2="65.67" y2="166.74" stroke="var(--coral-strong)" stroke-width="1.3" stroke-linecap="round"/>
-              <circle cx="65.67" cy="166.74" r="6" fill="var(--coral-base)" stroke="var(--paper)" stroke-width="2.5"/>
-
-              <!-- center -->
-              <text x="110" y="105" text-anchor="middle" font-family="Lenia" font-size="32" font-weight="500" fill="var(--ink)" letter-spacing="-0.02em">13h</text>
-              <text x="110" y="124" text-anchor="middle" font-family="Lenia" font-size="9" fill="var(--ink-muted)" letter-spacing="0.20em" font-weight="500">SUEÑO TOTAL</text>
-            </svg>
-          </div>
-
-          <div class="sleep-day-totals">
-            <div class="stat"><strong>11 h 30 m</strong>noche</div>
-            <div class="stat"><strong>1 h 30 m</strong>siesta</div>
-            <div class="stat" style="color:var(--coral-strong)"><strong style="color:var(--coral-strong)">14:32</strong>ahora</div>
+          <!-- ─── Horizontal 24h timeline ─── -->
+          <div class="sleep-day-line">
+            <div class="stl-row">
+              <div class="stl-row-label">
+                <span>Hoy · 24 h</span>
+                <span class="stats">13 h sueño · 10 h 30 m despierta</span>
+              </div>
+              <div class="stl-track">
+                <!-- 24 h split into 6 segments anchored at midnight.
+                     flex values match phase durations (in hours). -->
+                <span class="stl-seg sleep"   style="flex: 7.25" title="Noche · 0:00 — 7:15"></span>
+                <span class="stl-seg wake"    style="flex: 5"    title="Despierta mañana · 7:15 — 12:15"></span>
+                <span class="stl-seg sleep"   style="flex: 1.5"  title="Siesta · 12:15 — 13:45"></span>
+                <span class="stl-seg wake"    style="flex: 5.5"  title="Despierta tarde · 13:45 — 19:15"></span>
+                <span class="stl-seg routine" style="flex: 0.5"  title="Rutina noche · 19:15 — 19:45"></span>
+                <span class="stl-seg sleep"   style="flex: 4.25" title="Noche · 19:45 — 24:00"></span>
+                <!-- now marker @ 14:32 = 14.533/24 = 60.56% -->
+                <div class="stl-now-marker" style="left: 60.56%" data-now="Ahora · 14:32"></div>
+              </div>
+              <div class="stl-axis">
+                <span>0</span>
+                <span>6</span>
+                <span>12</span>
+                <span>18</span>
+                <span>24</span>
+              </div>
+            </div>
+            <div class="stl-legend">
+              <span class="item"><span class="swatch sleep"></span> Sueño · 13 h</span>
+              <span class="item"><span class="swatch wake"></span> Despierta · 10 h 30 m</span>
+              <span class="item"><span class="swatch routine"></span> Rutina · 30 m</span>
+            </div>
           </div>
 
           <div class="sleep-day-divider"></div>
@@ -2392,6 +2448,91 @@
             a 3 preguntas en una card: "¿qué forma tiene el día?", "¿cuándo
             pasa cada cosa?", "¿qué significa cada fase?".
           </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="spec">
+      <div class="spec-head">
+        <h3>Variant D · 2-line split — when there are more than 6 phases</h3>
+        <span class="meta-r">e.g. bebé 4 - 6 m con 3 siestas · day + night row</span>
+      </div>
+      <div class="spec-row col" style="margin-bottom: 14px">
+        <p style="font-size:13px;color:var(--ink-soft);max-width:64ch;line-height:1.55;margin:0">
+          Para edades con muchas siestas (0 - 9 m) la timeline única se satura.
+          Regla: si hay <strong>más de 6 fases</strong>, dividimos en dos líneas
+          — <strong>día</strong> (despierta, siestas, rutina, primer tramo de
+          noche) y <strong>noche</strong> (resto). Mismos colores, misma
+          tipografía. La regla del color de sueño se mantiene: todo dormir es
+          el mismo tono oscuro.
+        </p>
+      </div>
+      <div class="spec-row" style="padding: 16px 0">
+        <div class="sleep-day" style="max-width: 460px">
+          <div class="sleep-day-head">
+            <div>
+              <div class="eyb">Hoy · esquema</div>
+              <h3>4 - 6 meses</h3>
+            </div>
+          </div>
+
+          <div class="sleep-day-line">
+            <!-- DAY · 6:30 → 20:00 = 13.5 h, 9 segments -->
+            <div class="stl-row">
+              <div class="stl-row-label">
+                <span>Día · 6:30 → 20:00</span>
+                <span class="stats">3 siestas · 8 h despierta</span>
+              </div>
+              <div class="stl-track">
+                <span class="stl-seg wake"    style="flex: 1"   title="Despierta · 6:30 — 7:30"></span>
+                <span class="stl-seg sleep"   style="flex: 1"   title="Siesta 1 · 7:30 — 8:30"></span>
+                <span class="stl-seg wake"    style="flex: 2"   title="Despierta · 8:30 — 10:30"></span>
+                <span class="stl-seg sleep"   style="flex: 1.5" title="Siesta 2 · 10:30 — 12:00"></span>
+                <span class="stl-seg wake"    style="flex: 2"   title="Despierta · 12:00 — 14:00"></span>
+                <span class="stl-seg sleep"   style="flex: 1.5" title="Siesta 3 · 14:00 — 15:30"></span>
+                <span class="stl-seg wake"    style="flex: 3"   title="Despierta · 15:30 — 18:30"></span>
+                <span class="stl-seg routine" style="flex: 0.5" title="Rutina · 18:30 — 19:00"></span>
+                <span class="stl-seg sleep"   style="flex: 1"   title="Sueño nocturno · 19:00 — 20:00"></span>
+                <!-- now @ 14:32 = (14.533 - 6.5) / 13.5 = 59.5% -->
+                <div class="stl-now-marker" style="left: 59.5%" data-now="Ahora · 14:32"></div>
+              </div>
+              <div class="stl-axis">
+                <span>6:30</span>
+                <span>10</span>
+                <span>13</span>
+                <span>16</span>
+                <span>20:00</span>
+              </div>
+            </div>
+
+            <!-- NIGHT · 20:00 → 6:30 = 10.5 h, 1 segment -->
+            <div class="stl-row">
+              <div class="stl-row-label">
+                <span>Noche · 20:00 → 6:30</span>
+                <span class="stats">10 h 30 m sueño</span>
+              </div>
+              <div class="stl-track">
+                <span class="stl-seg sleep" style="flex: 10.5" title="Noche · 20:00 — 6:30"></span>
+              </div>
+              <div class="stl-axis">
+                <span>20:00</span>
+                <span>22</span>
+                <span>0</span>
+                <span>3</span>
+                <span>6:30</span>
+              </div>
+            </div>
+
+            <div class="stl-legend">
+              <span class="item"><span class="swatch sleep"></span> Sueño · 14 h 30 m</span>
+              <span class="item"><span class="swatch wake"></span> Despierta · 9 h</span>
+              <span class="item"><span class="swatch routine"></span> Rutina · 30 m</span>
+            </div>
+          </div>
+
+          <div class="sleep-day-summary">
+            <p>Esta rutina se adapta a tu peque, a su edad, a tu localidad y a la estación del año para saber cuándo amanece / anochece y respetar sus ritmos circadianos.</p>
+          </div>
         </div>
       </div>
     </div>
