@@ -6612,6 +6612,115 @@
     display: inline-block; padding: 0 4px;
     line-height: 1; vertical-align: -2px;
   }
+
+  /* § M · Dose row (vaccine calendar list)
+     ─── Editorial dose card pattern · matches DS v0.2 § M ───
+     3 cols · age (anchor) · body (vaccines + footline) · chevron
+     State signals: tonal gradient + footline icon (✓ / → / ·) + copy. */
+  .dose-row {
+    position: relative;
+    display: grid;
+    grid-template-columns: 56px 1fr auto;
+    align-items: center;
+    gap: 14px;
+    padding: 16px 18px;
+    border-radius: var(--radius-md);
+    background: var(--paper-soft);
+    color: var(--ink);
+    cursor: pointer;
+    border: 0;
+    text-align: left;
+    width: 100%;
+    font: inherit;
+    transition: filter 150ms var(--ease), transform 150ms var(--ease);
+  }
+  .dose-row:hover { filter: brightness(0.99); transform: translateY(-1px); }
+
+  .dose-row .age {
+    font-family: "Lenia";
+    font-weight: 500;
+    font-size: var(--fs-h3);
+    line-height: 1;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    white-space: nowrap;
+  }
+  .dose-row.future .age { color: var(--ink-soft); }
+
+  .dose-row .body { min-width: 0; }
+  .dose-row .body .vaccines {
+    display: block;
+    margin: 0;
+    font-family: "Lenia"; font-weight: 500;
+    font-size: var(--fs-body);
+    color: var(--ink);
+    line-height: 1.35;
+    letter-spacing: -0.005em;
+  }
+  .dose-row.future .body .vaccines { color: var(--ink-soft); font-weight: 400; }
+  .dose-row .body .vaccines .new-badge {
+    display: inline-block;
+    font-family: "Lenia"; font-weight: 500;
+    font-size: var(--fs-eyebrow);
+    color: var(--ink-muted);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    margin-left: 6px;
+    padding: 2px 6px;
+    border-radius: var(--radius-sm);
+    background: var(--paper);
+  }
+
+  .dose-row .footline {
+    display: flex; align-items: center;
+    gap: 6px;
+    margin-top: 6px;
+    font-family: "Helvena";
+    font-size: var(--fs-body-sm);
+    color: var(--ink-soft);
+    line-height: 1.4;
+  }
+  .dose-row .footline .state-icon {
+    font-family: "Lenia";
+    font-weight: 600;
+    font-size: var(--fs-body-sm);
+    line-height: 1;
+    flex-shrink: 0;
+  }
+  .dose-row.done   .footline .state-icon { color: var(--mint-strong); }
+  .dose-row.next   .footline .state-icon { color: #B8973F; }
+  .dose-row.future .footline .state-icon { color: var(--ink-muted); }
+  .dose-row.next   .footline { color: #6E5A2A; font-weight: 500; }
+  .dose-row.future .footline { color: var(--ink-muted); }
+
+  .dose-row .chevron {
+    width: 18px; height: 18px;
+    flex-shrink: 0;
+    color: var(--ink-faint);
+    transition: color 150ms var(--ease), transform 150ms var(--ease);
+  }
+  .dose-row .chevron svg {
+    width: 100%; height: 100%;
+    stroke: currentColor; fill: none;
+    stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round;
+  }
+  .dose-row:hover .chevron {
+    color: var(--ink-soft);
+    transform: translateX(2px);
+  }
+
+  /* State backgrounds · tonal gradient (same DNA as .sleep-day-phase) */
+  .dose-row.done {
+    background: linear-gradient(120deg, var(--paper) 0%, var(--mint-subtle) 110%);
+  }
+  .dose-row.next {
+    background: linear-gradient(120deg, var(--paper) 0%, var(--gold-subtle) 110%);
+    box-shadow: inset 0 0 0 1.5px var(--gold-base);
+  }
+  .dose-row.future {
+    background: var(--paper);
+    border: 1px solid var(--line);
+  }
 </style>
 </head>
 <body>
@@ -6626,6 +6735,7 @@
       <symbol id="i-home" viewBox="0 0 24 24"><path d="M3 12 12 3l9 9"/><path d="M5 10v10h14V10"/></symbol>
       <symbol id="i-cal" viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="16" rx="2"/><line x1="4" y1="10" x2="20" y2="10"/></symbol>
       <symbol id="i-chart" viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M7 14l3-4 4 3 5-7"/></symbol>
+      <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
     </defs>
   </svg>
   <main class="prototype">
@@ -8046,12 +8156,12 @@
     aap2026: { label: 'USA · AAP 2026', short: 'AAP 2026', copy: 'Mapping visual contra AEPED para no perder hitos vacunales si la familia cambia de país.' }
   };
   const vaccineSchedule = [
-    { age: '2 meses', title: 'Hexavalente · Neumococo · MenB · Rotavirus', date: '12 may', state: 'done' },
-    { age: '3 meses', title: 'Rotavirus 2ª', date: '12 jun', state: 'done' },
-    { age: '4 meses', title: 'Hexavalente · Neumococo · MenB · MenACWY', date: '12 jul · próxima', state: 'next' },
-    { age: '11 meses', title: 'Hexavalente · Neumococo · MenB', date: '12 feb 2027', state: 'future' },
-    { age: '12 meses', title: 'MenACWY · Triple vírica · Hepatitis A', date: '12 mar 2027', state: 'future', badge: 'Nuevo 2026' },
-    { age: '15 meses', title: 'Varicela', date: '12 jun 2027', state: 'future' }
+    { ageShort: '2 m',  age: '2 meses',  title: 'Hexavalente · Neumococo · MenB · Rotavirus', date: '12 may 2026', state: 'done',   centro: 'CAP Sant Pau' },
+    { ageShort: '3 m',  age: '3 meses',  title: 'Rotavirus 2ª',                                date: '12 jun 2026', state: 'done',   centro: 'CAP Sant Pau' },
+    { ageShort: '4 m',  age: '4 meses',  title: 'Hexavalente · Neumococo · MenB · MenACWY',     date: '12 jul 2026', state: 'next',   daysAway: 'En 12 días', centro: 'CAP Sant Pau' },
+    { ageShort: '11 m', age: '11 meses', title: 'Hexavalente · Neumococo · MenB',               date: 'feb 2027',    state: 'future', note: 'refuerzo' },
+    { ageShort: '12 m', age: '12 meses', title: 'MenACWY · Triple vírica · Hepatitis A',        date: 'mar 2027',    state: 'future', badge: 'Nuevo 2026' },
+    { ageShort: '15 m', age: '15 meses', title: 'Varicela',                                     date: 'jun 2027',    state: 'future' }
   ];
   const vaccineCoveredDiseases = [
     'Difteria',
@@ -10303,13 +10413,31 @@ Grow
   }
 
   function renderVaccineScheduleRows() {
-    return vaccineSchedule.map((item) => `
-      <button class="vaccine-schedule-row ${escapeHtml(item.state)}" type="button" data-vaccine-view="${item.state === 'next' ? 'detail' : 'card'}">
-        <span>${item.state === 'done' ? '●' : item.state === 'next' ? '●' : '○'}</span>
-        <strong>${escapeHtml(item.age)} · ${escapeHtml(item.title)} ${item.badge ? `<em>${escapeHtml(item.badge)}</em>` : ''}</strong>
-        <small>${escapeHtml(item.date)}${item.state === 'done' ? ' ✓' : ''}</small>
+    return vaccineSchedule.map((item) => {
+      const stateIcon = item.state === 'done' ? '✓' : item.state === 'next' ? '→' : '·';
+      let footlineText = '';
+      if (item.state === 'done') {
+        footlineText = `Puesta el ${escapeHtml(item.date)}${item.centro ? ` · ${escapeHtml(item.centro)}` : ''}`;
+      } else if (item.state === 'next') {
+        footlineText = `${escapeHtml(item.daysAway || 'Próxima')} · ${escapeHtml(item.date)}${item.centro ? ` · ${escapeHtml(item.centro)}` : ''}`;
+      } else {
+        footlineText = `Programada · ${escapeHtml(item.date)}${item.note ? ` · ${escapeHtml(item.note)}` : ''}`;
+      }
+      const badge = item.badge ? `<span class="new-badge">${escapeHtml(item.badge)}</span>` : '';
+      return `
+      <button class="dose-row ${escapeHtml(item.state)}" type="button" data-vaccine-view="${item.state === 'next' ? 'detail' : 'card'}">
+        <span class="age">${escapeHtml(item.ageShort || item.age)}</span>
+        <div class="body">
+          <span class="vaccines">${escapeHtml(item.title)}${badge ? ' ' + badge : ''}</span>
+          <div class="footline">
+            <span class="state-icon">${stateIcon}</span>
+            <span>${footlineText}</span>
+          </div>
+        </div>
+        <span class="chevron"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-arrow"/></svg></span>
       </button>
-    `).join('');
+    `;
+    }).join('');
   }
 
   function renderVaccineHome() {
