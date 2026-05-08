@@ -782,6 +782,179 @@
     font-style: italic;
   }
 
+  /* ─── Variant D: Mixed — pie + timeline + educational copy ── */
+  .sleep-day {
+    background: var(--paper);
+    border-radius: var(--radius-xl);
+    padding: 24px;
+    max-width: 460px;
+    border: 1px solid var(--line);
+    box-shadow: 0 18px 46px rgba(45,38,30,0.05);
+  }
+  .sleep-day-head {
+    display: flex; justify-content: space-between; align-items: baseline;
+    margin-bottom: 14px; gap: 12px;
+  }
+  .sleep-day-head .eyb {
+    font-family: "Lenia"; font-size: var(--fs-meta);
+    letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--ink-muted); margin: 0 0 6px;
+  }
+  .sleep-day-head h3 {
+    font-family: "Lenia"; font-weight: 500;
+    font-size: var(--fs-h2); line-height: 1;
+    margin: 0; letter-spacing: -0.015em;
+  }
+  .sleep-day-pie {
+    display: flex; flex-direction: column; align-items: center;
+    margin: 6px 0 0;
+  }
+  .sleep-day-pie svg { width: 220px; height: 220px; display: block; }
+  .sleep-day-totals {
+    display: flex; justify-content: center; gap: 28px;
+    font-family: 'Lenia'; font-size: var(--fs-caption);
+    color: var(--ink-muted); margin-top: 8px;
+    letter-spacing: 0.02em;
+  }
+  .sleep-day-totals strong {
+    color: var(--ink); font-weight: 500; font-size: var(--fs-body);
+    display: block; margin-bottom: 2px;
+  }
+  .sleep-day-totals .stat { text-align: center; }
+  .sleep-day-divider {
+    height: 1px; background: var(--line);
+    margin: 22px 0;
+  }
+  .sleep-day-section-title {
+    font-family: 'Lenia'; font-weight: 500;
+    font-size: var(--fs-h4); line-height: 1.2;
+    margin: 0 0 14px; letter-spacing: -0.01em;
+  }
+  .sleep-day-rhythm {
+    display: flex; flex-direction: column;
+  }
+  .sleep-day-phase {
+    display: grid;
+    grid-template-columns: 36px 1fr auto;
+    gap: 14px;
+    align-items: start;
+    padding: 8px 0;
+    border-radius: var(--radius-md);
+    transition: background 200ms;
+  }
+  .sleep-day-phase .icon {
+    width: 36px; height: 36px;
+    border-radius: var(--radius-pill);
+    display: grid; place-items: center;
+    background: var(--paper-soft);
+    flex-shrink: 0;
+  }
+  .sleep-day-phase .icon svg {
+    width: 18px; height: 18px;
+    stroke: currentColor; fill: none;
+    stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round;
+  }
+  .sleep-day-phase.morning .icon { background: var(--gold-subtle); color: #6E5A2A; }
+  .sleep-day-phase.nap .icon { background: var(--mint-subtle); color: #4F6647; }
+  .sleep-day-phase.bedtime .icon { background: var(--blush-base); color: #6B3D2A; }
+  .sleep-day-phase.night .icon { background: var(--module-dark); color: var(--paper); }
+  .sleep-day-phase.now {
+    background: rgba(242,165,122,0.06);
+    margin: 0 -10px; padding: 8px 10px;
+    box-shadow: inset 0 0 0 1px rgba(242,165,122,0.20);
+  }
+  .sleep-day-phase.now .icon { box-shadow: 0 0 0 2px var(--coral-base); }
+  .sleep-day-phase .body strong {
+    display: block;
+    font-family: 'Lenia'; font-weight: 500;
+    font-size: var(--fs-body-lg); line-height: 1.2;
+    letter-spacing: -0.005em;
+  }
+  .sleep-day-phase .body p {
+    margin: 4px 0 0;
+    font-size: var(--fs-body-sm);
+    color: var(--ink-soft);
+    line-height: 1.5;
+  }
+  .sleep-day-phase .time {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: var(--fs-caption);
+    color: var(--ink-soft);
+    white-space: nowrap;
+    align-self: start; padding-top: 4px;
+    text-align: right;
+  }
+
+  .sleep-day-wake {
+    display: grid;
+    grid-template-columns: 36px 1fr auto;
+    gap: 14px;
+    padding: 6px 0;
+    position: relative;
+    align-items: center;
+  }
+  .sleep-day-wake .icon {
+    width: 36px; height: 36px;
+    display: grid; place-items: center;
+    position: relative;
+  }
+  .sleep-day-wake .icon::before {
+    content: '';
+    width: 2px;
+    background: var(--line);
+    position: absolute;
+    top: -6px; bottom: -6px;
+    left: 50%; transform: translateX(-50%);
+  }
+  .sleep-day-wake .icon::after {
+    content: '';
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--paper);
+    border: 1.5px dashed var(--line-strong);
+    position: relative; z-index: 1;
+  }
+  .sleep-day-wake .label {
+    font-family: 'Lenia'; font-weight: 500;
+    font-size: var(--fs-body-sm); color: var(--ink-soft);
+    line-height: 1.3;
+  }
+  .sleep-day-wake .label p {
+    margin: 2px 0 0; font-size: var(--fs-caption);
+    color: var(--ink-muted); line-height: 1.45;
+    font-weight: 400;
+  }
+  .sleep-day-wake .dur {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: var(--fs-meta);
+    color: var(--ink-muted);
+    background: var(--paper-soft);
+    border-radius: var(--radius-pill);
+    padding: 4px 10px;
+    white-space: nowrap;
+  }
+  .sleep-day-wake.now { background: rgba(242,165,122,0.06); border-radius: var(--radius-md); }
+  .sleep-day-wake.now .icon::after { border-color: var(--coral-base); border-style: solid; background: var(--coral-base); }
+
+  .sleep-day-summary {
+    margin-top: 22px;
+    padding: 14px 16px;
+    background: var(--paper-soft);
+    border-radius: var(--radius-md);
+    text-align: center;
+  }
+  .sleep-day-summary strong {
+    font-family: 'Lenia'; font-weight: 500;
+    font-size: var(--fs-body-lg);
+    color: var(--ink);
+    display: block; margin-bottom: 4px;
+  }
+  .sleep-day-summary p {
+    margin: 0;
+    font-size: var(--fs-caption);
+    color: var(--ink-muted); font-style: italic;
+  }
+
   /* Compact variant — for sidebar or weekly view */
   .sleep-card.compact {
     padding: 16px;
@@ -2037,6 +2210,183 @@
               <tr><td style="padding:6px 8px">Modal "Ver esquema"</td><td style="padding:6px 8px"><strong>A</strong> + opcional <strong>B</strong> al final</td></tr>
             </tbody>
           </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="spec">
+      <div class="spec-head">
+        <h3>Variant D · Mixed — pie + timeline + educational copy</h3>
+        <span class="meta-r">.sleep-day · the unified one</span>
+      </div>
+      <div class="spec-row col" style="margin-bottom: 14px">
+        <p style="font-size:13px;color:var(--ink-soft);max-width:64ch;line-height:1.55;margin:0">
+          Combina las tres variantes:
+          <strong>(1)</strong> pie de 24 h compacto arriba para escaneo de
+          proporción · <strong>(2)</strong> timeline vertical con fases y wake
+          windows como nodos diferenciados · <strong>(3)</strong> copy educativa
+          breve por cada fase (qué pasa, no recetas). El "ahora" se refleja en
+          ambas zonas: dot en el pie y row destacado en la timeline.
+        </p>
+      </div>
+      <div class="spec-row" style="padding: 16px 0; align-items: flex-start; gap: 24px">
+        <div class="sleep-day">
+          <div class="sleep-day-head">
+            <div>
+              <div class="eyb">Hoy · esquema</div>
+              <h3>13 - 18 meses</h3>
+            </div>
+          </div>
+
+          <!-- ─── Pie · 24h overview ─── -->
+          <div class="sleep-day-pie">
+            <svg viewBox="0 0 220 220" xmlns="http://www.w3.org/2000/svg" aria-label="Pie de 24 horas">
+              <!-- Wake morning · 7:15 → 12:15 -->
+              <path d="M 178.16 133.14 A 72 72 0 0 1 105.29 181.85"
+                    stroke="#F6EBC9" stroke-width="20" fill="none"/>
+              <!-- Siesta · 12:15 → 13:45 -->
+              <path d="M 105.29 181.85 A 72 72 0 0 1 78.15 174.58"
+                    stroke="var(--mint-base)" stroke-width="20" fill="none"/>
+              <!-- Wake afternoon · 13:45 → 19:15 -->
+              <path d="M 78.15 174.58 A 72 72 0 0 1 41.84 86.86"
+                    stroke="#F6EBC9" stroke-width="20" fill="none"/>
+              <!-- Rutina noche · 19:15 → 19:45 -->
+              <path d="M 41.84 86.86 A 72 72 0 0 1 45.42 78.15"
+                    stroke="var(--blush-base)" stroke-width="20" fill="none"/>
+              <!-- Night sleep · 19:45 → 7:15 -->
+              <path d="M 45.42 78.15 A 72 72 0 0 1 178.16 133.14"
+                    stroke="var(--module-dark)" stroke-width="20" fill="none"/>
+
+              <!-- phase boundary dots -->
+              <circle cx="178.16" cy="133.14" r="2" fill="var(--paper)"/>
+              <circle cx="105.29" cy="181.85" r="2" fill="var(--paper)"/>
+              <circle cx="78.15" cy="174.58" r="2" fill="var(--paper)"/>
+              <circle cx="41.84" cy="86.86" r="2" fill="var(--paper)"/>
+              <circle cx="45.42" cy="78.15" r="2" fill="var(--paper)"/>
+
+              <!-- hour markers -->
+              <text x="110" y="56" text-anchor="middle" font-family="Lenia" font-size="11" fill="var(--ink-soft)" font-weight="500">0</text>
+              <text x="170" y="114" text-anchor="middle" font-family="Lenia" font-size="11" fill="var(--ink-soft)" font-weight="500">6</text>
+              <text x="110" y="172" text-anchor="middle" font-family="Lenia" font-size="11" fill="var(--ink-soft)" font-weight="500">12</text>
+              <text x="50" y="114" text-anchor="middle" font-family="Lenia" font-size="11" fill="var(--ink-soft)" font-weight="500">18</text>
+
+              <!-- "now" indicator at 14:32 (in wake afternoon) -->
+              <line x1="110" y1="110" x2="65.67" y2="166.74" stroke="var(--coral-strong)" stroke-width="1.3" stroke-linecap="round"/>
+              <circle cx="65.67" cy="166.74" r="6" fill="var(--coral-base)" stroke="var(--paper)" stroke-width="2.5"/>
+
+              <!-- center -->
+              <text x="110" y="105" text-anchor="middle" font-family="Lenia" font-size="32" font-weight="500" fill="var(--ink)" letter-spacing="-0.02em">13h</text>
+              <text x="110" y="124" text-anchor="middle" font-family="Lenia" font-size="9" fill="var(--ink-muted)" letter-spacing="0.20em" font-weight="500">SUEÑO TOTAL</text>
+            </svg>
+          </div>
+
+          <div class="sleep-day-totals">
+            <div class="stat"><strong>11 h 30 m</strong>noche</div>
+            <div class="stat"><strong>1 h 30 m</strong>siesta</div>
+            <div class="stat" style="color:var(--coral-strong)"><strong style="color:var(--coral-strong)">14:32</strong>ahora</div>
+          </div>
+
+          <div class="sleep-day-divider"></div>
+
+          <h4 class="sleep-day-section-title">Cómo es tu día</h4>
+
+          <!-- ─── Vertical timeline with educational copy ─── -->
+          <div class="sleep-day-rhythm">
+
+            <div class="sleep-day-phase morning">
+              <div class="icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4 12H2M22 12h-2M5 5l1.5 1.5M17.5 17.5L19 19M5 19l1.5-1.5M17.5 6.5L19 5"/></svg>
+              </div>
+              <div class="body">
+                <strong>Despertar</strong>
+                <p>Empieza con luz natural. 11 - 12 h de noche regulan el reloj interno.</p>
+              </div>
+              <div class="time">7:15</div>
+            </div>
+
+            <div class="sleep-day-wake">
+              <div class="icon" aria-hidden="true"></div>
+              <div class="label">
+                Despierta · ventana de mañana
+                <p>Juego activo, primera comida, paseo.</p>
+              </div>
+              <div class="dur">5 h</div>
+            </div>
+
+            <div class="sleep-day-phase nap">
+              <div class="icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><path d="M3 16h6"/><path d="M5 16v-3a3 3 0 0 1 3-3h0a3 3 0 0 1 3 3v3"/><path d="M14 9l3-3 3 3"/></svg>
+              </div>
+              <div class="body">
+                <strong>Siesta del mediodía</strong>
+                <p>Una siesta es típica a esta edad. En cuna, oscura, después de comer.</p>
+              </div>
+              <div class="time">12:15<br>— 13:45</div>
+            </div>
+
+            <div class="sleep-day-wake now">
+              <div class="icon" aria-hidden="true"></div>
+              <div class="label">
+                Despierta · ventana de tarde
+                <p>Tarde activa, cena ligera 1 h antes de la rutina.</p>
+              </div>
+              <div class="dur">5 h 30 m</div>
+            </div>
+
+            <div class="sleep-day-phase bedtime">
+              <div class="icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9z"/></svg>
+              </div>
+              <div class="body">
+                <strong>Rutina de noche</strong>
+                <p>Baño, pijama, cuento, abrazo. Misma secuencia cada noche.</p>
+              </div>
+              <div class="time">19:15<br>~30 min</div>
+            </div>
+
+            <div class="sleep-day-phase night">
+              <div class="icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><path d="M3 18h18"/><path d="M5 18v-4a4 4 0 0 1 4-4h6a4 4 0 0 1 4 4v4"/><path d="M3 14h18"/></svg>
+              </div>
+              <div class="body">
+                <strong>Dormido</strong>
+                <p>Sin estímulos. Despertares nocturnos son normales — la consistencia enseña.</p>
+              </div>
+              <div class="time">19:45<br>11 h 30 m</div>
+            </div>
+
+          </div>
+
+          <div class="sleep-day-summary">
+            <strong>Total 13 h · 11 h 30 m noche + 1 h 30 m siesta</strong>
+            <p>Esto es una orientación. Cada peque tiene su ritmo. Sin juicio.</p>
+          </div>
+        </div>
+
+        <div style="flex: 1; min-width: 280px">
+          <div class="spec-label">What this mix achieves</div>
+          <ul style="font-size:12.5px;color:var(--ink-soft);line-height:1.65;padding-left:18px;margin:0">
+            <li><strong>Pie + timeline</strong> · jerarquía dual — el pie da la forma del día, la timeline da los detalles. Mismo dato, dos lenguajes visuales.</li>
+            <li><strong>Wake como nodos</strong> · ventanas de vigilia tienen ya icono dashed + duración pill, no son notas marginales.</li>
+            <li><strong>Copy educativa breve</strong> · 1 línea por fase (no párrafo como en C) — orientación sin saturar.</li>
+            <li><strong>"Ahora" doble</strong> · coral dot en el pie + row destacada en la timeline.</li>
+            <li><strong>Tonos consistentes</strong> · gold mañana · mint nap · blush wind-down · ink noche en pie y timeline.</li>
+            <li><strong>Stats de cabecera</strong> · noche / siesta / ahora bajo el pie como números legibles.</li>
+          </ul>
+
+          <div class="spec-label" style="margin-top: 18px">Cuándo usarla</div>
+          <p style="font-size:12.5px;color:var(--ink-soft);line-height:1.6;margin:0">
+            <strong>Pantalla principal del libro de Sueño</strong> — la única vista
+            necesaria. Reemplaza A + B + C en la mayoría de superficies. Para
+            sidebar o weekly aún se usa <code>.sleep-card.compact</code>.
+          </p>
+
+          <div class="spec-label" style="margin-top: 18px">Trade-offs vs A · B · C</div>
+          <p style="font-size:12.5px;color:var(--ink-soft);line-height:1.6;margin:0">
+            Más alta verticalmente (~720 px vs 580 A). Pero a cambio responde
+            a 3 preguntas en una card: "¿qué forma tiene el día?", "¿cuándo
+            pasa cada cosa?", "¿qué significa cada fase?".
+          </p>
         </div>
       </div>
     </div>
