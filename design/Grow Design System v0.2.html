@@ -59,6 +59,16 @@
     /* a11y */
     --tap-target-min: 36px;
 
+    /* radius scale (matches prototype.html) */
+    --radius-sm: 14px;
+    --radius-md: 18px;
+    --radius-lg: 22px;
+    --radius-xl: 28px;
+    --radius-pill: 999px;
+
+    /* module-dark — neutral near-black for sleep · routine · accents */
+    --module-dark: #1B1A18;
+
     --ease: cubic-bezier(0.2, 0.8, 0.2, 1);
   }
 
@@ -1177,11 +1187,83 @@
   .timeline-legend .swatch.mint    { background: var(--mint-subtle); }
   .timeline-legend .swatch.blush   { background: var(--blush-subtle); }
 
+  /* ═════════════════ TOP HEADER — § H primitive ═════════════════ */
+  /* Eyebrow + title + (optional sub) + (optional close action).
+     Used at the top of books, modals, sheets, and full-screen flows. */
+  .top-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 14px;
+  }
+  .top-header .eyebrow {
+    font-family: "Lenia";
+    font-size: var(--fs-meta);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    font-weight: 500;
+    margin: 0 0 8px;
+    display: block;
+  }
+  .top-header h2,
+  .top-header h3 {
+    font-family: "Lenia";
+    font-weight: 500;
+    font-size: var(--fs-h2);
+    line-height: 1.05;
+    letter-spacing: -0.01em;
+    margin: 0;
+  }
+  .top-header .sub {
+    font-family: "Helvena";
+    font-size: var(--fs-body-sm);
+    color: var(--ink-muted);
+    line-height: 1.5;
+    margin: 6px 0 0;
+    max-width: 38ch;
+  }
+  .top-header .actions {
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+  /* Stack variant · centered title with close action absolute top-right */
+  .top-header.stack {
+    position: relative;
+    display: block;
+    text-align: center;
+  }
+  .top-header.stack .eyebrow { letter-spacing: 0.22em; margin-bottom: 12px; }
+  .top-header.stack h2,
+  .top-header.stack h3 { font-size: var(--fs-h1); line-height: 1.1; letter-spacing: -0.015em; }
+  .top-header.stack .sub { margin: 6px auto 0; }
+  .top-header.stack .actions {
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
+  /* Compact variant · smaller title for cards inside flows */
+  .top-header.compact h2,
+  .top-header.compact h3 { font-size: var(--fs-h3); }
+
   /* ═════════════════ CALLOUT — § L ═════════════════ */
   /* Editorial note card · used for adaptive copy, tips, footnotes.
-     Replaces ad-hoc summary boxes scattered across components. */
+     Replaces ad-hoc summary boxes scattered across components.
+     Always with a slow-shifting gradient to feel alive. */
   .callout {
-    background: var(--paper-soft);
+    --c-base: var(--paper-soft);
+    --c-tint: var(--paper);
+    --c-deep: var(--paper-deep);
+    background: linear-gradient(135deg,
+      var(--c-base) 0%,
+      var(--c-tint) 25%,
+      var(--c-base) 50%,
+      var(--c-deep) 75%,
+      var(--c-base) 100%);
+    background-size: 280% 280%;
+    animation: callout-shift 14s ease-in-out infinite;
     border-radius: var(--radius-md);
     padding: 16px 18px;
     text-align: center;
@@ -1201,26 +1283,57 @@
     line-height: 1.55;
     font-style: italic;
     max-width: 56ch;
+    position: relative;
   }
   .callout strong {
     color: var(--ink);
     font-weight: 500;
     font-style: normal;
   }
-  /* tone variants */
-  .callout.coral { background: var(--coral-subtle); }
+  /* tone variants — each gets its own gradient palette + asterisk color */
+  .callout.coral {
+    --c-base: var(--coral-subtle);
+    --c-tint: #FFE0CC;
+    --c-deep: #F8D6BE;
+  }
   .callout.coral::before { color: var(--coral-strong); }
-  .callout.mint { background: var(--mint-subtle); }
+  .callout.mint {
+    --c-base: var(--mint-subtle);
+    --c-tint: #EEF5E7;
+    --c-deep: #D9E5CD;
+  }
   .callout.mint::before { color: #4F6647; }
-  .callout.gold { background: var(--gold-subtle); }
+  .callout.gold {
+    --c-base: var(--gold-subtle);
+    --c-tint: #FFF3D2;
+    --c-deep: #ECDFB6;
+  }
   .callout.gold::before { color: #6E5A2A; }
-  .callout.blush { background: var(--blush-subtle); }
+  .callout.blush {
+    --c-base: var(--blush-subtle);
+    --c-tint: #FCEDE7;
+    --c-deep: #F0D9D0;
+  }
   .callout.blush::before { color: #7A4A3A; }
+
+  @keyframes callout-shift {
+    0%   { background-position: 0% 50%; }
+    50%  { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .callout { animation: none; background-position: 0% 50%; }
+  }
+
   /* without asterisk */
   .callout.plain::before { content: none; }
   .callout.plain { padding-top: 14px; }
-  /* stat variant — short statement with large coral number */
-  .callout.stat { background: transparent; padding: 8px 18px; }
+  /* stat variant — short statement with large coral number, no animation */
+  .callout.stat {
+    background: transparent;
+    animation: none;
+    padding: 8px 18px;
+  }
   .callout.stat::before { content: none; }
   .callout.stat p {
     font-style: normal;
@@ -2567,10 +2680,13 @@
       </div>
       <div class="spec-row" style="padding: 16px 0; align-items: flex-start; gap: 24px">
         <div class="sleep-day">
-          <div class="sleep-day-head">
-            <div class="meta">Lola · 18 m</div>
-            <h3>Rutina ideal</h3>
+          <div class="top-header stack" style="margin-bottom: 16px">
+            <span class="eyebrow">Lola · 18 m</span>
+            <h2>Rutina ideal</h2>
             <p class="sub">Según su edad, localización y estación del año.</p>
+            <div class="actions">
+              <button class="icon-btn sm ink" aria-label="Cerrar"><svg viewBox="0 0 24 24"><use href="#i-x"/></svg></button>
+            </div>
           </div>
 
           <div class="sleep-day-stat-wrap">
@@ -2579,8 +2695,8 @@
             </div>
           </div>
 
-          <!-- ─── Horizontal 24h timeline ─── -->
-          <div class="sleep-day-line">
+          <!-- ─── Horizontal 24h timeline · uses § M canonical .timeline ─── -->
+          <div class="timeline">
             <div class="stl-row">
               <div class="stl-row-label">
                 <span>Hoy · 24 h</span>
