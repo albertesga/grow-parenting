@@ -270,7 +270,7 @@
   .pill.blush { background: var(--blush-subtle); color: #7A4A3A; border-color: rgba(216,154,137,0.30); }
   .pill.ink { background: var(--ink); color: var(--paper); border-color: var(--ink); }
 
-  /* Sticker — like a label stuck onto a surface */
+  /* Sticker — like a label stuck onto a surface (always uppercase) */
   .sticker {
     display: inline-block;
     background: var(--paper);
@@ -279,7 +279,8 @@
     padding: 5px 11px 4px;
     border-radius: 999px;
     font-family: "Lenia"; font-weight: 600; font-size: var(--fs-eyebrow);
-    letter-spacing: 0.08em;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
     transform: rotate(-4deg);
     transform-origin: 50% 50%;
   }
@@ -389,7 +390,8 @@
     background: var(--paper); color: #2E4A2A;
     padding: 5px 11px 4px; border-radius: 999px;
     font-family: "Lenia"; font-weight: 600; font-size: var(--fs-eyebrow);
-    letter-spacing: 0.08em; line-height: 1;
+    letter-spacing: 0.12em; line-height: 1;
+    text-transform: uppercase;
     transform: rotate(-6deg);
   }
 
