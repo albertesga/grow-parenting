@@ -10003,8 +10003,11 @@ Grow
     return { left: 40, right: 580, top: 40, bottom: 220, width: 600, height: 280 };
   }
 
+  /* Chart axis spans 0–24 months (matches DS canon, viewBox 600×280). */
+  const GROWTH_AXIS_MAX = 24;
+
   function getGrowthReferenceValue(metric, month, curve = 'p50') {
-    const t = clamp(month / 36, 0, 1);
+    const t = clamp(month / GROWTH_AXIS_MAX, 0, 1);
     const range = metric.maxValue - metric.minValue;
     const eased = (1 - Math.exp(-2.35 * t)) / (1 - Math.exp(-2.35));
     const p50 = metric.minValue + range * (0.28 + 0.48 * eased);
@@ -10015,9 +10018,9 @@ Grow
   }
 
   function getChartPoint(metric, measurement, indexOffset = 0, geometry = getGrowthChartGeometry()) {
-    const month = clamp((measurement.ageMonths || getGrowthAgeMonths()) + indexOffset, 0, 36);
+    const month = clamp((measurement.ageMonths || getGrowthAgeMonths()) + indexOffset, 0, GROWTH_AXIS_MAX);
     const value = Number(measurement[metric.id]);
-    const x = geometry.left + (month / 36) * (geometry.right - geometry.left);
+    const x = geometry.left + (month / GROWTH_AXIS_MAX) * (geometry.right - geometry.left);
     const normalized = (value - metric.minValue) / (metric.maxValue - metric.minValue);
     const y = geometry.bottom - clamp(normalized, 0, 1) * (geometry.bottom - geometry.top);
     return { x, y, value, ageMonths: measurement.ageMonths || getGrowthAgeMonths(), measurement };
@@ -10027,27 +10030,50 @@ Grow
     return getChartPoint(metric, { ageMonths: month, [metric.id]: getGrowthReferenceValue(metric, month, curve) }, 0, geometry);
   }
 
+  /* Catmull-Rom-to-Bezier · G1-continuous smooth interpolation through all
+     anchor points. Replaces the midX-tangent algorithm which produced
+     stepped curves with horizontal tangents at every anchor. */
   function buildGrowthPath(points) {
     if (!points.length) return '';
     if (points.length === 1) return `M ${points[0].x.toFixed(1)} ${points[0].y.toFixed(1)}`;
-    return points.reduce((path, point, index) => {
-      if (index === 0) return `M ${point.x.toFixed(1)} ${point.y.toFixed(1)}`;
-      const previous = points[index - 1];
-      const midX = (previous.x + point.x) / 2;
-      return `${path} C ${midX.toFixed(1)} ${previous.y.toFixed(1)}, ${midX.toFixed(1)} ${point.y.toFixed(1)}, ${point.x.toFixed(1)} ${point.y.toFixed(1)}`;
-    }, '');
+    const tension = 0.5;
+    let path = `M ${points[0].x.toFixed(1)} ${points[0].y.toFixed(1)}`;
+    for (let i = 0; i < points.length - 1; i++) {
+      const p0 = points[i - 1] || points[i];
+      const p1 = points[i];
+      const p2 = points[i + 1];
+      const p3 = points[i + 2] || p2;
+      const cp1x = p1.x + (p2.x - p0.x) / 6 * tension;
+      const cp1y = p1.y + (p2.y - p0.y) / 6 * tension;
+      const cp2x = p2.x - (p3.x - p1.x) / 6 * tension;
+      const cp2y = p2.y - (p3.y - p1.y) / 6 * tension;
+      path += ` C ${cp1x.toFixed(1)} ${cp1y.toFixed(1)}, ${cp2x.toFixed(1)} ${cp2y.toFixed(1)}, ${p2.x.toFixed(1)} ${p2.y.toFixed(1)}`;
+    }
+    return path;
   }
 
   function buildGrowthBandPath(upperPoints, lowerPoints) {
     if (!upperPoints.length || !lowerPoints.length) return '';
+    /* Upper boundary forward, then reverse lower into a smooth return path,
+       then close. The L between upper-end and lower-start makes the right edge. */
     const lower = [...lowerPoints].reverse();
-    const lowerPath = lower.reduce((path, point, index) => {
-      if (index === 0) return `L ${point.x.toFixed(1)} ${point.y.toFixed(1)}`;
-      const previous = lower[index - 1];
-      const midX = (previous.x + point.x) / 2;
-      return `${path} C ${midX.toFixed(1)} ${previous.y.toFixed(1)}, ${midX.toFixed(1)} ${point.y.toFixed(1)}, ${point.x.toFixed(1)} ${point.y.toFixed(1)}`;
-    }, '');
-    return `${buildGrowthPath(upperPoints)} ${lowerPath} Z`;
+    const upperPath = buildGrowthPath(upperPoints);
+    /* Lower path treated as its own smooth segment, prefixed with L
+       to bridge the right edge from upper-end to lower-start. */
+    const tension = 0.5;
+    let lowerPath = `L ${lower[0].x.toFixed(1)} ${lower[0].y.toFixed(1)}`;
+    for (let i = 0; i < lower.length - 1; i++) {
+      const p0 = lower[i - 1] || lower[i];
+      const p1 = lower[i];
+      const p2 = lower[i + 1];
+      const p3 = lower[i + 2] || p2;
+      const cp1x = p1.x + (p2.x - p0.x) / 6 * tension;
+      const cp1y = p1.y + (p2.y - p0.y) / 6 * tension;
+      const cp2x = p2.x - (p3.x - p1.x) / 6 * tension;
+      const cp2y = p2.y - (p3.y - p1.y) / 6 * tension;
+      lowerPath += ` C ${cp1x.toFixed(1)} ${cp1y.toFixed(1)}, ${cp2x.toFixed(1)} ${cp2y.toFixed(1)}, ${p2.x.toFixed(1)} ${p2.y.toFixed(1)}`;
+    }
+    return `${upperPath} ${lowerPath} Z`;
   }
 
   function renderGrowthChart(metric, measurements, selectedIndex) {
@@ -10061,30 +10087,35 @@ Grow
     });
     const selectedPoint = points[selectedIndex] || points[points.length - 1] || getChartPoint(metric, { ageMonths: getGrowthAgeMonths(), [metric.id]: metric.reference }, 0, geometry);
     const selectedPercentile = getMetricPercentile(metric, selectedPoint.value);
-    const referenceMonths = [0, 6, 9, 12, 15, 18, 24, 30, 36];
+    /* Evenly spaced reference months for smooth curves. 9 points / 3-month steps. */
+    const referenceMonths = [0, 3, 6, 9, 12, 15, 18, 21, 24];
     const p97 = referenceMonths.map((month) => getReferencePoint(metric, month, 'p97', geometry));
     const p50 = referenceMonths.map((month) => getReferencePoint(metric, month, 'p50', geometry));
     const p3 = referenceMonths.map((month) => getReferencePoint(metric, month, 'p3', geometry));
     const bandPath = buildGrowthBandPath(p97, p3);
     const childPath = buildGrowthPath(points);
 
-    const grid = [0, 0.333, 0.666, 1].map((ratio) => {
+    /* 4 horizontal grid lines · 4 Y-axis labels (DS canon: top, 2 mids, bottom). */
+    const gridRatios = [0, 0.333, 0.666, 1];
+    const grid = gridRatios.map((ratio) => {
       const y = geometry.top + (geometry.bottom - geometry.top) * ratio;
       return `<line x1="${geometry.left}" y1="${y.toFixed(1)}" x2="${geometry.right}" y2="${y.toFixed(1)}" stroke="#E2DDD1" stroke-width="0.5"/>`;
     }).join('');
 
-    const axisMonths = [0, 6, 12, 18, 24, 36];
+    /* X-axis: 0/6/12/18/24m (DS canon, no 36m). */
+    const axisMonths = [0, 6, 12, 18, 24];
     const axis = axisMonths.map((month) => {
-      const x = geometry.left + (month / 36) * (geometry.right - geometry.left);
-      const anchor = month === 0 ? 'start' : month === 36 ? 'end' : 'middle';
+      const x = geometry.left + (month / GROWTH_AXIS_MAX) * (geometry.right - geometry.left);
+      const anchor = month === 0 ? 'start' : month === GROWTH_AXIS_MAX ? 'end' : 'middle';
       return `<text x="${x.toFixed(1)}" y="265" font-family="Lenia" font-size="10" fill="#888" text-anchor="${anchor}">${month}m</text>`;
     }).join('');
 
-    const ySteps = [metric.maxValue, metric.reference, metric.minValue];
-    const yLabels = ySteps.map((val, i) => {
-      const ratio = i / (ySteps.length - 1);
+    /* 4 Y-axis labels matching the 4 grid lines. Distribute linearly between
+       maxValue (top) and minValue (bottom). */
+    const yLabels = gridRatios.map((ratio) => {
+      const value = metric.maxValue - ratio * (metric.maxValue - metric.minValue);
       const y = geometry.top + (geometry.bottom - geometry.top) * ratio + 4;
-      return `<text x="32" y="${y.toFixed(1)}" font-family="Lenia" font-size="10" fill="#888" text-anchor="end">${formatNumber(val, metric.precision)}${metric.unit}</text>`;
+      return `<text x="32" y="${y.toFixed(1)}" font-family="Lenia" font-size="10" fill="#888" text-anchor="end">${formatNumber(value, metric.precision)}${metric.unit}</text>`;
     }).join('');
 
     const pointNodes = points.map((point, index) => {
