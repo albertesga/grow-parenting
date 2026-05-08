@@ -2589,6 +2589,7 @@
     transition: transform 260ms var(--ease), opacity 180ms ease, visibility 0s;
   }
   .measure-sheet {
+    position: relative;
     width: 100%;
     max-height: calc(100vh - 92px);
     overflow-y: auto;
@@ -2603,6 +2604,36 @@
     scrollbar-width: none;
   }
   .measure-sheet::-webkit-scrollbar { display: none; }
+
+  /* Sheet close X · canonical IconButton 36 ink-warm at top-right of any sheet */
+  .sheet-close {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    z-index: 4;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    padding: 0;
+    border: 0;
+    border-radius: var(--radius-pill);
+    background: var(--ink-warm);
+    color: var(--paper);
+    cursor: pointer;
+    transition: transform 150ms var(--ease), filter 150ms var(--ease);
+  }
+  .sheet-close svg {
+    width: 16px;
+    height: 16px;
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 1.85;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .sheet-close:hover { transform: translateY(-1px); filter: brightness(1.05); }
   .measure-grabber {
     width: 42px;
     height: 5px;
@@ -3392,6 +3423,7 @@
       0 -18px 58px rgba(42,33,27,0.18);
   }
   .milestone-sheet {
+    position: relative;
     max-height: calc(100vh - 92px);
     overflow-y: auto;
     scrollbar-width: none;
@@ -3578,7 +3610,6 @@
   .sleep-nav-card,
   .sleep-section,
   .sleep-block,
-  .sleep-note-card,
   .sleep-sweetspot,
   .sleep-week-card,
   .sleep-regression-card,
@@ -3876,20 +3907,6 @@
     margin-top: 12px;
   }
   .sleep-total strong { color: var(--ink); font-family: "Lenia"; }
-  .sleep-note-card {
-    border-radius: 20px;
-    padding: 13px;
-    color: var(--ink-soft);
-    font-size: 12.5px;
-    line-height: 1.45;
-  }
-  .sleep-note-card strong {
-    display: block;
-    color: var(--ink);
-    font-family: "Lenia";
-    font-size: var(--fs-body-lg);
-    margin-bottom: 4px;
-  }
   /* ============================================================
      module-strip + module-chip canon — horizontal scrollable
      filter/nav strip across sleep/food/pregnancy/vaccine. Active
@@ -4135,7 +4152,6 @@
   .food-cut-card,
   .food-allergen-card,
   .food-recipe-card,
-  .food-note-card,
   .food-canon-row,
   .food-age-chip,
   .food-filter-chip,
@@ -4213,7 +4229,6 @@
   .food-status-card,
   .food-section,
   .food-detail-card,
-  .food-note-card,
   .food-plan-card {
     border-radius: 26px;
     padding: 16px;
@@ -4472,20 +4487,6 @@
   .food-allergen-card.introduced span {
     color: rgba(250,247,240,0.70);
   }
-  .food-timeline-note,
-  .food-note-card {
-    color: var(--ink-soft);
-    font-size: var(--fs-body-sm);
-    line-height: 1.48;
-  }
-  .food-timeline-note strong,
-  .food-note-card strong {
-    display: block;
-    color: var(--ink);
-    font-family: "Lenia";
-    font-size: var(--fs-body-lg);
-    margin-bottom: 4px;
-  }
   .food-canon-row,
   .food-diary-row {
     border-radius: var(--radius-md);
@@ -4563,7 +4564,6 @@
   .lactation-nav-card,
   .lactation-section,
   .lactation-quick-card,
-  .lactation-note-card,
   .lactation-latch-card,
   .lactation-choice,
   .lactation-result-card,
@@ -4641,7 +4641,6 @@
   /* .lactation-pill base now in canonical .module-pill rule */
   .lactation-status-card,
   .lactation-section,
-  .lactation-note-card,
   .lactation-result-card,
   .lactation-plan-card,
   .lactation-med-card {
@@ -4851,8 +4850,7 @@
   }
   .lactation-batch-card strong,
   .lactation-canon-row strong,
-  .lactation-sensitive-card strong,
-  .lactation-note-card strong {
+  .lactation-sensitive-card strong {
     display: block;
     color: var(--ink);
     font-family: "Lenia";
@@ -4916,7 +4914,6 @@
   .pregnancy-status-card,
   .pregnancy-nav-card,
   .pregnancy-section,
-  .pregnancy-note-card,
   .pregnancy-plan-card,
   .pregnancy-canon-row,
   .pregnancy-choice,
@@ -4925,7 +4922,6 @@
   .vaccine-status-card,
   .vaccine-nav-card,
   .vaccine-section,
-  .vaccine-note-card,
   .vaccine-plan-card,
   .vaccine-canon-row,
   .vaccine-choice,
@@ -5036,11 +5032,9 @@
   /* .pregnancy-pill / .vaccine-pill base now in canonical .module-pill rule */
   .pregnancy-status-card,
   .pregnancy-section,
-  .pregnancy-note-card,
   .pregnancy-plan-card,
   .vaccine-status-card,
   .vaccine-section,
-  .vaccine-note-card,
   .vaccine-plan-card,
   .vaccine-dose-card {
     border-radius: 26px;
@@ -5209,10 +5203,8 @@
   }
   .pregnancy-row strong,
   .pregnancy-canon-row strong,
-  .pregnancy-note-card strong,
   .vaccine-row strong,
   .vaccine-canon-row strong,
-  .vaccine-note-card strong,
   .vaccine-schedule-row strong {
     display: block;
     color: var(--ink);
@@ -5609,6 +5601,7 @@
     transition: transform 260ms var(--ease), opacity 180ms ease, visibility 0s;
   }
   .qlog-sheet {
+    position: relative;
     width: 100%;
     max-width: 100%;
     max-height: calc(100vh - 78px);
@@ -5939,7 +5932,6 @@
   .sleep-nav-card,
   .sleep-section,
   .sleep-block,
-  .sleep-note-card,
   .sleep-sweetspot,
   .sleep-week-card,
   .sleep-regression-card,
@@ -5955,7 +5947,6 @@
   .food-cut-card,
   .food-allergen-card,
   .food-recipe-card,
-  .food-note-card,
   .food-canon-row,
   .food-age-chip,
   .food-filter-chip,
@@ -5966,7 +5957,6 @@
   .lactation-nav-card,
   .lactation-section,
   .lactation-quick-card,
-  .lactation-note-card,
   .lactation-latch-card,
   .lactation-choice,
   .lactation-result-card,
@@ -5979,7 +5969,6 @@
   .pregnancy-status-card,
   .pregnancy-nav-card,
   .pregnancy-section,
-  .pregnancy-note-card,
   .pregnancy-plan-card,
   .pregnancy-canon-row,
   .pregnancy-choice,
@@ -5988,7 +5977,6 @@
   .vaccine-status-card,
   .vaccine-nav-card,
   .vaccine-section,
-  .vaccine-note-card,
   .vaccine-plan-card,
   .vaccine-canon-row,
   .vaccine-choice,
@@ -6102,7 +6090,6 @@
     .sleep-nav-card,
     .sleep-section,
     .sleep-block,
-    .sleep-note-card,
     .sleep-sweetspot,
     .sleep-week-card,
     .sleep-regression-card,
@@ -6118,7 +6105,6 @@
     .food-cut-card,
     .food-allergen-card,
     .food-recipe-card,
-    .food-note-card,
     .food-canon-row,
     .food-age-chip,
     .food-filter-chip,
@@ -6129,7 +6115,6 @@
     .lactation-nav-card,
     .lactation-section,
     .lactation-quick-card,
-    .lactation-note-card,
     .lactation-latch-card,
     .lactation-choice,
     .lactation-result-card,
@@ -6970,6 +6955,7 @@
         <aside class="measure-sheet-shell" aria-label="Nueva medida" id="measure-modal">
           <form class="measure-sheet" data-measure-form>
             <div class="measure-grabber"></div>
+            <button class="sheet-close" type="button" data-close-sheet aria-label="Cerrar"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-x"/></svg></button>
             <h3>Nueva medida</h3>
             <p>¿Vienes del pediatra? Pon las que tengas. Si solo tienes peso, también vale.</p>
 
@@ -7012,6 +6998,7 @@
         <aside class="milestone-sheet-shell" aria-label="Hito logrado" id="milestone-modal">
           <form class="milestone-sheet" data-milestone-form>
             <div class="milestone-grabber"></div>
+            <button class="sheet-close" type="button" data-close-sheet aria-label="Cerrar"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-x"/></svg></button>
             <h3 data-milestone-modal-heading>¡Hito logrado!</h3>
             <div class="milestone-summary">
               <strong data-milestone-modal-title>Pinza superior</strong>
@@ -8735,7 +8722,7 @@
           </div>
           <span class="sleep-pill">18m</span>
         </div>
-        <div class="sleep-note-card" style="margin-top:12px;">
+        <div class="callout" style="margin-top:12px;">
           <strong>Ventana de sueño estimada</strong>
           <div class="sleep-window-time">${escapeHtml(predictor.window)}</div>
           <span>${escapeHtml(predictor.message)}</span>
@@ -8772,7 +8759,7 @@
         <button class="sleep-nav-card" type="button" data-sleep-view="regressions"><strong>Regresiones</strong><span>Biblioteca educativa sin alarma.</span></button>
         <button class="sleep-nav-card" type="button" data-sleep-view="plan"><strong>Plan IA</strong><span>Sin sleep coach humano ni cry-it-out.</span></button>
       </section>
-      <section class="sleep-note-card">
+      <section class="callout">
         <strong>Cero juicio.</strong>
         Cero juicio. Lo importante es sueño seguro, no ortodoxia. Colecho, cuna, lactancia, biberón nocturno: lo miramos desde seguridad y descanso familiar.
       </section>
@@ -8805,7 +8792,7 @@
           <div class="sweetspot-zone tired">Cansancio acumulado</div>
           <span class="sweetspot-now"></span>
         </div>
-        <div class="sleep-note-card">
+        <div class="callout">
           <strong>${escapeHtml(predictor.window)}</strong>
           ${escapeHtml(predictor.message)}
         </div>
@@ -8841,11 +8828,11 @@
       ${renderSleepViewHead('¿Cómo se divide el sueño a esta edad?', 'Selecciona la edad. El esquema cambia y avisa de la próxima transición.')}
       ${renderSleepAgeStrip()}
       ${renderSleepSchedule(sleepActiveAge)}
-      <section class="sleep-note-card">
+      <section class="callout">
         <strong>Próxima transición</strong>
         ${escapeHtml(ageRange.next)}
       </section>
-      <section class="sleep-note-card">
+      <section class="callout">
         <strong>Explicación pediátrica</strong>
         ${escapeHtml(ageRange.explanation)} Fuente: NHS · AAP · Sleep Foundation · Lullaby Trust · Huckleberry chart.
       </section>
@@ -8873,7 +8860,7 @@
         <div style="margin-top:10px;">${rows}</div>
         <div class="sleep-axis"><span>00</span><span>06</span><span>12</span><span>18</span><span>24</span></div>
       </section>
-      <section class="sleep-note-card">
+      <section class="callout">
         <strong>Notas de la semana</strong>
         Lola duerme 13-14.5h al día, dentro del rango esperable a su edad. El jueves durmió menos · puede haber sido la vacuna del miércoles.
       </section>
@@ -8892,7 +8879,7 @@
           </article>
         `).join('')}
       </section>
-      <section class="sleep-note-card">
+      <section class="callout">
         <strong>Fuentes</strong>
         Huckleberry · Sleep Foundation · NHS · Lullaby Trust. Las regresiones son educativas, no amenazas.
       </section>
@@ -8916,14 +8903,14 @@ Grow
 ├─ Bibliografía pública
 └─ Sin coach humano pagado</pre>
       </section>
-      <section class="sleep-note-card">
+      <section class="callout">
         <strong>Cómo funciona</strong>
         1. Cuéntanos qué pasa. 2. Te damos un plan de 3-6 semanas con pasos pequeños. 3. Lo ajustamos cada semana, sin culpa si tarda más.
       </section>
       <section class="sleep-plan-list">
         ${problems.map((problem) => `<button class="sleep-plan-problem" type="button" data-sheet-title="Plan de sueño" data-sheet-copy="Abriríamos el chat IA contextual para: ${escapeHtml(problem)}. Sin cry-it-out por defecto y con derivación externa si hace falta." data-open-sheet>${escapeHtml(problem)}</button>`).join('')}
       </section>
-      <section class="sleep-note-card">
+      <section class="callout">
         <strong>Importante</strong>
         Sin "cry it out" por defecto. Si necesitáis consultor humano, derivamos externamente; Grow no vende coaches humanos dentro del loop.
       </section>
@@ -9088,7 +9075,7 @@ Grow
         </div>
         ${renderFoodGrid({ limit: 4 })}
       </section>
-      <section class="food-note-card">
+      <section class="callout">
         <strong>Alérgenos sin ruido.</strong>
         Ofrecer 2-3 veces por semana durante al menos un mes. Si hay síntomas importantes, se consulta; si no, seguimos el ritmo familiar.
       </section>
@@ -9121,8 +9108,8 @@ Grow
         <div class="food-detail-photo">[Foto del alimento · alta resolución]<br>${escapeHtml(food.photo)}</div>
         <h3>${escapeHtml(food.name)}</h3>
         <div class="food-chip-row">${tags.map((tag) => `<span class="food-pill">${escapeHtml(tag)}</span>`).join('')}</div>
-        ${food.warning ? `<div class="food-note-card" style="margin-top:12px;"><strong>Seguridad</strong>${escapeHtml(food.warning)}. Siempre sentado, supervisado y sin prisas.</div>` : ''}
-        ${allergen ? `<div class="food-note-card" style="margin-top:12px;"><strong>Alérgeno · ${escapeHtml(allergen.name)}</strong>${escapeHtml(allergen.how)}. ${escapeHtml(allergen.alarm)}.</div>` : ''}
+        ${food.warning ? `<div class="callout" style="margin-top:12px;"><strong>Seguridad</strong>${escapeHtml(food.warning)}. Siempre sentado, supervisado y sin prisas.</div>` : ''}
+        ${allergen ? `<div class="callout" style="margin-top:12px;"><strong>Alérgeno · ${escapeHtml(allergen.name)}</strong>${escapeHtml(allergen.how)}. ${escapeHtml(allergen.alarm)}.</div>` : ''}
         <div class="food-card-actions" style="margin-top:14px;">
           <button class="food-card-button primary" type="button" data-log-type="alimento" data-log-source="alimentacion" data-log-food="${escapeHtml(food.id)}" data-log-title="${escapeHtml(food.name)} probado">${food.tried ? 'Probado · Diario' : 'Marcar probado'}</button>
           ${allergen ? `<button class="food-card-button" type="button" data-food-view="allergens">Ver alérgenos</button>` : `<button class="food-card-button" type="button" data-food-view="recipes">Ver recetas</button>`}
@@ -9163,7 +9150,7 @@ Grow
           `).join('')}
         </div>
       </section>
-      <section class="food-note-card food-timeline-note">
+      <section class="callout food-timeline-note">
         <strong>Línea temporal</strong>
         Ofrecer 2-3 veces por semana durante al menos un mes. Ingesta regular = clave prevención. Reg. UE 1169/2011 + Reg. Delegada 2024/2512.
       </section>
@@ -9204,7 +9191,7 @@ Grow
           `).join('')}
         </div>
       </section>
-      <section class="food-note-card">
+      <section class="callout">
         <strong>Regla de diseño.</strong>
         Las recetas no sustituyen el mapa de alérgenos: si aparece un alérgeno nuevo, se marca y se ofrece de forma regular.
       </section>
@@ -9233,7 +9220,7 @@ Grow
 ├─ Reglas de seguridad sin juicio
 └─ Chat IA contextual sin sustituir pediatra</pre>
       </section>
-      <section class="food-note-card">
+      <section class="callout">
         <strong>Cero juicio.</strong>
         Cero juicio. Seguridad, variedad y ritmo familiar. BLW, triturados o mixto: el libro acompaña, no corrige a la familia.
       </section>
@@ -9459,7 +9446,7 @@ Grow
           </article>
         `).join('')}
       </section>
-      <section class="lactation-note-card">
+      <section class="callout">
         <strong>Fuente</strong>
         Score LATCH (Jensen 1994) + adaptación FLIP. No es obligatorio. Sirve para ordenar observaciones, no para juzgar la toma.
       </section>
@@ -9482,7 +9469,7 @@ Grow
           <button class="lactation-action" type="button" data-lactation-view="canon">Ver tabla</button>
         </div>
       </section>
-      <section class="lactation-note-card">
+      <section class="callout">
         <strong>No diagnostica.</strong>
         Si vemos mastitis con fiebre o absceso probable, el módulo cambia a tono directo porque es clínicamente relevante.
       </section>
@@ -9567,7 +9554,7 @@ Grow
           `).join('')}
         </div>
       </section>
-      <section class="lactation-note-card">
+      <section class="callout">
         <strong>Tiempos canon</strong>
         Ambiente 4h · nevera 3-5 días · congelador 6 meses (óptimo 3). Fuente: ABM Protocol #8 · LLI · NHS.
       </section>
@@ -9598,7 +9585,7 @@ Grow
           ${problems.map((problem) => `<button class="lactation-action" type="button" data-sheet-title="Plan lactancia" data-sheet-copy="Abriríamos chat IA contextual para: ${escapeHtml(problem)}. Sin lactivism, sin culpa." data-open-sheet>${escapeHtml(problem)}</button>`).join('')}
         </div>
       </section>
-      <section class="lactation-note-card">
+      <section class="callout">
         <strong>Humano externo.</strong>
         Si necesitas IBCLC humana, te derivamos a profesional certificado por IBLCE. Grow no mete expertas humanas dentro del loop.
       </section>
@@ -9637,7 +9624,7 @@ Grow
           `).join('')}
         </div>
       </section>
-      <section class="lactation-note-card">
+      <section class="callout">
         <strong>Fuentes</strong>
         ABM Clinical Protocol #4 · La Leche League · APILAM · LactApp Medical · UC San Diego AI lactation tool.
       </section>
@@ -9790,7 +9777,7 @@ Grow
           `).join('')}
         </div>
       </section>
-      <section class="pregnancy-note-card">
+      <section class="callout">
         <strong>Cómo te encuentras</strong>
         EPDS antenatal · 3er trimestre. 10 preguntas · 4 minutos · canon ACOG. Detectar depresión perinatal antenatal cambia evolución postparto.
         <button class="pregnancy-action compact" type="button" data-open-sheet data-sheet-title="EPDS antenatal" data-sheet-copy="Cuestionario simulado. En producto real guardaría score, contexto y ruta de apoyo sin juicio.">Hacerlo ahora</button>
@@ -9820,7 +9807,7 @@ Grow
           </article>
         `).join('')}
       </section>
-      <section class="pregnancy-note-card">
+      <section class="callout">
         <strong>Biblioteca</strong>
         SEGO · NICE · ACOG · OMS · APILAM · Dana. Contenido factual, sin prescripción y con derivación externa si aplica.
       </section>
@@ -9842,7 +9829,7 @@ Grow
         <p class="pregnancy-copy">Llegas a 10 en una media de <strong>38 minutos</strong>. Hoy llevas 42 min — está dentro de tu rango.</p>
         <div class="pregnancy-note-inline">Ayer: 10 en 32 min · Anteayer: 10 en 41 min · Hace 3 días: 10 en 28 min</div>
       </section>
-      <section class="pregnancy-note-card ${complete ? '' : 'urgent-soft'}">
+      <section class="callout ${complete ? '' : 'urgent-soft'}">
         <strong>Cuándo preocuparse</strong>
         Si pasan 2h y no llegas a 10 movimientos → llama a tu obstetra/maternidad. No es necesariamente nada grave, pero merece valoración.
         <em>Norway research: el monitoreo diario reduce el stillbirth en un 30%.</em>
@@ -9882,11 +9869,11 @@ Grow
         <h3>Últimos 7 días</h3>
         ${renderPregnancyBpChart()}
       </section>
-      <section class="pregnancy-note-card urgent-soft">
+      <section class="callout urgent-soft">
         <strong>Cuándo es alarma</strong>
         ≥140/90 + cefalea/visión borrosa/dolor epigástrico → URGENCIAS. ≥140/90 sin síntomas en 2 lecturas separadas 4h → obstetra hoy. Subida brusca >30/15 mmHg sobre basal → consultar.
       </section>
-      <section class="pregnancy-note-card">
+      <section class="callout">
         <strong>Disclaimer</strong>
         PPG no sustituye tensiómetro de manguito si tu obstetra te pidió uno. Sirve para seguimiento orientativo y detección temprana.
       </section>
@@ -9913,7 +9900,7 @@ Grow
           </div>
         </section>
       `).join('')}
-      <section class="pregnancy-note-card urgent-soft">
+      <section class="callout urgent-soft">
         <strong>A vigilar (no marcables como rutina)</strong>
         ${pregnancyAlarmSymptoms.map((item) => `<span class="pregnancy-alarm-line">! ${escapeHtml(item)}</span>`).join('')}
         <button class="pregnancy-action compact" type="button" data-pregnancy-view="alarms">Ver señales de alarma</button>
@@ -9945,7 +9932,7 @@ Grow
           `).join('')}
         </div>
       </section>
-      <section class="pregnancy-note-card">
+      <section class="callout">
         <strong>Si pasa algo (cesárea u otros)</strong>
         Pablo entra al quirófano · piel con piel diferido pero hacerlo · informarme antes de cualquier procedimiento al peque.
       </section>
@@ -10025,7 +10012,7 @@ Grow
           `).join('')}
         </div>
       </section>
-      <section class="pregnancy-note-card">
+      <section class="callout">
         <strong>Fuentes</strong>
         SEGO · NICE Antenatal Care Guideline · ACOG · USPSTF · Count the Kicks · Babyscripts BP protocols · APILAM e-lactancia.
       </section>
@@ -10165,7 +10152,7 @@ Grow
           <button class="vaccine-nav-card" type="button" data-vaccine-view="education"><strong>Educación</strong><small>decisión informada</small></button>
         </div>
       </section>
-      <section class="vaccine-note-card">
+      <section class="callout">
         <strong>Esquema activo</strong>
         ${escapeHtml(getVaccineScheme().label)}. ${escapeHtml(getVaccineScheme().copy)}
         <button class="vaccine-action compact" type="button" data-vaccine-view="scheme">Cambiar esquema</button>
@@ -10261,7 +10248,7 @@ Grow
           <button class="vaccine-action" type="button" data-log-type="antitermico" data-log-source="vacunacion" data-log-title="Paracetamol 80 mg">+ Registrar antitérmico</button>
         </div>
       </section>
-      <section class="vaccine-note-card">
+      <section class="callout">
         <strong>Lectura IA</strong>
         Curva normal post-hexavalente. Comer un poco menos en las primeras 24h es esperable. Si pasa de 39.5° o dura >48h, te aviso para llamar.
       </section>
@@ -10302,7 +10289,7 @@ Grow
           <article class="vaccine-row"><strong>Duda autismo</strong><span>El estudio Wakefield fue retirado. Cohortes grandes, incluida danesa 657K, no muestran asociación. Tono neutral, sin moralizar.</span></article>
         </div>
       </section>
-      <section class="vaccine-note-card">
+      <section class="callout">
         <strong>Regla de tono</strong>
         Educación · decisión informada · sin militancia. Las dudas anti-vacunas se responden con datos sin tono moralizante.
       </section>
@@ -10338,7 +10325,7 @@ Grow
           `).join('')}
         </div>
       </section>
-      <section class="vaccine-note-card">
+      <section class="callout">
         <strong>Mapping</strong>
         Cambiar esquema no borra hitos: el prototipo conserva equivalencias AEPED/AAP y muestra diferencias como notas.
       </section>
@@ -11652,6 +11639,7 @@ Grow
     if (!logSheetRoot) return;
     logSheetRoot.innerHTML = `
       <div class="qlog-grabber"></div>
+      <button class="sheet-close" type="button" data-close-sheet aria-label="Cerrar"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-x"/></svg></button>
       <div class="qlog-head">
         <h4>¿Qué pasó?</h4>
         <span class="meta">9:23 · ahora</span>
