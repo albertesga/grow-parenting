@@ -10003,19 +10003,21 @@ Grow
     return { left: 40, right: 580, top: 40, bottom: 220, width: 600, height: 280 };
   }
 
-  /* Chart axis spans 0–24 months (matches DS canon, viewBox 600×280). */
-  const GROWTH_AXIS_MAX = 24;
+  /* ─── Growth chart · DS § G canon ─────────────────────────────
+     Refactored 2026-05: dynamic band/P50 generation produced
+     stepped/broken curves regardless of smoothing algorithm. Now
+     the WHO band + P50 are HARDCODED hand-tuned SVG paths from the
+     DS demo — same beautiful shape for all 3 metrics. Only the
+     data line (Lola's measurements) is generated dynamically.
 
-  function getGrowthReferenceValue(metric, month, curve = 'p50') {
-    const t = clamp(month / GROWTH_AXIS_MAX, 0, 1);
-    const range = metric.maxValue - metric.minValue;
-    const eased = (1 - Math.exp(-2.35 * t)) / (1 - Math.exp(-2.35));
-    const p50 = metric.minValue + range * (0.28 + 0.48 * eased);
-    const spread = range * (0.18 - 0.045 * t);
-    if (curve === 'p97') return p50 + spread;
-    if (curve === 'p3') return p50 - spread;
-    return p50;
-  }
+     This means the band is "stylized" not "actual WHO data" — but
+     visually identical to the DS reference. For an editorial
+     prototype this is the right trade-off.
+
+     viewBox 600 × 280 · chart area 40-580 × 40-220. */
+  const GROWTH_AXIS_MAX = 24;
+  const GROWTH_BAND_PATH = 'M40 215 Q150 180 250 130 T580 60 L580 100 Q400 130 250 175 T40 240 Z';
+  const GROWTH_P50_PATH = 'M40 230 Q150 195 250 150 T580 80';
 
   function getChartPoint(metric, measurement, indexOffset = 0, geometry = getGrowthChartGeometry()) {
     const month = clamp((measurement.ageMonths || getGrowthAgeMonths()) + indexOffset, 0, GROWTH_AXIS_MAX);
@@ -10026,14 +10028,9 @@ Grow
     return { x, y, value, ageMonths: measurement.ageMonths || getGrowthAgeMonths(), measurement };
   }
 
-  function getReferencePoint(metric, month, curve, geometry) {
-    return getChartPoint(metric, { ageMonths: month, [metric.id]: getGrowthReferenceValue(metric, month, curve) }, 0, geometry);
-  }
-
-  /* Catmull-Rom-to-Bezier · G1-continuous smooth interpolation through all
-     anchor points. Replaces the midX-tangent algorithm which produced
-     stepped curves with horizontal tangents at every anchor. */
-  function buildGrowthPath(points) {
+  /* Catmull-Rom-to-Bezier — smooth interpolation for the data line only.
+     G1-continuous, tension 0.5. Used solely on Lola's measurements path. */
+  function buildSmoothPath(points) {
     if (!points.length) return '';
     if (points.length === 1) return `M ${points[0].x.toFixed(1)} ${points[0].y.toFixed(1)}`;
     const tension = 0.5;
@@ -10052,30 +10049,6 @@ Grow
     return path;
   }
 
-  function buildGrowthBandPath(upperPoints, lowerPoints) {
-    if (!upperPoints.length || !lowerPoints.length) return '';
-    /* Upper boundary forward, then reverse lower into a smooth return path,
-       then close. The L between upper-end and lower-start makes the right edge. */
-    const lower = [...lowerPoints].reverse();
-    const upperPath = buildGrowthPath(upperPoints);
-    /* Lower path treated as its own smooth segment, prefixed with L
-       to bridge the right edge from upper-end to lower-start. */
-    const tension = 0.5;
-    let lowerPath = `L ${lower[0].x.toFixed(1)} ${lower[0].y.toFixed(1)}`;
-    for (let i = 0; i < lower.length - 1; i++) {
-      const p0 = lower[i - 1] || lower[i];
-      const p1 = lower[i];
-      const p2 = lower[i + 1];
-      const p3 = lower[i + 2] || p2;
-      const cp1x = p1.x + (p2.x - p0.x) / 6 * tension;
-      const cp1y = p1.y + (p2.y - p0.y) / 6 * tension;
-      const cp2x = p2.x - (p3.x - p1.x) / 6 * tension;
-      const cp2y = p2.y - (p3.y - p1.y) / 6 * tension;
-      lowerPath += ` C ${cp1x.toFixed(1)} ${cp1y.toFixed(1)}, ${cp2x.toFixed(1)} ${cp2y.toFixed(1)}, ${p2.x.toFixed(1)} ${p2.y.toFixed(1)}`;
-    }
-    return `${upperPath} ${lowerPath} Z`;
-  }
-
   function renderGrowthChart(metric, measurements, selectedIndex) {
     const geometry = getGrowthChartGeometry();
     const ageCounts = {};
@@ -10086,14 +10059,7 @@ Grow
       return getChartPoint(metric, measurement, duplicateIndex * 0.18, geometry);
     });
     const selectedPoint = points[selectedIndex] || points[points.length - 1] || getChartPoint(metric, { ageMonths: getGrowthAgeMonths(), [metric.id]: metric.reference }, 0, geometry);
-    const selectedPercentile = getMetricPercentile(metric, selectedPoint.value);
-    /* Evenly spaced reference months for smooth curves. 9 points / 3-month steps. */
-    const referenceMonths = [0, 3, 6, 9, 12, 15, 18, 21, 24];
-    const p97 = referenceMonths.map((month) => getReferencePoint(metric, month, 'p97', geometry));
-    const p50 = referenceMonths.map((month) => getReferencePoint(metric, month, 'p50', geometry));
-    const p3 = referenceMonths.map((month) => getReferencePoint(metric, month, 'p3', geometry));
-    const bandPath = buildGrowthBandPath(p97, p3);
-    const childPath = buildGrowthPath(points);
+    const childPath = buildSmoothPath(points);
 
     /* 4 horizontal grid lines · 4 Y-axis labels (DS canon: top, 2 mids, bottom). */
     const gridRatios = [0, 0.333, 0.666, 1];
@@ -10102,7 +10068,7 @@ Grow
       return `<line x1="${geometry.left}" y1="${y.toFixed(1)}" x2="${geometry.right}" y2="${y.toFixed(1)}" stroke="#E2DDD1" stroke-width="0.5"/>`;
     }).join('');
 
-    /* X-axis: 0/6/12/18/24m (DS canon, no 36m). */
+    /* X-axis: 0/6/12/18/24m (DS canon). */
     const axisMonths = [0, 6, 12, 18, 24];
     const axis = axisMonths.map((month) => {
       const x = geometry.left + (month / GROWTH_AXIS_MAX) * (geometry.right - geometry.left);
@@ -10110,8 +10076,7 @@ Grow
       return `<text x="${x.toFixed(1)}" y="265" font-family="Lenia" font-size="10" fill="#888" text-anchor="${anchor}">${month}m</text>`;
     }).join('');
 
-    /* 4 Y-axis labels matching the 4 grid lines. Distribute linearly between
-       maxValue (top) and minValue (bottom). */
+    /* 4 Y-axis labels matching the 4 grid lines. */
     const yLabels = gridRatios.map((ratio) => {
       const value = metric.maxValue - ratio * (metric.maxValue - metric.minValue);
       const y = geometry.top + (geometry.bottom - geometry.top) * ratio + 4;
@@ -10141,11 +10106,11 @@ Grow
         ${grid}
         ${yLabels}
         ${axis}
-        <path d="${bandPath}" fill="#E8E1CF" opacity="0.6"/>
-        <path d="${buildGrowthPath(p50)}" stroke="#888" stroke-width="1" stroke-dasharray="3 4" fill="none"/>
-        <text x="585" y="${p97[p97.length - 1].y.toFixed(1)}" font-family="Lenia" font-size="9" fill="#888">P97</text>
-        <text x="585" y="${p50[p50.length - 1].y.toFixed(1)}" font-family="Lenia" font-size="9" fill="#888">P50</text>
-        <text x="585" y="${p3[p3.length - 1].y.toFixed(1)}" font-family="Lenia" font-size="9" fill="#888">P3</text>
+        <path d="${GROWTH_BAND_PATH}" fill="#E8E1CF" opacity="0.6"/>
+        <path d="${GROWTH_P50_PATH}" stroke="#888" stroke-width="1" stroke-dasharray="3 4" fill="none"/>
+        <text x="585" y="60" font-family="Lenia" font-size="9" fill="#888">P97</text>
+        <text x="585" y="80" font-family="Lenia" font-size="9" fill="#888">P50</text>
+        <text x="585" y="245" font-family="Lenia" font-size="9" fill="#888">P3</text>
         ${childPath ? `<path class="growth-chart-path" d="${childPath}" stroke="#D67742" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>` : ''}
         <line x1="${tooltipX.toFixed(1)}" y1="${selectedPoint.y.toFixed(1)}" x2="${tooltipX.toFixed(1)}" y2="${tooltipY}" stroke="#D67742" stroke-width="0.5" stroke-dasharray="2 2"/>
         <rect x="${pillX.toFixed(1)}" y="${(tooltipY - 2).toFixed(1)}" width="${pillW.toFixed(1)}" height="16" rx="8" fill="#D67742"/>
