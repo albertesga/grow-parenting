@@ -868,89 +868,55 @@
   .top-header.compact h3 { font-size: var(--fs-h3); }
 
   /* ═════════════════ CALLOUT — § L ═════════════════ */
-  /* Editorial note card · used for adaptive copy, tips, footnotes.
-     Replaces ad-hoc summary boxes scattered across components.
-     Always with a slow-shifting gradient to feel alive. */
+  /* Editorial note · paper-soft card with a short tone-coloured rule
+     at top + italic body + tone-coloured emphasis on <strong>. No
+     moving gradient — restrained, calm, book-like. */
   .callout {
-    --c-base: var(--paper-soft);
-    --c-tint: var(--paper);
-    --c-deep: var(--paper-deep);
-    background: linear-gradient(135deg,
-      var(--c-base) 0%,
-      var(--c-tint) 25%,
-      var(--c-base) 50%,
-      var(--c-deep) 75%,
-      var(--c-base) 100%);
-    background-size: 280% 280%;
-    animation: callout-shift 14s ease-in-out infinite;
+    --accent: var(--coral-base);
+    --accent-strong: var(--coral-strong);
+    background: var(--paper-soft);
     border-radius: var(--radius-md);
-    padding: 16px 18px;
+    padding: 22px 24px 20px;
     text-align: center;
+    position: relative;
   }
   .callout::before {
-    content: "✶";
+    content: "";
     display: block;
-    color: var(--coral-strong);
-    margin-bottom: 6px;
-    font-size: 14px;
-    line-height: 1;
+    width: 28px;
+    height: 1.5px;
+    background: var(--accent);
+    border-radius: 2px;
+    margin: 0 auto 14px;
   }
   .callout p {
     margin: 0 auto;
+    font-family: "Helvena";
     font-size: var(--fs-body-sm);
-    color: var(--ink-soft);
-    line-height: 1.55;
+    color: var(--ink);
+    line-height: 1.6;
     font-style: italic;
-    max-width: 56ch;
-    position: relative;
+    max-width: 54ch;
+    letter-spacing: -0.005em;
   }
   .callout strong {
-    color: var(--ink);
+    color: var(--accent-strong);
     font-weight: 500;
     font-style: normal;
   }
-  /* tone variants — each gets its own gradient palette + asterisk color */
-  .callout.coral {
-    --c-base: var(--coral-subtle);
-    --c-tint: #FFE0CC;
-    --c-deep: #F8D6BE;
-  }
-  .callout.coral::before { color: var(--coral-strong); }
-  .callout.mint {
-    --c-base: var(--mint-subtle);
-    --c-tint: #EEF5E7;
-    --c-deep: #D9E5CD;
-  }
-  .callout.mint::before { color: #4F6647; }
-  .callout.gold {
-    --c-base: var(--gold-subtle);
-    --c-tint: #FFF3D2;
-    --c-deep: #ECDFB6;
-  }
-  .callout.gold::before { color: #6E5A2A; }
-  .callout.blush {
-    --c-base: var(--blush-subtle);
-    --c-tint: #FCEDE7;
-    --c-deep: #F0D9D0;
-  }
-  .callout.blush::before { color: #7A4A3A; }
+  /* tone variants — change accent rule + emphasis colour */
+  .callout.coral { --accent: var(--coral-base); --accent-strong: var(--coral-strong); }
+  .callout.mint  { --accent: var(--mint-base);  --accent-strong: #4F6647; }
+  .callout.gold  { --accent: var(--gold-base);  --accent-strong: #6E5A2A; }
+  .callout.blush { --accent: var(--blush-base); --accent-strong: #7A4A3A; }
 
-  @keyframes callout-shift {
-    0%   { background-position: 0% 50%; }
-    50%  { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
-  }
-  @media (prefers-reduced-motion: reduce) {
-    .callout { animation: none; background-position: 0% 50%; }
-  }
-
-  /* without asterisk */
+  /* without rule */
   .callout.plain::before { content: none; }
-  .callout.plain { padding-top: 14px; }
-  /* stat variant — short statement with large coral number, no animation */
+  .callout.plain { padding-top: 18px; }
+
+  /* stat variant — short statement with large coral number, no rule */
   .callout.stat {
     background: transparent;
-    animation: none;
     padding: 8px 18px;
   }
   .callout.stat::before { content: none; }
@@ -958,6 +924,7 @@
     font-style: normal;
     font-size: var(--fs-body-lg);
     color: var(--ink);
+    letter-spacing: 0;
   }
   .callout.stat strong {
     color: var(--coral-strong);
