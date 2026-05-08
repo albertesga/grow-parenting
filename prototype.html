@@ -6721,6 +6721,88 @@
     background: var(--paper);
     border: 1px solid var(--line);
   }
+
+  /* § M · Vax detail (per-dose deep view) · port from DS v0.2 */
+  .vax-detail {
+    background: var(--paper);
+    border-radius: var(--radius-xl);
+    padding: 24px;
+    border: 1px solid var(--line);
+    box-shadow: 0 18px 46px rgba(45,38,30,0.05);
+    margin-top: 12px;
+  }
+  .vax-detail .top-header { margin-bottom: 16px; }
+  .vax-detail-stat-wrap { margin: 0 0 18px; }
+
+  .vax-section-title {
+    font-family: "Lenia"; font-weight: 500;
+    font-size: var(--fs-h4); line-height: 1.2;
+    margin: 24px 0 12px;
+    letter-spacing: -0.01em;
+  }
+  .vax-section-title:first-of-type { margin-top: 18px; }
+
+  .vax-protection {
+    list-style: none; padding: 0; margin: 0;
+    display: flex; flex-direction: column; gap: 8px;
+  }
+  .vax-protection li {
+    display: grid;
+    grid-template-columns: 14px 1fr;
+    gap: 10px;
+    align-items: start;
+    font-size: var(--fs-body-sm);
+    color: var(--ink);
+    line-height: 1.55;
+  }
+  .vax-protection li::before {
+    content: ''; width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--coral-base);
+    margin-top: 8px;
+    margin-left: 4px;
+  }
+  .vax-protection strong { color: var(--ink); font-weight: 500; }
+
+  .vax-admin-details {
+    background: var(--paper-soft);
+    border-radius: var(--radius-md);
+    padding: 14px 18px;
+    display: flex; flex-direction: column;
+    gap: 10px;
+  }
+  .vax-admin-details .detail-row {
+    display: flex; justify-content: space-between;
+    gap: 12px; font-size: var(--fs-body-sm);
+  }
+  .vax-admin-details .label {
+    font-family: "Lenia"; color: var(--ink-muted);
+    letter-spacing: 0.04em;
+  }
+  .vax-admin-details .value {
+    color: var(--ink); text-align: right; font-weight: 500;
+  }
+
+  .vax-side-effects {
+    list-style: none; padding: 0; margin: 0;
+    display: flex; flex-direction: column; gap: 6px;
+  }
+  .vax-side-effects li {
+    display: grid;
+    grid-template-columns: 14px 1fr;
+    gap: 10px;
+    align-items: start;
+    font-size: var(--fs-body-sm);
+    color: var(--ink-soft);
+    line-height: 1.55;
+  }
+  .vax-side-effects li::before {
+    content: ''; width: 4px; height: 4px;
+    border-radius: 50%;
+    background: var(--ink-muted);
+    margin-top: 9px;
+    margin-left: 5px;
+  }
 </style>
 </head>
 <body>
@@ -8171,6 +8253,24 @@
     'Polio (VPI)',
     'Hepatitis B'
   ];
+  /* Per-vaccine info bank for .vax-detail rendering. Each entry maps a
+     vaccine short-name (as used in vaccineSchedule.title separated by " · ")
+     to its disease list and side-effects. Used by renderVaccineDoseDetail. */
+  const vaccineInfo = {
+    'Hexavalente':   { diseases: ['Difteria', 'Tétanos', 'Tos ferina', 'Polio', 'Hib', 'Hepatitis B'], sideEffects: ['Fiebre baja (≤ 38.5 °C) en las 24-48 h siguientes', 'Enrojecimiento, dolor o inflamación en la zona del pinchazo (1-3 días)', 'Irritabilidad o pérdida de apetito (24 h)'] },
+    'Neumococo':     { diseases: ['Streptococcus pneumoniae · neumonía, otitis, meningitis'], sideEffects: ['Fiebre leve', 'Hinchazón local', 'Somnolencia'] },
+    'MenB':          { diseases: ['Meningococo B · meningitis, sepsis'], sideEffects: ['Fiebre frecuente (60-80%) en las 6-24 h', 'Dolor local marcado', 'Irritabilidad'] },
+    'MenACWY':       { diseases: ['Meningococo A, C, W, Y · meningitis, sepsis'], sideEffects: ['Fiebre baja', 'Dolor local', 'Cefalea (en mayores)'] },
+    'Rotavirus':     { diseases: ['Rotavirus · gastroenteritis aguda'], sideEffects: ['Heces blandas o diarrea leve (3-5 días)', 'Vómitos ocasionales', 'Irritabilidad'] },
+    'Rotavirus 2ª':  { diseases: ['Rotavirus · gastroenteritis aguda'], sideEffects: ['Heces blandas o diarrea leve (3-5 días)', 'Vómitos ocasionales'] },
+    'Triple vírica': { diseases: ['Sarampión', 'Rubeola', 'Parotiditis (paperas)'], sideEffects: ['Fiebre 5-12 días post-vacuna', 'Exantema leve transitorio', 'Inflamación parotídea ocasional'] },
+    'Hepatitis A':   { diseases: ['Hepatitis A · infección hepática vírica'], sideEffects: ['Dolor local', 'Cefalea', 'Cansancio leve'] },
+    'Varicela':      { diseases: ['Varicela · vesículas, fiebre'], sideEffects: ['Fiebre 1-3 semanas post-vacuna', 'Exantema leve (5-10 lesiones)', 'Dolor local'] },
+    'VPH':           { diseases: ['Virus del papiloma humano · cáncer de cérvix, ano, orofaríngeo, verrugas genitales'], sideEffects: ['Dolor local marcado', 'Cefalea', 'Mareo (síncope vasovagal en adolescentes)'] },
+    'Td':            { diseases: ['Tétanos', 'Difteria (refuerzo)'], sideEffects: ['Dolor local', 'Hinchazón', 'Fiebre baja'] },
+    'DTPa-VPI':      { diseases: ['Difteria', 'Tétanos', 'Tos ferina', 'Polio'], sideEffects: ['Fiebre baja', 'Enrojecimiento local', 'Cansancio leve'] }
+  };
+  let vaccineDetailIndex = null;
   const vaccineReactions = [
     { title: 'Fiebre leve <38.5°C', copy: '~30% bebés · pico 6-12h' },
     { title: 'Dolor / enrojecimiento local', copy: '~50% · resuelve 48h' },
@@ -10413,7 +10513,7 @@ Grow
   }
 
   function renderVaccineScheduleRows() {
-    return vaccineSchedule.map((item) => {
+    return vaccineSchedule.map((item, index) => {
       const stateIcon = item.state === 'done' ? '✓' : item.state === 'next' ? '→' : '·';
       let footlineText = '';
       if (item.state === 'done') {
@@ -10425,7 +10525,7 @@ Grow
       }
       const badge = item.badge ? `<span class="new-badge">${escapeHtml(item.badge)}</span>` : '';
       return `
-      <button class="dose-row ${escapeHtml(item.state)}" type="button" data-vaccine-view="${item.state === 'next' ? 'detail' : 'card'}">
+      <button class="dose-row ${escapeHtml(item.state)}" type="button" data-vaccine-view="dose" data-vaccine-detail-index="${index}">
         <span class="age">${escapeHtml(item.ageShort || item.age)}</span>
         <div class="body">
           <span class="vaccines">${escapeHtml(item.title)}${badge ? ' ' + badge : ''}</span>
@@ -10438,6 +10538,102 @@ Grow
       </button>
     `;
     }).join('');
+  }
+
+  /* Per-dose vaccine detail · uses .vax-detail architecture from DS § M.
+     Top-header (eyebrow + h2 + sub) · stat callout · info callout · ¿qué
+     previene? · detalles administración (only done) · efectos secundarios ·
+     callout coral pediatra · footer source disclaimer. */
+  function renderVaccineDoseDetail() {
+    if (vaccineDetailIndex == null || !vaccineSchedule[vaccineDetailIndex]) {
+      return renderVaccineHome();
+    }
+    const dose = vaccineSchedule[vaccineDetailIndex];
+    const vaccineNames = dose.title.split(' · ');
+    const allDiseases = vaccineNames.flatMap((name) => (vaccineInfo[name]?.diseases) || []);
+    const allSideEffects = vaccineNames.flatMap((name) => (vaccineInfo[name]?.sideEffects) || []);
+    const uniqueDiseases = [...new Set(allDiseases)];
+    const uniqueSideEffects = [...new Set(allSideEffects)];
+    const totalDoses = vaccineSchedule.length;
+    const doseIndex = vaccineDetailIndex + 1;
+
+    let statCopy = '';
+    if (dose.state === 'done') {
+      statCopy = `Lleva <strong>${doseIndex}</strong> de <strong>${totalDoses}</strong> dosis. Administrada el <strong>${escapeHtml(dose.date)}</strong>.`;
+    } else if (dose.state === 'next') {
+      statCopy = `Toca <strong>${escapeHtml(dose.daysAway || 'esta semana')}</strong>. Cita estimada el <strong>${escapeHtml(dose.date)}</strong>.`;
+    } else {
+      statCopy = `Próxima a los <strong>${escapeHtml(dose.age)}</strong> · estimada en <strong>${escapeHtml(dose.date)}</strong>.`;
+    }
+
+    const reminderCallout = dose.state === 'done'
+      ? `<section class="callout"><p><strong>Próxima dosis a los ${escapeHtml(vaccineSchedule[vaccineDetailIndex + 1]?.age || '— ')}.</strong> Te avisaremos cuando se acerque.</p></section>`
+      : dose.state === 'next'
+        ? `<section class="callout"><p><strong>Pide cita en tu CAP.</strong> Llega 10 min antes para registro y observación post-vacuna 15 min.</p></section>`
+        : `<section class="callout"><p><strong>Sin urgencia.</strong> Te enviaremos un recordatorio 4 semanas antes de la fecha estimada.</p></section>`;
+
+    const adminDetailsBlock = dose.state === 'done' ? `
+      <h4 class="vax-section-title">Detalles de administración</h4>
+      <div class="vax-admin-details">
+        <div class="detail-row"><span class="label">Centro</span><span class="value">${escapeHtml(dose.centro || 'CAP Sant Pau · Madrid')}</span></div>
+        <div class="detail-row"><span class="label">Profesional</span><span class="value">Dr. Méndez · enfermería</span></div>
+        <div class="detail-row"><span class="label">Marca</span><span class="value">${escapeHtml(vaccineNames[0])}® · Sanofi Pasteur</span></div>
+        <div class="detail-row"><span class="label">Lote</span><span class="value">A8M3K</span></div>
+        <div class="detail-row"><span class="label">Vía</span><span class="value">Intramuscular · muslo izq.</span></div>
+      </div>
+    ` : '';
+
+    const ctaBlock = dose.state === 'next'
+      ? `<button class="btn btn-coral" type="button" style="width: 100%; margin-top: 14px" data-vaccine-mark-done="${vaccineDetailIndex}">Marcar como puesta</button>`
+      : dose.state === 'future'
+        ? `<button class="btn btn-soft" type="button" style="width: 100%; margin-top: 14px" data-vaccine-remind="${vaccineDetailIndex}">Avísame cuando se acerque</button>`
+        : '';
+
+    return `
+      <button class="book-close-pill" type="button" data-goto="hoy" aria-label="Cerrar libro"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-x"/></svg></button>
+      <div class="vax-detail">
+        <div class="top-header" style="margin-bottom: 16px">
+          <div>
+            <span class="eyebrow">Lola · ${escapeHtml(dose.ageShort || dose.age)}</span>
+            <h2>${escapeHtml(vaccineNames.join(' · '))}</h2>
+            <p class="sub">${escapeHtml(uniqueDiseases.slice(0, 6).join(' · '))}</p>
+          </div>
+          <div class="actions">
+            <button class="vaccine-back-view" type="button" data-vaccine-view="home" aria-label="Volver">←</button>
+          </div>
+        </div>
+
+        <div class="vax-detail-stat-wrap">
+          <div class="callout stat">
+            <p>${statCopy}</p>
+          </div>
+        </div>
+
+        ${reminderCallout}
+
+        <h4 class="vax-section-title">¿Qué previene?</h4>
+        <ul class="vax-protection">
+          ${uniqueDiseases.map((d) => `<li><span><strong>${escapeHtml(d.split(' · ')[0])}.</strong> ${escapeHtml(d.split(' · ')[1] || 'Enfermedad infecciosa prevenible.')}</span></li>`).join('')}
+        </ul>
+
+        ${adminDetailsBlock}
+
+        <h4 class="vax-section-title">Efectos secundarios típicos</h4>
+        <ul class="vax-side-effects">
+          ${uniqueSideEffects.map((s) => `<li>${escapeHtml(s)}</li>`).join('')}
+        </ul>
+
+        <section class="callout coral" style="margin-top: 12px">
+          <p><strong>Cuándo llamar al pediatra.</strong> Fiebre &gt; 39 °C, llanto inconsolable más de 3 h, convulsiones, o hinchazón en la zona &gt; 5 cm.</p>
+        </section>
+
+        ${ctaBlock}
+
+        <section class="callout with-rule" style="margin-top: 22px">
+          <p>Información médica adaptada de la <strong>Asociación Española de Pediatría · Comité Asesor de Vacunas (AEPED CAV) 2026</strong>. No sustituye la consulta con tu pediatra.</p>
+        </section>
+      </div>
+    `;
   }
 
   function renderVaccineHome() {
@@ -10650,6 +10846,7 @@ Grow
     const views = {
       home: renderVaccineHome,
       detail: renderVaccineDetail,
+      dose: renderVaccineDoseDetail,
       tracker: renderVaccineTracker,
       card: renderVaccineCard,
       education: renderVaccineEducation,
@@ -12539,6 +12736,10 @@ Grow
 
     const vaccineViewButton = event.target.closest('[data-vaccine-view]');
     if (vaccineViewButton) {
+      const idx = vaccineViewButton.dataset.vaccineDetailIndex;
+      if (idx != null && idx !== '') {
+        vaccineDetailIndex = parseInt(idx, 10);
+      }
       setVaccineView(vaccineViewButton.dataset.vaccineView);
       return;
     }
