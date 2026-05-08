@@ -61,9 +61,40 @@
     --night-surface: #2A2E36;
     --shadow: 0 26px 80px rgba(42, 33, 27, 0.22);
     --ease: cubic-bezier(0.2, 0.8, 0.2, 1);
+
+    /* font scale */
+    --fs-eyebrow: 9px;
+    --fs-meta: 11px;
+    --fs-caption: 12px;
+    --fs-body-sm: 13px;
+    --fs-body: 14px;
+    --fs-body-lg: 15px;
+    --fs-h4: 17px;
+    --fs-h3: 20px;
+    --fs-h2: 24px;
+    --fs-h1: 30px;
+
+    /* spacing scale */
+    --space-2xs: 4px;
+    --space-xs: 6px;
+    --space-sm: 8px;
+    --space-md: 12px;
+    --space-lg: 16px;
+    --space-xl: 22px;
+
+    /* a11y */
+    --tap-target-min: 36px;
   }
 
   * { box-sizing: border-box; }
+
+  /* keyboard-only focus ring (mouse users see no outline) */
+  :focus { outline: 0; }
+  :focus-visible {
+    outline: 2px solid var(--coral-base);
+    outline-offset: 2px;
+    border-radius: inherit;
+  }
   html, body { min-height: 100%; margin: 0; }
   body {
     font-family: "Helvena", "Helvetica Neue", sans-serif;
@@ -109,7 +140,7 @@
 
   .meta-kicker {
     font-family: "Lenia";
-    font-size: 11px;
+    font-size: var(--fs-meta);
     font-weight: 500;
     letter-spacing: 0.18em;
     text-transform: uppercase;
@@ -155,7 +186,7 @@
 
   .map button:hover { transform: translateX(3px); border-color: var(--ink); }
   .map button[aria-current="true"] { background: var(--ink); color: var(--paper); border-color: var(--ink); }
-  .map span { font-family: "Lenia"; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; }
+  .map span { font-family: "Lenia"; font-size: var(--fs-meta); letter-spacing: 0.12em; text-transform: uppercase; }
 
   .note-card { display: grid; gap: 16px; }
   .note-item { border-top: 1px solid var(--line); padding-top: 14px; }
@@ -164,7 +195,7 @@
     display: block;
     font-family: "Lenia";
     font-weight: 500;
-    font-size: 13px;
+    font-size: var(--fs-body-sm);
     margin-bottom: 4px;
   }
 
@@ -215,7 +246,7 @@
     align-items: center;
     justify-content: space-between;
     padding: 0 22px;
-    font-size: 12px;
+    font-size: var(--fs-caption);
     font-weight: 600;
     color: var(--ink);
   }
@@ -235,22 +266,7 @@
   .content::-webkit-scrollbar { display: none; }
   .screen.no-nav .content { padding-bottom: 28px; }
 
-  .book-close-pill {
-    display: inline-flex;
-    align-items: center;
-    gap: 5px;
-    padding: 6px 14px 6px 10px;
-    margin-bottom: 16px;
-    background: var(--surface-warm, #F5F2EC);
-    border: 1px solid var(--line, #E2DDD1);
-    border-radius: 999px;
-    font-size: 13px;
-    font-weight: 500;
-    color: var(--ink-warm, #8B7355);
-    cursor: pointer;
-    letter-spacing: 0.01em;
-  }
-  .book-close-pill:hover { background: var(--line, #E2DDD1); }
+  .book-close-pill { display: none; }
 
   .top-row {
     display: flex;
@@ -293,7 +309,7 @@
   .eyebrow {
     font-family: "Lenia";
     font-weight: 500;
-    font-size: 11px;
+    font-size: var(--fs-meta);
     letter-spacing: 0.18em;
     text-transform: uppercase;
     color: var(--ink-muted);
@@ -310,7 +326,7 @@
   }
 
   .body-copy {
-    font-size: 15px;
+    font-size: var(--fs-body-lg);
     color: var(--ink-soft);
     line-height: 1.55;
     margin: 0 0 18px;
@@ -386,26 +402,38 @@
   .ghost-link {
     width: 100%;
     border: 0;
-    border-radius: 16px;
+    border-radius: 999px;
     min-height: 54px;
-    padding: 14px 18px;
+    padding: 14px 22px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
     font-family: "Lenia";
     font-weight: 500;
     font-size: 16px;
+    line-height: 1;
     cursor: pointer;
-    transition: transform 160ms var(--ease), box-shadow 160ms var(--ease), background 160ms var(--ease);
+    transition: transform 160ms var(--ease), box-shadow 160ms var(--ease), filter 160ms var(--ease);
   }
 
   .primary { background: var(--ink); color: var(--paper); box-shadow: 0 14px 32px rgba(26,26,26,0.16); }
-  .secondary { background: var(--paper); color: var(--ink); border: 1px solid var(--line); }
-  .ghost-link { min-height: auto; background: transparent; color: var(--ink-muted); padding: 12px; }
+  .secondary { background: var(--paper-soft); color: var(--ink); border: 1px solid var(--line); }
+  .ghost-link { min-height: auto; background: transparent; color: var(--ink-muted); padding: 12px; border-radius: 12px; }
   .primary:hover,
-  .secondary:hover { transform: translateY(-1px); }
+  .secondary:hover { transform: translateY(-1px); filter: brightness(0.97); }
+
+  .primary.coral { background: var(--coral-base); color: #4A2614; box-shadow: 0 14px 32px rgba(242,165,122,0.30); }
+  .primary.mint  { background: var(--mint-base);  color: #2E4A2A; box-shadow: 0 14px 32px rgba(143,174,133,0.28); }
+  .primary.blush { background: var(--blush-base); color: #6B3D2A; box-shadow: 0 14px 32px rgba(216,154,137,0.28); }
+  .secondary.coral { background: var(--coral-subtle); color: #6B3D2A; border-color: rgba(216,119,66,0.32); }
+  .secondary.mint  { background: var(--mint-subtle);  color: #4F6647; border-color: rgba(143,174,133,0.36); }
+  .secondary.blush { background: var(--blush-subtle); color: #7A4A3A; border-color: rgba(216,154,137,0.36); }
   .button-stack { display: grid; gap: 10px; }
 
   .legal {
     color: var(--ink-muted);
-    font-size: 11px;
+    font-size: var(--fs-meta);
     line-height: 1.45;
     text-align: center;
     margin-top: 14px;
@@ -478,7 +506,7 @@
   }
   .phase-copy span,
   .input-card span,
-  .care-card span { color: var(--ink-muted); font-size: 13px; }
+  .care-card span { color: var(--ink-muted); font-size: var(--fs-body-sm); }
   .check-dot {
     width: 24px;
     height: 24px;
@@ -494,7 +522,7 @@
 
   .input-label {
     font-family: "Lenia";
-    font-size: 11px;
+    font-size: var(--fs-meta);
     letter-spacing: 0.16em;
     text-transform: uppercase;
     color: var(--ink-muted);
@@ -503,7 +531,7 @@
 
   .input-card { cursor: text; min-height: 58px; justify-content: space-between; }
   .input-card .value { color: var(--ink); font-family: "Lenia"; font-size: 16px; }
-  .input-card .muted { color: var(--ink-muted); font-size: 13px; }
+  .input-card .muted { color: var(--ink-muted); font-size: var(--fs-body-sm); }
   .mini-dot {
     width: 38px;
     height: 38px;
@@ -524,7 +552,7 @@
       radial-gradient(circle at 88% 0%, rgba(232,201,122,0.18), transparent 34%),
       linear-gradient(135deg, var(--paper-soft), rgba(250,247,240,0.78));
     color: var(--ink-soft);
-    font-size: 13px;
+    font-size: var(--fs-body-sm);
     line-height: 1.5;
     margin: 14px 0;
   }
@@ -569,7 +597,7 @@
     border: 1px solid rgba(226,221,209,0.7);
     padding: 10px;
   }
-  .stat strong { display: block; font-family: "Lenia"; font-weight: 500; font-size: 15px; }
+  .stat strong { display: block; font-family: "Lenia"; font-weight: 500; font-size: var(--fs-body-lg); }
   .stat span { display: block; color: var(--ink-muted); font-size: 10px; line-height: 1.25; margin-top: 2px; }
 
   .yo-btn {
@@ -616,18 +644,25 @@
   }
   .pill-row { display: flex; flex-wrap: wrap; gap: 7px; position: relative; z-index: 2; }
   .pill {
+    display: inline-block;
     border-radius: 999px;
-    background: rgba(250,247,240,0.84);
-    border: 1px solid rgba(226,221,209,0.8);
-    padding: 7px 11px;
+    background: var(--paper);
+    border: 0;
+    padding: 5px 11px 4px;
     font-family: "Lenia";
-    font-size: 11px;
-    font-weight: 500;
+    font-size: var(--fs-meta);
+    font-weight: 600;
+    letter-spacing: 0.04em;
     color: var(--ink-soft);
+    transform: rotate(-4deg);
+    transform-origin: 50% 50%;
   }
-  .pill.mint { background: var(--mint-subtle); color: #4F6647; }
-  .pill.gold { background: var(--gold-subtle); color: #6E5A2A; }
-  .pill.coral { background: var(--coral-subtle); color: #8E4A22; }
+  .pill.mint  { background: var(--mint-subtle);  color: #4F6647; border-color: rgba(143,174,133,0.32); }
+  .pill.gold  { background: var(--gold-subtle);  color: #6E5A2A; border-color: rgba(184,151,63,0.28); }
+  .pill.coral { background: var(--coral-subtle); color: #8E4A22; border-color: rgba(216,119,66,0.30); }
+  .pill.blush { background: var(--blush-subtle); color: #7A4A3A; border-color: rgba(216,154,137,0.30); }
+  .pill.soft  { background: var(--paper-soft);   color: var(--ink); border-color: var(--line); }
+  .pill.ink   { background: var(--ink); color: var(--paper); border-color: var(--ink); }
   .hero-person {
     position: absolute;
     left: 14px;
@@ -635,12 +670,12 @@
     z-index: 2;
   }
   .hero-person strong { display: block; font-family: "Lenia"; font-size: 21px; font-weight: 500; }
-  .hero-person span { color: var(--ink-soft); font-size: 12px; }
+  .hero-person span { color: var(--ink-soft); font-size: var(--fs-caption); }
 
   .shelf-scene {
     position: relative;
     margin: 0 -22px 14px;
-    padding: 48px 0 34px;
+    padding: 22px 0 20px;
     border-radius: 0;
     overflow: hidden;
     background: transparent;
@@ -654,11 +689,11 @@
   .shelf-label,
   .shelf-counter {
     position: absolute;
-    top: 14px;
+    top: 6px;
     z-index: 3;
     font-family: "Lenia";
     font-weight: 500;
-    font-size: 9px;
+    font-size: var(--fs-eyebrow);
     letter-spacing: 0.22em;
     text-transform: uppercase;
     color: rgba(80,60,30,0.42);
@@ -755,29 +790,44 @@
     display: none;
   }
   .shelf-book .sb-icon {
-    width: 40px;
-    height: 40px;
-    border-radius: 999px;
-    background:
-      radial-gradient(circle at 35% 28%, rgba(255,255,255,0.96), rgba(255,255,255,0.56) 72%),
-      linear-gradient(135deg, rgba(255,255,255,0.52), rgba(250,247,240,0.32));
+    width: 30px;
+    height: 30px;
     display: grid;
     place-items: center;
     color: var(--b-ink);
-    border: 1px solid rgba(255,255,255,0.62);
-    box-shadow: 0 10px 20px -14px rgba(42,33,27,0.42);
-    margin: 0 0 12px 2px;
+    margin: 0 0 14px 0;
     position: relative;
     z-index: 1;
   }
   .shelf-book .sb-icon svg {
-    width: 21px;
-    height: 21px;
+    width: 28px;
+    height: 28px;
     stroke: currentColor;
     fill: none;
-    stroke-width: 1.85;
+    stroke-width: 1.25;
     stroke-linecap: round;
     stroke-linejoin: round;
+  }
+  .shelf-book .sb-free {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 2;
+    display: inline-block;
+    font-family: "Lenia";
+    font-weight: 600;
+    font-size: var(--fs-meta);
+    letter-spacing: 0.04em;
+    text-transform: none;
+    padding: 5px 11px 4px;
+    border-radius: 999px;
+    background: var(--paper);
+    color: #2E4A2A;
+    line-height: 1;
+    border: 0;
+    box-shadow: none;
+    transform: rotate(-6deg);
+    transform-origin: 50% 50%;
   }
   .shelf-book .sb-ttl {
     font-family: "Lenia";
@@ -842,7 +892,7 @@
     box-shadow:
       inset 0 1px 0 rgba(255,255,255,0.70),
       inset 0 -1px 0 rgba(80,60,30,0.10),
-      0 14px 24px -16px rgba(80,60,30,0.46);
+      0 5px 10px -7px rgba(80,60,30,0.32);
   }
   .shelf-plank::before {
     content: "";
@@ -879,13 +929,13 @@
   .shelf-plank-dot.r { right: 14px; }
   .shelf-shadow {
     position: absolute;
-    left: 5%;
-    right: 5%;
-    top: calc(100% - 26px);
-    height: 34px;
+    left: 14%;
+    right: 14%;
+    top: calc(100% - 14px);
+    height: 12px;
     z-index: 0;
-    background: radial-gradient(ellipse at 50% 0%, rgba(70,50,20,0.32) 0%, rgba(70,50,20,0.18) 30%, rgba(70,50,20,0.06) 60%, transparent 80%);
-    filter: blur(6px);
+    background: radial-gradient(ellipse at 50% 0%, rgba(70,50,20,0.28) 0%, rgba(70,50,20,0.10) 38%, transparent 68%);
+    filter: blur(3px);
     pointer-events: none;
   }
   .shelf-scene .light-l,
@@ -913,62 +963,48 @@
   .chip,
   .cal-chip {
     --chip-bg: var(--paper-soft);
-    --chip-ink: var(--ink-soft);
-    --chip-glow: rgba(232,201,122,0.20);
-    border: 1px solid rgba(226,221,209,0.78);
-    background:
-      radial-gradient(circle at 82% 8%, var(--chip-glow), transparent 34%),
-      linear-gradient(135deg, color-mix(in srgb, var(--chip-bg) 82%, #fff), rgba(250,247,240,0.82));
+    --chip-ink: var(--ink);
+    border: 0;
+    background: var(--chip-bg);
     color: var(--chip-ink);
     border-radius: 999px;
-    padding: 8px 13px;
+    min-height: 36px;
+    padding: 0 16px;
     white-space: nowrap;
     font-family: "Lenia";
     font-weight: 500;
-    font-size: 13px;
+    font-size: var(--fs-body-sm);
     cursor: pointer;
-    box-shadow:
-      inset 0 1px 0 rgba(255,255,255,0.62),
-      0 8px 18px rgba(42,33,27,0.045);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transform-origin: 50% 50%;
     transition:
       transform 180ms var(--ease),
-      border-color 180ms var(--ease),
-      box-shadow 180ms var(--ease),
+      filter 180ms var(--ease),
+      background 180ms var(--ease),
       color 180ms var(--ease);
   }
-  .chip:nth-child(2) { --chip-bg: var(--gold-subtle); --chip-ink: #6E5A2A; --chip-glow: rgba(232,201,122,0.34); }
-  .chip:nth-child(3) { --chip-bg: var(--mint-subtle); --chip-ink: #4F6647; --chip-glow: rgba(191,210,176,0.38); }
-  .chip:nth-child(4) { --chip-bg: var(--violet-subtle); --chip-ink: var(--violet-strong); --chip-glow: rgba(191,210,176,0.30); }
-  .chip:nth-child(5) { --chip-bg: var(--coral-subtle); --chip-ink: var(--coral-strong); --chip-glow: rgba(242,165,122,0.34); }
-  .chip:hover,
-  .cal-chip:hover {
-    transform: translateY(-1px);
-    border-color: rgba(201,194,178,0.96);
-    box-shadow:
-      inset 0 1px 0 rgba(255,255,255,0.74),
-      0 12px 22px rgba(42,33,27,0.075);
-  }
+  .chip:hover, .cal-chip:hover { filter: brightness(0.97); }
+  .chip:nth-child(1) { transform: rotate(-3deg); }
+  .chip:nth-child(2) { --chip-bg: var(--coral-subtle); --chip-ink: #8E4A22; transform: rotate(2deg); }
+  .chip:nth-child(3) { --chip-bg: var(--mint-subtle);  --chip-ink: #4F6647; transform: rotate(-2deg); }
+  .chip:nth-child(4) { --chip-bg: var(--blush-subtle); --chip-ink: #7A4A3A; transform: rotate(3deg); }
+  .chip:nth-child(5) { --chip-bg: var(--gold-subtle);  --chip-ink: #6E5A2A; transform: rotate(-1deg); }
+  .chip:nth-child(6) { --chip-bg: var(--paper-soft);   --chip-ink: var(--ink); transform: rotate(2deg); }
   .chip.active,
   .cal-chip.active {
-    --chip-bg: var(--mint-subtle);
-    --chip-ink: var(--ink);
-    --chip-glow: rgba(232,201,122,0.52);
-    background:
-      radial-gradient(circle at 84% 8%, var(--chip-glow), transparent 36%),
-      linear-gradient(135deg, color-mix(in srgb, var(--chip-bg) 72%, var(--paper)), rgba(250,247,240,0.94));
-    color: var(--chip-ink);
-    border-color: rgba(143,174,133,0.42);
-    box-shadow:
-      inset 0 1px 0 rgba(255,255,255,0.80),
-      0 14px 26px rgba(42,33,27,0.12);
+    background: var(--paper);
+    color: var(--ink);
+    box-shadow: inset 0 0 0 1.5px var(--ink);
   }
-  .chips { margin-top: 22px; }
+  .chips { margin-top: 22px; padding-top: 6px; padding-bottom: 10px; }
 
   .feed-label,
   .section-label {
     font-family: "Lenia";
     font-weight: 500;
-    font-size: 11px;
+    font-size: var(--fs-meta);
     letter-spacing: 0.18em;
     text-transform: uppercase;
     color: var(--ink-muted);
@@ -1010,7 +1046,7 @@
   .tag {
     font-family: "Lenia";
     font-weight: 500;
-    font-size: 11px;
+    font-size: var(--fs-meta);
     letter-spacing: 0.16em;
     text-transform: uppercase;
     color: var(--card-ink);
@@ -1024,20 +1060,44 @@
     line-height: 1.15;
     margin: 0 0 5px;
   }
-  .meta-line { color: var(--ink-muted); font-size: 13px; margin-bottom: 8px; }
+  .meta-line { color: var(--ink-muted); font-size: var(--fs-body-sm); margin-bottom: 8px; }
   .context { color: var(--ink-soft); font-size: 14px; line-height: 1.45; margin: 0 0 12px; }
   .card-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
     border: 0;
     border-radius: 999px;
-    background: var(--ink);
-    color: var(--paper);
-    padding: 9px 13px;
+    background: var(--coral-base);
+    color: #4A2614;
+    padding: 13px 20px;
+    min-height: 46px;
     font-family: "Lenia";
     font-weight: 500;
-    font-size: 13px;
+    font-size: var(--fs-body-lg);
+    line-height: 1;
+    white-space: nowrap;
     cursor: pointer;
+    transition: transform 150ms var(--ease), filter 150ms var(--ease), box-shadow 150ms var(--ease);
   }
-  .soft-actions { margin-top: 10px; display: flex; gap: 12px; color: var(--ink-muted); font-size: 12px; }
+  .card-button:hover { transform: translateY(-1px); filter: brightness(0.97); }
+  .card-button svg {
+    width: 16px;
+    height: 16px;
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 1.7;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    flex-shrink: 0;
+  }
+  .card-button.mint  { background: var(--mint-base);  color: #2E4A2A; }
+  .card-button.soft  { background: var(--paper-soft); color: var(--ink); border: 1px solid var(--line); }
+  .card-button.blush { background: var(--blush-base); color: #6B3D2A; }
+  .card-button.ink   { background: var(--ink); color: var(--paper); }
+
+  .soft-actions { margin-top: 10px; display: flex; gap: 12px; color: var(--ink-muted); font-size: var(--fs-caption); }
   .soft-actions button { border: 0; background: transparent; color: inherit; padding: 0; cursor: pointer; }
 
   .screen[data-screen="calendario"] .content {
@@ -1144,7 +1204,7 @@
 
   .phase-seg-label {
     font-family: "Lenia";
-    font-size: 11px;
+    font-size: var(--fs-meta);
     font-weight: 600;
     line-height: 1;
     letter-spacing: -0.01em;
@@ -1194,12 +1254,12 @@
     justify-content: space-between;
     font-family: "Lenia";
     font-weight: 500;
-    font-size: 13px;
+    font-size: var(--fs-body-sm);
     margin: 2px 2px -2px;
     flex: 0 0 auto;
   }
-  .month-section-head [data-calendar-current-title] { color: var(--ink); font-family: "Lenia"; font-size: 13px; }
-  .month-section-head [data-calendar-counter] { color: var(--ink-muted); font-family: "Helvena"; font-size: 12px; }
+  .month-section-head [data-calendar-current-title] { color: var(--ink); font-family: "Lenia"; font-size: var(--fs-body-sm); }
+  .month-section-head [data-calendar-counter] { color: var(--ink-muted); font-family: "Helvena"; font-size: var(--fs-caption); }
 
   .month-carousel-shell {
     position: relative;
@@ -1380,7 +1440,7 @@
     gap: 8px;
     align-items: start;
     color: var(--ink);
-    font-size: 13px;
+    font-size: var(--fs-body-sm);
     line-height: 1.3;
   }
 
@@ -1445,7 +1505,7 @@
 
   .month-page-intro p {
     color: var(--ink-soft);
-    font-size: 13px;
+    font-size: var(--fs-body-sm);
     line-height: 1.45;
     margin: 0;
     display: -webkit-box;
@@ -1603,7 +1663,7 @@
     letter-spacing: 0.10em;
     color: var(--mint-strong);
   }
-  .bullets { margin: 10px 0 0; padding: 0; list-style: none; display: grid; gap: 6px; color: var(--ink-soft); font-size: 13px; }
+  .bullets { margin: 10px 0 0; padding: 0; list-style: none; display: grid; gap: 6px; color: var(--ink-soft); font-size: var(--fs-body-sm); }
   .bullets li:before { content: ""; display: inline-block; width: 7px; height: 7px; border-radius: 999px; border: 1.5px solid var(--line-strong); margin-right: 7px; }
   .bullets li.done:before { background: var(--mint-strong); border-color: var(--mint-strong); }
 
@@ -1638,7 +1698,7 @@
   .diary-month {
     font-family: "Lenia";
     font-weight: 500;
-    font-size: 12px;
+    font-size: var(--fs-caption);
     letter-spacing: 0.14em;
     text-transform: uppercase;
     color: var(--ink-muted);
@@ -1666,12 +1726,12 @@
     text-align: center;
     font-family: "Lenia";
   }
-  .date-chip strong { font-size: 20px; line-height: 1; }
+  .date-chip strong { font-size: var(--fs-h3); line-height: 1; }
   .date-chip span { font-size: 10px; color: var(--ink-muted); letter-spacing: 0.08em; text-transform: uppercase; }
   .entry-body strong { display: block; font-family: "Lenia"; font-size: 16px; font-weight: 500; margin-bottom: 4px; }
-  .entry-tag { color: var(--mint-strong); font-family: "Lenia"; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 4px; }
-  .entry-body p { margin: 0; color: var(--ink-soft); font-size: 13px; line-height: 1.45; }
-  .entry-author { margin-top: 6px; color: var(--ink-muted); font-size: 11px; }
+  .entry-tag { color: var(--mint-strong); font-family: "Lenia"; font-size: var(--fs-meta); letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 4px; }
+  .entry-body p { margin: 0; color: var(--ink-soft); font-size: var(--fs-body-sm); line-height: 1.45; }
+  .entry-author { margin-top: 6px; color: var(--ink-muted); font-size: var(--fs-meta); }
   .photo-placeholder {
     margin-top: 8px;
     border-radius: 14px;
@@ -1684,7 +1744,7 @@
     min-height: 56px;
     display: grid;
     place-items: center;
-    font-size: 12px;
+    font-size: var(--fs-caption);
   }
 
   .quick-grid { grid-template-columns: repeat(2, 1fr); margin: 12px 0 14px; }
@@ -1727,7 +1787,7 @@
   }
   .quick-icon svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
   .quick-tile strong { font-family: "Lenia"; font-size: 18px; font-weight: 500; }
-  .quick-tile span { color: var(--ink-muted); font-size: 12px; }
+  .quick-tile span { color: var(--ink-muted); font-size: var(--fs-caption); }
 
   .log-feedback {
     display: none;
@@ -1742,31 +1802,32 @@
   }
   .log-feedback.active { display: block; animation: screenIn 220ms var(--ease) forwards; }
   .log-feedback strong { display: block; font-family: "Lenia"; font-size: 17px; font-weight: 500; margin-bottom: 3px; color: #4F6647; }
-  .log-feedback span { display: block; color: #4F6647; font-size: 13px; line-height: 1.4; }
+  .log-feedback span { display: block; color: #4F6647; font-size: var(--fs-body-sm); line-height: 1.4; }
 
   .log-detail-page {
     padding-bottom: 26px;
   }
   .log-register-hero {
     border: 1px solid var(--line);
-    border-radius: 32px;
+    border-radius: 26px;
     background:
       radial-gradient(circle at 86% 6%, rgba(232,201,122,0.30), transparent 34%),
       radial-gradient(circle at 8% 0%, rgba(255,255,255,0.60), transparent 30%),
       linear-gradient(135deg, rgba(239,244,232,0.82), rgba(250,247,240,0.94) 52%, rgba(247,235,199,0.58));
     box-shadow: 0 18px 46px rgba(45,38,30,0.08);
-    padding: 20px;
-    margin-bottom: 16px;
+    padding: 16px;
+    margin-bottom: 12px;
     overflow: hidden;
     position: relative;
+    max-width: 100%;
   }
   .log-register-hero::after {
     content: "";
     position: absolute;
-    right: -34px;
-    bottom: -42px;
-    width: 138px;
-    height: 138px;
+    right: -28px;
+    bottom: -34px;
+    width: 110px;
+    height: 110px;
     border-radius: 999px;
     background: radial-gradient(circle, rgba(232,201,122,0.22), transparent 68%);
     pointer-events: none;
@@ -1775,25 +1836,39 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 12px;
-    margin-bottom: 18px;
+    gap: 10px;
+    margin-bottom: 12px;
     position: relative;
     z-index: 1;
   }
   .log-register-back {
-    min-height: 44px;
-    border: 1px solid var(--line);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    padding: 0;
+    border: 0;
     border-radius: 999px;
-    background: rgba(250,247,240,0.72);
-    color: var(--ink-soft);
-    padding: 0 14px;
-    font-family: "Lenia";
+    background: var(--ink-warm);
+    color: var(--paper);
     cursor: pointer;
+    transition: transform 150ms var(--ease), filter 150ms var(--ease);
   }
+  .log-register-back svg {
+    width: 16px;
+    height: 16px;
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 1.85;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .log-register-back:hover { transform: translateY(-1px); filter: brightness(1.05); }
   .log-register-icon {
-    width: 54px;
-    height: 54px;
-    border-radius: 18px;
+    width: 46px;
+    height: 46px;
+    border-radius: 15px;
     display: grid;
     place-items: center;
     background: rgba(250,247,240,0.78);
@@ -1801,8 +1876,8 @@
     color: var(--ink);
   }
   .log-register-icon svg {
-    width: 28px;
-    height: 28px;
+    width: 24px;
+    height: 24px;
     fill: none;
     stroke: currentColor;
     stroke-width: 1.7;
@@ -1811,35 +1886,40 @@
   }
   .log-register-hero h2 {
     font-family: "Lenia";
-    font-size: clamp(34px, 8vw, 48px);
+    font-size: clamp(26px, 7vw, 36px);
     line-height: 0.95;
     font-weight: 500;
     letter-spacing: -0.05em;
-    margin: 0 0 10px;
+    margin: 0 0 28px;
+    max-width: 100%;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+    hyphens: auto;
     position: relative;
     z-index: 1;
   }
   .log-register-hero p {
     color: var(--ink-soft);
-    font-size: 15px;
-    line-height: 1.45;
+    font-size: 14px;
+    line-height: 1.4;
     margin: 0;
-    max-width: 88%;
+    max-width: 100%;
+    overflow-wrap: anywhere;
     position: relative;
     z-index: 1;
   }
   .log-register-form {
     display: grid;
-    gap: 12px;
+    gap: 10px;
   }
   .log-form-card {
     border: 1px solid var(--line);
-    border-radius: 28px;
+    border-radius: 22px;
     background:
       radial-gradient(circle at 86% 6%, rgba(232,201,122,0.18), transparent 34%),
       radial-gradient(circle at 8% 0%, rgba(255,255,255,0.52), transparent 30%),
       linear-gradient(135deg, rgba(250,247,240,0.92), rgba(242,237,224,0.72));
-    padding: 16px;
+    padding: 14px;
     box-shadow: 0 12px 34px rgba(45,38,30,0.06);
   }
   .log-form-card.dark {
@@ -1853,21 +1933,21 @@
   .log-form-card.dark .log-field label { color: rgba(250,247,240,0.72); }
   .log-form-title {
     font-family: "Lenia";
-    font-size: 20px;
+    font-size: 18px;
     line-height: 1.05;
     font-weight: 500;
     margin: 0 0 8px;
   }
   .log-form-copy {
     color: var(--ink-soft);
-    font-size: 13px;
+    font-size: var(--fs-body-sm);
     line-height: 1.45;
     margin: 0 0 12px;
   }
   .log-field {
     display: grid;
-    gap: 7px;
-    margin-top: 12px;
+    gap: 6px;
+    margin-top: 10px;
   }
   .log-field label,
   .log-choice-label {
@@ -1883,14 +1963,21 @@
   .log-field select {
     width: 100%;
     border: 1px solid rgba(201,194,178,0.82);
-    border-radius: 17px;
+    border-radius: 14px;
     background: rgba(250,247,240,0.82);
     color: var(--ink);
-    padding: 12px 13px;
+    padding: 10px 12px;
     outline: 0;
     font: inherit;
   }
-  .log-field textarea { resize: vertical; min-height: 84px; }
+  .log-field textarea { resize: vertical; min-height: 72px; }
+  .log-field input:focus-visible,
+  .log-field textarea:focus-visible,
+  .log-field select:focus-visible {
+    outline: 2px solid var(--coral-base);
+    outline-offset: 0;
+    border-color: var(--coral-base);
+  }
   .log-inline-grid {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -1903,6 +1990,7 @@
     margin-top: 8px;
   }
   .log-choice {
+    position: relative;
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -1913,33 +2001,44 @@
     padding: 0 14px;
     color: var(--ink);
     cursor: pointer;
+    transition: background 150ms var(--ease), border-color 150ms var(--ease), color 150ms var(--ease);
   }
   .log-choice input {
     position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: 0;
+    border: 0;
+    background: transparent;
     opacity: 0;
     pointer-events: none;
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    overflow: hidden;
+    white-space: nowrap;
   }
   .log-choice:has(input:checked) {
-    background: var(--ink);
-    border-color: var(--ink);
-    color: var(--paper);
+    background: var(--coral-base);
+    border-color: var(--coral-base);
+    color: #4A2510;
   }
   .log-photo-drop {
-    min-height: 104px;
+    min-height: 80px;
     border: 1px dashed rgba(201,194,178,0.90);
-    border-radius: 20px;
+    border-radius: 16px;
     display: grid;
     place-items: center;
     text-align: center;
     color: var(--ink-muted);
     background: rgba(250,247,240,0.56);
-    font-size: 13px;
+    font-size: var(--fs-body-sm);
     line-height: 1.35;
   }
   .log-error {
     min-height: 20px;
     color: var(--coral-strong);
-    font-size: 13px;
+    font-size: var(--fs-body-sm);
     line-height: 1.35;
   }
   .log-submit-bar {
@@ -1949,11 +2048,11 @@
     display: grid;
     grid-template-columns: 1fr 1.35fr;
     gap: 10px;
-    padding: 12px 0 2px;
+    padding: 10px 0 2px;
     background: linear-gradient(to top, var(--paper) 72%, rgba(250,247,240,0));
   }
   .log-submit-bar button {
-    min-height: 52px;
+    min-height: 48px;
     border-radius: 999px;
     font-family: "Lenia";
     cursor: pointer;
@@ -1977,19 +2076,29 @@
     margin-bottom: 14px;
   }
   .book-back {
-    border: 1px solid rgba(226,221,209,0.86);
-    background:
-      radial-gradient(circle at 82% 8%, rgba(232,201,122,0.20), transparent 34%),
-      linear-gradient(135deg, var(--paper-soft), rgba(250,247,240,0.88));
-    color: var(--ink-soft);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    padding: 0;
+    border: 0;
     border-radius: 999px;
-    padding: 8px 12px;
-    font-family: "Lenia";
-    font-size: 12px;
-    font-weight: 500;
+    background: var(--ink-warm);
+    color: var(--paper);
     cursor: pointer;
-    box-shadow: inset 0 1px 0 rgba(255,255,255,0.65);
+    transition: transform 150ms var(--ease), filter 150ms var(--ease);
   }
+  .book-back svg {
+    width: 16px;
+    height: 16px;
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 1.85;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .book-back:hover { transform: translateY(-1px); filter: brightness(1.05); }
   .growth-book {
     display: grid;
     gap: 12px;
@@ -2026,7 +2135,7 @@
   }
   .growth-cover p {
     color: var(--ink-soft);
-    font-size: 13px;
+    font-size: var(--fs-body-sm);
     line-height: 1.45;
     margin: 0;
   }
@@ -2052,7 +2161,7 @@
     color: var(--ink-muted);
     padding: 7px 10px;
     font-family: "Lenia";
-    font-size: 11px;
+    font-size: var(--fs-meta);
     font-weight: 500;
     cursor: pointer;
   }
@@ -2083,7 +2192,7 @@
   .growth-empty strong {
     display: block;
     font-family: "Lenia";
-    font-size: 20px;
+    font-size: var(--fs-h3);
     color: var(--ink);
     margin-bottom: 6px;
   }
@@ -2120,7 +2229,7 @@
   }
   .growth-curve-meta {
     font-family: "Lenia";
-    font-size: 11px;
+    font-size: var(--fs-meta);
     letter-spacing: 0.12em;
     color: var(--ink-muted);
     white-space: nowrap;
@@ -2128,28 +2237,20 @@
   }
   .growth-curve-copy {
     color: var(--ink-muted);
-    font-size: 12px;
+    font-size: var(--fs-caption);
     line-height: 1.4;
     margin-bottom: 10px;
   }
   .growth-chart {
-    border-radius: 22px;
-    background:
-      radial-gradient(circle at 84% 8%, rgba(232,201,122,0.16), transparent 34%),
-      radial-gradient(circle at 12% 0%, rgba(255,255,255,0.78), transparent 36%),
-      linear-gradient(135deg, rgba(250,247,240,0.94), rgba(242,237,224,0.54));
+    border-radius: 14px;
+    background: var(--paper-soft);
     padding: 12px;
     margin: 0 -2px 12px;
-    box-shadow:
-      inset 0 1px 0 rgba(255,255,255,0.70),
-      0 10px 22px rgba(42,33,27,0.035);
-    overflow: hidden;
   }
   .growth-chart-canvas {
     position: relative;
     width: 100%;
-    aspect-ratio: 2 / 1;
-    min-height: 164px;
+    aspect-ratio: 600 / 280;
   }
   .growth-chart svg {
     position: absolute;
@@ -2157,7 +2258,6 @@
     width: 100%;
     height: 100%;
     display: block;
-    overflow: visible;
   }
   .growth-chart [data-growth-point] {
     cursor: pointer;
@@ -2194,7 +2294,7 @@
     background: rgba(250,247,240,0.62);
     border: 1px solid rgba(201,194,178,0.46);
     color: var(--ink-muted);
-    font-size: 11px;
+    font-size: var(--fs-meta);
     line-height: 1.25;
   }
   .growth-selected-meta strong {
@@ -2251,7 +2351,7 @@
     border-top: 0;
     background: transparent;
     font-family: "Lenia";
-    font-size: 13px;
+    font-size: var(--fs-body-sm);
     text-align: left;
     cursor: pointer;
   }
@@ -2283,7 +2383,7 @@
     background: rgba(250,247,240,0.58);
     color: var(--ink-soft);
     font-family: "Lenia";
-    font-size: 13px;
+    font-size: var(--fs-body-sm);
     font-weight: 500;
     cursor: pointer;
   }
@@ -2292,7 +2392,7 @@
     background: transparent;
     color: var(--ink-muted);
     font-family: "Lenia";
-    font-size: 12px;
+    font-size: var(--fs-caption);
     cursor: pointer;
     justify-self: center;
   }
@@ -2304,7 +2404,7 @@
       radial-gradient(circle at 84% 6%, rgba(232,201,122,0.22), transparent 34%),
       linear-gradient(135deg, var(--paper-soft), rgba(250,247,240,0.84));
     color: var(--ink-soft);
-    font-size: 12px;
+    font-size: var(--fs-caption);
     line-height: 1.4;
   }
   .growth-note strong {
@@ -2329,7 +2429,7 @@
   }
   .oms-head { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 14px; gap: 12px; }
   .oms-head .ttl { font-family: "Lenia"; font-weight: 500; font-size: 18px; }
-  .oms-head .meta { font-size: 11px; color: var(--ink-muted); letter-spacing: 0.04em; }
+  .oms-head .meta { font-size: var(--fs-meta); color: var(--ink-muted); letter-spacing: 0.04em; }
   .oms-tabs { display: flex; gap: 4px; margin-bottom: 14px; padding: 4px; background: var(--paper-soft); border-radius: 12px; width: fit-content; }
   .oms-tab {
     font-family: "Lenia"; font-size: 11.5px; padding: 6px 14px;
@@ -2355,7 +2455,7 @@
   }
   .oms-legend {
     display: flex; gap: 16px; margin-top: 12px; flex-wrap: wrap;
-    font-size: 11px; color: var(--ink-soft);
+    font-size: var(--fs-meta); color: var(--ink-soft);
   }
   .oms-legend .leg-item { display: flex; align-items: center; gap: 6px; }
   .oms-legend .swatch { width: 14px; height: 3px; border-radius: 2px; background: var(--ink-faint); }
@@ -2364,7 +2464,7 @@
     width: 8px; height: 8px; border-radius: 999px; background: var(--coral-base);
     border: 2px solid var(--coral-strong);
   }
-  .oms-stats { display: flex; gap: 20px; margin-top: 14px; font-size: 12px; color: var(--ink-soft); flex-wrap: wrap; }
+  .oms-stats { display: flex; gap: 20px; margin-top: 14px; font-size: var(--fs-caption); color: var(--ink-soft); flex-wrap: wrap; }
   .oms-stats b { font-family: "Lenia"; font-weight: 500; color: var(--ink); font-size: 16px; display: block; margin-bottom: 2px; }
   .oms-history {
     margin-top: 12px;
@@ -2382,7 +2482,7 @@
     border-top: 0;
     background: transparent;
     font-family: "Lenia";
-    font-size: 13px;
+    font-size: var(--fs-body-sm);
     text-align: left;
     cursor: pointer;
     border-radius: 0;
@@ -2448,7 +2548,7 @@
   }
   .measure-sheet p {
     color: var(--ink-soft);
-    font-size: 13px;
+    font-size: var(--fs-body-sm);
     line-height: 1.45;
     margin: 0 0 14px;
   }
@@ -2484,18 +2584,23 @@
     background: transparent;
     color: var(--ink);
     font-family: "Lenia";
-    font-size: 20px;
+    font-size: var(--fs-h3);
     font-weight: 500;
+  }
+  .measure-input-wrap:focus-within {
+    outline: 2px solid var(--coral-base);
+    outline-offset: 0;
+    border-color: var(--coral-base);
   }
   .measure-input-wrap input[type="date"] {
     font-family: "Helvena";
-    font-size: 15px;
+    font-size: var(--fs-body-lg);
     font-weight: 500;
   }
   .measure-input-wrap span {
     color: var(--ink-muted);
     font-family: "Lenia";
-    font-size: 13px;
+    font-size: var(--fs-body-sm);
   }
   .measure-context {
     display: flex;
@@ -2512,7 +2617,7 @@
     color: var(--ink-soft);
     padding: 7px 10px;
     font-family: "Lenia";
-    font-size: 12px;
+    font-size: var(--fs-caption);
     cursor: pointer;
   }
   .measure-context button.active {
@@ -2525,7 +2630,7 @@
   .measure-error {
     min-height: 18px;
     color: var(--ink-muted);
-    font-size: 12px;
+    font-size: var(--fs-caption);
     line-height: 1.4;
     margin-top: 10px;
   }
@@ -2578,7 +2683,7 @@
     max-width: 214px;
     margin: 0;
     color: var(--ink-soft);
-    font-size: 13px;
+    font-size: var(--fs-body-sm);
     line-height: 1.42;
   }
   .milestone-hero-kicker,
@@ -2645,7 +2750,7 @@
     top: 0;
     transform: translateX(-50%);
     font-family: "Lenia";
-    font-size: 9px;
+    font-size: var(--fs-eyebrow);
     color: var(--ink-soft);
   }
   .milestone-track-axis span:first-child { transform: none; }
@@ -2685,7 +2790,7 @@
     color: var(--ink);
     padding: 15px 14px;
     font-family: "Lenia";
-    font-size: 12px;
+    font-size: var(--fs-caption);
     font-weight: 500;
     text-align: left;
     cursor: pointer;
@@ -2799,7 +2904,7 @@
     max-width: 108px;
     color: var(--ink-muted);
     font-family: "Lenia";
-    font-size: 11px;
+    font-size: var(--fs-meta);
     line-height: 1.28;
     white-space: nowrap;
   }
@@ -2830,15 +2935,18 @@
   .scale-btn,
   .milestone-filter {
     flex: 0 0 auto;
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--tap-target-min);
     border: 1px solid rgba(201,194,178,0.72);
     border-radius: 999px;
     background:
       radial-gradient(circle at 82% 8%, rgba(232,201,122,0.12), transparent 34%),
       linear-gradient(135deg, rgba(250,247,240,0.84), rgba(242,237,224,0.50));
     color: var(--ink-soft);
-    padding: 9px 13px;
+    padding: 0 13px;
     font-family: "Lenia";
-    font-size: 11px;
+    font-size: var(--fs-meta);
     font-weight: 500;
     text-transform: uppercase;
     cursor: pointer;
@@ -2846,12 +2954,10 @@
   }
   .scale-btn.active,
   .milestone-filter.active {
-    background:
-      radial-gradient(circle at 82% 10%, rgba(232,201,122,0.28), transparent 34%),
-      linear-gradient(135deg, var(--ink), #303030);
-    border-color: rgba(26,26,26,0.86);
-    color: var(--paper);
-    box-shadow: 0 10px 22px rgba(42,33,27,0.12);
+    background: var(--coral-base);
+    border-color: var(--coral-base);
+    color: #4A2510;
+    box-shadow: 0 10px 22px rgba(214,119,66,0.18);
   }
   .scale-btn.premium {
     opacity: 0.55;
@@ -2894,20 +3000,20 @@
   }
   .milestone-add-button {
     flex: 0 0 auto;
-    border: 1px solid rgba(26,26,26,0.84);
+    border: 0;
     border-radius: 999px;
     min-height: 42px;
-    padding: 0 15px;
-    background:
-      radial-gradient(circle at 82% 8%, rgba(232,201,122,0.28), transparent 34%),
-      linear-gradient(135deg, var(--ink), #303030);
-    color: var(--paper);
+    padding: 0 18px;
+    background: var(--coral-base);
+    color: #4A2510;
     font-family: "Lenia";
-    font-size: 12px;
+    font-size: var(--fs-caption);
     font-weight: 600;
     cursor: pointer;
-    box-shadow: 0 12px 24px rgba(42,33,27,0.12);
+    box-shadow: 0 12px 24px rgba(242,165,122,0.28);
+    transition: transform 150ms var(--ease), filter 150ms var(--ease);
   }
+  .milestone-add-button:hover { transform: translateY(-1px); filter: brightness(0.97); }
   .milestone-card-list {
     display: grid;
     gap: 14px;
@@ -2957,7 +3063,7 @@
       linear-gradient(135deg, var(--paper-soft), rgba(250,247,240,0.66));
     color: var(--ink-soft);
     font-family: "Lenia";
-    font-size: 12px;
+    font-size: var(--fs-caption);
     font-weight: 700;
     letter-spacing: 0.06em;
     box-shadow: 0 10px 20px rgba(42,33,27,0.06);
@@ -2981,7 +3087,7 @@
   }
   .milestone-en {
     color: var(--ink-muted);
-    font-size: 13px;
+    font-size: var(--fs-body-sm);
     line-height: 1.3;
     margin-top: 4px;
   }
@@ -3070,7 +3176,7 @@
     place-items: center;
     transform: translateX(-50%);
     font-family: "Lenia";
-    font-size: 9px;
+    font-size: var(--fs-eyebrow);
     color: var(--ink);
     box-shadow: 0 0 0 7px rgba(242,165,122,0.14);
   }
@@ -3121,7 +3227,7 @@
     min-height: 34px;
     padding: 0 12px;
     font-family: "Lenia";
-    font-size: 11px;
+    font-size: var(--fs-meta);
     font-weight: 600;
     cursor: pointer;
     box-shadow: inset 0 1px 0 rgba(255,255,255,0.58);
@@ -3155,21 +3261,19 @@
     min-height: 34px;
     padding: 0 11px;
     font-family: "Lenia";
-    font-size: 11px;
+    font-size: var(--fs-meta);
     cursor: pointer;
   }
   .milestone-area-picker button.active {
-    background:
-      radial-gradient(circle at 82% 8%, rgba(232,201,122,0.24), transparent 34%),
-      linear-gradient(135deg, var(--ink), #303030);
-    border-color: var(--ink);
-    color: var(--paper);
+    background: var(--coral-base);
+    border-color: var(--coral-base);
+    color: #4A2510;
   }
   .milestone-error {
     min-height: 18px;
     margin-top: 8px;
     color: var(--coral-strong);
-    font-size: 12px;
+    font-size: var(--fs-caption);
     line-height: 1.35;
   }
   .milestone-sheet-shell,
@@ -3249,14 +3353,14 @@
   .milestone-summary strong {
     display: block;
     font-family: "Lenia";
-    font-size: 15px;
+    font-size: var(--fs-body-lg);
     margin-bottom: 4px;
   }
   .milestone-summary span,
   .milestone-sheet p,
   .celebration-card p {
     color: var(--ink-soft);
-    font-size: 13px;
+    font-size: var(--fs-body-sm);
     line-height: 1.45;
   }
   .milestone-field {
@@ -3291,7 +3395,7 @@
     display: grid;
     place-items: center;
     color: var(--ink-muted);
-    font-size: 12px;
+    font-size: var(--fs-caption);
     text-align: center;
     padding: 12px;
   }
@@ -3308,12 +3412,12 @@
       linear-gradient(135deg, rgba(250,247,240,0.84), rgba(242,237,224,0.50));
     padding: 8px 11px;
     font-family: "Lenia";
-    font-size: 12px;
+    font-size: var(--fs-caption);
   }
   .witness-row button.active {
-    background: var(--ink);
-    color: var(--paper);
-    border-color: var(--ink);
+    background: var(--coral-base);
+    color: #4A2510;
+    border-color: var(--coral-base);
   }
   .milestone-modal-actions {
     position: sticky;
@@ -3377,7 +3481,7 @@
     display: grid;
     place-items: center;
     font-family: "Lenia";
-    font-size: 13px;
+    font-size: var(--fs-body-sm);
     color: var(--ink);
     background: transparent;
     text-decoration: none;
@@ -3446,7 +3550,7 @@
   .sleep-hero p,
   .sleep-copy {
     color: var(--ink-soft);
-    font-size: 13px;
+    font-size: var(--fs-body-sm);
     line-height: 1.48;
     margin: 0;
   }
@@ -3473,15 +3577,29 @@
     flex-wrap: wrap;
     margin-top: 14px;
   }
-  .sleep-pill {
+  /* ============================================================
+     module-pill canon — shared across sleep/food/lactation/pregnancy/vaccine.
+     Each module book sets --module-ink (or aliases sleep-ink/food-ink/etc). */
+  .sleep-pill,
+  .food-pill,
+  .lactation-pill,
+  .pregnancy-pill,
+  .vaccine-pill {
+    display: inline-flex;
+    align-items: center;
     border-radius: 999px;
     border: 1px solid rgba(201,194,178,0.78);
-    background: rgba(250,247,240,0.62);
+    background: rgba(250,247,240,0.66);
     padding: 7px 10px;
     font-family: "Lenia";
-    font-size: 11px;
-    color: var(--sleep-ink);
+    font-size: var(--fs-meta);
+    font-weight: 500;
   }
+  .sleep-pill { color: var(--sleep-ink); }
+  .food-pill { color: var(--food-ink); }
+  .lactation-pill { color: var(--lactation-ink); }
+  .pregnancy-pill,
+  .vaccine-pill { color: var(--module-ink); }
   .sleep-nav-grid {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -3548,29 +3666,71 @@
     gap: 8px;
     margin-top: 14px;
   }
-  .sleep-actions button,
-  .sleep-action,
-  .sleep-plan-problem,
-  .sleep-back-view {
-    min-height: 44px;
+  /* ============================================================
+     module-action canon — shared base across sleep/food/lactation/
+     pregnancy/vaccine. Module-specific .primary fills stay below. */
+  .food-action, .food-card-button, .food-back-view,
+  .sleep-action, .sleep-actions button, .sleep-plan-problem, .sleep-back-view,
+  .lactation-action, .lactation-choice, .lactation-back-view,
+  .pregnancy-action, .pregnancy-choice, .pregnancy-back-view,
+  .vaccine-action, .vaccine-choice, .vaccine-back-view {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: var(--tap-target-min, 40px);
     border-radius: 999px;
     border: 1px solid rgba(201,194,178,0.80);
     background: rgba(250,247,240,0.70);
     color: var(--ink);
     font-family: "Lenia";
-    font-size: 13px;
+    font-size: var(--fs-caption);
+    font-weight: 500;
+    padding: 0 13px;
     cursor: pointer;
+    transition: transform 150ms var(--ease), filter 150ms var(--ease);
   }
+  .food-action:hover, .food-card-button:hover, .food-back-view:hover,
+  .sleep-action:hover, .sleep-actions button:hover, .sleep-plan-problem:hover, .sleep-back-view:hover,
+  .lactation-action:hover, .lactation-choice:hover, .lactation-back-view:hover,
+  .pregnancy-action:hover, .pregnancy-choice:hover, .pregnancy-back-view:hover,
+  .vaccine-action:hover, .vaccine-choice:hover, .vaccine-back-view:hover {
+    transform: translateY(-1px);
+    filter: brightness(0.97);
+  }
+  /* sleep variant — taller for primary CTAs */
+  .sleep-actions button,
+  .sleep-action,
+  .sleep-plan-problem {
+    min-height: 44px;
+    font-size: var(--fs-body-sm);
+    padding: 0 14px;
+  }
+  /* back-view variant — smaller */
+  .sleep-back-view,
+  .food-back-view,
+  .lactation-back-view,
+  .pregnancy-back-view,
+  .vaccine-back-view {
+    min-height: 34px;
+    padding: 0 12px;
+    color: var(--ink-soft);
+  }
+  /* choice variant — full-width tappable card */
+  .pregnancy-choice,
+  .vaccine-choice {
+    width: 100%;
+    min-height: 58px;
+    border-radius: 22px;
+    text-align: left;
+    padding: 12px 15px;
+    line-height: 1.3;
+  }
+  /* sleep .primary — module-specific dark */
   .sleep-actions .primary,
   .sleep-action.primary {
     background: var(--sleep-night);
     border-color: var(--sleep-night);
     color: var(--paper);
-  }
-  .sleep-back-view {
-    min-height: 34px;
-    padding: 0 12px;
-    color: var(--ink-soft);
   }
   .sleep-schedule {
     display: grid;
@@ -3614,13 +3774,13 @@
   .sleep-block strong {
     display: block;
     font-family: "Lenia";
-    font-size: 15px;
+    font-size: var(--fs-body-lg);
     line-height: 1.1;
     font-weight: 700;
   }
   .sleep-block small {
     display: block;
-    font-size: 12px;
+    font-size: var(--fs-caption);
     color: var(--ink-soft);
     margin-top: 4px;
   }
@@ -3628,7 +3788,7 @@
   .sleep-block-icon {
     flex: 0 0 auto;
     font-family: "Lenia";
-    font-size: 20px;
+    font-size: var(--fs-h3);
     color: var(--ink-muted);
   }
   .sleep-block.night .sleep-block-icon { color: var(--paper); }
@@ -3657,27 +3817,69 @@
     display: block;
     color: var(--ink);
     font-family: "Lenia";
-    font-size: 15px;
+    font-size: var(--fs-body-lg);
     margin-bottom: 4px;
   }
-  .sleep-age-strip {
+  /* ============================================================
+     module-strip + module-chip canon — horizontal scrollable
+     filter/nav strip across sleep/food/pregnancy/vaccine. Active
+     states stay per-module (sleep dark, food dark, preg/vac coral). */
+  .sleep-age-strip,
+  .food-age-strip, .food-filter-strip,
+  .pregnancy-nav-strip, .vaccine-nav-strip {
     display: flex;
     gap: 8px;
     overflow-x: auto;
-    margin: 0 -20px 12px;
-    padding: 0 20px 4px;
+    padding-bottom: 4px;
     scrollbar-width: none;
   }
-  .sleep-age-strip::-webkit-scrollbar { display: none; }
-  .sleep-age-chip {
-    flex: 0 0 auto;
-    border-radius: 999px;
-    padding: 9px 13px;
-    font-family: "Lenia";
-    color: var(--ink-soft);
-    cursor: pointer;
-    border-color: rgba(201,194,178,0.82);
+  .sleep-age-strip::-webkit-scrollbar,
+  .food-age-strip::-webkit-scrollbar,
+  .food-filter-strip::-webkit-scrollbar,
+  .pregnancy-nav-strip::-webkit-scrollbar,
+  .vaccine-nav-strip::-webkit-scrollbar { display: none; }
+  .sleep-age-strip {
+    margin: 0 -20px 12px;
+    padding: 0 20px 4px;
   }
+  .food-age-strip,
+  .food-filter-strip {
+    margin: 0 -20px 10px;
+    padding: 0 20px 4px;
+  }
+  .pregnancy-nav-strip,
+  .vaccine-nav-strip {
+    max-width: 100%;
+    min-width: 0;
+    padding: 1px 2px 6px;
+    scroll-snap-type: x proximity;
+    -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 14px, #000 calc(100% - 14px), transparent 100%);
+    mask-image: linear-gradient(90deg, transparent 0, #000 14px, #000 calc(100% - 14px), transparent 100%);
+  }
+
+  .sleep-age-chip,
+  .food-age-chip, .food-filter-chip,
+  .pregnancy-view-chip, .vaccine-view-chip {
+    flex: 0 0 auto;
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--tap-target-min, 36px);
+    border-radius: 999px;
+    border: 1px solid rgba(201,194,178,0.78);
+    background: rgba(250,247,240,0.70);
+    color: var(--ink-soft);
+    font-family: "Lenia";
+    font-size: var(--fs-caption);
+    padding: 0 13px;
+    cursor: pointer;
+    transition: background 150ms var(--ease), color 150ms var(--ease), border-color 150ms var(--ease);
+  }
+  .pregnancy-view-chip,
+  .vaccine-view-chip {
+    scroll-snap-align: start;
+    min-height: 38px;
+  }
+  /* sleep-age-chip active — module-dark */
   .sleep-age-chip.active {
     background: var(--sleep-night);
     color: var(--paper);
@@ -3721,7 +3923,7 @@
     transform: translateX(-50%);
     color: var(--coral-strong);
     font-family: "Lenia";
-    font-size: 9px;
+    font-size: var(--fs-eyebrow);
     letter-spacing: 0.10em;
   }
   .sleep-week-stats {
@@ -3739,7 +3941,7 @@
   .sleep-week-stat strong {
     display: block;
     font-family: "Lenia";
-    font-size: 20px;
+    font-size: var(--fs-h3);
     line-height: 1;
   }
   .sleep-week-stat span {
@@ -3779,7 +3981,7 @@
     justify-content: space-between;
     color: var(--ink-muted);
     font-family: "Lenia";
-    font-size: 9px;
+    font-size: var(--fs-eyebrow);
     padding: 0 48px 0 26px;
     margin-top: 4px;
   }
@@ -3810,7 +4012,7 @@
   .sleep-regression-state {
     float: right;
     font-family: "Lenia";
-    font-size: 9px;
+    font-size: var(--fs-eyebrow);
     letter-spacing: 0.12em;
     text-transform: uppercase;
     color: var(--ink-muted);
@@ -3820,7 +4022,7 @@
     margin: 0;
     color: var(--ink-soft);
     font-family: "Lenia";
-    font-size: 11px;
+    font-size: var(--fs-meta);
     line-height: 1.45;
   }
   .sleep-plan-problem {
@@ -3836,7 +4038,7 @@
     gap: 10px;
     border-radius: 18px;
     padding: 12px;
-    font-size: 12px;
+    font-size: var(--fs-caption);
     color: var(--ink-soft);
   }
   .sleep-canon-row strong {
@@ -3910,7 +4112,7 @@
   .food-copy,
   .food-hero p {
     color: var(--ink-soft);
-    font-size: 13px;
+    font-size: var(--fs-body-sm);
     line-height: 1.48;
     margin: 0;
   }
@@ -3938,15 +4140,7 @@
     flex-wrap: wrap;
     margin-top: 14px;
   }
-  .food-pill {
-    border-radius: 999px;
-    border: 1px solid rgba(201,194,178,0.78);
-    background: rgba(250,247,240,0.66);
-    color: var(--food-ink);
-    padding: 7px 10px;
-    font-family: "Lenia";
-    font-size: 11px;
-  }
+  /* .food-pill base now in canonical .module-pill rule */
   .food-status-card,
   .food-section,
   .food-detail-card,
@@ -3973,7 +4167,7 @@
   .food-stat strong {
     display: block;
     font-family: "Lenia";
-    font-size: 20px;
+    font-size: var(--fs-h3);
     line-height: 1;
   }
   .food-stat span {
@@ -4017,46 +4211,16 @@
     justify-content: space-between;
     gap: 12px;
   }
-  .food-back-view,
-  .food-action,
-  .food-card-button {
-    min-height: 40px;
-    border-radius: 999px;
-    border: 1px solid rgba(201,194,178,0.80);
-    background: rgba(250,247,240,0.70);
-    color: var(--ink);
-    font-family: "Lenia";
-    font-size: 12px;
-    cursor: pointer;
-    padding: 0 13px;
-  }
+  /* food-action / food-card-button base now in canonical .module-action rule */
   .food-action.primary,
   .food-card-button.primary {
     background: var(--food-dark);
     border-color: var(--food-dark);
     color: var(--paper);
   }
-  .food-age-strip,
-  .food-filter-strip {
-    display: flex;
-    gap: 8px;
-    overflow-x: auto;
-    margin: 0 -20px 10px;
-    padding: 0 20px 4px;
-    scrollbar-width: none;
-  }
-  .food-age-strip::-webkit-scrollbar,
-  .food-filter-strip::-webkit-scrollbar,
+  /* food-age-strip / food-filter-strip / chip base now in canonical .module-strip rule */
   .food-recipe-strip::-webkit-scrollbar { display: none; }
-  .food-age-chip,
-  .food-filter-chip {
-    flex: 0 0 auto;
-    border-radius: 999px;
-    padding: 9px 13px;
-    font-family: "Lenia";
-    color: var(--ink-soft);
-    cursor: pointer;
-  }
+  /* food active state — module-dark */
   .food-age-chip.active,
   .food-filter-chip.active {
     background: var(--food-dark);
@@ -4074,7 +4238,7 @@
     color: var(--ink-muted);
     padding: 0 16px;
     font-family: "Lenia";
-    font-size: 20px;
+    font-size: var(--fs-h3);
     margin-bottom: 14px;
   }
   .food-grid {
@@ -4109,12 +4273,12 @@
       linear-gradient(135deg, rgba(201,194,178,0.34), rgba(250,247,240,0.44));
     color: var(--ink-muted);
     font-family: "Lenia";
-    font-size: 13px;
+    font-size: var(--fs-body-sm);
     margin-bottom: 12px;
   }
   .food-card h4 {
     font-family: "Lenia";
-    font-size: 20px;
+    font-size: var(--fs-h3);
     line-height: 1.05;
     font-weight: 700;
     margin: 0 0 8px;
@@ -4122,7 +4286,7 @@
   .food-card small {
     display: block;
     color: var(--ink-soft);
-    font-size: 12px;
+    font-size: var(--fs-caption);
     line-height: 1.35;
   }
   .food-card .danger {
@@ -4142,7 +4306,7 @@
   .food-grid-footer {
     color: var(--ink-muted);
     font-family: "Lenia";
-    font-size: 13px;
+    font-size: var(--fs-body-sm);
     margin-top: 14px;
   }
   .food-detail-photo {
@@ -4155,7 +4319,7 @@
       linear-gradient(135deg, rgba(201,194,178,0.26), rgba(250,247,240,0.52));
     color: var(--ink-muted);
     font-family: "Lenia";
-    font-size: 15px;
+    font-size: var(--fs-body-lg);
     text-align: center;
     padding: 18px;
   }
@@ -4191,7 +4355,7 @@
     background: rgba(201,194,178,0.28);
     color: var(--ink-muted);
     font-family: "Lenia";
-    font-size: 12px;
+    font-size: var(--fs-caption);
     text-align: center;
     padding: 12px;
     margin-bottom: 10px;
@@ -4233,7 +4397,7 @@
   }
   .food-allergen-card span {
     color: var(--ink-muted);
-    font-size: 12px;
+    font-size: var(--fs-caption);
     line-height: 1.3;
   }
   .food-allergen-card.introduced span {
@@ -4242,7 +4406,7 @@
   .food-timeline-note,
   .food-note-card {
     color: var(--ink-soft);
-    font-size: 13px;
+    font-size: var(--fs-body-sm);
     line-height: 1.48;
   }
   .food-timeline-note strong,
@@ -4250,14 +4414,14 @@
     display: block;
     color: var(--ink);
     font-family: "Lenia";
-    font-size: 15px;
+    font-size: var(--fs-body-lg);
     margin-bottom: 4px;
   }
   .food-canon-row,
   .food-diary-row {
     border-radius: 18px;
     padding: 12px;
-    font-size: 12px;
+    font-size: var(--fs-caption);
     color: var(--ink-soft);
   }
   .food-canon-row {
@@ -4291,7 +4455,7 @@
     background: rgba(201,194,178,0.28);
     color: var(--ink-muted);
     font-family: "Lenia";
-    font-size: 12px;
+    font-size: var(--fs-caption);
     margin-bottom: 10px;
   }
   .food-recipe-card strong {
@@ -4302,7 +4466,7 @@
   }
   .food-recipe-card span {
     color: var(--ink-soft);
-    font-size: 12px;
+    font-size: var(--fs-caption);
     display: block;
     margin-top: 7px;
   }
@@ -4311,7 +4475,7 @@
     margin: 0;
     color: var(--ink-soft);
     font-family: "Lenia";
-    font-size: 11px;
+    font-size: var(--fs-meta);
     line-height: 1.48;
   }
 
@@ -4378,7 +4542,7 @@
   .lactation-copy,
   .lactation-hero p {
     color: var(--ink-soft);
-    font-size: 13px;
+    font-size: var(--fs-body-sm);
     line-height: 1.48;
     margin: 0;
   }
@@ -4406,15 +4570,7 @@
     flex-wrap: wrap;
     margin-top: 14px;
   }
-  .lactation-pill {
-    border-radius: 999px;
-    border: 1px solid rgba(201,194,178,0.78);
-    background: rgba(250,247,240,0.66);
-    color: var(--lactation-ink);
-    padding: 7px 10px;
-    font-family: "Lenia";
-    font-size: 11px;
-  }
+  /* .lactation-pill base now in canonical .module-pill rule */
   .lactation-status-card,
   .lactation-section,
   .lactation-note-card,
@@ -4440,7 +4596,7 @@
   .lactation-stat strong {
     display: block;
     font-family: "Lenia";
-    font-size: 20px;
+    font-size: var(--fs-h3);
     line-height: 1;
   }
   .lactation-stat span,
@@ -4457,7 +4613,7 @@
   .lactation-quick-card strong {
     display: block;
     font-family: "Lenia";
-    font-size: 13px;
+    font-size: var(--fs-body-sm);
     line-height: 1.1;
   }
   .lactation-nav-grid {
@@ -4496,19 +4652,7 @@
     justify-content: space-between;
     gap: 12px;
   }
-  .lactation-back-view,
-  .lactation-action,
-  .lactation-choice {
-    min-height: 40px;
-    border-radius: 999px;
-    border: 1px solid rgba(201,194,178,0.80);
-    background: rgba(250,247,240,0.70);
-    color: var(--ink);
-    font-family: "Lenia";
-    font-size: 12px;
-    cursor: pointer;
-    padding: 0 13px;
-  }
+  /* lactation-action / .choice base now in canonical .module-action rule */
   .lactation-action.primary,
   .lactation-choice.active {
     background: var(--lactation-dark);
@@ -4526,7 +4670,7 @@
     gap: 10px;
     align-items: center;
     color: var(--ink-soft);
-    font-size: 12px;
+    font-size: var(--fs-caption);
     border-top: 1px dashed rgba(201,194,178,0.68);
     padding-top: 8px;
   }
@@ -4595,7 +4739,7 @@
     padding: 12px;
     margin-top: 12px;
     color: rgba(250,247,240,0.70);
-    font-size: 12px;
+    font-size: var(--fs-caption);
   }
   .lactation-result-card.urgent {
     border: 2px solid var(--lactation-dark);
@@ -4631,7 +4775,7 @@
     border-radius: 18px;
     padding: 12px;
     color: var(--ink-soft);
-    font-size: 12px;
+    font-size: var(--fs-caption);
     line-height: 1.4;
   }
   .lactation-batch-card.soon {
@@ -4644,7 +4788,7 @@
     display: block;
     color: var(--ink);
     font-family: "Lenia";
-    font-size: 15px;
+    font-size: var(--fs-body-lg);
     margin-bottom: 4px;
   }
   .lactation-canon-row {
@@ -4670,7 +4814,7 @@
     margin: 0;
     color: var(--ink-soft);
     font-family: "Lenia";
-    font-size: 11px;
+    font-size: var(--fs-meta);
     line-height: 1.48;
   }
   .lactation-med-search {
@@ -4766,7 +4910,7 @@
   .vaccine-copy,
   .vaccine-hero p {
     color: var(--ink-soft);
-    font-size: 13px;
+    font-size: var(--fs-body-sm);
     line-height: 1.48;
     margin: 0;
   }
@@ -4783,45 +4927,16 @@
     background: rgba(250,247,240,0.62);
     border: 1px solid rgba(201,194,178,0.62);
     color: var(--module-ink);
-    font-size: 11px;
+    font-size: var(--fs-meta);
     padding: 7px 10px;
   }
-  .pregnancy-nav-strip,
-  .vaccine-nav-strip {
-    display: flex;
-    gap: 8px;
-    overflow-x: auto;
-    max-width: 100%;
-    min-width: 0;
-    padding: 1px 2px 6px;
-    scrollbar-width: none;
-    scroll-snap-type: x proximity;
-    -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 14px, #000 calc(100% - 14px), transparent 100%);
-    mask-image: linear-gradient(90deg, transparent 0, #000 14px, #000 calc(100% - 14px), transparent 100%);
-  }
-  .pregnancy-nav-strip::-webkit-scrollbar,
-  .vaccine-nav-strip::-webkit-scrollbar { display: none; }
-  .pregnancy-view-chip,
-  .vaccine-view-chip {
-    flex: 0 0 auto;
-    scroll-snap-align: start;
-    min-height: 38px;
-    border-radius: 999px;
-    border: 1px solid rgba(201,194,178,0.78);
-    background:
-      radial-gradient(circle at 82% 12%, rgba(232,201,122,0.18), transparent 36%),
-      rgba(250,247,240,0.70);
-    color: var(--ink-soft);
-    font-family: "Lenia";
-    font-size: 12px;
-    padding: 0 13px;
-  }
+  /* pregnancy/vaccine nav-strip + view-chip base now in canonical .module-strip rule */
   .pregnancy-view-chip.active,
   .vaccine-view-chip.active {
-    color: var(--paper);
-    background: var(--module-dark);
-    border-color: var(--module-dark);
-    box-shadow: 0 10px 20px rgba(42,33,27,0.10);
+    color: #4A2510;
+    background: var(--coral-base);
+    border-color: var(--coral-base);
+    box-shadow: 0 10px 20px rgba(214,119,66,0.18);
   }
   .pregnancy-hero-mark,
   .vaccine-hero-mark {
@@ -4850,16 +4965,7 @@
     flex-wrap: wrap;
     margin-top: 14px;
   }
-  .pregnancy-pill,
-  .vaccine-pill {
-    border-radius: 999px;
-    border: 1px solid rgba(201,194,178,0.78);
-    background: rgba(250,247,240,0.66);
-    color: var(--module-ink);
-    padding: 7px 10px;
-    font-family: "Lenia";
-    font-size: 11px;
-  }
+  /* .pregnancy-pill / .vaccine-pill base now in canonical .module-pill rule */
   .pregnancy-status-card,
   .pregnancy-section,
   .pregnancy-note-card,
@@ -4889,7 +4995,7 @@
   .vaccine-stat strong {
     display: block;
     font-family: "Lenia";
-    font-size: 20px;
+    font-size: var(--fs-h3);
     line-height: 1;
   }
   .pregnancy-stat span,
@@ -4970,38 +5076,14 @@
     gap: 10px;
     margin-top: 12px;
   }
-  .pregnancy-back-view,
-  .pregnancy-action,
-  .pregnancy-choice,
-  .vaccine-back-view,
-  .vaccine-action,
-  .vaccine-choice {
-    min-height: 40px;
-    border-radius: 999px;
-    border: 1px solid rgba(201,194,178,0.80);
-    background: rgba(250,247,240,0.70);
-    color: var(--ink);
-    font-family: "Lenia";
-    font-size: 12px;
-    cursor: pointer;
-    padding: 0 13px;
-  }
-  .pregnancy-choice,
-  .vaccine-choice {
-    width: 100%;
-    min-height: 58px;
-    border-radius: 22px;
-    text-align: left;
-    padding: 12px 15px;
-    line-height: 1.3;
-  }
+  /* pregnancy/vaccine action+choice base + .choice override now in canonical .module-action rule */
   .vaccine-choice strong,
   .vaccine-choice span {
     display: block;
   }
   .vaccine-choice span {
     color: var(--ink-soft);
-    font-size: 12px;
+    font-size: var(--fs-caption);
     margin-top: 5px;
   }
   .pregnancy-action,
@@ -5019,9 +5101,9 @@
   .pregnancy-choice.active,
   .vaccine-action.primary,
   .vaccine-choice.active {
-    background: var(--module-dark);
-    border-color: var(--module-dark);
-    color: var(--paper);
+    background: var(--coral-base);
+    border-color: var(--coral-base);
+    color: #4A2510;
   }
   .pregnancy-back-view,
   .vaccine-back-view {
@@ -5048,7 +5130,7 @@
     background: rgba(250,247,240,0.58);
     border: 1px solid rgba(201,194,178,0.52);
     color: var(--ink-soft);
-    font-size: 12px;
+    font-size: var(--fs-caption);
     line-height: 1.4;
   }
   .pregnancy-row,
@@ -5067,7 +5149,7 @@
     display: block;
     color: var(--ink);
     font-family: "Lenia";
-    font-size: 15px;
+    font-size: var(--fs-body-lg);
     margin-bottom: 4px;
   }
   .pregnancy-row span,
@@ -5124,13 +5206,13 @@
   }
   .pregnancy-symptom-card strong {
     display: block;
-    font-size: 15px;
+    font-size: var(--fs-body-lg);
     line-height: 1.1;
   }
   .pregnancy-symptom-card span {
     display: block;
     color: var(--ink-muted);
-    font-size: 11px;
+    font-size: var(--fs-meta);
     margin-top: 6px;
   }
   .pregnancy-kick-panel {
@@ -5174,7 +5256,7 @@
     background: rgba(250,247,240,0.58);
     padding: 12px;
     color: var(--ink-soft);
-    font-size: 12px;
+    font-size: var(--fs-caption);
     line-height: 1.45;
     margin-top: 12px;
   }
@@ -5230,7 +5312,7 @@
   .vaccine-chart text {
     fill: var(--ink-muted);
     font-family: "Lenia";
-    font-size: 11px;
+    font-size: var(--fs-meta);
   }
   .pregnancy-toggle-row,
   .vaccine-toggle-row {
@@ -5254,7 +5336,7 @@
     text-align: left;
     font-family: "Lenia";
     color: var(--ink-soft);
-    font-size: 13px;
+    font-size: var(--fs-body-sm);
     cursor: pointer;
   }
   .pregnancy-switch,
@@ -5303,7 +5385,7 @@
     margin: 0;
     color: var(--ink-soft);
     font-family: "Lenia";
-    font-size: 11px;
+    font-size: var(--fs-meta);
     line-height: 1.48;
   }
   .vaccine-schedule-row {
@@ -5326,7 +5408,7 @@
     padding-top: 9px;
     margin-top: 9px;
     font-family: "Lenia";
-    font-size: 13px;
+    font-size: var(--fs-body-sm);
   }
   .vaccine-dose-grid {
     display: grid;
@@ -5387,7 +5469,7 @@
     display: flex; flex-direction: column; align-items: center; gap: 4px;
     color: var(--ink-muted);
     cursor: pointer;
-    font-family: "Lenia"; font-size: 9px; font-weight: 500;
+    font-family: "Lenia"; font-size: var(--fs-eyebrow); font-weight: 500;
     letter-spacing: 0.08em; text-transform: uppercase;
     transition: color 220ms;
   }
@@ -5460,6 +5542,7 @@
   }
   .qlog-sheet {
     width: 100%;
+    max-width: 100%;
     max-height: calc(100vh - 78px);
     overflow-y: auto;
     background:
@@ -5467,8 +5550,8 @@
       radial-gradient(circle at 8% 0%, rgba(255,255,255,0.56), transparent 30%),
       linear-gradient(145deg, var(--paper), rgba(250,247,240,0.92));
     border: 1px solid var(--line);
-    border-radius: 30px;
-    padding: 20px;
+    border-radius: 26px;
+    padding: 18px 14px;
     box-shadow: 0 -18px 58px rgba(42,33,27,0.20);
     scrollbar-width: none;
   }
@@ -5484,32 +5567,36 @@
     display: flex;
     justify-content: space-between;
     align-items: baseline;
-    gap: 18px;
-    margin-bottom: 16px;
+    gap: 12px;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
   }
   .qlog-head h4 {
     font-family: "Lenia";
-    font-size: 26px;
+    font-size: 24px;
     line-height: 1;
     font-weight: 500;
     margin: 0;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+    max-width: 100%;
   }
   .qlog-head .meta {
     color: var(--ink-muted);
-    font-size: 14px;
+    font-size: var(--fs-body-sm);
     white-space: nowrap;
   }
   .qlog-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 10px;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8px;
   }
   .qlog-tile {
     --qlog-bg: var(--paper-soft);
     --qlog-glow: rgba(232,201,122,0.22);
     aspect-ratio: 1 / 1;
     border: 1px solid transparent;
-    border-radius: 22px;
+    border-radius: 20px;
     background:
       radial-gradient(circle at 84% 6%, var(--qlog-glow), transparent 34%),
       radial-gradient(circle at 10% 0%, rgba(255,255,255,0.54), transparent 30%),
@@ -5518,33 +5605,54 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 7px;
-    padding: 10px;
+    gap: 6px;
+    padding: 8px 6px;
     cursor: pointer;
+    overflow: hidden;
+    min-width: 0;
+    text-align: center;
     transition: transform 150ms var(--ease), border-color 150ms var(--ease), background 150ms var(--ease);
+  }
+  .qlog-tile > span:last-child {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    max-width: 100%;
+    min-width: 0;
   }
   .qlog-tile:hover { transform: translateY(-1px); border-color: var(--line-strong); }
   .qlog-tile svg {
-    width: 30px;
-    height: 30px;
+    width: 26px;
+    height: 26px;
     stroke: currentColor;
     fill: none;
     stroke-width: 1.55;
     stroke-linecap: round;
     stroke-linejoin: round;
     color: var(--ink-soft);
+    flex-shrink: 0;
   }
   .qlog-tile .label {
+    display: block;
     font-family: "Lenia";
     font-weight: 500;
-    font-size: 16px;
-    line-height: 1;
+    font-size: var(--fs-body-sm);
+    line-height: 1.1;
+    max-width: 100%;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+    hyphens: auto;
   }
   .qlog-tile .sub {
+    display: block;
     color: var(--ink-muted);
-    font-size: 12px;
-    line-height: 1;
+    font-size: var(--fs-meta);
+    line-height: 1.15;
     letter-spacing: 0.02em;
+    max-width: 100%;
+    overflow-wrap: anywhere;
+    word-break: break-word;
   }
   .qlog-tile.active {
     --qlog-bg: var(--mint-subtle);
@@ -5575,7 +5683,7 @@
   }
   .qlog-tile.coral svg { color: var(--coral-strong); }
   .qlog-context {
-    margin-top: -8px;
+    margin-top: 0;
     margin-bottom: 14px;
     border-radius: 18px;
     border: 1px solid rgba(201,194,178,0.68);
@@ -5584,6 +5692,7 @@
     font-size: 12.5px;
     line-height: 1.4;
     padding: 10px 12px;
+    overflow-wrap: anywhere;
   }
   .qlog-detail {
     margin-top: 14px;
@@ -5620,7 +5729,7 @@
   .qlog-field label {
     display: block;
     color: var(--ink-soft);
-    font-size: 12px;
+    font-size: var(--fs-caption);
     margin-bottom: 6px;
   }
   .qlog-field input,
@@ -5632,6 +5741,12 @@
     color: var(--ink);
     padding: 11px 12px;
     outline: 0;
+  }
+  .qlog-field input:focus-visible,
+  .qlog-field textarea:focus-visible {
+    outline: 2px solid var(--coral-base);
+    outline-offset: 0;
+    border-color: var(--coral-base);
   }
   .qlog-actions {
     display: grid;
@@ -6003,9 +6118,30 @@
     .chips, .cal-chips { margin-left: -20px; margin-right: -20px; padding-left: 20px; padding-right: 20px; }
     .shelf-scene { margin-left: -20px; margin-right: -20px; border-radius: 0; }
   }
+
+  /* Log register + qlog sheet: collapse to fewer columns on very small phones. */
+  @media (max-width: 360px) {
+    .log-inline-grid { grid-template-columns: 1fr; gap: 8px; }
+    .log-submit-bar { grid-template-columns: 1fr; gap: 8px; }
+    .qlog-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .qlog-sheet { padding: 16px 12px; }
+  }
 </style>
 </head>
 <body>
+  <!-- icon registry — referenced via <use href="#i-X"/> -->
+  <svg aria-hidden="true" style="position:absolute;width:0;height:0;overflow:hidden">
+    <defs>
+      <symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></symbol>
+      <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+      <symbol id="i-flag" viewBox="0 0 24 24"><path d="M5 21V4"/><path d="M5 4h12l-3 4 3 4H5"/></symbol>
+      <symbol id="i-chat" viewBox="0 0 24 24"><path d="M21 15a4 4 0 0 1-4 4H8l-5 4V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4z"/></symbol>
+      <symbol id="i-heart" viewBox="0 0 24 24"><path d="M12 21s-8-4.5-8-11a5 5 0 0 1 8-4 5 5 0 0 1 8 4c0 6.5-8 11-8 11z"/></symbol>
+      <symbol id="i-home" viewBox="0 0 24 24"><path d="M3 12 12 3l9 9"/><path d="M5 10v10h14V10"/></symbol>
+      <symbol id="i-cal" viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="16" rx="2"/><line x1="4" y1="10" x2="20" y2="10"/></symbol>
+      <symbol id="i-chart" viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M7 14l3-4 4 3 5-7"/></symbol>
+    </defs>
+  </svg>
   <main class="prototype">
     <aside class="brief" aria-label="Mapa del prototipo">
       <div class="brief-card">
@@ -6154,20 +6290,23 @@
               <div class="light-r"></div>
               <div class="shelf-rail">
                 <button class="shelf-book b-vacunas" type="button" data-goto="vacunacion" data-vaccine-view-set="home">
+                  <span class="sb-free">Free</span>
                   <div class="sb-eyb">Vacunas · AEP</div>
-                  <div class="sb-icon"><svg viewBox="0 0 24 24"><path d="m18 2 4 4-1.5 1.5"/><path d="m13 7 4 4"/><path d="m11 9 4 4"/><path d="m8 12 4 4"/><path d="m6 14 4 4"/><path d="M19 5 7 17l-3 1 1-3L17 3z"/></svg></div>
+                  <div class="sb-icon"><svg viewBox="0 0 24 24"><path d="m18 2 4 4"/><path d="m17 7 3-3"/><path d="M19 9 8.7 19.3a2.1 2.1 0 1 1-3-3L16 6z"/><path d="m9 11 4 4"/><path d="m5 19-3 3"/><path d="m14 4 6 6"/></svg></div>
                   <h4 class="sb-ttl">Libro de<br><em>vacunas</em></h4>
                   <div class="sb-foot"><span class="count">12 / 14</span><span>Próx 12m</span></div>
                 </button>
                 <button class="shelf-book b-desarrollo" type="button" data-goto="desarrollo">
+                  <span class="sb-free">Free</span>
                   <div class="sb-eyb">Crecimiento · OMS</div>
-                  <div class="sb-icon"><svg viewBox="0 0 24 24"><path d="M12 2v6"/><path d="M12 22v-6"/><path d="m4.93 4.93 4.24 4.24"/><path d="m14.83 14.83 4.24 4.24"/><path d="M2 12h6"/><path d="M22 12h-6"/></svg></div>
+                  <div class="sb-icon"><svg viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M7 14c2-3 4-5 6-5s3 2 5-1 2-4 3-5"/><circle cx="7" cy="14" r="1.2"/><circle cx="13" cy="9" r="1.2"/><circle cx="18" cy="6" r="1.2"/></svg></div>
                   <h4 class="sb-ttl">Libro de<br><em>desarrollo</em></h4>
                   <div class="sb-foot"><span class="count">3 curvas</span><span>OMS</span></div>
                 </button>
                 <button class="shelf-book b-hitos" type="button" data-goto="hitos">
+                  <span class="sb-free">Free</span>
                   <div class="sb-eyb">Hitos · Haizea</div>
-                  <div class="sb-icon"><svg viewBox="0 0 24 24"><path d="m12 3 2.4 6 6.6.6-5 4.5 1.5 6.4L12 17l-5.5 3.4 1.5-6.4-5-4.5 6.6-.6z"/></svg></div>
+                  <div class="sb-icon"><svg viewBox="0 0 24 24"><path d="M5 3h14a1 1 0 0 1 1 1v17l-8-5-8 5V4a1 1 0 0 1 1-1z"/><path d="m12 8 1.5 3 3.3.3-2.5 2.2.8 3.2L12 15l-3.1 1.7.8-3.2-2.5-2.2 3.3-.3z"/></svg></div>
                   <h4 class="sb-ttl">Libro de<br><em>hitos</em></h4>
                   <div class="sb-foot"><span class="count">97 hitos</span><span>0-60m</span></div>
                 </button>
@@ -6203,7 +6342,7 @@
                 </button>
                 <button class="shelf-book b-salud" type="button" data-goto="desarrollo">
                   <div class="sb-eyb">Salud · curvas WHO</div>
-                  <div class="sb-icon"><svg viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M7 14l3-4 4 3 5-7"/></svg></div>
+                  <div class="sb-icon"><svg viewBox="0 0 24 24"><use href="#i-chart"/></svg></div>
                   <h4 class="sb-ttl">Libro de<br><em>salud</em></h4>
                   <div class="sb-foot"><span class="count">9.4 kg</span><span>P52</span></div>
                 </button>
@@ -6226,17 +6365,17 @@
               </div>
             </div>
 
-            <div class="chips" aria-label="Filtros de Hoy">
-              <button class="chip active" type="button">Todo</button>
-              <button class="chip" type="button" data-goto="vacunacion" data-vaccine-view-set="home">Vacunas</button>
-              <button class="chip" type="button" data-goto="sueno" data-sleep-view-set="home">Sue&ntilde;o</button>
-              <button class="chip" type="button" data-goto="desarrollo">Desarrollo</button>
-              <button class="chip" type="button" data-goto="alimentacion" data-food-view-set="home">Alimentación</button>
+            <div class="chips" aria-label="Filtros de Hoy" data-feed-filter-bar>
+              <button class="chip active" type="button" data-filter="all">Todo</button>
+              <button class="chip" type="button" data-filter="vacunas">Vacunas</button>
+              <button class="chip" type="button" data-filter="sueno">Sue&ntilde;o</button>
+              <button class="chip" type="button" data-filter="desarrollo">Desarrollo</button>
+              <button class="chip" type="button" data-filter="alimentacion">Alimentación</button>
               <button class="chip" type="button" data-log-open data-log-source="hoy">Log</button>
             </div>
 
-            <div class="feed-label">Hoy</div>
-            <article class="feed-card gold">
+            <div class="feed-label" data-feed-label data-feed-group="hoy">Hoy</div>
+            <article class="feed-card gold" data-feed-item data-feed-group="hoy" data-category="vacunas">
               <div class="tag">Vacunas</div>
               <h3>Triple virica · ma&ntilde;ana</h3>
               <div class="meta-line">14 mayo · 10:30 · Dr. Mendez</div>
@@ -6245,7 +6384,7 @@
               <div class="soft-actions"><button type="button" data-sheet-title="Recordatorio" data-sheet-copy="Se pospone esta card. Quedaria en Esta semana." data-open-sheet>luego</button><button type="button" data-log-type="vacuna" data-log-source="hoy" data-log-title="Triple vírica · mañana">ya hecho</button></div>
             </article>
 
-            <article class="feed-card mint">
+            <article class="feed-card mint" data-feed-item data-feed-group="hoy" data-category="sueno">
               <div class="tag">Sue&ntilde;o</div>
               <h3>Anoche · 7 h 32</h3>
               <div class="meta-line">2 despertares · 04:12 · 06:40</div>
@@ -6253,8 +6392,8 @@
               <button class="card-button" type="button" data-goto="sueno" data-sleep-view-set="week">Ver semana</button>
             </article>
 
-            <div class="feed-label">Esta semana</div>
-            <article class="feed-card violet">
+            <div class="feed-label" data-feed-label data-feed-group="semana">Esta semana</div>
+            <article class="feed-card violet" data-feed-item data-feed-group="semana" data-category="desarrollo">
               <div class="tag">Desarrollo</div>
               <h3>ASQ-3 · 18 meses</h3>
               <div class="meta-line">30 preguntas · 10 min</div>
@@ -6263,14 +6402,14 @@
             </article>
           </div>
           <nav class="phone-nav" aria-label="Navegacion principal">
-            <button class="nav-tab active" type="button" data-goto="hoy"><svg viewBox="0 0 24 24"><path d="M3 12 12 3l9 9"/><path d="M5 10v10h14V10"/></svg><span>Hoy</span></button>
-            <button class="nav-tab" type="button" data-goto="calendario"><svg viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="16" rx="2"/><line x1="4" y1="10" x2="20" y2="10"/></svg><span>Calendario</span></button>
+            <button class="nav-tab active" type="button" data-goto="hoy"><svg viewBox="0 0 24 24"><use href="#i-home"/></svg><span>Hoy</span></button>
+            <button class="nav-tab" type="button" data-goto="calendario"><svg viewBox="0 0 24 24"><use href="#i-cal"/></svg><span>Calendario</span></button>
             <div class="nav-tab fab-cell">
-              <button class="fab" type="button" data-log-open data-log-source="hoy"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></button>
+              <button class="fab" aria-label="Abrir registro rápido" type="button" data-log-open data-log-source="hoy"><svg viewBox="0 0 24 24"><use href="#i-plus"/></svg></button>
               <span class="lbl">Log</span>
             </div>
-            <button class="nav-tab" type="button" data-goto="hitos"><svg viewBox="0 0 24 24"><path d="M5 21V4"/><path d="M5 4h12l-3 4 3 4H5"/></svg><span>Hitos</span></button>
-            <button class="nav-tab disabled" type="button"><svg viewBox="0 0 24 24"><path d="M21 15a4 4 0 0 1-4 4H8l-5 4V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4z"/></svg><span>Chat</span></button>
+            <button class="nav-tab" type="button" data-goto="hitos"><svg viewBox="0 0 24 24"><use href="#i-flag"/></svg><span>Hitos</span></button>
+            <button class="nav-tab disabled" type="button"><svg viewBox="0 0 24 24"><use href="#i-chat"/></svg><span>Chat</span></button>
           </nav>
         </section>
 
@@ -6296,14 +6435,14 @@
             </div>
           </div>
           <nav class="phone-nav" aria-label="Navegacion principal">
-            <button class="nav-tab" type="button" data-goto="hoy"><svg viewBox="0 0 24 24"><path d="M3 12 12 3l9 9"/><path d="M5 10v10h14V10"/></svg><span>Hoy</span></button>
-            <button class="nav-tab active" type="button" data-goto="calendario"><svg viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="16" rx="2"/><line x1="4" y1="10" x2="20" y2="10"/></svg><span>Calendario</span></button>
+            <button class="nav-tab" type="button" data-goto="hoy"><svg viewBox="0 0 24 24"><use href="#i-home"/></svg><span>Hoy</span></button>
+            <button class="nav-tab active" type="button" data-goto="calendario"><svg viewBox="0 0 24 24"><use href="#i-cal"/></svg><span>Calendario</span></button>
             <div class="nav-tab fab-cell">
-              <button class="fab" type="button" data-log-open data-log-source="calendario"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></button>
+              <button class="fab" aria-label="Abrir registro rápido" type="button" data-log-open data-log-source="calendario"><svg viewBox="0 0 24 24"><use href="#i-plus"/></svg></button>
               <span class="lbl">Log</span>
             </div>
-            <button class="nav-tab" type="button" data-goto="hitos"><svg viewBox="0 0 24 24"><path d="M5 21V4"/><path d="M5 4h12l-3 4 3 4H5"/></svg><span>Hitos</span></button>
-            <button class="nav-tab disabled" type="button"><svg viewBox="0 0 24 24"><path d="M21 15a4 4 0 0 1-4 4H8l-5 4V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4z"/></svg><span>Chat</span></button>
+            <button class="nav-tab" type="button" data-goto="hitos"><svg viewBox="0 0 24 24"><use href="#i-flag"/></svg><span>Hitos</span></button>
+            <button class="nav-tab disabled" type="button"><svg viewBox="0 0 24 24"><use href="#i-chat"/></svg><span>Chat</span></button>
           </nav>
         </section>
 
@@ -6315,7 +6454,7 @@
                 <div class="eyebrow">Crecimiento · OMS LMS</div>
                 <h2 class="screen-title">Libro de desarrollo</h2>
               </div>
-              <button class="book-back" type="button" data-goto="hoy">← Hoy</button>
+              <button class="book-back" type="button" data-goto="hoy" aria-label="Cerrar libro"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-x"/></svg></button>
             </div>
 
             <div class="growth-book">
@@ -6349,7 +6488,7 @@
                 <div class="eyebrow">Hitos · Haizea-Llevant</div>
                 <h2 class="screen-title">Libro de hitos</h2>
               </div>
-              <button class="book-back" type="button" data-goto="hoy">← Hoy</button>
+              <button class="book-back" type="button" data-goto="hoy" aria-label="Cerrar libro"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-x"/></svg></button>
             </div>
 
             <section class="milestone-hero">
@@ -6402,7 +6541,7 @@
                 <div class="eyebrow">Sueño · Madrid · primavera</div>
                 <h2 class="screen-title">Libro de sueño</h2>
               </div>
-              <button class="book-back" type="button" data-goto="hoy">← Hoy</button>
+              <button class="book-back" type="button" data-goto="hoy" aria-label="Cerrar libro"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-x"/></svg></button>
             </div>
             <div class="sleep-shell" data-sleep-root></div>
           </div>
@@ -6416,7 +6555,7 @@
                 <div class="eyebrow">Alimentación · BLW · alérgenos</div>
                 <h2 class="screen-title">Libro de alimentación</h2>
               </div>
-              <button class="book-back" type="button" data-goto="hoy">← Hoy</button>
+              <button class="book-back" type="button" data-goto="hoy" aria-label="Cerrar libro"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-x"/></svg></button>
             </div>
             <div class="food-shell" data-food-root></div>
           </div>
@@ -6430,7 +6569,7 @@
                 <div class="eyebrow">Lactancia · Lola · 6 semanas</div>
                 <h2 class="screen-title">Libro de lactancia</h2>
               </div>
-              <button class="book-back" type="button" data-goto="hoy">← Hoy</button>
+              <button class="book-back" type="button" data-goto="hoy" aria-label="Cerrar libro"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-x"/></svg></button>
             </div>
             <div class="lactation-shell" data-lactation-root></div>
           </div>
@@ -6444,7 +6583,7 @@
                 <div class="eyebrow">Embarazo · SEGO · semana 28</div>
                 <h2 class="screen-title">Libro de embarazo</h2>
               </div>
-              <button class="book-back" type="button" data-goto="hoy">← Hoy</button>
+              <button class="book-back" type="button" data-goto="hoy" aria-label="Cerrar libro"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-x"/></svg></button>
             </div>
             <div class="pregnancy-shell" data-pregnancy-root></div>
           </div>
@@ -6458,7 +6597,7 @@
                 <div class="eyebrow">Vacunas · AEPED CAV 2026</div>
                 <h2 class="screen-title">Libro de vacunas</h2>
               </div>
-              <button class="book-back" type="button" data-goto="hoy">← Hoy</button>
+              <button class="book-back" type="button" data-goto="hoy" aria-label="Cerrar libro"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-x"/></svg></button>
             </div>
             <div class="vaccine-shell" data-vaccine-root></div>
           </div>
@@ -6468,14 +6607,14 @@
           <div class="status"><span>9:43</span><div class="status-dots"><span></span><span></span><span></span></div></div>
           <div class="content log-book" data-log-screen-root></div>
           <nav class="phone-nav" aria-label="Navegacion principal">
-            <button class="nav-tab" type="button" data-goto="hoy"><svg viewBox="0 0 24 24"><path d="M3 12 12 3l9 9"/><path d="M5 10v10h14V10"/></svg><span>Hoy</span></button>
-            <button class="nav-tab" type="button" data-goto="calendario"><svg viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="16" rx="2"/><line x1="4" y1="10" x2="20" y2="10"/></svg><span>Calendario</span></button>
+            <button class="nav-tab" type="button" data-goto="hoy"><svg viewBox="0 0 24 24"><use href="#i-home"/></svg><span>Hoy</span></button>
+            <button class="nav-tab" type="button" data-goto="calendario"><svg viewBox="0 0 24 24"><use href="#i-cal"/></svg><span>Calendario</span></button>
             <div class="nav-tab fab-cell active">
-              <button class="fab" type="button" data-log-open data-log-source="log"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></button>
+              <button class="fab" aria-label="Abrir registro rápido" type="button" data-log-open data-log-source="log"><svg viewBox="0 0 24 24"><use href="#i-plus"/></svg></button>
               <span class="lbl">Log</span>
             </div>
-            <button class="nav-tab" type="button" data-goto="hitos"><svg viewBox="0 0 24 24"><path d="M5 21V4"/><path d="M5 4h12l-3 4 3 4H5"/></svg><span>Hitos</span></button>
-            <button class="nav-tab disabled" type="button"><svg viewBox="0 0 24 24"><path d="M21 15a4 4 0 0 1-4 4H8l-5 4V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4z"/></svg><span>Chat</span></button>
+            <button class="nav-tab" type="button" data-goto="hitos"><svg viewBox="0 0 24 24"><use href="#i-flag"/></svg><span>Hitos</span></button>
+            <button class="nav-tab disabled" type="button"><svg viewBox="0 0 24 24"><use href="#i-chat"/></svg><span>Chat</span></button>
           </nav>
         </section>
 
@@ -8146,7 +8285,7 @@
   function renderSleepHome() {
     const ageRange = getSleepAge();
     return `
-      <button class="book-close-pill" type="button" data-goto="hoy">← Cerrar libro</button>
+      <button class="book-close-pill" type="button" data-goto="hoy" aria-label="Cerrar libro"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-x"/></svg></button>
           <section class="sleep-hero">
         <div class="sleep-kicker">Sueño · Lola · ${escapeHtml(ageRange.title)}</div>
         <h3>Cuando duerme bien, descansáis mejor.</h3>
@@ -8449,7 +8588,7 @@ Grow
     const age = getFoodAge();
     const inProcess = allergenCanon.filter((item) => item.state === 'process').length;
     return `
-      <button class="book-close-pill" type="button" data-goto="hoy">← Cerrar libro</button>
+      <button class="book-close-pill" type="button" data-goto="hoy" aria-label="Cerrar libro"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-x"/></svg></button>
           <section class="food-hero">
         <div class="food-kicker">Alimentación · Lola · ${escapeHtml(age.label)}</div>
         <h3>Comer sin listas infinitas.</h3>
@@ -8779,7 +8918,7 @@ Grow
   function renderLactationHome() {
     updateLactationLatchScore();
     return `
-      <button class="book-close-pill" type="button" data-goto="hoy">← Cerrar libro</button>
+      <button class="book-close-pill" type="button" data-goto="hoy" aria-label="Cerrar libro"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-x"/></svg></button>
           <section class="lactation-hero">
         <div class="lactation-kicker">Lactancia · Lola · 6 semanas</div>
         <h3>Como salga. Y si no sale, también.</h3>
@@ -9158,7 +9297,7 @@ Grow
 
   function renderPregnancyHome() {
     return `
-      <button class="book-close-pill" type="button" data-goto="hoy">← Cerrar libro</button>
+      <button class="book-close-pill" type="button" data-goto="hoy" aria-label="Cerrar libro"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-x"/></svg></button>
           ${renderPregnancyHero()}
       ${renderPregnancyNav()}
       <section class="pregnancy-status-card">
@@ -9538,7 +9677,7 @@ Grow
 
   function renderVaccineHome() {
     return `
-      <button class="book-close-pill" type="button" data-goto="hoy">← Cerrar libro</button>
+      <button class="book-close-pill" type="button" data-goto="hoy" aria-label="Cerrar libro"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-x"/></svg></button>
           ${renderVaccineHero()}
       ${renderVaccineNav()}
       <section class="vaccine-status-card">
@@ -9915,14 +10054,12 @@ Grow
     const pillX = clamp(tooltipX - pillW / 2, geometry.left, geometry.right - pillW);
 
     return `
-      <svg viewBox="0 0 ${geometry.width} ${geometry.height}" preserveAspectRatio="none" aria-label="Curva ${escapeHtml(metric.label)}">
+      <svg viewBox="0 0 ${geometry.width} ${geometry.height}" preserveAspectRatio="xMidYMid meet" aria-label="Curva ${escapeHtml(metric.label)}">
         ${grid}
         ${yLabels}
         ${axis}
         <path d="${bandPath}" fill="#E8E1CF" opacity="0.6"/>
-        <path d="${buildGrowthPath(p97)}" stroke="rgba(136,136,136,0.28)" stroke-width="1" stroke-dasharray="4 5" fill="none"/>
         <path d="${buildGrowthPath(p50)}" stroke="#888" stroke-width="1" stroke-dasharray="3 4" fill="none"/>
-        <path d="${buildGrowthPath(p3)}" stroke="rgba(136,136,136,0.28)" stroke-width="1" stroke-dasharray="4 5" fill="none"/>
         <text x="585" y="${p97[p97.length - 1].y.toFixed(1)}" font-family="Lenia" font-size="9" fill="#888">P97</text>
         <text x="585" y="${p50[p50.length - 1].y.toFixed(1)}" font-family="Lenia" font-size="9" fill="#888">P50</text>
         <text x="585" y="${p3[p3.length - 1].y.toFixed(1)}" font-family="Lenia" font-size="9" fill="#888">P3</text>
@@ -11016,8 +11153,8 @@ Grow
     logDetailRoot.innerHTML = `
       <div class="log-register-hero">
         <div class="log-register-top">
-          <button class="log-register-back" type="button" data-log-back>← ${escapeHtml(returnLabel)}</button>
           <div class="log-register-icon">${category.icon}</div>
+          <button class="log-register-back" type="button" data-log-back aria-label="Cerrar ${escapeHtml(returnLabel)}"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-x"/></svg></button>
         </div>
         <div class="eyebrow">Registrando desde ${escapeHtml(sourceLabel)}</div>
         <h2>${escapeHtml(category.label)}</h2>
@@ -11091,7 +11228,7 @@ Grow
           <div class="eyebrow">Log central · Lola</div>
           <h2 class="screen-title">Apuntar sin pensarlo.</h2>
         </div>
-        <button class="yo-btn" type="button" data-log-open data-log-source="log"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"></path></svg></button>
+        <button class="yo-btn" aria-label="Añadir hito" type="button" data-log-open data-log-source="log"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"></path></svg></button>
       </div>
       <div class="quick-grid">
         ${logCategories.map((category) => renderLogCategoryTile(category, 'screen')).join('')}
@@ -11437,6 +11574,25 @@ Grow
     return textarea.value;
   }
 
+  function applyFeedFilter(chip) {
+    const filter = chip.dataset.filter;
+    if (!filter) return;
+    const bar = chip.closest('[data-feed-filter-bar]');
+    if (bar) {
+      bar.querySelectorAll('[data-filter]').forEach((c) => c.classList.toggle('active', c === chip));
+    }
+    const items = document.querySelectorAll('[data-feed-item]');
+    items.forEach((item) => {
+      const matches = filter === 'all' || item.dataset.category === filter;
+      item.hidden = !matches;
+    });
+    document.querySelectorAll('[data-feed-label]').forEach((label) => {
+      const group = label.dataset.feedGroup;
+      const hasVisible = Array.from(document.querySelectorAll(`[data-feed-item][data-feed-group="${group}"]`)).some((it) => !it.hidden);
+      label.hidden = !hasVisible;
+    });
+  }
+
   document.addEventListener('click', (event) => {
     const logSelectButton = event.target.closest('[data-log-select]');
     if (logSelectButton) {
@@ -11693,6 +11849,12 @@ Grow
     const phaseButton = event.target.closest('[data-phase]');
     if (phaseButton) {
       setPhase(phaseButton.dataset.phase);
+      return;
+    }
+
+    const filterButton = event.target.closest('[data-filter]');
+    if (filterButton) {
+      applyFeedFilter(filterButton);
       return;
     }
 

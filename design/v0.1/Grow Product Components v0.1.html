@@ -5,14 +5,14 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Grow · Session 04 — Product components</title>
 <style>
-  @font-face { font-family: "Lenia"; src: url("assets/fonts/LeniaSans-Light.ttf") format("truetype"); font-weight: 300; font-display: swap; }
-  @font-face { font-family: "Lenia"; src: url("assets/fonts/LeniaSans-Regular.ttf") format("truetype"); font-weight: 400; font-display: swap; }
-  @font-face { font-family: "Lenia"; src: url("assets/fonts/LeniaSans-Medium.ttf") format("truetype"); font-weight: 500; font-display: swap; }
-  @font-face { font-family: "Lenia"; src: url("assets/fonts/LeniaSans-Bold.ttf") format("truetype"); font-weight: 700; font-display: swap; }
-  @font-face { font-family: "Lenia"; src: url("assets/fonts/LeniaSans-Italic.ttf") format("truetype"); font-weight: 400; font-style: italic; font-display: swap; }
-  @font-face { font-family: "Helvena"; src: url("assets/fonts/Helvena-Regular.ttf") format("truetype"); font-weight: 400; font-display: swap; }
-  @font-face { font-family: "Helvena"; src: url("assets/fonts/Helvena-Medium.ttf") format("truetype"); font-weight: 500; font-display: swap; }
-  @font-face { font-family: "Helvena"; src: url("assets/fonts/Helvena-Semibold.ttf") format("truetype"); font-weight: 600; font-display: swap; }
+  @font-face { font-family: "Lenia"; src: url("../assets/fonts/LeniaSans-Light.ttf") format("truetype"); font-weight: 300; font-display: swap; }
+  @font-face { font-family: "Lenia"; src: url("../assets/fonts/LeniaSans-Regular.ttf") format("truetype"); font-weight: 400; font-display: swap; }
+  @font-face { font-family: "Lenia"; src: url("../assets/fonts/LeniaSans-Medium.ttf") format("truetype"); font-weight: 500; font-display: swap; }
+  @font-face { font-family: "Lenia"; src: url("../assets/fonts/LeniaSans-Bold.ttf") format("truetype"); font-weight: 700; font-display: swap; }
+  @font-face { font-family: "Lenia"; src: url("../assets/fonts/LeniaSans-Italic.ttf") format("truetype"); font-weight: 400; font-style: italic; font-display: swap; }
+  @font-face { font-family: "Helvena"; src: url("../assets/fonts/Helvena-Regular.ttf") format("truetype"); font-weight: 400; font-display: swap; }
+  @font-face { font-family: "Helvena"; src: url("../assets/fonts/Helvena-Medium.ttf") format("truetype"); font-weight: 500; font-display: swap; }
+  @font-face { font-family: "Helvena"; src: url("../assets/fonts/Helvena-Semibold.ttf") format("truetype"); font-weight: 600; font-display: swap; }
 
   :root {
     --paper: #FAF7F0;
@@ -187,6 +187,13 @@
   .chip.active.bienestar    { background: var(--cat-bienestar-tint);    color: var(--cat-bienestar-ink);    border-color: var(--cat-bienestar-ink); }
   .chip.active.embarazo     { background: var(--cat-embarazo-tint);     color: var(--cat-embarazo-ink);     border-color: var(--cat-embarazo-ink); }
   .chip.active.medicacion   { background: var(--cat-medicacion-tint);   color: var(--cat-medicacion-ink);   border-color: var(--cat-medicacion-ink); }
+  /* brand tone variants (Primitives canon) — for non-category chips */
+  .chip.gold  { background: var(--gold-subtle);  color: #6E5A2A; border-color: rgba(184,151,63,0.28); }
+  .chip.mint  { background: var(--mint-subtle);  color: #4F6647; border-color: rgba(143,174,133,0.32); }
+  .chip.coral { background: var(--coral-subtle); color: #8E4A22; border-color: rgba(216,119,66,0.30); }
+  .chip.blush { background: var(--blush-subtle); color: #7A4A3A; border-color: rgba(216,154,137,0.30); }
+  .chip.soft  { background: var(--paper-soft);   color: var(--ink); border-color: var(--line); }
+  .chip.ink   { background: var(--ink); color: var(--paper); border-color: var(--ink); }
 
   /* Section eyebrow inside Hoy feed (HOY · ESTA SEMANA) */
   .feed-eyb {
@@ -1537,7 +1544,7 @@
         <div class="chat-stage" style="background: var(--paper); border-radius: 22px;">
 
           <div class="bubble-row">
-            <div class="bubble-avatar companion"><img src="assets/avatar-mint.png" alt=""></div>
+            <div class="bubble-avatar companion"><img src="../assets/avatar-mint.png" alt=""></div>
             <div class="bubble companion">
               <div class="role">Companion</div>
               Hola María. ¿Cómo está Lola hoy con la regresión?
@@ -1554,7 +1561,7 @@
           </div>
 
           <div class="bubble-row">
-            <div class="bubble-avatar companion"><img src="assets/avatar-mint.png" alt=""></div>
+            <div class="bubble-avatar companion"><img src="../assets/avatar-mint.png" alt=""></div>
             <div class="bubble companion">
               <div class="role">Companion</div>
               La regresión de los 18 m suele durar 2–3 semanas. No estás haciendo nada mal.
@@ -2271,7 +2278,7 @@
           <div class="av-mini">
             <span class="pill-st">Crianza · 18m</span>
             <span class="pill-st tr">EPDS · 0/30</span>
-            <img src="assets/avatar-mint.png?v=2" alt="">
+            <img src="../assets/avatar-mint.png?v=2" alt="">
           </div>
 
           <div class="mini-hero">

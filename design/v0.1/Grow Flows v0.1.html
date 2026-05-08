@@ -5,13 +5,13 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Grow · Session 05 — Flows & Screens</title>
 <style>
-  @font-face { font-family: "Lenia"; src: url("assets/fonts/LeniaSans-Light.ttf") format("truetype"); font-weight: 300; font-display: swap; }
-  @font-face { font-family: "Lenia"; src: url("assets/fonts/LeniaSans-Regular.ttf") format("truetype"); font-weight: 400; font-display: swap; }
-  @font-face { font-family: "Lenia"; src: url("assets/fonts/LeniaSans-Medium.ttf") format("truetype"); font-weight: 500; font-display: swap; }
-  @font-face { font-family: "Lenia"; src: url("assets/fonts/LeniaSans-Italic.ttf") format("truetype"); font-weight: 400; font-style: italic; font-display: swap; }
-  @font-face { font-family: "Helvena"; src: url("assets/fonts/Helvena-Regular.ttf") format("truetype"); font-weight: 400; font-display: swap; }
-  @font-face { font-family: "Helvena"; src: url("assets/fonts/Helvena-Medium.ttf") format("truetype"); font-weight: 500; font-display: swap; }
-  @font-face { font-family: "Helvena"; src: url("assets/fonts/Helvena-Semibold.ttf") format("truetype"); font-weight: 600; font-display: swap; }
+  @font-face { font-family: "Lenia"; src: url("../assets/fonts/LeniaSans-Light.ttf") format("truetype"); font-weight: 300; font-display: swap; }
+  @font-face { font-family: "Lenia"; src: url("../assets/fonts/LeniaSans-Regular.ttf") format("truetype"); font-weight: 400; font-display: swap; }
+  @font-face { font-family: "Lenia"; src: url("../assets/fonts/LeniaSans-Medium.ttf") format("truetype"); font-weight: 500; font-display: swap; }
+  @font-face { font-family: "Lenia"; src: url("../assets/fonts/LeniaSans-Italic.ttf") format("truetype"); font-weight: 400; font-style: italic; font-display: swap; }
+  @font-face { font-family: "Helvena"; src: url("../assets/fonts/Helvena-Regular.ttf") format("truetype"); font-weight: 400; font-display: swap; }
+  @font-face { font-family: "Helvena"; src: url("../assets/fonts/Helvena-Medium.ttf") format("truetype"); font-weight: 500; font-display: swap; }
+  @font-face { font-family: "Helvena"; src: url("../assets/fonts/Helvena-Semibold.ttf") format("truetype"); font-weight: 600; font-display: swap; }
 
   :root {
     --paper: #FAF7F0; --paper-soft: #F2EDE0; --paper-deep: #E8E1CF;
@@ -612,32 +612,35 @@
     transition: opacity 220ms ease, transform 240ms cubic-bezier(0.34, 1.56, 0.64, 1);
   }
   .seg-opt.selected {
-    background: linear-gradient(180deg, var(--coral-base) 0%, var(--coral-strong) 100%);
-    color: #4A2510;
-    box-shadow:
-      0 2px 6px rgba(214, 119, 66, 0.30),
-      inset 0 1px 0 rgba(255,255,255,0.40);
+    background: var(--coral-base);
+    color: #4A2614;
+    box-shadow: 0 2px 6px rgba(214, 119, 66, 0.22);
   }
   .seg-opt.selected::before { opacity: 1; transform: scale(1); }
   .seg-group.mint .seg-opt.selected {
-    background: linear-gradient(180deg, var(--mint-base) 0%, var(--mint-strong) 100%);
-    color: #2E3F26;
-    box-shadow: 0 2px 6px rgba(118, 162, 105, 0.32), inset 0 1px 0 rgba(255,255,255,0.40);
+    background: var(--mint-base);
+    color: #2E4A2A;
+    box-shadow: 0 2px 6px rgba(143, 174, 133, 0.22);
   }
   .seg-group.gold .seg-opt.selected {
-    background: linear-gradient(180deg, var(--gold-base) 0%, var(--gold-strong) 100%);
+    background: var(--gold-base);
     color: #4A3A12;
-    box-shadow: 0 2px 6px rgba(214, 178, 96, 0.32), inset 0 1px 0 rgba(255,255,255,0.40);
+    box-shadow: 0 2px 6px rgba(184, 151, 63, 0.22);
   }
   .seg-group.blush .seg-opt.selected {
-    background: linear-gradient(180deg, var(--blush-base) 0%, var(--blush-strong) 100%);
-    color: #5A2A2A;
-    box-shadow: 0 2px 6px rgba(214, 162, 152, 0.32), inset 0 1px 0 rgba(255,255,255,0.40);
+    background: var(--blush-base);
+    color: #6B3D2A;
+    box-shadow: 0 2px 6px rgba(216, 154, 137, 0.22);
+  }
+  .seg-group.soft .seg-opt.selected {
+    background: var(--paper-soft);
+    color: var(--ink);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.06);
   }
   .seg-group.ink .seg-opt.selected {
     background: var(--ink-warm);
     color: var(--paper);
-    box-shadow: 0 2px 6px rgba(0,0,0,0.18), inset 0 1px 0 rgba(255,255,255,0.10);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.18);
   }
 
   /* Onboarding fase card — uses real avatar PNG */
@@ -720,7 +723,7 @@
     text-transform: uppercase; color: var(--ink-soft); margin-top: 8px; font-weight: 500;
   }
 
-  /* CTA */
+  /* CTA — pill canon (Primitives §B Buttons) */
   .cta-prim {
     display: block; text-align: center; padding: 9px 14px;
     background: var(--ink-warm); color: var(--paper); border-radius: 999px;
@@ -728,6 +731,10 @@
     margin-top: 10px;
   }
   .cta-prim.coral { background: var(--coral-base); color: #4A2510; }
+  .cta-prim.mint  { background: var(--mint-base);  color: #2F4029; }
+  .cta-prim.soft  { background: var(--paper-soft); color: var(--ink); box-shadow: inset 0 0 0 1px var(--line); }
+  .cta-prim.blush { background: var(--blush-base); color: #6B3D2A; }
+  .cta-prim.danger-soft { background: var(--coral-subtle); color: #8E4A22; }
   .cta-ghost {
     display: block; text-align: center; padding: 8px 14px;
     background: transparent; color: var(--ink-soft); font-size: 10px;
@@ -1387,7 +1394,7 @@
                 <p class="s-body">Esto cambia todo lo que verás. Puedes editarlo en cualquier momento.</p>
 
                 <div class="fase-card selected">
-                  <div class="av coral"><img src="assets/avatar-coral.png?v=2" alt=""></div>
+                  <div class="av coral"><img src="../assets/avatar-coral.png?v=2" alt=""></div>
                   <div class="body">
                     <div class="ttl">Embarazada</div>
                     <div class="sub">Hasta el parto</div>
@@ -1395,7 +1402,7 @@
                   <div class="check"></div>
                 </div>
                 <div class="fase-card">
-                  <div class="av blush"><img src="assets/avatar-blush.png?v=2" alt=""></div>
+                  <div class="av blush"><img src="../assets/avatar-blush.png?v=2" alt=""></div>
                   <div class="body">
                     <div class="ttl">Bebé</div>
                     <div class="sub">0 – 12 meses</div>
@@ -1403,7 +1410,7 @@
                   <div class="check"></div>
                 </div>
                 <div class="fase-card">
-                  <div class="av mint"><img src="assets/avatar-mint.png?v=2" alt=""></div>
+                  <div class="av mint"><img src="../assets/avatar-mint.png?v=2" alt=""></div>
                   <div class="body">
                     <div class="ttl">Crianza</div>
                     <div class="sub">12 – 36 meses</div>
@@ -1505,7 +1512,7 @@
                 <div class="av-hero coral">
                   <div class="float-tag tl"><span class="pill-st">Embarazo · 32 sem</span></div>
                   <div class="float-tag tr"><span class="pill-st coral">7 más</span></div>
-                  <div class="av-img"><img src="assets/avatar-coral.png?v=2" alt=""></div>
+                  <div class="av-img"><img src="../assets/avatar-coral.png?v=2" alt=""></div>
                   <div class="av-meta">
                     <div class="who-block">
                       <div class="who">+ Bebé</div>
@@ -1646,7 +1653,7 @@
                 <div class="av-hero blush">
                   <div class="float-tag tl"><span class="pill-st">Recién nacida</span></div>
                   <div class="float-tag tr"><span class="pill-st blush">EPDS · pendiente</span></div>
-                  <div class="av-img"><img src="assets/avatar-blush.png?v=2" alt=""></div>
+                  <div class="av-img"><img src="../assets/avatar-blush.png?v=2" alt=""></div>
                   <div class="av-meta">
                     <div class="who-block">
                       <div class="who">Lola</div>
@@ -1736,7 +1743,7 @@
               <div class="av-hero coral">
                 <div class="float-tag tl"><span class="pill-st">Embarazo · 32 sem</span></div>
                 <div class="float-tag tr"><span class="pill-st coral">7 más</span></div>
-                <div class="av-img"><img src="assets/avatar-coral.png?v=2" alt=""></div>
+                <div class="av-img"><img src="../assets/avatar-coral.png?v=2" alt=""></div>
                 <div class="av-meta">
                   <div class="who-block">
                     <div class="who">+ Bebé</div>
@@ -1830,7 +1837,7 @@
               <div class="av-hero blush">
                 <div class="float-tag tl"><span class="pill-st">Recién nacida</span></div>
                 <div class="float-tag tr"><span class="pill-st blush">EPDS · pendiente</span></div>
-                <div class="av-img"><img src="assets/avatar-blush.png?v=2" alt=""></div>
+                <div class="av-img"><img src="../assets/avatar-blush.png?v=2" alt=""></div>
                 <div class="av-meta">
                   <div class="who-block">
                     <div class="who">Lola</div>
@@ -1925,7 +1932,7 @@
               <div class="av-hero">
                 <div class="float-tag tl"><span class="pill-st">Crianza · 18m</span></div>
                 <div class="float-tag tr"><span class="pill-st mint">EPDS · 0/30</span></div>
-                <div class="av-img"><img src="assets/avatar-mint.png?v=2" alt=""></div>
+                <div class="av-img"><img src="../assets/avatar-mint.png?v=2" alt=""></div>
                 <div class="av-meta">
                   <div class="who-block">
                     <div class="who">Lola</div>
@@ -3057,7 +3064,7 @@
                 <div class="av-hero" style="margin-bottom: 6px;">
                   <div class="float-tag tl"><span class="pill-st">Crianza · 18m</span></div>
                   <div class="float-tag tr"><span class="pill-st mint">EPDS · 0/30</span></div>
-                  <div class="av-img"><img src="assets/avatar-mint.png?v=2" alt=""></div>
+                  <div class="av-img"><img src="../assets/avatar-mint.png?v=2" alt=""></div>
                   <div class="av-meta">
                     <div class="who-block">
                       <div class="who">Lola</div>
@@ -3203,7 +3210,7 @@
 
                 <div class="less-mini" style="width: 100%; flex: none; margin-bottom: 7px;">
                   <div class="cover" style="aspect-ratio: 16/8; display: grid; place-items: center; padding: 0;">
-                    <img src="assets/mood-durmiendo.png" alt="" style="height: 56px; width: auto;">
+                    <img src="../assets/mood-durmiendo.png" alt="" style="height: 56px; width: auto;">
                     <span class="duration">5 min</span>
                   </div>
                   <div class="body">
@@ -3215,7 +3222,7 @@
 
                 <div class="less-mini" style="width: 100%; flex: none; margin-bottom: 7px;">
                   <div class="cover blush" style="aspect-ratio: 16/8; display: grid; place-items: center; padding: 0;">
-                    <img src="assets/mood-cansados.png" alt="" style="height: 56px; width: auto;">
+                    <img src="../assets/mood-cansados.png" alt="" style="height: 56px; width: auto;">
                     <span class="duration">3 min</span>
                   </div>
                   <div class="body">
@@ -3241,7 +3248,7 @@
                 <h2 class="s-title" style="margin-bottom: 4px;">Regresión de los 4 meses, sin alarma.</h2>
 
                 <div style="background: var(--mint-subtle); border-radius: 12px; padding: 6px; margin: 10px 0 6px; text-align: center;">
-                  <img src="assets/mood-durmiendo.png" alt="" style="width: 130px; height: auto; display: block; margin: 0 auto;">
+                  <img src="../assets/mood-durmiendo.png" alt="" style="width: 130px; height: auto; display: block; margin: 0 auto;">
                 </div>
 
                 <div style="display:flex; align-items: center; gap: 6px; margin-top: 6px;">
@@ -3316,7 +3323,7 @@
                 <div class="av-hero">
                   <div class="float-tag tl"><span class="pill-st">Crianza · 18m</span></div>
                   <div class="float-tag tr"><span class="pill-st mint">EPDS · 0/30</span></div>
-                  <div class="av-img"><img src="assets/avatar-mint.png?v=2" alt=""></div>
+                  <div class="av-img"><img src="../assets/avatar-mint.png?v=2" alt=""></div>
                   <div class="av-meta">
                     <div class="who-block">
                       <div class="who">Lola</div>
@@ -3326,7 +3333,7 @@
                 </div>
 
                 <div class="es-block">
-                  <img src="assets/mood-contentos.png" alt="" style="width: 90px; height: auto; display: block; margin: -6px auto 4px;">
+                  <img src="../assets/mood-contentos.png" alt="" style="width: 90px; height: auto; display: block; margin: -6px auto 4px;">
                   <div class="ttl">Aún no hay entradas hoy</div>
                   <div class="meta">El + abajo lo registra todo en &lt; 5 s</div>
                 </div>
@@ -3412,7 +3419,7 @@
                 <div class="av-hero">
                   <div class="float-tag tl"><span class="pill-st">Crianza · 18m</span></div>
                   <div class="float-tag tr"><span class="pill-st mint">EPDS · 0/30</span></div>
-                  <div class="av-img"><img src="assets/avatar-mint.png?v=2" alt=""></div>
+                  <div class="av-img"><img src="../assets/avatar-mint.png?v=2" alt=""></div>
                   <div class="av-meta">
                     <div class="who-block">
                       <div class="who">Lola</div>
@@ -3486,7 +3493,7 @@
                 <p class="s-body">Mucho ruido de fondo. Prueba más cerca o vuelve más tarde.</p>
 
                 <div class="es-block" style="background: var(--paper); padding: 12px 12px 14px;">
-                  <img src="assets/mood-cansados.png" alt="" style="width: 100px; height: auto; display: block; margin: -2px auto 4px;">
+                  <img src="../assets/mood-cansados.png" alt="" style="width: 100px; height: auto; display: block; margin: -2px auto 4px;">
                   <div class="ttl">Sin clasificación</div>
                   <div class="meta">Hambre, sueño y gas se parecen mucho a este volumen.</div>
                 </div>

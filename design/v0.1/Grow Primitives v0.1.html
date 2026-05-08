@@ -5,15 +5,15 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Grow · Session 03 — Primitives</title>
 <style>
-  @font-face { font-family: "Lenia"; src: url("assets/fonts/LeniaSans-Light.ttf") format("truetype"); font-weight: 300; font-display: swap; }
-  @font-face { font-family: "Lenia"; src: url("assets/fonts/LeniaSans-Regular.ttf") format("truetype"); font-weight: 400; font-display: swap; }
-  @font-face { font-family: "Lenia"; src: url("assets/fonts/LeniaSans-Medium.ttf") format("truetype"); font-weight: 500; font-display: swap; }
-  @font-face { font-family: "Lenia"; src: url("assets/fonts/LeniaSans-Bold.ttf") format("truetype"); font-weight: 700; font-display: swap; }
-  @font-face { font-family: "Lenia"; src: url("assets/fonts/LeniaSans-Italic.ttf") format("truetype"); font-weight: 400; font-style: italic; font-display: swap; }
-  @font-face { font-family: "Helvena"; src: url("assets/fonts/Helvena-Regular.ttf") format("truetype"); font-weight: 400; font-display: swap; }
-  @font-face { font-family: "Helvena"; src: url("assets/fonts/Helvena-Medium.ttf") format("truetype"); font-weight: 500; font-display: swap; }
-  @font-face { font-family: "Helvena"; src: url("assets/fonts/Helvena-Semibold.ttf") format("truetype"); font-weight: 600; font-display: swap; }
-  @font-face { font-family: "Helvena"; src: url("assets/fonts/Helvena-Bold.ttf") format("truetype"); font-weight: 700; font-display: swap; }
+  @font-face { font-family: "Lenia"; src: url("../assets/fonts/LeniaSans-Light.ttf") format("truetype"); font-weight: 300; font-display: swap; }
+  @font-face { font-family: "Lenia"; src: url("../assets/fonts/LeniaSans-Regular.ttf") format("truetype"); font-weight: 400; font-display: swap; }
+  @font-face { font-family: "Lenia"; src: url("../assets/fonts/LeniaSans-Medium.ttf") format("truetype"); font-weight: 500; font-display: swap; }
+  @font-face { font-family: "Lenia"; src: url("../assets/fonts/LeniaSans-Bold.ttf") format("truetype"); font-weight: 700; font-display: swap; }
+  @font-face { font-family: "Lenia"; src: url("../assets/fonts/LeniaSans-Italic.ttf") format("truetype"); font-weight: 400; font-style: italic; font-display: swap; }
+  @font-face { font-family: "Helvena"; src: url("../assets/fonts/Helvena-Regular.ttf") format("truetype"); font-weight: 400; font-display: swap; }
+  @font-face { font-family: "Helvena"; src: url("../assets/fonts/Helvena-Medium.ttf") format("truetype"); font-weight: 500; font-display: swap; }
+  @font-face { font-family: "Helvena"; src: url("../assets/fonts/Helvena-Semibold.ttf") format("truetype"); font-weight: 600; font-display: swap; }
+  @font-face { font-family: "Helvena"; src: url("../assets/fonts/Helvena-Bold.ttf") format("truetype"); font-weight: 700; font-display: swap; }
 
   :root {
     --paper: #FAF7F0;
@@ -388,7 +388,9 @@
   .chip.gold  { background: var(--gold-subtle);  color: #6E5A2A; }
   .chip.mint  { background: var(--mint-subtle);  color: #4F6647; }
   .chip.coral { background: var(--coral-subtle); color: #8E4A22; }
-  .chip.blush { background: var(--blush-subtle); color: #8E4A4A; }
+  .chip.blush { background: var(--blush-subtle); color: #7A4A3A; }
+  .chip.soft  { background: var(--paper-soft);   color: var(--ink); border-color: var(--line); }
+  .chip.ink   { background: var(--ink); color: var(--paper); border-color: var(--ink); }
   .chip.mono {
     font-family: "JetBrains Mono", "SF Mono", monospace;
     background: var(--paper-deep); color: var(--ink-warm); letter-spacing: 0.04em;
@@ -444,43 +446,38 @@
   .seg-opt:hover { color: var(--ink-warm); }
   .seg-opt.selected::before { opacity: 1; transform: scale(1); }
 
-  /* default = coral family */
+  /* default = coral family — flat tonal fill (matches pill-CTA palette) */
   .seg-opt.selected {
-    background: linear-gradient(180deg, var(--coral-base) 0%, var(--coral-strong) 100%);
-    color: #4A2510;
-    box-shadow:
-      0 2px 6px rgba(214, 119, 66, 0.30),
-      inset 0 1px 0 rgba(255,255,255,0.40);
+    background: var(--coral-base);
+    color: #4A2614;
+    box-shadow: 0 2px 6px rgba(214, 119, 66, 0.22);
   }
   /* family modifiers on the GROUP */
   .seg-group.mint .seg-opt.selected {
-    background: linear-gradient(180deg, var(--mint-base) 0%, var(--mint-strong) 100%);
-    color: #2E3F26;
-    box-shadow:
-      0 2px 6px rgba(118, 162, 105, 0.32),
-      inset 0 1px 0 rgba(255,255,255,0.40);
+    background: var(--mint-base);
+    color: #2E4A2A;
+    box-shadow: 0 2px 6px rgba(143, 174, 133, 0.22);
   }
   .seg-group.gold .seg-opt.selected {
-    background: linear-gradient(180deg, var(--gold-base) 0%, var(--gold-strong) 100%);
+    background: var(--gold-base);
     color: #4A3A12;
-    box-shadow:
-      0 2px 6px rgba(214, 178, 96, 0.32),
-      inset 0 1px 0 rgba(255,255,255,0.40);
+    box-shadow: 0 2px 6px rgba(184, 151, 63, 0.22);
   }
   .seg-group.blush .seg-opt.selected {
-    background: linear-gradient(180deg, var(--blush-base) 0%, var(--blush-strong) 100%);
-    color: #5A2A2A;
-    box-shadow:
-      0 2px 6px rgba(214, 162, 152, 0.32),
-      inset 0 1px 0 rgba(255,255,255,0.40);
+    background: var(--blush-base);
+    color: #6B3D2A;
+    box-shadow: 0 2px 6px rgba(216, 154, 137, 0.22);
   }
-  /* ink-warm family — quiet, neutral */
+  .seg-group.soft .seg-opt.selected {
+    background: var(--paper-soft);
+    color: var(--ink);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+  }
+  /* ink family — quiet, neutral */
   .seg-group.ink .seg-opt.selected {
     background: var(--ink-warm);
     color: var(--paper);
-    box-shadow:
-      0 2px 6px rgba(0,0,0,0.18),
-      inset 0 1px 0 rgba(255,255,255,0.10);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.18);
   }
 
   /* ╔════════════════════════════════════════════════════════════╗
@@ -1518,7 +1515,7 @@
               <h2 style="font-size: 22px; margin-bottom: 10px;">El día empieza despacio.</h2>
 
               <div class="avatar-hero">
-                <div class="av-img"><img src="assets/avatar-mint.png?v=2" alt="Lola, 18 meses"></div>
+                <div class="av-img"><img src="../assets/avatar-mint.png?v=2" alt="Lola, 18 meses"></div>
                 <div class="float-tag tl"><span class="pill-st">Crianza · 18m</span></div>
                 <div class="float-tag tr"><span class="pill-st mint">EPDS · 0/30</span></div>
                 <div class="av-meta">
