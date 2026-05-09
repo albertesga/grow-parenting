@@ -3526,6 +3526,10 @@
     margin: 10px -20px 0;
     padding: 0 20px 4px;
   }
+  /* Separate scale row from filter row · evita colisión visual entre
+     los pills coral del scale (selección activa) y los chips tonales del filter */
+  .milestone-scale-row + .milestone-filter-row,
+  .milestone-scale-row + .milestone-filter-strip { margin-top: 18px; }
   .scale-label {
     flex: 0 0 auto;
     align-self: center;
@@ -7635,48 +7639,33 @@
               <div class="milestone-hero-orb"><img src="design/assets/avatar-mint.png" alt=""></div>
             </section>
 
-            <section class="milestone-track" aria-label="Timeline de hitos 0 a 60 meses">
-              <div class="milestone-track-axis">
-                <span style="left: 0%;">0m</span>
-                <span style="left: 20%;">12m</span>
-                <span style="left: 40%;">24m</span>
-                <span style="left: 60%;">36m</span>
-                <span style="left: 80%;">48m</span>
-                <span style="left: 100%;">60m</span>
+            <section class="milestone-stages" aria-label="Timeline de etapas 0 a 60 meses">
+              <div class="timeline-track tall" data-milestone-stages role="tablist"></div>
+              <div class="timeline-axis">
+                <span>0 m</span><span>12 m</span><span>24 m</span><span>36 m</span><span>48 m</span><span>60 m</span>
               </div>
-              <div class="stage-strip" data-milestone-stages></div>
-            </section>
-
-            <div class="scale-strip" aria-label="Selector de escala">
-              <span class="scale-label">Escala</span>
-              <button class="scale-btn active" type="button" data-milestone-scale="haizea">Haizea-Llevant</button>
-              <button class="scale-btn" type="button" data-milestone-scale="asq">ASQ-3</button>
-              <button class="scale-btn" type="button" data-milestone-scale="denver">Denver II</button>
-              <button class="scale-btn" type="button" data-milestone-scale="wiechen">Van Wiechen</button>
-              <button class="scale-btn premium" type="button" data-milestone-scale="bayley">Bayley-III</button>
-            </div>
-
-            <section class="milestone-stage-head">
-              <div class="milestone-stage-copy">
-                <div class="milestone-stage-meta" data-milestone-stage-meta>Lactante · cuarto trimestre</div>
-                <div class="milestone-stage-count" data-milestone-stage-count>0 logrados · 0 hitos</div>
-              </div>
-              <button class="btn-coral btn-sm" type="button" data-log-type="hito" data-log-source="hitos">+ Añadir hito</button>
             </section>
 
             <div class="milestone-scale-row" aria-label="Selector de escala">
               <span class="scale-label">Escala</span>
-              <div class="mark-selector ink full" role="tablist">
-                <button class="opt selected" type="button" role="tab" data-milestone-scale="haizea">Haizea-Llevant</button>
-                <button class="opt" type="button" role="tab" data-milestone-scale="asq">ASQ-3</button>
-                <button class="opt" type="button" role="tab" data-milestone-scale="denver">Denver II</button>
-                <button class="opt" type="button" role="tab" data-milestone-scale="wiechen">Van Wiechen</button>
-                <button class="opt premium" type="button" role="tab" data-milestone-scale="bayley">Bayley-III</button>
+              <div class="scale-strip">
+                <button class="scale-btn active" type="button" data-milestone-scale="haizea">Haizea-Llevant</button>
+                <button class="scale-btn" type="button" data-milestone-scale="asq">ASQ-3</button>
+                <button class="scale-btn" type="button" data-milestone-scale="denver">Denver II</button>
+                <button class="scale-btn" type="button" data-milestone-scale="wiechen">Van Wiechen</button>
+                <button class="scale-btn premium" type="button" data-milestone-scale="bayley">Bayley-III</button>
               </div>
             </div>
 
-            <div class="milestone-filter-strip" data-milestone-filters aria-label="Filtro por área"></div>
+            <div class="milestone-filter-row" aria-label="Filtros por tipo">
+              <span class="scale-label">Tipo</span>
+              <div class="milestone-filter-strip" data-milestone-filters></div>
+            </div>
             <div class="milestone-card-list" data-milestone-cards></div>
+
+            <div class="milestone-action-row">
+              <button class="btn-coral btn-sm" type="button" data-log-type="hito" data-log-source="hitos">+ Añadir hito</button>
+            </div>
           </div>
         </section>
 
