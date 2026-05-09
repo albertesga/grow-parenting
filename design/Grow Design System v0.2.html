@@ -2929,6 +2929,38 @@
         </ul>
       </div>
     </div>
+
+    <div class="spec">
+      <div class="spec-head"><h3>Module plan card · canon</h3><span class="meta-r">.module-plan-card · .module-plan-actions</span></div>
+      <div class="spec-row col" style="padding: 12px 0">
+        <p style="font-size:13px;color:var(--ink-soft);max-width:64ch;line-height:1.55;margin:0">
+          Card del "plan del día/semana" que cada libro muestra con CTAs al pie.
+          Estructura idéntica a <code>.module-section</code> · radius 26 · padding lg ·
+          tonal-bg compartido. La diferencia semántica es la presencia de
+          <code>.module-plan-actions</code> abajo (botones de acción del plan).
+        </p>
+      </div>
+      <div class="spec-row" style="padding: 12px 0">
+        <div class="module-plan-card mint" style="width: 100%; max-width: 480px">
+          <div class="module-section-head">
+            <h3>Plan de sueño · esta semana</h3>
+          </div>
+          <p style="margin:0 0 10px;color:var(--ink-soft);font-size:var(--fs-body-sm);line-height:1.55">Mantén siesta del mediodía. Bedtime 19:30 · ventana sueño 10-12 h.</p>
+          <div class="module-plan-actions" style="display:flex;gap:8px;margin-top:12px">
+            <button class="btn btn-coral btn-sm" type="button">Ajustar plan</button>
+            <button class="btn btn-soft btn-sm" type="button">Ver detalles</button>
+          </div>
+        </div>
+      </div>
+      <div class="spec-row col" style="padding: 6px 0 18px">
+        <div class="spec-label">Anatomy</div>
+        <ul style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--ink-soft); line-height: 1.7; padding-left: 18px; margin: 0">
+          <li><strong>.module-plan-card</strong> · radius 26 · padding lg · misma tonal-bg que .module-section</li>
+          <li><strong>.module-plan-actions</strong> · flex · gap sm/md · margin-top 12 · botones de acción del plan (.btn-coral primario, .btn-soft secundario)</li>
+          <li>Recomendación: usar <code>.module-section-head</code> para el título</li>
+        </ul>
+      </div>
+    </div>
   </section>
 
   <!-- ╔═════════════════════════════════════════════════════════╗
