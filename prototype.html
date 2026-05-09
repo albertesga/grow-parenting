@@ -3526,10 +3526,12 @@
     margin: 10px -20px 0;
     padding: 0 20px 4px;
   }
-  /* Separate scale row from filter row · evita colisión visual entre
-     los pills coral del scale (selección activa) y los chips tonales del filter */
+  /* Separate scale row from filter row · margen mínimo para no chocar
+     pero compacto (los pills coral del scale + chips tonales del filter
+     ya tienen suficiente diferencia visual con sus eyebrow labels) */
   .milestone-scale-row + .milestone-filter-row,
-  .milestone-scale-row + .milestone-filter-strip { margin-top: 18px; }
+  .milestone-scale-row + .milestone-filter-strip { margin-top: 6px; }
+  .milestone-filter-row .scale-label { margin-top: 0; }
   .scale-label {
     flex: 0 0 auto;
     align-self: center;
@@ -9204,8 +9206,10 @@
       : '<article class="milestone-card"><div class="milestone-title">Sin hitos en este filtro</div><div class="milestone-en">Cambia de área o etapa para ver más.</div></article>';
 
     requestAnimationFrame(() => {
-      stageRoot.querySelector('.stage-btn.active')?.scrollIntoView({ block: 'nearest', inline: 'center' });
-      filterRoot.querySelector('.milestone-filter.active')?.scrollIntoView({ block: 'nearest', inline: 'center' });
+      stageRoot.querySelector('.timeline-seg.active')?.scrollIntoView({ block: 'nearest', inline: 'center', behavior: 'smooth' });
+      /* inline: 'nearest' · solo scrollea si el chip está fuera de vista,
+         no fuerza centrar (que cortaba los chips adyacentes) */
+      filterRoot.querySelector('.chip.active')?.scrollIntoView({ block: 'nearest', inline: 'nearest' });
     });
   }
 
