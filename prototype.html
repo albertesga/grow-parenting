@@ -681,6 +681,9 @@
   .field-stack,
   .quick-grid { display: grid; gap: 10px; }
 
+  /* § S · Selector card · canonical row-card primitive for choice lists.
+     Aliases legacy .phase-card / .care-card so existing data-handlers (data-phase, data-sex) keep working. */
+  .selector-card,
   .phase-card,
   .input-card,
   .care-card {
@@ -694,12 +697,18 @@
     align-items: center;
     gap: 13px;
     cursor: pointer;
-    transition: border-color 180ms var(--ease), background 180ms var(--ease), transform 180ms var(--ease);
+    transition:
+      border-color var(--duration-base) var(--ease-standard),
+      background var(--duration-base) var(--ease-standard),
+      transform var(--duration-base) var(--ease-standard);
   }
 
+  .selector-card:hover,
   .phase-card:hover,
   .care-card:hover { transform: translateY(-1px); border-color: var(--line-strong); }
-  .phase-card.selected {
+  .selector-card.selected,
+  .phase-card.selected,
+  .care-card.selected {
     border-color: var(--ink);
     background:
       radial-gradient(circle at 82% 12%, rgba(191,210,176,0.28), transparent 32%),
@@ -755,7 +764,9 @@
     color: transparent;
     flex: 0 0 24px;
   }
-  .phase-card.selected .check-dot { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+  .selector-card.selected .check-dot,
+  .phase-card.selected .check-dot,
+  .care-card.selected .check-dot { background: var(--ink); color: var(--paper); border-color: var(--ink); }
   .check-dot:after { content: ""; width: 8px; height: 5px; border-left: 2px solid currentColor; border-bottom: 2px solid currentColor; transform: rotate(-45deg) translateY(-1px); }
 
   .input-label {
@@ -5671,10 +5682,13 @@
   }
   /* pregnancy/vaccine action+choice base + .choice override now in canonical .module-action rule */
   .vaccine-choice strong,
-  .vaccine-choice span {
+  .vaccine-choice span,
+  .module-choice strong,
+  .module-choice span {
     display: block;
   }
-  .vaccine-choice span {
+  .vaccine-choice span,
+  .module-choice span {
     color: var(--ink-soft);
     font-size: var(--fs-caption);
     margin-top: 5px;
@@ -5693,7 +5707,8 @@
   .pregnancy-action.primary,
   .pregnancy-choice.active,
   .vaccine-action.primary,
-  .vaccine-choice.active {
+  .vaccine-choice.active,
+  .module-choice.active {
     background: var(--coral-base);
     border-color: var(--coral-base);
     color: #4A2510;
@@ -5931,7 +5946,8 @@
     cursor: pointer;
   }
   .pregnancy-switch,
-  .vaccine-switch {
+  .vaccine-switch,
+  .module-switch {
     width: 48px;
     height: 28px;
     border-radius: var(--radius-pill);
@@ -5941,7 +5957,8 @@
     flex: 0 0 auto;
   }
   .pregnancy-switch::before,
-  .vaccine-switch::before {
+  .vaccine-switch::before,
+  .module-switch::before {
     content: "";
     display: block;
     width: 20px;
@@ -5953,7 +5970,8 @@
   .pregnancy-toggle.active .pregnancy-switch::before,
   .vaccine-toggle.active .vaccine-switch::before,
   .pregnancy-switch.active::before,
-  .vaccine-switch.active::before {
+  .vaccine-switch.active::before,
+  .module-switch.active::before {
     transform: translateX(18px);
     background: var(--module-ink);
   }
@@ -6029,7 +6047,8 @@
     flex-wrap: wrap;
     gap: 10px;
   }
-  .vaccine-warning {
+  .vaccine-warning,
+  .callout.warn {
     border-radius: var(--radius-md);
     padding: var(--space-md);
     background:
@@ -7327,38 +7346,38 @@
               <div class="ready-divider"></div>
 
               <div class="ready-section-label">Lo que hemos preparado</div>
-              <ul class="setup-list" aria-label="Configuración inicial">
+              <ul class="checklist" aria-label="Configuración inicial">
                 <li>
-                  <span class="setup-check" aria-hidden="true">✓</span>
-                  <div class="setup-body">
+                  <span class="checklist-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#i-check"/></svg></span>
+                  <div class="checklist-body">
                     <strong id="ready-phase">18 meses · niñez temprana</strong>
                     <p>Curvas, rutinas e hitos según su fase.</p>
                   </div>
                 </li>
                 <li>
-                  <span class="setup-check" aria-hidden="true">✓</span>
-                  <div class="setup-body">
+                  <span class="checklist-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#i-check"/></svg></span>
+                  <div class="checklist-body">
                     <strong>9 hitos abiertos</strong>
                     <p>Ventana 18 - 24 m activa, sin alarmismo.</p>
                   </div>
                 </li>
                 <li>
-                  <span class="setup-check" aria-hidden="true">✓</span>
-                  <div class="setup-body">
+                  <span class="checklist-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#i-check"/></svg></span>
+                  <div class="checklist-body">
                     <strong>Próxima vacuna · 12 mar</strong>
                     <p>Triple vírica + Hep A.</p>
                   </div>
                 </li>
                 <li>
-                  <span class="setup-check" aria-hidden="true">✓</span>
-                  <div class="setup-body">
+                  <span class="checklist-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#i-check"/></svg></span>
+                  <div class="checklist-body">
                     <strong>2 cuidadores invitados</strong>
                     <p>Podéis registrar y editar juntos.</p>
                   </div>
                 </li>
                 <li>
-                  <span class="setup-check" aria-hidden="true">✓</span>
-                  <div class="setup-body">
+                  <span class="checklist-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#i-check"/></svg></span>
+                  <div class="checklist-body">
                     <strong>Curvas OMS DS</strong>
                     <p>P50 estimado · sin diagnóstico.</p>
                   </div>
@@ -7366,7 +7385,7 @@
               </ul>
             </div>
             <div class="button-stack">
-              <button class="primary" type="button" data-goto="hoy">Entrar en Hoy</button>
+              <button class="primary coral" type="button" data-goto="hoy">Entrar en Hoy</button>
               <button class="ghost-link" type="button" data-sheet-title="Añadir otro peque" data-sheet-copy="En el producto real abriríamos aquí un nuevo flujo de onboarding para sumar un segundo peque al perfil familiar (gemelos, hermano mayor, niñ@ adoptad@). Cada peque mantiene su propio set de hitos, vacunas y curvas." data-open-sheet>+ Añadir otro peque</button>
             </div>
           </div>

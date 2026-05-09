@@ -1465,6 +1465,53 @@
     color: #7A4A3A;
   }
 
+  /* ═════════════════ CALLOUT WARN · § G ═════════════════ */
+  .callout.warn {
+    border-radius: var(--radius-md);
+    padding: 12px 16px;
+    background:
+      radial-gradient(circle at 84% 6%, rgba(242,165,122,0.18), transparent 34%),
+      linear-gradient(135deg, rgba(251,229,214,0.62), rgba(250,247,240,0.84));
+    border: 1px solid rgba(214,119,66,0.26);
+    color: var(--ink-soft);
+    font-size: 12.5px;
+    line-height: 1.45;
+    margin-top: 12px;
+  }
+  .callout.warn strong { color: var(--ink); font-weight: 500; }
+
+  /* ═════════════════ MODULE SWITCH · § H ═════════════════ */
+  .module-switch {
+    width: 48px;
+    height: 28px;
+    border-radius: 999px;
+    border: 2px solid rgba(201,194,178,0.80);
+    background: rgba(250,247,240,0.62);
+    padding: 2px;
+    flex: 0 0 auto;
+    cursor: pointer;
+    transition: border-color 180ms;
+  }
+  .module-switch::before {
+    content: "";
+    display: block;
+    width: 20px;
+    height: 20px;
+    border-radius: 999px;
+    background: rgba(201,194,178,0.90);
+    transition: transform 180ms, background 180ms;
+  }
+  .module-switch.active { border-color: var(--coral-base); }
+  .module-switch.active::before {
+    transform: translateX(18px);
+    background: var(--coral-base);
+  }
+  .sr-only {
+    position: absolute; width: 1px; height: 1px;
+    padding: 0; margin: -1px; overflow: hidden;
+    clip: rect(0,0,0,0); border: 0;
+  }
+
   /* ═════════════════ DATE PICKER · § S ═════════════════ */
   /* Editorial calendar · birth-date oriented · 7-col grid · 38px tap */
   .datepicker {
@@ -2157,6 +2204,23 @@
         </ul>
       </div>
     </div>
+
+    <div class="spec">
+      <div class="spec-head"><h3>Warn variant</h3><span class="meta-r">.callout.warn</span></div>
+      <div class="spec-row col" style="padding: 12px 0">
+        <p style="font-size:13px;color:var(--ink-soft);max-width:64ch;line-height:1.55;margin:0">
+          Para advertencias clínicas suaves que NO son urgencia (urgencia = <code>.callout.coral</code>).
+          Ej: "Antitérmico antes de la vacuna NO recomendado". Tono coral suave con borde sutil.
+          Antes existía como <code>.vaccine-warning</code>; ahora canon.
+        </p>
+      </div>
+      <div class="spec-row col" style="padding: 12px 0 18px">
+        <div class="callout warn">
+          <strong>Antitérmico antes de la vacuna · NO recomendado.</strong>
+          Reduce respuesta inmune en los primeros meses (CAV-AEP).
+        </div>
+      </div>
+    </div>
   </section>
 
   <!-- ╔═════════════════════════════════════════════════════════╗
@@ -2306,6 +2370,48 @@
           <code>.measure-input-wrap</code> usa <code>:focus-within</code> en el wrapper (no en
           inputs hijos) por su layout horizontal.
         </p>
+      </div>
+    </div>
+
+    <div class="spec">
+      <div class="spec-head"><h3>Module choice · selectable card</h3><span class="meta-r">.module-choice · .module-choice.active</span></div>
+      <div class="spec-row col" style="padding: 12px 0">
+        <p style="font-size:13px;color:var(--ink-soft);max-width:64ch;line-height:1.55;margin:0">
+          Card-button para elegir entre alternativas (ej. esquemas de vacunas, tipo de parto,
+          opción de lactancia). Width 100% · min-height 58 · radius-lg · text-left.
+          Selected state usa coral (TINTED CTAs canon). Antes existía como <code>.pregnancy-choice</code>
+          y <code>.vaccine-choice</code>; ahora canon.
+        </p>
+      </div>
+      <div class="spec-row col" style="gap: 8px; padding: 12px 0 18px">
+        <button class="module-choice active" type="button" style="width:100%;min-height:58px;border-radius:var(--radius-lg);text-align:left;padding:12px 15px;background:var(--coral-base);border:1px solid var(--coral-base);color:#4A2510;font-family:'Lenia';cursor:pointer">
+          <strong>Esquema oficial · CAV-AEP 2026</strong>
+          <span>Recomendado por la Asociación Española de Pediatría</span>
+        </button>
+        <button class="module-choice" type="button" style="width:100%;min-height:58px;border-radius:var(--radius-lg);text-align:left;padding:12px 15px;background:var(--paper);border:1px solid var(--line);color:var(--ink);font-family:'Lenia';cursor:pointer">
+          <strong>Esquema mínimo</strong>
+          <span>Solo vacunas obligatorias · WHO standard</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="spec">
+      <div class="spec-head"><h3>Module switch · iOS-style toggle</h3><span class="meta-r">.module-switch · .module-switch.active</span></div>
+      <div class="spec-row col" style="padding: 12px 0">
+        <p style="font-size:13px;color:var(--ink-soft);max-width:64ch;line-height:1.55;margin:0">
+          Toggle binario para configurar opciones (ej. notificaciones, modo sensible).
+          48×28 · radius pill · knob 20×20 con transition 180ms. Active = knob a la derecha
+          coloreado con <code>--module-ink</code>.
+        </p>
+      </div>
+      <div class="spec-row" style="padding: 12px 0 18px; gap: 16px; align-items: center">
+        <button class="module-switch" type="button" aria-checked="false">
+          <span class="sr-only">Off</span>
+        </button>
+        <button class="module-switch active" type="button" aria-checked="true">
+          <span class="sr-only">On</span>
+        </button>
+        <span style="font-size: 12px; color: var(--ink-muted)">Off · On (active)</span>
       </div>
     </div>
   </section>
