@@ -1897,6 +1897,46 @@
         <span style="font-size:12px;color:var(--ink-muted)">Único uso de coral en chrome. Vive en el bottom nav.</span>
       </div>
     </div>
+
+    <div class="spec">
+      <div class="spec-head"><h3>Legacy aliases · pre-DS</h3><span class="meta-r">.primary · .secondary · .ghost-link</span></div>
+      <div class="spec-row col" style="padding: 12px 0">
+        <p style="font-size:13px;color:var(--ink-soft);max-width:64ch;line-height:1.55;margin:0">
+          El prototipo aún tiene 34+ instancias de markup con clases pre-DS (<code>.primary</code>,
+          <code>.secondary</code>, <code>.ghost-link</code>). Estas funcionan como aliases CSS de la
+          taxonomía canon · markup migration está fuera de scope (ROI bajo · riesgo alto). Usa los
+          canon en código nuevo.
+        </p>
+      </div>
+      <div class="spec-row col" style="padding: 8px 0 18px">
+        <table style="font-size:12.5px;color:var(--ink-soft);border-collapse:collapse;width:100%;max-width:560px">
+          <thead>
+            <tr style="border-bottom:1px solid var(--line)">
+              <th style="text-align:left;padding:8px 12px 8px 0;font-family:'Lenia';color:var(--ink);font-weight:500">Legacy class</th>
+              <th style="text-align:left;padding:8px 12px;font-family:'Lenia';color:var(--ink);font-weight:500">Canon equivalent</th>
+              <th style="text-align:left;padding:8px 0 8px 12px;font-family:'Lenia';color:var(--ink);font-weight:500">Tone</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="border-bottom:1px dashed var(--line-soft)"><td style="padding:8px 12px 8px 0"><code>.primary</code></td><td style="padding:8px 12px"><code>.btn-coral</code></td><td style="padding:8px 0 8px 12px">coral default · ink fallback</td></tr>
+            <tr style="border-bottom:1px dashed var(--line-soft)"><td style="padding:8px 12px 8px 0"><code>.primary.coral</code></td><td style="padding:8px 12px"><code>.btn-coral</code></td><td style="padding:8px 0 8px 12px">coral</td></tr>
+            <tr style="border-bottom:1px dashed var(--line-soft)"><td style="padding:8px 12px 8px 0"><code>.secondary</code></td><td style="padding:8px 12px"><code>.btn-soft</code></td><td style="padding:8px 0 8px 12px">paper-soft</td></tr>
+            <tr style="border-bottom:1px dashed var(--line-soft)"><td style="padding:8px 12px 8px 0"><code>.ghost-link</code></td><td style="padding:8px 12px"><code>.btn</code> (transparent override)</td><td style="padding:8px 0 8px 12px">ink-muted ghost</td></tr>
+            <tr style="border-bottom:1px dashed var(--line-soft)"><td style="padding:8px 12px 8px 0"><code>.module-action</code></td><td style="padding:8px 12px"><code>.btn-soft</code> (default) / <code>.btn-coral</code> (.primary modifier)</td><td style="padding:8px 0 8px 12px">tonal por contexto</td></tr>
+            <tr style="border-bottom:1px dashed var(--line-soft)"><td style="padding:8px 12px 8px 0"><code>.compact</code></td><td style="padding:8px 12px"><code>.btn-sm</code></td><td style="padding:8px 0 8px 12px">size mod · 36 px height</td></tr>
+            <tr><td style="padding:8px 12px 8px 0"><code>.fab</code></td><td style="padding:8px 12px"><code>.fab</code> (sin cambio · canon = canon)</td><td style="padding:8px 0 8px 12px">coral · 60 px round</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="spec-row col">
+        <div class="spec-label">Override gotchas</div>
+        <ul style="font-size:12.5px;color:var(--ink-soft);line-height:1.6;padding-left:18px;margin:0;max-width:60ch">
+          <li><strong>Specificity-aware contexts</strong> · <code>.celebration-actions .primary</code>, <code>.measure-actions .primary</code>, <code>.log-submit-bar .primary</code> definen overrides que aplican solo dentro de esos contenedores. Migrar markup requiere considerar estos.</li>
+          <li><strong>Sleep variant</strong> · <code>.sleep-action.primary</code> usa <code>--module-dark</code> (no coral). Canon equivalente sería <code>.btn-ink</code> en libro de sueño.</li>
+          <li><strong>FAB exception</strong> · es el único uso de coral en chrome (bottom nav). No tocar.</li>
+        </ul>
+      </div>
+    </div>
   </section>
 
   <!-- ╔═════════════════════════════════════════════════════════╗
