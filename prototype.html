@@ -727,11 +727,10 @@
 
   .ready-card {
     position: relative;
-    min-height: 430px;
     border-radius: 34px;
     overflow: hidden;
     background:
-      radial-gradient(circle at 76% 24%, rgba(191,210,176,0.8), transparent 30%),
+      radial-gradient(circle at 80% 18%, rgba(191,210,176,0.7), transparent 32%),
       linear-gradient(145deg, var(--paper-soft), #FFF8EC 72%);
     border: 1px solid var(--line);
     padding: 24px;
@@ -740,22 +739,12 @@
 
   .ready-card img {
     position: absolute;
-    width: 230px;
-    height: 230px;
+    width: 150px;
+    height: 150px;
     object-fit: contain;
-    right: -12px;
-    bottom: 8px;
-  }
-
-  .ready-card .summary {
-    position: absolute;
-    left: 20px;
-    right: 20px;
-    bottom: 22px;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: var(--space-sm);
-    z-index: 2;
+    right: 6px;
+    top: 110px;
+    z-index: 1;
   }
 
   .stat {
@@ -766,6 +755,39 @@
   }
   .stat strong { display: block; font-family: "Lenia"; font-weight: 500; font-size: var(--fs-body-lg); }
   .stat span { display: block; color: var(--ink-muted); font-size: 10px; line-height: 1.25; margin-top: 2px; }
+
+  /* Onboarding-ready · checklist (replaces 3-stat grid · richer setup feedback) */
+  .ready-checklist {
+    list-style: none; padding: 14px 16px; margin: 18px 0 0;
+    background: rgba(250,247,240,0.86);
+    border: 1px solid rgba(226,221,209,0.72);
+    border-radius: 18px;
+    display: flex; flex-direction: column; gap: 10px;
+    position: relative; z-index: 2;
+  }
+  .ready-checklist li {
+    display: grid;
+    grid-template-columns: 20px 1fr;
+    gap: 10px;
+    align-items: start;
+    font-family: "Helvena";
+    font-size: var(--fs-body-sm);
+    color: var(--ink-soft);
+    line-height: 1.45;
+  }
+  .ready-checklist li strong {
+    color: var(--ink); font-weight: 500;
+  }
+  .ready-checklist .check {
+    width: 20px; height: 20px;
+    display: inline-flex; align-items: center; justify-content: center;
+    background: var(--mint-strong); color: var(--paper);
+    border-radius: 50%;
+    font-family: "Lenia"; font-weight: 600; font-size: 11px;
+    line-height: 1;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
 
   .yo-btn {
     width: 42px;
@@ -6934,17 +6956,22 @@
           <div class="status"><span>9:45</span><div class="status-dots"><span></span><span></span><span></span></div></div>
           <div class="content">
             <div class="ready-card">
-              <div class="eyebrow">Hoy · primer dia</div>
-              <h2>Tu primer Hoy esta listo.</h2>
-              <p class="body-copy" style="max-width: 18ch;">Sin tutorial. Entramos directamente en lo que toca.</p>
+              <div class="eyebrow">Perfil creado</div>
+              <h2>Ya tienes el primer perfil de tu peque.</h2>
+              <p class="body-copy" style="max-width: 30ch;">Hemos personalizado todo lo que toca para <strong>Lola</strong> según su edad y fase. Sin tutorial · entramos directos a lo importante.</p>
               <img id="ready-avatar" src="design/assets/avatar-mint.png" alt="Avatar seleccionado">
-              <div class="summary">
-                <div class="stat"><strong id="ready-phase">18m</strong><span>fase</span></div>
-                <div class="stat"><strong>5</strong><span>cards hoy</span></div>
-                <div class="stat"><strong>2</strong><span>cuidadores</span></div>
-              </div>
+              <ul class="ready-checklist" aria-label="Lo que hemos preparado para Lola">
+                <li><span class="check" aria-hidden="true">✓</span><span><strong id="ready-phase">18 meses · niñez temprana</strong>. Curvas, rutinas e hitos según su fase.</span></li>
+                <li><span class="check" aria-hidden="true">✓</span><span><strong>9 hitos abiertos</strong>. Ventana 18 - 24 m activa, sin alarmismo.</span></li>
+                <li><span class="check" aria-hidden="true">✓</span><span><strong>Próxima vacuna · 12 mar</strong>. Triple vírica + Hep A.</span></li>
+                <li><span class="check" aria-hidden="true">✓</span><span><strong>2 cuidadores invitados</strong>. Podéis registrar y editar juntos.</span></li>
+                <li><span class="check" aria-hidden="true">✓</span><span><strong>Curvas OMS DS</strong>. P50 estimado · sin diagnóstico.</span></li>
+              </ul>
             </div>
-            <button class="primary" type="button" data-goto="hoy">Entrar en Hoy</button>
+            <div class="button-stack">
+              <button class="primary" type="button" data-goto="hoy">Entrar en Hoy</button>
+              <button class="ghost-link" type="button" data-sheet-title="Añadir otro peque" data-sheet-copy="En el producto real abriríamos aquí un nuevo flujo de onboarding para sumar un segundo peque al perfil familiar (gemelos, hermano mayor, niñ@ adoptad@). Cada peque mantiene su propio set de hitos, vacunas y curvas." data-open-sheet>+ Añadir otro peque</button>
+            </div>
           </div>
         </section>
 
