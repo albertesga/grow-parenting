@@ -5684,6 +5684,11 @@
     align-items: center;
     padding: 0 12px;
     z-index: 15;
+    /* Drop shadow + hairline · canon DS § B Bottom nav. Sin estos la
+       nav se mimetizaba con cards tonales que quedan detrás (típico
+       feed-card.gold de Vacunas) y parecía estar "tintada". */
+    border: 1px solid var(--line-soft);
+    box-shadow: 0 14px 36px rgba(42,33,27,0.10);
   }
   .nav-tab {
     border: 0;
