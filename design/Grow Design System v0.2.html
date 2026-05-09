@@ -1672,6 +1672,193 @@
     background: var(--coral-base);
     color: #4A2510;
   }
+
+  /* ═════════════════ ONBOARDING — § T ═════════════════ */
+  /* progress-steps · indicador de pasos en flujos multi-screen */
+  .progress-steps {
+    list-style: none;
+    display: flex;
+    gap: var(--space-sm);
+    padding: 0;
+    margin: 0 0 var(--space-md);
+    counter-reset: step;
+    font-family: var(--font-display);
+    font-size: var(--fs-eyebrow);
+    letter-spacing: var(--ls-eyebrow);
+    text-transform: uppercase;
+    color: var(--ink-muted);
+  }
+  .progress-steps > li {
+    flex: 1 1 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-xs);
+    counter-increment: step;
+    position: relative;
+  }
+  .progress-steps > li::before {
+    content: counter(step);
+    width: 22px; height: 22px;
+    display: grid; place-items: center;
+    border-radius: var(--radius-pill);
+    border: 1.5px solid var(--line-strong);
+    background: var(--paper);
+    color: var(--ink-muted);
+    font-size: var(--fs-meta);
+    font-weight: 600;
+    letter-spacing: 0;
+    position: relative;
+    z-index: 1;
+  }
+  .progress-steps > li.done::before {
+    content: "✓";
+    background: var(--ink); border-color: var(--ink); color: var(--paper);
+    font-size: var(--fs-eyebrow);
+  }
+  .progress-steps > li.current::before {
+    background: var(--coral-base); border-color: var(--coral-strong); color: #4A2510;
+    box-shadow: 0 0 0 5px var(--coral-subtle);
+  }
+  .progress-steps > li.current { color: var(--ink); }
+  .progress-steps > li:not(:first-child)::after {
+    content: "";
+    position: absolute;
+    top: 10px; right: calc(50% + 14px); left: calc(-50% + 14px);
+    height: 1.5px; background: var(--line-strong);
+    z-index: 0;
+  }
+  .progress-steps > li.done + li::after,
+  .progress-steps > li.current::after { background: var(--ink); }
+
+  /* selector-card · row-card de elección. Aliases legacy .phase-card y .care-card. */
+  .selector-card,
+  .phase-card,
+  .care-card {
+    border: 1.5px solid var(--line);
+    background:
+      radial-gradient(circle at 86% 8%, rgba(232,201,122,0.18), transparent 34%),
+      linear-gradient(135deg, rgba(255,255,255,0.48), rgba(250,247,240,0.28));
+    border-radius: var(--radius-lg);
+    padding: 13px;
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    cursor: pointer;
+    width: 100%;
+    transition:
+      border-color var(--duration-base) var(--ease-standard),
+      background var(--duration-base) var(--ease-standard),
+      transform var(--duration-base) var(--ease-standard);
+  }
+  .selector-card:hover,
+  .phase-card:hover,
+  .care-card:hover { transform: translateY(-1px); border-color: var(--line-strong); }
+  .selector-card.selected,
+  .phase-card.selected,
+  .care-card.selected {
+    border-color: var(--ink);
+    background: var(--paper);
+    box-shadow: 0 12px 28px rgba(42,33,27,0.08);
+  }
+  .selector-card .phase-avatar,
+  .phase-card .phase-avatar {
+    width: 60px; height: 60px;
+    border-radius: 20px;
+    flex: 0 0 60px;
+    display: grid; place-items: center;
+    overflow: hidden;
+  }
+  .selector-card .phase-avatar.coral,
+  .phase-card .phase-avatar.coral { background: linear-gradient(135deg, var(--coral-subtle), rgba(250,247,240,0.72)); }
+  .selector-card .phase-avatar.mint,
+  .phase-card .phase-avatar.mint  { background: linear-gradient(135deg, var(--mint-subtle), rgba(250,247,240,0.72)); }
+  .selector-card .phase-avatar.blush,
+  .phase-card .phase-avatar.blush { background: linear-gradient(135deg, var(--blush-subtle), rgba(250,247,240,0.72)); }
+  .selector-card .phase-avatar img,
+  .phase-card .phase-avatar img { width: 74px; height: 74px; object-fit: contain; }
+  .selector-card .phase-copy,
+  .phase-card .phase-copy,
+  .care-card .phase-copy { flex: 1; min-width: 0; text-align: left; }
+  .selector-card .phase-copy strong,
+  .phase-card .phase-copy strong,
+  .care-card .phase-copy strong {
+    display: block;
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: var(--fs-h4);
+    margin-bottom: 2px;
+  }
+  .selector-card .phase-copy span,
+  .phase-card .phase-copy span,
+  .care-card .phase-copy span { color: var(--ink-muted); font-size: var(--fs-body-sm); }
+  .selector-card .check-dot,
+  .phase-card .check-dot,
+  .care-card .check-dot {
+    width: 24px; height: 24px;
+    border-radius: var(--radius-pill);
+    border: 1.5px solid var(--line-strong);
+    display: grid; place-items: center;
+    color: transparent;
+    flex: 0 0 24px;
+  }
+  .selector-card .check-dot::after,
+  .phase-card .check-dot::after,
+  .care-card .check-dot::after {
+    content: ""; width: 8px; height: 5px;
+    border-left: 2px solid currentColor;
+    border-bottom: 2px solid currentColor;
+    transform: rotate(-45deg) translateY(-1px);
+  }
+  .selector-card.selected .check-dot,
+  .phase-card.selected .check-dot,
+  .care-card.selected .check-dot { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+
+  /* checklist · ul de items con SVG check icons. Alias legacy .setup-list. */
+  .checklist,
+  .setup-list {
+    list-style: none; padding: 0; margin: 0;
+    display: flex; flex-direction: column;
+    gap: var(--space-md);
+  }
+  .checklist > li,
+  .setup-list > li {
+    display: grid;
+    grid-template-columns: 22px 1fr;
+    gap: var(--space-md);
+    align-items: start;
+  }
+  .checklist-icon,
+  .setup-check {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 22px; height: 22px;
+    background: var(--mint-strong); color: var(--paper);
+    border-radius: 50%;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .checklist-icon svg {
+    width: 14px; height: 14px;
+    stroke: currentColor; fill: none;
+    stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round;
+  }
+  .checklist-body strong,
+  .setup-body strong {
+    display: block;
+    font-family: var(--font-display); font-weight: 500;
+    font-size: var(--fs-body);
+    color: var(--ink);
+    letter-spacing: -0.005em;
+    line-height: 1.3;
+  }
+  .checklist-body p,
+  .setup-body p {
+    margin: 2px 0 0;
+    font-family: var(--font-text);
+    font-size: var(--fs-body-sm);
+    color: var(--ink-soft);
+    line-height: 1.45;
+  }
 </style>
 </head>
 <body>
@@ -4440,6 +4627,250 @@
           <li><strong>Selected</strong> · coral-base fill, ink-deep text</li>
           <li><strong>Outside</strong> · día del mes adyacente, ink-faint, no clickable</li>
           <li><strong>Disabled</strong> · futuro / fuera de rango, ink-faint, no clickable</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ╔═════════════════════════════════════════════════════════╗
+       ║  § T — ONBOARDING                                        ║
+       ╚═════════════════════════════════════════════════════════╝ -->
+  <section class="section">
+    <div class="section-head">
+      <div class="section-num">§ T — Onboarding</div>
+      <div>
+        <h2>Tres primitivas para flujos guiados.</h2>
+        <div class="desc">
+          Onboarding es el único contexto del prototipo donde múltiples pantallas
+          encadenan elecciones. Tres primitivas — <code>.progress-steps</code>,
+          <code>.selector-card</code> y <code>.checklist</code> — cubren los
+          patrones que se repiten en estas pantallas (y en cualquier flujo
+          multi-paso futuro: añadir otro peque, cambiar fase, gemelos…).
+        </div>
+      </div>
+    </div>
+
+    <!-- progress-steps -->
+    <div class="spec">
+      <div class="spec-head"><h3>Progress steps · indicador de pasos</h3><span class="meta-r">.progress-steps · li.done · li.current</span></div>
+      <div class="spec-row" style="padding: 18px 0; max-width: 480px">
+        <ol class="progress-steps" aria-label="Paso 2 de 3" style="width: 100%">
+          <li class="done">Fase</li>
+          <li class="current">Datos</li>
+          <li>Familia</li>
+        </ol>
+      </div>
+      <div class="spec-row col">
+        <p style="font-size: var(--fs-body-sm); color: var(--ink-soft); max-width: 60ch; line-height: 1.55; margin: 0">
+          Sustituye eyebrow text "Datos · 2 de 3". Cada <code>&lt;li&gt;</code>
+          recibe estado vía clase: <code>.done</code> (✓ tick + ink fill),
+          <code>.current</code> (coral ring + ink text), default (outline).
+          Línea conectora se dibuja con <code>::after</code> entre dots.
+        </p>
+      </div>
+    </div>
+
+    <!-- selector-card -->
+    <div class="spec">
+      <div class="spec-head"><h3>Selector card · row-card de elección</h3><span class="meta-r">.selector-card · alias .phase-card · .care-card</span></div>
+      <div class="spec-row col" style="padding: 18px 0; gap: 10px">
+        <button class="selector-card selected" type="button" style="width: 100%">
+          <span class="phase-avatar mint" style="flex: 0 0 60px;"><img src="assets/avatar-mint.png" alt=""></span>
+          <span class="phase-copy"><strong>Crianza</strong><span>12 - 36 meses</span></span>
+          <span class="check-dot" aria-hidden="true"></span>
+        </button>
+        <button class="selector-card" type="button" style="width: 100%">
+          <span class="phase-avatar coral" style="flex: 0 0 60px;"><img src="assets/avatar-coral.png" alt=""></span>
+          <span class="phase-copy"><strong>Embarazo</strong><span>Semanas, visitas y bienestar</span></span>
+          <span class="check-dot" aria-hidden="true"></span>
+        </button>
+      </div>
+      <div class="spec-row col">
+        <p style="font-size: var(--fs-body-sm); color: var(--ink-soft); max-width: 60ch; line-height: 1.55; margin: 0">
+          Aliases: <code>.phase-card</code> (selector de fase familiar) y
+          <code>.care-card</code> (lista de cuidadores) extienden la misma base.
+          Slot izquierdo acepta avatar (<code>&lt;img&gt;</code>) o iniciales
+          (<code>.mini-dot</code>). Estado seleccionado: <code>.selected</code>
+          → border ink + check-dot ink fill.
+        </p>
+      </div>
+    </div>
+
+    <!-- checklist -->
+    <div class="spec">
+      <div class="spec-head"><h3>Checklist · ul de items con check</h3><span class="meta-r">.checklist · .checklist-icon · .checklist-body</span></div>
+      <div class="spec-row col" style="padding: 18px 0; max-width: 480px">
+        <ul class="checklist" aria-label="Configuración inicial" style="width: 100%">
+          <li>
+            <span class="checklist-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#i-check"/></svg></span>
+            <div class="checklist-body">
+              <strong>9 hitos abiertos</strong>
+              <p>Ventana 18 - 24 m activa, sin alarmismo.</p>
+            </div>
+          </li>
+          <li>
+            <span class="checklist-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#i-check"/></svg></span>
+            <div class="checklist-body">
+              <strong>Próxima vacuna · 12 mar</strong>
+              <p>Triple vírica + Hep A.</p>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div class="spec-row col">
+        <p style="font-size: var(--fs-body-sm); color: var(--ink-soft); max-width: 60ch; line-height: 1.55; margin: 0">
+          Cada item: <code>.checklist-icon</code> (mint disc 22px con SVG
+          <code>#i-check</code> canónico) + <code>.checklist-body</code>
+          (Lenia title + Helvena body). Alias legacy <code>.setup-list</code>
+          / <code>.setup-check</code> / <code>.setup-body</code> mapean al
+          mismo CSS para no romper markup existente.
+        </p>
+      </div>
+    </div>
+
+    <!-- onboarding flow recap -->
+    <div class="spec">
+      <div class="spec-head"><h3>Aplicación · flujo de registro</h3><span class="meta-r">5 screens · 4 progress steps · 1 success</span></div>
+      <div class="spec-row col">
+        <table style="border-collapse: collapse; font-size: var(--fs-caption); color: var(--ink-soft); width: 100%; line-height: 1.5">
+          <thead style="font-family: var(--font-display); font-weight: 500; color: var(--ink); text-align: left">
+            <tr>
+              <th style="padding: 6px 8px; border-bottom: 1px solid var(--line)">Screen</th>
+              <th style="padding: 6px 8px; border-bottom: 1px solid var(--line)">Primitivas usadas</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="padding: 6px 8px; border-bottom: 1px dashed var(--line)">registro (splash)</td>
+              <td style="padding: 6px 8px; border-bottom: 1px dashed var(--line)"><code>.hero-blob</code> + <code>.primary.coral</code> + <code>.secondary</code> + <code>.legal</code></td>
+            </tr>
+            <tr>
+              <td style="padding: 6px 8px; border-bottom: 1px dashed var(--line)">onboarding-fase</td>
+              <td style="padding: 6px 8px; border-bottom: 1px dashed var(--line)"><code>.progress-steps</code> + <code>.selector-card</code> ×3</td>
+            </tr>
+            <tr>
+              <td style="padding: 6px 8px; border-bottom: 1px dashed var(--line)">onboarding-datos</td>
+              <td style="padding: 6px 8px; border-bottom: 1px dashed var(--line)"><code>.progress-steps</code> + <code>.input-field</code> + <code>.input-card.date-trigger</code> + <code>.mark-selector</code></td>
+            </tr>
+            <tr>
+              <td style="padding: 6px 8px; border-bottom: 1px dashed var(--line)">onboarding-casa</td>
+              <td style="padding: 6px 8px; border-bottom: 1px dashed var(--line)"><code>.progress-steps</code> + <code>.selector-card</code>(.care-card alias) ×N</td>
+            </tr>
+            <tr>
+              <td style="padding: 6px 8px">onboarding-ready</td>
+              <td style="padding: 6px 8px"><code>.ready-card</code> + <code>.checklist</code> + <code>.primary.coral</code></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ╔═════════════════════════════════════════════════════════╗
+       ║  § U — MODULE-SPECIFIC COMPONENTS (appendix)             ║
+       ╚═════════════════════════════════════════════════════════╝ -->
+  <section class="section">
+    <div class="section-head">
+      <div class="section-num">§ U — Module-specific components</div>
+      <div>
+        <h2>Componentes intencionalmente únicos.</h2>
+        <div class="desc">
+          Apéndice. Lista los componentes que viven en un único libro y NO se generalizan
+          a canon. Razones varían (anatomía SVG específica, widget clínico con lógica
+          propia, layout único). Documentados aquí para que futuras refactors sepan que
+          son <strong>decisión consciente</strong>, no deuda técnica pendiente.
+        </div>
+      </div>
+    </div>
+
+    <div class="spec">
+      <div class="spec-head"><h3>Inventario</h3></div>
+      <div class="spec-row col" style="padding: 12px 0 18px">
+        <table style="font-size:12.5px;color:var(--ink-soft);border-collapse:collapse;width:100%;max-width:760px">
+          <thead>
+            <tr style="border-bottom:1px solid var(--line)">
+              <th style="text-align:left;padding:10px 12px 10px 0;font-family:'Lenia';color:var(--ink);font-weight:500">Componente</th>
+              <th style="text-align:left;padding:10px 12px;font-family:'Lenia';color:var(--ink);font-weight:500">Libro</th>
+              <th style="text-align:left;padding:10px 12px;font-family:'Lenia';color:var(--ink);font-weight:500">Por qué no se generaliza</th>
+              <th style="text-align:left;padding:10px 0 10px 12px;font-family:'Lenia';color:var(--ink);font-weight:500">Líneas</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="border-bottom:1px dashed var(--line-soft)">
+              <td style="padding:8px 12px 8px 0"><code>.growth-chart-*</code></td>
+              <td style="padding:8px 12px">Desarrollo</td>
+              <td style="padding:8px 12px">Sistema de chart SVG con percentiles OMS, paths LMS, hover tooltips, selectors. Lógica de matemática biométrica única. Documentado en § K como <code>.oms-card</code> a alto nivel.</td>
+              <td style="padding:8px 0 8px 12px">~20 clases</td>
+            </tr>
+            <tr style="border-bottom:1px dashed var(--line-soft)">
+              <td style="padding:8px 12px 8px 0"><code>.lactation-detector-card</code> · <code>.lactation-latch-card</code></td>
+              <td style="padding:8px 12px">Lactancia</td>
+              <td style="padding:8px 12px">Assessment forms con multi-select específico de evaluación de agarre. Combina cards con scoring lógica.</td>
+              <td style="padding:8px 0 8px 12px">~30 líneas</td>
+            </tr>
+            <tr style="border-bottom:1px dashed var(--line-soft)">
+              <td style="padding:8px 12px 8px 0"><code>.milestone-area-picker</code></td>
+              <td style="padding:8px 12px">Hitos</td>
+              <td style="padding:8px 12px">Body map selector con SVG paths anatómicos (cabeza, tronco, extremidades). Único en su tipo.</td>
+              <td style="padding:8px 0 8px 12px">~25 líneas</td>
+            </tr>
+            <tr style="border-bottom:1px dashed var(--line-soft)">
+              <td style="padding:8px 12px 8px 0"><code>.pregnancy-bp-reading</code> · <code>.pregnancy-bp-values</code></td>
+              <td style="padding:8px 12px">Embarazo</td>
+              <td style="padding:8px 12px">Widget clínico de presión arterial con sistólica/diastólica + threshold checks. Lógica específica.</td>
+              <td style="padding:8px 0 8px 12px">~15 líneas</td>
+            </tr>
+            <tr style="border-bottom:1px dashed var(--line-soft)">
+              <td style="padding:8px 12px 8px 0"><code>.pregnancy-kick-panel</code> · <code>.pregnancy-kick-count</code></td>
+              <td style="padding:8px 12px">Embarazo</td>
+              <td style="padding:8px 12px">Counter widget para conteo de patadas. Botón grande con contador dinámico.</td>
+              <td style="padding:8px 0 8px 12px">~20 líneas</td>
+            </tr>
+            <tr style="border-bottom:1px dashed var(--line-soft)">
+              <td style="padding:8px 12px 8px 0"><code>.pregnancy-symptom-card</code> · <code>.pregnancy-symptom-grid</code></td>
+              <td style="padding:8px 12px">Embarazo</td>
+              <td style="padding:8px 12px">Tracker de síntomas físicos con toggle multi-select. Layout específico de severidad (1/3, 2/3, 3/3).</td>
+              <td style="padding:8px 0 8px 12px">~20 líneas</td>
+            </tr>
+            <tr style="border-bottom:1px dashed var(--line-soft)">
+              <td style="padding:8px 12px 8px 0"><code>.vaccine-fever-chart</code></td>
+              <td style="padding:8px 12px">Vacunas</td>
+              <td style="padding:8px 12px">Curva de fiebre 72h post-pinchazo. SVG con band esperada + curva real. Documentado a alto nivel en § P.</td>
+              <td style="padding:8px 0 8px 12px">~30 líneas</td>
+            </tr>
+            <tr style="border-bottom:1px dashed var(--line-soft)">
+              <td style="padding:8px 12px 8px 0"><code>.vaccine-dose-grid</code> (calculadora paracetamol)</td>
+              <td style="padding:8px 12px">Vacunas</td>
+              <td style="padding:8px 12px">Grid 2-col con dosis recomendada por kg + rango inseguro. Cálculo dinámico de mg.</td>
+              <td style="padding:8px 0 8px 12px">~20 líneas</td>
+            </tr>
+            <tr style="border-bottom:1px dashed var(--line-soft)">
+              <td style="padding:8px 12px 8px 0"><code>.food-allergen-card</code></td>
+              <td style="padding:8px 12px">Alimentación</td>
+              <td style="padding:8px 12px">Card de alérgeno con timeline de exposiciones + estado (introducido / pendiente / reacción).</td>
+              <td style="padding:8px 0 8px 12px">~25 líneas</td>
+            </tr>
+            <tr style="border-bottom:1px dashed var(--line-soft)">
+              <td style="padding:8px 12px 8px 0"><code>.food-cut-illustration</code></td>
+              <td style="padding:8px 12px">Alimentación</td>
+              <td style="padding:8px 12px">SVG ilustrativos de cortes de comida por edad (BLW). Anatomía visual única.</td>
+              <td style="padding:8px 0 8px 12px">~15 líneas</td>
+            </tr>
+            <tr>
+              <td style="padding:8px 12px 8px 0"><code>.sleep-day-rhythm</code></td>
+              <td style="padding:8px 12px">Sueño</td>
+              <td style="padding:8px 12px">Timeline vertical con fases de día/noche. Ya canon como <code>.sleep-day-phase</code> en § O · referencia cruzada documentada.</td>
+              <td style="padding:8px 0 8px 12px">canon § O</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="spec-row col">
+        <div class="spec-label">Política</div>
+        <ul style="font-size:12.5px;color:var(--ink-soft);line-height:1.6;padding-left:18px;margin:0;max-width:60ch">
+          <li><strong>NO migrar</strong> estos componentes a canon. Son <em>module-specific by design</em>.</li>
+          <li><strong>Si crece reuso</strong> (≥3 libros lo usan), reconsiderar en próximo audit.</li>
+          <li><strong>Si se extiende dentro del libro</strong> (ej. más allergen-cards, más bp-readings), mantener prefijo módulo (no promover).</li>
         </ul>
       </div>
     </div>
