@@ -3927,9 +3927,17 @@
       inset 0 1px 0 rgba(255,255,255,0.72),
       0 -18px 58px rgba(42,33,27,0.18);
   }
+  /* Constrain shell height to phone-frame parent (.screen has inset:0 of phone)
+     instead of 100vh which grows with browser window on desktop mock view.
+     top:60px + bottom:10px gives the modal a finite area to scroll inside. */
+  .milestone-sheet-shell {
+    top: 60px;
+    max-height: none;
+  }
   .milestone-sheet {
     position: relative;
-    max-height: calc(100vh - 92px);
+    height: 100%;
+    max-height: 100%;
     overflow-y: auto;
     scrollbar-width: none;
     padding-bottom: 0;
