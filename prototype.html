@@ -1193,11 +1193,18 @@
   .shelf-book.b-medicacion { --book-tint: #DDE6E8; --book-paper: #F1EBDD; --book-glow: rgba(191,210,176,0.48); --b-ink: #3A555E; }
   .shelf-book.b-colicos { --book-tint: #F8DDD2; --book-paper: #F1E9DC; --book-glow: rgba(242,165,122,0.52); --b-ink: #793726; }
   .shelf-book.b-diario .sb-ttl { color: var(--b-ink); }
-  .shelf-rail .shelf-book:nth-child(3n) { --lean: -2.8deg; }
-  .shelf-rail .shelf-book:nth-child(3n+1) { --lean: 1.6deg; }
-  .shelf-rail .shelf-book:nth-child(3n+2) { --lean: -0.8deg; }
-  .shelf-rail .shelf-book:nth-child(5n) { --lift: -3px; }
-  .shelf-rail .shelf-book:nth-child(7n) { --lift: 3px; }
+  /* Per-book tilts + lifts · efecto "real shelf" visible en el primer paint.
+     Cada libro tiene su propia inclinación y ligera elevación · combinados
+     dan el look de libros apoyados naturalmente en una balda. */
+  .shelf-rail .shelf-book:nth-child(1) { --lean: -3.6deg; --lift: -2px; }
+  .shelf-rail .shelf-book:nth-child(2) { --lean:  2.4deg; --lift:  1px; }
+  .shelf-rail .shelf-book:nth-child(3) { --lean: -1.8deg; --lift: -3px; }
+  .shelf-rail .shelf-book:nth-child(4) { --lean:  3.2deg; --lift:  2px; }
+  .shelf-rail .shelf-book:nth-child(5) { --lean: -2.4deg; --lift: -1px; }
+  .shelf-rail .shelf-book:nth-child(6) { --lean:  1.6deg; --lift:  3px; }
+  .shelf-rail .shelf-book:nth-child(7) { --lean: -2.8deg; --lift: -2px; }
+  .shelf-rail .shelf-book:nth-child(8) { --lean:  3.6deg; --lift:  1px; }
+  .shelf-rail .shelf-book:nth-child(n+9) { --lean: -1.2deg; --lift: 0px; }
   .shelf-plank {
     position: relative;
     z-index: 1;
