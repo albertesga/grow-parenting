@@ -725,68 +725,101 @@
   }
   .insight strong { font-family: "Lenia"; font-weight: 500; color: var(--ink); }
 
+  /* Ready card · onboarding success screen.
+     Layout: hero row (text + avatar) + body copy + section divider +
+     setup-list checklist. Uses DS canon checklist pattern (mint-circle
+     check + Lenia title + Helvena body). */
   .ready-card {
     position: relative;
-    border-radius: 34px;
-    overflow: hidden;
-    background:
-      radial-gradient(circle at 80% 18%, rgba(191,210,176,0.7), transparent 32%),
-      linear-gradient(145deg, var(--paper-soft), #FFF8EC 72%);
+    border-radius: var(--radius-xl);
     border: 1px solid var(--line);
-    padding: 24px;
+    background: linear-gradient(160deg, var(--paper) 0%, var(--paper-soft) 78%, var(--mint-subtle) 130%);
+    padding: 28px 24px 26px;
     margin-bottom: 16px;
   }
-
-  .ready-card img {
-    position: absolute;
-    width: 150px;
-    height: 150px;
+  .ready-hero {
+    display: flex; align-items: flex-start;
+    gap: 16px;
+    margin-bottom: 14px;
+  }
+  .ready-text { flex: 1; min-width: 0; }
+  .ready-text .eyebrow {
+    font-family: "Lenia"; font-size: var(--fs-meta);
+    font-weight: 500; letter-spacing: 0.18em;
+    text-transform: uppercase; color: var(--ink-muted);
+    margin: 0 0 12px; display: block;
+  }
+  .ready-avatar-wrap {
+    flex-shrink: 0;
+    width: 86px; height: 86px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 28%, var(--paper) 0%, var(--mint-subtle) 70%);
+    padding: 6px;
+    display: grid; place-items: center;
+    box-shadow: inset 0 0 0 1px rgba(143,174,133,0.20),
+                0 6px 18px rgba(143,174,133,0.18);
+  }
+  .ready-avatar-wrap img {
+    width: 100%; height: 100%;
     object-fit: contain;
-    right: 6px;
-    top: 110px;
-    z-index: 1;
+    filter: drop-shadow(0 4px 8px rgba(45,38,30,0.10));
+  }
+  .ready-body {
+    font-family: "Helvena";
+    font-size: var(--fs-body);
+    color: var(--ink-soft);
+    line-height: 1.55;
+    margin: 0;
+    max-width: 38ch;
+  }
+  .ready-body strong { color: var(--ink); font-weight: 500; }
+  .ready-divider {
+    height: 1px; background: var(--line-soft);
+    margin: 22px 0 16px;
+  }
+  .ready-section-label {
+    font-family: "Lenia"; font-size: var(--fs-meta);
+    font-weight: 500; letter-spacing: 0.18em;
+    text-transform: uppercase; color: var(--ink-muted);
+    margin: 0 0 14px;
   }
 
-  .stat {
-    border-radius: 16px;
-    background: rgba(250,247,240,0.82);
-    border: 1px solid rgba(226,221,209,0.7);
-    padding: 10px;
+  /* Setup checklist · DS canon (mint-circle marker + Lenia + Helvena) */
+  .setup-list {
+    list-style: none; padding: 0; margin: 0;
+    display: flex; flex-direction: column;
+    gap: 14px;
   }
-  .stat strong { display: block; font-family: "Lenia"; font-weight: 500; font-size: var(--fs-body-lg); }
-  .stat span { display: block; color: var(--ink-muted); font-size: 10px; line-height: 1.25; margin-top: 2px; }
-
-  /* Onboarding-ready · checklist (replaces 3-stat grid · richer setup feedback) */
-  .ready-checklist {
-    list-style: none; padding: 14px 16px; margin: 18px 0 0;
-    background: rgba(250,247,240,0.86);
-    border: 1px solid rgba(226,221,209,0.72);
-    border-radius: 18px;
-    display: flex; flex-direction: column; gap: 10px;
-    position: relative; z-index: 2;
-  }
-  .ready-checklist li {
+  .setup-list li {
     display: grid;
-    grid-template-columns: 20px 1fr;
-    gap: 10px;
+    grid-template-columns: 22px 1fr;
+    gap: 12px;
     align-items: start;
+  }
+  .setup-check {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 22px; height: 22px;
+    background: var(--mint-strong); color: var(--paper);
+    border-radius: 50%;
+    font-family: "Lenia"; font-weight: 600; font-size: 12px;
+    line-height: 1;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .setup-body strong {
+    display: block;
+    font-family: "Lenia"; font-weight: 500;
+    font-size: var(--fs-body);
+    color: var(--ink);
+    letter-spacing: -0.005em;
+    line-height: 1.3;
+  }
+  .setup-body p {
+    margin: 2px 0 0;
     font-family: "Helvena";
     font-size: var(--fs-body-sm);
     color: var(--ink-soft);
     line-height: 1.45;
-  }
-  .ready-checklist li strong {
-    color: var(--ink); font-weight: 500;
-  }
-  .ready-checklist .check {
-    width: 20px; height: 20px;
-    display: inline-flex; align-items: center; justify-content: center;
-    background: var(--mint-strong); color: var(--paper);
-    border-radius: 50%;
-    font-family: "Lenia"; font-weight: 600; font-size: 11px;
-    line-height: 1;
-    flex-shrink: 0;
-    margin-top: 2px;
   }
 
   .yo-btn {
@@ -7153,16 +7186,57 @@
           <div class="status"><span>9:45</span><div class="status-dots"><span></span><span></span><span></span></div></div>
           <div class="content">
             <div class="ready-card">
-              <div class="eyebrow">Perfil creado</div>
-              <h2>Ya tienes el primer perfil de tu peque.</h2>
-              <p class="body-copy" style="max-width: 30ch;">Hemos personalizado todo lo que toca para <strong>Lola</strong> según su edad y fase. Sin tutorial · entramos directos a lo importante.</p>
-              <img id="ready-avatar" src="design/assets/avatar-mint.png" alt="Avatar seleccionado">
-              <ul class="ready-checklist" aria-label="Lo que hemos preparado para Lola">
-                <li><span class="check" aria-hidden="true">✓</span><span><strong id="ready-phase">18 meses · niñez temprana</strong>. Curvas, rutinas e hitos según su fase.</span></li>
-                <li><span class="check" aria-hidden="true">✓</span><span><strong>9 hitos abiertos</strong>. Ventana 18 - 24 m activa, sin alarmismo.</span></li>
-                <li><span class="check" aria-hidden="true">✓</span><span><strong>Próxima vacuna · 12 mar</strong>. Triple vírica + Hep A.</span></li>
-                <li><span class="check" aria-hidden="true">✓</span><span><strong>2 cuidadores invitados</strong>. Podéis registrar y editar juntos.</span></li>
-                <li><span class="check" aria-hidden="true">✓</span><span><strong>Curvas OMS DS</strong>. P50 estimado · sin diagnóstico.</span></li>
+              <div class="ready-hero">
+                <div class="ready-text">
+                  <span class="eyebrow">Perfil creado</span>
+                  <h2>Ya tienes el primer perfil de tu peque.</h2>
+                </div>
+                <div class="ready-avatar-wrap">
+                  <img id="ready-avatar" src="design/assets/avatar-mint.png" alt="Avatar seleccionado">
+                </div>
+              </div>
+
+              <p class="ready-body">Hemos personalizado todo lo que toca para <strong>Lola</strong> según su edad y fase. Sin tutorial · entramos directos a lo importante.</p>
+
+              <div class="ready-divider"></div>
+
+              <div class="ready-section-label">Lo que hemos preparado</div>
+              <ul class="setup-list" aria-label="Configuración inicial">
+                <li>
+                  <span class="setup-check" aria-hidden="true">✓</span>
+                  <div class="setup-body">
+                    <strong id="ready-phase">18 meses · niñez temprana</strong>
+                    <p>Curvas, rutinas e hitos según su fase.</p>
+                  </div>
+                </li>
+                <li>
+                  <span class="setup-check" aria-hidden="true">✓</span>
+                  <div class="setup-body">
+                    <strong>9 hitos abiertos</strong>
+                    <p>Ventana 18 - 24 m activa, sin alarmismo.</p>
+                  </div>
+                </li>
+                <li>
+                  <span class="setup-check" aria-hidden="true">✓</span>
+                  <div class="setup-body">
+                    <strong>Próxima vacuna · 12 mar</strong>
+                    <p>Triple vírica + Hep A.</p>
+                  </div>
+                </li>
+                <li>
+                  <span class="setup-check" aria-hidden="true">✓</span>
+                  <div class="setup-body">
+                    <strong>2 cuidadores invitados</strong>
+                    <p>Podéis registrar y editar juntos.</p>
+                  </div>
+                </li>
+                <li>
+                  <span class="setup-check" aria-hidden="true">✓</span>
+                  <div class="setup-body">
+                    <strong>Curvas OMS DS</strong>
+                    <p>P50 estimado · sin diagnóstico.</p>
+                  </div>
+                </li>
               </ul>
             </div>
             <div class="button-stack">
