@@ -2773,6 +2773,153 @@
     transform: translateY(0);
     transition: transform 260ms var(--ease), opacity 180ms ease, visibility 0s;
   }
+
+  /* § S · Date picker (sheet variant · birth-date oriented · DS canon) */
+  .datepicker-sheet-shell {
+    position: absolute;
+    left: 12px; right: 12px; bottom: 10px;
+    z-index: 32;
+    opacity: 0; visibility: hidden; pointer-events: none;
+    transform: translateY(112%);
+    transition: transform 260ms var(--ease), opacity 180ms ease, visibility 0s linear 260ms;
+  }
+  .datepicker-sheet-shell.active {
+    opacity: 1; visibility: visible; pointer-events: auto;
+    transform: translateY(0);
+    transition: transform 260ms var(--ease), opacity 180ms ease, visibility 0s;
+  }
+  .datepicker {
+    background: var(--paper);
+    border-radius: var(--radius-xl);
+    border: 1px solid var(--line);
+    padding: 18px;
+    width: 100%;
+    display: flex; flex-direction: column;
+    gap: 14px;
+    box-shadow: 0 18px 46px rgba(45,38,30,0.12);
+  }
+  .datepicker-head {
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 8px;
+  }
+  .datepicker-month-label {
+    font-family: "Lenia"; font-weight: 500;
+    font-size: var(--fs-h4);
+    letter-spacing: -0.005em;
+    color: var(--ink);
+    background: transparent; border: 0;
+    padding: 6px 10px;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: background 150ms var(--ease);
+  }
+  .datepicker-month-label:hover { background: var(--paper-soft); }
+  .datepicker-nav { display: flex; gap: 4px; }
+  .datepicker-nav button {
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    border: 0; background: transparent;
+    color: var(--ink-soft);
+    cursor: pointer;
+    display: grid; place-items: center;
+    transition: background 150ms var(--ease), color 150ms var(--ease);
+  }
+  .datepicker-nav button:hover { background: var(--paper-soft); color: var(--ink); }
+  .datepicker-nav svg {
+    width: 16px; height: 16px;
+    stroke: currentColor; fill: none;
+    stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round;
+  }
+  .datepicker-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 2px;
+  }
+  .datepicker-weekday {
+    font-family: "Lenia";
+    font-size: var(--fs-eyebrow);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    text-align: center;
+    padding: 6px 0;
+    font-weight: 500;
+  }
+  .datepicker-day {
+    position: relative;
+    display: grid; place-items: center;
+    height: 38px;
+    border: 0; background: transparent;
+    font-family: "Lenia";
+    font-size: var(--fs-body-sm);
+    font-weight: 400;
+    color: var(--ink);
+    cursor: pointer;
+    border-radius: 50%;
+    transition: background 150ms var(--ease), color 150ms var(--ease);
+  }
+  .datepicker-day:hover:not(:disabled):not(.outside):not(.selected) {
+    background: var(--paper-soft);
+  }
+  .datepicker-day.outside { color: var(--ink-faint); }
+  .datepicker-day.disabled,
+  .datepicker-day:disabled {
+    color: var(--ink-faint);
+    cursor: default; pointer-events: none;
+  }
+  .datepicker-day.today { font-weight: 500; color: var(--coral-strong); }
+  .datepicker-day.today::after {
+    content: ""; position: absolute; bottom: 5px;
+    width: 4px; height: 4px;
+    border-radius: 50%; background: var(--coral-strong);
+  }
+  .datepicker-day.selected {
+    background: var(--coral-base);
+    color: #4A2510; font-weight: 500;
+  }
+  .datepicker-day.selected::after { display: none; }
+  .datepicker-day.selected:hover { background: var(--coral-base); filter: brightness(0.97); }
+  .datepicker-presets {
+    display: flex; gap: 6px; flex-wrap: wrap;
+    padding-top: 14px;
+    border-top: 1px solid var(--line-soft);
+  }
+  .datepicker-preset {
+    font-family: "Lenia";
+    font-size: var(--fs-meta);
+    letter-spacing: 0.04em;
+    font-weight: 500;
+    color: var(--ink-soft);
+    background: var(--paper-soft);
+    border: 1px solid var(--line-soft);
+    padding: 6px 12px;
+    border-radius: var(--radius-pill);
+    cursor: pointer;
+    transition: background 150ms var(--ease), color 150ms var(--ease), border-color 150ms var(--ease);
+  }
+  .datepicker-preset:hover,
+  .datepicker-preset.active {
+    background: var(--coral-subtle);
+    color: var(--coral-strong);
+    border-color: var(--coral-base);
+  }
+  .datepicker-actions {
+    display: flex; gap: 10px;
+  }
+  .datepicker-actions button {
+    flex: 1; height: 44px;
+    border-radius: var(--radius-pill);
+    font-family: "Lenia";
+    font-size: var(--fs-body-sm);
+    font-weight: 500;
+    cursor: pointer; border: 0;
+    transition: filter 150ms var(--ease);
+  }
+  .datepicker-actions button:hover { filter: brightness(0.98); }
+  .datepicker-actions .cancel { background: var(--paper-soft); color: var(--ink); }
+  .datepicker-actions .confirm { background: var(--coral-base); color: #4A2510; }
+  .input-card[data-open-datepicker] { cursor: pointer; }
+  .input-card[data-open-datepicker]:hover { filter: brightness(0.99); }
   .measure-sheet {
     position: relative;
     width: 100%;
@@ -6923,7 +7070,7 @@
             <div class="input-label">Nombre</div>
             <div class="input-card"><span><strong id="child-name-label">Lola</strong><span>Perfil activo</span></span><span class="value">Editar</span></div>
             <div class="input-label" id="date-label">Fecha de nacimiento</div>
-            <div class="input-card"><span class="value" id="date-value">9 · dic · 2024</span><span class="muted">18 meses</span></div>
+            <div class="input-card" data-open-datepicker role="button" tabindex="0"><span class="value" id="date-value">9 · dic · 2024</span><span class="muted" id="date-age">18 meses</span></div>
             <div class="input-label">Sexo registrado</div>
             <div class="input-card"><span class="value">Ni&ntilde;a</span><span class="muted">para curvas WHO</span></div>
             <div class="insight" id="data-insight"><strong>Inferencia visible.</strong> Lola tiene 18 meses. Mostraremos hitos 12-18m y la ventana de triple virica.</div>
@@ -7231,12 +7378,22 @@
 
             <section class="milestone-stage-head">
               <div class="milestone-stage-copy">
-                <h3 class="milestone-stage-title" data-milestone-stage-title>9-12 meses</h3>
                 <div class="milestone-stage-meta" data-milestone-stage-meta>Lactante · cuarto trimestre</div>
-                <div class="milestone-stage-count" data-milestone-stage-count>[ 0 logrados · 0 hitos ]</div>
+                <div class="milestone-stage-count" data-milestone-stage-count>0 logrados · 0 hitos</div>
               </div>
-              <button class="milestone-add-button" type="button" data-log-type="hito" data-log-source="hitos">+ Añadir hito</button>
+              <button class="btn-coral btn-sm" type="button" data-log-type="hito" data-log-source="hitos">+ Añadir hito</button>
             </section>
+
+            <div class="milestone-scale-row" aria-label="Selector de escala">
+              <span class="scale-label">Escala</span>
+              <div class="mark-selector ink full" role="tablist">
+                <button class="opt selected" type="button" role="tab" data-milestone-scale="haizea">Haizea-Llevant</button>
+                <button class="opt" type="button" role="tab" data-milestone-scale="asq">ASQ-3</button>
+                <button class="opt" type="button" role="tab" data-milestone-scale="denver">Denver II</button>
+                <button class="opt" type="button" role="tab" data-milestone-scale="wiechen">Van Wiechen</button>
+                <button class="opt premium" type="button" role="tab" data-milestone-scale="bayley">Bayley-III</button>
+              </div>
+            </div>
 
             <div class="milestone-filter-strip" data-milestone-filters aria-label="Filtro por área"></div>
             <div class="milestone-card-list" data-milestone-cards></div>
@@ -7334,6 +7491,9 @@
         </section>
 
         <div class="scrim" data-close-sheet></div>
+        <aside class="datepicker-sheet-shell" aria-label="Selector de fecha" id="datepicker-modal">
+          <div class="datepicker" data-datepicker-root></div>
+        </aside>
         <aside class="sheet" aria-live="polite" aria-label="Detalle" id="sheet">
           <h3 id="sheet-title">Detalle</h3>
           <p id="sheet-copy">Pantalla de detalle del prototipo.</p>
@@ -12281,8 +12441,187 @@ Grow
     milestoneModal.setAttribute('aria-hidden', 'true');
     milestoneCelebration.classList.remove('active');
     milestoneCelebration.setAttribute('aria-hidden', 'true');
+    const dp = document.getElementById('datepicker-modal');
+    if (dp) dp.classList.remove('active');
     scrim.classList.remove('active');
   }
+
+  /* § S · Date picker — birth-date oriented · sheet variant.
+     State: dpView (year/month being browsed) + dpSelected (year/month/day).
+     Default selection = current value parsed from #date-value.
+     Future dates disabled (a peque no nace mañana). */
+  const DP_MONTHS = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+  const DP_MONTHS_SHORT = ['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
+  const DP_WEEKDAYS = ['L','M','X','J','V','S','D'];
+  let dpView = null;
+  let dpSelected = null;
+  let dpToday = null;
+  function dpInit() {
+    const now = new Date();
+    dpToday = { year: now.getFullYear(), month: now.getMonth(), day: now.getDate() };
+    const dvText = (document.getElementById('date-value')?.textContent || '').trim();
+    const parsed = dpParseDateValue(dvText);
+    dpSelected = parsed || { ...dpToday };
+    dpView = { year: dpSelected.year, month: dpSelected.month };
+  }
+  function dpParseDateValue(text) {
+    const parts = text.split('·').map((s) => s.trim().toLowerCase());
+    if (parts.length !== 3) return null;
+    const day = parseInt(parts[0], 10);
+    const month = DP_MONTHS_SHORT.indexOf(parts[1]);
+    const year = parseInt(parts[2], 10);
+    if (isNaN(day) || month < 0 || isNaN(year)) return null;
+    return { year, month, day };
+  }
+  function dpFormatDateValue(d) {
+    return `${d.day} · ${DP_MONTHS_SHORT[d.month]} · ${d.year}`;
+  }
+  function dpFormatAge(d) {
+    const today = new Date();
+    const birth = new Date(d.year, d.month, d.day);
+    let months = (today.getFullYear() - birth.getFullYear()) * 12 + (today.getMonth() - birth.getMonth());
+    if (today.getDate() < birth.getDate()) months -= 1;
+    if (months < 0) return '—';
+    if (months < 1) {
+      const days = Math.floor((today - birth) / (1000 * 60 * 60 * 24));
+      if (days < 0) return '—';
+      if (days < 7) return `${days} ${days === 1 ? 'día' : 'días'}`;
+      const weeks = Math.floor(days / 7);
+      return `${weeks} ${weeks === 1 ? 'semana' : 'semanas'}`;
+    }
+    if (months < 24) return `${months} ${months === 1 ? 'mes' : 'meses'}`;
+    const years = Math.floor(months / 12);
+    return `${years} ${years === 1 ? 'año' : 'años'}`;
+  }
+  function dpIsSameDay(a, b) {
+    return a && b && a.year === b.year && a.month === b.month && a.day === b.day;
+  }
+  function dpIsFuture(d) {
+    if (d.year > dpToday.year) return true;
+    if (d.year < dpToday.year) return false;
+    if (d.month > dpToday.month) return true;
+    if (d.month < dpToday.month) return false;
+    return d.day > dpToday.day;
+  }
+  function openDatepicker() {
+    if (!dpView) dpInit();
+    const dvText = (document.getElementById('date-value')?.textContent || '').trim();
+    const parsed = dpParseDateValue(dvText);
+    if (parsed) {
+      dpSelected = parsed;
+      dpView = { year: parsed.year, month: parsed.month };
+    }
+    renderDatepicker();
+    document.getElementById('datepicker-modal').classList.add('active');
+    scrim.classList.add('active');
+  }
+  function closeDatepicker() {
+    document.getElementById('datepicker-modal').classList.remove('active');
+    scrim.classList.remove('active');
+  }
+  function dpStepMonth(delta) {
+    let m = dpView.month + delta;
+    let y = dpView.year;
+    while (m < 0)  { m += 12; y -= 1; }
+    while (m > 11) { m -= 12; y += 1; }
+    if (y > dpToday.year || (y === dpToday.year && m > dpToday.month)) return;
+    dpView = { year: y, month: m };
+    renderDatepicker();
+  }
+  function dpSelectDay(year, month, day) {
+    const candidate = { year, month, day };
+    if (dpIsFuture(candidate)) return;
+    dpSelected = candidate;
+    dpView = { year, month };
+    renderDatepicker();
+  }
+  function dpApplyPreset(preset) {
+    const today = new Date();
+    let target = new Date(today);
+    if (preset === 'hoy')        target = today;
+    else if (preset === 'ayer')  target.setDate(today.getDate() - 1);
+    else if (preset === '1week') target.setDate(today.getDate() - 7);
+    else if (preset === '1month')target.setMonth(today.getMonth() - 1);
+    dpSelected = { year: target.getFullYear(), month: target.getMonth(), day: target.getDate() };
+    dpView = { year: dpSelected.year, month: dpSelected.month };
+    renderDatepicker();
+  }
+  function confirmDatepicker() {
+    const dv = document.getElementById('date-value');
+    const da = document.getElementById('date-age');
+    if (dv) dv.textContent = dpFormatDateValue(dpSelected);
+    if (da) da.textContent = dpFormatAge(dpSelected);
+    closeDatepicker();
+  }
+  function renderDatepicker() {
+    const root = document.querySelector('[data-datepicker-root]');
+    if (!root) return;
+    const { year, month } = dpView;
+    const firstOfMonth = new Date(year, month, 1);
+    const firstWeekday = (firstOfMonth.getDay() + 6) % 7;
+    const daysInMonth = new Date(year, month + 1, 0).getDate();
+    const daysInPrevMonth = new Date(year, month, 0).getDate();
+    const cells = [];
+    for (let i = firstWeekday - 1; i >= 0; i--) {
+      cells.push({ day: daysInPrevMonth - i, outside: true, year: month === 0 ? year - 1 : year, month: month === 0 ? 11 : month - 1 });
+    }
+    for (let d = 1; d <= daysInMonth; d++) {
+      cells.push({ day: d, outside: false, year, month });
+    }
+    let nextDay = 1;
+    while (cells.length < 42) {
+      cells.push({ day: nextDay, outside: true, year: month === 11 ? year + 1 : year, month: month === 11 ? 0 : month + 1 });
+      nextDay += 1;
+    }
+    const cellsToRender = cells.slice(0, 42);
+    const monthLabel = `${DP_MONTHS[month]} · ${year}`;
+    const confirmLabel = dpFormatDateValue(dpSelected);
+    const today = dpToday;
+    const presetActive = (preset) => {
+      const t = new Date();
+      let target = new Date(t);
+      if (preset === 'hoy') target = t;
+      else if (preset === 'ayer')  target.setDate(t.getDate() - 1);
+      else if (preset === '1week') target.setDate(t.getDate() - 7);
+      else if (preset === '1month')target.setMonth(t.getMonth() - 1);
+      return dpIsSameDay(dpSelected, { year: target.getFullYear(), month: target.getMonth(), day: target.getDate() });
+    };
+    const nextDisabled = (year === today.year && month >= today.month) || year > today.year;
+    root.innerHTML = `
+      <div class="datepicker-head">
+        <button class="datepicker-month-label" type="button">${monthLabel}</button>
+        <div class="datepicker-nav">
+          <button type="button" data-dp-prev aria-label="Mes anterior"><svg viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"/></svg></button>
+          <button type="button" data-dp-next aria-label="Mes siguiente"${nextDisabled ? ' disabled style="opacity:0.4;cursor:default"' : ''}><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></button>
+        </div>
+      </div>
+      <div class="datepicker-grid">
+        ${DP_WEEKDAYS.map((w) => `<span class="datepicker-weekday">${w}</span>`).join('')}
+        ${cellsToRender.map((c) => {
+          const isToday = c.year === today.year && c.month === today.month && c.day === today.day;
+          const isSelected = dpIsSameDay(dpSelected, { year: c.year, month: c.month, day: c.day });
+          const isFuture = dpIsFuture({ year: c.year, month: c.month, day: c.day });
+          const cls = ['datepicker-day'];
+          if (c.outside)   cls.push('outside');
+          if (isToday)     cls.push('today');
+          if (isSelected)  cls.push('selected');
+          if (isFuture)    cls.push('disabled');
+          return `<button class="${cls.join(' ')}" type="button" data-dp-day="${c.year}-${c.month}-${c.day}"${isFuture ? ' disabled' : ''}>${c.day}</button>`;
+        }).join('')}
+      </div>
+      <div class="datepicker-presets">
+        <button class="datepicker-preset${presetActive('hoy') ? ' active' : ''}" type="button" data-dp-preset="hoy">Hoy</button>
+        <button class="datepicker-preset${presetActive('ayer') ? ' active' : ''}" type="button" data-dp-preset="ayer">Ayer</button>
+        <button class="datepicker-preset${presetActive('1week') ? ' active' : ''}" type="button" data-dp-preset="1week">Hace 1 sem</button>
+        <button class="datepicker-preset${presetActive('1month') ? ' active' : ''}" type="button" data-dp-preset="1month">Hace 1 mes</button>
+      </div>
+      <div class="datepicker-actions">
+        <button class="cancel" type="button" data-dp-cancel>Cancelar</button>
+        <button class="confirm" type="button" data-dp-confirm>${confirmLabel}</button>
+      </div>
+    `;
+  }
+
 
   function addLogEntry(entry) {
     const category = getLogCategory(entry.type);
@@ -12765,6 +13104,26 @@ Grow
       togglePregnancyRainbow();
       return;
     }
+
+    /* § S · Date picker · open from input-card, control inside picker */
+    const openDpTrigger = event.target.closest('[data-open-datepicker]');
+    if (openDpTrigger) {
+      event.preventDefault();
+      openDatepicker();
+      return;
+    }
+    if (event.target.closest('[data-dp-prev]'))  { dpStepMonth(-1); return; }
+    if (event.target.closest('[data-dp-next]'))  { dpStepMonth(1); return; }
+    const dpDay = event.target.closest('[data-dp-day]');
+    if (dpDay) {
+      const [y, m, d] = dpDay.dataset.dpDay.split('-').map(Number);
+      dpSelectDay(y, m, d);
+      return;
+    }
+    const dpPreset = event.target.closest('[data-dp-preset]');
+    if (dpPreset) { dpApplyPreset(dpPreset.dataset.dpPreset); return; }
+    if (event.target.closest('[data-dp-cancel]'))  { closeDatepicker(); return; }
+    if (event.target.closest('[data-dp-confirm]')) { confirmDatepicker(); return; }
 
     const vaccineViewButton = event.target.closest('[data-vaccine-view]');
     if (vaccineViewButton) {
