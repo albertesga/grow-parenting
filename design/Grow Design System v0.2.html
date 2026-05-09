@@ -2866,6 +2866,43 @@
         </ul>
       </div>
     </div>
+
+    <div class="spec">
+      <div class="spec-head"><h3>Module status card · canon</h3><span class="meta-r">.module-status-card · .module-status-grid · .module-stat</span></div>
+      <div class="spec-row col" style="padding: 12px 0">
+        <p style="font-size:13px;color:var(--ink-soft);max-width:64ch;line-height:1.55;margin:0">
+          Card de estadísticas resumidas (3 columnas típicamente) que cada libro
+          muestra en su home. Stats con número grande (Lenia fs-h3) y label pequeña
+          (eyebrow). Antes había 4 clones · ahora un solo canon con 4 variantes tonales.
+        </p>
+      </div>
+      <div class="spec-row" style="padding: 12px 0; gap: 16px; flex-wrap: wrap">
+        <div class="module-status-card mint" style="width: 320px">
+          <div class="module-status-grid">
+            <div class="module-stat"><strong>13h</strong><span>OBJETIVO</span></div>
+            <div class="module-stat"><strong>2</strong><span>SIESTAS</span></div>
+            <div class="module-stat"><strong>4/5</strong><span>AGARRE</span></div>
+          </div>
+        </div>
+        <div class="module-status-card coral" style="width: 320px">
+          <div class="module-status-grid">
+            <div class="module-stat"><strong>4/14</strong><span>DOSIS</span></div>
+            <div class="module-stat"><strong>12 jul</strong><span>PRÓX</span></div>
+            <div class="module-stat"><strong>9 m</strong><span>AHORA</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="spec-row col" style="padding: 6px 0 18px">
+        <div class="spec-label">Anatomy</div>
+        <ul style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--ink-soft); line-height: 1.7; padding-left: 18px; margin: 0">
+          <li><strong>.module-status-card</strong> · radius 26 · padding lg · display grid · gap md (mismo bg tonal)</li>
+          <li><strong>.module-status-grid</strong> · grid 3-col · gap sm · responsive 1fr</li>
+          <li><strong>.module-stat</strong> · radius-md · paper-soft bg · padding 12 8 · text-center</li>
+          <li><strong>.module-stat strong</strong> · Lenia · fs-h3 · line-height 1 · valor numérico</li>
+          <li><strong>.module-stat span</strong> · ink-muted · fs-eyebrow · margin-top 5 · label</li>
+        </ul>
+      </div>
+    </div>
   </section>
 
   <!-- ╔═════════════════════════════════════════════════════════╗

@@ -4021,7 +4021,8 @@
   .sleep-canon-row,
   .sleep-age-chip,
   .module-hero.mint,
-  .module-section.mint {
+  .module-section.mint,
+  .module-status-card.mint {
     background:
       radial-gradient(circle at 84% 6%, rgba(232,201,122,0.28), transparent 34%),
       radial-gradient(circle at 10% 0%, rgba(255,255,255,0.56), transparent 30%),
@@ -4144,7 +4145,8 @@
   .sleep-week-card,
   .sleep-sweetspot,
   .sleep-plan-card,
-  .module-section {
+  .module-section,
+  .module-status-card {
     border-radius: 26px;
     padding: var(--space-lg);
   }
@@ -4572,7 +4574,8 @@
   .food-diary-row,
   .food-plan-card,
   .module-hero.gold,
-  .module-section.gold {
+  .module-section.gold,
+  .module-status-card.gold {
     background:
       radial-gradient(circle at 84% 6%, rgba(232,201,122,0.30), transparent 34%),
       radial-gradient(circle at 9% 0%, rgba(255,255,255,0.58), transparent 30%),
@@ -4651,7 +4654,8 @@
     border-radius: 26px;
     padding: var(--space-lg);
   }
-  .food-status-card {
+  .food-status-card,
+  .module-status-card {
     display: grid;
     gap: var(--space-md);
   }
@@ -4991,7 +4995,8 @@
   .lactation-plan-card,
   .lactation-med-card,
   .module-hero.blush,
-  .module-section.blush {
+  .module-section.blush,
+  .module-status-card.blush {
     background:
       radial-gradient(circle at 84% 6%, rgba(232,201,122,0.28), transparent 34%),
       radial-gradient(circle at 9% 0%, rgba(255,255,255,0.58), transparent 30%),
@@ -5349,7 +5354,8 @@
   .vaccine-choice,
   .vaccine-dose-card,
   .module-hero.coral,
-  .module-section.coral {
+  .module-section.coral,
+  .module-status-card.coral {
     min-width: 0;
     background:
       radial-gradient(circle at 84% 6%, rgba(232,201,122,0.30), transparent 34%),
@@ -5466,27 +5472,31 @@
     padding: var(--space-lg);
   }
   .pregnancy-status-grid,
-  .vaccine-status-grid {
+  .vaccine-status-grid,
+  .module-status-grid {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: var(--space-sm);
   }
   .pregnancy-stat,
-  .vaccine-stat {
+  .vaccine-stat,
+  .module-stat {
     border-radius: var(--radius-md);
     background: rgba(250,247,240,0.64);
     padding: 12px 8px;
     text-align: center;
   }
   .pregnancy-stat strong,
-  .vaccine-stat strong {
+  .vaccine-stat strong,
+  .module-stat strong {
     display: block;
     font-family: "Lenia";
     font-size: var(--fs-h3);
     line-height: 1;
   }
   .pregnancy-stat span,
-  .vaccine-stat span {
+  .vaccine-stat span,
+  .module-stat span {
     color: var(--ink-muted);
     display: block;
     font-size: 10px;
