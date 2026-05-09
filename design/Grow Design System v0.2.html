@@ -2270,6 +2270,44 @@
         </div>
       </div>
     </div>
+
+    <div class="spec">
+      <div class="spec-head"><h3>Input wrappers · variantes</h3><span class="meta-r">.input-field · .milestone-field · .qlog-field · .measure-input-wrap</span></div>
+      <div class="spec-row col" style="padding: 12px 0">
+        <p style="font-size:13px;color:var(--ink-soft);max-width:64ch;line-height:1.55;margin:0">
+          El prototipo tiene 4 wrappers de input. Comparten <code>:focus-visible</code> canon
+          (outline coral 2 px) — pero cada uno tiene un caso de uso específico. NO consolidarlos
+          en uno único · cada variante tiene padding/radius distintos por contexto.
+        </p>
+      </div>
+      <div class="spec-row col" style="padding: 8px 0 18px">
+        <table style="font-size:12.5px;color:var(--ink-soft);border-collapse:collapse;width:100%;max-width:680px">
+          <thead>
+            <tr style="border-bottom:1px solid var(--line)">
+              <th style="text-align:left;padding:8px 12px 8px 0;font-family:'Lenia';color:var(--ink);font-weight:500">Wrapper</th>
+              <th style="text-align:left;padding:8px 12px;font-family:'Lenia';color:var(--ink);font-weight:500">Caso de uso</th>
+              <th style="text-align:left;padding:8px 0 8px 12px;font-family:'Lenia';color:var(--ink);font-weight:500">Layout</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="border-bottom:1px dashed var(--line-soft)"><td style="padding:8px 12px 8px 0"><code>.input-field</code></td><td style="padding:8px 12px">Onboarding · registro · forms canon</td><td style="padding:8px 0 8px 12px">grid · gap 6 · label eyebrow + input Lenia 500 fs-body-lg · radius 14</td></tr>
+            <tr style="border-bottom:1px dashed var(--line-soft)"><td style="padding:8px 12px 8px 0"><code>.milestone-field</code></td><td style="padding:8px 12px">Log de hitos · forms con textarea</td><td style="padding:8px 0 8px 12px">grid · gap xs · label uppercase 10 · padding md · resize vertical</td></tr>
+            <tr style="border-bottom:1px dashed var(--line-soft)"><td style="padding:8px 12px 8px 0"><code>.qlog-field</code></td><td style="padding:8px 12px">Quick log · entrada compacta</td><td style="padding:8px 0 8px 12px">block · margin-top 12 · label fs-caption · padding 11 12 · radius 16</td></tr>
+            <tr><td style="padding:8px 12px 8px 0"><code>.measure-input-wrap</code></td><td style="padding:8px 12px">Mediciones (peso · talla · PC) con unidad</td><td style="padding:8px 0 8px 12px">flex inline · min-height 48 · input + span unidad · radius 16</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="spec-row col">
+        <div class="spec-label">Focus consolidation</div>
+        <p style="font-size:12.5px;color:var(--ink-soft);line-height:1.6;margin:0;max-width:60ch">
+          La regla <code>:focus-visible</code> se aplica vía comma-list canon en
+          <code>prototype.html</code> a las 3 variantes de label+input
+          (<code>.input-field</code> + <code>.milestone-field</code> + <code>.qlog-field</code>).
+          <code>.measure-input-wrap</code> usa <code>:focus-within</code> en el wrapper (no en
+          inputs hijos) por su layout horizontal.
+        </p>
+      </div>
+    </div>
   </section>
 
   <!-- ╔═════════════════════════════════════════════════════════╗
