@@ -3532,6 +3532,15 @@
   .milestone-scale-row + .milestone-filter-row,
   .milestone-scale-row + .milestone-filter-strip { margin-top: 6px; }
   .milestone-filter-row .scale-label { margin-top: 0; }
+  /* Wrap los filter chips a múltiples líneas en lugar de scroll horizontal
+     (4 chips no caben siempre en una línea · mejor UX que ocultar). */
+  .milestone-filter-row .milestone-filter-strip {
+    flex-wrap: wrap;
+    overflow-x: visible;
+    margin: 8px 0 0;
+    padding: 0;
+    row-gap: var(--space-sm);
+  }
   .scale-label {
     flex: 0 0 auto;
     align-self: center;
