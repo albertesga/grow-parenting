@@ -2674,12 +2674,51 @@
   .mark-selector.gold  .opt.selected::after { background: var(--gold-base);  border-color: var(--gold-strong); }
   .mark-selector.blush .opt.selected::after { background: var(--blush-base); border-color: var(--blush-strong); }
   .mark-selector.ink   .opt.selected::after { background: var(--ink-warm);   border-color: var(--ink-warm); }
+  /* Per-option color · cada .opt puede llevar su propia identidad cromática */
+  .mark-selector .opt.coral.selected::after { background: var(--coral-base); border-color: var(--coral-strong); }
+  .mark-selector .opt.mint.selected::after  { background: var(--mint-base);  border-color: var(--mint-strong); }
+  .mark-selector .opt.gold.selected::after  { background: var(--gold-base);  border-color: var(--gold-strong); }
+  .mark-selector .opt.blush.selected::after { background: var(--blush-base); border-color: var(--blush-strong); }
+  .mark-selector .opt.ink.selected::after   { background: var(--ink-warm);   border-color: var(--ink-warm); }
   .mark-selector.full {
     display: flex; gap: 0;
     justify-content: space-between;
     width: 100%;
   }
   .mark-selector.full .opt { flex: 1; }
+
+  /* Input field · DS § H · label + native input · for nombre / texto */
+  .input-field { display: grid; gap: 6px; max-width: 100%; }
+  .input-field label {
+    font-family: "Lenia"; font-size: 10.5px; font-weight: 500;
+    letter-spacing: 0.15em; text-transform: uppercase; color: var(--ink-muted);
+  }
+  .input-field input,
+  .input-field textarea,
+  .input-field select {
+    width: 100%; border: 1px solid rgba(201,194,178,0.82); border-radius: 14px;
+    background: rgba(250,247,240,0.82); color: var(--ink);
+    padding: 14px 16px; outline: 0;
+    font-family: "Lenia"; font-weight: 500;
+    font-size: var(--fs-body-lg);
+    letter-spacing: -0.005em;
+    transition: border-color 150ms var(--ease), background 150ms var(--ease);
+  }
+  .input-field input::placeholder { color: var(--ink-muted); font-weight: 400; }
+  .input-field input:focus-visible,
+  .input-field textarea:focus-visible {
+    outline: 2px solid var(--coral-base); outline-offset: 0; border-color: var(--coral-base);
+  }
+  .input-field .hint {
+    font-family: "Helvena"; font-size: var(--fs-meta);
+    color: var(--ink-muted); margin-top: 2px;
+  }
+  .input-hint {
+    font-family: "Helvena"; font-size: var(--fs-body-sm);
+    color: var(--ink-muted);
+    margin: 6px 2px 0;
+    line-height: 1.4;
+  }
 
   /* OMS curve card — DS v0.2 canon (§ G).
      Flat paper, simple border, no gradient/animation. Tabs use .mark-selector. */
@@ -7067,13 +7106,24 @@
             <div class="eyebrow">Datos · 1 de 3</div>
             <h2 class="screen-title" id="data-title">&iquest;Como se llama?</h2>
             <p class="body-copy" id="data-copy">Solo lo veremos en vuestro espacio familiar.</p>
-            <div class="input-label">Nombre</div>
-            <div class="input-card"><span><strong id="child-name-label">Lola</strong><span>Perfil activo</span></span><span class="value">Editar</span></div>
-            <div class="input-label" id="date-label">Fecha de nacimiento</div>
+
+            <div class="input-field">
+              <label for="child-name">Nombre del peque</label>
+              <input id="child-name" type="text" value="Lola" placeholder="¿Cómo se llama?" autocomplete="off" data-child-name-input>
+            </div>
+
+            <div class="input-label" id="date-label" style="margin-top: 14px">Fecha de nacimiento</div>
             <div class="input-card" data-open-datepicker role="button" tabindex="0"><span class="value" id="date-value">9 · dic · 2024</span><span class="muted" id="date-age">18 meses</span></div>
-            <div class="input-label">Sexo registrado</div>
-            <div class="input-card"><span class="value">Ni&ntilde;a</span><span class="muted">para curvas WHO</span></div>
-            <div class="insight" id="data-insight"><strong>Inferencia visible.</strong> Lola tiene 18 meses. Mostraremos hitos 12-18m y la ventana de triple virica.</div>
+
+            <div class="input-label" style="margin-top: 14px">Sexo registrado</div>
+            <div class="mark-selector full" role="radiogroup" aria-label="Sexo registrado" data-sex-selector>
+              <button class="opt blush selected" type="button" role="radio" aria-checked="true" data-sex="nina">Niña</button>
+              <button class="opt mint" type="button" role="radio" aria-checked="false" data-sex="nino">Niño</button>
+              <button class="opt gold" type="button" role="radio" aria-checked="false" data-sex="otro">Otro</button>
+            </div>
+            <p class="input-hint" id="sex-hint">Para curvas OMS de crecimiento. Editable cuando quieras.</p>
+
+            <div class="insight" id="data-insight"><strong>Inferencia visible.</strong> <span id="data-insight-text">Lola tiene 18 meses. Mostraremos hitos 12-18m y la ventana de triple virica.</span></div>
             <div class="button-stack">
               <button class="primary" type="button" data-goto="onboarding-casa">Continuar</button>
               <button class="ghost-link" type="button" data-goto="onboarding-fase">Atras</button>
@@ -8853,17 +8903,20 @@
     `;
   }
 
+  /* Card frame inherits .feed-card canon (§ K Cards). Internals use canonical
+     primitives: .pill (state, area), .btn-coral / .btn-soft (actions). */
   function renderMilestoneCard(milestone) {
     const late = isMilestoneLate(milestone);
     const done = Boolean(milestone.achieved);
     const state = done ? 'Logrado' : late ? 'Atención' : 'Sin registrar';
+    const stateTone = done ? 'mint' : late ? 'coral' : 'soft';
     const stateAction = done
       ? `data-sheet-title="${escapeHtml(milestone.title)}" data-sheet-copy="Logrado el ${escapeHtml(milestone.achievedDate || 'día registrado')}. También queda disponible en Diario con foto o nota si la añades." data-open-sheet`
       : late
       ? `data-open-milestone-attention="${escapeHtml(milestone.id)}"`
       : `data-sheet-title="${escapeHtml(milestone.title)}" data-sheet-copy="Este hito todavía no está registrado. Puedes marcarlo, añadir foto o dejar una nota." data-open-sheet`;
     const visual = getMilestoneAreaVisual(milestone.area);
-    const cardClass = ['milestone-card', visual.className, late ? 'attention' : '', done ? 'done' : ''].filter(Boolean).join(' ');
+    const cardClass = ['feed-card', 'milestone-card', visual.tone, visual.className, late ? 'attention' : '', done ? 'done' : ''].filter(Boolean).join(' ');
     const range = `esperable ${Math.round(milestone.p50)}-${Math.round(milestone.p95)}m`;
     const source = milestoneScale === 'haizea' ? milestone.source : `${milestoneScaleLabels[milestoneScale]} · mapeo prototipo`;
 
@@ -8877,17 +8930,19 @@
                 <div class="milestone-title">${escapeHtml(milestone.title)}</div>
                 <div class="milestone-en">${escapeHtml(milestone.en)}</div>
               </div>
-              <button class="milestone-state" type="button" ${stateAction}>${escapeHtml(state)}</button>
+              <button class="pill ${stateTone}" type="button" ${stateAction}>${escapeHtml(state)}</button>
             </div>
           </div>
         </div>
         ${renderMilestoneMiniGraph(milestone)}
-        <div class="milestone-area">${escapeHtml(getMilestoneAreaLabel(milestone.area))}</div>
-        <div class="milestone-source">Fuente · ${escapeHtml(source)} · ${escapeHtml(range)}</div>
+        <div class="milestone-tagline">
+          <span class="pill ${visual.tone}">${escapeHtml(getMilestoneAreaLabel(milestone.area))}</span>
+          <span class="milestone-source">${escapeHtml(source)} · ${escapeHtml(range)}</span>
+        </div>
         <div class="milestone-actions">
-          <button class="primary-action" type="button" data-open-milestone="${escapeHtml(milestone.id)}">${done ? 'Logrado' : 'Marcar logrado'}</button>
-          <button class="ghost-action" type="button" data-sheet-title="Foto · ${escapeHtml(milestone.title)}" data-sheet-copy="En producto real abriría cámara o galería y guardaría la foto en Diario." data-open-sheet>Foto</button>
-          <button class="ghost-action" type="button" data-sheet-title="Nota · ${escapeHtml(milestone.title)}" data-sheet-copy="En producto real abriría una nota breve asociada al hito y visible en Diario." data-open-sheet>Nota</button>
+          <button class="btn-coral btn-sm" type="button" data-open-milestone="${escapeHtml(milestone.id)}">${done ? 'Logrado' : 'Marcar logrado'}</button>
+          <button class="btn-soft btn-sm" type="button" data-sheet-title="Foto · ${escapeHtml(milestone.title)}" data-sheet-copy="En producto real abriría cámara o galería y guardaría la foto en Diario." data-open-sheet>Foto</button>
+          <button class="btn-soft btn-sm" type="button" data-sheet-title="Nota · ${escapeHtml(milestone.title)}" data-sheet-copy="En producto real abriría una nota breve asociada al hito y visible en Diario." data-open-sheet>Nota</button>
         </div>
       </article>
     `;
@@ -12433,6 +12488,35 @@ Grow
     openLog({ type, source: getActiveScreenName() });
   }
 
+  /* Onboarding · interactive bindings for name + sex selectors.
+     Bound via delegation on document so works regardless of when DOM ready. */
+  let onboardingChildName = 'Lola';
+  let onboardingChildSex = 'nina';
+  function updateOnboardingInsight() {
+    const insightEl = document.getElementById('data-insight-text');
+    if (!insightEl) return;
+    const ageText = (document.getElementById('date-age')?.textContent || '').trim();
+    const lbl = document.getElementById('child-name-label');
+    if (lbl) lbl.textContent = onboardingChildName;
+    /* Re-render insight inline keeping the existing tone */
+    const sexLabel = onboardingChildSex === 'nina' ? 'Niña' : onboardingChildSex === 'nino' ? 'Niño' : 'Peque';
+    insightEl.textContent = `${onboardingChildName} (${sexLabel}) tiene ${ageText}. Mostraremos los hitos y curvas OMS adaptadas a esa edad.`;
+  }
+  function bindOnboardingDataScreen() {
+    const nameInput = document.getElementById('child-name');
+    if (nameInput && !nameInput.dataset.bound) {
+      nameInput.dataset.bound = '1';
+      nameInput.addEventListener('input', (e) => {
+        const v = e.target.value.trim();
+        onboardingChildName = v || 'tu peque';
+        updateOnboardingInsight();
+      });
+    }
+    /* Initial paint */
+    updateOnboardingInsight();
+  }
+  document.addEventListener('DOMContentLoaded', bindOnboardingDataScreen);
+
   function closeSheet() {
     sheet.classList.remove('active');
     qlogSheet.classList.remove('active');
@@ -12551,6 +12635,7 @@ Grow
     const da = document.getElementById('date-age');
     if (dv) dv.textContent = dpFormatDateValue(dpSelected);
     if (da) da.textContent = dpFormatAge(dpSelected);
+    if (typeof updateOnboardingInsight === 'function') updateOnboardingInsight();
     closeDatepicker();
   }
   function renderDatepicker() {
@@ -13102,6 +13187,21 @@ Grow
 
     if (event.target.closest('[data-pregnancy-rainbow]')) {
       togglePregnancyRainbow();
+      return;
+    }
+
+    /* Onboarding · sex selector */
+    const sexBtn = event.target.closest('[data-sex]');
+    if (sexBtn) {
+      const group = sexBtn.closest('[data-sex-selector]');
+      if (group) {
+        group.querySelectorAll('.opt').forEach((b) => {
+          b.classList.toggle('selected', b === sexBtn);
+          b.setAttribute('aria-checked', b === sexBtn ? 'true' : 'false');
+        });
+        onboardingChildSex = sexBtn.dataset.sex;
+        updateOnboardingInsight();
+      }
       return;
     }
 

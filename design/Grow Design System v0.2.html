@@ -426,6 +426,14 @@
   .mark-selector.gold  .opt.selected::after { background: var(--gold-base);  border-color: var(--gold-strong); }
   .mark-selector.blush .opt.selected::after { background: var(--blush-base); border-color: var(--blush-strong); }
   .mark-selector.ink   .opt.selected::after { background: var(--ink-warm);   border-color: var(--ink-warm); }
+  /* Per-option color · for selectors where each option carries its own
+     identity color (e.g. sex registered, mood, etc). Apply tone class
+     directly on the .opt — overrides group modifier when present. */
+  .mark-selector .opt.coral.selected::after { background: var(--coral-base); border-color: var(--coral-strong); }
+  .mark-selector .opt.mint.selected::after  { background: var(--mint-base);  border-color: var(--mint-strong); }
+  .mark-selector .opt.gold.selected::after  { background: var(--gold-base);  border-color: var(--gold-strong); }
+  .mark-selector .opt.blush.selected::after { background: var(--blush-base); border-color: var(--blush-strong); }
+  .mark-selector .opt.ink.selected::after   { background: var(--ink-warm);   border-color: var(--ink-warm); }
   /* full-width flow variant: justify between */
   .mark-selector.full {
     display: flex; gap: 0;
