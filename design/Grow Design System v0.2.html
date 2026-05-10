@@ -1506,6 +1506,20 @@
     transform: translateX(18px);
     background: var(--coral-base);
   }
+
+  /* ═════════════════ § V · CHAT · urgency badges (DS demo) ═════════════════ */
+  .urgency-badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-family: "Lenia"; font-weight: 500;
+    font-size: var(--fs-meta);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 999px;
+  }
+  .urgency-badge.urgent  { background: var(--coral-base); color: #4A2510; }
+  .urgency-badge.caution { background: var(--gold-base);  color: #4A3A12; }
+  .urgency-badge.safe    { background: var(--mint-base);  color: #2F4029; }
   .sr-only {
     position: absolute; width: 1px; height: 1px;
     padding: 0; margin: -1px; overflow: hidden;
@@ -4871,6 +4885,128 @@
           <li><strong>NO migrar</strong> estos componentes a canon. Son <em>module-specific by design</em>.</li>
           <li><strong>Si crece reuso</strong> (≥3 libros lo usan), reconsiderar en próximo audit.</li>
           <li><strong>Si se extiende dentro del libro</strong> (ej. más allergen-cards, más bp-readings), mantener prefijo módulo (no promover).</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ╔═════════════════════════════════════════════════════════╗
+       ║  § V — CHAT                                              ║
+       ╚═════════════════════════════════════════════════════════╝ -->
+  <section class="section">
+    <div class="section-head">
+      <div class="section-num">§ V — Chat</div>
+      <div>
+        <h2>Single thread + Modo 3AM + 8 árboles cribaje.</h2>
+        <div class="desc">
+          Chat principal · un único hilo continuo a lo largo del journey,
+          contextualizado con la edad del peque, módulo activo y modos especiales
+          (arcoíris/preemie). Modo 3AM · variante dark, thread efímero, 3 opciones
+          edad-aware. 8 árboles de cribaje rápido basados en NICE / AAP / AEPED · cada
+          uno cita su fuente. Tono trauma-informed canon: cero "tu peque está mal",
+          siempre "esto puede ser X o Y · hablamos de qué hacer".
+        </div>
+      </div>
+    </div>
+
+    <div class="spec">
+      <div class="spec-head"><h3>Arquitectura</h3></div>
+      <div class="spec-row col" style="padding: 12px 0">
+        <ul style="font-size:13px;color:var(--ink-soft);max-width:64ch;line-height:1.7;padding-left:18px;margin:0">
+          <li><strong>Chat principal</strong> · screen <code>data-screen="chat"</code> · navbar slot 4 (active)</li>
+          <li><strong>Modo 3AM</strong> · screen <code>data-screen="chat-3am"</code> · variante dark efímera</li>
+          <li><strong>Triage sheet</strong> · overlay <code>#triage-modal</code> con sequential Q&A</li>
+          <li><strong>Entry points</strong> · navbar Chat · 8 chips encima del input · "Le pasa algo" en 3AM</li>
+          <li><strong>Frase canon footer</strong> · sticky en chat principal y 3AM: "Aquí no diagnosticamos · aquí estamos"</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="spec">
+      <div class="spec-head"><h3>3 opciones del Modo 3AM por edad</h3><span class="meta-r">data-3am-options</span></div>
+      <div class="spec-row col" style="padding: 12px 0 18px">
+        <table style="font-size:12.5px;color:var(--ink-soft);border-collapse:collapse;width:100%;max-width:760px">
+          <thead>
+            <tr style="border-bottom:1px solid var(--line)">
+              <th style="text-align:left;padding:10px 12px 10px 0;font-family:'Lenia';color:var(--ink);font-weight:500">Etapa</th>
+              <th style="text-align:left;padding:10px 12px;font-family:'Lenia';color:var(--ink);font-weight:500">Opción 1</th>
+              <th style="text-align:left;padding:10px 12px;font-family:'Lenia';color:var(--ink);font-weight:500">Opción 2 (triage)</th>
+              <th style="text-align:left;padding:10px 0 10px 12px;font-family:'Lenia';color:var(--ink);font-weight:500">Opción 3</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="border-bottom:1px dashed var(--line-soft)"><td style="padding:8px 12px 8px 0">Embarazo</td><td style="padding:8px 12px">Algo no va bien con mi cuerpo</td><td style="padding:8px 12px">Tengo miedo · necesito hablar</td><td style="padding:8px 0 8px 12px">No puedo dormir</td></tr>
+            <tr style="border-bottom:1px dashed var(--line-soft)"><td style="padding:8px 12px 8px 0">0-3 m</td><td style="padding:8px 12px">No para de llorar</td><td style="padding:8px 12px">Le pasa algo a mi peque</td><td style="padding:8px 0 8px 12px">No puedo más</td></tr>
+            <tr style="border-bottom:1px dashed var(--line-soft)"><td style="padding:8px 12px 8px 0">3-12 m</td><td style="padding:8px 12px">No duerme · y yo tampoco</td><td style="padding:8px 12px">Le pasa algo a mi peque</td><td style="padding:8px 0 8px 12px">Solo necesito acompañar</td></tr>
+            <tr><td style="padding:8px 12px 8px 0">12-36 m</td><td style="padding:8px 12px">Pesadilla nocturna</td><td style="padding:8px 12px">Le pasa algo a mi peque</td><td style="padding:8px 0 8px 12px">No puedo más</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="spec">
+      <div class="spec-head"><h3>Urgency badges</h3><span class="meta-r">.urgency-badge.urgent · .caution · .safe</span></div>
+      <div class="spec-row" style="padding: 16px 0; gap: 12px">
+        <span class="urgency-badge urgent">🚨 URGENCIAS</span>
+        <span class="urgency-badge caution">⚠ MISMO DÍA</span>
+        <span class="urgency-badge safe">🟢 CASA</span>
+      </div>
+      <div class="spec-row col" style="padding: 6px 0 18px">
+        <div class="spec-label">3 niveles de output</div>
+        <ul style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--ink-soft); line-height: 1.7; padding-left: 18px; margin: 0">
+          <li><strong>.urgent</strong> · coral-base bg · ink-deep · llama 112 / urgencias inmediato</li>
+          <li><strong>.caution</strong> · gold-base bg · ink-deep · pediatra mismo día</li>
+          <li><strong>.safe</strong> · mint-base bg · ink-deep · casa · vigilar</li>
+          <li>Card del resultado tiene border-color matching · gradient de fondo subtle (10-14% opacity)</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="spec">
+      <div class="spec-head"><h3>8 árboles cribaje · fuentes clínicas</h3></div>
+      <div class="spec-row col" style="padding: 12px 0 18px">
+        <table style="font-size:12.5px;color:var(--ink-soft);border-collapse:collapse;width:100%;max-width:760px">
+          <thead>
+            <tr style="border-bottom:1px solid var(--line)">
+              <th style="text-align:left;padding:10px 12px 10px 0;font-family:'Lenia';color:var(--ink);font-weight:500">Árbol</th>
+              <th style="text-align:left;padding:10px 12px;font-family:'Lenia';color:var(--ink);font-weight:500">ID</th>
+              <th style="text-align:left;padding:10px 0 10px 12px;font-family:'Lenia';color:var(--ink);font-weight:500">Fuente</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="border-bottom:1px dashed var(--line-soft)"><td style="padding:8px 12px 8px 0">🌡 Fiebre</td><td style="padding:8px 12px"><code>fever</code></td><td style="padding:8px 0 8px 12px">NICE NG143 + CAV-AEP 2026</td></tr>
+            <tr style="border-bottom:1px dashed var(--line-soft)"><td style="padding:8px 12px 8px 0">😮‍💨 Respira</td><td style="padding:8px 12px"><code>breathing</code></td><td style="padding:8px 0 8px 12px">NICE NG9 + AAP CPG 2014/22</td></tr>
+            <tr style="border-bottom:1px dashed var(--line-soft)"><td style="padding:8px 12px 8px 0">😢 Llora</td><td style="padding:8px 12px"><code>crying</code></td><td style="padding:8px 0 8px 12px">Wessel 1954 + PURPLE Crying</td></tr>
+            <tr style="border-bottom:1px dashed var(--line-soft)"><td style="padding:8px 12px 8px 0">🤮 Vomita</td><td style="padding:8px 12px"><code>vomiting</code></td><td style="padding:8px 0 8px 12px">NICE CG84 + ESPGHAN/ESPID 2014</td></tr>
+            <tr style="border-bottom:1px dashed var(--line-soft)"><td style="padding:8px 12px 8px 0">💩 Diarrea</td><td style="padding:8px 12px"><code>diarrhea</code></td><td style="padding:8px 0 8px 12px">NICE CG84 + canon Grow §10.2 BITSS</td></tr>
+            <tr style="border-bottom:1px dashed var(--line-soft)"><td style="padding:8px 12px 8px 0">💢 Golpe</td><td style="padding:8px 12px"><code>head</code></td><td style="padding:8px 0 8px 12px">NICE NG232 + PECARN rule</td></tr>
+            <tr style="border-bottom:1px dashed var(--line-soft)"><td style="padding:8px 12px 8px 0">🫧 Rash</td><td style="padding:8px 12px"><code>rash</code></td><td style="padding:8px 0 8px 12px">NICE CG102 + AAD eczema</td></tr>
+            <tr><td style="padding:8px 12px 8px 0">⚡ Convulsión</td><td style="padding:8px 12px"><code>seizure</code></td><td style="padding:8px 0 8px 12px">NICE NG217 + AAP 2008 febrile</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="spec-row col">
+        <div class="spec-label">Tono trauma-informed (canon)</div>
+        <ul style="font-size:12.5px;color:var(--ink-soft);line-height:1.6;padding-left:18px;margin:0;max-width:60ch">
+          <li>Nunca "tu peque está enfermo" · siempre "esto puede ser X o Y · hablamos de qué hacer"</li>
+          <li>Nunca "deberías" / "tienes que" · siempre "si te ayuda, podemos…"</li>
+          <li>Cero rojo médico · alertas con borde + tag textual + emoji canon Fase 0</li>
+          <li>Cada output cierra con: "Si dudas, llama. Tu pediatra prefiere una falsa alarma a una real perdida."</li>
+          <li>Cita clínica siempre · "— NICE NG143 · 2021" o "— CAV-AEP 2026"</li>
+          <li>Número emergencia local · auto-detect país (España 112 · USA 911 · UK 999)</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="spec">
+      <div class="spec-head"><h3>Mensajes canon Modo 3AM</h3></div>
+      <div class="spec-row col" style="padding: 12px 0 18px">
+        <ul style="font-size:13px;color:var(--ink-soft);line-height:1.7;padding-left:18px;margin:0;max-width:62ch">
+          <li><strong>Apertura</strong> · "Este es un modo urgencia. Las respuestas son más rápidas, más directas y sin juzgar."</li>
+          <li><strong>Si tarda &gt;5s</strong> · "Estoy aquí. Un momento."</li>
+          <li><strong>Cierre</strong> · "¿Guardamos esta noche en el diario? Solo para ti." (guardar / no / luego)</li>
+          <li><strong>Si árbol detecta urgencia</strong> · "Llama al 112 ahora. Si quieres, me quedo contigo mientras llaman."</li>
+          <li><strong>Vuelta al chat principal</strong> · sticky note "Anoche 3AM · resuelto" en mint-subtle pill</li>
         </ul>
       </div>
     </div>
