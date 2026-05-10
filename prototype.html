@@ -7237,6 +7237,441 @@
     margin-top: 9px;
     margin-left: 5px;
   }
+
+  /* ═════════════════════════════════════════════════════════════
+     § V · CHAT
+     Chat principal · un único hilo contextual.
+     Modo 3AM · variante dark, thread efímero, 3 opciones edad-aware.
+     8 árboles de cribaje rápido · NICE / AAP / AEPED canon.
+     ═════════════════════════════════════════════════════════════ */
+
+  /* ─── Chat screen layout ─── */
+  .chat-screen {
+    background: var(--paper);
+  }
+  .chat-context {
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 12px 18px 14px;
+    border-bottom: 1px solid var(--line-soft);
+  }
+  .chat-context > div { display: flex; flex-direction: column; gap: 2px; }
+  .chat-context .eyebrow {
+    font-family: "Lenia"; font-size: var(--fs-eyebrow);
+    letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--ink-muted); font-weight: 500;
+  }
+  .chat-context strong {
+    font-family: "Lenia"; font-weight: 500;
+    font-size: var(--fs-body); color: var(--ink);
+    letter-spacing: -0.005em;
+  }
+  .chat-3am-toggle {
+    background: var(--paper-soft);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-pill);
+    padding: 7px 12px;
+    font-family: "Lenia"; font-size: var(--fs-meta);
+    color: var(--ink-soft); cursor: pointer;
+    display: inline-flex; align-items: center; gap: 6px;
+    transition: filter 150ms var(--ease);
+  }
+  .chat-3am-toggle:hover { filter: brightness(0.97); }
+
+  .chat-thread {
+    flex: 1 1 auto;
+    overflow-y: auto;
+    padding: 18px 16px 12px;
+    display: flex; flex-direction: column;
+    gap: 12px;
+    background: var(--paper);
+    scrollbar-width: none;
+  }
+  .chat-thread::-webkit-scrollbar { display: none; }
+
+  /* Bubble base · reuses DS § N pattern */
+  .chat-thread .bubble-row {
+    display: flex; gap: 8px;
+    align-items: flex-end;
+  }
+  .chat-thread .bubble-row.you { justify-content: flex-end; }
+  .chat-thread .bubble {
+    max-width: 78%;
+    border-radius: 18px;
+    padding: 10px 14px;
+    font-family: "Helvena";
+    font-size: var(--fs-body-sm);
+    line-height: 1.5;
+    color: var(--ink);
+    background: var(--paper-soft);
+    border: 1px solid var(--line-soft);
+  }
+  .chat-thread .bubble.you {
+    background: var(--coral-base);
+    color: #4A2510;
+    border-color: var(--coral-base);
+  }
+  .chat-thread .bubble.system {
+    background: transparent;
+    border: 0;
+    color: var(--ink-muted);
+    font-family: "Lenia";
+    font-size: var(--fs-meta);
+    letter-spacing: 0.04em;
+    text-align: center;
+    padding: 4px 0;
+    max-width: 100%;
+    align-self: center;
+  }
+  .chat-thread .bubble .source {
+    display: block;
+    margin-top: 6px;
+    font-size: var(--fs-eyebrow);
+    color: var(--ink-muted);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+  .chat-thread .bubble strong { font-weight: 500; color: inherit; }
+
+  /* Sticky note for resolved 3AM session in main thread */
+  .chat-thread .chat-note-3am {
+    align-self: center;
+    background: var(--mint-subtle);
+    color: #4F6647;
+    padding: 6px 12px;
+    border-radius: var(--radius-pill);
+    font-family: "Lenia"; font-size: var(--fs-meta);
+    letter-spacing: 0.04em;
+    border: 1px solid rgba(143,174,133,0.32);
+  }
+
+  /* ─── Chat input bar (sticky bottom) ─── */
+  .chat-input-bar {
+    flex: 0 0 auto;
+    background: var(--paper);
+    border-top: 1px solid var(--line-soft);
+    padding: 10px 16px 14px;
+    display: flex; flex-direction: column;
+    gap: 10px;
+  }
+  .chat-triage-chips {
+    display: flex; gap: 8px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    margin: 0 -16px;
+    padding: 2px 16px 4px;
+  }
+  .chat-triage-chips::-webkit-scrollbar { display: none; }
+  .chat-triage-chip {
+    flex: 0 0 auto;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-pill);
+    background: var(--paper-soft);
+    padding: 7px 12px;
+    font-family: "Lenia"; font-weight: 500;
+    font-size: var(--fs-meta);
+    color: var(--ink-soft);
+    cursor: pointer;
+    display: inline-flex; align-items: center; gap: 6px;
+    white-space: nowrap;
+    transition: filter 150ms var(--ease), background 150ms var(--ease);
+  }
+  .chat-triage-chip:hover { background: var(--paper); }
+  .chat-triage-chip .icon { font-size: 14px; line-height: 1; }
+
+  .chat-input-row {
+    display: flex; gap: 10px; align-items: center;
+  }
+  .chat-text-input {
+    flex: 1 1 auto;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-pill);
+    background: var(--paper-soft);
+    padding: 11px 16px;
+    font-family: "Helvena"; font-size: var(--fs-body-sm);
+    color: var(--ink); outline: 0;
+    transition: border-color 150ms var(--ease);
+  }
+  .chat-text-input::placeholder { color: var(--ink-muted); }
+  .chat-text-input:focus-visible {
+    outline: 2px solid var(--coral-base); outline-offset: 0;
+    border-color: var(--coral-base);
+  }
+  .chat-send-btn {
+    flex: 0 0 auto;
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    background: var(--coral-base);
+    color: #4A2510;
+    border: 0;
+    display: grid; place-items: center;
+    cursor: pointer;
+    font-family: "Lenia"; font-weight: 500; font-size: 17px;
+    transition: filter 150ms var(--ease);
+  }
+  .chat-send-btn:hover { filter: brightness(0.97); }
+  .chat-canon-foot {
+    text-align: center;
+    font-family: "Lenia"; font-size: var(--fs-eyebrow);
+    letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--ink-faint);
+    margin: 0;
+    padding-top: 4px;
+  }
+
+  /* ─── Modo 3AM · variante dark ─── */
+  .chat-3am {
+    background: #0E0F12;
+    color: #E6E2DC;
+  }
+  .chat-3am .status,
+  .chat-3am .status span,
+  .chat-3am .status .status-dots span { color: #E6E2DC; background: transparent; }
+  .chat-3am .chat-3am-back {
+    background: transparent;
+    border: 0;
+    color: #B7B0A4;
+    font-family: "Lenia"; font-size: var(--fs-meta);
+    padding: 14px 18px 0;
+    text-align: left;
+    cursor: pointer;
+  }
+  .chat-3am-header {
+    padding: 14px 22px 18px;
+  }
+  .chat-3am-header h1 {
+    font-family: "Lenia"; font-weight: 500;
+    font-size: var(--fs-h2);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    color: #F2A57A;
+    margin: 0 0 8px;
+  }
+  .chat-3am-header p {
+    font-family: "Helvena"; font-size: var(--fs-body-sm);
+    color: #B7B0A4; line-height: 1.5;
+    margin: 0; max-width: 32ch;
+  }
+  .chat-3am-options {
+    flex: 1 1 auto;
+    display: flex; flex-direction: column;
+    gap: 12px;
+    padding: 6px 22px 16px;
+  }
+  .chat-3am-option {
+    display: block;
+    width: 100%;
+    text-align: left;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: var(--radius-lg);
+    padding: 18px 20px;
+    color: #E6E2DC;
+    font-family: "Lenia"; font-weight: 500;
+    font-size: var(--fs-body-lg);
+    line-height: 1.3;
+    cursor: pointer;
+    transition: background 180ms var(--ease), transform 180ms var(--ease);
+  }
+  .chat-3am-option:hover {
+    background: rgba(242,165,122,0.10);
+    transform: translateY(-1px);
+  }
+  .chat-3am-option .sub {
+    display: block;
+    margin-top: 4px;
+    font-family: "Helvena";
+    font-size: var(--fs-meta);
+    color: #B7B0A4;
+    font-weight: 400;
+  }
+  .chat-3am .chat-canon-foot {
+    color: rgba(183,176,164,0.5);
+    padding: 14px 22px 18px;
+  }
+
+  /* ─── Triage sheet (8 árboles) ─── */
+  .triage-sheet-shell {
+    position: absolute;
+    left: 12px; right: 12px; bottom: 10px;
+    z-index: 36;
+    opacity: 0; visibility: hidden; pointer-events: none;
+    transform: translateY(112%);
+    transition: transform 260ms var(--ease), opacity 180ms ease, visibility 0s linear 260ms;
+    max-height: 86%;
+  }
+  .triage-sheet-shell.active {
+    opacity: 1; visibility: visible; pointer-events: auto;
+    transform: translateY(0);
+    transition: transform 260ms var(--ease), opacity 180ms ease, visibility 0s;
+  }
+  .triage-sheet {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-xl);
+    padding: 18px 20px 22px;
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,0.7),
+      0 -18px 60px rgba(42,33,27,0.18);
+    display: flex; flex-direction: column;
+    gap: 14px;
+    max-height: calc(86vh - 20px);
+    overflow-y: auto;
+    scrollbar-width: none;
+  }
+  .triage-sheet::-webkit-scrollbar { display: none; }
+  .triage-grabber {
+    width: 36px; height: 4px;
+    border-radius: var(--radius-pill);
+    background: var(--line-strong);
+    margin: 0 auto 8px;
+  }
+  .triage-head {
+    display: flex; justify-content: space-between; align-items: flex-start;
+    gap: 10px;
+  }
+  .triage-head h3 {
+    font-family: "Lenia"; font-weight: 500;
+    font-size: var(--fs-h4);
+    line-height: 1.2;
+    letter-spacing: -0.005em;
+    margin: 0;
+    color: var(--ink);
+  }
+  .triage-head .triage-icon {
+    font-size: 22px; line-height: 1;
+    flex-shrink: 0;
+  }
+  .triage-head .triage-close {
+    background: transparent; border: 0;
+    color: var(--ink-faint);
+    font-size: 20px;
+    cursor: pointer;
+    padding: 0 4px;
+    line-height: 1;
+  }
+  .triage-step {
+    display: flex; flex-direction: column;
+    gap: 10px;
+  }
+  .triage-step h4 {
+    font-family: "Lenia"; font-weight: 500;
+    font-size: var(--fs-body);
+    color: var(--ink);
+    margin: 0 0 4px;
+    line-height: 1.35;
+  }
+  .triage-options {
+    display: flex; flex-direction: column;
+    gap: 8px;
+  }
+  .triage-option {
+    text-align: left;
+    background: var(--paper-soft);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    padding: 14px 16px;
+    font-family: "Lenia"; font-weight: 500;
+    font-size: var(--fs-body-sm);
+    color: var(--ink);
+    line-height: 1.4;
+    cursor: pointer;
+    transition: filter 150ms var(--ease), border-color 150ms var(--ease);
+  }
+  .triage-option:hover {
+    filter: brightness(0.99);
+    border-color: var(--coral-base);
+  }
+  .triage-option .sub {
+    display: block;
+    margin-top: 3px;
+    font-family: "Helvena";
+    font-size: var(--fs-meta);
+    color: var(--ink-muted);
+    font-weight: 400;
+  }
+  .triage-back {
+    align-self: flex-start;
+    background: transparent; border: 0;
+    color: var(--ink-muted);
+    font-family: "Lenia"; font-size: var(--fs-meta);
+    cursor: pointer;
+    padding: 4px 0;
+    margin-top: -4px;
+  }
+
+  /* Triage result card · 3 levels of urgency */
+  .triage-result {
+    border-radius: var(--radius-lg);
+    padding: 16px 18px;
+    display: flex; flex-direction: column;
+    gap: 10px;
+    border: 1px solid;
+  }
+  .triage-result.urgent {
+    background: linear-gradient(135deg, rgba(214,119,66,0.10), rgba(251,229,214,0.55));
+    border-color: rgba(214,119,66,0.45);
+  }
+  .triage-result.caution {
+    background: linear-gradient(135deg, rgba(232,201,122,0.14), rgba(246,235,201,0.58));
+    border-color: rgba(184,151,63,0.40);
+  }
+  .triage-result.safe {
+    background: linear-gradient(135deg, rgba(143,174,133,0.14), rgba(229,237,223,0.58));
+    border-color: rgba(143,174,133,0.40);
+  }
+  .urgency-badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-family: "Lenia"; font-weight: 500;
+    font-size: var(--fs-meta);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: var(--radius-pill);
+    align-self: flex-start;
+  }
+  .urgency-badge.urgent { background: var(--coral-base); color: #4A2510; }
+  .urgency-badge.caution { background: var(--gold-base); color: #4A3A12; }
+  .urgency-badge.safe { background: var(--mint-base); color: #2F4029; }
+  .triage-result h4 {
+    font-family: "Lenia"; font-weight: 500;
+    font-size: var(--fs-body);
+    margin: 0;
+    color: var(--ink);
+    line-height: 1.35;
+  }
+  .triage-result p {
+    margin: 0;
+    font-family: "Helvena"; font-size: var(--fs-body-sm);
+    color: var(--ink-soft);
+    line-height: 1.5;
+  }
+  .triage-result .triage-actions {
+    display: flex; flex-direction: column;
+    gap: 6px;
+    margin-top: 4px;
+  }
+  .triage-result .triage-source {
+    font-family: "Lenia"; font-size: var(--fs-eyebrow);
+    color: var(--ink-muted);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    margin-top: 4px;
+  }
+  .triage-canon {
+    font-family: "Helvena"; font-style: italic;
+    font-size: var(--fs-body-sm);
+    color: var(--ink-soft);
+    line-height: 1.5;
+    text-align: center;
+    padding: 8px 0 4px;
+    border-top: 1px dashed var(--line-soft);
+    margin-top: 6px;
+  }
+
 </style>
 </head>
 <body>
@@ -7582,7 +8017,7 @@
               <button class="fab" aria-label="Abrir registro rápido" type="button" data-log-open data-log-source="hoy"><svg viewBox="0 0 24 24"><use href="#i-plus"/></svg></button>
               <span class="lbl">Log</span>
             </div>
-            <button class="nav-tab" type="button" data-sheet-title="Chat" data-sheet-copy="El chat con la IA y el pediatra de tu peque vive aquí. En el prototipo solo confirma que el flujo existe — en producción será una conversación contextual con tu data familiar." data-open-sheet><svg viewBox="0 0 24 24"><use href="#i-chat"/></svg><span>Chat</span></button>
+            <button class="nav-tab" type="button" data-goto="chat"><svg viewBox="0 0 24 24"><use href="#i-chat"/></svg><span>Chat</span></button>
             <button class="nav-tab" type="button" data-goto="hitos"><svg viewBox="0 0 24 24"><use href="#i-flag"/></svg><span>Hitos</span></button>
           </nav>
         </section>
@@ -7615,7 +8050,7 @@
               <button class="fab" aria-label="Abrir registro rápido" type="button" data-log-open data-log-source="calendario"><svg viewBox="0 0 24 24"><use href="#i-plus"/></svg></button>
               <span class="lbl">Log</span>
             </div>
-            <button class="nav-tab" type="button" data-sheet-title="Chat" data-sheet-copy="El chat con la IA y el pediatra de tu peque vive aquí. En el prototipo solo confirma que el flujo existe — en producción será una conversación contextual con tu data familiar." data-open-sheet><svg viewBox="0 0 24 24"><use href="#i-chat"/></svg><span>Chat</span></button>
+            <button class="nav-tab" type="button" data-goto="chat"><svg viewBox="0 0 24 24"><use href="#i-chat"/></svg><span>Chat</span></button>
             <button class="nav-tab" type="button" data-goto="hitos"><svg viewBox="0 0 24 24"><use href="#i-flag"/></svg><span>Hitos</span></button>
           </nav>
         </section>
@@ -7782,7 +8217,7 @@
               <button class="fab" aria-label="Abrir registro rápido" type="button" data-log-open data-log-source="log"><svg viewBox="0 0 24 24"><use href="#i-plus"/></svg></button>
               <span class="lbl">Log</span>
             </div>
-            <button class="nav-tab" type="button" data-sheet-title="Chat" data-sheet-copy="El chat con la IA y el pediatra de tu peque vive aquí. En el prototipo solo confirma que el flujo existe — en producción será una conversación contextual con tu data familiar." data-open-sheet><svg viewBox="0 0 24 24"><use href="#i-chat"/></svg><span>Chat</span></button>
+            <button class="nav-tab" type="button" data-goto="chat"><svg viewBox="0 0 24 24"><use href="#i-chat"/></svg><span>Chat</span></button>
             <button class="nav-tab" type="button" data-goto="hitos"><svg viewBox="0 0 24 24"><use href="#i-flag"/></svg><span>Hitos</span></button>
           </nav>
         </section>
@@ -7791,6 +8226,78 @@
           <div class="status"><span>9:43</span><div class="status-dots"><span></span><span></span><span></span></div></div>
           <div class="content log-book log-detail-page" data-log-detail-root></div>
         </section>
+
+        <!-- ═══════════════════════════════════════════════════════════
+             § V · Chat principal · single thread, contextual
+             ═══════════════════════════════════════════════════════════ -->
+        <section class="screen chat-screen" data-screen="chat">
+          <div class="status"><span>9:42</span><div class="status-dots"><span></span><span></span><span></span></div></div>
+          <header class="chat-context">
+            <div>
+              <span class="eyebrow">Chat · Grow</span>
+              <strong data-chat-context>Lola · 18 m · niñez temprana</strong>
+            </div>
+            <button class="chat-3am-toggle" type="button" data-goto="chat-3am" aria-label="Modo 3AM">
+              <span aria-hidden="true">🌙</span> Modo 3AM
+            </button>
+          </header>
+          <div class="chat-thread" data-chat-thread aria-live="polite">
+            <!-- messages render here -->
+          </div>
+          <div class="chat-input-bar">
+            <div class="chat-triage-chips" role="list" aria-label="Cribaje rápido">
+              <button class="chat-triage-chip" type="button" role="listitem" data-triage="fever"><span class="icon">🌡</span> Fiebre</button>
+              <button class="chat-triage-chip" type="button" role="listitem" data-triage="breathing"><span class="icon">😮‍💨</span> Respira</button>
+              <button class="chat-triage-chip" type="button" role="listitem" data-triage="crying"><span class="icon">😢</span> Llora</button>
+              <button class="chat-triage-chip" type="button" role="listitem" data-triage="vomiting"><span class="icon">🤮</span> Vomita</button>
+              <button class="chat-triage-chip" type="button" role="listitem" data-triage="diarrhea"><span class="icon">💩</span> Diarrea</button>
+              <button class="chat-triage-chip" type="button" role="listitem" data-triage="head"><span class="icon">💢</span> Golpe</button>
+              <button class="chat-triage-chip" type="button" role="listitem" data-triage="rash"><span class="icon">🫧</span> Rash</button>
+              <button class="chat-triage-chip" type="button" role="listitem" data-triage="seizure"><span class="icon">⚡</span> Convulsión</button>
+            </div>
+            <div class="chat-input-row">
+              <input class="chat-text-input" type="text" placeholder="Pregúntale a Grow…" aria-label="Mensaje" data-chat-input>
+              <button class="chat-send-btn" type="button" data-chat-send aria-label="Enviar">→</button>
+            </div>
+            <p class="chat-canon-foot">Aquí no diagnosticamos · aquí estamos</p>
+          </div>
+          <nav class="phone-nav" aria-label="Navegacion principal">
+            <button class="nav-tab" type="button" data-goto="hoy"><svg viewBox="0 0 24 24"><use href="#i-home"/></svg><span>Hoy</span></button>
+            <button class="nav-tab" type="button" data-goto="calendario"><svg viewBox="0 0 24 24"><use href="#i-cal"/></svg><span>Calendario</span></button>
+            <div class="nav-tab fab-cell">
+              <button class="fab" type="button" data-log-open data-log-source="chat" aria-label="Abrir registro rápido"><svg viewBox="0 0 24 24"><use href="#i-plus"/></svg></button>
+              <span class="lbl">Log</span>
+            </div>
+            <button class="nav-tab active" type="button" data-goto="chat"><svg viewBox="0 0 24 24"><use href="#i-chat"/></svg><span>Chat</span></button>
+            <button class="nav-tab" type="button" data-goto="hitos"><svg viewBox="0 0 24 24"><use href="#i-flag"/></svg><span>Hitos</span></button>
+          </nav>
+        </section>
+
+        <!-- ═══════════════════════════════════════════════════════════
+             § V.2 · Modo 3AM · dark, ephemeral, 3 age-aware options
+             ═══════════════════════════════════════════════════════════ -->
+        <section class="screen no-nav chat-3am" data-screen="chat-3am">
+          <div class="status"><span>3:14</span><div class="status-dots"><span></span><span></span><span></span></div></div>
+          <button class="chat-3am-back" type="button" data-goto="chat" aria-label="Volver al chat">← Volver al chat</button>
+          <div class="chat-3am-header">
+            <h1>Modo urgencia</h1>
+            <p>Las respuestas son más rápidas, más directas y sin juzgar.</p>
+          </div>
+          <div class="chat-3am-options" data-3am-options aria-label="Opciones 3AM">
+            <!-- options render here based on baby age -->
+          </div>
+          <p class="chat-canon-foot">Aquí no diagnosticamos · aquí estamos</p>
+        </section>
+
+        <!-- ═══════════════════════════════════════════════════════════
+             Triage sheet · sequential Q&A tree · 8 trees
+             ═══════════════════════════════════════════════════════════ -->
+        <aside class="triage-sheet-shell" id="triage-modal" aria-label="Cribaje rápido">
+          <div class="triage-sheet" data-triage-root>
+            <!-- triage-step OR triage-result render here -->
+          </div>
+        </aside>
+
 
         <div class="scrim" data-close-sheet></div>
         <aside class="datepicker-sheet-shell" aria-label="Selector de fecha" id="datepicker-modal">
@@ -12256,6 +12763,12 @@ Grow
       if (options.pregnancyView) pregnancyActiveView = options.pregnancyView;
       renderPregnancyBook();
     }
+    if (name === 'chat') {
+      renderChat();
+    }
+    if (name === 'chat-3am') {
+      renderChat3AM();
+    }
     if (name === 'vacunacion') {
       if (options.vaccineView) vaccineActiveView = options.vaccineView;
       renderVaccineBook();
@@ -12781,8 +13294,564 @@ Grow
     milestoneCelebration.setAttribute('aria-hidden', 'true');
     const dp = document.getElementById('datepicker-modal');
     if (dp) dp.classList.remove('active');
+    const triageMod = document.getElementById('triage-modal');
+    if (triageMod) triageMod.classList.remove('active');
     scrim.classList.remove('active');
   }
+
+  /* ═════════════════ § V · CHAT · single thread + 3AM + 8 triage trees ═════════════════ */
+
+  /* Initial chat messages — contextual welcome */
+  let chatMessages = [
+    { role: 'system',    text: 'Conversación segura · solo tú y Grow' },
+    { role: 'companion', text: 'Hola María. Estoy aquí.', time: '21:14' },
+    { role: 'companion', text: 'Cualquier cosa que pase con Lola, o contigo, hablamos. <strong>Aquí no diagnosticamos · aquí estamos.</strong>', time: '21:14' },
+    { role: 'companion', text: 'Si necesitas un cribaje rápido (fiebre, respira, llora…), tap en el chip de abajo.', time: '21:14' }
+  ];
+
+  /* Get current peque age in months for context-aware behaviour */
+  function chatGetBabyMonths() {
+    const dateValue = document.getElementById('date-value')?.textContent?.trim();
+    if (dateValue && typeof dpParseDateValue === 'function') {
+      const parsed = dpParseDateValue(dateValue);
+      if (parsed) {
+        const today = new Date();
+        const birth = new Date(parsed.year, parsed.month, parsed.day);
+        let months = (today.getFullYear() - birth.getFullYear()) * 12 + (today.getMonth() - birth.getMonth());
+        if (today.getDate() < birth.getDate()) months -= 1;
+        return Math.max(0, months);
+      }
+    }
+    return 18; /* fallback: Lola default */
+  }
+
+  /* 3AM options · 4 age buckets (returns array of {title, sub, action}) */
+  function chat3AMOptionsForAge(months) {
+    if (months < 0) {  /* embarazo · negative semantics not used; placeholder */
+      return [
+        { title: '"Algo no va bien con mi cuerpo"', sub: 'Síntomas físicos · sangrados · contracciones', action: 'embarazo-body' },
+        { title: '"Tengo miedo · necesito hablar"',  sub: 'Acompañamiento sin juzgar',                action: 'embarazo-fear' },
+        { title: '"No puedo dormir"',                sub: 'Insomnio · ansiedad nocturna',           action: 'embarazo-sleep' }
+      ];
+    }
+    if (months < 3) {
+      return [
+        { title: '"No para de llorar"',         sub: 'Llanto inconsolable · cólicos',         action: 'crying' },
+        { title: '"Le pasa algo a mi peque"',   sub: 'Triage clínico · árboles científicos',   action: 'triage-menu' },
+        { title: '"No puedo más"',              sub: 'Anti-shaken-baby · acompañamiento',     action: 'support' }
+      ];
+    }
+    if (months < 12) {
+      return [
+        { title: '"No duerme · y yo tampoco"',  sub: 'Regresiones · regulación · ventanas',   action: 'sleep' },
+        { title: '"Le pasa algo a mi peque"',   sub: 'Triage clínico · árboles científicos',   action: 'triage-menu' },
+        { title: '"Solo necesito acompañar"',   sub: 'Sin acción · solo presencia',           action: 'support' }
+      ];
+    }
+    return [  /* 12-36m */
+      { title: '"Pesadilla nocturna"',          sub: 'Terror nocturno vs pesadilla · cómo actuar', action: 'nightmare' },
+      { title: '"Le pasa algo a mi peque"',     sub: 'Triage clínico · árboles científicos',        action: 'triage-menu' },
+      { title: '"No puedo más"',                sub: 'Anti-burnout · acompañamiento',              action: 'support' }
+    ];
+  }
+
+  /* Triage trees · 8 árboles · NICE / AAP / AEPED canon
+     Each tree is { id, icon, label, source, steps: [...], evaluate: fn(answers, months) → result } */
+  const triageTrees = {
+    fever: {
+      id: 'fever',
+      icon: '🌡',
+      label: 'Fiebre',
+      source: 'NICE NG143 Fever in under 5s · 2021 + CAV-AEP 2026',
+      steps: [
+        { key: 'age',  q: '¿Qué edad tiene tu peque?', options: [
+          { label: 'Menos de 3 meses',    value: 'under3m' },
+          { label: '3 a 6 meses',          value: '3to6m'   },
+          { label: 'Más de 6 meses',       value: 'over6m'  }
+        ]},
+        { key: 'temp', q: '¿Qué temperatura tiene ahora?', options: [
+          { label: 'Menos de 38°C',         value: 'lt38'  },
+          { label: '38 a 38.9°C',           value: '38'    },
+          { label: '39 a 39.4°C',           value: '39'    },
+          { label: '39.5°C o más',          value: '39.5+' }
+        ]},
+        { key: 'flags', q: '¿Algún signo de alarma?', options: [
+          { label: 'Petequias que no blanquean (glass test)', sub: 'Manchas rojas/moradas que no desaparecen al presionar', value: 'petechiae' },
+          { label: 'Letargia · convulsión · no responde',     sub: 'Reactividad muy baja',                                  value: 'lethargy'  },
+          { label: 'Buen aspecto · come · juega',             sub: 'Activo entre subidas',                                  value: 'wellish'   }
+        ]}
+      ],
+      evaluate: function(a) {
+        if (a.flags === 'petechiae' || a.flags === 'lethargy') {
+          return { level: 'urgent', title: '🚨 Llama al 112 ahora.',
+                   body: 'Petequias que no blanquean o letargia post-fiebre son señales de meningococcemia. No esperes.',
+                   actions: ['Llama al 112', 'Si quieres, me quedo contigo mientras llaman.'] };
+        }
+        if (a.age === 'under3m' && a.temp !== 'lt38') {
+          return { level: 'urgent', title: '🚨 Urgencias siempre.',
+                   body: 'Cualquier fiebre ≥38°C en menores de 3 meses requiere evaluación inmediata. Es canon AEPED — no por alarmismo sino por cómo se presenta la sepsis a esa edad.',
+                   actions: ['Acude a urgencias', 'No esperes consulta'] };
+        }
+        if (a.age === '3to6m' && (a.temp === '39' || a.temp === '39.5+')) {
+          return { level: 'caution', title: '⚠ Pediatra mismo día.',
+                   body: 'Tª ≥39°C entre 3-6 meses · agenda mismo día. Mientras tanto: paracetamol calculado por peso, líquidos a demanda.',
+                   actions: ['Llama al pediatra hoy', 'Calculadora paracetamol disponible en libro Vacunas'] };
+        }
+        if (a.temp === '39.5+') {
+          return { level: 'caution', title: '⚠ Pediatra mismo día si dura >24h.',
+                   body: 'Tª ≥39.5°C en >6m · si persiste más de 24h o aspecto se deteriora, mismo día. Si lleva <5 días con fiebre, vigilar.',
+                   actions: ['Vigilar 24h', 'Paracetamol 10-15 mg/kg cada 4-6h', 'NO ibuprofeno si <6m · NO alternar'] };
+        }
+        return { level: 'safe', title: '🟢 Casa · vigilar.',
+                 body: 'Fiebre <39°C + buen aspecto + come/bebe · manejo en casa. Vigila si cambia.',
+                 actions: ['Paracetamol 10-15 mg/kg cada 4-6h si molesta', 'Líquidos a demanda · piel ligera', 'Llama si pasa de 39.5°C o dura >5 días'] };
+      }
+    },
+
+    breathing: {
+      id: 'breathing', icon: '😮‍💨', label: 'Respira',
+      source: 'NICE NG9 Bronchiolitis · 2021 + AAP CPG 2014/22',
+      steps: [
+        { key: 'severe', q: '¿Cómo se ve ahora?', options: [
+          { label: 'Apnea · cianosis · piel azulada',                value: 'cyanosis' },
+          { label: 'Aleteo nasal · tiraje · respira muy rápido',    value: 'severe'   },
+          { label: 'Sibilantes · cansancio · come <50%',             value: 'moderate' },
+          { label: 'Catarro · come bien · activo',                   value: 'mild'     }
+        ]}
+      ],
+      evaluate: function(a) {
+        if (a.severe === 'cyanosis') {
+          return { level: 'urgent', title: '🚨 Llama al 112 ahora.',
+                   body: 'Apnea o cianosis es emergencia. No esperes — llama mientras yo me quedo contigo.',
+                   actions: ['Llama al 112'] };
+        }
+        if (a.severe === 'severe') {
+          return { level: 'urgent', title: '🚨 Urgencias inmediato.',
+                   body: 'Aleteo nasal + tiraje + frecuencia respiratoria >70/min son criterios de hospitalización en lactante. Acude a urgencias.',
+                   actions: ['Acude a urgencias', 'No esperes consulta de mañana'] };
+        }
+        if (a.severe === 'moderate') {
+          return { level: 'caution', title: '⚠ Pediatra mismo día.',
+                   body: 'Sibilantes audibles + cansancio + tomas <50% requieren valoración mismo día.',
+                   actions: ['Llama al pediatra hoy', 'Lavado nasal con suero antes de tomas'] };
+        }
+        return { level: 'safe', title: '🟢 Casa · vigilar.',
+                 body: 'Catarro típico con buen aspecto. Llama si empeora la respiración o disminuyen tomas.',
+                 actions: ['Lavado nasal con suero antes de tomas y siesta', 'Cabeza ligeramente elevada al dormir', 'Paracetamol si fiebre asociada · 10-15 mg/kg'] };
+      }
+    },
+
+    crying: {
+      id: 'crying', icon: '😢', label: 'Llora',
+      source: 'Wessel 1954 · Hyman 2006 · National Center on Shaken Baby Syndrome (PURPLE)',
+      steps: [
+        { key: 'age', q: '¿Edad de tu peque?', options: [
+          { label: 'Menos de 3 meses',  value: 'under3m' },
+          { label: '3 a 12 meses',       value: '3to12m'  },
+          { label: 'Más de 12 meses',    value: 'over12m' }
+        ]},
+        { key: 'flags', q: '¿Algún signo extra?', options: [
+          { label: 'Fiebre o vómitos repetidos',                              value: 'feverVomit' },
+          { label: 'Heces "jalea de grosella" (sangre + moco)',                value: 'jelly'      },
+          { label: 'Bulto inguinal o en escroto',                               value: 'hernia'     },
+          { label: 'Cojea · no apoya pierna (>12m)',                            value: 'limp'       },
+          { label: 'Solo llanto · sin otros signos',                            value: 'cryOnly'    }
+        ]}
+      ],
+      evaluate: function(a) {
+        if (a.flags === 'feverVomit' || a.flags === 'jelly' || a.flags === 'hernia') {
+          const why = a.flags === 'jelly' ? 'jalea de grosella sugiere intususcepción · canon AEPED'
+                    : a.flags === 'hernia' ? 'bulto inguinal/escrotal puede ser hernia · valorar mismo día'
+                    : 'fiebre + vómitos en <3m requiere evaluación inmediata';
+          return { level: 'urgent', title: '🚨 Urgencias.',
+                   body: why,
+                   actions: ['Acude a urgencias', 'Si dudas, llama al 112'] };
+        }
+        if (a.flags === 'limp' && a.age === 'over12m') {
+          return { level: 'caution', title: '⚠ Pediatra mismo día.',
+                   body: 'Cojera o no apoyar pierna requiere descartar artritis séptica.',
+                   actions: ['Llama al pediatra hoy'] };
+        }
+        if (a.age === 'under3m') {
+          return { level: 'safe', title: '🟢 Cólicos típicos · acompañar.',
+                   body: 'Llanto con regla 3-3-3 (Wessel) sin signos extra · cólicos. <strong>PURPLE Crying</strong>: peak 6-8 sem, pasará. Nunca sacudas — si te abruma, deja al peque seguro y respira.',
+                   actions: ['5 S\'s (swaddle, side, shush, swing, suck)', 'Cross-ref Caca tracker (descartar APLV)', 'Cross-ref Lactancia (frenillo · agarre)'] };
+        }
+        if (a.age === '3to12m') {
+          return { level: 'safe', title: '🟢 Episodios cortos · normal.',
+                   body: 'Si los episodios son cortos y consolables, es desarrollo emocional normal.',
+                   actions: ['Ofrece presencia sin sobrerreaccionar', 'Si pasa de 3h sin consolar + cualquier signo, mismo día'] };
+        }
+        return { level: 'safe', title: '🟢 Pataletas · normal a esta edad.',
+                 body: 'Pataletas de frustración entre 12-36m · normales. Validar emoción sin ceder al motivo.',
+                 actions: ['"Veo que estás muy enfadada"', 'No razonar durante el pico · solo presencia'] };
+      }
+    },
+
+    vomiting: {
+      id: 'vomiting', icon: '🤮', label: 'Vomita',
+      source: 'NICE CG84 Diarrhoea and vomiting in under 5s · ESPGHAN/ESPID 2014',
+      steps: [
+        { key: 'red', q: '¿Cómo es el vómito?', options: [
+          { label: 'Verde (bilioso)',                          value: 'bilious'   },
+          { label: 'Con sangre',                                 value: 'blood'    },
+          { label: 'En proyectil + tu peque <8 sem',           value: 'pyloric'   },
+          { label: 'Repetido + cefalea o muy somnoliento',     value: 'icp'       },
+          { label: 'Vómito habitual · sin signos urgentes',    value: 'normal'    }
+        ]},
+        { key: 'dehyd', q: '¿Signos de deshidratación?', options: [
+          { label: 'Fontanela hundida + boca seca + <50% pañales',  value: 'severe' },
+          { label: 'Letargia · piel sin elasticidad',                value: 'severe' },
+          { label: 'Activo + tolera líquidos a sorbos',              value: 'mild'   }
+        ]}
+      ],
+      evaluate: function(a) {
+        if (a.red === 'bilious') {
+          return { level: 'urgent', title: '🚨 Llama al 112.',
+                   body: 'Vómito bilioso (verde) sugiere oclusión intestinal. No esperes.',
+                   actions: ['Llama al 112 ahora'] };
+        }
+        if (a.red === 'blood' || a.red === 'icp') {
+          return { level: 'urgent', title: '🚨 Urgencias.',
+                   body: a.red === 'blood' ? 'Vómito con sangre requiere evaluación inmediata.' : 'Vómitos repetidos + cefalea/somnolencia · descartar hipertensión intracraneal.',
+                   actions: ['Acude a urgencias'] };
+        }
+        if (a.red === 'pyloric') {
+          return { level: 'caution', title: '⚠ Pediatra mismo día.',
+                   body: 'Vómito en proyectil <8 sem · puede ser estenosis pilórica.',
+                   actions: ['Llama al pediatra hoy o acude a urgencias'] };
+        }
+        if (a.dehyd === 'severe') {
+          return { level: 'caution', title: '⚠ Pediatra mismo día.',
+                   body: 'Signos de deshidratación · valoración hoy.',
+                   actions: ['Llama al pediatra', 'Mientras: suero rehidratación 5 ml cada 5 min', 'Lactancia/fórmula a demanda'] };
+        }
+        return { level: 'safe', title: '🟢 Casa · vigilar.',
+                 body: 'Vómito sin signos urgentes y peque tolera líquidos. Vigila durante 24h.',
+                 actions: ['Suero rehidratación a sorbos · 5 ml cada 5 min', 'Reintroducir dieta a las 4-6h', 'Llama si aparecen signos de deshidratación'] };
+      }
+    },
+
+    diarrhea: {
+      id: 'diarrhea', icon: '💩', label: 'Diarrea',
+      source: 'NICE CG84 · canon Grow §10.2 BITSS scale',
+      steps: [
+        { key: 'blood', q: '¿Hay sangre en las heces?', options: [
+          { label: 'Sí + fiebre + tu peque <3m',     value: 'severe' },
+          { label: 'Sí pero buen aspecto',             value: 'mild'   },
+          { label: 'No hay sangre',                     value: 'no'     }
+        ]},
+        { key: 'duration', q: '¿Cuánto lleva la diarrea?', options: [
+          { label: 'Empezó hoy o ayer',                 value: 'short'  },
+          { label: '2 a 6 días',                         value: 'medium' },
+          { label: 'Más de 7 días',                      value: 'long'   }
+        ]}
+      ],
+      evaluate: function(a) {
+        if (a.blood === 'severe') {
+          return { level: 'urgent', title: '🚨 Urgencias.',
+                   body: 'Sangre en heces + fiebre en lactante <3m · descartar Salmonella/Shigella · sepsis.',
+                   actions: ['Acude a urgencias'] };
+        }
+        if (a.blood === 'mild') {
+          return { level: 'caution', title: '⚠ Pediatra mismo día.',
+                   body: 'Sangre en heces requiere valoración mismo día aunque el aspecto sea bueno.',
+                   actions: ['Llama al pediatra hoy'] };
+        }
+        if (a.duration === 'long') {
+          return { level: 'caution', title: '⚠ Pediatra esta semana.',
+                   body: 'Diarrea >7 días · descartar APLV o intolerancia a lactosa.',
+                   actions: ['Agenda con pediatra', 'Cross-ref Caca tracker para patrón APLV/FPIES'] };
+        }
+        return { level: 'safe', title: '🟢 Casa · autolimitada.',
+                 body: 'Diarrea sin sangre y peque come/bebe · manejo en casa.',
+                 actions: ['Suero rehidratación si demanda', 'Cross-ref Caca tracker (BITSS)', 'Llama si aparece sangre o duración >7 días'] };
+      }
+    },
+
+    head: {
+      id: 'head', icon: '💢', label: 'Golpe',
+      source: 'NICE NG232 Head injury · 2023 + PECARN rule (Kuppermann 2009)',
+      steps: [
+        { key: 'red', q: '¿Algún signo desde el golpe?', options: [
+          { label: 'Pérdida de conciencia >5s · convulsión',          value: 'loc'    },
+          { label: 'Vómitos >2 episodios después del golpe',           value: 'vomit'  },
+          { label: 'Sangrado de nariz/oído + líquido claro',           value: 'fluid'  },
+          { label: 'Pupilas desiguales',                                value: 'pupils' },
+          { label: 'No reconoce a sus padres · muy somnoliento',       value: 'altered'},
+          { label: 'Comportamiento normal · 0-1 vómitos',              value: 'normal' }
+        ]},
+        { key: 'context', q: '¿Cómo fue?', options: [
+          { label: 'Bebé <1 año · golpe desde >0.9 m',                 value: 'highFall' },
+          { label: 'Golpe leve · contexto normal',                       value: 'mild'     }
+        ]}
+      ],
+      evaluate: function(a) {
+        if (a.red === 'loc' || a.red === 'pupils') {
+          return { level: 'urgent', title: '🚨 Llama al 112.',
+                   body: 'Pérdida de conciencia, convulsión post-trauma o pupilas desiguales requieren atención inmediata.',
+                   actions: ['Llama al 112'] };
+        }
+        if (a.red === 'vomit' || a.red === 'fluid' || a.red === 'altered') {
+          return { level: 'urgent', title: '🚨 Urgencias.',
+                   body: 'Vómitos repetidos, sangrado/líquido claro de oído o alteración de consciencia tras golpe · evaluación inmediata.',
+                   actions: ['Acude a urgencias'] };
+        }
+        if (a.context === 'highFall') {
+          return { level: 'caution', title: '⚠ Pediatra mismo día.',
+                   body: 'Caída >0.9 m en lactante <1 año · valoración hoy aunque parezca bien.',
+                   actions: ['Llama al pediatra hoy o acude a urgencias'] };
+        }
+        return { level: 'safe', title: '🟢 Casa · vigilar 24h.',
+                 body: 'Golpe leve + comportamiento normal · vigila durante 24h.',
+                 actions: ['Frío local intermitente', 'Despertar cada 3-4h durante las primeras 12h', 'Paracetamol si dolor 10-15 mg/kg', 'Llama si vómitos >2, somnolencia anormal o cambios de comportamiento'] };
+      }
+    },
+
+    rash: {
+      id: 'rash', icon: '🫧', label: 'Rash',
+      source: 'NICE Meningitis CG102 · AAD eczema guidelines',
+      steps: [
+        { key: 'glass', q: 'Glass test · ¿blanquean al presionar?', options: [
+          { label: 'NO blanquean (petequias)',                                  value: 'petechiae' },
+          { label: 'Sí blanquean',                                                value: 'blanch'    }
+        ]},
+        { key: 'extra', q: '¿Algún signo extra?', options: [
+          { label: 'Urticaria + dificultad respirar/tragar',                     value: 'anaphylaxis' },
+          { label: 'Mancha caliente roja extendida + fiebre',                    value: 'cellulitis'  },
+          { label: 'Ampollas grandes · descamación',                              value: 'blisters'    },
+          { label: 'Manos/pies/boca con lesiones',                                value: 'hfm'         },
+          { label: 'Piel seca en pliegues · pica',                                value: 'eczema'      },
+          { label: 'Sarpullido en zona del pañal',                                value: 'diaper'      },
+          { label: 'No identifico · buen aspecto',                                value: 'unknown'     }
+        ]}
+      ],
+      evaluate: function(a) {
+        if (a.glass === 'petechiae') {
+          return { level: 'urgent', title: '🚨 Llama al 112 ahora.',
+                   body: 'Petequias que no blanquean es señal de meningococcemia. Tiempo crítico.',
+                   actions: ['Llama al 112'] };
+        }
+        if (a.extra === 'anaphylaxis') {
+          return { level: 'urgent', title: '🚨 Llama al 112.',
+                   body: 'Urticaria + dificultad respirar/tragar · anafilaxia. Necesita atención inmediata.',
+                   actions: ['Llama al 112', 'Si tiene autoinyector adrenalina, úsalo'] };
+        }
+        if (a.extra === 'cellulitis' || a.extra === 'blisters') {
+          return { level: 'caution', title: '⚠ Pediatra mismo día.',
+                   body: a.extra === 'cellulitis' ? 'Celulitis posible · necesita valoración.' : 'Ampollas grandes/descamación · valoración hoy.',
+                   actions: ['Llama al pediatra hoy'] };
+        }
+        if (a.extra === 'hfm') {
+          return { level: 'safe', title: '🟢 Hand-foot-mouth · típico.',
+                   body: 'Manos-pies-boca · viral autolimitado.',
+                   actions: ['Paracetamol si dolor o fiebre 10-15 mg/kg', 'Líquidos suaves · evitar ácidos en boca', 'Llama si no come/bebe'] };
+        }
+        if (a.extra === 'eczema') {
+          return { level: 'safe', title: '🟢 Eczema · cuidado de piel.',
+                   body: 'Piel seca en pliegues + picor · eczema atópico común.',
+                   actions: ['Emoliente 2-3 veces al día', 'Corticoide tópico leve si brote (consulta pediatra)', 'Evitar baños largos calientes'] };
+        }
+        if (a.extra === 'diaper') {
+          return { level: 'safe', title: '🟢 Sarpullido del pañal.',
+                   body: 'Cuidado en casa.',
+                   actions: ['Cambios frecuentes · piel al aire si posible', 'Crema barrera (óxido de zinc)', 'Llama si persiste >7 días o aparecen ampollas'] };
+        }
+        return { level: 'safe', title: '🟢 Foto al chat · valorar con pediatra.',
+                 body: 'Rash sin identificar pero peque con buen aspecto · subir foto al chat o consulta no urgente.',
+                 actions: ['Foto al chat para valoración', 'Llama si fiebre + rash o cambios rápidos'] };
+      }
+    },
+
+    seizure: {
+      id: 'seizure', icon: '⚡', label: 'Convulsión',
+      source: 'NICE NG217 Epilepsies + AAP 2008 Febrile seizures',
+      steps: [
+        { key: 'now', q: '¿Está convulsionando ahora?', options: [
+          { label: 'Sí · está pasando ahora',                                    value: 'now'       },
+          { label: 'Ya pasó · acaba de terminar',                                 value: 'done'      }
+        ]},
+        { key: 'hist', q: '¿Es la primera convulsión?', options: [
+          { label: 'Primera convulsión en su vida',                              value: 'first'     },
+          { label: 'Ya ha tenido antes',                                          value: 'recurrent' }
+        ]},
+        { key: 'context', q: '¿Cómo es la convulsión?', options: [
+          { label: '<5 min · generalizada · 1ª en 24h · con fiebre',             value: 'simple'    },
+          { label: '>5 min · focal · repite en 24h · sin fiebre',                 value: 'atypical'  },
+          { label: 'No sé / no estoy segura',                                     value: 'unsure'    }
+        ]}
+      ],
+      evaluate: function(a, months) {
+        if (a.now === 'now') {
+          return { level: 'urgent', title: '🚨 Llama al 112 si dura >5 min.',
+                   body: 'Coloca al peque de lado · sin meter nada en la boca · cronometra. Si pasa de 5 min, es estado epiléptico.',
+                   actions: ['Llama al 112 si pasa de 5 min', 'Posición lateral de seguridad', 'Sin meter nada en boca'] };
+        }
+        if (a.hist === 'first') {
+          return { level: 'urgent', title: '🚨 Urgencias siempre.',
+                   body: 'Primera convulsión en la vida · evaluación obligatoria aunque ya haya terminado.',
+                   actions: ['Acude a urgencias'] };
+        }
+        if (a.context === 'atypical') {
+          return { level: 'urgent', title: '🚨 Urgencias.',
+                   body: 'Convulsión atípica (focal, >15min o repetida en 24h) requiere valoración.',
+                   actions: ['Acude a urgencias'] };
+        }
+        if (months < 6 || months > 60) {
+          return { level: 'caution', title: '⚠ Urgencias por edad.',
+                   body: 'Convulsión febril simple SOLO se considera benigna entre 6m-5a. Fuera de ese rango, valorar.',
+                   actions: ['Acude a urgencias'] };
+        }
+        if (a.context === 'simple') {
+          return { level: 'caution', title: '⚠ Pediatra mismo día.',
+                   body: 'Convulsión febril simple (6m-5a) · benigna pero requiere consulta para descartar otras causas y dar pautas.',
+                   actions: ['Llama al pediatra hoy', 'Si recurre o cambia tipología, urgencias'] };
+        }
+        return { level: 'caution', title: '⚠ Pediatra mismo día.',
+                 body: 'Cuando dudes en clasificar, valoración mismo día siempre. La convulsión nunca es para esperar.',
+                 actions: ['Llama al pediatra hoy'] };
+      }
+    }
+  };
+
+  /* Triage runtime state */
+  let triageActive = null;  /* { treeId, stepIdx, answers: {} } */
+
+  function openTriage(treeId) {
+    const tree = triageTrees[treeId];
+    if (!tree) return;
+    triageActive = { treeId, stepIdx: 0, answers: {} };
+    renderTriage();
+    document.getElementById('triage-modal').classList.add('active');
+    scrim.classList.add('active');
+  }
+  function closeTriage() {
+    document.getElementById('triage-modal').classList.remove('active');
+    scrim.classList.remove('active');
+    triageActive = null;
+  }
+  function renderTriage() {
+    const root = document.querySelector('[data-triage-root]');
+    if (!root || !triageActive) return;
+    const tree = triageTrees[triageActive.treeId];
+    const step = tree.steps[triageActive.stepIdx];
+
+    if (!step) {
+      /* Show result */
+      const months = chatGetBabyMonths();
+      const result = tree.evaluate(triageActive.answers, months);
+      root.innerHTML = `
+        <div class="triage-grabber"></div>
+        <div class="triage-head">
+          <span class="triage-icon" aria-hidden="true">${tree.icon}</span>
+          <h3>${escapeHtml(tree.label)} · resultado</h3>
+          <button class="triage-close" type="button" data-triage-close aria-label="Cerrar">×</button>
+        </div>
+        <div class="triage-result ${result.level}">
+          <span class="urgency-badge ${result.level}">${escapeHtml(result.title.split(' ')[0])} ${result.level === 'urgent' ? 'URGENCIAS' : result.level === 'caution' ? 'MISMO DÍA' : 'CASA'}</span>
+          <h4>${result.title}</h4>
+          <p>${result.body}</p>
+          <div class="triage-actions">
+            ${result.actions.map((a) => `<p>• ${escapeHtml(a)}</p>`).join('')}
+          </div>
+          <p class="triage-source">— ${escapeHtml(tree.source)}</p>
+        </div>
+        <p class="triage-canon">Si dudas, llama. Tu pediatra prefiere una falsa alarma a una real perdida.</p>
+        <button class="btn btn-soft" type="button" data-triage-close>Cerrar</button>
+      `;
+      return;
+    }
+
+    const optionsHtml = step.options.map((opt) => `
+      <button class="triage-option" type="button" data-triage-answer="${escapeHtml(opt.value)}">
+        ${escapeHtml(opt.label)}
+        ${opt.sub ? `<span class="sub">${escapeHtml(opt.sub)}</span>` : ''}
+      </button>
+    `).join('');
+
+    root.innerHTML = `
+      <div class="triage-grabber"></div>
+      <div class="triage-head">
+        <span class="triage-icon" aria-hidden="true">${tree.icon}</span>
+        <h3>${escapeHtml(tree.label)} · paso ${triageActive.stepIdx + 1} de ${tree.steps.length}</h3>
+        <button class="triage-close" type="button" data-triage-close aria-label="Cerrar">×</button>
+      </div>
+      <div class="triage-step">
+        <h4>${escapeHtml(step.q)}</h4>
+        <div class="triage-options">${optionsHtml}</div>
+      </div>
+      ${triageActive.stepIdx > 0 ? '<button class="triage-back" type="button" data-triage-back>← Atrás</button>' : ''}
+    `;
+  }
+  function triageAnswer(value) {
+    if (!triageActive) return;
+    const tree = triageTrees[triageActive.treeId];
+    const step = tree.steps[triageActive.stepIdx];
+    triageActive.answers[step.key] = value;
+    triageActive.stepIdx += 1;
+    renderTriage();
+  }
+  function triageBack() {
+    if (!triageActive || triageActive.stepIdx === 0) return;
+    triageActive.stepIdx -= 1;
+    renderTriage();
+  }
+
+  /* Chat thread render */
+  function renderChat() {
+    const root = document.querySelector('[data-chat-thread]');
+    if (!root) return;
+    root.innerHTML = chatMessages.map((msg) => {
+      if (msg.role === 'system') {
+        return `<div class="bubble system">${msg.text}</div>`;
+      }
+      const sourceHtml = msg.source ? `<span class="source">— ${escapeHtml(msg.source)}</span>` : '';
+      const cls = msg.role === 'you' ? 'you' : msg.role;
+      return `<div class="bubble-row ${cls === 'you' ? 'you' : ''}">
+        <div class="bubble ${cls}">${msg.text}${sourceHtml}</div>
+      </div>`;
+    }).join('');
+    /* Scroll to bottom */
+    root.scrollTop = root.scrollHeight;
+
+    /* Update context strong */
+    const months = chatGetBabyMonths();
+    const ctx = document.querySelector('[data-chat-context]');
+    if (ctx) {
+      const ageLabel = months < 12 ? `${months} m` : months < 24 ? `${months} m` : `${Math.floor(months/12)} a`;
+      const phase = months < 3 ? 'recién nacido' : months < 12 ? 'bebé' : months < 36 ? 'niñez temprana' : 'preescolar';
+      ctx.textContent = `Lola · ${ageLabel} · ${phase}`;
+    }
+  }
+  function chatSend(text) {
+    if (!text || !text.trim()) return;
+    chatMessages.push({ role: 'you', text: escapeHtml(text.trim()), time: 'ahora' });
+    renderChat();
+    /* Echo placeholder · in production this would be IA + pediatra response */
+    window.setTimeout(() => {
+      chatMessages.push({
+        role: 'companion',
+        text: 'Te leo. <strong>Aquí no diagnosticamos · aquí estamos.</strong> ¿Quieres que abramos un cribaje rápido o lo cuentas con tus palabras?',
+        time: 'ahora'
+      });
+      renderChat();
+    }, 600);
+  }
+
+  /* 3AM render */
+  function renderChat3AM() {
+    const root = document.querySelector('[data-3am-options]');
+    if (!root) return;
+    const months = chatGetBabyMonths();
+    const opts = chat3AMOptionsForAge(months);
+    root.innerHTML = opts.map((opt) => `
+      <button class="chat-3am-option" type="button" data-3am-action="${escapeHtml(opt.action)}">
+        ${escapeHtml(opt.title)}
+        <span class="sub">${escapeHtml(opt.sub)}</span>
+      </button>
+    `).join('');
+  }
+
 
   /* § S · Date picker — birth-date oriented · sheet variant.
      State: dpView (year/month being browsed) + dpSelected (year/month/day).
@@ -13441,6 +14510,43 @@ Grow
 
     if (event.target.closest('[data-pregnancy-rainbow]')) {
       togglePregnancyRainbow();
+      return;
+    }
+
+    /* § V · Chat triage chip handler */
+    const triageChip = event.target.closest('[data-triage]');
+    if (triageChip) {
+      openTriage(triageChip.dataset.triage);
+      return;
+    }
+    if (event.target.closest('[data-triage-close]')) { closeTriage(); return; }
+    if (event.target.closest('[data-triage-back]'))  { triageBack(); return; }
+    const triageAns = event.target.closest('[data-triage-answer]');
+    if (triageAns) { triageAnswer(triageAns.dataset.triageAnswer); return; }
+
+    /* § V · Chat send */
+    if (event.target.closest('[data-chat-send]')) {
+      const input = document.querySelector('[data-chat-input]');
+      if (input) {
+        chatSend(input.value);
+        input.value = '';
+      }
+      return;
+    }
+
+    /* § V · 3AM option · most route to triage menu, others to chat-back */
+    const tamOpt = event.target.closest('[data-3am-action]');
+    if (tamOpt) {
+      const action = tamOpt.dataset['3amAction'];
+      if (action === 'triage-menu') {
+        /* Return to chat with intent to surface triage chips */
+        document.querySelector('[data-goto="chat"]')?.click();
+      } else {
+        /* Echo placeholder · log to chat thread and return */
+        chatMessages.push({ role: 'system', text: 'Anoche 3AM · resuelto' });
+        chatMessages.push({ role: 'companion', text: 'Te leo. Estoy contigo. ¿Quieres guardar esta noche en el diario? <em>Solo para ti.</em>', time: 'ahora' });
+        document.querySelector('[data-goto="chat"]')?.click();
+      }
       return;
     }
 
