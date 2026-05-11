@@ -7840,6 +7840,187 @@
   }
   .chat-night-banner .opt-toggle:hover { background: rgba(242,165,122,0.10); }
 
+
+  /* § V.C.1 · Safety frame & mental-health banner
+     Sheets que se abren desde 3AM ruta "No puedo más" + ruta embarazo-fear. */
+  .safety-frame-shell,
+  .mental-health-shell {
+    position: absolute;
+    left: 12px; right: 12px; bottom: 10px;
+    z-index: 38;
+    opacity: 0; visibility: hidden; pointer-events: none;
+    transform: translateY(112%);
+    transition: transform 260ms var(--ease), opacity 180ms ease, visibility 0s linear 260ms;
+    max-height: 88%;
+  }
+  .safety-frame-shell.active,
+  .mental-health-shell.active {
+    opacity: 1; visibility: visible; pointer-events: auto;
+    transform: translateY(0);
+    transition: transform 260ms var(--ease), opacity 180ms ease, visibility 0s;
+  }
+  .safety-frame,
+  .mental-health-card {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-xl);
+    padding: 22px 22px 24px;
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,0.7),
+      0 -18px 60px rgba(42,33,27,0.20);
+    display: flex; flex-direction: column;
+    gap: 14px;
+    max-height: 88vh;
+    overflow-y: auto;
+    scrollbar-width: none;
+  }
+  .safety-frame::-webkit-scrollbar,
+  .mental-health-card::-webkit-scrollbar { display: none; }
+  .safety-frame-grabber,
+  .mental-health-grabber {
+    width: 36px; height: 4px;
+    border-radius: 999px;
+    background: var(--line-strong);
+    margin: 0 auto 4px;
+  }
+
+  /* Safety frame header */
+  .safety-frame h2 {
+    font-family: "Lenia"; font-weight: 500;
+    font-size: var(--fs-h3);
+    line-height: 1.15;
+    letter-spacing: -0.015em;
+    margin: 0 0 4px;
+    color: var(--ink);
+  }
+  .safety-frame .sf-intro {
+    font-family: "Helvena";
+    font-size: var(--fs-body-sm);
+    color: var(--ink-soft);
+    line-height: 1.5;
+    margin: 0 0 8px;
+  }
+  .safety-frame .sf-intro strong {
+    color: var(--ink);
+    font-weight: 500;
+  }
+  .sf-steps {
+    list-style: none; padding: 0; margin: 0;
+    display: flex; flex-direction: column;
+    gap: 10px;
+  }
+  .sf-steps li {
+    display: grid;
+    grid-template-columns: 28px 1fr;
+    gap: 12px;
+    align-items: start;
+    padding: 14px 14px;
+    background: var(--paper-soft);
+    border: 1px solid var(--line-soft);
+    border-radius: 14px;
+  }
+  .sf-steps .sf-num {
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    display: grid; place-items: center;
+    background: var(--ink);
+    color: var(--paper);
+    font-family: "Lenia"; font-weight: 500;
+    font-size: 13px;
+    line-height: 1;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .sf-steps .sf-body strong {
+    display: block;
+    font-family: "Lenia"; font-weight: 500;
+    font-size: var(--fs-body);
+    color: var(--ink);
+    line-height: 1.35;
+    letter-spacing: -0.005em;
+  }
+  .sf-steps .sf-body p {
+    margin: 4px 0 0;
+    font-family: "Helvena";
+    font-size: var(--fs-body-sm);
+    color: var(--ink-soft);
+    line-height: 1.45;
+  }
+  .sf-canon-foot {
+    background: var(--mint-subtle);
+    border: 1px solid rgba(143,174,133,0.32);
+    border-radius: 14px;
+    padding: 14px 16px;
+    font-family: "Helvena"; font-style: italic;
+    font-size: var(--fs-body-sm);
+    color: #2F4029;
+    line-height: 1.5;
+    text-align: center;
+    margin-top: 4px;
+  }
+  .sf-canon-foot strong { color: #1F3019; font-style: normal; font-weight: 500; }
+  .sf-source {
+    text-align: center;
+    font-family: "Lenia"; font-size: var(--fs-eyebrow);
+    letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--ink-muted);
+    margin: 8px 0 4px;
+  }
+  .sf-actions {
+    display: flex; flex-direction: column;
+    gap: 8px;
+    margin-top: 6px;
+  }
+  .sf-actions .btn {
+    width: 100%;
+    min-height: 46px;
+    border-radius: 999px;
+    font-family: "Lenia"; font-weight: 500;
+    font-size: var(--fs-body-sm);
+    cursor: pointer;
+    border: 0;
+    transition: filter 150ms var(--ease);
+  }
+  .sf-actions .btn:hover { filter: brightness(0.97); }
+  .sf-actions .btn.coral { background: var(--coral-base); color: #4A2510; }
+  .sf-actions .btn.soft  { background: var(--paper-soft); color: var(--ink); border: 1px solid var(--line); }
+  .sf-actions .btn.ghost { background: transparent; color: var(--ink-soft); }
+
+  /* Mental-health banner */
+  .mental-health-card {
+    background: linear-gradient(160deg, var(--paper) 0%, rgba(248,228,221,0.62) 110%);
+    border-color: rgba(216,154,137,0.38);
+  }
+  .mental-health-card h2 {
+    font-family: "Lenia"; font-weight: 500;
+    font-size: var(--fs-h3);
+    line-height: 1.15;
+    letter-spacing: -0.015em;
+    margin: 0 0 6px;
+    color: var(--ink);
+  }
+  .mental-health-card .mh-intro {
+    font-family: "Helvena";
+    font-size: var(--fs-body);
+    color: var(--ink);
+    line-height: 1.55;
+    margin: 0;
+  }
+  .mental-health-card .mh-sub {
+    font-family: "Helvena";
+    font-size: var(--fs-body-sm);
+    color: var(--ink-soft);
+    line-height: 1.5;
+    margin: 4px 0 0;
+  }
+  .mental-health-card .mh-source {
+    text-align: center;
+    font-family: "Lenia"; font-size: var(--fs-eyebrow);
+    letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--ink-muted);
+    margin: 8px 0 4px;
+  }
+
 </style>
 </head>
 <body>
@@ -8465,6 +8646,74 @@
             <!-- triage-step OR triage-result render here -->
           </div>
         </aside>
+
+        <!-- ═══════════════════════════════════════════════════════════
+             § V.C.1 · Safety frame · NSBSP 4-step anti-shaken-baby
+             ═══════════════════════════════════════════════════════════ -->
+        <aside class="safety-frame-shell" id="safety-frame-modal" aria-label="Safety frame">
+          <div class="safety-frame">
+            <div class="safety-frame-grabber"></div>
+            <h2>Lo que sientes es real.</h2>
+            <p class="sf-intro">No es debilidad. <strong>No estás sola.</strong> Tres horas sin dormir cambian a cualquiera.</p>
+            <ol class="sf-steps">
+              <li>
+                <span class="sf-num">1</span>
+                <div class="sf-body">
+                  <strong>Deja a tu peque en un sitio seguro</strong>
+                  <p>Cuna o moisés · sin almohadas · boca arriba · tu peque está bien.</p>
+                </div>
+              </li>
+              <li>
+                <span class="sf-num">2</span>
+                <div class="sf-body">
+                  <strong>Sal de la habitación</strong>
+                  <p>5 minutos. Aunque siga llorando. Está seguro.</p>
+                </div>
+              </li>
+              <li>
+                <span class="sf-num">3</span>
+                <div class="sf-body">
+                  <strong>Respira</strong>
+                  <p>4 segundos dentro · 6 segundos fuera · 5 veces.</p>
+                </div>
+              </li>
+              <li>
+                <span class="sf-num">4</span>
+                <div class="sf-body">
+                  <strong>Vuelve cuando estés en calma</strong>
+                  <p>No hay prisa. El llanto pasará. Tú primero.</p>
+                </div>
+              </li>
+            </ol>
+            <div class="sf-canon-foot">
+              Nunca sacudas al bebé. <strong>Ni siquiera 1 segundo.</strong>
+            </div>
+            <p class="sf-source">— NSBSP · dontshake.org</p>
+            <div class="sf-actions">
+              <button class="btn coral" type="button" data-safety-action="relay">Avisar a Pablo · necesito relevo</button>
+              <button class="btn soft" type="button" data-safety-action="mental">Línea de ayuda · 024</button>
+              <button class="btn ghost" type="button" data-close-sheet>Cerrar</button>
+            </div>
+          </div>
+        </aside>
+
+        <!-- ═══════════════════════════════════════════════════════════
+             § V.C.2 · Mental-health 024 banner
+             ═══════════════════════════════════════════════════════════ -->
+        <aside class="mental-health-shell" id="mental-health-modal" aria-label="Línea de ayuda salud mental">
+          <div class="mental-health-card">
+            <div class="mental-health-grabber"></div>
+            <h2>🤲 No estás sola.</h2>
+            <p class="mh-intro">Hay personas entrenadas para escucharte ahora mismo.</p>
+            <p class="mh-sub">Es gratis. Es 24h. No registran. Solo escuchan. La línea 024 es el teléfono nacional de atención a conducta suicida en España, atendido por profesionales de salud mental.</p>
+            <p class="mh-source">— Ministerio de Sanidad · línea 024</p>
+            <div class="sf-actions">
+              <button class="btn coral" type="button" data-mental-call>Llamar al 024 ahora</button>
+              <button class="btn soft" type="button" data-close-sheet>Ahora no · cerrar</button>
+            </div>
+          </div>
+        </aside>
+
 
 
         <div class="scrim" data-close-sheet></div>
@@ -13467,6 +13716,10 @@ Grow
     if (dp) dp.classList.remove('active');
     const triageMod = document.getElementById('triage-modal');
     if (triageMod) triageMod.classList.remove('active');
+    const safetyMod = document.getElementById('safety-frame-modal');
+    if (safetyMod) safetyMod.classList.remove('active');
+    const mentalMod = document.getElementById('mental-health-modal');
+    if (mentalMod) mentalMod.classList.remove('active');
     scrim.classList.remove('active');
   }
 
@@ -13677,6 +13930,18 @@ Grow
       { title: '"Le pasa algo a mi peque"',     sub: 'Triage clínico · árboles científicos',        action: 'triage-menu' },
       { title: '"No puedo más"',                sub: 'Anti-burnout · acompañamiento',              action: 'support' }
     ];
+  }
+
+
+
+  /* § V.C.1 · Safety frame & mental-health helpers */
+  function openSafetyFrame() {
+    document.getElementById('safety-frame-modal')?.classList.add('active');
+    scrim.classList.add('active');
+  }
+  function openMentalHealth() {
+    document.getElementById('mental-health-modal')?.classList.add('active');
+    scrim.classList.add('active');
   }
 
   /* Triage trees · 8 árboles · NICE / AAP / AEPED canon
@@ -14904,19 +15169,46 @@ Grow
       return;
     }
 
-    /* § V · 3AM option · most route to triage menu, others to chat-back */
+    /* § V · 3AM option · routes to triage / safety frame / mental health / echo */
     const tamOpt = event.target.closest('[data-3am-action]');
     if (tamOpt) {
       const action = tamOpt.dataset['3amAction'];
       if (action === 'triage-menu') {
-        /* Return to chat with intent to surface triage chips */
         document.querySelector('[data-goto="chat"]')?.click();
+      } else if (action === 'support' || action === 'crying') {
+        /* "No puedo más" en cualquier edad + "No para de llorar" 0-3m → safety frame */
+        openSafetyFrame();
+      } else if (action === 'embarazo-fear') {
+        /* "Tengo miedo · necesito hablar" embarazo → directo a mental-health */
+        openMentalHealth();
       } else {
-        /* Echo placeholder · log to chat thread and return */
+        /* Resto (sleep · nightmare · embarazo-body · embarazo-sleep) · echo placeholder */
         chatMessages.push({ role: 'system', text: 'Anoche 3AM · resuelto' });
         chatMessages.push({ role: 'companion', text: 'Te leo. Estoy contigo. ¿Quieres guardar esta noche en el diario? <em>Solo para ti.</em>', time: 'ahora' });
         document.querySelector('[data-goto="chat"]')?.click();
       }
+      return;
+    }
+
+    /* § V.C.1 · Safety frame internal actions */
+    const sfAction = event.target.closest('[data-safety-action]');
+    if (sfAction) {
+      const t = sfAction.dataset.safetyAction;
+      document.getElementById('safety-frame-modal')?.classList.remove('active');
+      if (t === 'mental') openMentalHealth();
+      else if (t === 'relay') {
+        /* Phase C.2 materializa · interim: sheet placeholder */
+        if (typeof sheet !== 'undefined' && sheetTitle && sheetCopy) {
+          sheetTitle.textContent = 'Avisar a Pablo';
+          sheetCopy.textContent = 'Le diremos que necesitas relevo. Sheet con mensaje opcional en la siguiente actualización.';
+          sheet.classList.add('active');
+          scrim.classList.add('active');
+        }
+      }
+      return;
+    }
+    if (event.target.closest('[data-mental-call]')) {
+      window.location.href = 'tel:024';
       return;
     }
 
