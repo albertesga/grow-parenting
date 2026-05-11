@@ -9450,6 +9450,194 @@
     max-width: max-content;
   }
 
+  /* ═══════════════════════════════════════════════════════════════════════
+     § Books · .book-hero primitive · canon-aligned con .avatar-hero de Hoy
+     ───────────────────────────────────────────────────────────────────────
+     Usado por TODOS los libros. Solo cambia el color · 1 tono por libro:
+       mint (hitos, sueño, salud, medicación, default)
+       coral (embarazo, alimentación)
+       gold (vacunas)
+       blush (lactancia)
+       lavender (desarrollo)
+     Markup canon:
+       <section class="book-hero TONE">
+         <div class="book-hero-kicker">EYEBROW</div>
+         <h3>TITLE</h3>
+         <p>SHORT SUBTITLE</p>
+         <div class="book-hero-orb"><img src="..." alt=""></div>   ← optional
+         <div class="book-hero-mark">☾</div>                      ← optional
+       </section>
+     Aliases para no romper markup legacy: .milestone-hero, .vaccine-hero,
+     .pregnancy-hero, .sleep-hero, .food-hero, .lactation-hero, .growth-cover
+     ─────────────────────────────────────────────────────────────────────── */
+  .book-hero,
+  .milestone-hero,
+  .vaccine-hero,
+  .pregnancy-hero,
+  .sleep-hero,
+  .food-hero,
+  .lactation-hero,
+  .growth-cover {
+    position: relative;
+    overflow: hidden;
+    min-height: 120px;
+    border: 1px solid var(--line);
+    border-radius: 26px;
+    padding: 14px;
+    margin-bottom: 12px;
+    /* Default tone: mint */
+    background:
+      radial-gradient(circle at 72% 12%, rgba(232,201,122,0.48), transparent 24%),
+      linear-gradient(135deg, var(--mint-subtle), var(--paper-soft));
+    box-shadow: none;
+  }
+  .book-hero.coral,
+  .pregnancy-hero,
+  .food-hero {
+    background:
+      radial-gradient(circle at 72% 12%, rgba(232,201,122,0.42), transparent 24%),
+      linear-gradient(135deg, var(--coral-subtle), var(--paper-soft));
+  }
+  .book-hero.gold,
+  .vaccine-hero {
+    background:
+      radial-gradient(circle at 72% 12%, rgba(232,201,122,0.42), transparent 24%),
+      linear-gradient(135deg, var(--gold-subtle), var(--paper-soft));
+  }
+  .book-hero.blush,
+  .lactation-hero {
+    background:
+      radial-gradient(circle at 72% 12%, rgba(232,201,122,0.42), transparent 24%),
+      linear-gradient(135deg, var(--blush-subtle), var(--paper-soft));
+  }
+  .book-hero.lavender,
+  .growth-cover {
+    background:
+      radial-gradient(circle at 72% 12%, rgba(232,201,122,0.42), transparent 24%),
+      linear-gradient(135deg, #E9E3ED, var(--paper-soft));
+  }
+  /* Title canon · matches .hero-person strong de Hoy (21-22px Lenia 500) */
+  .book-hero > h3,
+  .milestone-hero > h3,
+  .vaccine-hero > h3,
+  .pregnancy-hero > h3,
+  .sleep-hero > h3,
+  .food-hero > h3,
+  .lactation-hero > h3,
+  .growth-cover > h3 {
+    position: relative;
+    z-index: 1;
+    font-family: "Lenia";
+    font-size: 22px;
+    font-weight: 500;
+    line-height: 1.05;
+    letter-spacing: -0.01em;
+    margin: 8px 0 4px;
+    max-width: 17ch;
+    color: var(--ink);
+  }
+  /* Subtitle canon · caption-sized, max ~28ch wrap */
+  .book-hero > p,
+  .milestone-hero > p,
+  .vaccine-hero > p,
+  .pregnancy-hero > p,
+  .sleep-hero > p,
+  .food-hero > p,
+  .lactation-hero > p,
+  .growth-cover > p {
+    position: relative;
+    z-index: 1;
+    max-width: 220px;
+    margin: 0;
+    color: var(--ink-soft);
+    font-size: var(--fs-caption);
+    line-height: 1.4;
+  }
+  /* Kicker canon · uppercase Lenia 10.5 0.18em */
+  .book-hero-kicker,
+  .milestone-hero-kicker,
+  .vaccine-mini-label,
+  .pregnancy-mini-label,
+  .sleep-kicker,
+  .food-kicker,
+  .lactation-kicker,
+  .growth-kicker {
+    font-family: "Lenia";
+    font-size: 10.5px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    position: relative;
+    z-index: 1;
+  }
+  /* Orb (img) · bottom-right -2/-18 mirror de .avatar-hero img de Hoy */
+  .book-hero-orb,
+  .milestone-hero-orb {
+    position: absolute;
+    right: -2px;
+    bottom: -18px;
+    width: 130px;
+    height: 130px;
+    display: grid;
+    place-items: end center;
+    background: transparent;
+    border: 0;
+    box-shadow: none;
+    pointer-events: none;
+  }
+  .book-hero-orb img,
+  .milestone-hero-orb img {
+    width: 130px;
+    height: 130px;
+    object-fit: contain;
+    filter: drop-shadow(0 14px 18px rgba(42,33,27,0.16));
+    animation: avatarFloat 5.4s ease-in-out infinite;
+  }
+  /* Glyph mark · sustituye orb cuando el libro usa un símbolo (☾ ♡ 🍐) */
+  .book-hero-mark,
+  .sleep-hero-mark,
+  .food-hero-mark,
+  .lactation-hero-mark {
+    position: absolute;
+    right: 22px;
+    bottom: 14px;
+    font-size: 56px;
+    line-height: 1;
+    color: rgba(42,33,27,0.16);
+    pointer-events: none;
+    z-index: 1;
+    text-shadow: 0 4px 10px rgba(42,33,27,0.06);
+  }
+  /* Meta-row de pills · compacto, no rompe altura mínima */
+  .book-hero-meta,
+  .vaccine-hero-stats,
+  .pregnancy-hero-stats,
+  .sleep-meta-row,
+  .food-meta-row,
+  .lactation-meta-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 10px;
+    position: relative;
+    z-index: 1;
+  }
+  .book-hero-meta > span,
+  .vaccine-hero-stats > span,
+  .pregnancy-hero-stats > span,
+  .sleep-pill,
+  .food-pill,
+  .lactation-pill {
+    background: rgba(255,255,255,0.55);
+    border: 1px solid rgba(255,255,255,0.85);
+    padding: 3px 8px;
+    border-radius: 999px;
+    font-size: 10.5px;
+    font-family: "Lenia";
+    letter-spacing: 0.06em;
+    color: var(--ink-soft);
+    text-transform: none;
+  }
 </style>
 </head>
 <body>
@@ -9859,7 +10047,7 @@
               <section class="growth-cover">
                 <div class="growth-kicker">Crecimiento · OMS LMS</div>
                 <h3 data-growth-profile-title>Lola · 18 meses</h3>
-                <p data-growth-last>última medida · 12 jun · revisión 18m</p>
+                <p data-growth-last>última medida · 12 jun</p>
                 <div class="growth-tools">
                   <div class="age-toggle" aria-label="Edad mostrada">
                     <button class="active" type="button" data-growth-age-mode="cronologica">Cronológica</button>
@@ -9867,6 +10055,7 @@
                   </div>
                   <div class="growth-source">OMS 2006</div>
                 </div>
+                <div class="book-hero-orb"><img src="design/assets/avatar-mint.png" alt=""></div>
               </section>
 
               <section class="callout gold growth-note">
@@ -12439,14 +12628,9 @@
       <button class="book-close-pill" type="button" data-goto="hoy" aria-label="Cerrar libro"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-x"/></svg></button>
           <section class="sleep-hero">
         <div class="sleep-kicker">Sueño · Lola · ${escapeHtml(ageRange.title)}</div>
-        <h3>Cuando duerme bien, descansáis mejor.</h3>
-        <p>Sin coaching agresivo. Sin juicio. Los horarios se adaptan a edad, estación y salida del sol local.</p>
+        <h3>Cuando duerme bien, descansáis.</h3>
+        <p>${escapeHtml(sleepLocation.city)} · sol ${escapeHtml(sleepLocation.sunrise)} · ${escapeHtml(ageRange.total)}/24h.</p>
         <div class="sleep-hero-mark">☾</div>
-        <div class="sleep-meta-row">
-          <span class="sleep-pill">${escapeHtml(sleepLocation.city)}</span>
-          <span class="sleep-pill">Sol ${escapeHtml(sleepLocation.sunrise)}</span>
-          <span class="sleep-pill">${escapeHtml(ageRange.total)} / 24h</span>
-        </div>
       </section>
       ${renderSleepStatusCard()}
       ${renderSleepSchedule(sleepActiveAge, { compact: true })}
@@ -12743,13 +12927,8 @@ Grow
           <section class="food-hero">
         <div class="food-kicker">Alimentación · Lola · ${escapeHtml(age.label)}</div>
         <h3>Comer sin listas infinitas.</h3>
-        <p>Alimentos, cortes por edad y alérgenos en un solo libro. Cero juicio. Seguridad, variedad y ritmo familiar.</p>
+        <p>${escapeHtml(age.pattern)} · ${getTriedFoodsCount()} probados · ${inProcess} alérgeno en proceso.</p>
         <div class="food-hero-mark">🍐</div>
-        <div class="food-meta-row">
-          <span class="food-pill">${escapeHtml(age.pattern)}</span>
-          <span class="food-pill">${getTriedFoodsCount()} probados</span>
-          <span class="food-pill">${inProcess} alérgeno en proceso</span>
-        </div>
       </section>
       <section class="food-status-card">
         <div class="food-status-grid">
@@ -13073,13 +13252,8 @@ Grow
           <section class="lactation-hero">
         <div class="lactation-kicker">Lactancia · Lola · 6 semanas</div>
         <h3>Como salga. Y si no sale, también.</h3>
-        <p>Lactancia materna, mixta o biberón. Cero juicio. Aquí estamos para que duela menos y dudes menos.</p>
+        <p>Semana 6 · materna + biberón puntual · LATCH ${lactationLatchScore}/10.</p>
         <div class="lactation-hero-mark">♡</div>
-        <div class="lactation-meta-row">
-          <span class="lactation-pill">Semana 6</span>
-          <span class="lactation-pill">materna + biberón puntual</span>
-          <span class="lactation-pill">LATCH ${lactationLatchScore}/10</span>
-        </div>
       </section>
       <section class="lactation-status-card">
         <div class="lactation-mini-label">Cómo vais</div>
@@ -13404,14 +13578,10 @@ Grow
   function renderPregnancyHero() {
     return `
       <section class="pregnancy-hero ${pregnancyRainbowMode ? 'rainbow' : ''}">
-        <div class="pregnancy-mini-label">Embarazo · SEGO + ACOG · semana ${pregnancyWeek}</div>
+        <div class="pregnancy-mini-label">Embarazo · SEGO · semana ${pregnancyWeek}</div>
         <h3>María · semana ${pregnancyWeek}</h3>
-        <p>${pregnancyDueDays > 0 ? `Faltan ${pregnancyDueDays} días para la FPP.` : 'FPP en curso.'} Semana a semana, controles, plan de parto y señales claras sin convertir cada síntoma en ruido.</p>
-        <div class="pregnancy-hero-stats">
-          <span>28 sem</span>
-          <span>-84 días FPP</span>
-          <span>${pregnancyRainbowMode ? 'Modo arcoíris activo' : 'Tono estándar'}</span>
-        </div>
+        <p>${pregnancyDueDays > 0 ? `Faltan ${pregnancyDueDays} días para la FPP.` : 'FPP en curso.'}${pregnancyRainbowMode ? ' · 🌈 arcoíris' : ''}</p>
+        <div class="book-hero-orb"><img src="design/assets/avatar-coral.png" alt=""></div>
       </section>
     `;
   }
@@ -13791,14 +13961,10 @@ Grow
   function renderVaccineHero() {
     return `
       <section class="vaccine-hero">
-        <div class="vaccine-mini-label">${escapeHtml(getVaccineScheme().label)}</div>
-        <h3>Lola · 4 meses · ${formatNumber(vaccineWeightKg, 1)} kg</h3>
-        <p>Próxima cita: <strong>12 jul · CAP Sant Gervasi · 11:30</strong>. Calendario, lotes, fiebre 72h y carnet exportable en un solo libro.</p>
-        <div class="vaccine-hero-stats">
-          <span>3 / 9 completadas</span>
-          <span>Al día ●</span>
-          <span>Hepatitis A · Nuevo 2026</span>
-        </div>
+        <div class="vaccine-mini-label">${escapeHtml(getVaccineScheme().short || getVaccineScheme().label)}</div>
+        <h3>Lola · 4 meses</h3>
+        <p>Próxima: <strong>12 jul</strong> · 3/9 completadas.</p>
+        <div class="book-hero-orb"><img src="design/assets/avatar-mint.png" alt=""></div>
       </section>
     `;
   }
