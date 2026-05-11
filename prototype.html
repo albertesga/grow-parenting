@@ -8236,6 +8236,49 @@
     transform: translateX(-50%) translateY(0);
   }
 
+
+  /* § V.D · 3AM close-flow sheet · ofrece guardar / borrar / quedarse */
+  .chat3am-close-shell {
+    position: absolute;
+    left: 12px; right: 12px; bottom: 10px;
+    z-index: 38;
+    opacity: 0; visibility: hidden; pointer-events: none;
+    transform: translateY(112%);
+    transition: transform 260ms var(--ease), opacity 180ms ease, visibility 0s linear 260ms;
+    max-height: 80%;
+  }
+  .chat3am-close-shell.active {
+    opacity: 1; visibility: visible; pointer-events: auto;
+    transform: translateY(0);
+    transition: transform 260ms var(--ease), opacity 180ms ease, visibility 0s;
+  }
+  .chat3am-close-sheet {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-xl);
+    padding: 22px 22px 24px;
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,0.7),
+      0 -18px 60px rgba(42,33,27,0.18);
+    display: flex; flex-direction: column;
+    gap: 14px;
+  }
+  .chat3am-close-sheet h2 {
+    font-family: "Lenia"; font-weight: 500;
+    font-size: var(--fs-h4);
+    line-height: 1.2;
+    margin: 0;
+    color: var(--ink);
+  }
+  .chat3am-close-sheet p {
+    font-family: "Helvena";
+    font-size: var(--fs-body-sm);
+    color: var(--ink-soft);
+    line-height: 1.5;
+    margin: 0;
+  }
+  .chat3am-close-sheet em { font-style: italic; color: var(--ink); }
+
 </style>
 </head>
 <body>
@@ -8842,7 +8885,7 @@
              ═══════════════════════════════════════════════════════════ -->
         <section class="screen no-nav chat-3am" data-screen="chat-3am">
           <div class="status"><span>3:14</span><div class="status-dots"><span></span><span></span><span></span></div></div>
-          <button class="chat-3am-back" type="button" data-goto="chat" aria-label="Volver al chat">← Volver al chat</button>
+          <button class="chat-3am-back" type="button" data-3am-close-trigger aria-label="Volver al chat">← Volver al chat</button>
           <div class="chat-3am-header">
             <h1>Modo urgencia</h1>
             <p>Las respuestas son más rápidas, más directas y sin juzgar.</p>
@@ -8955,6 +8998,23 @@
         </aside>
 
         <div class="relay-toast" id="relay-toast" aria-live="polite">Aviso enviado a Pablo · llegará al instante</div>
+
+        <!-- ═══════════════════════════════════════════════════════════
+             § V.D · Close-flow sheet para Modo 3AM
+             ═══════════════════════════════════════════════════════════ -->
+        <aside class="chat3am-close-shell" id="chat3am-close-modal" aria-label="Cerrar Modo 3AM">
+          <div class="chat3am-close-sheet">
+            <div class="safety-frame-grabber"></div>
+            <h2>¿Guardamos esta noche en el diario?</h2>
+            <p>Solo lo verás tú. Si guardas, aparecerá como nota en tu chat principal. Si no, se borra · solo queda un agregado anonimizado para mejorar Grow.</p>
+            <div class="sf-actions">
+              <button class="btn coral" type="button" data-3am-close-action="save">Sí · guardar resumen</button>
+              <button class="btn soft" type="button" data-3am-close-action="discard">No · borrar todo</button>
+              <button class="btn ghost" type="button" data-3am-close-action="stay">Quedarme en 3AM</button>
+            </div>
+          </div>
+        </aside>
+
 
 
 
@@ -13967,6 +14027,8 @@ Grow
     if (epdsMod) epdsMod.classList.remove('active');
     const relayMod = document.getElementById('relay-modal');
     if (relayMod) relayMod.classList.remove('active');
+    const c3amMod = document.getElementById('chat3am-close-modal');
+    if (c3amMod) c3amMod.classList.remove('active');
     scrim.classList.remove('active');
   }
 
@@ -14362,6 +14424,89 @@ Grow
     }
     if (ta) ta.value = '';
     closeRelay();
+  }
+
+
+
+  /* § V.D · Persistencia · localStorage para chat principal (resilient)
+     y para 3AM (ephemeral · solo durante sesión). */
+  const CHAT_MAIN_KEY = 'grow.chat.main.v1';
+  const CHAT_3AM_KEY  = 'grow.chat.3am.v1';
+
+  function chatSaveMain() {
+    try {
+      const payload = JSON.stringify(chatMessages);
+      localStorage.setItem(CHAT_MAIN_KEY, payload);
+    } catch (e) {}
+  }
+  function chatRestoreFromStorage() {
+    try {
+      const raw = localStorage.getItem(CHAT_MAIN_KEY);
+      if (raw) {
+        const parsed = JSON.parse(raw);
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          chatMessages = parsed;
+          return true;
+        }
+      }
+    } catch (e) {}
+    return false;
+  }
+  function chatClearMainStorage() {
+    try { localStorage.removeItem(CHAT_MAIN_KEY); } catch (e) {}
+  }
+
+  /* 3AM session tracking · array de actions hechas en esta sesión */
+  let chat3AMSession = null;  /* { startedAt, route, actions: [] } */
+  function chat3AMStart(route) {
+    chat3AMSession = { startedAt: Date.now(), route: route || 'unknown', actions: [] };
+  }
+  function chat3AMLogAction(action) {
+    if (!chat3AMSession) chat3AMStart('manual');
+    chat3AMSession.actions.push({ action, at: Date.now() });
+  }
+
+  /* Genera un resumen sintético de la sesión 3AM para sticky en chat main */
+  function chat3AMSummary() {
+    if (!chat3AMSession) return null;
+    const routeLabels = {
+      'crying': 'llanto inconsolable',
+      'support': 'acompañamiento · no puedo más',
+      'embarazo-fear': 'miedo · necesito hablar',
+      'embarazo-body': 'cuerpo · síntomas',
+      'embarazo-sleep': 'no puedo dormir',
+      'sleep': 'sueño',
+      'nightmare': 'pesadilla nocturna',
+      'triage-menu': 'cribaje rápido'
+    };
+    const label = routeLabels[chat3AMSession.route] || chat3AMSession.route;
+    return `Anoche 3AM · ${label} · resuelto`;
+  }
+
+  /* Sheet de cierre 3AM · 3 botones (guardar / borrar / quedarme) */
+  function openChat3AMClose() {
+    document.getElementById('chat3am-close-modal')?.classList.add('active');
+    scrim.classList.add('active');
+  }
+  function closeChat3AMClose() {
+    document.getElementById('chat3am-close-modal')?.classList.remove('active');
+    scrim.classList.remove('active');
+  }
+  function chat3AMSaveAndExit() {
+    const summary = chat3AMSummary();
+    if (summary) {
+      chatMessages.push({ role: 'system', text: summary, class: 'chat-note-3am' });
+      chatSaveMain();
+    }
+    chat3AMSession = null;
+    closeChat3AMClose();
+    document.querySelector('[data-goto="chat"]')?.click();
+  }
+  function chat3AMDiscardAndExit() {
+    /* Solo agregado anonimizado en métricas (placeholder · no-op) */
+    chat3AMSession = null;
+    closeChat3AMClose();
+    document.querySelector('[data-goto="chat"]')?.click();
   }
 
   /* § V.C.1 · Safety frame & mental-health helpers */
@@ -14817,12 +14962,18 @@ Grow
   }
 
   /* Chat thread render */
+  let chatRestored = false;
   function renderChat() {
     const root = document.querySelector('[data-chat-thread]');
     if (!root) return;
+    if (!chatRestored) {
+      chatRestoreFromStorage();
+      chatRestored = true;
+    }
     root.innerHTML = chatMessages.map((msg) => {
       if (msg.role === 'system') {
-        return `<div class="bubble system">${msg.text}</div>`;
+        const sysClass = msg.class ? ` ${escapeHtml(msg.class)}` : '';
+        return `<div class="bubble system${sysClass}">${msg.text}</div>`;
       }
       const sourceHtml = msg.source ? `<span class="source">— ${escapeHtml(msg.source)}</span>` : '';
       const cls = msg.role === 'you' ? 'you' : msg.role;
@@ -14851,6 +15002,7 @@ Grow
     if (!text || !text.trim()) return;
     chatMessages.push({ role: 'you', text: escapeHtml(text.trim()), time: 'ahora' });
     renderChat();
+    chatSaveMain();
     /* Echo placeholder · in production this would be IA + pediatra response */
     window.setTimeout(() => {
       chatMessages.push({
@@ -14859,6 +15011,7 @@ Grow
         time: 'ahora'
       });
       renderChat();
+      chatSaveMain();
     }, 600);
   }
 
@@ -15587,10 +15740,27 @@ Grow
       return;
     }
 
+    /* § V.D · 3AM close-flow trigger from "← Volver al chat" button */
+    if (event.target.closest('[data-3am-close-trigger]')) {
+      openChat3AMClose();
+      return;
+    }
+    /* § V.D · 3AM close actions */
+    const cAct = event.target.closest('[data-3am-close-action]');
+    if (cAct) {
+      const t = cAct.dataset['3amCloseAction'];
+      if (t === 'save')        chat3AMSaveAndExit();
+      else if (t === 'discard') chat3AMDiscardAndExit();
+      else if (t === 'stay')    closeChat3AMClose();
+      return;
+    }
+
     /* § V · 3AM option · routes to triage / safety frame / mental health / echo */
     const tamOpt = event.target.closest('[data-3am-action]');
     if (tamOpt) {
       const action = tamOpt.dataset['3amAction'];
+      chat3AMStart(action);
+      chat3AMLogAction(action);
       if (action === 'triage-menu') {
         document.querySelector('[data-goto="chat"]')?.click();
       } else if (action === 'support' || action === 'crying') {
@@ -15600,10 +15770,9 @@ Grow
         /* "Tengo miedo · necesito hablar" embarazo → directo a mental-health */
         openMentalHealth();
       } else {
-        /* Resto (sleep · nightmare · embarazo-body · embarazo-sleep) · echo placeholder */
-        chatMessages.push({ role: 'system', text: 'Anoche 3AM · resuelto' });
-        chatMessages.push({ role: 'companion', text: 'Te leo. Estoy contigo. ¿Quieres guardar esta noche en el diario? <em>Solo para ti.</em>', time: 'ahora' });
-        document.querySelector('[data-goto="chat"]')?.click();
+        /* Resto (sleep · nightmare · embarazo-body · embarazo-sleep) · echo +
+           ofrecer guardar via close-flow sheet en vez de salida silenciosa. */
+        openChat3AMClose();
       }
       return;
     }
