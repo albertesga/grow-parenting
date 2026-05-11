@@ -8279,6 +8279,128 @@
   }
   .chat3am-close-sheet em { font-style: italic; color: var(--ink); }
 
+
+  /* § V.E.1 · Streaming dots indicator · "IA escribiendo" placeholder.
+     Render entre push del user message y push del companion message (~600ms). */
+  .chat-streaming-dots {
+    display: inline-flex; align-items: center; gap: 4px;
+    padding: 12px 16px;
+    background: var(--paper-soft);
+    border: 1px solid var(--line-soft);
+    border-radius: 18px;
+    max-width: 78%;
+    align-self: flex-start;
+  }
+  .chat-streaming-dots span {
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: var(--ink-muted);
+    opacity: 0.4;
+    animation: chatDot 1s ease-in-out infinite;
+  }
+  .chat-streaming-dots span:nth-child(2) { animation-delay: 0.16s; }
+  .chat-streaming-dots span:nth-child(3) { animation-delay: 0.32s; }
+  @keyframes chatDot {
+    0%, 100% { opacity: 0.4; transform: translateY(0); }
+    50%      { opacity: 1;   transform: translateY(-3px); }
+  }
+
+  /* § V.E.2 · Photo + voice icon buttons in chat input row */
+  .chat-input-row .chat-attach-btn,
+  .chat-input-row .chat-voice-btn {
+    flex: 0 0 auto;
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    border: 1px solid var(--line);
+    background: var(--paper-soft);
+    color: var(--ink-soft);
+    display: grid; place-items: center;
+    cursor: pointer;
+    font-size: 17px; line-height: 1;
+    transition: filter 150ms var(--ease), color 150ms var(--ease);
+  }
+  .chat-input-row .chat-attach-btn:hover,
+  .chat-input-row .chat-voice-btn:hover {
+    color: var(--ink);
+    filter: brightness(0.99);
+  }
+
+  /* § V.E.3 · Special-mode badges en chat header */
+  .chat-context .chat-mode-badges {
+    display: inline-flex; gap: 6px;
+    margin-top: 4px;
+  }
+  .chat-mode-badge {
+    display: inline-flex; align-items: center; gap: 4px;
+    font-family: "Lenia"; font-weight: 500;
+    font-size: var(--fs-eyebrow);
+    letter-spacing: 0.06em;
+    padding: 3px 8px;
+    border-radius: 999px;
+    border: 1px solid var(--line-soft);
+    color: var(--ink-soft);
+    background: var(--paper-soft);
+  }
+  .chat-mode-badge.rainbow {
+    background: linear-gradient(135deg, rgba(245,222,231,0.5), rgba(191,210,176,0.4));
+    color: #6B3D2A;
+  }
+  .chat-mode-badge.preemie {
+    background: var(--gold-subtle);
+    color: #6E5A2A;
+  }
+  .chat-mode-badge.mono {
+    background: var(--coral-subtle);
+    color: #8E4A22;
+  }
+  .chat-mode-badge.sync {
+    background: var(--mint-subtle);
+    color: #4F6647;
+  }
+
+  /* § V.E.4 · Citation pill .cita-clinica · render dentro del bubble companion
+     reemplazando el .source legacy con un pill clickable. */
+  .cita-clinica {
+    display: inline-flex; align-items: center; gap: 4px;
+    margin-top: 6px;
+    padding: 3px 9px;
+    border-radius: 999px;
+    background: var(--paper-soft);
+    border: 1px solid var(--line);
+    font-family: "Lenia"; font-weight: 500;
+    font-size: var(--fs-eyebrow);
+    letter-spacing: 0.10em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    cursor: pointer;
+    transition: filter 150ms var(--ease), border-color 150ms var(--ease);
+  }
+  .cita-clinica:hover {
+    border-color: var(--coral-base);
+    color: var(--coral-strong);
+  }
+  .cita-clinica::before { content: "📄"; font-size: 11px; }
+
+  /* Toast genérico para placeholder (photo/voice) */
+  .chat-toast {
+    position: fixed;
+    left: 50%; bottom: 88px;
+    transform: translateX(-50%) translateY(20px);
+    background: var(--ink);
+    color: var(--paper);
+    padding: 12px 18px;
+    border-radius: 999px;
+    font-family: "Lenia"; font-size: var(--fs-meta);
+    z-index: 60;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 220ms var(--ease), transform 220ms var(--ease);
+  }
+  .chat-toast.active {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+
 </style>
 </head>
 <body>
@@ -8843,6 +8965,9 @@
             <div>
               <span class="eyebrow">Chat · Grow</span>
               <strong data-chat-context>Lola · 18 m · niñez temprana</strong>
+              <span class="chat-mode-badges" data-chat-mode-badges aria-label="Modos especiales activos">
+                <!-- badges injected by JS based on flags -->
+              </span>
             </div>
             <button class="chat-3am-toggle" type="button" data-goto="chat-3am" aria-label="Modo 3AM">
               <span aria-hidden="true">🌙</span> Modo 3AM
@@ -8863,6 +8988,8 @@
               <button class="chat-triage-chip" type="button" role="listitem" data-triage="seizure"><span class="icon">⚡</span> Convulsión</button>
             </div>
             <div class="chat-input-row">
+              <button class="chat-attach-btn" type="button" data-chat-attach aria-label="Adjuntar foto">📷</button>
+              <button class="chat-voice-btn" type="button" data-chat-voice aria-label="Mensaje de voz">🎙</button>
               <input class="chat-text-input" type="text" placeholder="Pregúntale a Grow…" aria-label="Mensaje" data-chat-input>
               <button class="chat-send-btn" type="button" data-chat-send aria-label="Enviar">→</button>
             </div>
@@ -8998,6 +9125,7 @@
         </aside>
 
         <div class="relay-toast" id="relay-toast" aria-live="polite">Aviso enviado a Pablo · llegará al instante</div>
+        <div class="chat-toast" id="chat-toast" aria-live="polite"></div>
 
         <!-- ═══════════════════════════════════════════════════════════
              § V.D · Close-flow sheet para Modo 3AM
@@ -14428,6 +14556,54 @@ Grow
 
 
 
+
+
+  /* § V.E.1 · Streaming dots · 600ms entre user-send y companion-response */
+  function chatShowStreamingDots() {
+    const root = document.querySelector('[data-chat-thread]');
+    if (!root) return;
+    const existing = root.querySelector('.chat-streaming-dots');
+    if (existing) existing.remove();
+    const wrap = document.createElement('div');
+    wrap.className = 'bubble-row';
+    wrap.innerHTML = '<div class="chat-streaming-dots" aria-label="IA escribiendo"><span></span><span></span><span></span></div>';
+    root.appendChild(wrap);
+    root.scrollTop = root.scrollHeight;
+  }
+  function chatHideStreamingDots() {
+    document.querySelectorAll('.chat-streaming-dots').forEach((el) => el.closest('.bubble-row')?.remove());
+  }
+
+  /* § V.E.2 · Toast helper · usado por photo/voice placeholders */
+  function chatToast(msg, ms) {
+    const t = document.getElementById('chat-toast');
+    if (!t) return;
+    t.textContent = msg;
+    t.classList.add('active');
+    window.setTimeout(() => t.classList.remove('active'), ms || 1800);
+  }
+
+  /* § V.E.3 · Special-mode flags · read from app state if exist, else demo defaults */
+  function chatGetModeFlags() {
+    return {
+      rainbow:  typeof pregnancyRainbowMode !== 'undefined' && pregnancyRainbowMode === true,
+      preemie:  typeof growBabyIsPreemie    !== 'undefined' && growBabyIsPreemie    === true,
+      mono:     typeof caregiverMonoparental!== 'undefined' && caregiverMonoparental=== true,
+      sync:     true  /* Demo · "Pablo" en cuenta · siempre visible per spec */
+    };
+  }
+  function chatRenderModeBadges() {
+    const root = document.querySelector('[data-chat-mode-badges]');
+    if (!root) return;
+    const f = chatGetModeFlags();
+    const html = [];
+    if (f.rainbow) html.push('<span class="chat-mode-badge rainbow" title="Embarazo arcoíris"><span aria-hidden="true">🌈</span> arcoíris</span>');
+    if (f.preemie) html.push('<span class="chat-mode-badge preemie" title="Bebé prematuro"><span aria-hidden="true">🐣</span> preemie</span>');
+    if (f.mono)    html.push('<span class="chat-mode-badge mono" title="Familia monoparental"><span aria-hidden="true">💪</span> monoparental</span>');
+    if (f.sync)    html.push('<span class="chat-mode-badge sync" title="Sincronizado con co-cuidador">🔄 sincr. con Pablo</span>');
+    root.innerHTML = html.join('');
+  }
+
   /* § V.D · Persistencia · localStorage para chat principal (resilient)
      y para 3AM (ephemeral · solo durante sesión). */
   const CHAT_MAIN_KEY = 'grow.chat.main.v1';
@@ -14975,7 +15151,9 @@ Grow
         const sysClass = msg.class ? ` ${escapeHtml(msg.class)}` : '';
         return `<div class="bubble system${sysClass}">${msg.text}</div>`;
       }
-      const sourceHtml = msg.source ? `<span class="source">— ${escapeHtml(msg.source)}</span>` : '';
+      const sourceHtml = msg.source
+        ? `<button class="cita-clinica" type="button" data-cita-source="${escapeHtml(msg.source)}" aria-label="Fuente clínica">${escapeHtml(msg.source)}</button>`
+        : '';
       const cls = msg.role === 'you' ? 'you' : msg.role;
       const toolsHtml = Array.isArray(msg.tools)
         ? msg.tools.map((id) => renderToolCard(id)).join('')
@@ -14997,14 +15175,19 @@ Grow
     }
     /* Night-mode visual cues */
     chatUpdateNightState();
+    /* Special-mode badges */
+    chatRenderModeBadges();
   }
   function chatSend(text) {
     if (!text || !text.trim()) return;
     chatMessages.push({ role: 'you', text: escapeHtml(text.trim()), time: 'ahora' });
     renderChat();
     chatSaveMain();
+    /* Streaming dots while "IA escribe" */
+    chatShowStreamingDots();
     /* Echo placeholder · in production this would be IA + pediatra response */
     window.setTimeout(() => {
+      chatHideStreamingDots();
       chatMessages.push({
         role: 'companion',
         text: 'Te leo. <strong>Aquí no diagnosticamos · aquí estamos.</strong> ¿Quieres que abramos un cribaje rápido o lo cuentas con tus palabras?',
@@ -15012,7 +15195,7 @@ Grow
       });
       renderChat();
       chatSaveMain();
-    }, 600);
+    }, 700);
   }
 
   /* 3AM render */
@@ -15700,6 +15883,22 @@ Grow
       document.body.appendChild(btn);
       btn.click();
       btn.remove();
+      return;
+    }
+
+    /* § V.E.2 · Photo + voice placeholders */
+    if (event.target.closest('[data-chat-attach]')) {
+      chatToast('📷 Adjuntar foto · disponible en v1.5');
+      return;
+    }
+    if (event.target.closest('[data-chat-voice]')) {
+      chatToast('🎙 Mensaje de voz · disponible en v1.5');
+      return;
+    }
+    /* § V.E.4 · Cita-clinica pill · click muestra detalle compacto */
+    const cita = event.target.closest('.cita-clinica');
+    if (cita && cita.dataset.citaSource) {
+      chatToast('📄 ' + cita.dataset.citaSource);
       return;
     }
 
