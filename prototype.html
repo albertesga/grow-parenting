@@ -8401,6 +8401,52 @@
     transform: translateX(-50%) translateY(0);
   }
 
+
+  /* § V.revision · Last-action banner en Modo 3AM
+     Muestra contexto después de safety/mental para no dejar al usuario sin pista. */
+  .chat-3am-last-action {
+    margin: 12px 22px;
+    padding: 12px 14px;
+    background: rgba(242,165,122,0.10);
+    border: 1px solid rgba(242,165,122,0.30);
+    border-radius: 14px;
+    color: #E6E2DC;
+    font-family: "Helvena"; font-size: var(--fs-body-sm);
+    line-height: 1.45;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .chat-3am-last-action .icon { font-size: 18px; line-height: 1; flex-shrink: 0; }
+  .chat-3am-last-action strong { color: #F2A57A; font-weight: 500; }
+  .chat-3am-last-action .dismiss {
+    margin-left: auto; flex-shrink: 0;
+    background: transparent; border: 0; color: rgba(183,176,164,0.6);
+    cursor: pointer; font-size: 18px; line-height: 1; padding: 0 4px;
+  }
+
+  /* § V.revision · note-3am-epds rendering · sticky pill mint para EPDS */
+  .bubble.system.chat-note-epds {
+    background: rgba(232,201,122,0.20);
+    color: #6E5A2A;
+    border: 1px solid rgba(184,151,63,0.32);
+    padding: 6px 12px;
+    border-radius: 999px;
+    font-family: "Lenia"; font-size: var(--fs-meta);
+    letter-spacing: 0.04em;
+    align-self: center;
+    max-width: max-content;
+  }
+  .bubble.system.chat-note-triage {
+    background: rgba(214,119,66,0.10);
+    color: var(--coral-strong);
+    border: 1px solid rgba(214,119,66,0.30);
+    padding: 6px 12px;
+    border-radius: 999px;
+    font-family: "Lenia"; font-size: var(--fs-meta);
+    letter-spacing: 0.04em;
+    align-self: center;
+    max-width: max-content;
+  }
+
 </style>
 </head>
 <body>
@@ -13611,8 +13657,17 @@ Grow
       if (options.pregnancyView) pregnancyActiveView = options.pregnancyView;
       renderPregnancyBook();
     }
+    /* Cleanup streaming dots si dejamos chat */
+    if (name !== 'chat' && name !== 'chat-3am') {
+      if (typeof chatCleanupOnLeave === 'function') chatCleanupOnLeave();
+    }
     if (name === 'chat') {
       renderChat();
+      /* Auto-focus input · accesibilidad · solo si no es restore tras refresh */
+      requestAnimationFrame(() => {
+        const input = document.querySelector('[data-chat-input]');
+        if (input && document.activeElement !== input) input.focus({ preventScroll: true });
+      });
     }
     if (name === 'chat-3am') {
       renderChat3AM();
@@ -14456,6 +14511,19 @@ Grow
     scrim.classList.add('active');
   }
   function closeEpds() {
+    /* Si EPDS llegó a resultado · pushea al chat principal como nota privada */
+    if (epdsActive && epdsActive.stepIdx >= 5) {
+      const score = epdsActive.score;
+      const lastQ = epdsActive.answers[4];
+      const hasIdeation = lastQ != null && lastQ > 0;
+      const label = hasIdeation ? 'EPDS · alerta cuidado' : score >= 10 ? 'EPDS · cuidate' : 'EPDS · bien';
+      chatMessages.push({
+        role: 'system',
+        class: 'chat-note-epds',
+        text: `📋 ${label} · score ${score}/15`
+      });
+      chatSaveMain();
+    }
     document.getElementById('epds-modal')?.classList.remove('active');
     scrim.classList.remove('active');
     epdsActive = null;
@@ -14573,6 +14641,10 @@ Grow
   function chatHideStreamingDots() {
     document.querySelectorAll('.chat-streaming-dots').forEach((el) => el.closest('.bubble-row')?.remove());
   }
+  /* Cleanup completo al cambiar de screen · evita dots zombie */
+  function chatCleanupOnLeave() {
+    chatHideStreamingDots();
+  }
 
   /* § V.E.2 · Toast helper · usado por photo/voice placeholders */
   function chatToast(msg, ms) {
@@ -14625,7 +14697,12 @@ Grow
           return true;
         }
       }
-    } catch (e) {}
+    } catch (e) {
+      /* Corrupted JSON · clear and continue with defaults */
+      try { localStorage.removeItem(CHAT_MAIN_KEY); } catch (e2) {}
+    }
+    /* Primera visita · welcome ya está en chatMessages por default. Marcamos. */
+    try { localStorage.setItem('grow.chat.welcomed', '1'); } catch (e) {}
     return false;
   }
   function chatClearMainStorage() {
@@ -14672,6 +14749,12 @@ Grow
     const summary = chat3AMSummary();
     if (summary) {
       chatMessages.push({ role: 'system', text: summary, class: 'chat-note-3am' });
+      /* Companion follow-up · trauma-informed canon · NO juzgar, presencia */
+      chatMessages.push({
+        role: 'companion',
+        text: 'Hiciste lo correcto al venir aquí. Cuando quieras, te leo.',
+        time: 'ahora'
+      });
       chatSaveMain();
     }
     chat3AMSession = null;
@@ -15066,6 +15149,30 @@ Grow
     scrim.classList.add('active');
   }
   function closeTriage() {
+    /* Si el triage había terminado (resultado visible) · pusheamos al chat principal
+       para dar continuidad. Companion follow-up trauma-informed canon. */
+    if (triageActive) {
+      const tree = triageTrees[triageActive.treeId];
+      const step = tree && tree.steps[triageActive.stepIdx];
+      if (tree && !step) {
+        /* Estábamos en el step de result · capturamos antes de borrar */
+        const months = chatGetBabyMonths();
+        const result = tree.evaluate(triageActive.answers, months);
+        const levelLabel = result.level === 'urgent' ? 'URGENCIAS' : result.level === 'caution' ? 'MISMO DÍA' : 'CASA';
+        chatMessages.push({
+          role: 'system',
+          class: 'chat-note-triage',
+          text: `${tree.icon} ${tree.label} · ${levelLabel}`
+        });
+        chatMessages.push({
+          role: 'companion',
+          text: `Te dejo el cribaje aquí por si lo necesitas mañana. <strong>${escapeHtml(result.title)}</strong> ${result.actions.map((a) => '· ' + escapeHtml(a)).join(' ')}`,
+          source: tree.source,
+          time: 'ahora'
+        });
+        chatSaveMain();
+      }
+    }
     document.getElementById('triage-modal').classList.remove('active');
     scrim.classList.remove('active');
     triageActive = null;
@@ -15199,11 +15306,35 @@ Grow
   }
 
   /* 3AM render */
+  let chat3AMLastAction = null;  /* { type: 'safety'|'mental'|'epds'|'relay', label } */
+  function chat3AMSetLastAction(type) {
+    const labels = {
+      safety: { icon: '🤲', label: 'Has revisado el safety frame' },
+      mental: { icon: '🤲', label: 'Has visto la línea 024' },
+      epds:   { icon: '📋', label: 'Has hecho el EPDS rápido' },
+      relay:  { icon: '👋', label: 'Has avisado a Pablo' }
+    };
+    chat3AMLastAction = labels[type] || null;
+    renderChat3AM();
+  }
   function renderChat3AM() {
     const root = document.querySelector('[data-3am-options]');
     if (!root) return;
     const months = chatGetBabyMonths();
     const opts = chat3AMOptionsForAge(months);
+    /* Remove previous last-action banner */
+    document.querySelectorAll('.chat-3am-last-action').forEach((el) => el.remove());
+    /* Inject last-action banner before options if exists */
+    if (chat3AMLastAction) {
+      const banner = document.createElement('div');
+      banner.className = 'chat-3am-last-action';
+      banner.innerHTML = `
+        <span class="icon" aria-hidden="true">${chat3AMLastAction.icon}</span>
+        <div><strong>${escapeHtml(chat3AMLastAction.label)}.</strong> Si quieres, sigue · o vuelve al chat principal.</div>
+        <button class="dismiss" type="button" data-3am-dismiss-action aria-label="Cerrar nota">×</button>
+      `;
+      root.parentNode.insertBefore(banner, root);
+    }
     root.innerHTML = opts.map((opt) => `
       <button class="chat-3am-option" type="button" data-3am-action="${escapeHtml(opt.action)}">
         ${escapeHtml(opt.title)}
@@ -15981,10 +16112,15 @@ Grow
     if (sfAction) {
       const t = sfAction.dataset.safetyAction;
       document.getElementById('safety-frame-modal')?.classList.remove('active');
-      if (t === 'mental') openMentalHealth();
-      else if (t === 'relay') {
-        openRelay();
-      }
+      chat3AMSetLastAction('safety');
+      if (t === 'mental') { openMentalHealth(); chat3AMSetLastAction('mental'); }
+      else if (t === 'relay') { openRelay(); chat3AMSetLastAction('relay'); }
+      return;
+    }
+    /* Dismiss last-action banner */
+    if (event.target.closest('[data-3am-dismiss-action]')) {
+      chat3AMLastAction = null;
+      renderChat3AM();
       return;
     }
     if (event.target.closest('[data-mental-call]')) {
@@ -16002,7 +16138,8 @@ Grow
     if (epdsAct) {
       const t = epdsAct.dataset.epdsAction;
       closeEpds();
-      if (t === 'mental') openMentalHealth();
+      chat3AMSetLastAction('epds');
+      if (t === 'mental') { openMentalHealth(); chat3AMSetLastAction('mental'); }
       else if (t === 'library') {
         if (typeof sheet !== 'undefined' && sheetTitle && sheetCopy) {
           sheetTitle.textContent = 'Libro de bienestar materno';
