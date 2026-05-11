@@ -5487,6 +5487,15 @@
     padding-bottom: 22px;
     min-width: 0;
   }
+  /* § Vacunas · navbar dedicado · ver tabs Calendario/Fiebre/Carnet/Settings + FAB Log filtrado */
+  [data-screen="vacunacion"] .content { padding-bottom: 110px; }
+  .vaccine-phone-nav { background: #FBF5EA; }
+  .vaccine-phone-nav .nav-tab.active { color: #7C6429; }
+  .vaccine-phone-nav .fab.vaccine-fab {
+    background: var(--gold-base);
+    color: #4A3815;
+    box-shadow: 0 6px 18px rgba(184,151,63,0.32);
+  }
   .pregnancy-hero,
   .pregnancy-status-card,
   .pregnancy-nav-card,
@@ -9458,6 +9467,9 @@
       <symbol id="i-chart" viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M7 14l3-4 4 3 5-7"/></symbol>
       <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
       <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12l5 5 9-11"/></symbol>
+      <symbol id="i-thermo" viewBox="0 0 24 24"><path d="M14 14.76V5a2 2 0 0 0-4 0v9.76a4 4 0 1 0 4 0z"/></symbol>
+      <symbol id="i-card" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 10h18"/><path d="M7 15h4"/></symbol>
+      <symbol id="i-settings" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 0 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 0 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 0 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 0 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></symbol>
     </defs>
   </svg>
   <main class="prototype">
@@ -9971,7 +9983,7 @@
           </div>
         </section>
 
-        <section class="screen no-nav" data-screen="vacunacion">
+        <section class="screen" data-screen="vacunacion">
           <div class="status"><span>9:42</span><div class="status-dots"><span></span><span></span><span></span></div></div>
           <div class="content vaccine-book">
             <div class="top-header">
@@ -9983,6 +9995,16 @@
             </div>
             <div class="vaccine-shell" data-vaccine-root></div>
           </div>
+          <nav class="phone-nav vaccine-phone-nav" aria-label="Libro de vacunas">
+            <button class="nav-tab" type="button" data-vaccine-view="home" data-vaccine-tab="home"><svg viewBox="0 0 24 24"><use href="#i-cal"/></svg><span>Calendario</span></button>
+            <button class="nav-tab" type="button" data-vaccine-view="tracker" data-vaccine-tab="tracker"><svg viewBox="0 0 24 24"><use href="#i-thermo"/></svg><span>Fiebre</span></button>
+            <div class="nav-tab fab-cell">
+              <button class="fab vaccine-fab" type="button" data-log-open data-log-source="vacunacion" aria-label="Abrir log de vacunas"><svg viewBox="0 0 24 24"><use href="#i-plus"/></svg></button>
+              <span class="lbl">Log</span>
+            </div>
+            <button class="nav-tab" type="button" data-vaccine-view="card" data-vaccine-tab="card"><svg viewBox="0 0 24 24"><use href="#i-card"/></svg><span>Carnet</span></button>
+            <button class="nav-tab" type="button" data-vaccine-view="scheme" data-vaccine-tab="scheme"><svg viewBox="0 0 24 24"><use href="#i-settings"/></svg><span>Settings</span></button>
+          </nav>
         </section>
 
         <section class="screen" data-screen="log">
@@ -13920,42 +13942,14 @@ Grow
   }
 
   function renderVaccineHome() {
+    /* § Vacunas · Calendario tab · home limpio: hero + calendario completo.
+       Quitamos status-grid (notis), nav-grid (reemplazado por bottom-nav) y
+       scheme callout (movido a Settings tab). */
     return `
-      <button class="book-close-pill" type="button" data-goto="hoy" aria-label="Cerrar libro"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-x"/></svg></button>
           ${renderVaccineHero()}
-      ${renderVaccineNav()}
-      <section class="vaccine-status-card">
-        <div class="vaccine-status-grid">
-          <div class="vaccine-stat"><strong>12 jul</strong><span>próxima</span></div>
-          <div class="vaccine-stat"><strong>3/9</strong><span>hitos</span></div>
-          <div class="vaccine-stat"><strong>${formatNumber(vaccineWeightKg, 1)} kg</strong><span>calculadora</span></div>
-        </div>
-      </section>
       <section class="vaccine-section">
         <div class="vaccine-section-head"><span>Calendario completo</span><span>hasta 14a →</span></div>
         <div class="vaccine-list">${renderVaccineScheduleRows()}</div>
-      </section>
-      <section class="vaccine-section">
-        <div class="vaccine-nav-grid">
-          <button class="vaccine-nav-card" type="button" data-vaccine-view="detail"><strong>¿Qué le ponen hoy?</strong><small>hexavalente + 72h</small></button>
-          <button class="vaccine-nav-card" type="button" data-vaccine-view="tracker"><strong>Tracker fiebre</strong><small>curva esperada 72h</small></button>
-          <button class="vaccine-nav-card" type="button" data-vaccine-view="card"><strong>Carnet digital</strong><small>3 vacunas registradas</small></button>
-          <button class="vaccine-nav-card" type="button" data-vaccine-view="education"><strong>Educación</strong><small>decisión informada</small></button>
-        </div>
-      </section>
-      <section class="callout">
-        <strong>Esquema activo</strong>
-        ${escapeHtml(getVaccineScheme().label)}. ${escapeHtml(getVaccineScheme().copy)}
-        <button class="vaccine-action compact" type="button" data-vaccine-view="scheme">Cambiar esquema</button>
-      </section>
-      <section class="vaccine-section">
-        <div class="vaccine-section-head"><span>Notificaciones</span><span>desactivables</span></div>
-        ${Object.entries({ t7: 'T-7d · Vacunas dentro de 1 semana', t1: 'T-1d · Mañana toca', t0: 'T+0 · tracker activo automático', t24: 'T+24h · ¿Cómo va Lola?', t72: 'T+72h · cierre del seguimiento' }).map(([id, label]) => `
-          <button class="vaccine-toggle" type="button" data-vaccine-notification="${id}">
-            <span>${escapeHtml(label)}</span>
-            <span class="vaccine-switch${vaccineNotifications[id] ? ' active' : ''}"></span>
-          </button>
-        `).join('')}
       </section>
     `;
   }
@@ -14105,8 +14099,9 @@ Grow
 
   function renderVaccineScheme() {
     return `
-      ${renderVaccineViewHead('Esquema activo', 'Default España · AEPED CAV 2026 · cambiable manualmente.', 'home')}
+      ${renderVaccineViewHead('Ajustes del libro', 'Esquema activo, notificaciones y mapping. Editable cuando quieras.', 'home')}
       <section class="vaccine-section">
+        <div class="vaccine-section-head"><span>Esquema activo</span><span>${escapeHtml(getVaccineScheme().short || '')}</span></div>
         <div class="vaccine-plan-list">
           ${Object.entries(vaccineSchemes).map(([id, scheme]) => `
             <button class="vaccine-choice${vaccineScheme === id ? ' active' : ''}" type="button" data-vaccine-scheme="${escapeHtml(id)}">
@@ -14115,6 +14110,15 @@ Grow
             </button>
           `).join('')}
         </div>
+      </section>
+      <section class="vaccine-section">
+        <div class="vaccine-section-head"><span>Notificaciones</span><span>desactivables</span></div>
+        ${Object.entries({ t7: 'T-7d · Vacunas dentro de 1 semana', t1: 'T-1d · Mañana toca', t0: 'T+0 · tracker activo automático', t24: 'T+24h · ¿Cómo va Lola?', t72: 'T+72h · cierre del seguimiento' }).map(([id, label]) => `
+          <button class="vaccine-toggle" type="button" data-vaccine-notification="${id}">
+            <span>${escapeHtml(label)}</span>
+            <span class="vaccine-switch${vaccineNotifications[id] ? ' active' : ''}"></span>
+          </button>
+        `).join('')}
       </section>
       <section class="callout">
         <strong>Mapping</strong>
@@ -14142,7 +14146,19 @@ Grow
   function setVaccineView(view) {
     vaccineActiveView = view || 'home';
     renderVaccineBook();
+    updateVaccineNavActive();
     document.querySelector('[data-screen="vacunacion"] .content')?.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  /* § Vacunas · sync navbar active state cuando cambia el view.
+     Maps view ids a tab slots del bottom-nav. Sub-vistas como `detail`/`dose`/
+     `education`/`table` no tienen tab propio · highlightean su padre lógico. */
+  function updateVaccineNavActive() {
+    const parents = { home: 'home', detail: 'home', dose: 'home', tracker: 'tracker', table: 'tracker', card: 'card', scheme: 'scheme', education: 'scheme' };
+    const tabId = parents[vaccineActiveView] || 'home';
+    document.querySelectorAll('.vaccine-phone-nav [data-vaccine-tab]').forEach((el) => {
+      el.classList.toggle('active', el.dataset.vaccineTab === tabId);
+    });
   }
 
   function setVaccineScheme(schemeId) {
@@ -15059,6 +15075,7 @@ Grow
     if (name === 'vacunacion') {
       if (options.vaccineView) vaccineActiveView = options.vaccineView;
       renderVaccineBook();
+      updateVaccineNavActive();
     }
     if (name === 'log-registro') {
       renderLogDetailScreen();
@@ -15463,8 +15480,26 @@ Grow
     `;
   }
 
+  /* § Log · per-source filter · libros con scope limitado solo muestran categorías
+     relevantes en el sheet del FAB. Vacunas: Vacuna · Temperatura(Fiebre) · Antitérmico(Med) · Síntoma. */
+  const logSourceCategoryFilter = {
+    vacunacion: ['vacuna', 'temperatura', 'antitermico', 'sintoma']
+  };
+  function getLogCategoriesForSource(source) {
+    const ids = logSourceCategoryFilter[source];
+    if (!ids) return logCategories;
+    const order = new Map(ids.map((id, i) => [id, i]));
+    return logCategories
+      .filter((c) => order.has(c.id))
+      .sort((a, b) => order.get(a.id) - order.get(b.id));
+  }
   function renderLogSheet() {
     if (!logSheetRoot) return;
+    const filtered = getLogCategoriesForSource(logActive.source);
+    const isFiltered = filtered.length !== logCategories.length;
+    const contextCopy = isFiltered
+      ? `Registrando desde ${escapeHtml(getLogSourceLabel())}. Categorías filtradas al scope de este libro.`
+      : `Registrando desde ${escapeHtml(getLogSourceLabel())}. Todo entra por el mismo log y se guarda en Diario mock cuando aplica.`;
     logSheetRoot.innerHTML = `
       <div class="qlog-grabber"></div>
       <button class="sheet-close" type="button" data-close-sheet aria-label="Cerrar"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-x"/></svg></button>
@@ -15472,9 +15507,9 @@ Grow
         <h4>¿Qué pasó?</h4>
         <span class="meta">9:23 · ahora</span>
       </div>
-      <div class="qlog-context">Registrando desde ${escapeHtml(getLogSourceLabel())}. Todo entra por el mismo log y se guarda en Diario mock cuando aplica.</div>
+      <div class="qlog-context">${contextCopy}</div>
       <div class="qlog-grid">
-        ${logCategories.map((category) => renderLogCategoryTile(category, 'sheet')).join('')}
+        ${filtered.map((category) => renderLogCategoryTile(category, 'sheet')).join('')}
       </div>
     `;
   }
