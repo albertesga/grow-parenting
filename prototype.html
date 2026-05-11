@@ -10103,6 +10103,14 @@
               </div>
             </div>
 
+            <section class="milestone-stage-head">
+              <div class="milestone-stage-copy">
+                <h3 class="milestone-stage-title" data-milestone-stage-title>—</h3>
+                <div class="milestone-stage-meta" data-milestone-stage-meta>—</div>
+                <div class="milestone-stage-count" data-milestone-stage-count>—</div>
+              </div>
+            </section>
+
             <div class="milestone-filter-row" aria-label="Filtros por tipo">
               <span class="scale-label">Tipo</span>
               <div class="milestone-filter-strip" data-milestone-filters></div>
@@ -12193,13 +12201,15 @@
   }
 
   function renderMilestoneBook() {
+    /* Resilient render · sólo los 3 nodos core (stages/filters/cards) son
+       obligatorios. title/meta/count son opcionales (display incremental). */
     const stageRoot = document.querySelector('[data-milestone-stages]');
     const filterRoot = document.querySelector('[data-milestone-filters]');
     const cardRoot = document.querySelector('[data-milestone-cards]');
+    if (!stageRoot || !filterRoot || !cardRoot) return;
     const title = document.querySelector('[data-milestone-stage-title]');
     const meta = document.querySelector('[data-milestone-stage-meta]');
     const count = document.querySelector('[data-milestone-stage-count]');
-    if (!stageRoot || !filterRoot || !cardRoot || !title || !meta || !count) return;
 
     const activeStage = getMilestoneStage();
     const stageMilestones = getMilestonesForStage(activeStage.id);
@@ -12208,9 +12218,9 @@
 
     stageRoot.innerHTML = renderMilestoneStages();
     filterRoot.innerHTML = renderMilestoneFilters();
-    title.textContent = activeStage.title;
-    meta.textContent = activeStage.meta;
-    count.textContent = `${achieved} logrados · ${stageMilestones.length} hitos`;
+    if (title) title.textContent = activeStage.title;
+    if (meta) meta.textContent = activeStage.meta;
+    if (count) count.textContent = `${achieved} logrados · ${stageMilestones.length} hitos`;
 
     document.querySelectorAll('[data-milestone-scale]').forEach((button) => {
       button.classList.toggle('active', button.dataset.milestoneScale === milestoneScale);
