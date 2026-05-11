@@ -1326,6 +1326,17 @@
   .chip:nth-child(4) { --chip-bg: var(--blush-subtle); --chip-ink: #7A4A3A; --chip-tilt:  3deg; }
   .chip:nth-child(5) { --chip-bg: var(--gold-subtle);  --chip-ink: #6E5A2A; --chip-tilt: -1deg; }
   .chip:nth-child(6) { --chip-bg: var(--paper-soft);   --chip-ink: var(--ink); --chip-tilt:  2deg; }
+  /* § E · class-based tone overrides · scopean per-chip independiente de la posición.
+     Vienen DESPUÉS de los nth-child para que ganen specificity ties por source-order.
+     El tilt sigue siendo position-based (preserva el ritmo torcido del strip). */
+  .chip.coral { --chip-bg: var(--coral-subtle); --chip-ink: #8E4A22; }
+  .chip.mint  { --chip-bg: var(--mint-subtle);  --chip-ink: #4F6647; }
+  .chip.gold  { --chip-bg: var(--gold-subtle);  --chip-ink: #6E5A2A; }
+  .chip.blush { --chip-bg: var(--blush-subtle); --chip-ink: #7A4A3A; }
+  .chip.ink   { --chip-bg: var(--ink);          --chip-ink: var(--paper); }
+  .chip.soft  { --chip-bg: var(--paper-soft);   --chip-ink: var(--ink); }
+  /* Premium · usado para escalas/funciones gated (Bayley-III, módulos premium) */
+  .chip.premium { opacity: 0.55; }
   .chip.active,
   .cal-chip.active {
     background: var(--paper);
@@ -10107,21 +10118,13 @@
               <div class="milestone-scale-row" aria-label="Selector de escala">
                 <span class="scale-label">Escala</span>
                 <div class="scale-strip">
-                  <button class="scale-btn active" type="button" data-milestone-scale="haizea">Haizea-Llevant</button>
-                  <button class="scale-btn" type="button" data-milestone-scale="asq">ASQ-3</button>
-                  <button class="scale-btn" type="button" data-milestone-scale="denver">Denver II</button>
-                  <button class="scale-btn" type="button" data-milestone-scale="wiechen">Van Wiechen</button>
-                  <button class="scale-btn premium" type="button" data-milestone-scale="bayley">Bayley-III</button>
+                  <button class="chip active" type="button" data-milestone-scale="haizea">Haizea-Llevant</button>
+                  <button class="chip coral" type="button" data-milestone-scale="asq">ASQ-3</button>
+                  <button class="chip mint" type="button" data-milestone-scale="denver">Denver II</button>
+                  <button class="chip blush" type="button" data-milestone-scale="wiechen">Van Wiechen</button>
+                  <button class="chip gold premium" type="button" data-milestone-scale="bayley">Bayley-III</button>
                 </div>
               </div>
-
-              <section class="milestone-stage-head">
-                <div class="milestone-stage-copy">
-                  <h3 class="milestone-stage-title" data-milestone-stage-title>—</h3>
-                  <div class="milestone-stage-meta" data-milestone-stage-meta>—</div>
-                  <div class="milestone-stage-count" data-milestone-stage-count>—</div>
-                </div>
-              </section>
 
               <div class="milestone-filter-row" aria-label="Filtros por tipo">
                 <span class="scale-label">Tipo</span>
@@ -12157,10 +12160,13 @@
   }
 
   function renderMilestoneFilters() {
-    return milestoneAreas.map((area) => {
+    /* Chip primitive canon · cycle tonos coral/mint/blush/gold/(default soft) */
+    const tones = ['', 'coral', 'mint', 'blush', 'gold'];
+    return milestoneAreas.map((area, i) => {
       const active = area.id === milestoneArea ? ' active' : '';
+      const tone = tones[i % tones.length];
       const count = getMilestoneAreaCount(milestoneActiveStage, area.id);
-      return `<button class="milestone-filter${active}" type="button" data-milestone-area="${area.id}">${escapeHtml(area.label)} · ${count}</button>`;
+      return `<button class="chip${tone ? ' ' + tone : ''}${active}" type="button" data-milestone-area="${area.id}">${escapeHtml(area.label)} · ${count}</button>`;
     }).join('');
   }
 
@@ -13700,9 +13706,15 @@ Grow
       ['plan', 'Plan IA'],
       ['alarms', 'Alarma']
     ];
+    /* Chip primitive canon · cycle tonos coral/mint/gold/blush para el tilt-rhythm */
+    const tones = ['', 'coral', 'mint', 'gold', 'blush'];
     return `
       <div class="pregnancy-nav-strip" aria-label="Vistas del libro de embarazo">
-        ${items.map(([id, label]) => `<button class="pregnancy-view-chip${pregnancyActiveView === id ? ' active' : ''}" type="button" data-pregnancy-view="${id}">${escapeHtml(label)}</button>`).join('')}
+        ${items.map(([id, label], i) => {
+          const tone = tones[i % tones.length];
+          const active = pregnancyActiveView === id ? ' active' : '';
+          return `<button class="chip${tone ? ' ' + tone : ''}${active}" type="button" data-pregnancy-view="${id}">${escapeHtml(label)}</button>`;
+        }).join('')}
       </div>
     `;
   }

@@ -332,6 +332,9 @@
   .chip.gold { background: var(--gold-subtle); color: #6E5A2A; }
   .chip.blush { background: var(--blush-subtle); color: var(--blush-ink); }
   .chip.ink { background: var(--ink); color: var(--paper); }
+  .chip.soft { background: var(--paper-soft); color: var(--ink); }
+  /* Premium · gated state · scales premium o módulos pro */
+  .chip.premium { opacity: 0.55; }
   .chip.active { background: var(--paper); color: var(--ink); box-shadow: inset 0 0 0 1.5px var(--ink); }
 
   /* Tilted chips row (Hoy filter strip) */
@@ -2283,7 +2286,7 @@
     </div>
 
     <div class="spec">
-      <div class="spec-head"><h3>Tone variants</h3><span class="meta-r">.coral · .mint · .gold · .blush · .ink</span></div>
+      <div class="spec-head"><h3>Tone variants</h3><span class="meta-r">.coral · .mint · .gold · .blush · .ink · .soft</span></div>
       <div class="spec-row" style="gap:8px">
         <button class="chip coral">Coral</button>
         <button class="chip mint">Mint</button>
@@ -2291,6 +2294,67 @@
         <button class="chip blush">Blush</button>
         <button class="chip ink">Ink</button>
         <button class="chip">Soft (default)</button>
+      </div>
+    </div>
+
+    <div class="spec">
+      <div class="spec-head"><h3>Multi-context · libros · escalas, filtros, view-tabs</h3><span class="meta-r">.chip aplicable a TODO selector horizontal</span></div>
+      <div class="spec-row col" style="padding:12px 0">
+        <p style="font-size:13px;color:var(--ink-soft);max-width:64ch;line-height:1.55;margin:0">
+          El mismo primitive <code>.chip</code> se usa en filtros de Hoy,
+          selectores de escala (Hitos · Haizea/ASQ/Denver/Wiechen), filtros
+          por área (Hitos · Tipo) y view-tabs de libros (Embarazo). El tilt
+          se aplica por posición (nth-child del strip); el tono por clase
+          (<code>.coral/.mint/.gold/.blush</code>). Selección sin fill ·
+          inset stroke 1.5px ink sobre paper · "se vacía" visualmente.
+        </p>
+      </div>
+      <div class="spec-row col" style="padding: 8px 0">
+        <div class="spec-label">Escala selector · Hitos · Bayley-III premium</div>
+        <div class="chip-strip-tilt">
+          <button class="chip active">Haizea</button>
+          <button class="chip coral">ASQ-3</button>
+          <button class="chip mint">Denver II</button>
+          <button class="chip blush">Wiechen</button>
+          <button class="chip gold premium">Bayley-III</button>
+        </div>
+      </div>
+      <div class="spec-row col" style="padding: 8px 0">
+        <div class="spec-label">Filtros por tipo · Hitos · cycle tonal con count inline</div>
+        <div class="chip-strip-tilt">
+          <button class="chip active">Todo · 17</button>
+          <button class="chip coral">Postural · 5</button>
+          <button class="chip mint">Manipulación · 5</button>
+          <button class="chip blush">Lenguaje · 4</button>
+          <button class="chip gold">Social · 3</button>
+        </div>
+      </div>
+      <div class="spec-row col" style="padding: 8px 0 18px">
+        <div class="spec-label">View tabs · Embarazo · Resumen / Patadas / Tensión / …</div>
+        <div class="chip-strip-tilt">
+          <button class="chip active">Resumen</button>
+          <button class="chip coral">Patadas</button>
+          <button class="chip mint">Tensión</button>
+          <button class="chip gold">Síntomas</button>
+          <button class="chip blush">Parto</button>
+          <button class="chip">Plan IA</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="spec">
+      <div class="spec-head"><h3>Premium gated</h3><span class="meta-r">.chip.premium</span></div>
+      <div class="spec-row col" style="padding: 12px 0 18px">
+        <p style="font-size:13px;color:var(--ink-soft);max-width:64ch;line-height:1.55;margin:0">
+          Opacity 0.55 sobre cualquier tono · indica que la opción está
+          gateada por plan/feature flag (Bayley-III · v0.5+). El click sigue
+          siendo intercep table para abrir el sheet de upgrade.
+        </p>
+        <div class="spec-row" style="gap: 8px">
+          <button class="chip gold premium">Bayley-III</button>
+          <button class="chip coral premium">Bilingüe v2</button>
+          <button class="chip mint premium">EEG mock</button>
+        </div>
       </div>
     </div>
   </section>
