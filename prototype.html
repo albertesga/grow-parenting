@@ -7751,6 +7751,95 @@
   .chat-3am .tool-card .tc-title { color: #E6E2DC; }
   .chat-3am .tool-card .tc-sub { color: #B7B0A4; }
 
+
+  /* § V.B · Night mode visual cues
+     Real-time check de getHours(). Si 22:00-06:00 → indicador visible
+     en chat header + card "🌙 No estás sola" inyectada al feed Hoy. */
+  .chat-context.is-night .chat-3am-toggle {
+    border-color: var(--coral-base);
+    background: linear-gradient(135deg, rgba(242,165,122,0.10), var(--paper-soft));
+    color: var(--coral-strong);
+    font-weight: 500;
+    position: relative;
+  }
+  .chat-context.is-night .chat-3am-toggle::before {
+    content: "";
+    width: 6px; height: 6px;
+    border-radius: 999px;
+    background: var(--coral-strong);
+    margin-right: 6px;
+    box-shadow: 0 0 0 0 rgba(214,119,66,0.5);
+    animation: nightPulse 2.2s ease-in-out infinite;
+  }
+  @keyframes nightPulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(214,119,66,0.5); }
+    50%      { box-shadow: 0 0 0 5px rgba(214,119,66,0); }
+  }
+
+  /* Hoy · night card · "No estás sola" — only inserted via JS when isNight() */
+  .feed-card.night {
+    background: linear-gradient(160deg, #1A1D24 0%, #2A2D34 100%);
+    border: 1px solid rgba(255,255,255,0.12);
+    color: #E6E2DC;
+  }
+  .feed-card.night .tag {
+    color: var(--coral-strong);
+    letter-spacing: 0.16em;
+  }
+  .feed-card.night h3 {
+    color: #E6E2DC;
+    font-family: "Lenia"; font-weight: 500;
+  }
+  .feed-card.night .context {
+    color: #B7B0A4;
+  }
+  .feed-card.night .card-button {
+    background: var(--coral-base);
+    color: #4A2510;
+    border: 0;
+  }
+  .feed-card.night .card-button:hover { filter: brightness(0.97); }
+  .feed-card.night .soft-actions button {
+    color: #B7B0A4;
+    border-color: rgba(255,255,255,0.10);
+  }
+
+  /* Banner card vivo en chat principal cuando es de noche */
+  .chat-night-banner {
+    margin: 12px 16px 0;
+    padding: 12px 16px;
+    border-radius: 14px;
+    background: linear-gradient(135deg, rgba(242,165,122,0.10), rgba(250,247,240,0.86));
+    border: 1px solid var(--coral-base);
+    color: var(--ink);
+    display: flex; align-items: center; gap: 12px;
+    font-family: "Helvena"; font-size: var(--fs-body-sm);
+    line-height: 1.45;
+  }
+  .chat-night-banner .moon {
+    font-size: 22px; line-height: 1;
+    flex-shrink: 0;
+  }
+  .chat-night-banner .ttl {
+    display: block;
+    font-family: "Lenia"; font-weight: 500;
+    font-size: var(--fs-body); color: var(--ink);
+    margin-bottom: 2px;
+  }
+  .chat-night-banner .opt-toggle {
+    margin-left: auto;
+    flex-shrink: 0;
+    background: transparent;
+    border: 1px solid var(--coral-base);
+    color: var(--coral-strong);
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-family: "Lenia"; font-size: var(--fs-meta);
+    font-weight: 500;
+    cursor: pointer;
+  }
+  .chat-night-banner .opt-toggle:hover { background: rgba(242,165,122,0.10); }
+
 </style>
 </head>
 <body>
@@ -12848,6 +12937,9 @@ Grow
     if (name === 'chat-3am') {
       renderChat3AM();
     }
+    if (name === 'hoy') {
+      chatInjectHoyNightCard();
+    }
     if (name === 'vacunacion') {
       if (options.vaccineView) vaccineActiveView = options.vaccineView;
       renderVaccineBook();
@@ -13493,6 +13585,70 @@ Grow
     return 18; /* fallback: Lola default */
   }
 
+
+
+  /* § V.B · Night mode helpers · real-time check + localStorage opt-in. */
+  function chatIsNightTime() {
+    const h = new Date().getHours();
+    return h >= 22 || h < 6;
+  }
+  function chatGet3AMOptedIn() {
+    try { return localStorage.getItem('grow.chat.3am.optedIn') === '1'; }
+    catch (e) { return false; }
+  }
+  function chatSet3AMOptedIn(v) {
+    try { localStorage.setItem('grow.chat.3am.optedIn', v ? '1' : '0'); }
+    catch (e) {}
+  }
+  function chatUpdateNightState() {
+    const isNight = chatIsNightTime();
+    const ctx = document.querySelector('.chat-context');
+    if (ctx) ctx.classList.toggle('is-night', isNight);
+    /* Banner card si night + no opted-in todavía */
+    const thread = document.querySelector('[data-chat-thread]');
+    if (!thread) return;
+    /* Remove existing banner */
+    thread.querySelectorAll('.chat-night-banner').forEach((el) => el.remove());
+    if (isNight && !chatGet3AMOptedIn()) {
+      const banner = document.createElement('div');
+      banner.className = 'chat-night-banner';
+      banner.innerHTML = `
+        <span class="moon" aria-hidden="true">🌙</span>
+        <div>
+          <span class="ttl">Modo 3AM disponible</span>
+          Respuestas más rápidas y directas. Sin juzgar.
+        </div>
+        <button class="opt-toggle" type="button" data-3am-opt-in>Activar</button>
+      `;
+      thread.appendChild(banner);
+    }
+  }
+  /* Inject "No estás sola" card en Hoy feed cuando night */
+  function chatInjectHoyNightCard() {
+    const isNight = chatIsNightTime();
+    /* Remove if exists */
+    document.querySelectorAll('.feed-card.night[data-night-card]').forEach((el) => el.remove());
+    if (!isNight) return;
+    const label = document.querySelector('[data-feed-label][data-feed-group="hoy"]');
+    if (!label) return;
+    const card = document.createElement('article');
+    card.className = 'feed-card night';
+    card.setAttribute('data-feed-item', '');
+    card.setAttribute('data-feed-group', 'hoy');
+    card.setAttribute('data-night-card', '');
+    card.innerHTML = `
+      <div class="tag">🌙 Noche</div>
+      <h3>No estás sola.</h3>
+      <div class="meta-line">Modo 3AM · disponible ahora</div>
+      <p class="context">Las respuestas son más rápidas, más directas y sin juzgar. Si necesitas algo, estoy aquí.</p>
+      <button class="card-button" type="button" data-goto="chat-3am">Abrir Modo 3AM</button>
+      <div class="soft-actions">
+        <button type="button" data-goto="chat">Chat normal</button>
+      </div>
+    `;
+    label.insertAdjacentElement('afterend', card);
+  }
+
   /* 3AM options · 4 age buckets (returns array of {title, sub, action}) */
   function chat3AMOptionsForAge(months) {
     if (months < 0) {  /* embarazo · negative semantics not used; placeholder */
@@ -13993,6 +14149,8 @@ Grow
       const phase = months < 3 ? 'recién nacido' : months < 12 ? 'bebé' : months < 36 ? 'niñez temprana' : 'preescolar';
       ctx.textContent = `Lola · ${ageLabel} · ${phase}`;
     }
+    /* Night-mode visual cues */
+    chatUpdateNightState();
   }
   function chatSend(text) {
     if (!text || !text.trim()) return;
@@ -14681,6 +14839,19 @@ Grow
 
     if (event.target.closest('[data-pregnancy-rainbow]')) {
       togglePregnancyRainbow();
+      return;
+    }
+
+    /* § V.B · Night mode opt-in handler */
+    if (event.target.closest('[data-3am-opt-in]')) {
+      chatSet3AMOptedIn(true);
+      document.querySelectorAll('.chat-night-banner').forEach((el) => el.remove());
+      /* Route to chat-3am immediately */
+      const btn = document.createElement('button');
+      btn.dataset.goto = 'chat-3am';
+      document.body.appendChild(btn);
+      btn.click();
+      btn.remove();
       return;
     }
 
