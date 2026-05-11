@@ -5506,11 +5506,17 @@
     color: #4A3815;
     box-shadow: 0 6px 18px rgba(184,151,63,0.32);
   }
-  /* § Hitos · navbar dedicado · 3 cells (Hitos · Log FAB · Carnet) · tonal mint */
+  /* § Hitos · navbar dedicado · 3 cells (Hitos · Log FAB · Carnet) · tonal mint
+     Estrecho + centrado horizontalmente (no stretch full-width como el global). */
   [data-screen="hitos"] .content { padding-bottom: 110px; }
   .milestone-phone-nav {
     background: #EEF7EE;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(3, 72px);
+    width: max-content;
+    left: 50%;
+    right: auto;
+    transform: translateX(-50%);
+    padding: 0 14px;
   }
   .milestone-phone-nav .nav-tab.active { color: #4F6647; }
   .milestone-phone-nav .fab.milestone-fab {
