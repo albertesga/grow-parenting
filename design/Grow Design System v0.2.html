@@ -1521,6 +1521,22 @@
   .urgency-badge.caution { background: var(--gold-base);  color: #4A3A12; }
   .urgency-badge.safe    { background: var(--mint-base);  color: #2F4029; }
 
+  /* § V.F · DS demo primitives · cita-clinica pill */
+  .cita-clinica {
+    display: inline-flex; align-items: center; gap: 4px;
+    padding: 3px 9px;
+    border-radius: 999px;
+    background: var(--paper-soft);
+    border: 1px solid var(--line);
+    font-family: "Lenia"; font-weight: 500;
+    font-size: var(--fs-eyebrow);
+    letter-spacing: 0.10em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    cursor: pointer;
+  }
+  .cita-clinica::before { content: "📄"; font-size: 11px; }
+
   /* § V.A · Tool-card primitive · DS demo */
   .tool-card {
     display: grid;
@@ -5133,6 +5149,123 @@
           <li><strong>Si árbol detecta urgencia</strong> · "Llama al 112 ahora. Si quieres, me quedo contigo mientras llaman."</li>
           <li><strong>Vuelta al chat principal</strong> · sticky note "Anoche 3AM · resuelto" en mint-subtle pill</li>
         </ul>
+      </div>
+    </div>
+
+    <div class="spec">
+      <div class="spec-head"><h3>Cita clínica pill</h3><span class="meta-r">.cita-clinica</span></div>
+      <div class="spec-row col" style="padding: 12px 0">
+        <p style="font-size:13px;color:var(--ink-soft);max-width:64ch;line-height:1.55;margin:0">
+          Render inline al final de cualquier bubble companion que tenga campo
+          <code>source</code>. Tap muestra la fuente completa como toast. Reemplaza
+          el legacy <code>&lt;span class="source"&gt;</code> de v0.2. Formato canon:
+          <code>FUENTE · AÑO</code> (NICE NG143 · 2021).
+        </p>
+      </div>
+      <div class="spec-row" style="padding: 16px 0; gap: 12px; align-items: center">
+        <button class="cita-clinica" type="button">NICE NG143 · 2021</button>
+        <button class="cita-clinica" type="button">Wessel 1954</button>
+        <button class="cita-clinica" type="button">CAV-AEP 2026</button>
+      </div>
+      <div class="spec-row col" style="padding: 6px 0 18px">
+        <div class="spec-label">Anatomy</div>
+        <ul style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--ink-soft); line-height: 1.7; padding-left: 18px; margin: 0">
+          <li><strong>.cita-clinica</strong> · pill paper-soft + border line · radius 999 · padding 3 9 · uppercase 0.10em</li>
+          <li>::before · "📄" icon emoji · fs 11</li>
+          <li>Hover · border coral-base · color coral-strong</li>
+          <li>data-cita-source · texto completo de la fuente (mostrado en toast al tap)</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="spec">
+      <div class="spec-head"><h3>Sticky disclaimer footer</h3><span class="meta-r">.chat-canon-foot</span></div>
+      <div class="spec-row col" style="padding: 12px 0 18px">
+        <p style="font-size:13px;color:var(--ink-soft);max-width:64ch;line-height:1.55;margin:0">
+          Frase canon Fase 0 siempre visible al final del chat input bar.
+          <strong>"Aquí no diagnosticamos · aquí estamos"</strong>. Uppercase 0.14em
+          letter-spacing · color ink-faint · centro. Mismo placement en chat principal
+          y Modo 3AM (con color ajustado para dark).
+        </p>
+      </div>
+    </div>
+
+    <div class="spec">
+      <div class="spec-head"><h3>Safety frame · NSBSP 4 pasos</h3><span class="meta-r">.safety-frame · .sf-steps · .sf-canon-foot</span></div>
+      <div class="spec-row col" style="padding: 12px 0">
+        <p style="font-size:13px;color:var(--ink-soft);max-width:64ch;line-height:1.55;margin:0">
+          Sheet overlay que se abre desde ruta 3AM "No puedo más". 4 cards numeradas con
+          pasos de regulación + footer mint canon "Nunca sacudas al bebé. Ni siquiera 1 segundo."
+          Trauma-informed canon · cero rojo médico · NSBSP/dontshake.org.
+        </p>
+      </div>
+      <div class="spec-row col" style="padding: 6px 0 18px">
+        <div class="spec-label">Anatomy</div>
+        <ul style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--ink-soft); line-height: 1.7; padding-left: 18px; margin: 0">
+          <li><strong>.safety-frame</strong> · paper bg · radius xl · padding 22</li>
+          <li><strong>.sf-steps</strong> · ol list-style none · 4 li paper-soft cards radius 14</li>
+          <li><strong>.sf-num</strong> · 28×28 round · ink bg · paper text · Lenia 500</li>
+          <li><strong>.sf-canon-foot</strong> · mint-subtle bg · italic Helvena fs-body-sm · text-center</li>
+          <li><strong>.sf-actions</strong> · 3 botones · coral (relay) + soft (mental 024) + ghost (cerrar)</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="spec">
+      <div class="spec-head"><h3>Mental-health banner</h3><span class="meta-r">.mental-health-card</span></div>
+      <div class="spec-row col" style="padding: 12px 0">
+        <p style="font-size:13px;color:var(--ink-soft);max-width:64ch;line-height:1.55;margin:0">
+          Sheet con gradient blush-subtle + border 1.5px ink. Copy canon trauma-informed.
+          CTA primario tel: line-of-help local (ES 024 · US 988 · UK 116123) auto-detectado
+          vía <code>navigator.language</code>. CTA secundario "Ahora no · cerrar".
+        </p>
+      </div>
+      <div class="spec-row col" style="padding: 6px 0 18px">
+        <div class="spec-label">Copy canon</div>
+        <ul style="font-family: 'Helvena', serif; font-size: 13px; color: var(--ink-soft); line-height: 1.65; padding-left: 18px; margin: 0; max-width: 60ch; font-style: italic">
+          <li>"🤲 No estás sola."</li>
+          <li>"Hay personas entrenadas para escucharte ahora mismo."</li>
+          <li>"Es gratis. Es 24h. No registran. Solo escuchan."</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="spec">
+      <div class="spec-head"><h3>Night palette canon</h3><span class="meta-r">--night-bg · --night-surface · --night-fg · --night-accent</span></div>
+      <div class="spec-row col" style="padding: 12px 0">
+        <p style="font-size:13px;color:var(--ink-soft);max-width:64ch;line-height:1.55;margin:0">
+          Paleta dark usada SOLO en Modo 3AM · variante intencional, no opcional.
+          No es "tema oscuro" del producto · es marca semántica: estás en modo urgencia.
+        </p>
+      </div>
+      <div class="spec-row" style="padding: 16px 0; gap: 12px; flex-wrap: wrap">
+        <div style="display: flex; flex-direction: column; gap: 6px; min-width: 140px">
+          <div style="background: #0E0F12; height: 64px; border-radius: 8px; border: 1px solid var(--line)"></div>
+          <code style="font-size: 11px">--night-bg #0E0F12</code>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 6px; min-width: 140px">
+          <div style="background: rgba(230,226,220,0.04); height: 64px; border-radius: 8px; border: 1px solid var(--line); background-clip: padding-box"></div>
+          <code style="font-size: 11px">--night-surface rgba(255,255,255,0.04)</code>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 6px; min-width: 140px">
+          <div style="background: #E6E2DC; height: 64px; border-radius: 8px; border: 1px solid var(--line)"></div>
+          <code style="font-size: 11px">--night-fg #E6E2DC</code>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 6px; min-width: 140px">
+          <div style="background: #F2A57A; height: 64px; border-radius: 8px"></div>
+          <code style="font-size: 11px">--night-accent #F2A57A</code>
+        </div>
+      </div>
+    </div>
+
+    <div class="spec">
+      <div class="spec-head"><h3>Triage banner full-width</h3><span class="meta-r">.triage-result.urgent · .caution · .safe</span></div>
+      <div class="spec-row col" style="padding: 12px 0 18px">
+        <p style="font-size:13px;color:var(--ink-soft);max-width:64ch;line-height:1.55;margin:0">
+          Output card de cualquier árbol de triage. Border + gradient subtle (10-14% opacity)
+          según urgencia. Composición: urgency-badge + title h4 + body p + lista acciones + source pill.
+          Cierre canon: "Si dudas, llama. Tu pediatra prefiere una falsa alarma a una real perdida."
+        </p>
       </div>
     </div>
   </section>
