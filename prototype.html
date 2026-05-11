@@ -6752,6 +6752,1001 @@
     }
   }
 
+  /* ═══════════════════════════════════════════════════════════════════
+     LIBRO DE CÓLICOS · 6 frames · canon DS Grow v0.2 (categoría Salud)
+     Selectores prefijados con .colicos-* para evitar colisión.
+     Cross-link a safety-frame y mental-health del módulo Chat.
+     ═══════════════════════════════════════════════════════════════════ */
+  .colicos-book {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+    padding-bottom: var(--space-xl);
+  }
+  .colicos-eyebrow {
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--cat-salud-ink);
+    font-weight: 600;
+  }
+  .colicos-no-diag {
+    font-size: 10px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--cat-salud-ink);
+    font-weight: 600;
+    margin-top: 6px;
+  }
+
+  /* ── Hero (Frame A) ── */
+  .colicos-home-hero h2 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: clamp(22px, 6.5vw, 30px);
+    line-height: 1.05;
+    margin: 8px 0 4px;
+    letter-spacing: -0.01em;
+  }
+  .colicos-home-hero .sub-italic {
+    font-style: italic;
+    color: var(--ink-soft);
+    font-size: 14px;
+  }
+
+  /* ── Sticky PURPLE banner ── */
+  .colicos-purple-sticky {
+    background: var(--cat-salud-tint);
+    border: 2px solid var(--ink);
+    border-radius: 16px;
+    padding: 14px 16px;
+    font-size: 14px;
+    line-height: 1.45;
+    color: var(--cat-salud-ink);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .colicos-purple-link {
+    align-self: flex-start;
+    background: transparent;
+    border: 0;
+    padding: 0;
+    color: var(--ink);
+    font-weight: 600;
+    font-size: 13px;
+    cursor: pointer;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  .colicos-purple-cta {
+    text-align: left;
+    padding: 8px 4px;
+    font-size: 14px;
+  }
+
+  /* ── Cry classifier card (home) ── */
+  .colicos-classifier-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    padding: 22px 16px;
+    background: var(--paper-soft);
+    border: 1px solid var(--line);
+    border-radius: 22px;
+    text-align: center;
+  }
+  .colicos-classifier-card strong {
+    font-family: var(--font-display);
+    font-size: 17px;
+  }
+  .colicos-classifier-card .meta {
+    font-size: 12px;
+    color: var(--ink-soft);
+    margin-top: -2px;
+  }
+  .colicos-classifier-bigbtn {
+    width: 96px;
+    height: 96px;
+    border-radius: 50%;
+    background: var(--cat-salud-tint);
+    border: 1.5px solid var(--ink);
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+    color: var(--ink);
+    transition: transform 150ms var(--ease, ease);
+  }
+  .colicos-classifier-bigbtn svg {
+    width: 36px;
+    height: 36px;
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 1.6;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .colicos-classifier-bigbtn:hover {
+    transform: scale(1.05);
+    animation: colicosPulse 1.4s ease-in-out infinite;
+  }
+  @keyframes colicosPulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(92,86,72,0.20); }
+    50%      { box-shadow: 0 0 0 14px rgba(92,86,72,0); }
+  }
+
+  /* ── Episode card (home) ── */
+  .colicos-episode-card {
+    padding: 16px;
+    background: var(--paper-soft);
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .colicos-episode-card.is-live {
+    border-color: var(--ink);
+    background: var(--cat-salud-tint);
+  }
+  .colicos-episode-card .ep-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 12px;
+  }
+  .colicos-episode-card .ep-title strong {
+    font-family: var(--font-display);
+    font-size: 15px;
+    color: var(--ink);
+  }
+  .colicos-episode-card .ep-title .meta {
+    font-size: 12px;
+    color: var(--ink-soft);
+    font-variant-numeric: tabular-nums;
+  }
+  .colicos-episode-card .ep-empty-cta {
+    width: 100%;
+    padding: 16px;
+    background: transparent;
+    border: 1.5px dashed var(--ink);
+    border-radius: 12px;
+    cursor: pointer;
+    font-family: var(--font-display);
+    font-size: 15px;
+    color: var(--ink);
+    text-align: center;
+  }
+  .colicos-episode-card .ep-live-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+  .colicos-episode-card .ep-live-timer {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 28px;
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+    color: var(--ink);
+  }
+  .colicos-episode-card .ep-live-cta {
+    border: 0;
+    padding: 10px 16px;
+    border-radius: 999px;
+    background: var(--ink);
+    color: var(--paper);
+    font-size: 13px;
+    cursor: pointer;
+  }
+  .colicos-episode-card .ep-summary {
+    font-size: 13px;
+    color: var(--ink-soft);
+    line-height: 1.45;
+  }
+
+  /* ── Timer block (Frame B) ── */
+  .colicos-timer-block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 0 4px;
+  }
+  .colicos-timer-big {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 56px;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    text-align: center;
+    font-variant-numeric: tabular-nums;
+  }
+  .colicos-timer-sub {
+    text-align: center;
+    font-size: 12px;
+    color: var(--ink-soft);
+  }
+
+  /* ── Intensity slider ── */
+  .colicos-intensity-row {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+  }
+  .colicos-intensity-row .label {
+    font-size: 11px;
+    color: var(--ink-soft);
+    letter-spacing: 0.08em;
+    font-weight: 600;
+  }
+  .colicos-intensity {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+  }
+  .colicos-intensity-dot {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 1.5px solid var(--ink);
+    background: var(--paper);
+    cursor: pointer;
+    display: grid;
+    place-items: center;
+    font-size: 13px;
+    font-family: var(--font-display);
+    color: var(--ink-soft);
+    transition: background 150ms ease, color 150ms ease, transform 150ms ease;
+  }
+  .colicos-intensity-dot:hover { transform: translateY(-1px); }
+  .colicos-intensity-dot.selected {
+    background: var(--ink);
+    color: var(--paper);
+  }
+
+  /* ── 5 S's pills ── */
+  .colicos-5s-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .colicos-5s-intro {
+    font-size: 13px;
+    color: var(--ink-soft);
+    padding: 0 4px;
+    line-height: 1.45;
+  }
+  .colicos-5s-pill {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 16px;
+    background: var(--paper-soft);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    cursor: pointer;
+    text-align: left;
+    width: 100%;
+    font-family: inherit;
+    transition: background 200ms ease, border-color 200ms ease, opacity 200ms ease;
+  }
+  .colicos-5s-pill .s-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    background: var(--cat-salud-tint);
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+    color: var(--cat-salud-ink);
+  }
+  .colicos-5s-pill .s-icon svg {
+    width: 18px;
+    height: 18px;
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 1.6;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .colicos-5s-pill .s-meta {
+    flex: 1;
+    min-width: 0;
+  }
+  .colicos-5s-pill .s-meta strong {
+    font-family: var(--font-display);
+    font-size: 15px;
+    display: block;
+    line-height: 1.1;
+    color: var(--ink);
+  }
+  .colicos-5s-pill .s-meta span {
+    font-size: 12px;
+    color: var(--ink-soft);
+    display: block;
+    margin-top: 2px;
+    line-height: 1.3;
+  }
+  .colicos-5s-pill .s-state {
+    font-size: 11px;
+    color: var(--ink-soft);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    flex-shrink: 0;
+  }
+  .colicos-5s-pill[data-state="doing"] {
+    background: var(--cat-salud-tint);
+    border-color: var(--ink);
+  }
+  .colicos-5s-pill[data-state="done"] {
+    opacity: 0.55;
+  }
+  .colicos-5s-pill[data-state="done"] .s-state::before { content: '✓ '; }
+
+  /* ── Relevo row (Frame B) ── */
+  .colicos-relevo-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 12px 14px;
+    background: var(--paper-soft);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+  }
+  .colicos-relevo-row strong {
+    font-family: var(--font-display);
+    font-size: 14px;
+  }
+  .colicos-relevo-row .meta {
+    font-size: 12px;
+    color: var(--ink-soft);
+  }
+  .colicos-relevo-chip {
+    background: var(--cat-salud-tint);
+    color: var(--cat-salud-ink);
+    border: 1px solid var(--cat-salud-ink);
+    padding: 8px 14px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 150ms ease, color 150ms ease;
+  }
+  .colicos-relevo-chip[data-state="sent"] {
+    background: var(--ink);
+    color: var(--paper);
+    border-color: var(--ink);
+  }
+  .colicos-relevo-chip[data-state="enroute"] {
+    background: var(--paper);
+    color: var(--ink);
+    border-color: var(--ink);
+    cursor: default;
+  }
+
+  /* ── Episode footer ── */
+  .colicos-episode-footer {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: auto;
+    padding-top: 16px;
+  }
+  .colicos-pediatra-link { color: var(--ink-soft); }
+
+  /* ── Cry classifier (Frame C) ── */
+  .colicos-classifier-stage {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+    padding: 24px 16px 18px;
+  }
+  .colicos-classifier-bigbtn-xl {
+    position: relative;
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    background: var(--cat-salud-tint);
+    border: 1.5px solid var(--ink);
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+    color: var(--ink);
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+  }
+  .colicos-classifier-bigbtn-xl svg {
+    width: 52px;
+    height: 52px;
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 1.6;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .colicos-classifier-bigbtn-xl .rec-ring {
+    position: absolute;
+    inset: -8px;
+    border-radius: 50%;
+    border: 3px solid var(--cat-salud-ink);
+    opacity: 0;
+    transition: opacity 150ms ease;
+    pointer-events: none;
+    /* Conic gradient progress (controlled via --p custom property 0..1) */
+    background: conic-gradient(var(--cat-salud-ink) calc(var(--p, 0) * 360deg), transparent 0);
+    -webkit-mask: radial-gradient(circle, transparent calc(50% - 4px), black calc(50% - 1px));
+            mask: radial-gradient(circle, transparent calc(50% - 4px), black calc(50% - 1px));
+    border: 0;
+  }
+  .colicos-classifier-bigbtn-xl[data-state="recording"] {
+    background: var(--ink);
+    color: var(--paper);
+    transform: scale(0.96);
+    transition: transform 200ms ease, background 200ms ease;
+  }
+  .colicos-classifier-bigbtn-xl[data-state="recording"] .rec-ring { opacity: 1; }
+  .colicos-record-status {
+    font-size: 13px;
+    color: var(--ink-soft);
+    letter-spacing: 0.04em;
+    font-weight: 500;
+    min-height: 18px;
+    text-align: center;
+  }
+  .colicos-waveform-mock {
+    display: flex;
+    align-items: flex-end;
+    gap: 4px;
+    height: 48px;
+    opacity: 0.35;
+    transition: opacity 200ms ease;
+  }
+  .colicos-waveform-mock.is-active { opacity: 1; }
+  .colicos-waveform-mock span {
+    display: block;
+    width: 4px;
+    background: var(--cat-salud-ink);
+    border-radius: 4px;
+    height: 30%;
+    transform-origin: 50% 100%;
+  }
+  .colicos-waveform-mock.is-active span {
+    animation: colicosWave 0.9s ease-in-out infinite;
+  }
+  .colicos-waveform-mock span:nth-child(1) { animation-delay: 0s; }
+  .colicos-waveform-mock span:nth-child(2) { animation-delay: 0.1s; }
+  .colicos-waveform-mock span:nth-child(3) { animation-delay: 0.2s; }
+  .colicos-waveform-mock span:nth-child(4) { animation-delay: 0.3s; }
+  .colicos-waveform-mock span:nth-child(5) { animation-delay: 0.4s; }
+  .colicos-waveform-mock span:nth-child(6) { animation-delay: 0.2s; }
+  .colicos-waveform-mock span:nth-child(7) { animation-delay: 0.05s; }
+  @keyframes colicosWave {
+    0%, 100% { transform: scaleY(0.5); }
+    50%      { transform: scaleY(2.4); }
+  }
+
+  /* ── Classifier result ── */
+  .colicos-classifier-result {
+    text-align: center;
+    padding: 18px 16px;
+    background: var(--paper-soft);
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    animation: colicosFadeIn 350ms ease both;
+  }
+  @keyframes colicosFadeIn {
+    from { opacity: 0; transform: translateY(6px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .colicos-classifier-result .top {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 32px;
+    line-height: 1;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+  }
+  .colicos-classifier-result .top .pct { color: var(--cat-salud-ink); }
+  .colicos-classifier-result .sub {
+    font-size: 13px;
+    color: var(--ink-soft);
+    margin: 6px 0 14px;
+  }
+  .colicos-classifier-result .insight {
+    font-size: 13px;
+    line-height: 1.45;
+    background: var(--cat-salud-tint);
+    color: var(--cat-salud-ink);
+    padding: 10px 12px;
+    border-radius: 10px;
+    margin-bottom: 14px;
+  }
+  .colicos-classifier-result .ctas {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .colicos-cta-pill {
+    padding: 10px 16px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 500;
+    border: 1px solid var(--ink);
+    background: transparent;
+    color: var(--ink);
+    cursor: pointer;
+  }
+  .colicos-cta-pill.primary,
+  .colicos-classifier-result .primary.coral.colicos-cta-pill {
+    background: var(--ink);
+    color: var(--paper);
+  }
+  .colicos-classifier-privacy {
+    text-align: center;
+    font-size: 12px;
+    color: var(--ink-soft);
+    padding: 0 16px;
+  }
+
+  /* ── Heatmap (Frame A mini + D full) ── */
+  .colicos-week-card {
+    padding: 16px;
+    background: var(--paper-soft);
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .colicos-week-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 12px;
+  }
+  .colicos-week-head strong {
+    font-family: var(--font-display);
+    font-size: 15px;
+    color: var(--ink);
+  }
+  .colicos-week-head .sub {
+    font-size: 11px;
+    color: var(--ink-soft);
+    margin-left: 6px;
+    letter-spacing: 0.04em;
+  }
+  .colicos-heatmap {
+    display: grid;
+    grid-template-columns: repeat(24, 1fr);
+    gap: 2px;
+    border-radius: 10px;
+  }
+  .colicos-heatmap.mini {
+    grid-template-rows: repeat(7, 1fr);
+    height: 56px;
+  }
+  .colicos-heatmap.full {
+    grid-template-rows: repeat(7, 1fr);
+    height: 140px;
+  }
+  .colicos-heatmap-cell {
+    background: var(--cat-salud-ink);
+    border-radius: 2px;
+    opacity: var(--cell-opacity, 0.06);
+    min-height: 4px;
+  }
+  .colicos-heatmap-axis {
+    display: flex;
+    justify-content: space-between;
+    font-size: 9px;
+    color: var(--ink-soft);
+    letter-spacing: 0.04em;
+  }
+
+  /* ── Stats row ── */
+  .colicos-stats-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+  }
+  .colicos-stat {
+    padding: 12px 8px;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    text-align: center;
+  }
+  .colicos-stat strong {
+    font-family: var(--font-display);
+    font-size: 15px;
+    display: block;
+    color: var(--ink);
+    line-height: 1.1;
+  }
+  .colicos-stat span {
+    font-size: 10px;
+    color: var(--ink-soft);
+    display: block;
+    margin-top: 4px;
+    letter-spacing: 0.06em;
+  }
+
+  /* ── Wessel checkpoint card (Frame D) ── */
+  .colicos-wessel-card {
+    padding: 16px;
+    background: var(--cat-salud-tint);
+    border: 1px solid var(--cat-salud-ink);
+    border-radius: 16px;
+  }
+  .colicos-wessel-card h4 {
+    font-family: var(--font-display);
+    font-size: 15px;
+    margin: 0 0 10px;
+    color: var(--cat-salud-ink);
+  }
+  .colicos-wessel-checks {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    margin-bottom: 10px;
+  }
+  .colicos-wessel-pill {
+    padding: 6px 12px;
+    border-radius: 999px;
+    font-size: 12px;
+    border: 1px solid var(--cat-salud-ink);
+    background: var(--paper);
+    color: var(--cat-salud-ink);
+  }
+  .colicos-wessel-pill.met {
+    background: var(--cat-salud-ink);
+    color: var(--paper);
+  }
+  .colicos-wessel-card .status {
+    font-size: 12px;
+    color: var(--cat-salud-ink);
+    margin-bottom: 12px;
+  }
+  .colicos-wessel-card .colicos-cta-pill[data-hidden] { display: none; }
+
+  /* ── Episodes list (Frame D) ── */
+  .colicos-episodes-list {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .colicos-episode-item {
+    display: grid;
+    grid-template-columns: 80px 1fr auto;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 12px;
+    background: var(--paper-soft);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    font-size: 13px;
+  }
+  .colicos-episode-item.is-fresh {
+    background: var(--cat-salud-tint);
+    border-color: var(--cat-salud-ink);
+  }
+  .colicos-episode-item .when {
+    font-family: var(--font-display);
+    color: var(--ink);
+  }
+  .colicos-episode-item .dur {
+    color: var(--ink-soft);
+    font-size: 12px;
+  }
+  .colicos-episode-item .int {
+    display: flex;
+    gap: 3px;
+  }
+  .colicos-episode-item .int-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--cat-salud-ink);
+    opacity: 0.3;
+  }
+  .colicos-episode-item .int-dot.on { opacity: 1; }
+  .colicos-episodes-empty {
+    padding: 20px 16px;
+    text-align: center;
+    color: var(--ink-soft);
+    font-size: 13px;
+    background: var(--paper-soft);
+    border: 1px dashed var(--line);
+    border-radius: 12px;
+  }
+
+  /* ── Week chips (Frame D) ── */
+  .colicos-week-chips {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  /* ── Causes (Frame E · accordion) ── */
+  .colicos-causes {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .colicos-cause-card {
+    padding: 0;
+    background: var(--paper-soft);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    overflow: hidden;
+  }
+  .colicos-cause-card.alarm {
+    border: 1.5px solid var(--ink);
+    background: var(--paper);
+  }
+  .colicos-cause-card summary {
+    list-style: none;
+    cursor: pointer;
+    padding: 14px 16px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    gap: 12px;
+    column-gap: 8px;
+  }
+  .colicos-cause-card summary::-webkit-details-marker { display: none; }
+  .colicos-cause-card .cause-tag {
+    grid-column: 1 / 2;
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--cat-salud-ink);
+    font-weight: 600;
+  }
+  .colicos-cause-card.alarm .cause-tag { color: var(--ink); }
+  .colicos-cause-card .cause-name {
+    grid-column: 1 / 2;
+    font-family: var(--font-display);
+    font-size: 17px;
+    line-height: 1.15;
+    color: var(--ink);
+  }
+  .colicos-cause-card .cause-chev {
+    grid-row: 1 / span 2;
+    grid-column: 2 / 3;
+    color: var(--ink-soft);
+    font-size: 16px;
+    transition: transform 200ms ease;
+    align-self: center;
+  }
+  .colicos-cause-card[open] .cause-chev { transform: rotate(180deg); }
+  .colicos-cause-card .cause-body {
+    padding: 0 16px 16px;
+    border-top: 1px solid var(--line);
+    margin-top: 4px;
+  }
+  .colicos-cause-card.alarm .cause-body {
+    border-top-color: var(--ink);
+  }
+  .colicos-cause-card ul {
+    list-style: none;
+    padding: 0;
+    margin: 12px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .colicos-cause-card li {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    font-size: 13px;
+    line-height: 1.4;
+    color: var(--ink-soft);
+  }
+  .colicos-cause-card li::before {
+    content: '○';
+    color: var(--ink-soft);
+    flex-shrink: 0;
+    line-height: 1.3;
+  }
+  .colicos-cause-card.alarm li::before {
+    content: '!';
+    font-weight: 700;
+    color: var(--ink);
+  }
+  .colicos-cause-cta {
+    display: inline-block;
+    padding: 8px 14px;
+    border: 1px solid var(--cat-salud-ink);
+    border-radius: 999px;
+    font-size: 13px;
+    color: var(--cat-salud-ink);
+    background: transparent;
+    cursor: pointer;
+  }
+  .colicos-cause-card.alarm .colicos-cause-cta {
+    border-color: var(--ink);
+    color: var(--paper);
+    background: var(--ink);
+  }
+
+  .colicos-reuteri-callout {
+    padding: 14px;
+    background: var(--paper-soft);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    font-size: 13px;
+    line-height: 1.5;
+  }
+  .colicos-reuteri-callout .tag {
+    display: inline-block;
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--cat-salud-ink);
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+  .colicos-reuteri-callout .source {
+    font-size: 11px;
+    color: var(--ink-soft);
+    margin-top: 6px;
+    font-style: italic;
+  }
+  .colicos-plan-cierre {
+    font-size: 14px;
+    line-height: 1.5;
+    padding: 14px 4px;
+    color: var(--ink-soft);
+    text-align: center;
+    font-style: italic;
+  }
+
+  /* ── PURPLE letters (Frame F) ── */
+  .colicos-purple-letters {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .colicos-purple-letter {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 12px 14px;
+    background: var(--paper-soft);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+  }
+  .colicos-purple-letter .letter {
+    font-family: var(--font-display);
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--cat-salud-ink);
+    line-height: 1;
+    flex-shrink: 0;
+    width: 36px;
+    text-align: center;
+  }
+  .colicos-purple-letter .meta strong {
+    display: block;
+    font-family: var(--font-display);
+    font-size: 15px;
+    line-height: 1.15;
+    color: var(--ink);
+  }
+  .colicos-purple-letter .meta span {
+    font-size: 12px;
+    color: var(--ink-soft);
+    line-height: 1.4;
+    display: block;
+    margin-top: 2px;
+  }
+
+  /* ── Safety frame cross-link card (Frame F) ── */
+  .colicos-safety-cross {
+    background: var(--cat-salud-tint);
+    border: 2px solid var(--ink);
+    border-radius: 18px;
+    padding: 18px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .colicos-safety-cross h3 {
+    font-family: var(--font-display);
+    font-size: 18px;
+    margin: 0;
+    color: var(--ink);
+  }
+  .colicos-safety-cross p {
+    font-size: 13px;
+    line-height: 1.45;
+    margin: 0;
+    color: var(--cat-salud-ink);
+  }
+  .colicos-safety-cross button {
+    align-self: flex-start;
+  }
+
+  /* ── 3 reglas oro (Frame F) ── */
+  .colicos-rules-oro {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    counter-reset: rule;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .colicos-rules-oro li {
+    display: flex;
+    gap: 12px;
+    counter-increment: rule;
+    font-size: 14px;
+    line-height: 1.4;
+  }
+  .colicos-rules-oro li::before {
+    content: counter(rule);
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 16px;
+    color: var(--cat-salud-ink);
+    flex-shrink: 0;
+    width: 20px;
+  }
+
+  /* ── Escalada SM 024 ── */
+  .colicos-024-cta {
+    padding: 14px 16px;
+    background: var(--cat-salud-tint);
+    border: 1px solid var(--cat-salud-ink);
+    border-radius: 14px;
+    font-size: 13px;
+    color: var(--cat-salud-ink);
+    line-height: 1.5;
+    text-align: left;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    transition: transform 150ms ease;
+  }
+  .colicos-024-cta:hover { transform: translateY(-1px); }
+  .colicos-024-cta strong {
+    font-family: var(--font-display);
+    font-size: 15px;
+    color: var(--ink);
+  }
+
+  .colicos-fuentes {
+    font-size: 11px;
+    color: var(--ink-soft);
+    text-align: center;
+    padding-top: 8px;
+    letter-spacing: 0.02em;
+  }
+
+  /* ── Canon message blocks ── */
+  .colicos-canon-message {
+    background: var(--paper-soft);
+    border-left: 4px solid var(--ink);
+    padding: 14px 16px;
+    border-radius: 0 12px 12px 0;
+    font-size: 14px;
+    line-height: 1.5;
+    color: var(--ink);
+  }
+
   @media (max-width: 980px) {
     .prototype { grid-template-columns: 1fr; padding: 18px; }
     .brief,
@@ -8736,11 +9731,11 @@
                   <h4 class="sb-ttl">Familia &amp;<br><em>medicación</em></h4>
                   <div class="sb-foot"><span class="count">2 act.</span><span>4 pers.</span></div>
                 </button>
-                <button class="shelf-book b-colicos" type="button" data-sheet-title="Libro de colicos" data-sheet-copy="Modulo cerrado para esta edad. Se conserva como archivo de los primeros meses." data-open-sheet>
-                  <div class="sb-eyb">Cólicos · 5 S</div>
+                <button class="shelf-book b-colicos" type="button" data-goto="colicos">
+                  <div class="sb-eyb">Cólicos · 5 S's</div>
                   <div class="sb-icon"><svg viewBox="0 0 24 24"><path d="M9 11.5a4 4 0 1 0 6 0V8a3 3 0 0 0-6 0z"/><path d="M12 18v3"/><path d="M9 21h6"/></svg></div>
                   <h4 class="sb-ttl">Libro de<br><em>cólicos</em></h4>
-                  <div class="sb-foot"><span class="count">Cerrado</span><span>M0-4</span></div>
+                  <div class="sb-foot"><span class="count" data-colicos-shelf-count>Sem 7</span><span>M0-4</span></div>
                 </button>
               </div>
               <div class="shelf-plank">
@@ -9189,8 +10184,386 @@
           </div>
         </aside>
 
+        <!-- ═══════════════════════════════════════════════════════════
+             LIBRO DE CÓLICOS · 6 frames · PRD v0.1 · canon Fase 0
+             Cross-link a safety-frame-modal y mental-health-modal del módulo Chat.
+             ═══════════════════════════════════════════════════════════ -->
 
+        <!-- Frame A · Home Cólicos -->
+        <section class="screen no-nav" data-screen="colicos">
+          <div class="status"><span>9:42</span><div class="status-dots"><span></span><span></span><span></span></div></div>
+          <div class="content colicos-book colicos-home">
+            <div class="top-header">
+              <div class="colicos-home-hero">
+                <div class="colicos-eyebrow">Cólicos · 🌡 Salud</div>
+                <h2>Las tres horas más largas del día.</h2>
+                <div class="sub-italic">Y las 3 más importantes para ti.</div>
+              </div>
+              <button class="book-back" type="button" data-goto="hoy" aria-label="Cerrar libro"><svg viewBox="0 0 24 24"><use href="#i-x"/></svg></button>
+            </div>
 
+            <div class="colicos-purple-sticky">
+              <div>Esto que estás viviendo es un período. Pasará. No es tu culpa. Aquí estamos.</div>
+              <button type="button" class="colicos-purple-link" data-open-safety-frame>Si no puedes más ›</button>
+            </div>
+
+            <section class="colicos-classifier-card" aria-labelledby="colicos-classifier-title">
+              <button class="colicos-classifier-bigbtn" type="button" data-goto="colicos-classifier" aria-label="Abrir cry classifier">
+                <svg viewBox="0 0 24 24"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><path d="M12 19v4"/><path d="M8 23h8"/></svg>
+              </button>
+              <strong id="colicos-classifier-title">Escuchar 5 segundos</strong>
+              <span class="meta">on-device · privado · nunca sale del móvil</span>
+            </section>
+
+            <section class="colicos-episode-card" aria-labelledby="colicos-episode-title" data-colicos-episode-card>
+              <!-- Renderizado por renderColicosHome() · estado activo o vacío -->
+            </section>
+
+            <section class="colicos-week-card" aria-labelledby="colicos-week-title">
+              <div class="colicos-week-head">
+                <div>
+                  <strong id="colicos-week-title">Esta semana</strong>
+                  <span class="sub" data-colicos-week-sub></span>
+                </div>
+                <button class="ghost-link" type="button" data-goto="colicos-historico">Ver detalle ›</button>
+              </div>
+              <div class="colicos-heatmap mini" aria-hidden="true" data-colicos-heatmap-mini></div>
+              <div class="colicos-stats-row">
+                <div class="colicos-stat"><strong data-colicos-stat-today>—</strong><span>HOY</span></div>
+                <div class="colicos-stat"><strong data-colicos-stat-peak>19-21h</strong><span>PICO</span></div>
+                <div class="colicos-stat"><strong data-colicos-stat-wessel>—</strong><span>WESSEL</span></div>
+              </div>
+            </section>
+
+            <button class="ghost-link colicos-purple-cta" type="button" data-goto="colicos-purple">
+              Por qué llora aunque no le pase nada ›
+            </button>
+          </div>
+        </section>
+
+        <!-- Frame B · Episodio en curso -->
+        <section class="screen no-nav" data-screen="colicos-episodio">
+          <div class="status"><span>9:42</span><div class="status-dots"><span></span><span></span><span></span></div></div>
+          <div class="content colicos-book colicos-episode">
+            <div class="top-header">
+              <div>
+                <div class="colicos-eyebrow">Cólicos · episodio en curso</div>
+                <h2 class="screen-title">Empezamos contigo.</h2>
+              </div>
+              <button class="book-back" type="button" data-goto="colicos" aria-label="Volver"><svg viewBox="0 0 24 24"><use href="#i-x"/></svg></button>
+            </div>
+
+            <div class="colicos-timer-block">
+              <div class="colicos-timer-big" data-colicos-timer>00:00</div>
+              <div class="colicos-timer-sub" data-colicos-timer-sub>Acabas de empezar · solas las dos</div>
+            </div>
+
+            <div class="colicos-intensity-row">
+              <span class="label">INTENSIDAD</span>
+              <div class="colicos-intensity" role="radiogroup" aria-label="Intensidad del llanto" data-colicos-intensity>
+                <button class="colicos-intensity-dot" type="button" role="radio" aria-checked="false" data-intensity="1">1</button>
+                <button class="colicos-intensity-dot" type="button" role="radio" aria-checked="false" data-intensity="2">2</button>
+                <button class="colicos-intensity-dot selected" type="button" role="radio" aria-checked="true" data-intensity="3">3</button>
+                <button class="colicos-intensity-dot" type="button" role="radio" aria-checked="false" data-intensity="4">4</button>
+                <button class="colicos-intensity-dot" type="button" role="radio" aria-checked="false" data-intensity="5">5</button>
+              </div>
+            </div>
+
+            <p class="colicos-5s-intro">Cinco cosas que han ayudado a millones de bebés. Pruébalas en orden. Si no funcionan, está bien también.</p>
+            <div class="colicos-5s-list" data-colicos-5s>
+              <button class="colicos-5s-pill" type="button" data-state="pending" data-s="swaddle">
+                <span class="s-icon"><svg viewBox="0 0 24 24"><path d="M4 4h16v6a8 8 0 0 1-16 0z"/></svg></span>
+                <span class="s-meta"><strong>Swaddle · envolver</strong><span>Manta firme · brazos pegados</span></span>
+                <span class="s-state">pendiente</span>
+              </button>
+              <button class="colicos-5s-pill" type="button" data-state="pending" data-s="side">
+                <span class="s-icon"><svg viewBox="0 0 24 24"><path d="M3 12a9 9 0 0 1 18 0"/><path d="M12 3v9"/></svg></span>
+                <span class="s-meta"><strong>Side / Stomach</strong><span>En brazos · NO en cuna</span></span>
+                <span class="s-state">pendiente</span>
+              </button>
+              <button class="colicos-5s-pill" type="button" data-state="pending" data-s="shush">
+                <span class="s-icon"><svg viewBox="0 0 24 24"><path d="M5 12c0-3 3-6 7-6s7 3 7 6-3 6-7 6-7-3-7-6z"/><path d="M9 12h6"/></svg></span>
+                <span class="s-meta"><strong>Shush · sonido blanco</strong><span>≤ 50 dB · ≥ 200 cm · canon AAP 2023</span></span>
+                <span class="s-state">pendiente</span>
+              </button>
+              <button class="colicos-5s-pill" type="button" data-state="pending" data-s="swing">
+                <span class="s-icon"><svg viewBox="0 0 24 24"><path d="M5 12a7 7 0 1 1 14 0"/><path d="M12 5v7"/></svg></span>
+                <span class="s-meta"><strong>Swing · mecer</strong><span>Movimiento corto 1-2 cm · rápido</span></span>
+                <span class="s-state">pendiente</span>
+              </button>
+              <button class="colicos-5s-pill" type="button" data-state="pending" data-s="suck">
+                <span class="s-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="6"/><path d="M9 12h6"/></svg></span>
+                <span class="s-meta"><strong>Suck · succión</strong><span>Dedo limpio o chupete</span></span>
+                <span class="s-state">pendiente</span>
+              </button>
+            </div>
+
+            <div class="colicos-relevo-row" data-colicos-relevo-row>
+              <div>
+                <strong>Pablo</strong>
+                <div class="meta" data-colicos-relevo-meta>en cuenta · push síncrono</div>
+              </div>
+              <button class="colicos-relevo-chip" type="button" data-colicos-relevo>Avisar Pablo</button>
+            </div>
+
+            <button class="ghost-link colicos-classifier-secondary" type="button" data-goto="colicos-classifier">
+              🎙 Cry classifier · 5 s
+            </button>
+
+            <div class="colicos-episode-footer">
+              <button class="primary coral" type="button" data-colicos-close>Cerrar episodio · guardar</button>
+              <button class="ghost-link" type="button" data-open-safety-frame>Si no puedes más</button>
+              <button class="ghost-link colicos-pediatra-link" type="button" data-sheet-title="Algo va mal" data-sheet-copy="Si crees que algo va mal — fiebre &lt; 3m, vómitos verdes, letargia, llanto agudo súbito — abre el triage de salud o llama a tu pediatra. Aquí no diagnosticamos." data-open-sheet>Algo va mal · pediatra</button>
+            </div>
+          </div>
+        </section>
+
+        <!-- Frame C · Cry classifier -->
+        <section class="screen no-nav" data-screen="colicos-classifier">
+          <div class="status"><span>9:42</span><div class="status-dots"><span></span><span></span><span></span></div></div>
+          <div class="content colicos-book colicos-classifier-screen">
+            <div class="top-header">
+              <div>
+                <div class="colicos-eyebrow">Cólicos · cry classifier</div>
+                <h2 class="screen-title">5 segundos.</h2>
+                <div class="sub-italic">Acerca el móvil a Lola y mantén pulsado.</div>
+              </div>
+              <button class="book-back" type="button" data-goto="colicos" aria-label="Volver"><svg viewBox="0 0 24 24"><use href="#i-x"/></svg></button>
+            </div>
+
+            <div class="colicos-classifier-stage">
+              <button class="colicos-classifier-bigbtn-xl" type="button" data-colicos-record aria-label="Mantén pulsado para grabar 5 segundos">
+                <svg viewBox="0 0 24 24"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><path d="M12 19v4"/><path d="M8 23h8"/></svg>
+                <span class="rec-ring" data-colicos-record-ring></span>
+              </button>
+              <div class="colicos-record-status" data-colicos-record-status>Mantén pulsado</div>
+              <div class="colicos-waveform-mock" aria-hidden="true" data-colicos-waveform>
+                <span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+              </div>
+            </div>
+
+            <div class="colicos-classifier-result" data-colicos-classifier-result hidden>
+              <div class="top">
+                <span data-colicos-result-cat>Sueño</span> · <span class="pct" data-colicos-result-pct>87%</span>
+              </div>
+              <div class="sub" data-colicos-result-sub>Dolor 9% · Hambre 4%</div>
+              <div class="insight" data-colicos-result-insight>Lola lleva despierta 2h 15min · su ventana ideal era 2h.</div>
+              <div class="ctas">
+                <button class="ghost-link colicos-cta-pill" type="button" data-colicos-result-cta1></button>
+                <button class="primary coral colicos-cta-pill" type="button" data-goto="colicos-episodio">Continuar episodio</button>
+              </div>
+            </div>
+
+            <div class="colicos-classifier-privacy">
+              El audio nunca sale de tu móvil. Solo guardamos el resultado.
+            </div>
+          </div>
+        </section>
+
+        <!-- Frame D · Histórico semanal -->
+        <section class="screen no-nav" data-screen="colicos-historico">
+          <div class="status"><span>9:42</span><div class="status-dots"><span></span><span></span><span></span></div></div>
+          <div class="content colicos-book">
+            <div class="top-header">
+              <div>
+                <div class="colicos-eyebrow">Cólicos · histórico</div>
+                <h2 class="screen-title">Esta semana · Lola</h2>
+              </div>
+              <button class="book-back" type="button" data-goto="colicos" aria-label="Volver"><svg viewBox="0 0 24 24"><use href="#i-x"/></svg></button>
+            </div>
+
+            <div class="colicos-week-chips">
+              <button class="chip active" type="button" data-colicos-week="0">Sem actual</button>
+              <button class="chip" type="button" data-colicos-week="-1">Sem -1</button>
+              <button class="chip" type="button" data-colicos-week="-2">Sem -2</button>
+            </div>
+
+            <div class="colicos-week-card">
+              <div class="colicos-heatmap full" aria-label="Heatmap llanto · 7 días × 24 horas" data-colicos-heatmap-full></div>
+              <div class="colicos-heatmap-axis">
+                <span>0h</span><span>6h</span><span>12h</span><span>18h</span><span>24h</span>
+              </div>
+              <div class="colicos-stats-row">
+                <div class="colicos-stat"><strong data-colicos-hist-avg>—</strong><span>PROMEDIO/DÍA</span></div>
+                <div class="colicos-stat"><strong data-colicos-hist-peak>—</strong><span>PICO</span></div>
+                <div class="colicos-stat"><strong data-colicos-hist-trend>—</strong><span>VS SEM -1</span></div>
+              </div>
+            </div>
+
+            <div class="colicos-wessel-card">
+              <h4>Wessel auto-monitor</h4>
+              <div class="colicos-wessel-checks" data-colicos-wessel-checks></div>
+              <div class="status" data-colicos-wessel-status></div>
+              <button class="primary coral colicos-cta-pill" type="button" data-colicos-wessel-cta data-goto="colicos-plan">Adelantar plan IA descarte</button>
+            </div>
+
+            <div>
+              <div class="section-label">Últimos episodios</div>
+              <div class="colicos-episodes-list" data-colicos-episodes-list></div>
+            </div>
+
+            <div class="colicos-canon-message">
+              Lola llora más entre 19:00 y 21:00 los días que duerme menos siesta. ¿Quieres que ajustemos su rutina de sueño?
+            </div>
+          </div>
+        </section>
+
+        <!-- Frame E · Plan IA descarte -->
+        <section class="screen no-nav" data-screen="colicos-plan">
+          <div class="status"><span>9:42</span><div class="status-dots"><span></span><span></span><span></span></div></div>
+          <div class="content colicos-book">
+            <div class="top-header">
+              <div>
+                <div class="colicos-eyebrow">Cólicos · plan descarte</div>
+                <h2 class="screen-title">Vamos a descartar 5 cosas.</h2>
+                <div class="colicos-no-diag">Aquí no diagnosticamos</div>
+              </div>
+              <button class="book-back" type="button" data-goto="colicos" aria-label="Volver"><svg viewBox="0 0 24 24"><use href="#i-x"/></svg></button>
+            </div>
+
+            <div class="colicos-causes">
+              <details class="colicos-cause-card">
+                <summary>
+                  <span class="cause-tag">🌡 Causa posible</span>
+                  <span class="cause-name">APLV · alergia proteína leche vaca</span>
+                  <span class="cause-chev" aria-hidden="true">▾</span>
+                </summary>
+                <div class="cause-body">
+                  <ul>
+                    <li>Caca con sangre o moco (BITSS tipo 7+)</li>
+                    <li>Eczema severo</li>
+                    <li>Vómitos frecuentes</li>
+                    <li>Curva peso plana</li>
+                  </ul>
+                  <button class="colicos-cause-cta" type="button" data-sheet-title="Cross-ref Caca tracker" data-sheet-copy="Aquí abriría el libro de Caca tracker para revisar el patrón BITSS de los últimos días y compararlo con criterios APLV." data-open-sheet>Cross-ref Caca tracker</button>
+                </div>
+              </details>
+              <details class="colicos-cause-card">
+                <summary>
+                  <span class="cause-tag">🌡 Causa posible</span>
+                  <span class="cause-name">Frenillo lingual / labial</span>
+                  <span class="cause-chev" aria-hidden="true">▾</span>
+                </summary>
+                <div class="cause-body">
+                  <ul>
+                    <li>LATCH score &lt; 7</li>
+                    <li>Dolor pezones materno persistente</li>
+                    <li>Tomas &gt; 40 min frecuentes</li>
+                    <li>Click al mamar</li>
+                    <li>Curva peso plana</li>
+                  </ul>
+                  <button class="colicos-cause-cta" type="button" data-goto="lactancia" data-lactation-view-set="home">Cross-ref Lactancia</button>
+                </div>
+              </details>
+              <details class="colicos-cause-card">
+                <summary>
+                  <span class="cause-tag">🌡 Causa posible</span>
+                  <span class="cause-name">Reflujo gastroesofágico</span>
+                  <span class="cause-chev" aria-hidden="true">▾</span>
+                </summary>
+                <div class="cause-body">
+                  <ul>
+                    <li>Regurgitaciones frecuentes (&gt; 5/día)</li>
+                    <li>Llanto inmediato post-toma</li>
+                    <li>Arquea espalda</li>
+                    <li>Tos sin catarro</li>
+                  </ul>
+                  <button class="colicos-cause-cta" type="button" data-sheet-title="Reflujo · pediatra" data-sheet-copy="Si marcas 2 o más síntomas, vale la pena consultar con tu pediatra. GERD posible." data-open-sheet>Habla con pediatra</button>
+                </div>
+              </details>
+              <details class="colicos-cause-card">
+                <summary>
+                  <span class="cause-tag">🌡 Causa posible</span>
+                  <span class="cause-name">Sobre-cansancio</span>
+                  <span class="cause-chev" aria-hidden="true">▾</span>
+                </summary>
+                <div class="cause-body">
+                  <ul>
+                    <li>Ventana de sueño excedida en &gt; 80% episodios</li>
+                    <li>Mini-señales de cansancio ignoradas</li>
+                  </ul>
+                  <button class="colicos-cause-cta" type="button" data-goto="sueno" data-sleep-view-set="home">Cross-ref Sueño</button>
+                </div>
+              </details>
+              <details class="colicos-cause-card alarm" open>
+                <summary>
+                  <span class="cause-tag">🚨 Algo más serio</span>
+                  <span class="cause-name">Signos de alarma</span>
+                  <span class="cause-chev" aria-hidden="true">▾</span>
+                </summary>
+                <div class="cause-body">
+                  <ul>
+                    <li>Fiebre + bebé &lt; 3 meses</li>
+                    <li>Vómitos verdes o con sangre</li>
+                    <li>Letargia · no responde</li>
+                    <li>Heces "jalea de grosella"</li>
+                    <li>Bulto inguinal o escrotal</li>
+                  </ul>
+                  <button class="colicos-cause-cta" type="button" data-sheet-title="🚨 Urgencias" data-sheet-copy="Si Lola tiene cualquiera de estos signos, llama al 112 o ve a urgencias ahora. No esperes." data-open-sheet>🚨 Urgencias / 112</button>
+                </div>
+              </details>
+            </div>
+
+            <div class="colicos-reuteri-callout">
+              <span class="tag">Lactancia materna · evidencia</span>
+              <div>Algunos estudios muestran que <em>L. reuteri DSM 17938</em> puede reducir el llanto en bebés amamantados. Habla con tu pediatra antes de probar.</div>
+              <div class="source">Sung 2018 · meta-análisis Cochrane.</div>
+            </div>
+
+            <div class="colicos-plan-cierre">
+              Si descartamos las 5, es cólico clásico. Variación normal. Pasará a los 4 meses.
+            </div>
+          </div>
+        </section>
+
+        <!-- Frame F · PURPLE education + safety -->
+        <section class="screen no-nav" data-screen="colicos-purple">
+          <div class="status"><span>9:42</span><div class="status-dots"><span></span><span></span><span></span></div></div>
+          <div class="content colicos-book">
+            <div class="top-header">
+              <div>
+                <div class="colicos-eyebrow">Cólicos · PURPLE Crying</div>
+                <h2 class="screen-title">Por qué llora aunque no le pase nada.</h2>
+              </div>
+              <button class="book-back" type="button" data-goto="colicos" aria-label="Volver"><svg viewBox="0 0 24 24"><use href="#i-x"/></svg></button>
+            </div>
+
+            <div class="colicos-purple-letters">
+              <div class="colicos-purple-letter"><div class="letter">P</div><div class="meta"><strong>Peak of crying</strong><span>Pico semana 6-8 · luego baja gradualmente.</span></div></div>
+              <div class="colicos-purple-letter"><div class="letter">U</div><div class="meta"><strong>Unexpected</strong><span>Sin razón aparente · empieza y para sin motivo.</span></div></div>
+              <div class="colicos-purple-letter"><div class="letter">R</div><div class="meta"><strong>Resists soothing</strong><span>No calma con nada de lo que pruebas. No es tu culpa.</span></div></div>
+              <div class="colicos-purple-letter"><div class="letter">P</div><div class="meta"><strong>Pain-like face</strong><span>Cara de dolor pero no le duele nada.</span></div></div>
+              <div class="colicos-purple-letter"><div class="letter">L</div><div class="meta"><strong>Long-lasting</strong><span>Puede durar horas. 30-40 min es normal.</span></div></div>
+              <div class="colicos-purple-letter"><div class="letter">E</div><div class="meta"><strong>Evening</strong><span>Vespertino · 18:00-22:00 es lo más frecuente.</span></div></div>
+            </div>
+
+            <div class="colicos-canon-message">
+              El llanto del bebé puede ser normal aunque te parezca insoportable. No es culpa tuya. No le pasa nada grave. Pasará.
+            </div>
+
+            <section class="colicos-safety-cross">
+              <h3>Si sientes que no puedes más</h3>
+              <p>Tienes una guía de 4 pasos pensada para los momentos duros. La activamos para ti cuando la necesites.</p>
+              <button class="primary coral colicos-cta-pill" type="button" data-open-safety-frame>Abrir guía 4 pasos</button>
+            </section>
+
+            <div>
+              <div class="section-label">3 reglas oro</div>
+              <ol class="colicos-rules-oro">
+                <li>Llorar no es señal de mala madre o mal padre.</li>
+                <li>Soltar al bebé en cuna durante 5 min es seguro.</li>
+                <li>Pedir relevo es un acto de cuidado · no de fracaso.</li>
+              </ol>
+            </div>
+
+            <button type="button" class="colicos-024-cta" data-open-mental-health>
+              <strong>¿Llevas días pensando en hacer daño?</strong>
+              <span>Habla ahora · línea 024 · 24/7</span>
+            </button>
+
+            <div class="colicos-fuentes">NSBSP · Barr 2006 · canon NICHD</div>
+          </div>
+        </section>
 
 
         <div class="scrim" data-close-sheet></div>
@@ -13682,6 +15055,22 @@ Grow
     if (name === 'log-registro') {
       renderLogDetailScreen();
     }
+    /* Cólicos · render por frame · ver §LIBRO DE CÓLICOS al final del IIFE */
+    if (name === 'colicos') {
+      renderColicosHome();
+    }
+    if (name === 'colicos-episodio') {
+      renderColicosEpisode();
+      colicosTimerStart();
+    } else {
+      colicosTimerStop();
+    }
+    if (name === 'colicos-historico') {
+      renderColicosHistorico();
+    }
+    if (name === 'colicos-classifier') {
+      colicosClassifierReset();
+    }
     if (location.hash.slice(1) !== name) history.replaceState(null, '', '#' + name);
   }
 
@@ -16348,6 +17737,537 @@ Grow
   renderLogScreen();
   renderLogSheet();
   renderLogDetailScreen();
+
+  /* ═══════════════════════════════════════════════════════════════════
+     LIBRO DE CÓLICOS · estado, helpers, render functions, lifecycle
+     ═══════════════════════════════════════════════════════════════════ */
+  /* Mock seed: 5 episodios pasados de la semana actual + algunos previos.
+     Día 0 = hoy, día -6 = hace 6 días (Sem actual). Día -7..-13 = Sem -1.
+     Hora local 0-23. Duración en minutos. Intensidad 1-5. */
+  const colicosState = {
+    today: { hour: 9, minute: 42 },
+    babyName: 'Lola',
+    weekNumber: 7, /* semanas postparto */
+    activeEpisode: null, /* { startMs, intensity, fives:{swaddle,…} } o null */
+    episodes: [
+      /* Sem actual (días -6 a 0) — patrón vespertino canónico */
+      { dayOffset: 0,  hourStart: 19, minutes: 22, intensity: 3, type: 'cólico',  closed: false },
+      { dayOffset: -1, hourStart: 20, minutes: 74, intensity: 4, type: 'cólico',  closed: true  },
+      { dayOffset: -1, hourStart: 17, minutes: 18, intensity: 2, type: 'hambre',  closed: true  },
+      { dayOffset: -2, hourStart: 18, minutes: 55, intensity: 3, type: 'sueño',   closed: true  },
+      { dayOffset: -3, hourStart: 21, minutes: 122,intensity: 5, type: 'cólico',  closed: true  },
+      { dayOffset: -3, hourStart: 14, minutes: 12, intensity: 2, type: 'sueño',   closed: true  },
+      { dayOffset: -4, hourStart: 19, minutes: 41, intensity: 3, type: 'cólico',  closed: true  },
+      { dayOffset: -5, hourStart: 20, minutes: 88, intensity: 4, type: 'cólico',  closed: true  },
+      { dayOffset: -6, hourStart: 18, minutes: 35, intensity: 3, type: 'cólico',  closed: true  },
+      /* Sem -1 */
+      { dayOffset: -8, hourStart: 19, minutes: 95, intensity: 4, type: 'cólico',  closed: true  },
+      { dayOffset: -9, hourStart: 20, minutes: 110,intensity: 5, type: 'cólico',  closed: true  },
+      { dayOffset: -10,hourStart: 18, minutes: 70, intensity: 3, type: 'cólico',  closed: true  },
+    ],
+    relevoState: 'idle', /* idle | sent | enroute */
+    classifierResults: [
+      { cat: 'Sueño',      pct: 87, sub: 'Dolor 9% · Hambre 4%',   insight: 'Lola lleva despierta 2h 15min · su ventana ideal era 2h.', cta: { label: 'Ver rutina sueño',     goto: 'sueno' } },
+      { cat: 'Hambre',     pct: 78, sub: 'Sueño 12% · Dolor 7%',    insight: 'Última toma hace 2h 50min · podría ser hambre.',           cta: { label: 'Ver libro lactancia',  goto: 'lactancia' } },
+      { cat: 'Dolor/cólico',pct: 81, sub: 'Sueño 10% · Hambre 6%',  insight: 'Vespertino · cara de dolor · resiste consuelo. Patrón clásico.', cta: { label: 'Plan IA descarte',     goto: 'colicos-plan' } },
+      { cat: 'Gas',        pct: 73, sub: 'Dolor 14% · Sueño 8%',    insight: 'Encogen las piernas · gemidos cortos · podría ser gas.',  cta: { label: 'Ver Plan IA descarte', goto: 'colicos-plan' } },
+      { cat: 'Aburrimiento', pct: 64, sub: 'Sueño 18% · Hambre 12%', insight: 'Lleva 30min sin estímulo nuevo · prueba un cambio de escena.', cta: { label: 'Volver a Hoy',         goto: 'hoy' } },
+    ],
+    classifierLastIdx: -1,
+    timerInterval: null,
+    activeWeek: 0, /* 0 = sem actual, -1 = sem -1, etc. */
+  };
+
+  /* ── Helpers ── */
+  function colicosFmtMin(min) {
+    const h = Math.floor(min / 60);
+    const m = min % 60;
+    if (h === 0) return `${m}m`;
+    if (m === 0) return `${h}h`;
+    return `${h}h ${String(m).padStart(2,'0')}m`;
+  }
+  function colicosFmtTimer(ms) {
+    const totalSec = Math.max(0, Math.floor(ms / 1000));
+    const min = Math.floor(totalSec / 60);
+    const sec = totalSec % 60;
+    return `${String(min).padStart(2,'0')}:${String(sec).padStart(2,'0')}`;
+  }
+  function colicosEpisodesInWeek(weekOffset) {
+    /* weekOffset 0 = días -6 a 0; -1 = -13 a -7; etc. */
+    const minDay = (weekOffset * 7) - 6;
+    const maxDay = (weekOffset * 7);
+    return colicosState.episodes.filter(e => e.dayOffset >= minDay && e.dayOffset <= maxDay);
+  }
+  function colicosTotalMinForDay(dayOffset) {
+    return colicosState.episodes
+      .filter(e => e.dayOffset === dayOffset)
+      .reduce((sum, e) => sum + e.minutes, 0);
+  }
+  function colicosWesselForWeek(weekOffset) {
+    /* Cuenta días con ≥180 min de llanto en esa semana. */
+    const days = [];
+    for (let d = (weekOffset * 7) - 6; d <= (weekOffset * 7); d++) {
+      const total = colicosTotalMinForDay(d);
+      days.push({ day: d, total, met: total >= 180 });
+    }
+    const daysMet = days.filter(d => d.met).length;
+    return { days, daysMet, met3hOk: days.some(d => d.met), met3DaysOk: daysMet >= 3 };
+  }
+  function colicosPeakHour(weekOffset) {
+    /* Devuelve el rango horario de mayor concentración de llanto. */
+    const hourMin = new Array(24).fill(0);
+    colicosEpisodesInWeek(weekOffset).forEach(e => {
+      let remaining = e.minutes;
+      let h = e.hourStart;
+      while (remaining > 0 && h < 24) {
+        const consume = Math.min(60, remaining);
+        hourMin[h] += consume;
+        remaining -= consume;
+        h++;
+      }
+    });
+    let maxH = 0, maxV = 0;
+    for (let h = 0; h < 24; h++) {
+      if (hourMin[h] > maxV) { maxV = hourMin[h]; maxH = h; }
+    }
+    return { peakHour: maxH, range: `${maxH}-${maxH+2}h`, hourMin };
+  }
+  function colicosHeatmapData(weekOffset) {
+    /* Devuelve matriz 7 días × 24 horas con minutos por celda. */
+    const grid = Array.from({ length: 7 }, () => new Array(24).fill(0));
+    colicosEpisodesInWeek(weekOffset).forEach(e => {
+      const dayInWeek = e.dayOffset - ((weekOffset * 7) - 6); /* 0..6 */
+      let remaining = e.minutes;
+      let h = e.hourStart;
+      while (remaining > 0 && h < 24 && dayInWeek >= 0 && dayInWeek < 7) {
+        const consume = Math.min(60, remaining);
+        grid[dayInWeek][h] = Math.max(grid[dayInWeek][h], consume);
+        remaining -= consume;
+        h++;
+      }
+    });
+    return grid;
+  }
+
+  /* ── Frame A · Home ── */
+  function renderColicosHome() {
+    /* Episode card: live si hay activo, empty si no */
+    const card = document.querySelector('[data-colicos-episode-card]');
+    if (card) {
+      const ep = colicosState.activeEpisode;
+      if (ep) {
+        const elapsed = colicosFmtTimer(Date.now() - ep.startMs);
+        card.classList.add('is-live');
+        card.innerHTML = `
+          <div class="ep-title">
+            <strong>Episodio activo</strong>
+            <span class="meta">empezó a las ${ep.startedLabel}</span>
+          </div>
+          <div class="ep-live-row">
+            <div class="ep-live-timer" data-colicos-home-timer>+${elapsed}</div>
+            <button class="ep-live-cta" type="button" data-goto="colicos-episodio">Volver al episodio ›</button>
+          </div>
+        `;
+      } else {
+        card.classList.remove('is-live');
+        const lastClosed = colicosState.episodes
+          .filter(e => e.closed)
+          .sort((a, b) => b.dayOffset - a.dayOffset || b.hourStart - a.hourStart)[0];
+        const summary = lastClosed
+          ? `Último episodio: hace ${Math.abs(lastClosed.dayOffset)} día(s) · ${colicosFmtMin(lastClosed.minutes)} · ${lastClosed.type}.`
+          : 'Aún no hay episodios registrados.';
+        card.innerHTML = `
+          <div class="ep-title"><strong>Sin episodio activo</strong></div>
+          <div class="ep-summary">${summary}</div>
+          <button class="ep-empty-cta" type="button" data-goto="colicos-episodio">+ Empezar episodio</button>
+        `;
+      }
+    }
+    /* Stats + heatmap mini */
+    const totalToday = colicosTotalMinForDay(0);
+    const totalTodayEl = document.querySelector('[data-colicos-stat-today]');
+    if (totalTodayEl) totalTodayEl.textContent = totalToday > 0 ? colicosFmtMin(totalToday) : '0m';
+    const peak = colicosPeakHour(0);
+    const peakEl = document.querySelector('[data-colicos-stat-peak]');
+    if (peakEl) peakEl.textContent = peak.range;
+    const wessel = colicosWesselForWeek(0);
+    const wesselEl = document.querySelector('[data-colicos-stat-wessel]');
+    if (wesselEl) wesselEl.textContent = `${wessel.daysMet}/3`;
+    const weekSubEl = document.querySelector('[data-colicos-week-sub]');
+    if (weekSubEl) weekSubEl.textContent = `· Sem ${colicosState.weekNumber} postparto`;
+    /* Heatmap mini */
+    colicosRenderHeatmap('mini', 0);
+  }
+
+  /* ── Frame B · Episodio en curso ── */
+  function renderColicosEpisode() {
+    /* Si no hay episodio activo, lo arrancamos ahora */
+    if (!colicosState.activeEpisode) {
+      colicosStartEpisode();
+    }
+    /* Reset relevo UI por si quedó en otro estado */
+    const chip = document.querySelector('[data-colicos-relevo]');
+    if (chip) {
+      chip.dataset.state = colicosState.relevoState;
+      chip.disabled = colicosState.relevoState === 'enroute';
+      if (colicosState.relevoState === 'idle') chip.textContent = 'Avisar Pablo';
+      else if (colicosState.relevoState === 'sent') chip.textContent = 'Avisando…';
+      else chip.textContent = 'Pablo viene en 8 min';
+    }
+    /* Aplicar estado de cada 5 S según activeEpisode.fives */
+    const ep = colicosState.activeEpisode;
+    if (ep) {
+      document.querySelectorAll('[data-colicos-5s] .colicos-5s-pill').forEach((pill) => {
+        const id = pill.dataset.s;
+        const state = ep.fives[id] || 'pending';
+        pill.dataset.state = state;
+        const stateEl = pill.querySelector('.s-state');
+        if (stateEl) stateEl.textContent = state;
+      });
+      /* Aplicar intensidad seleccionada */
+      document.querySelectorAll('[data-colicos-intensity] .colicos-intensity-dot').forEach((dot) => {
+        const sel = parseInt(dot.dataset.intensity, 10) === ep.intensity;
+        dot.classList.toggle('selected', sel);
+        dot.setAttribute('aria-checked', sel ? 'true' : 'false');
+      });
+    }
+    colicosUpdateTimerDisplay();
+  }
+  function colicosStartEpisode() {
+    const now = new Date();
+    colicosState.activeEpisode = {
+      startMs: Date.now(),
+      startedLabel: `${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`,
+      intensity: 3,
+      fives: { swaddle: 'pending', side: 'pending', shush: 'pending', swing: 'pending', suck: 'pending' },
+    };
+    colicosState.relevoState = 'idle';
+  }
+  function colicosCloseEpisode() {
+    const ep = colicosState.activeEpisode;
+    if (!ep) return;
+    const elapsedMin = Math.max(1, Math.round((Date.now() - ep.startMs) / 60000));
+    const now = new Date();
+    /* Insertar como episodio fresco (dayOffset 0) */
+    colicosState.episodes.unshift({
+      dayOffset: 0,
+      hourStart: now.getHours(),
+      minutes: elapsedMin,
+      intensity: ep.intensity,
+      type: 'cólico',
+      closed: true,
+      fresh: true, /* visual destacado en lista */
+    });
+    /* Quitar el episodio "en curso" placeholder previo si existía */
+    colicosState.episodes = colicosState.episodes.filter((e, i) => !(i > 0 && e.closed === false && e.dayOffset === 0));
+    colicosState.activeEpisode = null;
+    colicosTimerStop();
+  }
+  function colicosTimerStart() {
+    if (colicosState.timerInterval) return;
+    colicosState.timerInterval = setInterval(() => {
+      colicosUpdateTimerDisplay();
+    }, 1000);
+  }
+  function colicosTimerStop() {
+    if (colicosState.timerInterval) {
+      clearInterval(colicosState.timerInterval);
+      colicosState.timerInterval = null;
+    }
+  }
+  function colicosUpdateTimerDisplay() {
+    const ep = colicosState.activeEpisode;
+    const timerEl = document.querySelector('[data-colicos-timer]');
+    const subEl = document.querySelector('[data-colicos-timer-sub]');
+    if (timerEl) timerEl.textContent = ep ? colicosFmtTimer(Date.now() - ep.startMs) : '00:00';
+    if (subEl && ep) {
+      const elapsedMin = Math.floor((Date.now() - ep.startMs) / 60000);
+      if (elapsedMin < 1) subEl.textContent = `Acabas de empezar · solas las dos`;
+      else if (elapsedMin < 30) subEl.textContent = `Llevas ${elapsedMin} min · empezó a las ${ep.startedLabel}`;
+      else subEl.textContent = `${elapsedMin} min · puede ser un buen momento para pedir relevo`;
+    }
+    /* Sync home timer si está visible */
+    const homeTimerEl = document.querySelector('[data-colicos-home-timer]');
+    if (homeTimerEl && ep) homeTimerEl.textContent = `+${colicosFmtTimer(Date.now() - ep.startMs)}`;
+  }
+
+  /* ── Frame D · Histórico ── */
+  function renderColicosHistorico() {
+    const w = colicosState.activeWeek;
+    /* Heatmap full */
+    colicosRenderHeatmap('full', w);
+    /* Stats */
+    const eps = colicosEpisodesInWeek(w);
+    const totalMin = eps.reduce((s, e) => s + e.minutes, 0);
+    const dayCount = new Set(eps.map(e => e.dayOffset)).size || 1;
+    const avg = Math.round(totalMin / dayCount);
+    const avgEl = document.querySelector('[data-colicos-hist-avg]');
+    if (avgEl) avgEl.textContent = colicosFmtMin(avg);
+    const peak = colicosPeakHour(w);
+    const peakEl = document.querySelector('[data-colicos-hist-peak]');
+    if (peakEl) peakEl.textContent = peak.range;
+    /* Trend vs sem -1 */
+    if (w === 0) {
+      const prevEps = colicosEpisodesInWeek(-1);
+      const prevTotal = prevEps.reduce((s, e) => s + e.minutes, 0);
+      const trendEl = document.querySelector('[data-colicos-hist-trend]');
+      if (trendEl) {
+        if (prevTotal === 0) trendEl.textContent = '—';
+        else {
+          const diff = Math.round(((totalMin - prevTotal) / prevTotal) * 100);
+          trendEl.textContent = `${diff >= 0 ? '↑' : '↓'} ${Math.abs(diff)}%`;
+        }
+      }
+    } else {
+      const trendEl = document.querySelector('[data-colicos-hist-trend]');
+      if (trendEl) trendEl.textContent = '—';
+    }
+    /* Wessel checkpoints */
+    const wessel = colicosWesselForWeek(w);
+    const wcEl = document.querySelector('[data-colicos-wessel-checks]');
+    if (wcEl) {
+      const allMet = wessel.met3hOk && wessel.met3DaysOk;
+      wcEl.innerHTML = `
+        <span class="colicos-wessel-pill ${wessel.met3hOk ? 'met' : ''}">${wessel.met3hOk ? '✓' : '○'} ≥ 3h/día</span>
+        <span class="colicos-wessel-pill ${wessel.met3DaysOk ? 'met' : ''}">${wessel.met3DaysOk ? '✓' : '○'} ≥ 3 días/sem (${wessel.daysMet}/3)</span>
+        <span class="colicos-wessel-pill">${allMet ? '2/3' : '0/3'} sem consec.</span>
+      `;
+    }
+    const wsEl = document.querySelector('[data-colicos-wessel-status]');
+    const wesselCta = document.querySelector('[data-colicos-wessel-cta]');
+    if (wsEl) {
+      const allMet = wessel.met3hOk && wessel.met3DaysOk;
+      if (allMet) {
+        wsEl.textContent = 'Cumple criterios esta semana · 2/3 semanas para confirmar Wessel.';
+        if (wesselCta) wesselCta.removeAttribute('data-hidden');
+      } else {
+        wsEl.textContent = 'Sin patrón Wessel todavía · sigue logueando como hasta ahora.';
+        if (wesselCta) wesselCta.setAttribute('data-hidden', 'true');
+      }
+    }
+    /* Episodes list */
+    const list = document.querySelector('[data-colicos-episodes-list]');
+    if (list) {
+      const sorted = [...eps].sort((a, b) => b.dayOffset - a.dayOffset || b.hourStart - a.hourStart).slice(0, 8);
+      if (sorted.length === 0) {
+        list.innerHTML = `<div class="colicos-episodes-empty">No hay episodios esta semana.</div>`;
+      } else {
+        list.innerHTML = sorted.map(e => {
+          const whenLabel = e.dayOffset === 0 ? 'Hoy' : e.dayOffset === -1 ? 'Ayer' : `Hace ${Math.abs(e.dayOffset)}d`;
+          const dur = e.closed ? colicosFmtMin(e.minutes) : `${e.minutes} min · sigue`;
+          const dots = [1,2,3,4,5].map(i => `<span class="int-dot ${i <= e.intensity ? 'on' : ''}"></span>`).join('');
+          return `
+            <div class="colicos-episode-item ${e.fresh ? 'is-fresh' : ''}">
+              <span class="when">${whenLabel} · ${String(e.hourStart).padStart(2,'0')}:00</span>
+              <span class="dur">${dur} · ${e.type}</span>
+              <span class="int">${dots}</span>
+            </div>
+          `;
+        }).join('');
+      }
+    }
+  }
+
+  /* ── Heatmap renderer (compartido A mini + D full) ── */
+  function colicosRenderHeatmap(kind, weekOffset) {
+    const sel = kind === 'mini' ? '[data-colicos-heatmap-mini]' : '[data-colicos-heatmap-full]';
+    const grid = document.querySelector(sel);
+    if (!grid) return;
+    const data = colicosHeatmapData(weekOffset);
+    const cells = [];
+    /* Mini muestra solo las últimas 4 filas (4 días recientes) condensados */
+    const rows = data;
+    rows.forEach((row) => {
+      row.forEach((min) => {
+        /* Opacidad según minutos en esa hora · max 60min = opacidad 0.92 */
+        const op = min === 0 ? 0.04 : 0.18 + Math.min(0.74, (min / 60) * 0.74);
+        cells.push(`<span class="colicos-heatmap-cell" style="--cell-opacity:${op.toFixed(2)}"></span>`);
+      });
+    });
+    grid.innerHTML = cells.join('');
+  }
+
+  /* ── Cry classifier · hold-to-record ── */
+  let colicosRecordTimeout = null;
+  let colicosRecordStartMs = 0;
+  let colicosRecordRaf = null;
+  function colicosClassifierReset() {
+    const btn = document.querySelector('[data-colicos-record]');
+    if (btn) btn.dataset.state = 'idle';
+    const status = document.querySelector('[data-colicos-record-status]');
+    if (status) status.textContent = 'Mantén pulsado';
+    const wave = document.querySelector('[data-colicos-waveform]');
+    if (wave) wave.classList.remove('is-active');
+    const result = document.querySelector('[data-colicos-classifier-result]');
+    if (result) result.hidden = true;
+    const ring = document.querySelector('[data-colicos-record-ring]');
+    if (ring) ring.style.setProperty('--p', 0);
+  }
+  function colicosClassifierStartRecord() {
+    const btn = document.querySelector('[data-colicos-record]');
+    const status = document.querySelector('[data-colicos-record-status]');
+    const wave = document.querySelector('[data-colicos-waveform]');
+    const ring = document.querySelector('[data-colicos-record-ring]');
+    const result = document.querySelector('[data-colicos-classifier-result]');
+    if (result) result.hidden = true;
+    if (btn) btn.dataset.state = 'recording';
+    if (status) status.textContent = 'Grabando 5 s…';
+    if (wave) wave.classList.add('is-active');
+    colicosRecordStartMs = Date.now();
+    /* Animar el ring de progreso */
+    const tick = () => {
+      const elapsed = Date.now() - colicosRecordStartMs;
+      const p = Math.min(1, elapsed / 5000);
+      if (ring) ring.style.setProperty('--p', p);
+      if (p < 1 && colicosRecordRaf !== null) colicosRecordRaf = requestAnimationFrame(tick);
+    };
+    colicosRecordRaf = requestAnimationFrame(tick);
+    /* Auto-finish a los 5 s */
+    colicosRecordTimeout = setTimeout(() => {
+      colicosClassifierFinish(true);
+    }, 5000);
+  }
+  function colicosClassifierStopRecord() {
+    const elapsed = Date.now() - colicosRecordStartMs;
+    if (colicosRecordTimeout) { clearTimeout(colicosRecordTimeout); colicosRecordTimeout = null; }
+    if (colicosRecordRaf) { cancelAnimationFrame(colicosRecordRaf); colicosRecordRaf = null; }
+    if (elapsed < 5000) {
+      /* Soltó antes de tiempo */
+      colicosClassifierFinish(false);
+    }
+  }
+  function colicosClassifierFinish(complete) {
+    const btn = document.querySelector('[data-colicos-record]');
+    const status = document.querySelector('[data-colicos-record-status]');
+    const wave = document.querySelector('[data-colicos-waveform]');
+    const ring = document.querySelector('[data-colicos-record-ring]');
+    if (btn) btn.dataset.state = 'idle';
+    if (wave) wave.classList.remove('is-active');
+    if (ring) ring.style.setProperty('--p', 0);
+    if (!complete) {
+      if (status) status.textContent = 'Necesito 5 s completos · vuelve a intentarlo';
+      return;
+    }
+    if (status) status.textContent = 'Listo';
+    /* Pick result distinto al anterior */
+    let idx = Math.floor(Math.random() * colicosState.classifierResults.length);
+    if (idx === colicosState.classifierLastIdx && colicosState.classifierResults.length > 1) {
+      idx = (idx + 1) % colicosState.classifierResults.length;
+    }
+    colicosState.classifierLastIdx = idx;
+    const r = colicosState.classifierResults[idx];
+    const result = document.querySelector('[data-colicos-classifier-result]');
+    if (!result) return;
+    result.hidden = false;
+    result.querySelector('[data-colicos-result-cat]').textContent = r.cat;
+    result.querySelector('[data-colicos-result-pct]').textContent = `${r.pct}%`;
+    result.querySelector('[data-colicos-result-sub]').textContent = r.sub;
+    result.querySelector('[data-colicos-result-insight]').textContent = r.insight;
+    const cta1 = result.querySelector('[data-colicos-result-cta1]');
+    if (cta1) {
+      cta1.textContent = r.cta.label;
+      cta1.dataset.goto = r.cta.goto;
+    }
+  }
+
+  /* ── Wiring · click delegation ── */
+  document.addEventListener('click', (event) => {
+    /* Open safety frame (cross-link al modal del Chat) */
+    if (event.target.closest('[data-open-safety-frame]')) {
+      openSafetyFrame();
+      return;
+    }
+    /* Open mental-health 024 */
+    if (event.target.closest('[data-open-mental-health]')) {
+      openMentalHealth();
+      return;
+    }
+    /* 5 S's pill cycling */
+    const pill = event.target.closest('.colicos-5s-pill');
+    if (pill) {
+      const cur = pill.dataset.state || 'pending';
+      const next = cur === 'pending' ? 'doing' : cur === 'doing' ? 'done' : 'pending';
+      pill.dataset.state = next;
+      const stateEl = pill.querySelector('.s-state');
+      if (stateEl) stateEl.textContent = next;
+      if (colicosState.activeEpisode && pill.dataset.s) {
+        colicosState.activeEpisode.fives[pill.dataset.s] = next;
+      }
+      return;
+    }
+    /* Intensity dots */
+    const dot = event.target.closest('.colicos-intensity-dot');
+    if (dot) {
+      const group = dot.parentElement;
+      if (group) {
+        group.querySelectorAll('.colicos-intensity-dot').forEach((d) => {
+          d.classList.toggle('selected', d === dot);
+          d.setAttribute('aria-checked', d === dot ? 'true' : 'false');
+        });
+      }
+      if (colicosState.activeEpisode) {
+        colicosState.activeEpisode.intensity = parseInt(dot.dataset.intensity, 10) || 3;
+      }
+      return;
+    }
+    /* Relevo chip flow: idle → sent → enroute */
+    const relevo = event.target.closest('[data-colicos-relevo]');
+    if (relevo) {
+      if (colicosState.relevoState === 'idle') {
+        colicosState.relevoState = 'sent';
+        relevo.dataset.state = 'sent';
+        relevo.textContent = 'Avisando…';
+        setTimeout(() => {
+          if (colicosState.relevoState === 'sent') {
+            colicosState.relevoState = 'enroute';
+            relevo.dataset.state = 'enroute';
+            relevo.textContent = 'Pablo viene en 8 min';
+            relevo.disabled = true;
+            const meta = document.querySelector('[data-colicos-relevo-meta]');
+            if (meta) meta.textContent = 'En camino · 8 min';
+          }
+        }, 1400);
+      }
+      return;
+    }
+    /* Cerrar episodio */
+    if (event.target.closest('[data-colicos-close]')) {
+      colicosCloseEpisode();
+      goTo('colicos');
+      return;
+    }
+    /* Week chip selector (Frame D) */
+    const weekChip = event.target.closest('[data-colicos-week]');
+    if (weekChip) {
+      const w = parseInt(weekChip.dataset.colicosWeek, 10) || 0;
+      colicosState.activeWeek = w;
+      document.querySelectorAll('[data-colicos-week]').forEach((c) => {
+        c.classList.toggle('active', c === weekChip);
+      });
+      renderColicosHistorico();
+      return;
+    }
+  });
+
+  /* Cry classifier · hold-to-record bindings (pointerdown/up para touch + mouse) */
+  document.addEventListener('pointerdown', (event) => {
+    const btn = event.target.closest('[data-colicos-record]');
+    if (!btn) return;
+    event.preventDefault();
+    btn.setPointerCapture && btn.setPointerCapture(event.pointerId);
+    colicosClassifierStartRecord();
+  });
+  document.addEventListener('pointerup', (event) => {
+    const btn = event.target.closest('[data-colicos-record]');
+    if (!btn) return;
+    colicosClassifierStopRecord();
+  });
+  document.addEventListener('pointercancel', () => {
+    if (colicosRecordTimeout || colicosRecordRaf) {
+      colicosClassifierStopRecord();
+    }
+  });
+
   setPhase(selectedPhase);
   if (screenNames.has(initial)) goTo(initial);
   else goTo('registro');
