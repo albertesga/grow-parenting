@@ -7672,6 +7672,85 @@
     margin-top: 6px;
   }
 
+
+  /* § V.A · Tool-card primitive · link-out cards inline en chat thread.
+     Variantes tonales por categoría: coral (calc) · mint (cribado) · gold (info) ·
+     blush (acción soft) · ink (urgencia). */
+  .tool-card {
+    display: grid;
+    grid-template-columns: 44px 1fr auto;
+    gap: 12px;
+    align-items: center;
+    width: 100%;
+    text-align: left;
+    background: var(--paper-soft);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 12px 14px;
+    cursor: pointer;
+    font: inherit;
+    color: var(--ink);
+    transition: filter 150ms var(--ease), border-color 150ms var(--ease), transform 150ms var(--ease);
+    margin-top: 6px;
+  }
+  .tool-card:hover {
+    filter: brightness(0.99);
+    border-color: var(--ink-faint);
+    transform: translateY(-1px);
+  }
+  .tool-card .tc-icon {
+    width: 44px; height: 44px;
+    border-radius: 12px;
+    display: grid; place-items: center;
+    font-size: 22px;
+    line-height: 1;
+    background: var(--paper);
+    border: 1px solid var(--line-soft);
+    flex-shrink: 0;
+  }
+  .tool-card .tc-body { min-width: 0; }
+  .tool-card .tc-title {
+    display: block;
+    font-family: "Lenia"; font-weight: 500;
+    font-size: var(--fs-body);
+    color: var(--ink);
+    line-height: 1.3;
+    letter-spacing: -0.005em;
+  }
+  .tool-card .tc-sub {
+    display: block;
+    margin-top: 2px;
+    font-family: "Helvena";
+    font-size: var(--fs-meta);
+    color: var(--ink-muted);
+    line-height: 1.4;
+  }
+  .tool-card .tc-action {
+    font-family: "Lenia"; font-size: var(--fs-meta);
+    color: var(--ink-soft);
+    display: inline-flex; align-items: center; gap: 4px;
+    flex-shrink: 0;
+  }
+  .tool-card .tc-action::after { content: "→"; font-size: 13px; }
+
+  /* Tonal variants · per tool category */
+  .tool-card.coral .tc-icon  { background: var(--coral-subtle); }
+  .tool-card.mint  .tc-icon  { background: var(--mint-subtle); }
+  .tool-card.gold  .tc-icon  { background: var(--gold-subtle); }
+  .tool-card.blush .tc-icon  { background: var(--blush-subtle); }
+  .tool-card.ink   .tc-icon  { background: var(--ink); color: var(--paper); }
+  .tool-card.ink   .tc-action { color: var(--coral-strong); font-weight: 500; }
+
+  /* In dark 3AM thread · contrast adjusted */
+  .chat-3am .tool-card {
+    background: rgba(255,255,255,0.04);
+    border-color: rgba(255,255,255,0.08);
+    color: #E6E2DC;
+  }
+  .chat-3am .tool-card .tc-icon { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.08); }
+  .chat-3am .tool-card .tc-title { color: #E6E2DC; }
+  .chat-3am .tool-card .tc-sub { color: #B7B0A4; }
+
 </style>
 </head>
 <body>
@@ -13306,8 +13385,97 @@ Grow
     { role: 'system',    text: 'Conversación segura · solo tú y Grow' },
     { role: 'companion', text: 'Hola María. Estoy aquí.', time: '21:14' },
     { role: 'companion', text: 'Cualquier cosa que pase con Lola, o contigo, hablamos. <strong>Aquí no diagnosticamos · aquí estamos.</strong>', time: '21:14' },
-    { role: 'companion', text: 'Si necesitas un cribaje rápido (fiebre, respira, llora…), tap en el chip de abajo.', time: '21:14' }
+    { role: 'companion', text: 'Para esta semana te recomiendo dos cosas:', time: '21:14', tools: ['milestone_lookup', 'mchat_screening'] },
+    { role: 'companion', text: 'Si necesitas un cribaje rápido (fiebre, respira, llora…), tap en el chip de abajo. O si me cuentas qué pasa con tus palabras, también te leo.', time: '21:14' }
   ];
+
+  /* § V.A · Tool catalog · 10 tools que el chat puede sugerir.
+     Cada tool es una placeholder card que enlaza al libro existente
+     que cubre esa tool (data-goto · data-vaccine-view · data-open-sheet). */
+  const chatTools = {
+    dose_calculator: {
+      icon: '💊', title: 'Calculadora paracetamol',
+      sub: 'Dosis canon AEPED 10-15 mg/kg por peso',
+      action: 'Abrir', tone: 'coral',
+      data: 'data-goto="vacunacion" data-vaccine-view-set="tracker"'
+    },
+    vaccine_lookup: {
+      icon: '💉', title: 'Calendario vacunas AEPED',
+      sub: 'Pauta actualizada 2026 · Lola al día',
+      action: 'Ver', tone: 'gold',
+      data: 'data-goto="vacunacion"'
+    },
+    epds_screening: {
+      icon: '📋', title: 'EPDS · cómo te has sentido',
+      sub: '5 preguntas · 2 minutos · solo para ti',
+      action: 'Empezar', tone: 'mint',
+      data: 'data-chat-tool="epds"'
+    },
+    mchat_screening: {
+      icon: '🔎', title: 'M-CHAT-R · cribado 18 m',
+      sub: 'Lola tiene la edad · cribado canon AAP',
+      action: 'Hacer', tone: 'mint',
+      data: 'data-goto="hitos"'
+    },
+    growth_lookup: {
+      icon: '📈', title: 'Curva OMS de Lola',
+      sub: 'P50 estimado · sin diagnóstico',
+      action: 'Ver curva', tone: 'gold',
+      data: 'data-goto="desarrollo"'
+    },
+    milestone_lookup: {
+      icon: '🌱', title: 'Hitos por edad de Lola',
+      sub: 'Rango Haizea-Llevant 12-24 m',
+      action: 'Ver hitos', tone: 'mint',
+      data: 'data-goto="hitos"'
+    },
+    library_open_colicos: {
+      icon: '📚', title: 'Libro de Cólicos',
+      sub: 'PURPLE Crying · 5 S’s · cry classifier',
+      action: 'Abrir', tone: 'blush',
+      data: 'data-sheet-title="Libro de Cólicos" data-sheet-copy="Módulo accionable 1 sem - 4 m · canon NSBSP." data-open-sheet'
+    },
+    library_open_sueno: {
+      icon: '📚', title: 'Libro de Sueño',
+      sub: 'Rutina ideal · ventanas · regresiones',
+      action: 'Abrir', tone: 'mint',
+      data: 'data-goto="sueno"'
+    },
+    urgent_call: {
+      icon: '🚨', title: 'Emergencias · 112',
+      sub: 'Si quieres, me quedo contigo mientras llaman',
+      action: 'Llamar', tone: 'ink',
+      data: 'data-chat-tool="urgent_call"'
+    },
+    mental_health_escalation: {
+      icon: '🤲', title: 'Línea de ayuda · 024',
+      sub: 'Es gratis · 24h · no registran · solo escuchan',
+      action: 'Llamar', tone: 'ink',
+      data: 'data-chat-tool="mental_024"'
+    },
+    relay_partner: {
+      icon: '👋', title: 'Avisar a Pablo',
+      sub: 'Le diremos que necesitas relevo',
+      action: 'Enviar', tone: 'blush',
+      data: 'data-chat-tool="relay_partner"'
+    }
+  };
+
+  function renderToolCard(toolId) {
+    const t = chatTools[toolId];
+    if (!t) return '';
+    return `
+      <button class="tool-card ${t.tone || ''}" type="button" ${t.data || ''}>
+        <span class="tc-icon" aria-hidden="true">${t.icon}</span>
+        <span class="tc-body">
+          <span class="tc-title">${escapeHtml(t.title)}</span>
+          <span class="tc-sub">${escapeHtml(t.sub)}</span>
+        </span>
+        <span class="tc-action">${escapeHtml(t.action)}</span>
+      </button>
+    `;
+  }
+
 
   /* Get current peque age in months for context-aware behaviour */
   function chatGetBabyMonths() {
@@ -13807,9 +13975,12 @@ Grow
       }
       const sourceHtml = msg.source ? `<span class="source">— ${escapeHtml(msg.source)}</span>` : '';
       const cls = msg.role === 'you' ? 'you' : msg.role;
+      const toolsHtml = Array.isArray(msg.tools)
+        ? msg.tools.map((id) => renderToolCard(id)).join('')
+        : '';
       return `<div class="bubble-row ${cls === 'you' ? 'you' : ''}">
         <div class="bubble ${cls}">${msg.text}${sourceHtml}</div>
-      </div>`;
+      </div>${toolsHtml}`;
     }).join('');
     /* Scroll to bottom */
     root.scrollTop = root.scrollHeight;
@@ -14511,6 +14682,34 @@ Grow
     if (event.target.closest('[data-pregnancy-rainbow]')) {
       togglePregnancyRainbow();
       return;
+    }
+
+    /* § V.A · Chat tool-card stub handlers */
+    const chatTool = event.target.closest('[data-chat-tool]');
+    if (chatTool) {
+      const t = chatTool.dataset.chatTool;
+      if (t === 'urgent_call') {
+        window.location.href = 'tel:112';
+        return;
+      }
+      if (t === 'mental_024') {
+        window.location.href = 'tel:024';
+        return;
+      }
+      if (t === 'epds' || t === 'relay_partner') {
+        /* Phase C will materialize these sheets · interim: show generic sheet */
+        const title = t === 'epds' ? 'EPDS · cómo te has sentido' : 'Avisar a Pablo';
+        const copy = t === 'epds'
+          ? '5 preguntas · 2 min · solo para ti. Disponible en la siguiente actualización.'
+          : 'Le diremos que necesitas relevo. Sheet de mensaje opcional en la siguiente actualización.';
+        if (typeof sheet !== 'undefined' && sheetTitle && sheetCopy) {
+          sheetTitle.textContent = title;
+          sheetCopy.textContent = copy;
+          sheet.classList.add('active');
+          if (typeof scrim !== 'undefined') scrim.classList.add('active');
+        }
+        return;
+      }
     }
 
     /* § V · Chat triage chip handler */

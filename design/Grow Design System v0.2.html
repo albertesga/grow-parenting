@@ -1520,6 +1520,56 @@
   .urgency-badge.urgent  { background: var(--coral-base); color: #4A2510; }
   .urgency-badge.caution { background: var(--gold-base);  color: #4A3A12; }
   .urgency-badge.safe    { background: var(--mint-base);  color: #2F4029; }
+
+  /* § V.A · Tool-card primitive · DS demo */
+  .tool-card {
+    display: grid;
+    grid-template-columns: 44px 1fr auto;
+    gap: 12px;
+    align-items: center;
+    width: 100%;
+    text-align: left;
+    background: var(--paper-soft);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 12px 14px;
+    cursor: pointer;
+    font: inherit;
+    color: var(--ink);
+  }
+  .tool-card .tc-icon {
+    width: 44px; height: 44px;
+    border-radius: 12px;
+    display: grid; place-items: center;
+    font-size: 22px; line-height: 1;
+    background: var(--paper);
+    border: 1px solid var(--line-soft);
+  }
+  .tool-card .tc-title {
+    display: block;
+    font-family: "Lenia"; font-weight: 500;
+    font-size: var(--fs-body);
+    color: var(--ink); line-height: 1.3;
+    letter-spacing: -0.005em;
+  }
+  .tool-card .tc-sub {
+    display: block; margin-top: 2px;
+    font-family: "Helvena";
+    font-size: var(--fs-meta);
+    color: var(--ink-muted); line-height: 1.4;
+  }
+  .tool-card .tc-action {
+    font-family: "Lenia"; font-size: var(--fs-meta);
+    color: var(--ink-soft);
+    display: inline-flex; align-items: center; gap: 4px;
+  }
+  .tool-card .tc-action::after { content: "→"; font-size: 13px; }
+  .tool-card.coral .tc-icon { background: var(--coral-subtle); }
+  .tool-card.mint  .tc-icon { background: var(--mint-subtle); }
+  .tool-card.gold  .tc-icon { background: var(--gold-subtle); }
+  .tool-card.blush .tc-icon { background: var(--blush-subtle); }
+  .tool-card.ink   .tc-icon { background: var(--ink); color: var(--paper); }
+  .tool-card.ink   .tc-action { color: var(--coral-strong); font-weight: 500; }
   .sr-only {
     position: absolute; width: 1px; height: 1px;
     padding: 0; margin: -1px; overflow: hidden;
@@ -4994,6 +5044,81 @@
           <li>Cada output cierra con: "Si dudas, llama. Tu pediatra prefiere una falsa alarma a una real perdida."</li>
           <li>Cita clínica siempre · "— NICE NG143 · 2021" o "— CAV-AEP 2026"</li>
           <li>Número emergencia local · auto-detect país (España 112 · USA 911 · UK 999)</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="spec">
+      <div class="spec-head"><h3>Tool cards · placeholders contextuales</h3><span class="meta-r">.tool-card · .tool-card.coral|mint|gold|blush|ink</span></div>
+      <div class="spec-row col" style="padding: 12px 0">
+        <p style="font-size:13px;color:var(--ink-soft);max-width:64ch;line-height:1.55;margin:0">
+          Cards inline en el chat thread que enlazan a tools del producto (calculadora paracetamol,
+          EPDS, cribados, curva OMS, libros canon, llamada emergencia). Cada card es un placeholder
+          visual con icon + title + sub + action. Tap navega al libro existente que cubre esa tool.
+          5 variantes tonales por categoría:
+          <strong>.coral</strong> = calculadora · <strong>.mint</strong> = cribado · <strong>.gold</strong> = info ·
+          <strong>.blush</strong> = acción soft · <strong>.ink</strong> = urgencia.
+        </p>
+      </div>
+      <div class="spec-row col" style="padding: 12px 0 18px; gap: 8px; max-width: 480px">
+        <button class="tool-card coral" type="button">
+          <span class="tc-icon">💊</span>
+          <span class="tc-body">
+            <span class="tc-title">Calculadora paracetamol</span>
+            <span class="tc-sub">Dosis canon AEPED 10-15 mg/kg por peso</span>
+          </span>
+          <span class="tc-action">Abrir</span>
+        </button>
+        <button class="tool-card mint" type="button">
+          <span class="tc-icon">📋</span>
+          <span class="tc-body">
+            <span class="tc-title">EPDS · cómo te has sentido</span>
+            <span class="tc-sub">5 preguntas · 2 minutos · solo para ti</span>
+          </span>
+          <span class="tc-action">Empezar</span>
+        </button>
+        <button class="tool-card gold" type="button">
+          <span class="tc-icon">📈</span>
+          <span class="tc-body">
+            <span class="tc-title">Curva OMS de Lola</span>
+            <span class="tc-sub">P50 estimado · sin diagnóstico</span>
+          </span>
+          <span class="tc-action">Ver curva</span>
+        </button>
+        <button class="tool-card ink" type="button">
+          <span class="tc-icon">🚨</span>
+          <span class="tc-body">
+            <span class="tc-title">Emergencias · 112</span>
+            <span class="tc-sub">Si quieres, me quedo contigo mientras llaman</span>
+          </span>
+          <span class="tc-action">Llamar</span>
+        </button>
+      </div>
+      <div class="spec-row col">
+        <div class="spec-label">Anatomy</div>
+        <ul style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--ink-soft); line-height: 1.7; padding-left: 18px; margin: 0">
+          <li><strong>.tool-card</strong> · grid 44 / 1fr / auto · gap 12 · radius 14 · paper-soft bg · border line</li>
+          <li><strong>.tc-icon</strong> · 44×44 round · paper bg · emoji 22px · tonal-bg según variante</li>
+          <li><strong>.tc-title</strong> · Lenia 500 · fs-body · letter-spacing -0.005</li>
+          <li><strong>.tc-sub</strong> · Helvena · fs-meta · ink-muted</li>
+          <li><strong>.tc-action</strong> · Lenia fs-meta · ink-soft · "→" auto-añadido</li>
+          <li>Hover · brightness 0.99 · border ink-faint · translateY -1px</li>
+          <li>Dark mode (.chat-3am .tool-card) · bg rgba(255,255,255,0.04) · text night-fg</li>
+        </ul>
+      </div>
+      <div class="spec-row col">
+        <div class="spec-label">Tools registradas v0 (10)</div>
+        <ul style="font-size:12.5px;color:var(--ink-soft);line-height:1.6;padding-left:18px;margin:0;max-width:60ch">
+          <li><strong>dose_calculator</strong> · coral · calc paracetamol → libro Vacunas</li>
+          <li><strong>vaccine_lookup</strong> · gold · calendario AEPED → libro Vacunas</li>
+          <li><strong>epds_screening</strong> · mint · cribado depresión perinatal → sheet inline</li>
+          <li><strong>mchat_screening</strong> · mint · cribado autismo 18 m → libro Hitos</li>
+          <li><strong>growth_lookup</strong> · gold · curva OMS percentil → libro Desarrollo</li>
+          <li><strong>milestone_lookup</strong> · mint · rango Haizea por edad → libro Hitos</li>
+          <li><strong>library_open_*</strong> · blush/mint · libro recomendado → goto módulo</li>
+          <li><strong>urgent_call</strong> · ink · tel:112 (auto-detect país)</li>
+          <li><strong>mental_health_escalation</strong> · ink · tel:024 (España)</li>
+          <li><strong>relay_partner</strong> · blush · avisar co-cuidador → sheet placeholder</li>
         </ul>
       </div>
     </div>
