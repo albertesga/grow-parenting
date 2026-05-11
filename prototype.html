@@ -3269,39 +3269,38 @@
   .milestone-book .top-header {
     margin-bottom: 14px;
   }
+  /* § Hitos · hero canon-aligned con .avatar-hero de Hoy (mint gradient + orb
+     bottom-right). Más bajo, menos texto, mismo lenguaje visual que Hoy. */
   .milestone-hero {
     position: relative;
     overflow: hidden;
-    min-height: 168px;
-    border: 1px solid rgba(201,194,178,0.68);
-    border-radius: var(--radius-xl);
-    padding: 18px;
-    margin-bottom: 14px;
+    min-height: 120px;
+    border: 1px solid var(--line);
+    border-radius: 26px;
+    padding: 14px;
+    margin-bottom: 12px;
     background:
-      radial-gradient(circle at 82% 12%, rgba(232,201,122,0.32), transparent 32%),
-      radial-gradient(circle at 4% 0%, rgba(191,210,176,0.34), transparent 30%),
-      linear-gradient(135deg, rgba(250,247,240,0.96), rgba(230,223,233,0.72));
-    box-shadow:
-      inset 0 1px 0 rgba(255,255,255,0.74),
-      0 18px 44px rgba(42,33,27,0.08);
+      radial-gradient(circle at 72% 12%, rgba(232,201,122,0.48), transparent 24%),
+      linear-gradient(135deg, var(--mint-subtle), var(--paper-soft));
   }
   .milestone-hero h3 {
     position: relative;
     z-index: 1;
     font-family: "Lenia";
-    font-size: 28px;
-    line-height: 1.02;
-    letter-spacing: -0.02em;
-    margin: 8px 0 8px;
+    font-size: 22px;
+    font-weight: 500;
+    line-height: 1.05;
+    letter-spacing: -0.01em;
+    margin: 8px 0 4px;
   }
   .milestone-hero p {
     position: relative;
     z-index: 1;
-    max-width: 214px;
+    max-width: 200px;
     margin: 0;
     color: var(--ink-soft);
-    font-size: var(--fs-body-sm);
-    line-height: 1.42;
+    font-size: var(--fs-caption);
+    line-height: 1.4;
   }
   .milestone-hero-kicker,
   .milestone-section-label {
@@ -3313,10 +3312,10 @@
   }
   .milestone-hero-orb {
     position: absolute;
-    right: 16px;
-    bottom: 14px;
-    width: 104px;
-    height: 104px;
+    right: -2px;
+    bottom: -18px;
+    width: 130px;
+    height: 130px;
     border-radius: 0;
     display: grid;
     place-items: end center;
@@ -3326,10 +3325,10 @@
     pointer-events: none;
   }
   .milestone-hero-orb img {
-    width: 104px;
-    height: 104px;
+    width: 130px;
+    height: 130px;
     object-fit: contain;
-    filter: drop-shadow(0 18px 22px rgba(42,33,27,0.18));
+    filter: drop-shadow(0 14px 18px rgba(42,33,27,0.16));
     animation: avatarFloat 5.4s ease-in-out infinite;
   }
   .milestone-track {
@@ -9893,7 +9892,7 @@
             <section class="milestone-hero">
               <div class="milestone-hero-kicker">Vista canónica · 0-60 meses</div>
               <h3>Lola · 18 meses</h3>
-              <p>Hitos por etapa y área, con rangos P50/P75/P95. Sin ranking: observamos, guardamos y hablamos con calma si hace falta.</p>
+              <p>Rangos P50/P75/P95. Sin ranking.</p>
               <div class="milestone-hero-orb"><img src="design/assets/avatar-mint.png" alt=""></div>
             </section>
 
