@@ -5495,6 +5495,18 @@
     color: #4A3815;
     box-shadow: 0 6px 18px rgba(184,151,63,0.32);
   }
+  /* § Hitos · navbar dedicado · 3 cells (Hitos · Log FAB · Carnet) · tonal mint */
+  [data-screen="hitos"] .content { padding-bottom: 110px; }
+  .milestone-phone-nav {
+    background: #EEF7EE;
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .milestone-phone-nav .nav-tab.active { color: #4F6647; }
+  .milestone-phone-nav .fab.milestone-fab {
+    background: var(--mint-base);
+    color: #2F4029;
+    box-shadow: 0 6px 18px rgba(143,174,133,0.32);
+  }
   .pregnancy-hero,
   .pregnancy-status-card,
   .pregnancy-nav-card,
@@ -10066,7 +10078,7 @@
           </div>
         </section>
 
-        <section class="screen no-nav" data-screen="hitos">
+        <section class="screen" data-screen="hitos">
           <div class="status"><span>9:42</span><div class="status-dots"><span></span><span></span><span></span></div></div>
           <div class="content milestone-book">
             <div class="top-header">
@@ -10084,42 +10096,62 @@
               <div class="milestone-hero-orb"><img src="design/assets/avatar-mint.png" alt=""></div>
             </section>
 
-            <section class="milestone-stages" aria-label="Timeline de etapas 0 a 60 meses">
-              <div class="timeline-track tall" data-milestone-stages role="tablist"></div>
-              <div class="timeline-axis">
-                <span>0 m</span><span>12 m</span><span>24 m</span><span>36 m</span><span>48 m</span><span>60 m</span>
-              </div>
-            </section>
+            <div data-milestone-home>
+              <section class="milestone-stages" aria-label="Timeline de etapas 0 a 60 meses">
+                <div class="timeline-track tall" data-milestone-stages role="tablist"></div>
+                <div class="timeline-axis">
+                  <span>0 m</span><span>12 m</span><span>24 m</span><span>36 m</span><span>48 m</span><span>60 m</span>
+                </div>
+              </section>
 
-            <div class="milestone-scale-row" aria-label="Selector de escala">
-              <span class="scale-label">Escala</span>
-              <div class="scale-strip">
-                <button class="scale-btn active" type="button" data-milestone-scale="haizea">Haizea-Llevant</button>
-                <button class="scale-btn" type="button" data-milestone-scale="asq">ASQ-3</button>
-                <button class="scale-btn" type="button" data-milestone-scale="denver">Denver II</button>
-                <button class="scale-btn" type="button" data-milestone-scale="wiechen">Van Wiechen</button>
-                <button class="scale-btn premium" type="button" data-milestone-scale="bayley">Bayley-III</button>
+              <div class="milestone-scale-row" aria-label="Selector de escala">
+                <span class="scale-label">Escala</span>
+                <div class="scale-strip">
+                  <button class="scale-btn active" type="button" data-milestone-scale="haizea">Haizea-Llevant</button>
+                  <button class="scale-btn" type="button" data-milestone-scale="asq">ASQ-3</button>
+                  <button class="scale-btn" type="button" data-milestone-scale="denver">Denver II</button>
+                  <button class="scale-btn" type="button" data-milestone-scale="wiechen">Van Wiechen</button>
+                  <button class="scale-btn premium" type="button" data-milestone-scale="bayley">Bayley-III</button>
+                </div>
+              </div>
+
+              <section class="milestone-stage-head">
+                <div class="milestone-stage-copy">
+                  <h3 class="milestone-stage-title" data-milestone-stage-title>—</h3>
+                  <div class="milestone-stage-meta" data-milestone-stage-meta>—</div>
+                  <div class="milestone-stage-count" data-milestone-stage-count>—</div>
+                </div>
+              </section>
+
+              <div class="milestone-filter-row" aria-label="Filtros por tipo">
+                <span class="scale-label">Tipo</span>
+                <div class="milestone-filter-strip" data-milestone-filters></div>
+              </div>
+              <div class="milestone-card-list" data-milestone-cards></div>
+
+              <div class="milestone-action-row">
+                <button class="btn-coral btn-sm" type="button" data-log-type="hito" data-log-source="hitos">+ Añadir hito</button>
               </div>
             </div>
 
-            <section class="milestone-stage-head">
-              <div class="milestone-stage-copy">
-                <h3 class="milestone-stage-title" data-milestone-stage-title>—</h3>
-                <div class="milestone-stage-meta" data-milestone-stage-meta>—</div>
-                <div class="milestone-stage-count" data-milestone-stage-count>—</div>
-              </div>
-            </section>
-
-            <div class="milestone-filter-row" aria-label="Filtros por tipo">
-              <span class="scale-label">Tipo</span>
-              <div class="milestone-filter-strip" data-milestone-filters></div>
-            </div>
-            <div class="milestone-card-list" data-milestone-cards></div>
-
-            <div class="milestone-action-row">
-              <button class="btn-coral btn-sm" type="button" data-log-type="hito" data-log-source="hitos">+ Añadir hito</button>
-            </div>
+            <div data-milestone-carnet hidden></div>
           </div>
+          <nav class="phone-nav milestone-phone-nav" aria-label="Libro de hitos">
+            <button class="nav-tab" type="button" data-milestone-view="home" data-milestone-tab="home">
+              <svg viewBox="0 0 24 24"><use href="#i-flag"/></svg>
+              <span>Hitos</span>
+            </button>
+            <div class="nav-tab fab-cell">
+              <button class="fab milestone-fab" type="button" data-log-open data-log-type="hito" data-log-source="hitos" aria-label="Añadir hito">
+                <svg viewBox="0 0 24 24"><use href="#i-plus"/></svg>
+              </button>
+              <span class="lbl">Log</span>
+            </div>
+            <button class="nav-tab" type="button" data-milestone-view="carnet" data-milestone-tab="carnet">
+              <svg viewBox="0 0 24 24"><use href="#i-card"/></svg>
+              <span>Carnet</span>
+            </button>
+          </nav>
         </section>
 
         <section class="screen no-nav" data-screen="sueno">
@@ -12241,6 +12273,91 @@
          no fuerza centrar (que cortaba los chips adyacentes) */
       filterRoot.querySelector('.chip.active')?.scrollIntoView({ block: 'nearest', inline: 'nearest' });
     });
+  }
+
+  /* § Hitos · view routing (home/carnet) + navbar dedicado */
+  let milestoneActiveView = 'home';
+
+  function setMilestoneView(view) {
+    milestoneActiveView = view || 'home';
+    const home = document.querySelector('[data-milestone-home]');
+    const carnet = document.querySelector('[data-milestone-carnet]');
+    if (home) home.toggleAttribute('hidden', milestoneActiveView !== 'home');
+    if (carnet) carnet.toggleAttribute('hidden', milestoneActiveView !== 'carnet');
+    if (milestoneActiveView === 'home') renderMilestoneBook();
+    if (milestoneActiveView === 'carnet') renderMilestoneCarnet();
+    updateMilestoneNavActive();
+    document.querySelector('[data-screen="hitos"] .content')?.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function updateMilestoneNavActive() {
+    document.querySelectorAll('.milestone-phone-nav [data-milestone-tab]').forEach((el) => {
+      el.classList.toggle('active', el.dataset.milestoneTab === milestoneActiveView);
+    });
+  }
+
+  /* Locale-friendly fecha corta · "2025-02-15" → "15 feb 2025" */
+  const milestoneMonthShortES = ['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
+  function formatMilestoneDate(iso) {
+    if (!iso) return '—';
+    const [y, m, d] = iso.split('-').map((n) => parseInt(n, 10));
+    if (!y || !m || !d) return iso;
+    return `${d} ${milestoneMonthShortES[m - 1]} ${y}`;
+  }
+  function milestoneStageLabel(stageId) {
+    return milestoneStages.find((s) => s.id === stageId)?.title || stageId;
+  }
+
+  function renderMilestoneCarnet() {
+    const root = document.querySelector('[data-milestone-carnet]');
+    if (!root) return;
+    const achieved = milestoneData.filter((m) => m.achieved);
+    const pending = milestoneData.filter((m) => !m.achieved);
+
+    root.innerHTML = `
+      <section class="milestone-section">
+        <div class="milestone-section-head">
+          <span>Logrados</span>
+          <span>${achieved.length} de ${milestoneData.length}</span>
+        </div>
+        <div class="vaccine-list">
+          ${achieved.map((m) => `
+            <article class="vaccine-row done">
+              <strong>${escapeHtml(m.title)}</strong>
+              <span>${escapeHtml(formatMilestoneDate(m.achievedDate))} · ${escapeHtml(milestoneStageLabel(m.stage))}</span>
+            </article>
+          `).join('')}
+        </div>
+      </section>
+
+      <section class="milestone-section">
+        <div class="milestone-section-head">
+          <span>Pendientes</span>
+          <span>${pending.length}</span>
+        </div>
+        <div class="vaccine-list">
+          ${pending.map((m) => `
+            <article class="vaccine-row">
+              <strong>${escapeHtml(m.title)}</strong>
+              <span>Esperado P50 ${m.p50}m · P95 ${m.p95}m · ${escapeHtml(milestoneStageLabel(m.stage))}</span>
+            </article>
+          `).join('')}
+        </div>
+      </section>
+
+      <div class="vaccine-card-actions">
+        <button class="vaccine-action primary" type="button" data-open-sheet
+          data-sheet-title="Exportar PDF"
+          data-sheet-copy="Stub de PDF del carnet de hitos · Lola. Incluye logrados con fecha y pendientes con rango esperado.">
+          Exportar PDF
+        </button>
+        <button class="vaccine-action" type="button" data-open-sheet
+          data-sheet-title="Compartir con pediatra"
+          data-sheet-copy="Stub · envío al pediatra de cabecera para revisión 18m.">
+          📤 Compartir
+        </button>
+      </div>
+    `;
   }
 
   function setMilestoneStage(stageId) {
@@ -15216,7 +15333,7 @@ Grow
       renderGrowthBook();
     }
     if (name === 'hitos') {
-      renderMilestoneBook();
+      setMilestoneView(milestoneActiveView);
     }
     if (name === 'sueno') {
       if (options.sleepView) sleepActiveView = options.sleepView;
@@ -17808,6 +17925,12 @@ Grow
         vaccineDetailIndex = parseInt(idx, 10);
       }
       setVaccineView(vaccineViewButton.dataset.vaccineView);
+      return;
+    }
+
+    const milestoneViewButton = event.target.closest('[data-milestone-view]');
+    if (milestoneViewButton) {
+      setMilestoneView(milestoneViewButton.dataset.milestoneView);
       return;
     }
 
