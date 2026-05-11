@@ -10419,13 +10419,19 @@
           <div class="status"><span>9:42</span><div class="status-dots"><span></span><span></span><span></span></div></div>
           <div class="content colicos-book colicos-home">
             <div class="top-header">
-              <div class="colicos-home-hero">
-                <div class="colicos-eyebrow">Cólicos · 🌡 Salud</div>
-                <h2>Las tres horas más largas del día.</h2>
-                <div class="sub-italic">Y las 3 más importantes para ti.</div>
+              <div>
+                <div class="eyebrow">Cólicos · Wessel + Period of PURPLE</div>
+                <h2 class="screen-title">Libro de cólicos</h2>
               </div>
               <button class="book-back" type="button" data-goto="hoy" aria-label="Cerrar libro"><svg viewBox="0 0 24 24"><use href="#i-x"/></svg></button>
             </div>
+
+            <section class="book-hero coral">
+              <div class="book-hero-kicker">Cólicos · período morado · trauma-informed</div>
+              <h3>Lola · 6 semanas</h3>
+              <p>Las tres horas más largas del día. Y las 3 más importantes para ti.</p>
+              <div class="book-hero-orb"><img src="design/assets/avatar-mint.png" alt=""></div>
+            </section>
 
             <div class="colicos-purple-sticky">
               <div>Esto que estás viviendo es un período. Pasará. No es tu culpa. Aquí estamos.</div>
@@ -12636,10 +12642,10 @@
     return `
       <button class="book-close-pill" type="button" data-goto="hoy" aria-label="Cerrar libro"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-x"/></svg></button>
           <section class="sleep-hero">
-        <div class="sleep-kicker">Sueño · Lola · ${escapeHtml(ageRange.title)}</div>
-        <h3>Cuando duerme bien, descansáis.</h3>
-        <p>${escapeHtml(sleepLocation.city)} · sol ${escapeHtml(sleepLocation.sunrise)} · ${escapeHtml(ageRange.total)}/24h.</p>
-        <div class="sleep-hero-mark">☾</div>
+        <div class="sleep-kicker">Sueño · ventanas + sol local</div>
+        <h3>Lola · ${escapeHtml(ageRange.title)}</h3>
+        <p>${escapeHtml(ageRange.total)} / 24h · sol ${escapeHtml(sleepLocation.sunrise)} en ${escapeHtml(sleepLocation.city)}.</p>
+        <div class="book-hero-orb"><img src="design/assets/avatar-mint.png" alt=""></div>
       </section>
       ${renderSleepStatusCard()}
       ${renderSleepSchedule(sleepActiveAge, { compact: true })}
@@ -12934,10 +12940,10 @@ Grow
     return `
       <button class="book-close-pill" type="button" data-goto="hoy" aria-label="Cerrar libro"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-x"/></svg></button>
           <section class="food-hero">
-        <div class="food-kicker">Alimentación · Lola · ${escapeHtml(age.label)}</div>
-        <h3>Comer sin listas infinitas.</h3>
+        <div class="food-kicker">Alimentación · BLW + alérgenos canon</div>
+        <h3>Lola · ${escapeHtml(age.label)}</h3>
         <p>${escapeHtml(age.pattern)} · ${getTriedFoodsCount()} probados · ${inProcess} alérgeno en proceso.</p>
-        <div class="food-hero-mark">🍐</div>
+        <div class="book-hero-orb"><img src="design/assets/avatar-mint.png" alt=""></div>
       </section>
       <section class="food-status-card">
         <div class="food-status-grid">
@@ -13259,10 +13265,10 @@ Grow
     return `
       <button class="book-close-pill" type="button" data-goto="hoy" aria-label="Cerrar libro"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-x"/></svg></button>
           <section class="lactation-hero">
-        <div class="lactation-kicker">Lactancia · Lola · 6 semanas</div>
-        <h3>Como salga. Y si no sale, también.</h3>
-        <p>Semana 6 · materna + biberón puntual · LATCH ${lactationLatchScore}/10.</p>
-        <div class="lactation-hero-mark">♡</div>
+        <div class="lactation-kicker">Lactancia · LATCH + producción</div>
+        <h3>Lola · 6 semanas</h3>
+        <p>Materna + biberón puntual · LATCH ${lactationLatchScore}/10.</p>
+        <div class="book-hero-orb"><img src="design/assets/avatar-mint.png" alt=""></div>
       </section>
       <section class="lactation-status-card">
         <div class="lactation-mini-label">Cómo vais</div>
