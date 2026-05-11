@@ -8021,6 +8021,221 @@
     margin: 8px 0 4px;
   }
 
+
+  /* § V.C.2 · EPDS rápido sheet + Relay partner sheet · país auto-detect tel
+     EPDS subset 5 preguntas (Cox 1987 validated) · Q5 (ideación) trigger
+     directo a mental-health 024 banner sin importar score total. */
+  .epds-shell,
+  .relay-shell {
+    position: absolute;
+    left: 12px; right: 12px; bottom: 10px;
+    z-index: 38;
+    opacity: 0; visibility: hidden; pointer-events: none;
+    transform: translateY(112%);
+    transition: transform 260ms var(--ease), opacity 180ms ease, visibility 0s linear 260ms;
+    max-height: 86%;
+  }
+  .epds-shell.active,
+  .relay-shell.active {
+    opacity: 1; visibility: visible; pointer-events: auto;
+    transform: translateY(0);
+    transition: transform 260ms var(--ease), opacity 180ms ease, visibility 0s;
+  }
+  .epds-sheet,
+  .relay-sheet {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-xl);
+    padding: 22px 22px 24px;
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,0.7),
+      0 -18px 60px rgba(42,33,27,0.18);
+    display: flex; flex-direction: column;
+    gap: 14px;
+    max-height: 86vh;
+    overflow-y: auto;
+    scrollbar-width: none;
+  }
+  .epds-sheet::-webkit-scrollbar,
+  .relay-sheet::-webkit-scrollbar { display: none; }
+  .epds-grabber,
+  .relay-grabber {
+    width: 36px; height: 4px;
+    border-radius: 999px;
+    background: var(--line-strong);
+    margin: 0 auto;
+  }
+
+  .epds-head {
+    display: flex; align-items: flex-start; justify-content: space-between;
+    gap: 8px;
+  }
+  .epds-head h2 {
+    font-family: "Lenia"; font-weight: 500;
+    font-size: var(--fs-h4);
+    line-height: 1.2;
+    margin: 0;
+    color: var(--ink);
+  }
+  .epds-head .epds-progress {
+    font-family: "Lenia"; font-size: var(--fs-eyebrow);
+    color: var(--ink-muted);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    flex-shrink: 0;
+    margin-top: 4px;
+  }
+  .epds-step h3 {
+    font-family: "Lenia"; font-weight: 500;
+    font-size: var(--fs-body);
+    color: var(--ink);
+    line-height: 1.4;
+    margin: 8px 0 12px;
+  }
+  .epds-options {
+    display: flex; flex-direction: column;
+    gap: 8px;
+  }
+  .epds-option {
+    text-align: left;
+    background: var(--paper-soft);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    padding: 12px 16px;
+    font-family: "Helvena";
+    font-size: var(--fs-body-sm);
+    color: var(--ink);
+    cursor: pointer;
+    line-height: 1.45;
+    transition: filter 150ms var(--ease), border-color 150ms var(--ease);
+  }
+  .epds-option:hover {
+    filter: brightness(0.99);
+    border-color: var(--coral-base);
+  }
+  .epds-source {
+    font-family: "Lenia"; font-size: var(--fs-eyebrow);
+    color: var(--ink-muted);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    text-align: center;
+    margin-top: 4px;
+  }
+  .epds-canon {
+    font-family: "Helvena"; font-style: italic;
+    font-size: var(--fs-body-sm);
+    color: var(--ink-soft);
+    text-align: center;
+    line-height: 1.5;
+    padding: 6px 0;
+    border-top: 1px dashed var(--line-soft);
+  }
+
+  /* EPDS result · 3 levels (low · mid · high+ideación) */
+  .epds-result {
+    border-radius: var(--radius-lg);
+    padding: 16px 18px;
+    display: flex; flex-direction: column;
+    gap: 8px;
+    border: 1px solid;
+  }
+  .epds-result.low {
+    background: linear-gradient(135deg, rgba(143,174,133,0.14), rgba(229,237,223,0.55));
+    border-color: rgba(143,174,133,0.40);
+  }
+  .epds-result.mid {
+    background: linear-gradient(135deg, rgba(232,201,122,0.14), rgba(246,235,201,0.58));
+    border-color: rgba(184,151,63,0.40);
+  }
+  .epds-result.high {
+    background: linear-gradient(135deg, rgba(214,119,66,0.10), rgba(251,229,214,0.55));
+    border-color: rgba(214,119,66,0.45);
+  }
+  .epds-result h3 {
+    font-family: "Lenia"; font-weight: 500;
+    font-size: var(--fs-body);
+    margin: 0;
+    color: var(--ink);
+  }
+  .epds-result p {
+    margin: 0;
+    font-family: "Helvena";
+    font-size: var(--fs-body-sm);
+    color: var(--ink-soft);
+    line-height: 1.5;
+  }
+  .epds-actions {
+    display: flex; flex-direction: column;
+    gap: 8px;
+    margin-top: 4px;
+  }
+  .epds-actions .btn {
+    width: 100%;
+    min-height: 44px;
+    border-radius: 999px;
+    font-family: "Lenia"; font-weight: 500;
+    font-size: var(--fs-body-sm);
+    cursor: pointer;
+    border: 0;
+    transition: filter 150ms var(--ease);
+  }
+  .epds-actions .btn:hover { filter: brightness(0.97); }
+  .epds-actions .btn.coral { background: var(--coral-base); color: #4A2510; }
+  .epds-actions .btn.soft  { background: var(--paper-soft); color: var(--ink); border: 1px solid var(--line); }
+
+  /* Relay sheet · "Avisar a Pablo" */
+  .relay-sheet h2 {
+    font-family: "Lenia"; font-weight: 500;
+    font-size: var(--fs-h4);
+    line-height: 1.2;
+    margin: 0;
+    color: var(--ink);
+  }
+  .relay-sheet p {
+    font-family: "Helvena";
+    font-size: var(--fs-body-sm);
+    color: var(--ink-soft);
+    line-height: 1.5;
+    margin: 0;
+  }
+  .relay-sheet textarea {
+    width: 100%;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    background: var(--paper-soft);
+    padding: 12px 14px;
+    font: inherit;
+    font-family: "Helvena";
+    font-size: var(--fs-body-sm);
+    color: var(--ink);
+    outline: 0;
+    resize: vertical;
+    min-height: 80px;
+  }
+  .relay-sheet textarea:focus-visible {
+    outline: 2px solid var(--coral-base);
+    outline-offset: 0;
+    border-color: var(--coral-base);
+  }
+  .relay-toast {
+    position: fixed;
+    left: 50%; bottom: 88px;
+    transform: translateX(-50%) translateY(20px);
+    background: var(--ink);
+    color: var(--paper);
+    padding: 12px 18px;
+    border-radius: 999px;
+    font-family: "Lenia"; font-size: var(--fs-meta);
+    z-index: 60;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 220ms var(--ease), transform 220ms var(--ease);
+  }
+  .relay-toast.active {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+
 </style>
 </head>
 <body>
@@ -8713,6 +8928,34 @@
             </div>
           </div>
         </aside>
+
+        <!-- ═══════════════════════════════════════════════════════════
+             § V.C.2 · EPDS rápido (5 preguntas · Cox 1987 subset)
+             ═══════════════════════════════════════════════════════════ -->
+        <aside class="epds-shell" id="epds-modal" aria-label="EPDS · cómo te has sentido">
+          <div class="epds-sheet" data-epds-root>
+            <!-- epds-step OR epds-result render here -->
+          </div>
+        </aside>
+
+        <!-- ═══════════════════════════════════════════════════════════
+             § V.C.2 · Relay partner · Avisar a Pablo
+             ═══════════════════════════════════════════════════════════ -->
+        <aside class="relay-shell" id="relay-modal" aria-label="Avisar a co-cuidador">
+          <div class="relay-sheet">
+            <div class="relay-grabber"></div>
+            <h2>👋 Avisar a Pablo</h2>
+            <p>Le diremos que necesitas relevo. Puedes añadir un mensaje opcional · si lo dejas vacío, va con texto canon.</p>
+            <textarea data-relay-message placeholder="Necesito que me releves un rato · te quiero"></textarea>
+            <div class="epds-actions">
+              <button class="btn coral" type="button" data-relay-send>Enviar a Pablo</button>
+              <button class="btn soft" type="button" data-close-sheet>Cerrar</button>
+            </div>
+          </div>
+        </aside>
+
+        <div class="relay-toast" id="relay-toast" aria-live="polite">Aviso enviado a Pablo · llegará al instante</div>
+
 
 
 
@@ -13720,6 +13963,10 @@ Grow
     if (safetyMod) safetyMod.classList.remove('active');
     const mentalMod = document.getElementById('mental-health-modal');
     if (mentalMod) mentalMod.classList.remove('active');
+    const epdsMod = document.getElementById('epds-modal');
+    if (epdsMod) epdsMod.classList.remove('active');
+    const relayMod = document.getElementById('relay-modal');
+    if (relayMod) relayMod.classList.remove('active');
     scrim.classList.remove('active');
   }
 
@@ -13933,6 +14180,189 @@ Grow
   }
 
 
+
+
+
+  /* § V.C.2 · Country auto-detect for emergency tel · ES/US/UK/default
+     Uses navigator.language as proxy (no real geo IP) */
+  function chatGetCountryCode() {
+    const lang = (navigator.language || 'es-ES').toUpperCase();
+    if (lang.includes('-ES') || lang === 'ES') return 'ES';
+    if (lang.includes('-US') || lang === 'EN-US') return 'US';
+    if (lang.includes('-GB') || lang.includes('-UK')) return 'UK';
+    return 'ES'; /* default canon */
+  }
+  function chatGetEmergencyNumber() {
+    const map = { ES: '112', US: '911', UK: '999' };
+    return map[chatGetCountryCode()] || '112';
+  }
+  function chatGetMentalHealthNumber() {
+    const map = { ES: '024', US: '988', UK: '116123' };
+    return map[chatGetCountryCode()] || '024';
+  }
+
+  /* § V.C.2 · EPDS rápido (5 questions · Cox 1987 subset)
+     Score 0-3 per question · total 0-15 · cutoff 10 (rapid subset proportion)
+     Q5 (ideación) override → siempre escalada salud mental */
+  const epdsQuestions = [
+    {
+      id: 1,
+      q: 'En los últimos 7 días · ¿has podido reírte y ver el lado divertido de las cosas?',
+      options: [
+        { label: 'Tanto como siempre',                       value: 0 },
+        { label: 'No tanto ahora',                            value: 1 },
+        { label: 'Mucho menos ahora',                         value: 2 },
+        { label: 'No, ya no',                                  value: 3 }
+      ]
+    },
+    {
+      id: 2,
+      q: '¿Has esperado las cosas con ilusión?',
+      options: [
+        { label: 'Tanto como siempre',                       value: 0 },
+        { label: 'Algo menos',                                value: 1 },
+        { label: 'Mucho menos',                               value: 2 },
+        { label: 'Casi nada',                                  value: 3 }
+      ]
+    },
+    {
+      id: 3,
+      q: '¿Te has sentido triste o desgraciada?',
+      options: [
+        { label: 'No, en absoluto',                           value: 0 },
+        { label: 'No mucho',                                  value: 1 },
+        { label: 'Sí, a veces',                               value: 2 },
+        { label: 'Sí, la mayor parte del tiempo',             value: 3 }
+      ]
+    },
+    {
+      id: 4,
+      q: '¿Te has sentido tan desgraciada que has llorado?',
+      options: [
+        { label: 'No, nunca',                                 value: 0 },
+        { label: 'Solo de vez en cuando',                     value: 1 },
+        { label: 'Bastante a menudo',                         value: 2 },
+        { label: 'Sí, casi siempre',                          value: 3 }
+      ]
+    },
+    {
+      id: 5,
+      q: '¿Has pensado en hacerte daño?',
+      options: [
+        { label: 'No, en absoluto',                           value: 0 },
+        { label: 'Casi nunca',                                value: 1 },
+        { label: 'A veces',                                   value: 2 },
+        { label: 'Sí, bastante a menudo',                     value: 3 }
+      ],
+      ideation: true
+    }
+  ];
+  let epdsActive = null;  /* { stepIdx, answers: [], score: 0 } */
+
+  function openEpds() {
+    epdsActive = { stepIdx: 0, answers: [], score: 0 };
+    renderEpds();
+    document.getElementById('epds-modal')?.classList.add('active');
+    scrim.classList.add('active');
+  }
+  function closeEpds() {
+    document.getElementById('epds-modal')?.classList.remove('active');
+    scrim.classList.remove('active');
+    epdsActive = null;
+  }
+  function renderEpds() {
+    const root = document.querySelector('[data-epds-root]');
+    if (!root || !epdsActive) return;
+    const q = epdsQuestions[epdsActive.stepIdx];
+
+    if (!q) {
+      /* Show result */
+      const score = epdsActive.score;
+      const lastQ = epdsActive.answers[4];
+      const hasIdeation = lastQ != null && lastQ > 0;
+      let level, title, body, actions;
+      if (hasIdeation) {
+        level = 'high';
+        title = 'Hay algo que merece atención hoy.';
+        body = 'Has respondido a la última pregunta · eso es información que escucho. No estás sola. Las personas de la línea 024 saben acompañar exactamente lo que sientes.';
+        actions = '<button class="btn coral" type="button" data-epds-action="mental">Llamar al 024 ahora</button><button class="btn soft" type="button" data-epds-action="close">Ahora no · cerrar</button>';
+      } else if (score >= 10) {
+        level = 'mid';
+        title = 'Lo que sientes pesa más de lo habitual.';
+        body = `Score EPDS: ${score} / 15 (subset rápido). Por encima de 10 sugiere que pides apoyo · sin urgencia pero sin esperar. Habla con tu profesional de referencia esta semana.`;
+        actions = '<button class="btn coral" type="button" data-epds-action="library">Abrir libro de bienestar materno</button><button class="btn soft" type="button" data-epds-action="mental">Conocer línea 024</button>';
+      } else {
+        level = 'low';
+        title = 'Estás en un buen lugar emocional.';
+        body = `Score EPDS: ${score} / 15. Sin señales de alerta hoy. Sigue cuidándote · puedes repetir EPDS cuando quieras.`;
+        actions = '<button class="btn soft" type="button" data-epds-action="close">Cerrar</button>';
+      }
+      root.innerHTML = `
+        <div class="epds-grabber"></div>
+        <div class="epds-head">
+          <h2>EPDS · resultado</h2>
+          <span class="epds-progress">5 / 5</span>
+        </div>
+        <div class="epds-result ${level}">
+          <h3>${title}</h3>
+          <p>${body}</p>
+        </div>
+        <div class="epds-actions">${actions}</div>
+        <p class="epds-source">— Cox 1987 EPDS · validación ES Garcia-Esteve 2003</p>
+        <p class="epds-canon">No diagnosticamos. Acompañamos. Si dudas, habla con tu profesional.</p>
+      `;
+      return;
+    }
+
+    const optsHtml = q.options.map((opt) => `
+      <button class="epds-option" type="button" data-epds-answer="${opt.value}">
+        ${escapeHtml(opt.label)}
+      </button>
+    `).join('');
+
+    root.innerHTML = `
+      <div class="epds-grabber"></div>
+      <div class="epds-head">
+        <h2>EPDS · cómo te has sentido</h2>
+        <span class="epds-progress">${epdsActive.stepIdx + 1} / ${epdsQuestions.length}</span>
+      </div>
+      <div class="epds-step">
+        <h3>${escapeHtml(q.q)}</h3>
+        <div class="epds-options">${optsHtml}</div>
+      </div>
+      <p class="epds-source">— Cox 1987 EPDS (5-pregunta rápida)</p>
+    `;
+  }
+  function epdsAnswer(value) {
+    if (!epdsActive) return;
+    const v = parseInt(value, 10);
+    epdsActive.answers[epdsActive.stepIdx] = v;
+    epdsActive.score += v;
+    epdsActive.stepIdx += 1;
+    renderEpds();
+  }
+
+  /* § V.C.2 · Relay partner */
+  function openRelay() {
+    document.getElementById('relay-modal')?.classList.add('active');
+    scrim.classList.add('active');
+  }
+  function closeRelay() {
+    document.getElementById('relay-modal')?.classList.remove('active');
+    scrim.classList.remove('active');
+  }
+  function sendRelay() {
+    const ta = document.querySelector('[data-relay-message]');
+    const msg = ta?.value?.trim() || 'Necesito que me releves un rato · te quiero';
+    /* Placeholder · no real network. Show toast. */
+    const toast = document.getElementById('relay-toast');
+    if (toast) {
+      toast.classList.add('active');
+      window.setTimeout(() => toast.classList.remove('active'), 2200);
+    }
+    if (ta) ta.value = '';
+    closeRelay();
+  }
 
   /* § V.C.1 · Safety frame & mental-health helpers */
   function openSafetyFrame() {
@@ -15125,27 +15555,15 @@ Grow
     if (chatTool) {
       const t = chatTool.dataset.chatTool;
       if (t === 'urgent_call') {
-        window.location.href = 'tel:112';
+        window.location.href = 'tel:' + chatGetEmergencyNumber();
         return;
       }
       if (t === 'mental_024') {
-        window.location.href = 'tel:024';
+        window.location.href = 'tel:' + chatGetMentalHealthNumber();
         return;
       }
-      if (t === 'epds' || t === 'relay_partner') {
-        /* Phase C will materialize these sheets · interim: show generic sheet */
-        const title = t === 'epds' ? 'EPDS · cómo te has sentido' : 'Avisar a Pablo';
-        const copy = t === 'epds'
-          ? '5 preguntas · 2 min · solo para ti. Disponible en la siguiente actualización.'
-          : 'Le diremos que necesitas relevo. Sheet de mensaje opcional en la siguiente actualización.';
-        if (typeof sheet !== 'undefined' && sheetTitle && sheetCopy) {
-          sheetTitle.textContent = title;
-          sheetCopy.textContent = copy;
-          sheet.classList.add('active');
-          if (typeof scrim !== 'undefined') scrim.classList.add('active');
-        }
-        return;
-      }
+      if (t === 'epds') { openEpds(); return; }
+      if (t === 'relay_partner') { openRelay(); return; }
     }
 
     /* § V · Chat triage chip handler */
@@ -15197,20 +15615,39 @@ Grow
       document.getElementById('safety-frame-modal')?.classList.remove('active');
       if (t === 'mental') openMentalHealth();
       else if (t === 'relay') {
-        /* Phase C.2 materializa · interim: sheet placeholder */
+        openRelay();
+      }
+      return;
+    }
+    if (event.target.closest('[data-mental-call]')) {
+      window.location.href = 'tel:' + chatGetMentalHealthNumber();
+      return;
+    }
+
+    /* § V.C.2 · EPDS handlers */
+    const epdsAns = event.target.closest('[data-epds-answer]');
+    if (epdsAns) {
+      epdsAnswer(epdsAns.dataset.epdsAnswer);
+      return;
+    }
+    const epdsAct = event.target.closest('[data-epds-action]');
+    if (epdsAct) {
+      const t = epdsAct.dataset.epdsAction;
+      closeEpds();
+      if (t === 'mental') openMentalHealth();
+      else if (t === 'library') {
         if (typeof sheet !== 'undefined' && sheetTitle && sheetCopy) {
-          sheetTitle.textContent = 'Avisar a Pablo';
-          sheetCopy.textContent = 'Le diremos que necesitas relevo. Sheet con mensaje opcional en la siguiente actualización.';
+          sheetTitle.textContent = 'Libro de bienestar materno';
+          sheetCopy.textContent = 'En producción esto abriría el módulo de wellbeing materno · acompañamiento sin diagnóstico.';
           sheet.classList.add('active');
           scrim.classList.add('active');
         }
       }
       return;
     }
-    if (event.target.closest('[data-mental-call]')) {
-      window.location.href = 'tel:024';
-      return;
-    }
+
+    /* § V.C.2 · Relay handlers */
+    if (event.target.closest('[data-relay-send]')) { sendRelay(); return; }
 
     /* Onboarding · sex selector */
     const sexBtn = event.target.closest('[data-sex]');
