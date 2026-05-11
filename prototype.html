@@ -5524,6 +5524,15 @@
     color: #2F4029;
     box-shadow: 0 6px 18px rgba(143,174,133,0.32);
   }
+  /* § Embarazo · navbar dedicado · 4 tabs + FAB Log central · tonal coral */
+  [data-screen="embarazo"] .content { padding-bottom: 110px; }
+  .pregnancy-phone-nav { background: #FBEEE5; }
+  .pregnancy-phone-nav .nav-tab.active { color: #8B4621; }
+  .pregnancy-phone-nav .fab.pregnancy-fab {
+    background: var(--coral-base);
+    color: #4A2510;
+    box-shadow: 0 6px 18px rgba(214,119,66,0.28);
+  }
   .pregnancy-hero,
   .pregnancy-status-card,
   .pregnancy-nav-card,
@@ -10205,7 +10214,7 @@
           </div>
         </section>
 
-        <section class="screen no-nav" data-screen="embarazo">
+        <section class="screen" data-screen="embarazo">
           <div class="status"><span>9:42</span><div class="status-dots"><span></span><span></span><span></span></div></div>
           <div class="content pregnancy-book">
             <div class="top-header">
@@ -10217,6 +10226,30 @@
             </div>
             <div class="pregnancy-shell" data-pregnancy-root></div>
           </div>
+          <nav class="phone-nav pregnancy-phone-nav" aria-label="Libro de embarazo">
+            <button class="nav-tab" type="button" data-pregnancy-view="calendario" data-pregnancy-tab="calendario">
+              <svg viewBox="0 0 24 24"><use href="#i-cal"/></svg>
+              <span>Calendario</span>
+            </button>
+            <button class="nav-tab" type="button" data-pregnancy-view="patadas" data-pregnancy-tab="patadas">
+              <svg viewBox="0 0 24 24"><use href="#i-heart"/></svg>
+              <span>Patadas</span>
+            </button>
+            <div class="nav-tab fab-cell">
+              <button class="fab pregnancy-fab" type="button" data-log-open data-log-source="embarazo" aria-label="Abrir log de embarazo">
+                <svg viewBox="0 0 24 24"><use href="#i-plus"/></svg>
+              </button>
+              <span class="lbl">Log</span>
+            </div>
+            <button class="nav-tab" type="button" data-pregnancy-view="tension" data-pregnancy-tab="tension">
+              <svg viewBox="0 0 24 24"><use href="#i-chart"/></svg>
+              <span>Tensión</span>
+            </button>
+            <button class="nav-tab" type="button" data-pregnancy-view="parto" data-pregnancy-tab="parto">
+              <svg viewBox="0 0 24 24"><use href="#i-flag"/></svg>
+              <span>Parto</span>
+            </button>
+          </nav>
         </section>
 
         <section class="screen" data-screen="vacunacion">
@@ -11654,7 +11687,7 @@
     { condition: 'D-MER', symptoms: 'Tristeza/ansiedad breve al inicio de toma', action: 'Validación · no es PPD · derivar si persiste', urgent: false }
   ];
 
-  let pregnancyActiveView = 'home';
+  let pregnancyActiveView = 'calendario';
   let pregnancyWeek = 28;
   let pregnancyRainbowMode = false;
   let pregnancyKickCount = 7;
@@ -14041,23 +14074,160 @@ Grow
     const root = document.querySelector('[data-pregnancy-root]');
     if (!root) return;
     const views = {
-      home: renderPregnancyHome,
-      week: renderPregnancyWeek,
+      /* Navbar canon · 4 tabs */
+      calendario: renderPregnancyCalendario,
+      patadas: renderPregnancyKicks,
+      tension: renderPregnancyBp,
+      parto: renderPregnancyParto,
+      /* Aliases legacy (compat con shelf-book data-pregnancy-view-set="home" + view-chips antiguos) */
+      home: renderPregnancyCalendario,
       kicks: renderPregnancyKicks,
       bp: renderPregnancyBp,
+      'birth-plan': renderPregnancyParto,
+      /* Sub-vistas drill-down · accesibles desde dentro de los tabs */
+      week: renderPregnancyWeek,
       symptoms: renderPregnancySymptoms,
-      'birth-plan': renderPregnancyBirthPlan,
       clinical: renderPregnancyClinical,
       plan: renderPregnancyPlan,
       alarms: renderPregnancyAlarms
     };
-    root.innerHTML = (views[pregnancyActiveView] || renderPregnancyHome)();
+    root.innerHTML = (views[pregnancyActiveView] || renderPregnancyCalendario)();
   }
 
   function setPregnancyView(view) {
-    pregnancyActiveView = view || 'home';
+    pregnancyActiveView = view || 'calendario';
     renderPregnancyBook();
+    updatePregnancyNavActive();
     document.querySelector('[data-screen="embarazo"] .content')?.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  /* § Embarazo · sync navbar active state · sub-vistas highlight tab padre lógico */
+  function updatePregnancyNavActive() {
+    const parents = {
+      calendario: 'calendario', home: 'calendario', week: 'calendario', clinical: 'calendario', plan: 'calendario',
+      patadas: 'patadas', kicks: 'patadas',
+      tension: 'tension', bp: 'tension',
+      parto: 'parto', 'birth-plan': 'parto', symptoms: 'parto', alarms: 'parto'
+    };
+    const tabId = parents[pregnancyActiveView] || 'calendario';
+    document.querySelectorAll('.pregnancy-phone-nav [data-pregnancy-tab]').forEach((el) => {
+      el.classList.toggle('active', el.dataset.pregnancyTab === tabId);
+    });
+  }
+
+  /* § Embarazo · Calendario tab · mes-a-mes filtrado a embarazo (9 meses)
+     Combina month-timeline + week highlight + clinical events + EPDS + APILAM + Plan IA shortcut. */
+  const pregnancyMonthOverrides = {
+    1: { title: 'Mes 1 · primer trimestre', focus: 'Confirmación + ácido fólico + cita inicial' },
+    2: { title: 'Mes 2 · embriogénesis', focus: 'Náuseas + APILAM medicación' },
+    3: { title: 'Mes 3 · fin del primer trimestre', focus: 'Eco 12s + cribado combinado' },
+    4: { title: 'Mes 4 · segundo trimestre', focus: 'Energía vuelve · primer movimiento' },
+    5: { title: 'Mes 5 · eco morfológica', focus: 'Eco 20s + plan tu equipo' },
+    6: { title: 'Mes 6 · viabilidad', focus: 'Diabetes gestacional + ferritina' },
+    7: { title: 'Mes 7 · tercer trimestre', focus: 'Tdpa + count the kicks (28s)' },
+    8: { title: 'Mes 8 · preparación parto', focus: 'EGB strep + clases preparto + plan de parto' },
+    9: { title: 'Mes 9 · último mes', focus: 'Bolsa + senales · cita semanal' }
+  };
+  function renderPregnancyMonthTimeline() {
+    const currentMonth = Math.min(9, Math.max(1, Math.ceil(pregnancyWeek / 4)));
+    return `
+      <section class="pregnancy-section">
+        <div class="pregnancy-section-head"><span>Mes a mes</span><span>Semana ${pregnancyWeek}/40</span></div>
+        <div class="scale-strip" role="tablist" aria-label="Mes del embarazo">
+          ${Array.from({ length: 9 }, (_, i) => {
+            const m = i + 1;
+            const active = m === currentMonth ? ' active' : '';
+            const tones = ['', 'coral', 'mint', 'blush', 'gold'];
+            const tone = tones[i % tones.length];
+            return `<button class="chip${tone ? ' ' + tone : ''}${active}" type="button" data-pregnancy-month="${m}" role="tab" aria-selected="${m === currentMonth}">M${m}</button>`;
+          }).join('')}
+        </div>
+      </section>
+    `;
+  }
+  function renderPregnancyCalendario() {
+    const currentMonth = Math.min(9, Math.max(1, Math.ceil(pregnancyWeek / 4)));
+    const monthCopy = pregnancyMonthOverrides[currentMonth] || { title: `Mes ${currentMonth}`, focus: 'Highlights del mes' };
+    const weekHi = pregnancyWeekHighlights[0] || { title: 'Lo que pasa esta semana', copy: '' };
+    return `
+      ${renderPregnancyMonthTimeline()}
+
+      <article class="calendar-card coral" data-pregnancy-month-card>
+        <div class="pregnancy-mini-label">${escapeHtml(monthCopy.title)}</div>
+        <h3>Semana ${pregnancyWeek} · ${escapeHtml(weekHi.title)}</h3>
+        <p class="pregnancy-copy">${escapeHtml(weekHi.copy || monthCopy.focus)}</p>
+        <button class="pregnancy-action compact" type="button" data-pregnancy-view="week">Ver semana a semana →</button>
+      </article>
+
+      <section class="pregnancy-section">
+        <div class="pregnancy-section-head"><span>Vacunas + cribados</span><span>SEGO canon</span></div>
+        <div class="pregnancy-list">
+          ${pregnancyClinicalVaccines.map((item) => `
+            <article class="pregnancy-row ${item.state}">
+              <strong>${item.state === 'done' ? '✓ ' : ''}${escapeHtml(item.title)}</strong>
+              <span>${escapeHtml(item.copy)}</span>
+              ${item.state === 'pending' ? '<button class="pregnancy-action compact" type="button" data-log-type="vacuna" data-log-source="embarazo" data-log-title="Tdpa · embarazo">Marcar puesta</button>' : ''}
+            </article>
+          `).join('')}
+          ${pregnancyClinicalScreenings.slice(0, 3).map((item) => `
+            <article class="pregnancy-row ${item.state}">
+              <strong>${item.state === 'done' ? '✓ ' : ''}${escapeHtml(item.title)}</strong>
+              <span>${escapeHtml(item.copy)}</span>
+            </article>
+          `).join('')}
+        </div>
+        <button class="pregnancy-action compact" type="button" data-pregnancy-view="clinical">Ver todos los cribados →</button>
+      </section>
+
+      <section class="callout">
+        <strong>Cómo te encuentras</strong>
+        EPDS antenatal · 3er trimestre. 10 preguntas · 4 minutos · canon ACOG.
+        <button class="pregnancy-action compact" type="button" data-open-sheet data-sheet-title="EPDS antenatal" data-sheet-copy="Cuestionario simulado. En producto real guardaría score, contexto y ruta de apoyo sin juicio.">Hacerlo ahora</button>
+      </section>
+
+      <section class="pregnancy-section">
+        <h3>¿Puedo tomar este medicamento?</h3>
+        <p class="pregnancy-copy">Compatibilidad con embarazo · base APILAM</p>
+        <button class="pregnancy-search" type="button" data-open-sheet data-sheet-title="Buscador APILAM" data-sheet-copy="Buscador mock de medicamentos, plantas o procedimientos durante embarazo.">Buscar medicamento, planta o procedimiento... [⌕]</button>
+      </section>
+
+      <section class="callout">
+        <strong>Plan IA contextual</strong>
+        Chat con tu contexto + SEGO · NICE · ACOG · OMS · APILAM. Sin prescripción, con derivación cuando aplica.
+        <button class="pregnancy-action compact" type="button" data-pregnancy-view="plan">Abrir Plan IA</button>
+      </section>
+    `;
+  }
+
+  /* § Embarazo · Parto tab · plan de parto + síntomas a vigilar + señales de alarma */
+  function renderPregnancyParto() {
+    return `
+      ${renderPregnancyBirthPlan()}
+
+      <section class="pregnancy-section">
+        <div class="pregnancy-section-head"><span>Síntomas a vigilar</span><span>auto-log</span></div>
+        ${pregnancySymptomGroups.slice(0, 1).map((group) => `
+          <div class="pregnancy-symptom-grid">
+            ${group.items.slice(0, 4).map((item) => {
+              const active = pregnancySymptoms.includes(item.id);
+              return `
+                <button class="pregnancy-symptom-card${active ? ' active' : ''}" type="button" data-pregnancy-symptom="${escapeHtml(item.id)}">
+                  <strong>${escapeHtml(item.title)}</strong>
+                  ${item.note ? `<span>${escapeHtml(item.note)}</span>` : ''}
+                </button>
+              `;
+            }).join('')}
+          </div>
+        `).join('')}
+        <button class="pregnancy-action compact" type="button" data-pregnancy-view="symptoms">Ver todos los síntomas →</button>
+      </section>
+
+      <section class="callout urgent-soft">
+        <strong>Señales de alarma · ${pregnancyAlarmCanon.length} canon</strong>
+        ${pregnancyAlarmSymptoms.slice(0, 3).map((item) => `<span class="pregnancy-alarm-line">! ${escapeHtml(item)}</span>`).join('')}
+        <button class="pregnancy-action compact" type="button" data-pregnancy-view="alarms">Ver todas →</button>
+      </section>
+    `;
   }
 
   function incrementPregnancyKick() {
@@ -15368,6 +15538,7 @@ Grow
     if (name === 'embarazo') {
       if (options.pregnancyView) pregnancyActiveView = options.pregnancyView;
       renderPregnancyBook();
+      updatePregnancyNavActive();
     }
     /* Cleanup streaming dots si dejamos chat */
     if (name !== 'chat' && name !== 'chat-3am') {
@@ -15798,7 +15969,8 @@ Grow
   /* § Log · per-source filter · libros con scope limitado solo muestran categorías
      relevantes en el sheet del FAB. Vacunas: Vacuna · Temperatura(Fiebre) · Antitérmico(Med) · Síntoma. */
   const logSourceCategoryFilter = {
-    vacunacion: ['vacuna', 'temperatura', 'antitermico', 'sintoma']
+    vacunacion: ['vacuna', 'temperatura', 'antitermico', 'sintoma'],
+    embarazo: ['patadas', 'med', 'tension', 'embarazo']
   };
   function getLogCategoriesForSource(source) {
     const ids = logSourceCategoryFilter[source];
