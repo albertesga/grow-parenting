@@ -5514,13 +5514,14 @@
   [data-screen="hitos"] .content { padding-bottom: 110px; }
   .milestone-phone-nav {
     background: #EEF7EE;
-    grid-template-columns: repeat(3, 72px);
+    grid-template-columns: repeat(3, auto);
+    column-gap: 18px;
     width: max-content;
     left: 0;
     right: 0;
     margin-left: auto;
     margin-right: auto;
-    padding: 0 14px;
+    padding: 0 22px;
   }
   .milestone-phone-nav .nav-tab.active { color: #4F6647; }
   .milestone-phone-nav .fab.milestone-fab {
@@ -5537,6 +5538,140 @@
     color: #4A2510;
     box-shadow: 0 6px 18px rgba(214,119,66,0.28);
   }
+  /* § Diario · timeline vertical primitive · canon shared across libros que
+     necesiten un feed cronológico de logs (tomas, sueño, fotos, notas, ...).
+     Layout: rail izq (tiempo + dot) + card derecha con icon tonal + body. */
+  .diary-book {
+    color: var(--ink);
+  }
+  .diary-timeline {
+    position: relative;
+    padding-left: 56px;
+    padding-top: 4px;
+    padding-bottom: 18px;
+  }
+  .diary-timeline::before {
+    content: '';
+    position: absolute;
+    left: 23px;
+    top: 28px;
+    bottom: 14px;
+    width: 2px;
+    background: var(--line);
+    border-radius: 1px;
+  }
+  .diary-day-group {
+    position: relative;
+    margin-bottom: 22px;
+  }
+  .diary-day-group:last-child { margin-bottom: 0; }
+  .diary-day-label {
+    position: relative;
+    margin-left: -56px;
+    margin-bottom: 10px;
+    padding-left: 56px;
+    font-family: 'Lenia';
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+  }
+  .diary-day-label::before {
+    content: '';
+    position: absolute;
+    left: 18px;
+    top: 4px;
+    width: 12px;
+    height: 12px;
+    background: var(--paper);
+    border: 2px solid var(--ink-muted);
+    border-radius: 50%;
+  }
+  .diary-entry {
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 12px 14px;
+    margin-bottom: 8px;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+  }
+  .diary-entry:last-child { margin-bottom: 0; }
+  .diary-entry::before {
+    /* Dot on the timeline · color per tone */
+    content: '';
+    position: absolute;
+    left: -39px;
+    top: 18px;
+    width: 10px;
+    height: 10px;
+    background: var(--paper);
+    border: 2px solid var(--diary-dot-color, var(--ink-muted));
+    border-radius: 50%;
+    z-index: 1;
+  }
+  .diary-entry-time {
+    position: absolute;
+    left: -56px;
+    top: 14px;
+    width: 38px;
+    text-align: right;
+    font-family: 'Lenia';
+    font-size: 10.5px;
+    color: var(--ink-muted);
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0.02em;
+  }
+  .diary-entry-icon {
+    flex: 0 0 32px;
+    width: 32px;
+    height: 32px;
+    display: grid;
+    place-items: center;
+    background: var(--diary-icon-bg, var(--paper-soft));
+    color: var(--diary-icon-ink, var(--ink-soft));
+    border-radius: 8px;
+  }
+  .diary-entry-icon svg {
+    width: 18px;
+    height: 18px;
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 1.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .diary-entry-body { flex: 1; min-width: 0; }
+  .diary-entry-title {
+    font-family: 'Lenia';
+    font-weight: 500;
+    font-size: var(--fs-body-sm);
+    line-height: 1.25;
+    margin: 0;
+    color: var(--ink);
+  }
+  .diary-entry-detail {
+    color: var(--ink-soft);
+    font-size: var(--fs-caption);
+    line-height: 1.4;
+    margin: 3px 0 0;
+  }
+  .diary-entry-author {
+    color: var(--ink-muted);
+    font-size: 10.5px;
+    margin: 6px 0 0;
+    font-family: 'Lenia';
+    letter-spacing: 0.04em;
+  }
+  /* Tonal variants per category · driven by inline custom props from JS */
+  .diary-entry.tone-mint  { --diary-dot-color: #4F6647; --diary-icon-bg: var(--mint-subtle);  --diary-icon-ink: #4F6647; }
+  .diary-entry.tone-coral { --diary-dot-color: var(--coral-strong); --diary-icon-bg: var(--coral-subtle); --diary-icon-ink: #8E4A22; }
+  .diary-entry.tone-gold  { --diary-dot-color: #6E5A2A; --diary-icon-bg: var(--gold-subtle);  --diary-icon-ink: #6E5A2A; }
+  .diary-entry.tone-blush { --diary-dot-color: #7A4A3A; --diary-icon-bg: var(--blush-subtle); --diary-icon-ink: #7A4A3A; }
+
   /* § Sueño · navbar dedicado · 4 tabs + FAB Log central · tonal mint nocturno */
   [data-screen="sueno"] .content { padding-bottom: 110px; }
   .sleep-phone-nav { background: #EAF0E7; }
@@ -10009,7 +10144,7 @@
                   <h4 class="sb-ttl">Libro de<br><em>embarazo</em></h4>
                   <div class="sb-foot"><span class="count">Sem 28</span><span>FPP -84d</span></div>
                 </button>
-                <button class="shelf-book b-diario" type="button" data-sheet-title="El diario" data-sheet-copy="El diario vive en la biblioteca. Aqui abriria recuerdos, fotos, hitos auto y notas privadas." data-open-sheet>
+                <button class="shelf-book b-diario" type="button" data-goto="diario">
                   <div class="sb-eyb">Diario · privado</div>
                   <div class="sb-icon"><svg viewBox="0 0 24 24"><path d="M4 4h12a4 4 0 0 1 4 4v12H8a4 4 0 0 1-4-4z"/><path d="M8 8h8"/><path d="M8 12h6"/></svg></div>
                   <h4 class="sb-ttl">El<br><em>diario</em></h4>
@@ -10239,6 +10374,28 @@
               <span>Carnet</span>
             </button>
           </nav>
+        </section>
+
+        <section class="screen no-nav" data-screen="diario">
+          <div class="status"><span>9:42</span><div class="status-dots"><span></span><span></span><span></span></div></div>
+          <div class="content diary-book">
+            <div class="top-header">
+              <div>
+                <div class="eyebrow">El diario · Lola · privado</div>
+                <h2 class="screen-title">Todo lo que ha pasado.</h2>
+              </div>
+              <button class="book-back" type="button" data-goto="hoy" aria-label="Cerrar libro"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-x"/></svg></button>
+            </div>
+
+            <section class="book-hero blush">
+              <div class="book-hero-kicker">Diario · timeline privado</div>
+              <h3>Lola · 18 meses</h3>
+              <p>Tomas, sueño, pañal, fotos y notas · solo tu familia las ve.</p>
+              <div class="book-hero-orb"><img src="design/assets/avatar-mint.png" alt=""></div>
+            </section>
+
+            <div class="diary-timeline" data-diary-timeline aria-label="Timeline vertical de logs"></div>
+          </div>
         </section>
 
         <section class="screen" data-screen="sueno">
@@ -11166,9 +11323,19 @@
   };
   let logActive = { type: 'toma', source: 'log', preset: {}, returnTo: 'hoy' };
   let logEntries = [
-    { id: 'seed-toma', type: 'toma', title: 'Pecho izq · 04:32', detail: 'Timer corriendo. Puedes cerrar esta pantalla.', source: 'Hoy', author: 'María · iPhone', time: '09:18', day: '09' },
-    { id: 'seed-panal', type: 'panal', title: 'Pis', detail: 'Registrado en un toque.', source: 'Hoy', author: 'Pablo', time: '08:30', day: '08' },
-    { id: 'seed-sueno', type: 'sueno', title: 'Despertó · 7 h 32', detail: 'Auto-log de cuna. 2 despertares.', source: 'Sueño', author: 'Auto-log', time: '07:14', day: '07' }
+    /* HOY · día 11 */
+    { id: 'seed-toma-hoy', type: 'toma', title: 'Pecho izq · 14 min', detail: 'L5 · R3 · LATCH 9/10.', source: 'Hoy', author: 'María', time: '14:32', day: '11' },
+    { id: 'seed-foto-hoy', type: 'foto', title: 'Primer baño en piscina', detail: 'Fui valiente.', source: 'Hoy', author: 'Pablo', time: '12:15', day: '11' },
+    { id: 'seed-biberon-hoy', type: 'biberon', title: 'Biberón · 120 ml', detail: 'Termina sin dejar nada.', source: 'Hoy', author: 'Pablo', time: '10:00', day: '11' },
+    { id: 'seed-panal-hoy', type: 'panal', title: 'Caca', detail: 'Bristol 4 · sin novedad.', source: 'Hoy', author: 'María', time: '08:30', day: '11' },
+    { id: 'seed-sueno-hoy', type: 'sueno', title: 'Despertó · 9h 30min', detail: 'Auto-log cuna · 1 despertar.', source: 'Sueño', author: 'Auto-log', time: '07:14', day: '11' },
+    /* AYER · día 10 */
+    { id: 'seed-nota-ayer', type: 'nota', title: 'Primera frase de 2 palabras', detail: '"Mamá gato" · perfecta.', source: 'Hoy', author: 'María', time: '21:42', day: '10' },
+    { id: 'seed-sintoma-ayer', type: 'sintoma', title: 'Fiebre 38.2°', detail: 'Probable reacción a la vacuna.', source: 'Hoy', author: 'María', time: '19:30', day: '10' },
+    { id: 'seed-medida-ayer', type: 'medida', title: 'Peso 10.8 kg', detail: 'Revisión 18m · percentil 52.', source: 'Desarrollo', author: 'Dr. Méndez', time: '12:00', day: '10' },
+    /* 9 NOV */
+    { id: 'seed-vacuna-9', type: 'vacuna', title: 'Triple vírica', detail: 'Lote A8M3K · CAP Sant Gervasi.', source: 'Vacunas', author: 'Enfermera Laura', time: '16:00', day: '09' },
+    { id: 'seed-hito-9', type: 'hito', title: 'Caminó 6 pasos seguidos', detail: 'Por primera vez sin agarrarse.', source: 'Hitos', author: 'Pablo', time: '09:30', day: '09' }
   ];
 
   const phaseData = {
@@ -15690,6 +15857,9 @@ Grow
     if (name === 'hitos') {
       setMilestoneView(milestoneActiveView);
     }
+    if (name === 'diario') {
+      renderDiary();
+    }
     if (name === 'sueno') {
       if (options.sleepView) sleepActiveView = options.sleepView;
       renderSleepBook();
@@ -16187,6 +16357,57 @@ Grow
         </article>
       `;
     }).join('');
+  }
+
+  /* § Diario · timeline vertical de logs · agrupado por día.
+     Reusa logEntries (single source of truth con el sistema de log).
+     Tonal por categoría · día actual = "Hoy", anterior = "Ayer", resto = "N nov". */
+  const diaryDayLabelES = {
+    '11': 'Hoy',
+    '10': 'Ayer',
+    '09': '9 nov',
+    '08': '8 nov',
+    '07': '7 nov'
+  };
+  function diaryDayLabel(day) {
+    return diaryDayLabelES[day] || `Día ${day}`;
+  }
+  function diaryToneForCategory(category) {
+    if (category.tone) return category.tone;
+    if (['nota', 'foto', 'medida', 'biberon', 'panal'].includes(category.id)) return 'blush';
+    return 'soft';
+  }
+  function renderDiary() {
+    const root = document.querySelector('[data-diary-timeline]');
+    if (!root) return;
+    /* Group by day, preservando el orden de logEntries (más reciente primero asumido). */
+    const groups = {};
+    const order = [];
+    logEntries.forEach((entry) => {
+      const day = entry.day || '—';
+      if (!groups[day]) { groups[day] = []; order.push(day); }
+      groups[day].push(entry);
+    });
+    root.innerHTML = order.map((day) => `
+      <div class="diary-day-group">
+        <div class="diary-day-label">${escapeHtml(diaryDayLabel(day))}</div>
+        ${groups[day].map((entry) => {
+          const cat = getLogCategory(entry.type);
+          const tone = diaryToneForCategory(cat);
+          return `
+            <article class="diary-entry tone-${tone}" data-diary-entry-id="${escapeHtml(entry.id || '')}">
+              <span class="diary-entry-time">${escapeHtml(entry.time || '—')}</span>
+              <div class="diary-entry-icon">${cat.icon}</div>
+              <div class="diary-entry-body">
+                <p class="diary-entry-title">${escapeHtml(entry.title || cat.label)}</p>
+                ${entry.detail ? `<p class="diary-entry-detail">${escapeHtml(entry.detail)}</p>` : ''}
+                ${entry.author ? `<p class="diary-entry-author">${escapeHtml(entry.author)}${entry.source ? ' · ' + escapeHtml(entry.source) : ''}</p>` : ''}
+              </div>
+            </article>
+          `;
+        }).join('')}
+      </div>
+    `).join('');
   }
 
   function renderLogScreen() {
