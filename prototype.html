@@ -5681,6 +5681,15 @@
     color: #2F4029;
     box-shadow: 0 6px 18px rgba(143,174,133,0.32);
   }
+  /* § Alimentación · navbar dedicado · 4 tabs + FAB Log central · tonal coral */
+  [data-screen="alimentacion"] .content { padding-bottom: 110px; }
+  .food-phone-nav { background: #FAEAE0; }
+  .food-phone-nav .nav-tab.active { color: #7E4438; }
+  .food-phone-nav .fab.food-fab {
+    background: var(--coral-base);
+    color: #4A2510;
+    box-shadow: 0 6px 18px rgba(214,119,66,0.28);
+  }
   .pregnancy-hero,
   .pregnancy-status-card,
   .pregnancy-nav-card,
@@ -10436,7 +10445,7 @@
           </nav>
         </section>
 
-        <section class="screen no-nav" data-screen="alimentacion">
+        <section class="screen" data-screen="alimentacion">
           <div class="status"><span>9:42</span><div class="status-dots"><span></span><span></span><span></span></div></div>
           <div class="content food-book">
             <div class="top-header">
@@ -10448,6 +10457,30 @@
             </div>
             <div class="food-shell" data-food-root></div>
           </div>
+          <nav class="phone-nav food-phone-nav" aria-label="Libro de alimentación">
+            <button class="nav-tab" type="button" data-food-view="alimentos" data-food-tab="alimentos">
+              <svg viewBox="0 0 24 24"><path d="M4 11a8 8 0 0 1 16 0v8H4z"/><path d="M8 11V7"/><path d="M12 11V5"/><path d="M16 11V7"/></svg>
+              <span>Alimentos</span>
+            </button>
+            <button class="nav-tab" type="button" data-food-view="alergenos" data-food-tab="alergenos">
+              <svg viewBox="0 0 24 24"><path d="M12 2v20"/><path d="M2 12h20"/><circle cx="12" cy="12" r="9"/></svg>
+              <span>Alérgenos</span>
+            </button>
+            <div class="nav-tab fab-cell">
+              <button class="fab food-fab" type="button" data-log-open data-log-source="alimentacion" aria-label="Abrir log de alimentación">
+                <svg viewBox="0 0 24 24"><use href="#i-plus"/></svg>
+              </button>
+              <span class="lbl">Log</span>
+            </div>
+            <button class="nav-tab" type="button" data-food-view="recetas" data-food-tab="recetas">
+              <svg viewBox="0 0 24 24"><path d="M6 8h12l-1 12H7z"/><path d="M9 8V5a3 3 0 0 1 6 0v3"/></svg>
+              <span>Recetas</span>
+            </button>
+            <button class="nav-tab" type="button" data-food-view="plan" data-food-tab="plan">
+              <svg viewBox="0 0 24 24"><use href="#i-chat"/></svg>
+              <span>Plan</span>
+            </button>
+          </nav>
         </section>
 
         <section class="screen no-nav" data-screen="lactancia">
@@ -11609,7 +11642,7 @@
     { title: 'Regresión de los 18 meses', state: 'activa', copy: 'Testing de límites e independencia. Resistencia a acostarse y negociaciones nocturnas. La rutina firme ayuda más que nunca.' },
     { title: 'Regresión de los 2 años', state: 'próxima', copy: 'Pesadillas reales, transición a cama o llegada de hermanito. Suele ser más emocional que biológica.' }
   ];
-  let foodActiveView = 'home';
+  let foodActiveView = 'alimentos';
   let foodActiveAge = '7m';
   let foodActiveFilter = 'todos';
   let selectedFoodId = 'aguacate';
@@ -13642,29 +13675,82 @@ Grow
     `;
   }
 
+  /* § Alimentación · Alimentos tab · hero + status + grid (compose canon) */
+  function renderFoodAlimentosTab() {
+    const age = getFoodAge();
+    const inProcess = allergenCanon.filter((item) => item.state === 'process').length;
+    return `
+      <section class="food-hero">
+        <div class="food-kicker">Alimentación · BLW + alérgenos canon</div>
+        <h3>Lola · ${escapeHtml(age.label)}</h3>
+        <p>${escapeHtml(age.pattern)} · ${getTriedFoodsCount()} probados · ${inProcess} alérgeno en proceso.</p>
+        <div class="book-hero-orb"><img src="design/assets/avatar-mint.png" alt=""></div>
+      </section>
+      <section class="food-status-card">
+        <div class="food-status-grid">
+          <div class="food-stat"><strong>${getTriedFoodsCount()}</strong><span>probados</span></div>
+          <div class="food-stat"><strong>${foodSharedCount}</strong><span>cuenta familiar</span></div>
+          <div class="food-stat"><strong>14</strong><span>alérgenos EU</span></div>
+        </div>
+      </section>
+      <section class="food-section">
+        <div class="food-search"><span>Buscar alimento...</span><span>[⌕]</span></div>
+        ${renderFoodAgeStrip()}
+        ${renderFoodFilterStrip()}
+        ${renderFoodGrid()}
+      </section>
+    `;
+  }
+
+  /* § Alimentación · Plan tab · Plan IA + diary inline · sumario */
+  function renderFoodPlanCombined() {
+    return renderFoodPlan() + renderFoodDiary();
+  }
+
   function renderFoodBook() {
     const root = document.querySelector('[data-food-root]');
     if (!root) return;
     const views = {
-      home: renderFoodHome,
-      foods: renderFoodLibrary,
-      detail: () => renderFoodDetail(selectedFoodId),
+      /* Navbar canon · 4 tabs */
+      alimentos: renderFoodAlimentosTab,
+      alergenos: renderAllergenTracker,
+      recetas: renderFoodRecipes,
+      plan: renderFoodPlanCombined,
+      /* Aliases legacy (compat con shelf-book + drill-downs antiguos) */
+      home: renderFoodAlimentosTab,
+      foods: renderFoodAlimentosTab,
       allergens: renderAllergenTracker,
-      'allergen-table': renderAllergenCanonTable,
       recipes: renderFoodRecipes,
-      plan: renderFoodPlan,
-      diary: renderFoodDiary
+      diary: renderFoodPlanCombined,
+      /* Sub-vistas drill-down */
+      detail: () => renderFoodDetail(selectedFoodId),
+      'allergen-table': renderAllergenCanonTable
     };
-    root.innerHTML = (views[foodActiveView] || renderFoodHome)();
+    root.innerHTML = (views[foodActiveView] || renderFoodAlimentosTab)();
     requestAnimationFrame(() => {
       root.querySelector('.food-age-chip.active')?.scrollIntoView({ block: 'nearest', inline: 'center' });
       root.querySelector('.food-filter-chip.active')?.scrollIntoView({ block: 'nearest', inline: 'center' });
     });
   }
 
+  /* § Alimentación · sync navbar active · sub-vistas highlight tab padre lógico */
+  function updateFoodNavActive() {
+    const parents = {
+      alimentos: 'alimentos', home: 'alimentos', foods: 'alimentos', detail: 'alimentos',
+      alergenos: 'alergenos', allergens: 'alergenos', 'allergen-table': 'alergenos',
+      recetas: 'recetas', recipes: 'recetas',
+      plan: 'plan', diary: 'plan'
+    };
+    const tabId = parents[foodActiveView] || 'alimentos';
+    document.querySelectorAll('.food-phone-nav [data-food-tab]').forEach((el) => {
+      el.classList.toggle('active', el.dataset.foodTab === tabId);
+    });
+  }
+
   function setFoodView(view) {
-    foodActiveView = view || 'home';
+    foodActiveView = view || 'alimentos';
     renderFoodBook();
+    updateFoodNavActive();
     document.querySelector('[data-screen="alimentacion"] .content')?.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
@@ -15868,6 +15954,7 @@ Grow
     if (name === 'alimentacion') {
       if (options.foodView) foodActiveView = options.foodView;
       renderFoodBook();
+      updateFoodNavActive();
     }
     if (name === 'lactancia') {
       if (options.lactationView) lactationActiveView = options.lactationView;
@@ -16309,7 +16396,8 @@ Grow
   const logSourceCategoryFilter = {
     vacunacion: ['vacuna', 'temperatura', 'antitermico', 'sintoma'],
     embarazo: ['patadas', 'med', 'tension', 'embarazo'],
-    sueno: ['sueno', 'toma', 'panal', 'sintoma']
+    sueno: ['sueno', 'toma', 'panal', 'sintoma'],
+    alimentacion: ['biberon', 'alimento']
   };
   function getLogCategoriesForSource(source) {
     const ids = logSourceCategoryFilter[source];
