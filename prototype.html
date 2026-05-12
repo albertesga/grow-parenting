@@ -5511,15 +5511,19 @@
   [data-screen="hitos"] .content { padding-bottom: 110px; }
   .milestone-phone-nav {
     background: #EEF7EE;
-    grid-template-columns: repeat(3, auto);
-    column-gap: 18px;
+    /* 3 columnas iguales · evita que la cell del FAB (60px wide) infle su
+       columna respecto a HITOS / CARNET (labels más estrechos). Padding
+       simétrico 16px · gap 14 entre cells. Total 3×64 + 2×14 + 32 = 252px */
+    grid-template-columns: repeat(3, 64px);
+    column-gap: 14px;
     width: max-content;
     left: 0;
     right: 0;
     margin-left: auto;
     margin-right: auto;
-    padding: 0 22px;
+    padding: 0 16px;
   }
+  .milestone-phone-nav .nav-tab { justify-content: center; }
   .milestone-phone-nav .nav-tab.active { color: #4F6647; }
   .milestone-phone-nav .fab.milestone-fab {
     background: var(--mint-base);
