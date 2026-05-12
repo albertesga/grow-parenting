@@ -8288,6 +8288,17 @@
     border-radius: var(--radius-sm);
     overflow: visible;
   }
+  /* § Hitos · timeline 2-row layout · row 1 = 0-12m, row 2 = 12-60m */
+  .milestone-stages {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .timeline-row {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
   .timeline-seg {
     display: block; height: 100%; border: 0; padding: 0;
     background: var(--paper-soft); cursor: pointer; position: relative;
@@ -10588,12 +10599,7 @@
             </section>
 
             <div data-milestone-home>
-              <section class="milestone-stages" aria-label="Timeline de etapas 0 a 60 meses">
-                <div class="timeline-track tall" data-milestone-stages role="tablist"></div>
-                <div class="timeline-axis">
-                  <span>0 m</span><span>12 m</span><span>24 m</span><span>36 m</span><span>48 m</span><span>60 m</span>
-                </div>
-              </section>
+              <section class="milestone-stages" data-milestone-stages aria-label="Timeline de etapas 0 a 60 meses" role="tablist"></section>
 
               <div class="milestone-scale-row" aria-label="Selector de escala">
                 <span class="scale-label">Escala</span>
@@ -12920,26 +12926,45 @@
   }
 
   /* Render canónico § K DS · .timeline-track.tall · 7 sub-etapas con flex
-     proporcional a su duración (meses) · today-dot + seg-cursor en la activa. */
-  function renderMilestoneStages() {
+     proporcional a su duración (meses) · today-dot + seg-cursor en la activa.
+     Split en 2 rows · row 1: 0-12m (4 trimestres) · row 2: 12-60m (lactante mayor + 2 preescolares).
+     Cada row tiene su propio axis para que los labels sean legibles. */
+  function renderMilestoneStageSeg(stage) {
     const todayAgeMonths = milestoneProfile.ageMonths;
-    return milestoneStages.map((stage) => {
-      const isActive = stage.id === milestoneActiveStage;
-      const isToday = todayAgeMonths >= stage.start && todayAgeMonths < stage.end;
-      const tone = getMilestoneStageTone(stage);
-      const months = stage.end - stage.start;
-      const todayPercent = isToday ? clamp(((todayAgeMonths - stage.start) / months) * 100, 5, 95) : 50;
-      const cursors = isActive
-        ? `<span class="today-dot" style="left:${todayPercent.toFixed(1)}%"></span><span class="seg-cursor" style="left:${todayPercent.toFixed(1)}%"></span>`
-        : (isToday ? `<span class="today-dot" style="left:${todayPercent.toFixed(1)}%"></span>` : '');
-      return `
-        <button class="timeline-seg ${tone}${isActive ? ' active' : ''}" type="button" data-milestone-stage="${stage.id}" style="flex: ${months}" aria-label="${escapeHtml(stage.label)}, ${stage.start}-${stage.end} m${isActive ? ', activa' : ''}">
-          <span class="seg-label">${escapeHtml(stage.label)}</span>
-          <span class="seg-dur">${stage.start}-${stage.end} m</span>
-          ${cursors}
-        </button>
-      `;
-    }).join('');
+    const isActive = stage.id === milestoneActiveStage;
+    const isToday = todayAgeMonths >= stage.start && todayAgeMonths < stage.end;
+    const tone = getMilestoneStageTone(stage);
+    const months = stage.end - stage.start;
+    const todayPercent = isToday ? clamp(((todayAgeMonths - stage.start) / months) * 100, 5, 95) : 50;
+    const cursors = isActive
+      ? `<span class="today-dot" style="left:${todayPercent.toFixed(1)}%"></span><span class="seg-cursor" style="left:${todayPercent.toFixed(1)}%"></span>`
+      : (isToday ? `<span class="today-dot" style="left:${todayPercent.toFixed(1)}%"></span>` : '');
+    return `
+      <button class="timeline-seg ${tone}${isActive ? ' active' : ''}" type="button" data-milestone-stage="${stage.id}" style="flex: ${months}" aria-label="${escapeHtml(stage.label)}, ${stage.start}-${stage.end} m${isActive ? ', activa' : ''}">
+        <span class="seg-label">${escapeHtml(stage.label)}</span>
+        <span class="seg-dur">${stage.start}-${stage.end} m</span>
+        ${cursors}
+      </button>
+    `;
+  }
+
+  function renderMilestoneStages() {
+    const row1 = milestoneStages.filter((s) => s.end <= 12);  /* 4 trimestres */
+    const row2 = milestoneStages.filter((s) => s.start >= 12); /* lactante mayor + 2 preescolares */
+    return `
+      <div class="timeline-row">
+        <div class="timeline-track tall">${row1.map(renderMilestoneStageSeg).join('')}</div>
+        <div class="timeline-axis">
+          <span>0 m</span><span>3 m</span><span>6 m</span><span>9 m</span><span>12 m</span>
+        </div>
+      </div>
+      <div class="timeline-row">
+        <div class="timeline-track tall">${row2.map(renderMilestoneStageSeg).join('')}</div>
+        <div class="timeline-axis">
+          <span>12 m</span><span>24 m</span><span>36 m</span><span>48 m</span><span>60 m</span>
+        </div>
+      </div>
+    `;
   }
 
   function renderMilestoneFilters() {
