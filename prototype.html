@@ -5544,21 +5544,29 @@
   .diary-book {
     color: var(--ink);
   }
+  /* Layout en 3 lanes:
+       0-32px  · time text (right-aligned)
+       32-40px · gap (8px)
+       40-54px · rail line (2px centered at x=47) + dot (14px visible centered at x=47)
+       54-64px · gap (10px)
+       64+     · card content
+     Padding-left: 64px · room para las 3 lanes con respiración. */
   .diary-timeline {
     position: relative;
-    padding-left: 56px;
+    padding-left: 64px;
     padding-top: 4px;
     padding-bottom: 18px;
   }
   .diary-timeline::before {
     content: '';
     position: absolute;
-    left: 23px;
+    left: 46px;
     top: 28px;
     bottom: 14px;
     width: 2px;
     background: var(--line);
     border-radius: 1px;
+    z-index: 0;
   }
   .diary-day-group {
     position: relative;
@@ -5567,9 +5575,9 @@
   .diary-day-group:last-child { margin-bottom: 0; }
   .diary-day-label {
     position: relative;
-    margin-left: -56px;
+    margin-left: -64px;
     margin-bottom: 10px;
-    padding-left: 56px;
+    padding-left: 64px;
     font-family: 'Lenia';
     font-size: 11px;
     font-weight: 500;
@@ -5578,15 +5586,17 @@
     color: var(--ink-muted);
   }
   .diary-day-label::before {
+    /* Day marker · 12x12 + 2px border = 16 visible · center at x=47 · left=39 */
     content: '';
     position: absolute;
-    left: 18px;
-    top: 4px;
+    left: 39px;
+    top: 2px;
     width: 12px;
     height: 12px;
     background: var(--paper);
     border: 2px solid var(--ink-muted);
     border-radius: 50%;
+    z-index: 1;
   }
   .diary-entry {
     position: relative;
@@ -5601,10 +5611,11 @@
   }
   .diary-entry:last-child { margin-bottom: 0; }
   .diary-entry::before {
-    /* Dot on the timeline · color per tone */
+    /* Entry dot · 10x10 + 2px border = 14 visible · center at x=47 (lane center)
+       Card at x=64 · dot.left = 47 - 7 = 40 → left:-24 relative to card */
     content: '';
     position: absolute;
-    left: -39px;
+    left: -24px;
     top: 18px;
     width: 10px;
     height: 10px;
@@ -5614,10 +5625,11 @@
     z-index: 1;
   }
   .diary-entry-time {
+    /* Time text · lane 0-32 right-aligned · 8px gap antes del dot */
     position: absolute;
-    left: -56px;
+    left: -64px;
     top: 14px;
-    width: 38px;
+    width: 32px;
     text-align: right;
     font-family: 'Lenia';
     font-size: 10.5px;
