@@ -4502,8 +4502,11 @@
   }
   .food-age-strip,
   .food-filter-strip {
-    margin: 0 -20px 10px;
-    padding: 0 20px 4px;
+    margin: 0 0 10px;
+    padding: 6px 0 4px;
+    flex-wrap: wrap;
+    overflow-x: visible;
+    row-gap: var(--space-sm);
   }
   .pregnancy-nav-strip,
   .vaccine-nav-strip {
@@ -4745,7 +4748,9 @@
       inset 0 1px 0 rgba(255,255,255,0.68),
       0 12px 24px rgba(42,33,27,0.06);
   }
-  .food-hero,
+  /* .food-hero ahora hereda del primitive .book-hero canon (120px min-height,
+     border-radius 26, padding 14) · evitamos el override anterior que rompía
+     el lenguaje visual común entre libros. Solo aplica al alias .module-hero.gold. */
   .module-hero.gold {
     position: relative;
     overflow: hidden;
@@ -4886,13 +4891,6 @@
   }
   /* food-age-strip / food-filter-strip / chip base now in canonical .module-strip rule */
   .food-recipe-strip::-webkit-scrollbar { display: none; }
-  /* food active state — module-dark */
-  .food-age-chip.active,
-  .food-filter-chip.active {
-    background: var(--module-dark);
-    color: var(--paper);
-    border-color: var(--module-dark);
-  }
   .food-search {
     display: flex;
     align-items: center;
@@ -4921,7 +4919,8 @@
     overflow: hidden;
   }
   .food-card.highlight {
-    border: 2px solid var(--module-dark);
+    border: 1.5px solid var(--mint-base);
+    box-shadow: 0 0 0 4px rgba(143,174,133,0.12);
   }
   .food-card.tried {
     border-color: rgba(79,102,71,0.54);
@@ -4929,17 +4928,15 @@
   .food-card.blocked {
     opacity: 0.58;
   }
+  /* Photo swatch · decorativo limpio (sin text placeholder) · radial subtle.
+     Espera <img> real cuando llegue el catálogo. */
   .food-photo {
     min-height: 92px;
     border-radius: 12px;
-    display: grid;
-    place-items: center;
     background:
-      radial-gradient(circle at 70% 16%, rgba(255,255,255,0.62), transparent 34%),
-      linear-gradient(135deg, rgba(201,194,178,0.34), rgba(250,247,240,0.44));
-    color: var(--ink-muted);
-    font-family: "Lenia";
-    font-size: var(--fs-body-sm);
+      radial-gradient(circle at 30% 22%, rgba(255,255,255,0.74), transparent 42%),
+      radial-gradient(circle at 78% 78%, rgba(232,201,122,0.20), transparent 50%),
+      linear-gradient(135deg, rgba(248,228,221,0.62), rgba(229,237,223,0.42));
     margin-bottom: 12px;
   }
   .food-card h4 {
@@ -13422,17 +13419,29 @@ Grow
   }
 
   function renderFoodAgeStrip() {
+    /* Chip primitive canon DS § E · tonal cycle por posición */
+    const tones = ['', 'coral', 'mint', 'blush', 'gold'];
     return `
-      <div class="food-age-strip" aria-label="Selector de edad de alimentación">
-        ${foodAgeRanges.map((range) => `<button class="food-age-chip${range.id === foodActiveAge ? ' active' : ''}" type="button" data-food-age="${range.id}">${escapeHtml(range.short)}</button>`).join('')}
+      <div class="food-age-strip chip-strip" aria-label="Selector de edad de alimentación">
+        ${foodAgeRanges.map((range, i) => {
+          const tone = tones[i % tones.length];
+          const active = range.id === foodActiveAge ? ' active' : '';
+          return `<button class="chip${tone ? ' ' + tone : ''}${active}" type="button" data-food-age="${range.id}">${escapeHtml(range.short)}</button>`;
+        }).join('')}
       </div>
     `;
   }
 
   function renderFoodFilterStrip() {
+    /* Chip primitive canon DS § E · tonal cycle por posición */
+    const tones = ['', 'coral', 'mint', 'blush', 'gold'];
     return `
-      <div class="food-filter-strip" aria-label="Filtros de alimentos">
-        ${foodFilters.map((filter) => `<button class="food-filter-chip${filter.id === foodActiveFilter ? ' active' : ''}" type="button" data-food-filter="${filter.id}">${escapeHtml(filter.label)}</button>`).join('')}
+      <div class="food-filter-strip chip-strip" aria-label="Filtros de alimentos">
+        ${foodFilters.map((filter, i) => {
+          const tone = tones[i % tones.length];
+          const active = filter.id === foodActiveFilter ? ' active' : '';
+          return `<button class="chip${tone ? ' ' + tone : ''}${active}" type="button" data-food-filter="${filter.id}">${escapeHtml(filter.label)}</button>`;
+        }).join('')}
       </div>
     `;
   }
@@ -13456,7 +13465,7 @@ Grow
     const line = getFoodAgeLine(food);
     return `
       <button class="${classes}" type="button" data-food-open="${escapeHtml(food.id)}">
-        <div class="food-photo">[${escapeHtml(food.photo)}]</div>
+        <div class="food-photo" role="img" aria-label="${escapeHtml(food.name)}"></div>
         <h4>${escapeHtml(food.name)}</h4>
         <small class="${food.choking ? 'danger' : ''}">${escapeHtml(line)}</small>
         ${locked ? `<span class="tried-badge">más adelante</span>` : food.tried ? `<span class="tried-badge">probado · ${escapeHtml(food.triedDate || 'hoy')}</span>` : ''}
@@ -13538,7 +13547,7 @@ Grow
     return `
       ${renderFoodViewHead(food.name, 'Detalle con cortes ilustrados por edad y acción para guardar en Diario.', 'foods')}
       <section class="food-detail-card">
-        <div class="food-detail-photo">[Foto del alimento · alta resolución]<br>${escapeHtml(food.photo)}</div>
+        <div class="food-detail-photo" role="img" aria-label="${escapeHtml(food.name)}"></div>
         <h3>${escapeHtml(food.name)}</h3>
         <div class="food-chip-row">${tags.map((tag) => `<span class="food-pill">${escapeHtml(tag)}</span>`).join('')}</div>
         ${food.warning ? `<div class="callout" style="margin-top:12px;"><strong>Seguridad</strong>${escapeHtml(food.warning)}. Siempre sentado, supervisado y sin prisas.</div>` : ''}
