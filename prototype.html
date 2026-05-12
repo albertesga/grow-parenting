@@ -5533,6 +5533,15 @@
     color: #4A2510;
     box-shadow: 0 6px 18px rgba(214,119,66,0.28);
   }
+  /* § Sueño · navbar dedicado · 4 tabs + FAB Log central · tonal mint nocturno */
+  [data-screen="sueno"] .content { padding-bottom: 110px; }
+  .sleep-phone-nav { background: #EAF0E7; }
+  .sleep-phone-nav .nav-tab.active { color: #4F6647; }
+  .sleep-phone-nav .fab.sleep-fab {
+    background: var(--mint-base);
+    color: #2F4029;
+    box-shadow: 0 6px 18px rgba(143,174,133,0.32);
+  }
   .pregnancy-hero,
   .pregnancy-status-card,
   .pregnancy-nav-card,
@@ -10172,7 +10181,7 @@
           </nav>
         </section>
 
-        <section class="screen no-nav" data-screen="sueno">
+        <section class="screen" data-screen="sueno">
           <div class="status"><span>9:42</span><div class="status-dots"><span></span><span></span><span></span></div></div>
           <div class="content sleep-book">
             <div class="top-header">
@@ -10184,6 +10193,30 @@
             </div>
             <div class="sleep-shell" data-sleep-root></div>
           </div>
+          <nav class="phone-nav sleep-phone-nav" aria-label="Libro de sueño">
+            <button class="nav-tab" type="button" data-sleep-view="now" data-sleep-tab="now">
+              <svg viewBox="0 0 24 24"><use href="#i-home"/></svg>
+              <span>Ahora</span>
+            </button>
+            <button class="nav-tab" type="button" data-sleep-view="schedule" data-sleep-tab="schedule">
+              <svg viewBox="0 0 24 24"><use href="#i-cal"/></svg>
+              <span>Esquema</span>
+            </button>
+            <div class="nav-tab fab-cell">
+              <button class="fab sleep-fab" type="button" data-log-open data-log-source="sueno" aria-label="Abrir log de sueño">
+                <svg viewBox="0 0 24 24"><use href="#i-plus"/></svg>
+              </button>
+              <span class="lbl">Log</span>
+            </div>
+            <button class="nav-tab" type="button" data-sleep-view="week" data-sleep-tab="week">
+              <svg viewBox="0 0 24 24"><use href="#i-chart"/></svg>
+              <span>Semana</span>
+            </button>
+            <button class="nav-tab" type="button" data-sleep-view="plan" data-sleep-tab="plan">
+              <svg viewBox="0 0 24 24"><use href="#i-chat"/></svg>
+              <span>Plan</span>
+            </button>
+          </nav>
         </section>
 
         <section class="screen no-nav" data-screen="alimentacion">
@@ -11237,7 +11270,7 @@
     { id: 'juego-simbolico', stage: 'pre3', area: 'social', title: 'Juego simbólico complejo', en: 'Complex pretend play', p50: 36, p75: 48, p95: 60, achieved: false, source: 'Haizea-Llevant 1991' },
     { id: 'dibuja-persona', stage: 'pre3', area: 'manipulacion', title: 'Dibuja una persona simple', en: 'Draws a simple person', p50: 42, p75: 54, p95: 60, achieved: false, source: 'Haizea-Llevant 1991' }
   ];
-  let sleepActiveView = 'home';
+  let sleepActiveView = 'now';
   let sleepActiveAge = '13-18m';
   const sleepLocation = { city: 'Madrid', sunrise: '07:18', season: 'primavera' };
   const sleepAgeRanges = [
@@ -12980,23 +13013,85 @@ Grow
     const root = document.querySelector('[data-sleep-root]');
     if (!root) return;
     const views = {
-      home: renderSleepHome,
-      sweetspot: renderSleepSweetSpot,
+      /* Navbar canon · 4 tabs */
+      now: renderSleepNow,
       schedule: renderSleepScheduleView,
       week: renderSleepWeekly,
-      regressions: renderSleepRegressions,
-      plan: renderSleepPlan
+      plan: renderSleepPlanCombined,
+      /* Aliases legacy (compat con shelf-book data-sleep-view-set="home" + nav-cards antiguos) */
+      home: renderSleepNow,
+      sweetspot: renderSleepNow,
+      regressions: renderSleepPlanCombined
     };
-    root.innerHTML = (views[sleepActiveView] || renderSleepHome)();
+    root.innerHTML = (views[sleepActiveView] || renderSleepNow)();
     requestAnimationFrame(() => {
       root.querySelector('.sleep-age-chip.active')?.scrollIntoView({ block: 'nearest', inline: 'center' });
     });
   }
 
   function setSleepView(view) {
-    sleepActiveView = view || 'home';
+    sleepActiveView = view || 'now';
     renderSleepBook();
+    updateSleepNavActive();
     document.querySelector('[data-screen="sueno"] .content')?.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  /* § Sueño · sync navbar active · sub-vistas highlight tab padre lógico */
+  function updateSleepNavActive() {
+    const parents = {
+      now: 'now', home: 'now', sweetspot: 'now',
+      schedule: 'schedule',
+      week: 'week',
+      plan: 'plan', regressions: 'plan'
+    };
+    const tabId = parents[sleepActiveView] || 'now';
+    document.querySelectorAll('.sleep-phone-nav [data-sleep-tab]').forEach((el) => {
+      el.classList.toggle('active', el.dataset.sleepTab === tabId);
+    });
+  }
+
+  /* § Sueño · Ahora tab · sweetspot + status + schedule preview · sin nav-grid */
+  function renderSleepNow() {
+    const ageRange = getSleepAge();
+    const predictor = ageRange.predictor;
+    return `
+      <section class="sleep-hero">
+        <div class="sleep-kicker">Sueño · ventanas + sol local</div>
+        <h3>Lola · ${escapeHtml(ageRange.title)}</h3>
+        <p>${escapeHtml(ageRange.total)} / 24h · sol ${escapeHtml(sleepLocation.sunrise)} en ${escapeHtml(sleepLocation.city)}.</p>
+        <div class="book-hero-orb"><img src="design/assets/avatar-mint.png" alt=""></div>
+      </section>
+      ${renderSleepStatusCard()}
+      <section class="sleep-sweetspot">
+        <div class="sleep-mini-label">Ventana óptima · desde que despertó a las ${escapeHtml(predictor.lastWake)}</div>
+        <div class="sweetspot-bar" style="--now: ${predictor.nowPercent}%;">
+          <div class="sweetspot-zone early">Aún pronto</div>
+          <div class="sweetspot-zone optimal">Ventana óptima</div>
+          <div class="sweetspot-zone tired">Cansancio acumulado</div>
+          <span class="sweetspot-now"></span>
+        </div>
+        <div class="callout">
+          <strong>${escapeHtml(predictor.window)}</strong>
+          ${escapeHtml(predictor.message)}
+        </div>
+        <div class="sleep-actions">
+          <button class="primary" type="button" data-log-type="sueno" data-log-source="sueno" data-log-title="Siesta · iniciada">[zZ] Empezar siesta ahora</button>
+          <button type="button" data-sheet-title="Aviso de ventana" data-sheet-copy="En producto real avisaríamos cuando empiece la ventana. En este prototipo queda como acción simulada." data-open-sheet>[campana] Avisarme</button>
+        </div>
+      </section>
+      ${renderSleepSchedule(sleepActiveAge, { compact: true })}
+      <section class="callout">
+        <strong>Cero juicio.</strong>
+        Lo importante es sueño seguro, no ortodoxia. Colecho, cuna, lactancia, biberón nocturno: lo miramos desde seguridad y descanso familiar.
+      </section>
+    `;
+  }
+
+  /* § Sueño · Plan tab · Plan IA contextual + Regresiones educativas inline */
+  function renderSleepPlanCombined() {
+    const plan = renderSleepPlan();
+    const regressions = renderSleepRegressions();
+    return plan + regressions;
   }
 
   function setSleepAge(ageId) {
@@ -15526,6 +15621,7 @@ Grow
     if (name === 'sueno') {
       if (options.sleepView) sleepActiveView = options.sleepView;
       renderSleepBook();
+      updateSleepNavActive();
     }
     if (name === 'alimentacion') {
       if (options.foodView) foodActiveView = options.foodView;
@@ -15970,7 +16066,8 @@ Grow
      relevantes en el sheet del FAB. Vacunas: Vacuna · Temperatura(Fiebre) · Antitérmico(Med) · Síntoma. */
   const logSourceCategoryFilter = {
     vacunacion: ['vacuna', 'temperatura', 'antitermico', 'sintoma'],
-    embarazo: ['patadas', 'med', 'tension', 'embarazo']
+    embarazo: ['patadas', 'med', 'tension', 'embarazo'],
+    sueno: ['sueno', 'toma', 'panal', 'sintoma']
   };
   function getLogCategoriesForSource(source) {
     const ids = logSourceCategoryFilter[source];
