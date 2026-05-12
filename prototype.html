@@ -5945,6 +5945,559 @@
     color: #4A2510;
     box-shadow: 0 6px 18px rgba(214,119,66,0.28);
   }
+  /* § Salud · navbar dedicado · 4 tabs + FAB Log central · tonal paper-deep AEPap */
+  [data-screen="salud"] .content { padding-bottom: 110px; }
+  .health-phone-nav { background: #EFE9D8; }
+  .health-phone-nav .nav-tab.active { color: #5C5648; }
+  .health-phone-nav .fab.health-fab {
+    background: #C9BFA8;
+    color: #3D3729;
+    box-shadow: 0 6px 18px rgba(92,86,72,0.18);
+  }
+  /* Sub-libro card (Cólicos · educación PURPLE) · highlight gold sutil */
+  .health-sublibro-card {
+    background:
+      radial-gradient(circle at 86% 8%, rgba(232,201,122,0.32), transparent 36%),
+      linear-gradient(135deg, #F5EFDE, var(--paper-soft));
+    border: 1px solid rgba(184,151,63,0.32);
+    border-radius: var(--radius-md);
+    padding: 14px;
+    margin-bottom: 12px;
+  }
+  .health-sublibro-tag {
+    font-family: 'Lenia';
+    font-size: 10.5px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #6E5A2A;
+    margin-bottom: 6px;
+  }
+  .health-sublibro-card h3 {
+    margin: 0 0 4px;
+    font-family: 'Lenia';
+    font-weight: 500;
+    font-size: var(--fs-h3);
+    color: var(--ink);
+  }
+  .health-sublibro-card p {
+    margin: 0 0 12px;
+    font-size: var(--fs-caption);
+    color: var(--ink-soft);
+    line-height: 1.4;
+  }
+
+  /* Sections + lists shared with health primitives */
+  .health-section {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    padding: 14px;
+    margin-bottom: 12px;
+  }
+  .health-section-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 10px;
+    font-family: 'Lenia';
+    font-size: 10.5px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+  }
+  .health-section-head > span:first-child { color: var(--ink); }
+  .health-empty {
+    margin: 0;
+    color: var(--ink-soft);
+    font-size: var(--fs-caption);
+    line-height: 1.45;
+  }
+  .health-list {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  /* Entry primitive · used in Hoy último/próxima + Historial cronológico */
+  .health-entry {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px;
+    background: transparent;
+    border: 0;
+    border-radius: 10px;
+    width: 100%;
+    text-align: left;
+  }
+  .health-entry + .health-entry { border-top: 1px solid var(--line); border-radius: 0; }
+  .health-entry-icon {
+    flex-shrink: 0;
+    width: 36px;
+    height: 36px;
+    display: grid;
+    place-items: center;
+    border-radius: 10px;
+    font-size: 16px;
+    background: var(--paper-soft);
+  }
+  .health-entry-icon.tone-coral { background: var(--coral-subtle); }
+  .health-entry-icon.tone-mint  { background: var(--mint-subtle); }
+  .health-entry-icon.tone-blush { background: var(--blush-subtle); }
+  .health-entry-icon.tone-gold  { background: var(--gold-subtle); }
+  .health-entry-body { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+  .health-entry-body strong {
+    font-family: 'Lenia';
+    font-weight: 500;
+    font-size: var(--fs-body-sm);
+  }
+  .health-entry-body span {
+    color: var(--ink-soft);
+    font-size: var(--fs-caption);
+    line-height: 1.35;
+  }
+  .health-entry-state {
+    flex-shrink: 0;
+    font-family: 'Lenia';
+    font-size: 12px;
+    color: var(--ink-muted);
+    font-weight: 500;
+  }
+  .health-entry-state.done { color: #4F6647; }
+  .health-entry-state.attention { color: var(--coral-strong); }
+
+  /* Pattern alert · banner gold-coral muted */
+  .health-pattern-alert {
+    background:
+      radial-gradient(circle at 86% 8%, rgba(232,201,122,0.28), transparent 36%),
+      linear-gradient(135deg, rgba(248,228,221,0.72), var(--paper-soft));
+    border: 1.5px solid rgba(184,151,63,0.42);
+    border-radius: var(--radius-md);
+    padding: 14px;
+    margin-bottom: 12px;
+  }
+  .health-pattern-tag {
+    font-family: 'Lenia';
+    font-size: 10.5px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: #6E5A2A;
+    margin-bottom: 6px;
+  }
+  .health-pattern-alert p {
+    margin: 0 0 12px;
+    color: var(--ink-soft);
+    font-size: var(--fs-body-sm);
+    line-height: 1.45;
+  }
+  .health-pattern-alert strong { color: var(--ink); font-weight: 500; }
+  .health-pattern-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+
+  /* Allergy banner · sticky alert muted */
+  .health-allergy-banner {
+    background: rgba(216,154,137,0.14);
+    border: 1px solid rgba(216,154,137,0.36);
+    border-radius: var(--radius-md);
+    padding: 12px 14px;
+    margin-bottom: 12px;
+  }
+  .health-allergy-banner strong {
+    display: block;
+    font-family: 'Lenia';
+    font-weight: 500;
+    font-size: var(--fs-body-sm);
+    color: #7E4438;
+    margin-bottom: 4px;
+  }
+  .health-allergy-banner p {
+    margin: 0 0 10px;
+    color: var(--ink-soft);
+    font-size: var(--fs-caption);
+    line-height: 1.4;
+  }
+
+  /* Quick action chip row · justify center */
+  .health-quick-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+
+  /* Action button · reusable */
+  .health-action {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 38px;
+    padding: 0 16px;
+    border-radius: var(--radius-pill);
+    font-family: 'Lenia';
+    font-weight: 500;
+    font-size: var(--fs-body-sm);
+    border: 0;
+    cursor: pointer;
+    background: var(--ink);
+    color: var(--paper);
+    transition: filter 150ms var(--ease-standard);
+  }
+  .health-action:hover { filter: brightness(0.92); }
+  .health-action.compact { min-height: 32px; padding: 0 12px; font-size: var(--fs-caption); }
+  .health-action.coral { background: var(--coral-base); color: #4A2510; }
+  .health-action.ghost {
+    background: transparent;
+    color: var(--ink-soft);
+    border: 1px solid var(--line);
+  }
+  .health-action.ghost:hover { background: var(--paper-soft); }
+  .health-card-actions {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+  .health-card-actions .health-action { flex: 1; }
+
+  /* Filter strip + search */
+  .health-filter-strip {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin: 0 0 12px;
+    padding: 6px 0 4px;
+    row-gap: var(--space-sm);
+  }
+  .health-search {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    padding: 14px 16px;
+    margin-bottom: 14px;
+    color: var(--ink-muted);
+    font-family: 'Lenia';
+    font-size: var(--fs-body-sm);
+    cursor: pointer;
+  }
+
+  /* History timeline by month */
+  .health-history { display: flex; flex-direction: column; gap: 14px; }
+  .health-history-group {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    padding: 6px;
+  }
+  .health-history-label {
+    padding: 8px 12px 4px;
+    font-family: 'Lenia';
+    font-size: 10.5px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+  }
+
+  /* Carnet · row primitive */
+  .health-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 10px;
+    background: transparent;
+    border: 0;
+    border-radius: 10px;
+    width: 100%;
+    text-align: left;
+    cursor: pointer;
+    font-family: 'Helvena';
+  }
+  .health-row:not(.static):hover { background: var(--paper-soft); }
+  .health-row.static { cursor: default; }
+  .health-row-label {
+    flex: 1;
+    color: var(--ink-soft);
+    font-size: var(--fs-body-sm);
+  }
+  .health-row-value {
+    font-family: 'Lenia';
+    font-weight: 500;
+    font-size: var(--fs-body-sm);
+    color: var(--ink);
+    text-align: right;
+  }
+  .health-blood-card {
+    background:
+      radial-gradient(circle at 80% 20%, rgba(216,154,137,0.16), transparent 50%),
+      var(--paper-soft);
+    border-radius: var(--radius-md);
+    padding: 18px;
+    text-align: center;
+  }
+  .health-blood-value {
+    font-family: 'Lenia';
+    font-size: 56px;
+    font-weight: 500;
+    line-height: 1;
+    color: var(--ink-muted);
+    margin-bottom: 8px;
+  }
+  .health-blood-card p {
+    margin: 0 0 10px;
+    color: var(--ink-soft);
+    font-size: var(--fs-caption);
+    line-height: 1.45;
+  }
+
+  /* Allergy row in carnet · severity tonal */
+  .health-allergy-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 12px;
+    border-radius: 10px;
+    background: rgba(216,154,137,0.10);
+    border: 1px solid rgba(216,154,137,0.30);
+  }
+  .health-allergy-row.severe {
+    background: rgba(214,119,66,0.10);
+    border-color: rgba(214,119,66,0.30);
+  }
+  .health-allergy-icon { font-size: 22px; flex-shrink: 0; }
+  .health-allergy-body { flex: 1; display: flex; flex-direction: column; gap: 4px; }
+  .health-allergy-body strong { font-family: 'Lenia'; font-weight: 500; font-size: var(--fs-body-sm); }
+  .health-allergy-body span { color: var(--ink-soft); font-size: var(--fs-caption); line-height: 1.4; }
+  .health-allergy-body em {
+    color: #7E4438;
+    font-style: normal;
+    font-family: 'Lenia';
+    font-size: var(--fs-caption);
+    font-weight: 500;
+  }
+  .health-severity-tag {
+    flex-shrink: 0;
+    padding: 4px 9px;
+    border-radius: 999px;
+    font-family: 'Lenia';
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    color: var(--ink-soft);
+  }
+  .health-severity-tag.severe { background: var(--coral-base); color: #4A2510; border-color: var(--coral-base); }
+
+  /* Contact rows · call CTA */
+  .health-contact-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px;
+    background: var(--paper);
+    border-radius: 10px;
+  }
+  .health-contact-row + .health-contact-row { border-top: 1px solid var(--line); border-radius: 0; }
+  .health-contact-body { flex: 1; display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+  .health-contact-body strong { font-family: 'Lenia'; font-weight: 500; font-size: var(--fs-body-sm); }
+  .health-contact-body span { color: var(--ink-soft); font-size: var(--fs-caption); line-height: 1.35; }
+  .health-call-cta {
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 8px 14px;
+    border-radius: 999px;
+    background: var(--mint-subtle);
+    color: #4F6647;
+    font-family: 'Lenia';
+    font-size: 14px;
+    text-decoration: none;
+  }
+  .health-call-cta.urgent { background: var(--coral-base); color: #4A2510; }
+
+  /* Centro referencia · card */
+  .health-center-card {
+    padding: 14px;
+    border-radius: 10px;
+    background:
+      radial-gradient(circle at 84% 12%, rgba(143,174,133,0.18), transparent 36%),
+      var(--paper-soft);
+  }
+  .health-center-card strong { display: block; font-family: 'Lenia'; font-weight: 500; font-size: var(--fs-body-sm); margin-bottom: 4px; }
+  .health-center-card p { margin: 0 0 10px; color: var(--ink-soft); font-size: var(--fs-caption); line-height: 1.4; }
+
+  /* Educación · rows con icon tonal */
+  .health-edu-list { display: flex; flex-direction: column; gap: 4px; }
+  .health-edu-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 10px;
+    background: transparent;
+    border: 0;
+    border-radius: 10px;
+    width: 100%;
+    text-align: left;
+    cursor: pointer;
+    font-family: 'Helvena';
+  }
+  .health-edu-row:hover { background: var(--paper-soft); }
+  .health-edu-row + .health-edu-row { border-top: 1px solid var(--line); border-radius: 0; }
+  .health-edu-icon {
+    flex-shrink: 0;
+    width: 36px; height: 36px;
+    display: grid; place-items: center;
+    border-radius: 10px;
+    font-size: 16px;
+    background: var(--paper-soft);
+  }
+  .health-edu-icon.tone-coral { background: var(--coral-subtle); }
+  .health-edu-icon.tone-mint  { background: var(--mint-subtle); }
+  .health-edu-icon.tone-blush { background: var(--blush-subtle); }
+  .health-edu-icon.tone-gold  { background: var(--gold-subtle); }
+  .health-edu-stack { flex: 1; display: flex; flex-direction: column; gap: 2px; }
+  .health-edu-stack strong { font-family: 'Lenia'; font-weight: 500; font-size: var(--fs-body-sm); }
+  .health-edu-stack span { color: var(--ink-soft); font-size: var(--fs-caption); }
+  .health-edu-arrow { color: var(--ink-muted); font-size: 16px; }
+
+  /* ═══════════════════════════════════════════════════════════
+     § Salud · Modo emergencia · full-screen tipografía grande
+     ═══════════════════════════════════════════════════════════ */
+  .health-emergencia-screen .content {
+    padding: 22px;
+    background: linear-gradient(180deg, #EAE3D0, var(--paper-soft));
+  }
+  .health-emergencia-back {
+    position: absolute;
+    top: 22px;
+    right: 22px;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: var(--ink);
+    color: var(--paper);
+    border: 0;
+    cursor: pointer;
+    display: grid; place-items: center;
+    z-index: 2;
+  }
+  .health-emergencia-back svg {
+    width: 18px;
+    height: 18px;
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 2;
+  }
+  .health-emergencia-name {
+    font-family: 'Lenia';
+    font-weight: 500;
+    font-size: 56px;
+    line-height: 1;
+    color: var(--ink);
+    margin-top: 30px;
+    letter-spacing: -0.02em;
+  }
+  .health-emergencia-meta {
+    font-family: 'Helvena';
+    color: var(--ink-soft);
+    font-size: var(--fs-body-sm);
+    margin: 6px 0 22px;
+  }
+  .health-emergencia-blood {
+    background: var(--paper);
+    border: 1.5px solid var(--ink);
+    border-radius: var(--radius-md);
+    padding: 22px;
+    text-align: center;
+    margin-bottom: 22px;
+  }
+  .health-emergencia-blood-label {
+    display: block;
+    font-family: 'Lenia';
+    font-size: 10.5px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    margin-bottom: 8px;
+  }
+  .health-emergencia-blood-value {
+    display: block;
+    font-family: 'Lenia';
+    font-weight: 500;
+    font-size: 84px;
+    line-height: 1;
+    color: var(--ink);
+  }
+  .health-emergencia-blood-note {
+    display: block;
+    color: var(--ink-muted);
+    font-size: var(--fs-caption);
+    margin-top: 6px;
+  }
+  .health-emergencia-section {
+    margin-bottom: 22px;
+  }
+  .health-emergencia-section-head {
+    font-family: 'Lenia';
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    margin-bottom: 10px;
+  }
+  .health-emergencia-allergy {
+    background: var(--paper);
+    border: 1.5px solid var(--coral-base);
+    border-radius: var(--radius-md);
+    padding: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .health-emergencia-allergy strong {
+    font-family: 'Lenia';
+    font-weight: 500;
+    font-size: var(--fs-h3);
+    color: #7E4438;
+  }
+  .health-emergencia-allergy span {
+    font-family: 'Helvena';
+    font-size: var(--fs-body-sm);
+    color: var(--ink-soft);
+  }
+  .health-emergencia-empty {
+    margin: 0;
+    color: var(--ink-soft);
+    font-size: var(--fs-body-sm);
+    font-style: italic;
+  }
+  .health-emergencia-call {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 18px;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    margin-bottom: 8px;
+    text-decoration: none;
+    color: var(--ink);
+  }
+  .health-emergencia-call:first-of-type {
+    background: var(--coral-base);
+    border-color: var(--coral-base);
+    color: #4A2510;
+  }
+  .health-emergencia-call-name {
+    font-family: 'Lenia';
+    font-weight: 500;
+    font-size: var(--fs-body-sm);
+  }
+  .health-emergencia-call-action {
+    font-family: 'Lenia';
+    font-size: var(--fs-caption);
+  }
   .pregnancy-hero,
   .pregnancy-status-card,
   .pregnancy-nav-card,
@@ -10033,6 +10586,12 @@
       radial-gradient(circle at 72% 12%, rgba(232,201,122,0.42), transparent 24%),
       linear-gradient(135deg, #E9E3ED, var(--paper-soft));
   }
+  /* § book-hero · tone salud · paper-deep canon AEPap DSI */
+  .book-hero.salud {
+    background:
+      radial-gradient(circle at 72% 12%, rgba(232,201,122,0.34), transparent 24%),
+      linear-gradient(135deg, #EAE3D0, var(--paper-soft));
+  }
   /* Title canon · matches .hero-person strong de Hoy (21-22px Lenia 500) */
   .book-hero > h3,
   .milestone-hero > h3,
@@ -10444,11 +11003,11 @@
                   <h4 class="sb-ttl">Libro del<br><em>sueño</em></h4>
                   <div class="sb-foot"><span class="count">11h 24m</span><span>Media</span></div>
                 </button>
-                <button class="shelf-book b-salud" type="button" data-goto="desarrollo">
-                  <div class="sb-eyb">Salud · curvas WHO</div>
-                  <div class="sb-icon"><svg viewBox="0 0 24 24"><use href="#i-chart"/></svg></div>
+                <button class="shelf-book b-salud" type="button" data-goto="salud">
+                  <div class="sb-eyb">Salud · AEPap DSI</div>
+                  <div class="sb-icon"><svg viewBox="0 0 24 24"><path d="M12 21s-7-5-7-12a5 5 0 0 1 9-3 5 5 0 0 1 9 3c0 7-7 12-7 12-1 1-3 1-4 0z"/><path d="M12 11v4"/><path d="M10 13h4"/></svg></div>
                   <h4 class="sb-ttl">Libro de<br><em>salud</em></h4>
-                  <div class="sb-foot"><span class="count">9.4 kg</span><span>P52</span></div>
+                  <div class="sb-foot"><span class="count">3 ep</span><span>0-18m</span></div>
                 </button>
                 <button class="shelf-book b-medicacion" type="button" data-log-open data-log-source="hoy">
                   <div class="sb-eyb">Familia · medicación</div>
@@ -10666,6 +11225,524 @@
             </section>
 
             <div class="diary-timeline" data-diary-timeline aria-label="Timeline vertical de logs"></div>
+          </div>
+        </section>
+
+        <!-- ═══════════════════════════════════════════════════════════
+             § Libro de Salud · expediente clínico episódico
+             4 tabs: Hoy · Historial · Carnet · Educación · FAB Log
+             ═══════════════════════════════════════════════════════════ -->
+        <section class="screen" data-screen="salud">
+          <div class="status"><span>9:42</span><div class="status-dots"><span></span><span></span><span></span></div></div>
+          <div class="content health-book">
+            <div class="top-header">
+              <div>
+                <div class="eyebrow">Salud · expediente clínico</div>
+                <h2 class="screen-title">Libro de salud</h2>
+              </div>
+              <button class="book-back" type="button" data-goto="hoy" aria-label="Cerrar libro"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-x"/></svg></button>
+            </div>
+
+            <!-- ────────── TAB · HOY (default) ────────── -->
+            <div data-salud-tab="hoy">
+              <section class="book-hero salud">
+                <div class="book-hero-kicker">Expediente clínico · canon AEPap</div>
+                <h3>Lola · 18 meses</h3>
+                <p>Al día · sin episodios activos. Respira.</p>
+                <div class="book-hero-orb"><img src="design/assets/avatar-mint.png" alt=""></div>
+              </section>
+
+              <!-- Sub-libro Cólicos · entry destacado -->
+              <article class="health-sublibro-card">
+                <div class="health-sublibro-tag">📕 Sub-libro</div>
+                <h3>Libro de cólicos</h3>
+                <p>1 sem - 4 m · estamos contigo si llega esa etapa.</p>
+                <button class="health-action ghost" type="button" data-goto="colicos">Abrir libro de cólicos →</button>
+              </article>
+
+              <!-- Último episodio -->
+              <section class="health-section">
+                <div class="health-section-head"><span>Último episodio</span><span>resuelto · hace 4m</span></div>
+                <article class="health-entry">
+                  <div class="health-entry-icon tone-coral">🌡</div>
+                  <div class="health-entry-body">
+                    <strong>Otitis · oído izquierdo</strong>
+                    <span>12 marzo · amoxicilina 7 días · Dr. Méndez</span>
+                  </div>
+                  <span class="health-entry-state done">✓</span>
+                </article>
+              </section>
+
+              <!-- Próxima visita -->
+              <section class="health-section">
+                <div class="health-section-head"><span>Próxima visita</span><span>agendada</span></div>
+                <article class="health-entry">
+                  <div class="health-entry-icon tone-mint">🩺</div>
+                  <div class="health-entry-body">
+                    <strong>Revisión 18m · Dr. Méndez</strong>
+                    <span>15 jul · 11:30 · CAP Sant Gervasi</span>
+                  </div>
+                </article>
+              </section>
+
+              <!-- Alerta de patrón -->
+              <section class="health-pattern-alert">
+                <div class="health-pattern-tag">📊 Patrón detectado</div>
+                <p><strong>Lola: 3 otitis en 6 meses.</strong> Es común a esta edad, pero quizás vale la pena que tu pediatra eche un vistazo.</p>
+                <div class="health-pattern-actions">
+                  <button class="health-action coral" type="button" data-open-sheet data-sheet-title="Exportar resumen ORL" data-sheet-copy="Stub · resumen para llevar a derivación ORL.">Exportar resumen</button>
+                  <button class="health-action ghost" type="button" data-goto="chat">Hablar con chat IA</button>
+                </div>
+              </section>
+
+              <!-- Alergias críticas · sticky banner -->
+              <section class="health-allergy-banner">
+                <strong>🐝 Alergia confirmada · severa</strong>
+                <p>Picadura abeja · Epipen + 112. Visible en modo emergencia.</p>
+                <button class="health-action ghost compact" type="button" data-goto="salud-emergencia">Abrir modo emergencia →</button>
+              </section>
+
+              <!-- Quick actions -->
+              <div class="health-quick-row">
+                <button class="chip coral" type="button" data-salud-tab-switch="historial">Ver historial</button>
+                <button class="chip mint" type="button" data-salud-tab-switch="carnet">Carnet sanitario</button>
+                <button class="chip gold" type="button" data-salud-tab-switch="educacion">Educación</button>
+              </div>
+            </div>
+
+            <!-- ────────── TAB · HISTORIAL ────────── -->
+            <div data-salud-tab="historial" hidden>
+              <section class="book-hero salud">
+                <div class="book-hero-kicker">Historial · cronológico inverso</div>
+                <h3>Lola · 18 meses</h3>
+                <p>Todo lo que ha pasado · searchable y exportable.</p>
+                <div class="book-hero-orb"><img src="design/assets/avatar-mint.png" alt=""></div>
+              </section>
+
+              <div class="health-filter-strip chip-strip" aria-label="Filtros del historial">
+                <button class="chip active" type="button">Todo · 12</button>
+                <button class="chip coral" type="button">🌡 Episodios · 6</button>
+                <button class="chip mint" type="button">🩺 Visitas · 3</button>
+                <button class="chip blush" type="button">💊 Medicación · 2</button>
+                <button class="chip gold" type="button">🧪 Pruebas · 1</button>
+              </div>
+
+              <div class="health-search" data-open-sheet data-sheet-title="Buscar en historial" data-sheet-copy="Stub · búsqueda full-text por tipo, fecha, medicamento, diagnóstico.">
+                <span>Buscar (otitis, amoxicilina, fiebre marzo...)</span>
+                <span>[⌕]</span>
+              </div>
+
+              <div class="health-history">
+                <div class="health-history-group">
+                  <div class="health-history-label">Julio 2026</div>
+                  <article class="health-entry">
+                    <div class="health-entry-icon tone-mint">🩺</div>
+                    <div class="health-entry-body">
+                      <strong>Revisión 18m · agendada</strong>
+                      <span>15 jul · Dr. Méndez · CAP Sant Gervasi</span>
+                    </div>
+                    <span class="health-entry-state">●</span>
+                  </article>
+                </div>
+
+                <div class="health-history-group">
+                  <div class="health-history-label">Marzo 2026</div>
+                  <article class="health-entry">
+                    <div class="health-entry-icon tone-coral">🌡</div>
+                    <div class="health-entry-body">
+                      <strong>Otitis · oído izquierdo</strong>
+                      <span>12 mar · amoxicilina 7 días · resuelto 19 mar</span>
+                    </div>
+                    <span class="health-entry-state done">✓</span>
+                  </article>
+                  <article class="health-entry">
+                    <div class="health-entry-icon tone-blush">💊</div>
+                    <div class="health-entry-body">
+                      <strong>Amoxicilina 250mg/5ml</strong>
+                      <span>5ml/8h × 7 días · pediatra · finalizado</span>
+                    </div>
+                    <span class="health-entry-state done">✓</span>
+                  </article>
+                </div>
+
+                <div class="health-history-group">
+                  <div class="health-history-label">Enero 2026</div>
+                  <article class="health-entry">
+                    <div class="health-entry-icon tone-coral">🌡</div>
+                    <div class="health-entry-body">
+                      <strong>Otitis · oído derecho</strong>
+                      <span>20 ene · amoxicilina 7 días · resuelto 27 ene</span>
+                    </div>
+                    <span class="health-entry-state done">✓</span>
+                  </article>
+                </div>
+
+                <div class="health-history-group">
+                  <div class="health-history-label">Diciembre 2025</div>
+                  <article class="health-entry">
+                    <div class="health-entry-icon tone-coral">🌡</div>
+                    <div class="health-entry-body">
+                      <strong>Gastroenteritis viral</strong>
+                      <span>3 dic · solución rehidratante · casa</span>
+                    </div>
+                    <span class="health-entry-state done">✓</span>
+                  </article>
+                </div>
+
+                <div class="health-history-group">
+                  <div class="health-history-label">Octubre 2025</div>
+                  <article class="health-entry">
+                    <div class="health-entry-icon tone-coral">🌡</div>
+                    <div class="health-entry-body">
+                      <strong>Otitis · oído izquierdo</strong>
+                      <span>15 oct · amoxicilina 7 días · auto-import vacuna</span>
+                    </div>
+                    <span class="health-entry-state done">✓</span>
+                  </article>
+                  <article class="health-entry">
+                    <div class="health-entry-icon tone-coral">🌡</div>
+                    <div class="health-entry-body">
+                      <strong>Fiebre post-vacuna hexavalente</strong>
+                      <span>12 oct · 38.4° 24h · resuelto · auto-Vacunas</span>
+                    </div>
+                    <span class="health-entry-state done">✓</span>
+                  </article>
+                  <article class="health-entry">
+                    <div class="health-entry-icon tone-mint">🩺</div>
+                    <div class="health-entry-body">
+                      <strong>Revisión 12m · Dr. Méndez</strong>
+                      <span>10 oct · normal · próx 15m</span>
+                    </div>
+                    <span class="health-entry-state done">✓</span>
+                  </article>
+                </div>
+
+                <div class="health-history-group">
+                  <div class="health-history-label">Agosto 2025</div>
+                  <article class="health-entry">
+                    <div class="health-entry-icon tone-gold">🧪</div>
+                    <div class="health-entry-body">
+                      <strong>Análisis sangre rutinario</strong>
+                      <span>22 ago · normal · ferritina 35</span>
+                    </div>
+                    <span class="health-entry-state done">✓</span>
+                  </article>
+                  <article class="health-entry">
+                    <div class="health-entry-icon">🐝</div>
+                    <div class="health-entry-body">
+                      <strong>Alergia abeja · CONFIRMADA</strong>
+                      <span>8 ago · pruebas alergólogo · severidad anafiláctica</span>
+                    </div>
+                    <span class="health-entry-state attention">⚠</span>
+                  </article>
+                </div>
+              </div>
+            </div>
+
+            <!-- ────────── TAB · CARNET ────────── -->
+            <div data-salud-tab="carnet" hidden>
+              <section class="book-hero salud">
+                <div class="book-hero-kicker">Carnet sanitario digital · DSI AEPap</div>
+                <h3>Lola · 18 meses</h3>
+                <p>Todo lo importante en un toque · exportable.</p>
+                <div class="book-hero-orb"><img src="design/assets/avatar-mint.png" alt=""></div>
+              </section>
+
+              <!-- Identificación -->
+              <section class="health-section">
+                <div class="health-section-head"><span>Identificación</span><span>editable</span></div>
+                <div class="health-list">
+                  <div class="health-row static">
+                    <span class="health-row-label">Nombre completo</span>
+                    <span class="health-row-value">Lola Espanol Gamon</span>
+                  </div>
+                  <div class="health-row static">
+                    <span class="health-row-label">Fecha de nacimiento</span>
+                    <span class="health-row-value">9 dic 2024</span>
+                  </div>
+                  <div class="health-row static">
+                    <span class="health-row-label">Edad cronológica</span>
+                    <span class="health-row-value">18 meses</span>
+                  </div>
+                  <div class="health-row static">
+                    <span class="health-row-label">Sexo registrado</span>
+                    <span class="health-row-value">Niña</span>
+                  </div>
+                  <div class="health-row static">
+                    <span class="health-row-label">Peso · talla</span>
+                    <span class="health-row-value">9,4 kg · 82 cm</span>
+                  </div>
+                </div>
+              </section>
+
+              <!-- Tarjeta sanitaria -->
+              <section class="health-section">
+                <div class="health-section-head"><span>Identificación médica</span></div>
+                <div class="health-list">
+                  <button class="health-row" type="button" data-open-sheet data-sheet-title="Tarjeta sanitaria" data-sheet-copy="Stub · foto o número de tarjeta CIPA.">
+                    <span class="health-row-label">Tarjeta sanitaria</span>
+                    <span class="health-row-value">XXXXXX001 · CatSalut</span>
+                  </button>
+                  <button class="health-row" type="button" data-open-sheet data-sheet-title="Seguro privado" data-sheet-copy="Stub · datos del seguro privado.">
+                    <span class="health-row-label">Seguro privado</span>
+                    <span class="health-row-value">DKV Integral</span>
+                  </button>
+                </div>
+              </section>
+
+              <!-- Tipo sanguíneo -->
+              <section class="health-section">
+                <div class="health-section-head"><span>Tipo sanguíneo</span></div>
+                <div class="health-blood-card">
+                  <div class="health-blood-value">—</div>
+                  <p>Pendiente de confirmar. Lo descubriremos cuando le hagan el primer análisis · no hay prisa.</p>
+                  <button class="health-action ghost compact" type="button" data-open-sheet data-sheet-title="Anotar tipo sanguíneo" data-sheet-copy="Stub · anotar tipo cuando se confirme tras análisis.">Anotar tras análisis</button>
+                </div>
+              </section>
+
+              <!-- Alergias confirmadas -->
+              <section class="health-section">
+                <div class="health-section-head"><span>Alergias confirmadas</span><span>1</span></div>
+                <div class="health-list">
+                  <article class="health-allergy-row severe">
+                    <div class="health-allergy-icon">🐝</div>
+                    <div class="health-allergy-body">
+                      <strong>Picadura abeja</strong>
+                      <span>Anafilaxia · confirmada 8 ago 2025 por Dr. García alergólogo</span>
+                      <em>Protocolo: Epipen IM + 112 inmediato</em>
+                    </div>
+                    <span class="health-severity-tag severe">Severa</span>
+                  </article>
+                </div>
+                <button class="health-action ghost compact" type="button" data-open-sheet data-sheet-title="+ Añadir alergia" data-sheet-copy="Stub · registrar alergia confirmada por especialista.">+ Añadir alergia</button>
+              </section>
+
+              <!-- Medicaciones activas -->
+              <section class="health-section">
+                <div class="health-section-head"><span>Medicación activa</span><span>0 crónica</span></div>
+                <p class="health-empty">Sin medicación crónica. Aquí aparecerían los tratamientos continuos si los hubiera.</p>
+              </section>
+
+              <!-- Antecedentes -->
+              <section class="health-section">
+                <div class="health-section-head"><span>Antecedentes relevantes</span><span>familia</span></div>
+                <div class="health-list">
+                  <div class="health-row static">
+                    <span class="health-row-label">Madre · María</span>
+                    <span class="health-row-value">Alergia polen estacional</span>
+                  </div>
+                  <div class="health-row static">
+                    <span class="health-row-label">Padre · Pablo</span>
+                    <span class="health-row-value">Asma infantil resuelto</span>
+                  </div>
+                </div>
+              </section>
+
+              <!-- Contactos médicos -->
+              <section class="health-section">
+                <div class="health-section-head"><span>Contactos médicos</span><span>4</span></div>
+                <div class="health-list">
+                  <article class="health-contact-row">
+                    <div class="health-contact-body">
+                      <strong>Dr. Méndez · pediatra</strong>
+                      <span>CAP Sant Gervasi · +34 93 200 00 00</span>
+                    </div>
+                    <a class="health-call-cta" href="tel:+34932000000" aria-label="Llamar pediatra">📞</a>
+                  </article>
+                  <article class="health-contact-row">
+                    <div class="health-contact-body">
+                      <strong>Dr. García · alergólogo</strong>
+                      <span>Hospital Sant Joan de Déu · +34 93 280 40 00</span>
+                    </div>
+                    <a class="health-call-cta" href="tel:+34932804000" aria-label="Llamar alergólogo">📞</a>
+                  </article>
+                  <article class="health-contact-row">
+                    <div class="health-contact-body">
+                      <strong>Urgencias pediátricas</strong>
+                      <span>Hospital Sant Joan de Déu · 24h</span>
+                    </div>
+                    <a class="health-call-cta" href="tel:+34932532100" aria-label="Llamar urgencias">📞</a>
+                  </article>
+                  <article class="health-contact-row">
+                    <div class="health-contact-body">
+                      <strong>Emergencias generales</strong>
+                      <span>España · 24h gratuito</span>
+                    </div>
+                    <a class="health-call-cta urgent" href="tel:112" aria-label="Llamar 112">📞 112</a>
+                  </article>
+                </div>
+              </section>
+
+              <!-- Centro referencia -->
+              <section class="health-section">
+                <div class="health-section-head"><span>Centro de referencia</span></div>
+                <article class="health-center-card">
+                  <strong>Hospital Sant Joan de Déu</strong>
+                  <p>Esplugues de Llobregat · 24h pediatría · referencia comunidad.</p>
+                  <button class="health-action ghost compact" type="button" data-open-sheet data-sheet-title="Cómo llegar" data-sheet-copy="Stub · abriría mapa con ruta.">Cómo llegar</button>
+                </article>
+              </section>
+
+              <!-- Acciones -->
+              <div class="health-card-actions">
+                <button class="health-action coral" type="button" data-open-sheet data-sheet-title="Exportar PDF" data-sheet-copy="Stub · 3 plantillas (pediatra · colegio · viaje internacional bilingüe). Cada una con QR a versión digital.">📤 Exportar PDF</button>
+                <button class="health-action" type="button" data-goto="salud-emergencia">📱 Modo emergencia</button>
+              </div>
+            </div>
+
+            <!-- ────────── TAB · EDUCACIÓN ────────── -->
+            <div data-salud-tab="educacion" hidden>
+              <section class="book-hero salud">
+                <div class="book-hero-kicker">Educación · síntomas + canon AEPap</div>
+                <h3>Lola · 18 meses</h3>
+                <p>Síntomas a vigilar este mes. Sin alarmismo · sin minimización.</p>
+                <div class="book-hero-orb"><img src="design/assets/avatar-mint.png" alt=""></div>
+              </section>
+
+              <section class="health-section">
+                <div class="health-section-head"><span>Síntomas canon</span><span>por edad</span></div>
+                <div class="health-edu-list">
+                  <button class="health-edu-row" type="button" data-open-sheet data-sheet-title="Fiebre · NICE NG143" data-sheet-copy="Traffic light verde-ámbar-rojo. Verde: <38° o 38-39° sin signos. Ámbar: 38-39° con signos. Rojo: ≥39° en <3m o signos de alarma.">
+                    <span class="health-edu-icon tone-coral">🌡</span>
+                    <span class="health-edu-stack"><strong>Fiebre</strong><span>NICE NG143 · traffic light</span></span>
+                    <span class="health-edu-arrow">→</span>
+                  </button>
+                  <button class="health-edu-row" type="button" data-open-sheet data-sheet-title="Tos y respiración · NICE NG9" data-sheet-copy="Bronquiolitis canon. Signos de alarma: aleteo, retracción, taquipnea, cianosis.">
+                    <span class="health-edu-icon tone-mint">😷</span>
+                    <span class="health-edu-stack"><strong>Tos · respiración</strong><span>NICE NG9 · bronquiolitis</span></span>
+                    <span class="health-edu-arrow">→</span>
+                  </button>
+                  <button class="health-edu-row" type="button" data-open-sheet data-sheet-title="Vómitos y diarrea · NICE CG84" data-sheet-copy="Gastroenteritis canon. Vigilar deshidratación: signos clínicos + ingesta líquidos.">
+                    <span class="health-edu-icon tone-blush">🤢</span>
+                    <span class="health-edu-stack"><strong>Vómitos · diarrea</strong><span>NICE CG84 · gastroenteritis</span></span>
+                    <span class="health-edu-arrow">→</span>
+                  </button>
+                  <button class="health-edu-row" type="button" data-open-sheet data-sheet-title="Llanto inconsolable · Wessel" data-sheet-copy="Regla Wessel · llanto >3h/día >3 días/sem >3 sem = cólico. NSBSP PURPLE.">
+                    <span class="health-edu-icon tone-coral">😭</span>
+                    <span class="health-edu-stack"><strong>Llanto inconsolable</strong><span>Wessel + NSBSP PURPLE</span></span>
+                    <span class="health-edu-arrow">→</span>
+                  </button>
+                  <button class="health-edu-row" type="button" data-open-sheet data-sheet-title="Rash · NICE CG102" data-sheet-copy="Meningitis canon. Glass test, petequias, fiebre alta + irritabilidad = urgencias.">
+                    <span class="health-edu-icon tone-gold">🌹</span>
+                    <span class="health-edu-stack"><strong>Rash</strong><span>NICE CG102 · meningitis</span></span>
+                    <span class="health-edu-arrow">→</span>
+                  </button>
+                  <button class="health-edu-row" type="button" data-open-sheet data-sheet-title="Golpe cabeza · NICE NG232" data-sheet-copy="Head injury canon. Vigilar 24-48h: vómitos repetidos, somnolencia, irritabilidad, pérdida consciencia.">
+                    <span class="health-edu-icon tone-blush">💢</span>
+                    <span class="health-edu-stack"><strong>Golpe cabeza</strong><span>NICE NG232 · head injury</span></span>
+                    <span class="health-edu-arrow">→</span>
+                  </button>
+                  <button class="health-edu-row" type="button" data-open-sheet data-sheet-title="Convulsión · NICE NG217" data-sheet-copy="Convulsión febril simple es común a esta edad. Si dura >5min o repetida = 112.">
+                    <span class="health-edu-icon tone-coral">⚡</span>
+                    <span class="health-edu-stack"><strong>Convulsión</strong><span>NICE NG217 · epilepsies</span></span>
+                    <span class="health-edu-arrow">→</span>
+                  </button>
+                </div>
+              </section>
+
+              <section class="health-section">
+                <div class="health-section-head"><span>Cuándo actuar</span></div>
+                <article class="callout">
+                  <strong>Cuándo llamar al pediatra</strong>
+                  <p>Fiebre &gt;38° persistente, rechazo de líquidos, decaimiento, dolor de oído, tos con dificultad respiratoria.</p>
+                </article>
+                <article class="callout coral">
+                  <strong>Cuándo ir a urgencias</strong>
+                  <p>Fiebre alta &lt;3 meses, dificultad respiratoria severa, deshidratación, vómitos persistentes, rash que no blanquea.</p>
+                </article>
+                <article class="callout urgent-soft">
+                  <strong>Cuándo es 112</strong>
+                  <p>Pérdida de consciencia, convulsión &gt;5 min, dificultad respiratoria con cianosis, anafilaxia, traumatismo grave.</p>
+                </article>
+              </section>
+
+              <!-- Sub-libro Cólicos · educación PURPLE -->
+              <article class="health-sublibro-card">
+                <div class="health-sublibro-tag">📕 Sub-libro · educación</div>
+                <h3>Período PURPLE · cólicos</h3>
+                <p>NSBSP canon. Peak around 6-8 weeks. Resistant to soothing. Unexpected. Long-lasting. Painlike. Evening.</p>
+                <button class="health-action ghost" type="button" data-goto="colicos">Ver libro de cólicos →</button>
+              </article>
+
+              <section class="callout with-rule">
+                <strong>Fuentes canon</strong>
+                <p>AEPap · AAP Bright Futures · NICE NG143/NG9/NG232/NG217/CG84/CG102 · NSBSP · EAACI · WHO ICD-10. Aquí no diagnosticamos · aquí estamos.</p>
+              </section>
+            </div>
+          </div>
+          <nav class="phone-nav health-phone-nav" aria-label="Libro de salud">
+            <button class="nav-tab" type="button" data-salud-tab-switch="hoy" data-salud-tab-id="hoy">
+              <svg viewBox="0 0 24 24"><use href="#i-home"/></svg>
+              <span>Hoy</span>
+            </button>
+            <button class="nav-tab" type="button" data-salud-tab-switch="historial" data-salud-tab-id="historial">
+              <svg viewBox="0 0 24 24"><use href="#i-cal"/></svg>
+              <span>Historial</span>
+            </button>
+            <div class="nav-tab fab-cell">
+              <button class="fab health-fab" type="button" data-open-sheet data-sheet-title="+ Registrar al libro de salud" data-sheet-copy="🌡 Episodio · 🩺 Visita · 💊 Medicación · 🐝 Alergia · 🧪 Prueba. Stub · cada opción abriría su form contextual (3 pasos).">
+                <svg viewBox="0 0 24 24"><use href="#i-plus"/></svg>
+              </button>
+              <span class="lbl">Log</span>
+            </div>
+            <button class="nav-tab" type="button" data-salud-tab-switch="carnet" data-salud-tab-id="carnet">
+              <svg viewBox="0 0 24 24"><use href="#i-card"/></svg>
+              <span>Carnet</span>
+            </button>
+            <button class="nav-tab" type="button" data-salud-tab-switch="educacion" data-salud-tab-id="educacion">
+              <svg viewBox="0 0 24 24"><use href="#i-chat"/></svg>
+              <span>Educación</span>
+            </button>
+          </nav>
+        </section>
+
+        <!-- ═══════════════════════════════════════════════════════════
+             § Salud · Modo emergencia · full-screen
+             ═══════════════════════════════════════════════════════════ -->
+        <section class="screen no-nav health-emergencia-screen" data-screen="salud-emergencia">
+          <div class="status"><span>9:42</span><div class="status-dots"><span></span><span></span><span></span></div></div>
+          <div class="content health-emergencia">
+            <button class="health-emergencia-back" type="button" data-goto="salud" aria-label="Volver al libro de salud"><svg viewBox="0 0 24 24"><use href="#i-x"/></svg></button>
+
+            <div class="health-emergencia-name">Lola</div>
+            <div class="health-emergencia-meta">18 meses · 9,4 kg · niña</div>
+
+            <div class="health-emergencia-blood">
+              <span class="health-emergencia-blood-label">Tipo sanguíneo</span>
+              <span class="health-emergencia-blood-value">—</span>
+              <span class="health-emergencia-blood-note">pendiente de confirmar</span>
+            </div>
+
+            <section class="health-emergencia-section">
+              <div class="health-emergencia-section-head">Alergias críticas</div>
+              <article class="health-emergencia-allergy">
+                <strong>🐝 Picadura abeja · anafilaxia</strong>
+                <span>Epipen IM en muslo · 112 inmediato</span>
+              </article>
+            </section>
+
+            <section class="health-emergencia-section">
+              <div class="health-emergencia-section-head">Medicación activa</div>
+              <p class="health-emergencia-empty">Sin medicación crónica.</p>
+            </section>
+
+            <section class="health-emergencia-section">
+              <div class="health-emergencia-section-head">Contactos · 1-tap</div>
+              <a class="health-emergencia-call" href="tel:112">
+                <span class="health-emergencia-call-name">112 · Emergencias</span>
+                <span class="health-emergencia-call-action">📞 Llamar</span>
+              </a>
+              <a class="health-emergencia-call" href="tel:+34932000000">
+                <span class="health-emergencia-call-name">Dr. Méndez · pediatra</span>
+                <span class="health-emergencia-call-action">📞 Llamar</span>
+              </a>
+              <a class="health-emergencia-call" href="tel:+34932532100">
+                <span class="health-emergencia-call-name">Urgencias Sant Joan de Déu</span>
+                <span class="health-emergencia-call-action">📞 Llamar</span>
+              </a>
+            </section>
+
+            <button class="health-action ghost" type="button" data-goto="salud" style="margin: 14px auto 0; display: block;">Volver al libro</button>
           </div>
         </section>
 
@@ -16426,6 +17503,9 @@ Grow
     if (name === 'diario') {
       renderDiary();
     }
+    if (name === 'salud') {
+      setSaludTab(saludActiveTab);
+    }
     if (name === 'sueno') {
       if (options.sleepView) sleepActiveView = options.sleepView;
       renderSleepBook();
@@ -16925,6 +18005,20 @@ Grow
         </article>
       `;
     }).join('');
+  }
+
+  /* § Salud · tab switcher · 4 tabs (Hoy/Historial/Carnet/Educación)
+     Sin lógica · solo toggle visible + active class del navbar. */
+  let saludActiveTab = 'hoy';
+  function setSaludTab(tab) {
+    saludActiveTab = tab || 'hoy';
+    document.querySelectorAll('[data-salud-tab]').forEach((el) => {
+      el.toggleAttribute('hidden', el.dataset.saludTab !== saludActiveTab);
+    });
+    document.querySelectorAll('.health-phone-nav [data-salud-tab-id]').forEach((el) => {
+      el.classList.toggle('active', el.dataset.saludTabId === saludActiveTab);
+    });
+    document.querySelector('[data-screen="salud"] .content')?.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
   /* § Diario · timeline vertical de logs · agrupado por día.
@@ -19087,6 +20181,13 @@ Grow
     if (profileToggle) {
       const sw = profileToggle.querySelector('.profile-switch');
       if (sw) sw.classList.toggle('active');
+      return;
+    }
+
+    /* § Salud · tab switcher · sin lógica, solo toggle del visible */
+    const saludTab = event.target.closest('[data-salud-tab-switch]');
+    if (saludTab) {
+      setSaludTab(saludTab.dataset.saludTabSwitch);
       return;
     }
 
