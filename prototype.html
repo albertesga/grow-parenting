@@ -3557,8 +3557,11 @@
   .milestone-scale-row + .milestone-filter-strip { margin-top: 6px; }
   .milestone-filter-row .scale-label { margin-top: 0; }
   /* Wrap los filter chips a múltiples líneas en lugar de scroll horizontal
-     (4 chips no caben siempre en una línea · mejor UX que ocultar). */
-  .milestone-filter-row .milestone-filter-strip {
+     (4 chips no caben siempre en una línea · mejor UX que ocultar).
+     Mismo tratamiento para .scale-strip de Hitos · las 5 escalas
+     (Haizea/ASQ/Denver/Wiechen/Bayley) tampoco caben en una línea. */
+  .milestone-filter-row .milestone-filter-strip,
+  .milestone-scale-row .scale-strip {
     flex-wrap: wrap;
     overflow-x: visible;
     margin: 8px 0 0;
@@ -7882,6 +7885,14 @@
     border-radius: var(--radius-pill); overflow: hidden;
     background: var(--paper-soft);
   }
+  /* § Hitos · timeline canon · .tall variant · sustituye .stage-strip+.stage-btn.
+     Barra compacta de 52px alto con segmentos por fase (coral/blush/mint/gold). */
+  .timeline-track.tall {
+    height: 40px;
+    gap: 3px;
+    border-radius: var(--radius-sm);
+    overflow: visible;
+  }
   .timeline-seg {
     display: block; height: 100%; border: 0; padding: 0;
     background: var(--paper-soft); cursor: pointer; position: relative;
@@ -7889,6 +7900,54 @@
   .timeline-seg.sleep   { background: var(--mint-subtle); }
   .timeline-seg.wake    { background: var(--gold-subtle); }
   .timeline-seg.routine { background: var(--blush-base); }
+  .timeline-seg.coral   { background: var(--coral-subtle); }
+  .timeline-seg.mint    { background: var(--mint-subtle); }
+  .timeline-seg.blush   { background: var(--blush-subtle); }
+  .timeline-seg.gold    { background: var(--gold-subtle); }
+  .timeline-track.tall .timeline-seg {
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    border-radius: 10px;
+    padding: 0 6px;
+    gap: 2px;
+    overflow: hidden;
+    opacity: 0.55;
+    filter: saturate(0.7);
+    transition: opacity 200ms var(--ease-standard), filter 200ms var(--ease-standard);
+  }
+  .timeline-track.tall .timeline-seg.active {
+    opacity: 1; filter: saturate(1);
+  }
+  .timeline-track.tall .timeline-seg .seg-label {
+    font-family: 'Lenia';
+    font-size: var(--fs-meta);
+    font-weight: 600;
+    line-height: 1;
+    letter-spacing: -0.01em;
+    white-space: nowrap;
+    color: var(--ink);
+  }
+  .timeline-track.tall .timeline-seg .seg-dur {
+    font-family: 'Lenia';
+    font-size: 10px;
+    line-height: 1;
+    color: var(--ink-muted);
+    white-space: nowrap;
+  }
+  .timeline-seg .today-dot,
+  .timeline-seg .seg-cursor {
+    position: absolute;
+    bottom: 7px;
+    width: 5px; height: 5px;
+    border-radius: var(--radius-pill);
+    transform: translateX(-50%);
+    transition: left var(--duration-base) var(--ease-standard);
+  }
+  .timeline-seg .today-dot { background: var(--ink); opacity: 0.32; }
+  .timeline-seg.coral .seg-cursor { background: var(--coral-strong); opacity: 0.72; }
+  .timeline-seg.mint  .seg-cursor { background: #4F6647;             opacity: 0.72; }
+  .timeline-seg.blush .seg-cursor { background: #7A4A3A;             opacity: 0.72; }
+  .timeline-seg.gold  .seg-cursor { background: #6E5A2A;             opacity: 0.72; }
   .timeline-now {
     position: absolute; top: -6px; bottom: -6px;
     width: 2.5px; background: var(--coral-strong);
@@ -12213,20 +12272,32 @@
     return 'preschool';
   }
 
+  /* § Hitos · timeline canon DS · tonos por fase (coral 0-6, blush 6-12, mint 12-36, gold 36-60) */
+  function getMilestoneStageTone(stage) {
+    if (stage.end <= 6) return 'coral';
+    if (stage.end <= 12) return 'blush';
+    if (stage.end <= 36) return 'mint';
+    return 'gold';
+  }
+
+  /* Render canónico § K DS · .timeline-track.tall · 7 sub-etapas con flex
+     proporcional a su duración (meses) · today-dot + seg-cursor en la activa. */
   function renderMilestoneStages() {
+    const todayAgeMonths = milestoneProfile.ageMonths;
     return milestoneStages.map((stage) => {
-      const active = stage.id === milestoneActiveStage ? ' active' : '';
-      const visualClass = getMilestoneStageVisualClass(stage);
-      const count = getMilestoneAreaCount(stage.id, 'todas');
-      const achieved = getMilestonesForStage(stage.id).filter((item) => item.achieved).length;
-      const percent = clamp((stage.start / 60) * 100, 0, 100);
+      const isActive = stage.id === milestoneActiveStage;
+      const isToday = todayAgeMonths >= stage.start && todayAgeMonths < stage.end;
+      const tone = getMilestoneStageTone(stage);
+      const months = stage.end - stage.start;
+      const todayPercent = isToday ? clamp(((todayAgeMonths - stage.start) / months) * 100, 5, 95) : 50;
+      const cursors = isActive
+        ? `<span class="today-dot" style="left:${todayPercent.toFixed(1)}%"></span><span class="seg-cursor" style="left:${todayPercent.toFixed(1)}%"></span>`
+        : (isToday ? `<span class="today-dot" style="left:${todayPercent.toFixed(1)}%"></span>` : '');
       return `
-        <button class="stage-btn ${visualClass}${active}" type="button" data-milestone-stage="${stage.id}" style="--stage-pos: ${percent.toFixed(1)}%; --stage-avatar-scale: ${getMilestoneStageAvatarScale(stage)};">
-          <span class="stage-btn-tag">${stage.start}-${stage.end}m</span>
-          <strong class="stage-btn-title">${escapeHtml(stage.label)}</strong>
-          <span class="stage-btn-meta">${count} hitos</span>
-          <small class="stage-btn-progress">${achieved}/${count} logrados</small>
-          <img class="stage-btn-avatar" src="design/assets/avatar-mint.png" alt="">
+        <button class="timeline-seg ${tone}${isActive ? ' active' : ''}" type="button" data-milestone-stage="${stage.id}" style="flex: ${months}" aria-label="${escapeHtml(stage.label)}, ${stage.start}-${stage.end} m${isActive ? ', activa' : ''}">
+          <span class="seg-label">${escapeHtml(stage.label)}</span>
+          <span class="seg-dur">${stage.start}-${stage.end} m</span>
+          ${cursors}
         </button>
       `;
     }).join('');
