@@ -5750,11 +5750,328 @@
   </section>
 
   <!-- ╔═════════════════════════════════════════════════════════╗
-       ║  § Q — CHANGELOG                                         ║
+       ║  § W — SALUD · expediente clínico (ADR-0009)             ║
+       ╚═════════════════════════════════════════════════════════╝ -->
+  <style>
+    /* CSS canon del Libro de Salud · prefijo ds-health-* para demos del DS
+       sin colisión con global. En prototype.html se usa .health-* sin prefix. */
+    .ds-health-nav {
+      display: inline-grid; grid-template-columns: repeat(5, 1fr);
+      gap: 0; padding: 0 12px;
+      width: 320px; height: 64px;
+      background: #EFE9D8;
+      border-radius: 28px;
+      border: 1px solid var(--line);
+      align-items: center;
+    }
+    .ds-health-nav-tab {
+      display: flex; flex-direction: column; align-items: center; gap: 3px;
+      color: var(--ink-soft); font-family: 'Lenia'; font-size: 9px;
+      letter-spacing: 0.1em; text-transform: uppercase;
+    }
+    .ds-health-nav-tab.active { color: #5C5648; }
+    .ds-health-nav-fab {
+      width: 50px; height: 50px; border-radius: 50%;
+      background: #C9BFA8; color: #3D3729;
+      display: grid; place-items: center;
+      font-size: 20px;
+      transform: translateY(-18px);
+      box-shadow: 0 6px 18px rgba(92,86,72,0.18);
+    }
+
+    .ds-health-sublibro {
+      max-width: 380px;
+      background: radial-gradient(circle at 86% 8%, rgba(232,201,122,0.32), transparent 36%),
+                  linear-gradient(135deg, #F5EFDE, var(--paper-soft));
+      border: 1px solid rgba(184,151,63,0.32);
+      border-radius: 18px;
+      padding: 14px;
+    }
+    .ds-health-sublibro-tag {
+      font-family: 'Lenia'; font-size: 10.5px;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      color: #6E5A2A; margin-bottom: 6px;
+    }
+    .ds-health-sublibro h3 {
+      margin: 0 0 4px; font-family: 'Lenia'; font-weight: 500;
+      font-size: 18px; color: var(--ink);
+    }
+    .ds-health-sublibro p {
+      margin: 0 0 12px; font-size: 12px; color: var(--ink-soft); line-height: 1.4;
+    }
+
+    .ds-health-section { background: var(--paper); border: 1px solid var(--line);
+      border-radius: 18px; padding: 14px; max-width: 380px;
+    }
+    .ds-health-section-head { display: flex; justify-content: space-between;
+      margin-bottom: 10px; font-family: 'Lenia'; font-size: 10.5px;
+      letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-muted);
+    }
+    .ds-health-section-head > span:first-child { color: var(--ink); }
+    .ds-health-list { display: flex; flex-direction: column; gap: 4px; }
+    .ds-health-entry { display: flex; align-items: center; gap: 12px;
+      padding: 10px; border-radius: 10px;
+    }
+    .ds-health-entry + .ds-health-entry { border-top: 1px solid var(--line); border-radius: 0; }
+    .ds-health-entry-icon { flex-shrink: 0; width: 36px; height: 36px;
+      display: grid; place-items: center; border-radius: 10px; font-size: 16px;
+    }
+    .ds-health-entry-icon.tone-coral { background: var(--coral-subtle); }
+    .ds-health-entry-icon.tone-mint  { background: var(--mint-subtle); }
+    .ds-health-entry-icon.tone-blush { background: var(--blush-subtle); }
+    .ds-health-entry-icon.tone-gold  { background: var(--gold-subtle); }
+    .ds-health-entry-body { flex: 1; display: flex; flex-direction: column; gap: 2px; }
+    .ds-health-entry-body strong { font-family: 'Lenia'; font-weight: 500; font-size: 14px; }
+    .ds-health-entry-body span { color: var(--ink-soft); font-size: 12px; line-height: 1.35; }
+    .ds-health-entry-state { flex-shrink: 0; font-family: 'Lenia'; font-size: 12px; color: var(--ink-muted); }
+    .ds-health-entry-state.done { color: #4F6647; }
+    .ds-health-entry-state.attention { color: var(--coral-strong); }
+
+    .ds-health-pattern { max-width: 380px;
+      background: radial-gradient(circle at 86% 8%, rgba(232,201,122,0.28), transparent 36%),
+                  linear-gradient(135deg, rgba(248,228,221,0.72), var(--paper-soft));
+      border: 1.5px solid rgba(184,151,63,0.42);
+      border-radius: 18px; padding: 14px;
+    }
+    .ds-health-pattern-tag { font-family: 'Lenia'; font-size: 10.5px;
+      letter-spacing: 0.16em; text-transform: uppercase; color: #6E5A2A; margin-bottom: 6px;
+    }
+    .ds-health-pattern p { margin: 0 0 12px; color: var(--ink-soft); font-size: 14px; line-height: 1.45; }
+    .ds-health-pattern strong { color: var(--ink); font-weight: 500; }
+
+    .ds-health-allergy-banner { max-width: 380px;
+      background: rgba(216,154,137,0.14);
+      border: 1px solid rgba(216,154,137,0.36);
+      border-radius: 18px; padding: 12px 14px;
+    }
+    .ds-health-allergy-banner strong { display: block; font-family: 'Lenia';
+      font-weight: 500; font-size: 14px; color: #7E4438; margin-bottom: 4px;
+    }
+    .ds-health-allergy-banner p { margin: 0; color: var(--ink-soft); font-size: 12px; line-height: 1.4; }
+
+    .ds-health-emergencia { width: 320px; min-height: 420px;
+      padding: 22px; border-radius: 22px;
+      background: linear-gradient(180deg, #EAE3D0, var(--paper-soft));
+      position: relative;
+    }
+    .ds-health-emergencia-name { font-family: 'Lenia'; font-weight: 500;
+      font-size: 38px; line-height: 1; color: var(--ink);
+      margin-top: 20px; letter-spacing: -0.02em;
+    }
+    .ds-health-emergencia-meta { font-family: 'Helvena'; color: var(--ink-soft);
+      font-size: 13px; margin: 6px 0 18px;
+    }
+    .ds-health-emergencia-blood { background: var(--paper); border: 1.5px solid var(--ink);
+      border-radius: 16px; padding: 18px; text-align: center; margin-bottom: 18px;
+    }
+    .ds-health-emergencia-blood-label { display: block; font-family: 'Lenia';
+      font-size: 10.5px; letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--ink-muted); margin-bottom: 4px;
+    }
+    .ds-health-emergencia-blood-value { display: block; font-family: 'Lenia';
+      font-weight: 500; font-size: 64px; line-height: 1; color: var(--ink);
+    }
+    .ds-health-emergencia-allergy { background: var(--paper); border: 1.5px solid var(--coral-base);
+      border-radius: 16px; padding: 12px; display: flex; flex-direction: column; gap: 4px;
+    }
+    .ds-health-emergencia-allergy strong { font-family: 'Lenia'; font-weight: 500;
+      font-size: 16px; color: #7E4438;
+    }
+    .ds-health-emergencia-allergy span { font-family: 'Helvena'; font-size: 13px; color: var(--ink-soft); }
+
+    .ds-health-action { display: inline-flex; align-items: center; justify-content: center;
+      min-height: 36px; padding: 0 16px; border-radius: 999px;
+      font-family: 'Lenia'; font-weight: 500; font-size: 13px;
+      background: var(--ink); color: var(--paper); border: 0; cursor: pointer;
+    }
+    .ds-health-action.coral { background: var(--coral-base); color: #4A2510; }
+    .ds-health-action.ghost { background: transparent; color: var(--ink-soft); border: 1px solid var(--line); }
+    .ds-health-action.compact { min-height: 30px; padding: 0 12px; font-size: 12px; }
+  </style>
+  <section class="section">
+    <div class="section-head">
+      <div class="section-num">§ W — Salud · expediente clínico</div>
+      <div>
+        <h2>Cartilla sanitaria digital · canon AEPap DSI + NICE.</h2>
+        <div class="desc">
+          Primitives del Libro de Salud (<strong>ADR-0009</strong>) · expediente
+          clínico episódico paralelo a Vacunas. 116 clases canónicas: navbar
+          tonal paper-deep · sub-libro card · sections · entry primitive 4 tonos
+          · pattern alert · allergy banner · modo emergencia full-screen ·
+          carnet sanitario · educación canon NICE. Cross-ref con sub-libro
+          Cólicos (ADR-0006) y Chat IA triage (ADR-0005).
+        </div>
+      </div>
+    </div>
+
+    <div class="spec">
+      <div class="spec-head"><h3>Navbar dedicado · paper-deep tonal</h3><span class="meta-r">.health-phone-nav · .health-fab · 5 tabs</span></div>
+      <div class="spec-row col" style="padding: 12px 0">
+        <p style="font-size:13px;color:var(--ink-soft);max-width:64ch;line-height:1.55;margin:0">
+          Navbar canon del libro · tonal <code>#EFE9D8</code> paper-deep AEPap DSI.
+          5 cells: Hoy · Historial · ⊕ FAB Log · Carnet · Educación. FAB con
+          fondo <code>#C9BFA8</code> warm-stone + shadow tonal. Active state
+          <code>#5C5648</code> ink salud.
+        </p>
+      </div>
+      <div class="spec-row" style="padding: 16px 0">
+        <div class="ds-health-nav">
+          <span class="ds-health-nav-tab active">⌂<br>Hoy</span>
+          <span class="ds-health-nav-tab">📚<br>Hist</span>
+          <span class="ds-health-nav-fab">＋</span>
+          <span class="ds-health-nav-tab">🪪<br>Carnet</span>
+          <span class="ds-health-nav-tab">📖<br>Edu</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="spec">
+      <div class="spec-head"><h3>Sub-libro entry · highlight gold sutil</h3><span class="meta-r">.health-sublibro-card · .health-sublibro-tag</span></div>
+      <div class="spec-row col" style="padding: 12px 0">
+        <p style="font-size:13px;color:var(--ink-soft);max-width:64ch;line-height:1.55;margin:0">
+          Entry destacado en Hoy/Educación del libro padre cuando hay sub-libro
+          activable (ADR-0006). Gradient gold subtle + border <code>rgba(184,151,63,0.32)</code>.
+          NO infla el shelf · vive dentro del libro padre.
+        </p>
+      </div>
+      <div class="spec-row" style="padding: 16px 0">
+        <article class="ds-health-sublibro">
+          <div class="ds-health-sublibro-tag">📕 Sub-libro</div>
+          <h3>Libro de cólicos</h3>
+          <p>1 sem - 4 m · estamos contigo si llega esa etapa.</p>
+          <button class="ds-health-action ghost">Abrir libro de cólicos →</button>
+        </article>
+      </div>
+    </div>
+
+    <div class="spec">
+      <div class="spec-head"><h3>Section + Entry primitive · 4 tonos tonal icon</h3><span class="meta-r">.health-section · .health-entry · .health-entry-icon.{coral|mint|blush|gold}</span></div>
+      <div class="spec-row col" style="padding: 12px 0">
+        <p style="font-size:13px;color:var(--ink-soft);max-width:64ch;line-height:1.55;margin:0">
+          Section cards paper + border canónicas. Cada entry tiene icon tonal
+          36×36 (colored per tipo · coral=episodio · mint=visita · blush=medicación
+          · gold=prueba) + body strong/sub + estado pill (✓ resuelto · ● activo · ⚠ seguimiento).
+        </p>
+      </div>
+      <div class="spec-row" style="padding: 16px 0">
+        <div class="ds-health-section">
+          <div class="ds-health-section-head"><span>Último episodio</span><span>resuelto · hace 4m</span></div>
+          <div class="ds-health-list">
+            <article class="ds-health-entry">
+              <div class="ds-health-entry-icon tone-coral">🌡</div>
+              <div class="ds-health-entry-body">
+                <strong>Otitis · oído izquierdo</strong>
+                <span>12 mar · amoxicilina 7 días · Dr. Méndez</span>
+              </div>
+              <span class="ds-health-entry-state done">✓</span>
+            </article>
+            <article class="ds-health-entry">
+              <div class="ds-health-entry-icon tone-mint">🩺</div>
+              <div class="ds-health-entry-body">
+                <strong>Revisión 18m · agendada</strong>
+                <span>15 jul · CAP Sant Gervasi</span>
+              </div>
+              <span class="ds-health-entry-state">●</span>
+            </article>
+            <article class="ds-health-entry">
+              <div class="ds-health-entry-icon tone-blush">💊</div>
+              <div class="ds-health-entry-body">
+                <strong>Amoxicilina 250mg/5ml</strong>
+                <span>5ml/8h × 7 días · pediatra</span>
+              </div>
+              <span class="ds-health-entry-state done">✓</span>
+            </article>
+            <article class="ds-health-entry">
+              <div class="ds-health-entry-icon tone-gold">🧪</div>
+              <div class="ds-health-entry-body">
+                <strong>Análisis sangre rutinario</strong>
+                <span>22 ago · normal · ferritina 35</span>
+              </div>
+              <span class="ds-health-entry-state done">✓</span>
+            </article>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="spec">
+      <div class="spec-head"><h3>Pattern alert + Allergy banner · awareness sin alarmismo</h3><span class="meta-r">.health-pattern-alert · .health-allergy-banner</span></div>
+      <div class="spec-row col" style="padding: 12px 0">
+        <p style="font-size:13px;color:var(--ink-soft);max-width:64ch;line-height:1.55;margin:0">
+          Pattern alert · gold subtle + border 1.5px tonal · canon IA detection
+          ADR-0009 (otitis recurrente, fiebre sin foco, antibióticos repetidos).
+          Allergy banner · blush/coral subtle background · sticky en Hoy si alergia
+          confirmada. Ambos respetan trauma-informed copy (ADR-0011) · "puede valer
+          la pena" no "tu peque tiene problema".
+        </p>
+      </div>
+      <div class="spec-row" style="padding: 16px 0; gap: 14px; flex-wrap: wrap">
+        <section class="ds-health-pattern">
+          <div class="ds-health-pattern-tag">📊 Patrón detectado</div>
+          <p><strong>Lola: 3 otitis en 6 meses.</strong> Es común a esta edad, pero quizás vale la pena que tu pediatra eche un vistazo.</p>
+          <div style="display: flex; gap: 8px; flex-wrap: wrap">
+            <button class="ds-health-action coral compact">Exportar resumen</button>
+            <button class="ds-health-action ghost compact">Hablar con chat IA</button>
+          </div>
+        </section>
+        <section class="ds-health-allergy-banner">
+          <strong>🐝 Alergia confirmada · severa</strong>
+          <p>Picadura abeja · Epipen + 112. Visible en modo emergencia.</p>
+        </section>
+      </div>
+    </div>
+
+    <div class="spec">
+      <div class="spec-head"><h3>Modo emergencia · full-screen PWA-ready</h3><span class="meta-r">.health-emergencia-screen · .health-emergencia-name · -blood · -allergy · -call</span></div>
+      <div class="spec-row col" style="padding: 12px 0">
+        <p style="font-size:13px;color:var(--ink-soft);max-width:64ch;line-height:1.55;margin:0">
+          Pantalla full-screen accesible sin desbloquear app (PWA quick-action
+          · NFC tag · QR colegio). Tipografía Lenia bold extra-grande · nombre 56px ·
+          tipo sangre 84px · alergias críticas con <strong>border coral 1.5px</strong>
+          (NO fill rojo · canon anti-rojo médico ADR-0011) · contactos 1-tap con
+          <code>tel:</code> · 112 primero coral. Solo info marcada explícitamente como
+          "visible en emergencia" por el usuario.
+        </p>
+      </div>
+      <div class="spec-row" style="padding: 16px 0">
+        <div class="ds-health-emergencia">
+          <div class="ds-health-emergencia-name">Lola</div>
+          <div class="ds-health-emergencia-meta">18 meses · 9,4 kg · niña</div>
+          <div class="ds-health-emergencia-blood">
+            <span class="ds-health-emergencia-blood-label">Tipo sanguíneo</span>
+            <span class="ds-health-emergencia-blood-value">—</span>
+          </div>
+          <div class="ds-health-emergencia-allergy">
+            <strong>🐝 Picadura abeja · anafilaxia</strong>
+            <span>Epipen IM en muslo · 112 inmediato</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="spec">
+      <div class="spec-head"><h3>Anatomy · reglas y cross-ref</h3><span class="meta-r">ADR-0009 · ADR-0006 · ADR-0011</span></div>
+      <div class="spec-row col" style="padding: 12px 0 18px">
+        <ul style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--ink-soft); line-height: 1.7; padding-left: 18px; margin: 0">
+          <li><strong>Tab structure canon</strong> · Hoy · Historial · ⊕ Log FAB · Carnet · Educación</li>
+          <li><strong>FAB Log · 5 tipos</strong> · 🌡 Episodio · 🩺 Visita · 💊 Medicación · 🐝 Alergia · 🧪 Prueba</li>
+          <li><strong>Carnet 8 secciones DSI AEPap</strong> · ID · tarjeta · tipo sangre · alergias · medicación · antecedentes · contactos · centro ref</li>
+          <li><strong>Educación · 7 cards NICE</strong> · NG143 fiebre · NG9 tos · CG84 vómitos · Wessel llanto · CG102 rash · NG232 golpe · NG217 convulsión</li>
+          <li><strong>Pattern detection IA · 4 reglas v0</strong> · otitis recurrente · fiebre sin foco · antibióticos repetidos · alergia bajo investigación</li>
+          <li><strong>Cross-ref bidireccional</strong> · Vacunas→Salud (fiebre 72h auto) · Chat→Salud (triage outcome) · Cólicos↔Salud (sub-libro)</li>
+          <li><strong>Anti-rojo médico</strong> · canon ADR-0011 · usa coral-base (no #FF0000) · "puede valer la pena" no "tu peque tiene problema"</li>
+          <li><strong>MDR compliance</strong> · Class IIa pendiente · sign-off legal antes v0 launch</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ╔═════════════════════════════════════════════════════════╗
+       ║  CHANGELOG (end-marker · no §letter)                     ║
        ╚═════════════════════════════════════════════════════════╝ -->
   <section class="section">
     <div class="section-head">
-      <div class="section-num">§ Q — v0.2 changelog</div>
+      <div class="section-num">Changelog · v0.2</div>
       <div>
         <h2>What changed since v0.1.</h2>
         <div class="desc">
