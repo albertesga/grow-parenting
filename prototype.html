@@ -13579,7 +13579,49 @@
     { id: 'juego-simbolico', stage: 'pre3', area: 'social', title: 'Juego simbólico complejo', en: 'Complex pretend play', p50: 36, p75: 48, p95: 60, achieved: false, source: 'Haizea-Llevant 1991' },
     { id: 'dibuja-persona', stage: 'pre3', area: 'manipulacion', title: 'Dibuja una persona simple', en: 'Draws a simple person', p50: 42, p75: 54, p95: 60, achieved: false, source: 'Haizea-Llevant 1991' }
   ];
-  let sleepActiveView = 'now';
+
+  /* ─────────────────────────────────────────────────────────────────────
+     § Books · state centralizado + helpers genéricos (Opción B refactor)
+     Reemplaza 5 vars globales (xActiveView) + 5 funciones setXView() +
+     5 funciones updateXNavActive() duplicadas · centraliza canon ADR-0002. */
+  const bookConfig = {
+    milestone: { screenId: 'hitos',        navClass: 'milestone-phone-nav',  tabAttr: 'milestoneTab',  tabSelector: 'data-milestone-tab',  defaultView: 'home',       parents: null },
+    sleep:     { screenId: 'sueno',        navClass: 'sleep-phone-nav',      tabAttr: 'sleepTab',      tabSelector: 'data-sleep-tab',      defaultView: 'now',        parents: { now: 'now', home: 'now', sweetspot: 'now', schedule: 'schedule', week: 'week', plan: 'plan', regressions: 'plan' } },
+    food:      { screenId: 'alimentacion', navClass: 'food-phone-nav',       tabAttr: 'foodTab',       tabSelector: 'data-food-tab',       defaultView: 'alimentos',  parents: { alimentos: 'alimentos', home: 'alimentos', foods: 'alimentos', detail: 'alimentos', alergenos: 'alergenos', allergens: 'alergenos', 'allergen-table': 'alergenos', recetas: 'recetas', recipes: 'recetas', plan: 'plan', diary: 'plan' } },
+    pregnancy: { screenId: 'embarazo',     navClass: 'pregnancy-phone-nav',  tabAttr: 'pregnancyTab',  tabSelector: 'data-pregnancy-tab',  defaultView: 'calendario', parents: { calendario: 'calendario', home: 'calendario', week: 'calendario', clinical: 'calendario', plan: 'calendario', patadas: 'patadas', kicks: 'patadas', tension: 'tension', bp: 'tension', parto: 'parto', 'birth-plan': 'parto', symptoms: 'parto', alarms: 'parto' } },
+    vaccine:   { screenId: 'vacunacion',   navClass: 'vaccine-phone-nav',    tabAttr: 'vaccineTab',    tabSelector: 'data-vaccine-tab',    defaultView: 'home',       parents: { home: 'home', detail: 'home', dose: 'home', tracker: 'tracker', table: 'tracker', card: 'card', scheme: 'scheme', education: 'scheme' } }
+  };
+  const bookState = {
+    milestone: 'home',
+    sleep:     'now',
+    food:      'alimentos',
+    pregnancy: 'calendario',
+    vaccine:   'home'
+  };
+
+  /* setBookView · helper genérico · actualiza state + renderiza + nav + scroll. */
+  function setBookView(book, view, renderFn) {
+    const cfg = bookConfig[book];
+    if (!cfg) return;
+    bookState[book] = view || cfg.defaultView;
+    if (typeof renderFn === 'function') renderFn();
+    updateBookNavActive(book);
+    document.querySelector(`[data-screen="${cfg.screenId}"] .content`)?.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  /* updateBookNavActive · helper genérico · sync .active del navbar · soporta
+     sub-vistas drill-down via parents map (highlight su tab padre lógico). */
+  function updateBookNavActive(book) {
+    const cfg = bookConfig[book];
+    if (!cfg) return;
+    const current = bookState[book];
+    const tabId = cfg.parents ? (cfg.parents[current] || cfg.defaultView) : current;
+    document.querySelectorAll(`.${cfg.navClass} [${cfg.tabSelector}]`).forEach((el) => {
+      el.classList.toggle('active', el.dataset[cfg.tabAttr] === tabId);
+    });
+  }
+  /* ───────────────────────────────────────────────────────────────────── */
+
   let sleepActiveAge = '13-18m';
   const sleepLocation = { city: 'Madrid', sunrise: '07:18', season: 'primavera' };
   const sleepAgeRanges = [
@@ -13691,7 +13733,7 @@
     { title: 'Regresión de los 18 meses', state: 'activa', copy: 'Testing de límites e independencia. Resistencia a acostarse y negociaciones nocturnas. La rutina firme ayuda más que nunca.' },
     { title: 'Regresión de los 2 años', state: 'próxima', copy: 'Pesadillas reales, transición a cama o llegada de hermanito. Suele ser más emocional que biológica.' }
   ];
-  let foodActiveView = 'alimentos';
+  /* bookState.food vive en bookState global (canon Opción B) */
   let foodActiveAge = '7m';
   let foodActiveFilter = 'todos';
   let selectedFoodId = 'aguacate';
@@ -14029,7 +14071,7 @@
     { condition: 'D-MER', symptoms: 'Tristeza/ansiedad breve al inicio de toma', action: 'Validación · no es PPD · derivar si persiste', urgent: false }
   ];
 
-  let pregnancyActiveView = 'calendario';
+  /* bookState.pregnancy vive en bookState global (canon Opción B) */
   let pregnancyWeek = 28;
   let pregnancyRainbowMode = false;
   let pregnancyKickCount = 7;
@@ -14143,7 +14185,7 @@
     'Otra cosa · cuéntame'
   ];
 
-  let vaccineActiveView = 'home';
+  /* bookState.vaccine vive en bookState global (canon Opción B) */
   let vaccineScheme = 'aeped2026';
   let vaccineWeightKg = 6.4;
   let vaccineTrackerActive = false;
@@ -14694,29 +14736,25 @@
     });
   }
 
-  /* § Hitos · view routing (home/carnet/aprende/ajustes) + navbar dedicado */
-  let milestoneActiveView = 'home';
+  /* § Hitos · view routing (home/carnet/aprende/ajustes) + navbar dedicado
+     bookState.milestone vive en bookState global (canon Opción B). */
 
+  /* setMilestoneView · usa setBookView genérico + render custom callback
+     que maneja toggle hidden de los 4 wrappers + dispatch al render correcto. */
   function setMilestoneView(view) {
-    milestoneActiveView = view || 'home';
-    const views = ['home', 'carnet', 'aprende', 'ajustes'];
-    views.forEach((v) => {
-      const el = document.querySelector(`[data-milestone-${v}]`);
-      if (el) el.toggleAttribute('hidden', milestoneActiveView !== v);
-    });
-    if (milestoneActiveView === 'home') renderMilestoneBook();
-    if (milestoneActiveView === 'carnet') renderMilestoneCarnet();
-    if (milestoneActiveView === 'aprende') renderMilestoneAprende();
-    if (milestoneActiveView === 'ajustes') renderMilestoneAjustes();
-    updateMilestoneNavActive();
-    document.querySelector('[data-screen="hitos"] .content')?.scrollTo({ top: 0, behavior: 'smooth' });
-  }
-
-  function updateMilestoneNavActive() {
-    document.querySelectorAll('.milestone-phone-nav [data-milestone-tab]').forEach((el) => {
-      el.classList.toggle('active', el.dataset.milestoneTab === milestoneActiveView);
+    setBookView('milestone', view, () => {
+      const views = ['home', 'carnet', 'aprende', 'ajustes'];
+      views.forEach((v) => {
+        const el = document.querySelector(`[data-milestone-${v}]`);
+        if (el) el.toggleAttribute('hidden', bookState.milestone !== v);
+      });
+      if (bookState.milestone === 'home') renderMilestoneBook();
+      if (bookState.milestone === 'carnet') renderMilestoneCarnet();
+      if (bookState.milestone === 'aprende') renderMilestoneAprende();
+      if (bookState.milestone === 'ajustes') renderMilestoneAjustes();
     });
   }
+  function updateMilestoneNavActive()    { updateBookNavActive('milestone'); }
 
   /* Locale-friendly fecha corta · "2025-02-15" → "15 feb 2025" */
   const milestoneMonthShortES = ['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
@@ -15562,32 +15600,15 @@ Grow
       sweetspot: renderSleepNow,
       regressions: renderSleepPlanCombined
     };
-    root.innerHTML = (views[sleepActiveView] || renderSleepNow)();
+    root.innerHTML = (views[bookState.sleep] || renderSleepNow)();
     requestAnimationFrame(() => {
       root.querySelector('.sleep-age-chip.active')?.scrollIntoView({ block: 'nearest', inline: 'center' });
     });
   }
 
-  function setSleepView(view) {
-    sleepActiveView = view || 'now';
-    renderSleepBook();
-    updateSleepNavActive();
-    document.querySelector('[data-screen="sueno"] .content')?.scrollTo({ top: 0, behavior: 'smooth' });
-  }
-
-  /* § Sueño · sync navbar active · sub-vistas highlight tab padre lógico */
-  function updateSleepNavActive() {
-    const parents = {
-      now: 'now', home: 'now', sweetspot: 'now',
-      schedule: 'schedule',
-      week: 'week',
-      plan: 'plan', regressions: 'plan'
-    };
-    const tabId = parents[sleepActiveView] || 'now';
-    document.querySelectorAll('.sleep-phone-nav [data-sleep-tab]').forEach((el) => {
-      el.classList.toggle('active', el.dataset.sleepTab === tabId);
-    });
-  }
+  /* § Sueño · wrappers thin · canon Opción B (bookConfig + helpers) */
+  function setSleepView(view)         { setBookView('sleep', view, renderSleepBook); }
+  function updateSleepNavActive()     { updateBookNavActive('sleep'); }
 
   /* § Sueño · Ahora tab · sweetspot + status + schedule preview · sin nav-grid */
   function renderSleepNow() {
@@ -16005,33 +16026,16 @@ Grow
       detail: () => renderFoodDetail(selectedFoodId),
       'allergen-table': renderAllergenCanonTable
     };
-    root.innerHTML = (views[foodActiveView] || renderFoodAlimentosTab)();
+    root.innerHTML = (views[bookState.food] || renderFoodAlimentosTab)();
     requestAnimationFrame(() => {
       root.querySelector('.food-age-chip.active')?.scrollIntoView({ block: 'nearest', inline: 'center' });
       root.querySelector('.food-filter-chip.active')?.scrollIntoView({ block: 'nearest', inline: 'center' });
     });
   }
 
-  /* § Alimentación · sync navbar active · sub-vistas highlight tab padre lógico */
-  function updateFoodNavActive() {
-    const parents = {
-      alimentos: 'alimentos', home: 'alimentos', foods: 'alimentos', detail: 'alimentos',
-      alergenos: 'alergenos', allergens: 'alergenos', 'allergen-table': 'alergenos',
-      recetas: 'recetas', recipes: 'recetas',
-      plan: 'plan', diary: 'plan'
-    };
-    const tabId = parents[foodActiveView] || 'alimentos';
-    document.querySelectorAll('.food-phone-nav [data-food-tab]').forEach((el) => {
-      el.classList.toggle('active', el.dataset.foodTab === tabId);
-    });
-  }
-
-  function setFoodView(view) {
-    foodActiveView = view || 'alimentos';
-    renderFoodBook();
-    updateFoodNavActive();
-    document.querySelector('[data-screen="alimentacion"] .content')?.scrollTo({ top: 0, behavior: 'smooth' });
-  }
+  /* § Alimentación · wrappers thin · canon Opción B (bookConfig + helpers) */
+  function updateFoodNavActive()      { updateBookNavActive('food'); }
+  function setFoodView(view)          { setBookView('food', view, renderFoodBook); }
 
   function setFoodAge(ageId) {
     if (!foodAgeRanges.some((range) => range.id === ageId)) return;
@@ -16450,7 +16454,7 @@ Grow
       <div class="pregnancy-nav-strip" aria-label="Vistas del libro de embarazo">
         ${items.map(([id, label], i) => {
           const tone = tones[i % tones.length];
-          const active = pregnancyActiveView === id ? ' active' : '';
+          const active = bookState.pregnancy === id ? ' active' : '';
           return `<button class="chip${tone ? ' ' + tone : ''}${active}" type="button" data-pregnancy-view="${id}">${escapeHtml(label)}</button>`;
         }).join('')}
       </div>
@@ -16476,7 +16480,7 @@ Grow
           <h3>${escapeHtml(title)}</h3>
           <p class="pregnancy-copy">${escapeHtml(copy)}</p>
         </div>
-        ${pregnancyActiveView !== 'home' ? `<button class="pregnancy-back-view" type="button" data-pregnancy-view="${escapeHtml(backView)}">← Embarazo</button>` : ''}
+        ${bookState.pregnancy !== 'home' ? `<button class="pregnancy-back-view" type="button" data-pregnancy-view="${escapeHtml(backView)}">← Embarazo</button>` : ''}
       </div>
     `;
   }
@@ -16790,29 +16794,12 @@ Grow
       plan: renderPregnancyPlan,
       alarms: renderPregnancyAlarms
     };
-    root.innerHTML = (views[pregnancyActiveView] || renderPregnancyCalendario)();
+    root.innerHTML = (views[bookState.pregnancy] || renderPregnancyCalendario)();
   }
 
-  function setPregnancyView(view) {
-    pregnancyActiveView = view || 'calendario';
-    renderPregnancyBook();
-    updatePregnancyNavActive();
-    document.querySelector('[data-screen="embarazo"] .content')?.scrollTo({ top: 0, behavior: 'smooth' });
-  }
-
-  /* § Embarazo · sync navbar active state · sub-vistas highlight tab padre lógico */
-  function updatePregnancyNavActive() {
-    const parents = {
-      calendario: 'calendario', home: 'calendario', week: 'calendario', clinical: 'calendario', plan: 'calendario',
-      patadas: 'patadas', kicks: 'patadas',
-      tension: 'tension', bp: 'tension',
-      parto: 'parto', 'birth-plan': 'parto', symptoms: 'parto', alarms: 'parto'
-    };
-    const tabId = parents[pregnancyActiveView] || 'calendario';
-    document.querySelectorAll('.pregnancy-phone-nav [data-pregnancy-tab]').forEach((el) => {
-      el.classList.toggle('active', el.dataset.pregnancyTab === tabId);
-    });
-  }
+  /* § Embarazo · wrappers thin · canon Opción B (bookConfig + helpers) */
+  function setPregnancyView(view)     { setBookView('pregnancy', view, renderPregnancyBook); }
+  function updatePregnancyNavActive() { updateBookNavActive('pregnancy'); }
 
   /* § Embarazo · Calendario tab · mes-a-mes filtrado a embarazo (9 meses)
      Combina month-timeline + week highlight + clinical events + EPDS + APILAM + Plan IA shortcut. */
@@ -16972,7 +16959,7 @@ Grow
       <div class="vaccine-nav-strip chip-strip" aria-label="Vistas del libro de vacunas">
         ${items.map(([id, label], i) => {
           const tone = tones[i % tones.length];
-          const active = vaccineActiveView === id ? ' active' : '';
+          const active = bookState.vaccine === id ? ' active' : '';
           return `<button class="chip${tone ? ' ' + tone : ''}${active}" type="button" data-vaccine-view="${id}">${escapeHtml(label)}</button>`;
         }).join('')}
       </div>
@@ -17002,7 +16989,7 @@ Grow
           <h3>${escapeHtml(title)}</h3>
           <p class="vaccine-copy">${escapeHtml(copy)}</p>
         </div>
-        ${vaccineActiveView !== 'home' ? `<button class="vaccine-back-view" type="button" data-vaccine-view="${escapeHtml(backView)}">← Vacunas</button>` : ''}
+        ${bookState.vaccine !== 'home' ? `<button class="vaccine-back-view" type="button" data-vaccine-view="${escapeHtml(backView)}">← Vacunas</button>` : ''}
       </div>
     `;
   }
@@ -17330,26 +17317,14 @@ Grow
       table: renderVaccinePostTable,
       scheme: renderVaccineScheme
     };
-    root.innerHTML = (views[vaccineActiveView] || renderVaccineHome)();
+    root.innerHTML = (views[bookState.vaccine] || renderVaccineHome)();
   }
 
-  function setVaccineView(view) {
-    vaccineActiveView = view || 'home';
-    renderVaccineBook();
-    updateVaccineNavActive();
-    document.querySelector('[data-screen="vacunacion"] .content')?.scrollTo({ top: 0, behavior: 'smooth' });
-  }
-
-  /* § Vacunas · sync navbar active state cuando cambia el view.
-     Maps view ids a tab slots del bottom-nav. Sub-vistas como `detail`/`dose`/
-     `education`/`table` no tienen tab propio · highlightean su padre lógico. */
-  function updateVaccineNavActive() {
-    const parents = { home: 'home', detail: 'home', dose: 'home', tracker: 'tracker', table: 'tracker', card: 'card', scheme: 'scheme', education: 'scheme' };
-    const tabId = parents[vaccineActiveView] || 'home';
-    document.querySelectorAll('.vaccine-phone-nav [data-vaccine-tab]').forEach((el) => {
-      el.classList.toggle('active', el.dataset.vaccineTab === tabId);
-    });
-  }
+  /* § Vacunas · wrappers thin · canon Opción B (bookConfig + helpers)
+     Sub-vistas detail/dose/education/table highlightean su tab padre lógico
+     vía bookConfig.vaccine.parents (declarado al inicio del IIFE). */
+  function setVaccineView(view)       { setBookView('vaccine', view, renderVaccineBook); }
+  function updateVaccineNavActive()   { updateBookNavActive('vaccine'); }
 
   function setVaccineScheme(schemeId) {
     if (!vaccineSchemes[schemeId]) return;
@@ -18226,7 +18201,7 @@ Grow
       renderGrowthBook();
     }
     if (name === 'hitos') {
-      setMilestoneView(milestoneActiveView);
+      setMilestoneView(bookState.milestone);
     }
     if (name === 'diario') {
       renderDiary();
@@ -18235,12 +18210,12 @@ Grow
       setSaludTab(saludActiveTab);
     }
     if (name === 'sueno') {
-      if (options.sleepView) sleepActiveView = options.sleepView;
+      if (options.sleepView) bookState.sleep = options.sleepView;
       renderSleepBook();
       updateSleepNavActive();
     }
     if (name === 'alimentacion') {
-      if (options.foodView) foodActiveView = options.foodView;
+      if (options.foodView) bookState.food = options.foodView;
       renderFoodBook();
       updateFoodNavActive();
     }
@@ -18249,7 +18224,7 @@ Grow
       renderLactationBook();
     }
     if (name === 'embarazo') {
-      if (options.pregnancyView) pregnancyActiveView = options.pregnancyView;
+      if (options.pregnancyView) bookState.pregnancy = options.pregnancyView;
       renderPregnancyBook();
       updatePregnancyNavActive();
     }
@@ -18272,7 +18247,7 @@ Grow
       chatInjectHoyNightCard();
     }
     if (name === 'vacunacion') {
-      if (options.vaccineView) vaccineActiveView = options.vaccineView;
+      if (options.vaccineView) bookState.vaccine = options.vaccineView;
       renderVaccineBook();
       updateVaccineNavActive();
     }
