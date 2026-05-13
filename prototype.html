@@ -61,6 +61,27 @@
     --night-surface: #2A2E36;
     --shadow: 0 26px 80px rgba(42, 33, 27, 0.22);
 
+    /* Book navbar palettes · canon ADR-0002 (navbar dedicado por libro) */
+    --nav-vaccine-bg: #FBF5EA;
+    --nav-vaccine-active: #7C6429;
+    --nav-vaccine-fab-ink: #4A3815;
+    --nav-milestone-bg: #EEF7EE;
+    --nav-milestone-active: #4F6647;
+    --nav-milestone-fab-ink: #2F4029;
+    --nav-pregnancy-bg: #FBEEE5;
+    --nav-pregnancy-active: #8B4621;
+    --nav-pregnancy-fab-ink: #4A2510;
+    --nav-sleep-bg: #EAF0E7;
+    --nav-sleep-active: #4F6647;
+    --nav-sleep-fab-ink: #2F4029;
+    --nav-food-bg: #FAEAE0;
+    --nav-food-active: #7E4438;
+    --nav-food-fab-ink: #4A2510;
+    --nav-health-bg: #EFE9D8;
+    --nav-health-active: #5C5648;
+    --nav-health-fab-bg: #C9BFA8;
+    --nav-health-fab-ink: #3D3729;
+
     /* ─── motion · § R canon ─── */
     --duration-instant: 80ms;
     --duration-fast: 150ms;
@@ -5461,30 +5482,30 @@
   }
   /* § Vacunas · navbar dedicado · ver tabs Calendario/Fiebre/Carnet/Settings + FAB Log filtrado */
   [data-screen="vacunacion"] .content { padding-bottom: 110px; }
-  .vaccine-phone-nav { background: #FBF5EA; }
-  .vaccine-phone-nav .nav-tab.active { color: #7C6429; }
+  .vaccine-phone-nav { background: var(--nav-vaccine-bg); }
+  .vaccine-phone-nav .nav-tab.active { color: var(--nav-vaccine-active); }
   .vaccine-phone-nav .fab.vaccine-fab {
     background: var(--gold-base);
-    color: #4A3815;
+    color: var(--nav-vaccine-fab-ink);
     box-shadow: 0 6px 18px rgba(184,151,63,0.32);
   }
   /* § Hitos · navbar dedicado · 5 cells (Hitos · Aprende · Log FAB · Carnet · Ajustes)
      Tonal mint · canónico full-width 5-col (hereda .phone-nav default) */
   [data-screen="hitos"] .content { padding-bottom: 110px; }
-  .milestone-phone-nav { background: #EEF7EE; }
-  .milestone-phone-nav .nav-tab.active { color: #4F6647; }
+  .milestone-phone-nav { background: var(--nav-milestone-bg); }
+  .milestone-phone-nav .nav-tab.active { color: var(--nav-milestone-active); }
   .milestone-phone-nav .fab.milestone-fab {
     background: var(--mint-base);
-    color: #2F4029;
+    color: var(--nav-milestone-fab-ink);
     box-shadow: 0 6px 18px rgba(143,174,133,0.32);
   }
   /* § Embarazo · navbar dedicado · 4 tabs + FAB Log central · tonal coral */
   [data-screen="embarazo"] .content { padding-bottom: 110px; }
-  .pregnancy-phone-nav { background: #FBEEE5; }
-  .pregnancy-phone-nav .nav-tab.active { color: #8B4621; }
+  .pregnancy-phone-nav { background: var(--nav-pregnancy-bg); }
+  .pregnancy-phone-nav .nav-tab.active { color: var(--nav-pregnancy-active); }
   .pregnancy-phone-nav .fab.pregnancy-fab {
     background: var(--coral-base);
-    color: #4A2510;
+    color: var(--nav-pregnancy-fab-ink);
     box-shadow: 0 6px 18px rgba(214,119,66,0.28);
   }
   /* § Perfil · screen con secciones de niño, cuidadores, modos, país,
@@ -5877,29 +5898,29 @@
 
   /* § Sueño · navbar dedicado · 4 tabs + FAB Log central · tonal mint nocturno */
   [data-screen="sueno"] .content { padding-bottom: 110px; }
-  .sleep-phone-nav { background: #EAF0E7; }
-  .sleep-phone-nav .nav-tab.active { color: #4F6647; }
+  .sleep-phone-nav { background: var(--nav-sleep-bg); }
+  .sleep-phone-nav .nav-tab.active { color: var(--nav-sleep-active); }
   .sleep-phone-nav .fab.sleep-fab {
     background: var(--mint-base);
-    color: #2F4029;
+    color: var(--nav-sleep-fab-ink);
     box-shadow: 0 6px 18px rgba(143,174,133,0.32);
   }
   /* § Alimentación · navbar dedicado · 4 tabs + FAB Log central · tonal coral */
   [data-screen="alimentacion"] .content { padding-bottom: 110px; }
-  .food-phone-nav { background: #FAEAE0; }
-  .food-phone-nav .nav-tab.active { color: #7E4438; }
+  .food-phone-nav { background: var(--nav-food-bg); }
+  .food-phone-nav .nav-tab.active { color: var(--nav-food-active); }
   .food-phone-nav .fab.food-fab {
     background: var(--coral-base);
-    color: #4A2510;
+    color: var(--nav-food-fab-ink);
     box-shadow: 0 6px 18px rgba(214,119,66,0.28);
   }
   /* § Salud · navbar dedicado · 4 tabs + FAB Log central · tonal paper-deep AEPap */
   [data-screen="salud"] .content { padding-bottom: 110px; }
-  .health-phone-nav { background: #EFE9D8; }
-  .health-phone-nav .nav-tab.active { color: #5C5648; }
+  .health-phone-nav { background: var(--nav-health-bg); }
+  .health-phone-nav .nav-tab.active { color: var(--nav-health-active); }
   .health-phone-nav .fab.health-fab {
-    background: #C9BFA8;
-    color: #3D3729;
+    background: var(--nav-health-fab-bg);
+    color: var(--nav-health-fab-ink);
     box-shadow: 0 6px 18px rgba(92,86,72,0.18);
   }
   /* Sub-libro card (Cólicos · educación PURPLE) · highlight gold sutil */
