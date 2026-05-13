@@ -8845,11 +8845,15 @@
     border-radius: var(--radius-sm);
     overflow: visible;
   }
-  /* § Hitos · timeline 2-row layout · row 1 = 0-12m, row 2 = 12-60m */
+  /* § Hitos · timeline 2-row layout · row 1 = 0-12m, row 2 = 12-60m
+     Gap pequeño entre rows · padding generoso top/bottom para respirar
+     en el bloque de hero superior y bloque de chips inferior. */
   .milestone-stages {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 4px;
+    padding-top: 16px;
+    padding-bottom: 18px;
   }
   .timeline-row {
     display: flex;
@@ -14010,10 +14014,11 @@
     const isToday = todayAgeMonths >= stage.start && todayAgeMonths < stage.end;
     const tone = getMilestoneStageTone(stage);
     const months = stage.end - stage.start;
+    /* Dot only renders donde el peque está HOY · sin fallback al 50% en active */
     const todayPercent = isToday ? clamp(((todayAgeMonths - stage.start) / months) * 100, 5, 95) : 50;
-    const cursors = isActive
-      ? `<span class="today-dot" style="left:${todayPercent.toFixed(1)}%"></span><span class="seg-cursor" style="left:${todayPercent.toFixed(1)}%"></span>`
-      : (isToday ? `<span class="today-dot" style="left:${todayPercent.toFixed(1)}%"></span>` : '');
+    const cursors = isToday
+      ? `<span class="today-dot" style="left:${todayPercent.toFixed(1)}%"></span>${isActive ? `<span class="seg-cursor" style="left:${todayPercent.toFixed(1)}%"></span>` : ''}`
+      : '';
     return `
       <button class="timeline-seg ${tone}${isActive ? ' active' : ''}" type="button" data-milestone-stage="${stage.id}" style="flex: ${months}" aria-label="${escapeHtml(stage.label)}, ${stage.start}-${stage.end} m${isActive ? ', activa' : ''}">
         <span class="seg-label">${escapeHtml(stage.label)}</span>
