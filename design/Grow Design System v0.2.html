@@ -6366,6 +6366,236 @@
   </section>
 
   <!-- ╔═════════════════════════════════════════════════════════╗
+       ║  § Y — DIARIO · timeline vertical primitive (ADR-0007)   ║
+       ╚═════════════════════════════════════════════════════════╝ -->
+  <style>
+    /* CSS canon Diario · prefix ds-diary-* en demos · prototype usa .diary-* */
+    .ds-diary-timeline {
+      position: relative;
+      padding-left: 64px;
+      padding-top: 4px; padding-bottom: 18px;
+      max-width: 380px;
+    }
+    .ds-diary-timeline::before {
+      content: '';
+      position: absolute;
+      left: 46px;
+      top: 28px; bottom: 14px;
+      width: 2px;
+      background: var(--line);
+      border-radius: 1px;
+      z-index: 0;
+    }
+    .ds-diary-day-group { position: relative; margin-bottom: 22px; }
+    .ds-diary-day-group:last-child { margin-bottom: 0; }
+    .ds-diary-day-label {
+      position: relative;
+      margin-left: -64px;
+      margin-bottom: 10px;
+      padding-left: 64px;
+      font-family: 'Lenia'; font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--ink-muted);
+    }
+    .ds-diary-day-label::before {
+      content: '';
+      position: absolute;
+      left: 39px; top: 2px;
+      width: 12px; height: 12px;
+      background: var(--paper);
+      border: 2px solid var(--ink-muted);
+      border-radius: 50%;
+      z-index: 1;
+    }
+    .ds-diary-entry {
+      position: relative;
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 12px 14px;
+      margin-bottom: 8px;
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+    }
+    .ds-diary-entry:last-child { margin-bottom: 0; }
+    .ds-diary-entry::before {
+      content: '';
+      position: absolute;
+      left: -24px; top: 18px;
+      width: 10px; height: 10px;
+      background: var(--paper);
+      border: 2px solid var(--diary-dot-color, var(--ink-muted));
+      border-radius: 50%;
+      z-index: 1;
+    }
+    .ds-diary-entry-time {
+      position: absolute;
+      left: -64px; top: 14px;
+      width: 32px;
+      text-align: right;
+      font-family: 'Lenia'; font-size: 10.5px;
+      color: var(--ink-muted);
+      font-variant-numeric: tabular-nums;
+      letter-spacing: 0.02em;
+    }
+    .ds-diary-entry-icon {
+      flex: 0 0 32px;
+      width: 32px; height: 32px;
+      display: grid; place-items: center;
+      background: var(--diary-icon-bg, var(--paper-soft));
+      color: var(--diary-icon-ink, var(--ink-soft));
+      border-radius: 8px;
+      font-size: 16px;
+    }
+    .ds-diary-entry-body { flex: 1; min-width: 0; }
+    .ds-diary-entry-title {
+      font-family: 'Lenia'; font-weight: 500; font-size: 14px;
+      line-height: 1.25; margin: 0;
+      color: var(--ink);
+    }
+    .ds-diary-entry-detail {
+      color: var(--ink-soft);
+      font-size: 12px; line-height: 1.4;
+      margin: 3px 0 0;
+    }
+    .ds-diary-entry-author {
+      color: var(--ink-muted);
+      font-size: 10.5px;
+      margin: 6px 0 0;
+      font-family: 'Lenia'; letter-spacing: 0.04em;
+    }
+    /* Tonal variants · driven via inline custom props from canon */
+    .ds-diary-entry.tone-mint  { --diary-dot-color: #4F6647; --diary-icon-bg: var(--mint-subtle);  --diary-icon-ink: #4F6647; }
+    .ds-diary-entry.tone-coral { --diary-dot-color: var(--coral-strong); --diary-icon-bg: var(--coral-subtle); --diary-icon-ink: #8E4A22; }
+    .ds-diary-entry.tone-gold  { --diary-dot-color: #6E5A2A; --diary-icon-bg: var(--gold-subtle);  --diary-icon-ink: #6E5A2A; }
+    .ds-diary-entry.tone-blush { --diary-dot-color: #7A4A3A; --diary-icon-bg: var(--blush-subtle); --diary-icon-ink: #7A4A3A; }
+  </style>
+  <section class="section">
+    <div class="section-head">
+      <div class="section-num">§ Y — Diario · timeline vertical</div>
+      <div>
+        <h2>Feed cronológico de logs · primitive reusable.</h2>
+        <div class="desc">
+          Componente vertical timeline del Libro de Diario (<strong>ADR-0007</strong>).
+          12 primitives canónicos · 3 lanes calculadas (time + rail+dot + card) ·
+          4 tonos por categoría (mint=continuidad · coral=alerta clínica · gold=
+          institucional · blush=lifestyle). Reusa <code>logEntries</code> array
+          como single source of truth (cualquier registro desde FAB Log aparece
+          automáticamente).
+        </div>
+      </div>
+    </div>
+
+    <div class="spec">
+      <div class="spec-head"><h3>Timeline vertical · 3 lanes layout</h3><span class="meta-r">.diary-timeline · .diary-entry · .diary-entry-time · 4 tonos</span></div>
+      <div class="spec-row col" style="padding: 12px 0">
+        <p style="font-size:13px;color:var(--ink-soft);max-width:64ch;line-height:1.55;margin:0">
+          Layout en 3 lanes · padding-left 64px del container:
+        </p>
+        <ul style="font-size:12px;color:var(--ink-soft);line-height:1.65;padding-left:18px;margin:8px 0 0">
+          <li><strong>Lane 1</strong> (x=0-32px) · time text right-aligned · Lenia 10.5px tabular-nums</li>
+          <li><strong>Gap</strong> 8px entre time y dot</li>
+          <li><strong>Lane 2</strong> (x=40-54px) · rail vertical 2px + dot 14px visible (10+border 2px) centrados en x=47</li>
+          <li><strong>Gap</strong> 10px entre dot y card</li>
+          <li><strong>Lane 3</strong> (x=64+) · entry card paper + border · icon tonal 32×32 + body</li>
+        </ul>
+      </div>
+      <div class="spec-row" style="padding: 16px 0">
+        <div class="ds-diary-timeline">
+          <div class="ds-diary-day-group">
+            <div class="ds-diary-day-label">Hoy</div>
+            <article class="ds-diary-entry tone-mint">
+              <span class="ds-diary-entry-time">14:32</span>
+              <div class="ds-diary-entry-icon">🤱</div>
+              <div class="ds-diary-entry-body">
+                <p class="ds-diary-entry-title">Pecho izq · 14 min</p>
+                <p class="ds-diary-entry-detail">L5 · R3 · LATCH 9/10.</p>
+                <p class="ds-diary-entry-author">María · Hoy</p>
+              </div>
+            </article>
+            <article class="ds-diary-entry tone-blush">
+              <span class="ds-diary-entry-time">12:15</span>
+              <div class="ds-diary-entry-icon">📷</div>
+              <div class="ds-diary-entry-body">
+                <p class="ds-diary-entry-title">Primer baño en piscina</p>
+                <p class="ds-diary-entry-detail">Fui valiente.</p>
+                <p class="ds-diary-entry-author">Pablo · Hoy</p>
+              </div>
+            </article>
+          </div>
+          <div class="ds-diary-day-group">
+            <div class="ds-diary-day-label">Ayer</div>
+            <article class="ds-diary-entry tone-coral">
+              <span class="ds-diary-entry-time">19:30</span>
+              <div class="ds-diary-entry-icon">🌡</div>
+              <div class="ds-diary-entry-body">
+                <p class="ds-diary-entry-title">Fiebre 38.2°</p>
+                <p class="ds-diary-entry-detail">Probable reacción a la vacuna.</p>
+                <p class="ds-diary-entry-author">María · Hoy</p>
+              </div>
+            </article>
+            <article class="ds-diary-entry tone-gold">
+              <span class="ds-diary-entry-time">16:00</span>
+              <div class="ds-diary-entry-icon">💉</div>
+              <div class="ds-diary-entry-body">
+                <p class="ds-diary-entry-title">Triple vírica</p>
+                <p class="ds-diary-entry-detail">Lote A8M3K · CAP Sant Gervasi.</p>
+                <p class="ds-diary-entry-author">Enf. Laura · Vacunas</p>
+              </div>
+            </article>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="spec">
+      <div class="spec-head"><h3>Tonal mapping · 4 tonos por categoría</h3><span class="meta-r">.tone-mint · .tone-coral · .tone-gold · .tone-blush</span></div>
+      <div class="spec-row col" style="padding: 12px 0">
+        <p style="font-size:13px;color:var(--ink-soft);max-width:64ch;line-height:1.55;margin:0">
+          El tono se aplica vía CSS custom property (<code>--diary-dot-color</code>,
+          <code>--diary-icon-bg</code>, <code>--diary-icon-ink</code>) lo que hace
+          que el dot del rail + el background del icon + el ink del icon sean
+          coherentes tonally.
+        </p>
+        <ul style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--ink-soft); line-height: 1.7; padding-left: 18px; margin: 8px 0 0">
+          <li><strong>tone-mint</strong> · toma · lactancia · sueño · hito (continuidad/wellness)</li>
+          <li><strong>tone-coral</strong> · síntoma · temperatura · antitérmico · embarazo · patadas · tensión · alimento (clínico/alerta)</li>
+          <li><strong>tone-gold</strong> · vacuna (institucional)</li>
+          <li><strong>tone-blush</strong> · nota · foto · medida · biberón · pañal (lifestyle/registro)</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="spec">
+      <div class="spec-head"><h3>Day grouping · "Hoy" / "Ayer" / "N nov"</h3><span class="meta-r">.diary-day-group · .diary-day-label</span></div>
+      <div class="spec-row col" style="padding: 12px 0 18px">
+        <p style="font-size:13px;color:var(--ink-soft);max-width:64ch;line-height:1.55;margin:0">
+          Entries se agrupan por día con label uppercase + dot 16px (12 + border 2px)
+          en el rail. Labels canon: "Hoy" · "Ayer" · "{N nov}" · lookup table en
+          <code>diaryDayLabelES</code>. v1.5 derivar de fecha real (date-fns).
+          Cero gamification · "no es un libro que tenga que estar lleno" (ADR-0011).
+        </p>
+      </div>
+    </div>
+
+    <div class="spec">
+      <div class="spec-head"><h3>Anatomy · reglas y reuso</h3><span class="meta-r">ADR-0007 · single source of truth</span></div>
+      <div class="spec-row col" style="padding: 12px 0 18px">
+        <ul style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--ink-soft); line-height: 1.7; padding-left: 18px; margin: 0">
+          <li><strong>Single source of truth</strong> · reusa <code>logEntries</code> global · cualquier registro FAB Log aparece auto</li>
+          <li><strong>Lanes calculadas</strong> · 0-32 time · 40-54 rail+dot · 64+ card · gaps mínimos 6-8px</li>
+          <li><strong>Tono via inline CSS vars</strong> · <code>--diary-dot-color</code> + <code>--diary-icon-bg</code> + <code>--diary-icon-ink</code></li>
+          <li><strong>Iconography</strong> · emoji decorativo (no SVG) · 16px · 1 por entry tipo</li>
+          <li><strong>Reusable in other books</strong> · misma estructura podría usarse en Hitos timeline cribaje, Salud historial · NO usado todavía pero canon abierto</li>
+          <li><strong>Animation cero</strong> · loading inmediato · "Aquí registramos lo que pasa · cuando pase"</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ╔═════════════════════════════════════════════════════════╗
        ║  CHANGELOG (end-marker · no §letter)                     ║
        ╚═════════════════════════════════════════════════════════╝ -->
   <section class="section">
