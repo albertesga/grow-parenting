@@ -45,3 +45,6 @@ agentes, resistentes a la rotación. Reemplaza prose en CLAUDE.md.
 
 ### Tono y producto
 - [0011 · Trauma-informed copy canon](0011-trauma-informed-copy.md)
+
+### Estrategia de distribución
+- [0014 · App Store · single app + App Clips (no multi-app)](0014-app-store-distribucion.md)
