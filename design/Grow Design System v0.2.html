@@ -6366,6 +6366,260 @@
   </section>
 
   <!-- ╔═════════════════════════════════════════════════════════╗
+       ║  § K.2 — MILESTONE CARNET · canon ADR-0012 CTAs          ║
+       ╚═════════════════════════════════════════════════════════╝ -->
+  <style>
+    /* CSS canon Milestone carnet · prefix ds-mc-* en demos · prototype usa .milestone-carnet-* */
+    .ds-mc-section {
+      background: var(--paper); border: 1px solid var(--line);
+      border-radius: 18px; padding: 16px;
+      max-width: 380px;
+    }
+    .ds-mc-section + .ds-mc-section { margin-top: 12px; }
+    .ds-mc-head {
+      display: flex; justify-content: space-between; align-items: flex-start;
+      gap: 12px; margin-bottom: 14px;
+    }
+    .ds-mc-eyebrow {
+      font-family: 'Lenia'; font-size: 10.5px;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--ink-muted); margin-bottom: 4px;
+    }
+    .ds-mc-head h3 {
+      margin: 0;
+      font-family: 'Lenia'; font-weight: 500;
+      font-size: 24px; line-height: 1.05;
+      letter-spacing: -0.01em; color: var(--ink);
+    }
+    .ds-mc-h3-sub {
+      font-family: 'Helvena'; font-weight: 400;
+      font-size: 13px; color: var(--ink-soft);
+      letter-spacing: 0; margin-left: 4px;
+    }
+    .ds-mc-chip {
+      flex-shrink: 0;
+      display: inline-flex; align-items: center;
+      padding: 6px 12px; border-radius: 999px;
+      font-family: 'Lenia'; font-weight: 500;
+      font-size: 13px; letter-spacing: 0.04em;
+    }
+    .ds-mc-chip.mint  { background: var(--mint-subtle);  color: #4F6647; }
+    .ds-mc-chip.gold  { background: var(--gold-subtle);  color: #6E5A2A; }
+    .ds-mc-chip.coral { background: var(--coral-subtle); color: #8E4A22; }
+
+    .ds-mc-progress-bar {
+      height: 6px; border-radius: 999px;
+      background: var(--paper-soft);
+      overflow: hidden; margin-bottom: 16px;
+    }
+    .ds-mc-progress-fill {
+      height: 100%; background: var(--mint-base); border-radius: 999px;
+    }
+
+    .ds-mc-list { display: flex; flex-direction: column; gap: 4px; }
+    .ds-mc-row {
+      display: flex; align-items: center; gap: 12px;
+      padding: 10px 4px;
+    }
+    .ds-mc-row + .ds-mc-row {
+      border-top: 1px solid rgba(201,194,178,0.42);
+    }
+    .ds-mc-row-icon {
+      flex-shrink: 0; width: 32px; height: 32px;
+      display: grid; place-items: center;
+      border-radius: 10px;
+      background: var(--paper-soft); color: var(--ink-soft);
+      font-size: 14px;
+    }
+    .ds-mc-row-icon.mint  { background: var(--mint-subtle);  color: #4F6647; }
+    .ds-mc-row-icon.gold  { background: var(--gold-subtle);  color: #6E5A2A; }
+    .ds-mc-row-icon.coral { background: var(--coral-subtle); color: #8E4A22; }
+    .ds-mc-row-body { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+    .ds-mc-row-body strong {
+      font-family: 'Lenia'; font-weight: 500;
+      font-size: 14px; line-height: 1.25; color: var(--ink);
+    }
+    .ds-mc-row-body span {
+      font-family: 'Helvena'; font-size: 12px;
+      color: var(--ink-soft); line-height: 1.4;
+    }
+    .ds-mc-row.pending strong { color: var(--ink-soft); }
+
+    .ds-mc-actions {
+      display: flex; flex-direction: column; gap: 10px;
+      margin-top: 14px;
+    }
+    .ds-mc-cta {
+      display: flex; align-items: center; gap: 14px;
+      padding: 14px 16px;
+      background: var(--paper); border: 1px solid var(--line);
+      border-radius: 18px;
+      text-align: left;
+      max-width: 380px; width: 100%;
+    }
+    .ds-mc-cta.primary {
+      background: radial-gradient(circle at 86% 8%, rgba(232,201,122,0.32), transparent 36%),
+                  linear-gradient(135deg, var(--mint-subtle), var(--paper-soft));
+      border-color: rgba(143,174,133,0.42);
+    }
+    .ds-mc-cta-icon {
+      flex-shrink: 0; width: 44px; height: 44px;
+      display: grid; place-items: center;
+      border-radius: 12px;
+      background: var(--paper); border: 1px solid var(--line);
+      color: var(--ink);
+      font-size: 20px;
+    }
+    .ds-mc-cta.primary .ds-mc-cta-icon {
+      background: var(--mint-base); border-color: var(--mint-base);
+      color: #2F4029;
+    }
+    .ds-mc-cta-body { flex: 1; display: flex; flex-direction: column; gap: 2px; }
+    .ds-mc-cta-body strong { font-family: 'Lenia'; font-weight: 500; font-size: 15px; color: var(--ink); }
+    .ds-mc-cta-body span { font-family: 'Helvena'; font-size: 12px; color: var(--ink-soft); }
+    .ds-mc-cta-arrow { flex-shrink: 0; font-family: 'Lenia'; font-size: 18px; color: var(--ink-muted); }
+  </style>
+  <section class="section">
+    <div class="section-head">
+      <div class="section-num">§ K.2 — Milestone carnet</div>
+      <div>
+        <h2>Logrados/Pendientes + progress bar + CTAs card-style.</h2>
+        <div class="desc">
+          Primitives del Carnet de Hitos (sub-vista del Libro de Hitos) ·
+          extiende <strong>§K Cards</strong> con specs específicos del carnet
+          de logros. 30 primitives canónicos. Cross-ref ADR-0001 (book-hero
+          de hitos), ADR-0012 (action CTAs card-style).
+        </div>
+      </div>
+    </div>
+
+    <div class="spec">
+      <div class="spec-head"><h3>Section head · eyebrow + h3 + chip de progreso</h3><span class="meta-r">.milestone-carnet-head · .milestone-carnet-eyebrow · .milestone-carnet-chip.{mint|gold|coral}</span></div>
+      <div class="spec-row col" style="padding: 12px 0">
+        <p style="font-size:13px;color:var(--ink-soft);max-width:64ch;line-height:1.55;margin:0">
+          Header jerárquico: eyebrow uppercase Lenia 10.5 · h3 Lenia 500 24px
+          con número grande + sub-text tipográfico secundario · chip tonal
+          alineado derecha. Progress bar slim 6px mint-base opcional debajo.
+        </p>
+      </div>
+      <div class="spec-row" style="padding: 16px 0">
+        <section class="ds-mc-section">
+          <header class="ds-mc-head">
+            <div>
+              <div class="ds-mc-eyebrow">Logrados · Haizea-Llevant</div>
+              <h3>17 <span class="ds-mc-h3-sub">de 32 hitos</span></h3>
+            </div>
+            <span class="ds-mc-chip mint">53%</span>
+          </header>
+          <div class="ds-mc-progress-bar"><div class="ds-mc-progress-fill" style="width: 53%"></div></div>
+          <div class="ds-mc-list">
+            <article class="ds-mc-row">
+              <span class="ds-mc-row-icon mint">✓</span>
+              <div class="ds-mc-row-body">
+                <strong>Sonrisa social</strong>
+                <span>15 feb 2025 · 0-3 meses</span>
+              </div>
+            </article>
+            <article class="ds-mc-row">
+              <span class="ds-mc-row-icon mint">✓</span>
+              <div class="ds-mc-row-body">
+                <strong>Camina solo</strong>
+                <span>2 mayo 2026 · Lactante mayor</span>
+              </div>
+            </article>
+          </div>
+        </section>
+      </div>
+    </div>
+
+    <div class="spec">
+      <div class="spec-head"><h3>Pending rows · gold tone + clock icon</h3><span class="meta-r">.milestone-carnet-row.pending · .milestone-carnet-row-icon.gold</span></div>
+      <div class="spec-row col" style="padding: 12px 0">
+        <p style="font-size:13px;color:var(--ink-soft);max-width:64ch;line-height:1.55;margin:0">
+          Pendientes con clock icon gold + rangos esperados P50/P95.
+          <strong>strong</strong> en ink-soft (no full ink · señala "no logrado
+          aún" sin alarma).
+        </p>
+      </div>
+      <div class="spec-row" style="padding: 16px 0">
+        <section class="ds-mc-section">
+          <header class="ds-mc-head">
+            <div>
+              <div class="ds-mc-eyebrow">Pendientes · por venir</div>
+              <h3>15 <span class="ds-mc-h3-sub">hitos en banda</span></h3>
+            </div>
+            <span class="ds-mc-chip gold">15</span>
+          </header>
+          <div class="ds-mc-list">
+            <article class="ds-mc-row pending">
+              <span class="ds-mc-row-icon gold">○</span>
+              <div class="ds-mc-row-body">
+                <strong>Pinza superior</strong>
+                <span>P50 10m · P95 15m · 4° trim</span>
+              </div>
+            </article>
+            <article class="ds-mc-row pending">
+              <span class="ds-mc-row-icon gold">○</span>
+              <div class="ds-mc-row-body">
+                <strong>Usa 8-10 palabras</strong>
+                <span>P50 16m · P95 24m · Lactante mayor</span>
+              </div>
+            </article>
+          </div>
+        </section>
+      </div>
+    </div>
+
+    <div class="spec">
+      <div class="spec-head"><h3>Action CTAs · card-style (ADR-0012)</h3><span class="meta-r">.milestone-carnet-cta.primary · .milestone-carnet-cta-icon · -body · -arrow</span></div>
+      <div class="spec-row col" style="padding: 12px 0">
+        <p style="font-size:13px;color:var(--ink-soft);max-width:64ch;line-height:1.55;margin:0">
+          CTAs card-style (no pills planas) para acciones principales · canon
+          ADR-0012. Icon tonal 44×44 + body (strong Lenia 500 15px + subtitle
+          Helvena 12px informativo) + arrow → derecha. <code>.primary</code>
+          tonal mint con gradient + gold radial.
+        </p>
+      </div>
+      <div class="spec-row" style="padding: 16px 0">
+        <div class="ds-mc-actions">
+          <button class="ds-mc-cta primary">
+            <span class="ds-mc-cta-icon">📤</span>
+            <span class="ds-mc-cta-body">
+              <strong>Exportar PDF</strong>
+              <span>Para pediatra · colegio · viaje</span>
+            </span>
+            <span class="ds-mc-cta-arrow">→</span>
+          </button>
+          <button class="ds-mc-cta">
+            <span class="ds-mc-cta-icon">🔗</span>
+            <span class="ds-mc-cta-body">
+              <strong>Compartir</strong>
+              <span>Enlace · email · WhatsApp</span>
+            </span>
+            <span class="ds-mc-cta-arrow">→</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="spec">
+      <div class="spec-head"><h3>Anatomy · reglas y reuso</h3><span class="meta-r">ADR-0001 · ADR-0012 · ADR-0011</span></div>
+      <div class="spec-row col" style="padding: 12px 0 18px">
+        <ul style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--ink-soft); line-height: 1.7; padding-left: 18px; margin: 0">
+          <li><strong>Section paper canon</strong> · border var(--line) · radius 18 · padding 16</li>
+          <li><strong>Eyebrow + h3 jerárquico</strong> · uppercase Lenia 10.5 + Lenia 500 24px con sub-text</li>
+          <li><strong>Chip tonal</strong> · 3 variantes (mint=progress · gold=pending count · coral=alerta)</li>
+          <li><strong>Progress bar slim</strong> · 6px mint-base · width % via inline style</li>
+          <li><strong>Row icon tonal 32×32</strong> · 4 tonos cycle · ✓ for done · ○ for pending</li>
+          <li><strong>CTA card-style canon</strong> · icon 44×44 + body strong+sub + arrow · ADR-0012</li>
+          <li><strong>Hover transitions</strong> · translateY(-1px) + border-color ink-soft</li>
+          <li><strong>Cross-ref Libro Hitos</strong> · accesible desde tab Carnet del navbar</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ╔═════════════════════════════════════════════════════════╗
        ║  § Y — DIARIO · timeline vertical primitive (ADR-0007)   ║
        ╚═════════════════════════════════════════════════════════╝ -->
   <style>
