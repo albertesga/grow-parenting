@@ -2136,6 +2136,137 @@
   </section>
 
   <!-- ╔═════════════════════════════════════════════════════════╗
+       ║  § A.2 — COPY CANON · trauma-informed (ADR-0011)         ║
+       ╚═════════════════════════════════════════════════════════╝ -->
+  <section class="section">
+    <div class="section-head">
+      <div class="section-num">§ A.2 — Copy canon · trauma-informed</div>
+      <div>
+        <h2>El tono manda más que el primitive.</h2>
+        <div class="desc">
+          Foundation invisible · 6 reglas hard que aplican a TODO copy de
+          producto (<strong>ADR-0011</strong>). Si un texto rompe estas reglas
+          rechazo del PR sin importar lo bien diseñado que esté el primitive.
+          Diferenciador canon de Grow vs apps comerciales · familias en
+          momentos vulnerables se sienten acompañadas, no juzgadas.
+        </div>
+      </div>
+    </div>
+
+    <div class="spec">
+      <div class="spec-head"><h3>1 · Cero gamification tóxica</h3><span class="meta-r">no streaks · no badges · no comparativas</span></div>
+      <div class="spec-row col" style="padding: 12px 0 18px">
+        <table style="width: 100%; max-width: 720px; border-collapse: collapse; font-size: 13px; line-height: 1.55">
+          <tr style="border-bottom: 1px solid var(--line)">
+            <th style="text-align: left; padding: 8px 12px; font-family: 'Lenia'; font-weight: 500; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-muted); width: 50%">❌ Anti-canon</th>
+            <th style="text-align: left; padding: 8px 12px; font-family: 'Lenia'; font-weight: 500; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-muted)">✓ Canon</th>
+          </tr>
+          <tr><td style="padding: 8px 12px; color: var(--coral-strong)">¡Llevas 5 días sin perder!</td><td style="padding: 8px 12px; color: var(--ink-soft)">Aquí registramos lo que pasa · cuando pase.</td></tr>
+          <tr><td style="padding: 8px 12px; color: var(--coral-strong)">Racha de 12 hitos · sigue así</td><td style="padding: 8px 12px; color: var(--ink-soft)">17 logrados · de 32 hitos.</td></tr>
+          <tr><td style="padding: 8px 12px; color: var(--coral-strong)">Tu peque va detrás del 70% de niños</td><td style="padding: 8px 12px; color: var(--ink-soft)">Lola está en banda P50 · normal a su edad.</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="spec">
+      <div class="spec-head"><h3>2 · Cero rojo médico</h3><span class="meta-r">coral-base para urgencias · NO #FF0000</span></div>
+      <div class="spec-row col" style="padding: 12px 0 18px">
+        <p style="font-size:13px;color:var(--ink-soft);max-width:64ch;line-height:1.55;margin:0">
+          El rojo puro es alarmante y contraproducente en momentos de crisis
+          (3AM, post-pérdida, primer parto). Canon:
+        </p>
+        <ul style="font-size:13px;color:var(--ink-soft);line-height:1.65;padding-left:18px;margin:8px 0 0">
+          <li><strong>Urgencias reales</strong> (112, anafilaxia, modo emergencia) · <code>var(--coral-base) #F2A57A</code></li>
+          <li><strong>Advertencias</strong> · <code>var(--coral-subtle)</code> o <code>var(--blush-subtle)</code></li>
+          <li><strong>Border crítico</strong> · <code>1.5px solid var(--coral-base)</code> (NO fill)</li>
+          <li><strong>Borrar/eliminar danger CTA</strong> · <code>var(--coral-strong)</code> en texto · NO fill rojo</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="spec">
+      <div class="spec-head"><h3>3 · Cero militancia · cero juicio</h3><span class="meta-r">respeto decisiones familias</span></div>
+      <div class="spec-row col" style="padding: 12px 0 18px">
+        <table style="width: 100%; max-width: 720px; border-collapse: collapse; font-size: 13px; line-height: 1.55">
+          <tr style="border-bottom: 1px solid var(--line)">
+            <th style="text-align: left; padding: 8px 12px; font-family: 'Lenia'; font-weight: 500; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-muted); width: 50%">❌ Anti-canon</th>
+            <th style="text-align: left; padding: 8px 12px; font-family: 'Lenia'; font-weight: 500; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-muted)">✓ Canon</th>
+          </tr>
+          <tr><td style="padding: 8px 12px; color: var(--coral-strong)">La lactancia materna es lo mejor</td><td style="padding: 8px 12px; color: var(--ink-soft)">Como salga. Y si no sale, también.</td></tr>
+          <tr><td style="padding: 8px 12px; color: var(--coral-strong)">El método X es el único correcto</td><td style="padding: 8px 12px; color: var(--ink-soft)">Cero juicio · seguridad, variedad y ritmo familiar.</td></tr>
+          <tr><td style="padding: 8px 12px; color: var(--coral-strong)">Deberías acostarlo a las 19:30</td><td style="padding: 8px 12px; color: var(--ink-soft)">Esto es una orientación · tú conoces a Lola.</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="spec">
+      <div class="spec-head"><h3>4 · Cita clínica con fuente + año</h3><span class="meta-r">.cita-clinica pill · DS § V Chat</span></div>
+      <div class="spec-row col" style="padding: 12px 0 18px">
+        <p style="font-size:13px;color:var(--ink-soft);max-width:64ch;line-height:1.55;margin:0">
+          Si no hay fuente con año <strong>no es post · es nota</strong>. La
+          fuente da legitimidad clínica sin caer en alarmismo o autoridad
+          ciega. Si una afirmación dice "los expertos dicen…" sin fuente
+          específica, no pasa review.
+        </p>
+        <table style="width: 100%; max-width: 720px; border-collapse: collapse; font-size: 13px; line-height: 1.55; margin-top: 8px">
+          <tr style="border-bottom: 1px solid var(--line)">
+            <th style="text-align: left; padding: 8px 12px; font-family: 'Lenia'; font-weight: 500; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-muted); width: 50%">❌ Anti-canon</th>
+            <th style="text-align: left; padding: 8px 12px; font-family: 'Lenia'; font-weight: 500; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-muted)">✓ Canon</th>
+          </tr>
+          <tr><td style="padding: 8px 12px; color: var(--coral-strong)">Los expertos dicen que…</td><td style="padding: 8px 12px; color: var(--ink-soft)">NICE NG143 · 2021</td></tr>
+          <tr><td style="padding: 8px 12px; color: var(--coral-strong)">Estudios demuestran que…</td><td style="padding: 8px 12px; color: var(--ink-soft)">AAP Bright Futures · 2024</td></tr>
+          <tr><td style="padding: 8px 12px; color: var(--coral-strong)">Es algo bien conocido</td><td style="padding: 8px 12px; color: var(--ink-soft)">Wessel 1954 · regla cólicos canon</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="spec">
+      <div class="spec-head"><h3>5 · Lenguaje trauma-informed</h3><span class="meta-r">"aquí no diagnosticamos · aquí estamos"</span></div>
+      <div class="spec-row col" style="padding: 12px 0 18px">
+        <table style="width: 100%; max-width: 720px; border-collapse: collapse; font-size: 13px; line-height: 1.55">
+          <tr style="border-bottom: 1px solid var(--line)">
+            <th style="text-align: left; padding: 8px 12px; font-family: 'Lenia'; font-weight: 500; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-muted); width: 50%">❌ Anti-canon</th>
+            <th style="text-align: left; padding: 8px 12px; font-family: 'Lenia'; font-weight: 500; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-muted)">✓ Canon</th>
+          </tr>
+          <tr><td style="padding: 8px 12px; color: var(--coral-strong)">Tu peque está enfermo</td><td style="padding: 8px 12px; color: var(--ink-soft)">Vamos a por la otitis · día 3 de antibiótico.</td></tr>
+          <tr><td style="padding: 8px 12px; color: var(--coral-strong)">Has fallado en X</td><td style="padding: 8px 12px; color: var(--ink-soft)">Hiciste lo correcto al venir aquí.</td></tr>
+          <tr><td style="padding: 8px 12px; color: var(--coral-strong)">Patrón anormal detectado</td><td style="padding: 8px 12px; color: var(--ink-soft)">3 otitis en 6 meses · puede valer la pena hablar con ORL.</td></tr>
+          <tr><td style="padding: 8px 12px; color: var(--coral-strong)">Sacudir es peligroso</td><td style="padding: 8px 12px; color: var(--ink-soft)">Nunca sacudas al bebé. Ni siquiera 1 segundo.</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="spec">
+      <div class="spec-head"><h3>6 · Modo arcoíris (post-pérdida)</h3><span class="meta-r">opt-in · cero confetti</span></div>
+      <div class="spec-row col" style="padding: 12px 0 18px">
+        <p style="font-size:13px;color:var(--ink-soft);max-width:64ch;line-height:1.55;margin:0">
+          Toggle opt-in en Perfil + Onboarding · cambia solo tono y contenido,
+          nunca limita funciones. Sin alegría performativa.
+        </p>
+        <ul style="font-size:13px;color:var(--ink-soft);line-height:1.65;padding-left:18px;margin:8px 0 0">
+          <li>❌ "¡Felicidades semana 28!" · confetti animations · "estás cerca!"</li>
+          <li>✓ Tono coral-subtle (sin alegría performativa)</li>
+          <li>✓ "Cero confetti · sin felicidades semana X · contenido factual + validación emocional"</li>
+          <li>✓ Ruta rápida a recursos de duelo perinatal + psicología perinatal</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="spec">
+      <div class="spec-head"><h3>Sticky disclaimer canon</h3><span class="meta-r">.chat-canon-foot · footer fijo</span></div>
+      <div class="spec-row col" style="padding: 12px 0 18px">
+        <p style="font-size:13px;color:var(--ink-soft);max-width:64ch;line-height:1.55;margin:0">
+          Frase canon presente en chat · footer de educación · modo emergencia
+          · y cualquier surface clínica:
+        </p>
+        <div style="margin-top: 12px; padding: 16px 22px; background: var(--paper-soft); border-radius: 16px; max-width: 500px; text-align: center">
+          <strong style="font-family: 'Lenia'; font-weight: 500; font-size: 16px; letter-spacing: -0.005em; color: var(--ink)">Aquí no diagnosticamos · aquí estamos.</strong>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ╔═════════════════════════════════════════════════════════╗
        ║  § B — ICONOGRAPHY                                       ║
        ╚═════════════════════════════════════════════════════════╝ -->
   <section class="section">
@@ -4783,6 +4914,14 @@
           Primer caller: Hitos · tab Aprende. Otros candidatos: Salud · Educación · Embarazo · Plan IA.
           Mismo lenguaje visual que <code>.book-hero</code> y <code>.callout</code> · paper + border <code>--line</code> + radius-md.
           Tonal opcional por tema (mint · coral · gold · blush · lavender).
+          <br><br>
+          <strong>📝 Nota sobre prefijo CSS</strong> · Los demos de este DS usan
+          <code>.ds-post-*</code> con prefijo <code>ds-</code> para aislar el CSS de las
+          demos visuales del DS. El <strong>canon en prototype.html</strong> es
+          <code>.post-*</code> sin prefijo (ver ADR-0013). Esta misma convención
+          aplica a todos los demos del DS (<code>.ds-health-*</code> en §W,
+          <code>.ds-profile-*</code> en §X, <code>.ds-diary-*</code> en §Y,
+          <code>.ds-mc-*</code> en §K.2).
         </div>
       </div>
     </div>
