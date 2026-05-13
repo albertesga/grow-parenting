@@ -50,8 +50,8 @@ María (embarazo) usa `avatar-coral`. Resto usa `avatar-mint`.
 
 ## Harness
 
-- **Skills** · `.claude/skills/` · `/verify-proto` · `/new-book` · `/sync-ds`
-- **Subagents** · `.claude/agents/` · `ds-auditor` (review independiente DS)
-- **ADRs** · `docs/decisions/` · 14 decisiones canon · ver `README.md` index
-  (5 primitives DS · 6 arquitectura módulos · 1 tono · 1 distribución App Store · 1 harness)
+- **Skills** · `.claude/skills/` · `/verify-proto` · `/new-book` · `/sync-ds` · `/audit-trauma-copy`
+- **Subagents** · `.claude/agents/` · `ds-auditor` (visual/DS) · `copy-auditor` (tono/citas)
+- **ADRs** · `docs/decisions/` · 16 decisiones canon · ver `README.md` index
+  (6 primitives DS · 6 arquitectura módulos · 2 tono+routing · 1 distribución · 1 centralización JS)
 - **Patterns** · `.claude/PATTERNS.md` · patrones implícitos del código (data-goto · tonal · log filter · localStorage · sheet stubs · sub-libros · cross-ref)

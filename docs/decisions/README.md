@@ -42,9 +42,13 @@ agentes, resistentes a la rotación. Reemplaza prose en CLAUDE.md.
 - [0008 · Pantalla Perfil · identidad + config global](0008-pantalla-perfil.md)
 - [0009 · Libro de Salud · expediente clínico + Modo emergencia](0009-libro-salud-emergencia.md)
 - [0010 · Log filter por source](0010-log-filter-por-source.md)
+- [0016 · Cross-libro routing · data-goto pattern](0016-cross-libro-routing.md)
 
 ### Tono y producto
 - [0011 · Trauma-informed copy canon](0011-trauma-informed-copy.md)
 
 ### Estrategia de distribución
 - [0014 · App Store · single app + App Clips (no multi-app)](0014-app-store-distribucion.md)
+
+### Centralización JS
+- [0015 · bookState + generic helpers canon](0015-bookstate-helpers.md)
