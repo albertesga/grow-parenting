@@ -20,3 +20,6 @@ playwright-report/
 __pycache__/
 *.pyc
 .venv/
+
+# Claude Code · worktrees temporales (se generan al usar el harness)
+.claude/worktrees/
