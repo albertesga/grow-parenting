@@ -4182,14 +4182,9 @@
       inset 0 1px 0 rgba(255,255,255,0.68),
       0 12px 24px rgba(42,33,27,0.06);
   }
-  .sleep-hero,
-  .module-hero,
-  .module-hero.mint {
-    border-radius: 30px;
-    padding: 19px;
-    position: relative;
-    overflow: hidden;
-  }
+  /* .sleep-hero ahora hereda de .book-hero canon (ADR-0001) · 120px min-height,
+     border-radius 26, padding 14, h3 22px. Override eliminado.
+     .sleep-kicker / .sleep-mini-label conservados como aliases canon DS § E kicker. */
   .sleep-kicker,
   .sleep-mini-label {
     font-family: "Lenia";
@@ -4198,19 +4193,8 @@
     text-transform: uppercase;
     color: var(--ink-muted);
   }
-  .sleep-hero h3,
-  .module-hero h3 {
-    font-family: "Lenia";
-    font-size: 30px;
-    line-height: 1;
-    letter-spacing: -0.04em;
-    font-weight: 500;
-    margin: 8px 0 8px;
-    max-width: 10ch;
-  }
-  .sleep-hero p,
   .sleep-copy,
-  .module-hero p {
+  .sleep-hero p {
     color: var(--ink-soft);
     font-size: var(--fs-body-sm);
     line-height: 1.48;
@@ -4540,12 +4524,8 @@
     scroll-snap-align: start;
     min-height: 38px;
   }
-  /* sleep-age-chip active — module-dark */
-  .sleep-age-chip.active {
-    background: var(--module-dark);
-    color: var(--paper);
-    border-color: var(--module-dark);
-  }
+  /* .sleep-age-chip migrated to .chip primitive (ADR-0003) · render JS usa class="chip ..."
+     · active state heredado del canon .chip.active (paper + inset ink ring · no fill sólido) */
   .sweetspot-bar {
     position: relative;
     display: grid;
@@ -4748,16 +4728,8 @@
       inset 0 1px 0 rgba(255,255,255,0.68),
       0 12px 24px rgba(42,33,27,0.06);
   }
-  /* .food-hero ahora hereda del primitive .book-hero canon (120px min-height,
-     border-radius 26, padding 14) · evitamos el override anterior que rompía
-     el lenguaje visual común entre libros. Solo aplica al alias .module-hero.gold. */
-  .module-hero.gold {
-    position: relative;
-    overflow: hidden;
-    border-radius: 30px;
-    padding: 19px;
-    min-height: 168px;
-  }
+  /* .food-hero hereda de .book-hero canon · .module-hero.gold legacy
+     eliminado (no se usa en markup · ADR-0001). */
   .food-kicker,
   .food-mini-label {
     font-family: "Lenia";
@@ -4766,7 +4738,7 @@
     text-transform: uppercase;
     color: var(--ink-muted);
   }
-  .food-hero h3,
+  /* food-view-head + food-section h3 mantienen 28px (sección title interna · no hero) */
   .food-view-head h3,
   .food-section h3 {
     font-family: "Lenia";
@@ -4775,9 +4747,6 @@
     letter-spacing: -0.04em;
     font-weight: 500;
     margin: 7px 0 8px;
-  }
-  .food-hero h3 {
-    max-width: 10ch;
   }
   .food-copy,
   .food-hero p {
@@ -5166,14 +5135,8 @@
       inset 0 1px 0 rgba(255,255,255,0.68),
       0 12px 24px rgba(42,33,27,0.06);
   }
-  .lactation-hero,
-  .module-hero.blush {
-    position: relative;
-    overflow: hidden;
-    border-radius: 30px;
-    padding: 19px;
-    min-height: 176px;
-  }
+  /* .lactation-hero hereda de .book-hero canon · .module-hero.blush legacy
+     eliminado (ADR-0001). */
   .lactation-kicker,
   .lactation-mini-label {
     font-family: "Lenia";
@@ -5182,7 +5145,7 @@
     text-transform: uppercase;
     color: var(--ink-muted);
   }
-  .lactation-hero h3,
+  /* lactation-view-head + lactation-section h3 (sección title · no hero) */
   .lactation-view-head h3,
   .lactation-section h3 {
     font-family: "Lenia";
@@ -5192,7 +5155,6 @@
     font-weight: 500;
     margin: 7px 0 8px;
   }
-  .lactation-hero h3 { max-width: 11ch; }
   .lactation-copy,
   .lactation-hero p {
     color: var(--ink-soft);
@@ -6530,15 +6492,8 @@
       inset 0 1px 0 rgba(255,255,255,0.68),
       0 12px 24px rgba(42,33,27,0.06);
   }
-  .pregnancy-hero,
-  .vaccine-hero,
-  .module-hero.coral {
-    position: relative;
-    overflow: hidden;
-    border-radius: 30px;
-    padding: 19px;
-    min-height: 176px;
-  }
+  /* .pregnancy-hero + .vaccine-hero heredan de .book-hero canon · .module-hero.coral
+     legacy eliminado (ADR-0001). */
   .pregnancy-kicker,
   .pregnancy-mini-label,
   .vaccine-kicker,
@@ -6549,10 +6504,9 @@
     text-transform: uppercase;
     color: var(--ink-muted);
   }
-  .pregnancy-hero h3,
+  /* view-head + section h3 (sección title · no hero) */
   .pregnancy-view-head h3,
   .pregnancy-section h3,
-  .vaccine-hero h3,
   .vaccine-view-head h3,
   .vaccine-section h3 {
     font-family: "Lenia";
@@ -6562,8 +6516,6 @@
     font-weight: 500;
     margin: 7px 0 8px;
   }
-  .pregnancy-hero h3,
-  .vaccine-hero h3 { max-width: 11ch; }
   .pregnancy-copy,
   .pregnancy-hero p,
   .vaccine-copy,
@@ -6589,14 +6541,9 @@
     font-size: var(--fs-meta);
     padding: 7px 10px;
   }
-  /* pregnancy/vaccine nav-strip + view-chip base now in canonical .module-strip rule */
-  .pregnancy-view-chip.active,
-  .vaccine-view-chip.active {
-    color: #4A2510;
-    background: var(--coral-base);
-    border-color: var(--coral-base);
-    box-shadow: 0 10px 20px rgba(214,119,66,0.18);
-  }
+  /* .pregnancy-view-chip + .vaccine-view-chip migrated to .chip primitive (ADR-0003)
+     · render JS usa class="chip ..." con tonal cycle · active state heredado del
+     canon .chip.active (paper + inset ink ring · no fill coral sólido) */
   .pregnancy-hero-mark,
   .vaccine-hero-mark {
     position: absolute;
@@ -14707,9 +14654,15 @@
   }
 
   function renderSleepAgeStrip() {
+    /* Chip primitive canon DS § E · tonal cycle por posición · ADR-0003 */
+    const tones = ['', 'coral', 'mint', 'blush', 'gold'];
     return `
-      <div class="sleep-age-strip" aria-label="Selector de edad de sueño">
-        ${sleepAgeRanges.map((range) => `<button class="sleep-age-chip${range.id === sleepActiveAge ? ' active' : ''}" type="button" data-sleep-age="${range.id}">${escapeHtml(range.label)}</button>`).join('')}
+      <div class="sleep-age-strip chip-strip" aria-label="Selector de edad de sueño">
+        ${sleepAgeRanges.map((range, i) => {
+          const tone = tones[i % tones.length];
+          const active = range.id === sleepActiveAge ? ' active' : '';
+          return `<button class="chip${tone ? ' ' + tone : ''}${active}" type="button" data-sleep-age="${range.id}">${escapeHtml(range.label)}</button>`;
+        }).join('')}
       </div>
     `;
   }
@@ -16492,9 +16445,15 @@ Grow
       ['table', 'Tabla'],
       ['scheme', 'Esquema']
     ];
+    /* Chip primitive canon DS § E · tonal cycle por posición · ADR-0003 */
+    const tones = ['', 'coral', 'mint', 'gold', 'blush'];
     return `
-      <div class="vaccine-nav-strip" aria-label="Vistas del libro de vacunas">
-        ${items.map(([id, label]) => `<button class="vaccine-view-chip${vaccineActiveView === id ? ' active' : ''}" type="button" data-vaccine-view="${id}">${escapeHtml(label)}</button>`).join('')}
+      <div class="vaccine-nav-strip chip-strip" aria-label="Vistas del libro de vacunas">
+        ${items.map(([id, label], i) => {
+          const tone = tones[i % tones.length];
+          const active = vaccineActiveView === id ? ' active' : '';
+          return `<button class="chip${tone ? ' ' + tone : ''}${active}" type="button" data-vaccine-view="${id}">${escapeHtml(label)}</button>`;
+        }).join('')}
       </div>
     `;
   }
