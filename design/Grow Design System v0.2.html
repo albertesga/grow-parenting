@@ -6989,6 +6989,371 @@
   </section>
 
   <!-- ╔═════════════════════════════════════════════════════════╗
+       ║  § Z — CÓLICOS · sub-libro PURPLE (ADR-0006)             ║
+       ╚═════════════════════════════════════════════════════════╝ -->
+  <style>
+    /* CSS canon Cólicos · prefix ds-col-* en demos · prototype usa .colicos-* */
+    .ds-col-no-diag {
+      font-family: 'Lenia'; font-size: 11px;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--ink-muted); margin-bottom: 10px;
+    }
+    .ds-col-purple-sticky {
+      background: linear-gradient(135deg, rgba(245,222,231,0.92), rgba(229,210,232,0.78));
+      border: 1.5px solid #B89BC9;
+      border-radius: 18px;
+      padding: 16px 18px;
+      max-width: 380px;
+      font-family: 'Helvena'; font-size: 14px; line-height: 1.45;
+      color: #5A4970;
+    }
+    .ds-col-purple-link {
+      display: block;
+      margin-top: 10px;
+      background: transparent; border: 0; padding: 0;
+      color: #5A4970;
+      font-family: 'Lenia'; font-size: 12px;
+      letter-spacing: 0.06em;
+      text-decoration: underline; text-underline-offset: 4px;
+      cursor: pointer;
+    }
+    .ds-col-classifier {
+      max-width: 380px;
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      padding: 20px;
+      display: flex; flex-direction: column; align-items: center; gap: 10px;
+    }
+    .ds-col-classifier-btn {
+      width: 80px; height: 80px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.7), transparent 50%),
+                  linear-gradient(135deg, var(--coral-base), var(--coral-strong));
+      color: #4A2510;
+      display: grid; place-items: center;
+      font-size: 32px;
+      border: 0; cursor: pointer;
+      box-shadow: 0 8px 22px rgba(214,119,66,0.32);
+    }
+    .ds-col-classifier strong {
+      font-family: 'Lenia'; font-weight: 500; font-size: 16px; color: var(--ink);
+    }
+    .ds-col-classifier .meta {
+      font-family: 'Lenia'; font-size: 11px;
+      color: var(--ink-muted); letter-spacing: 0.06em;
+    }
+    .ds-col-episode {
+      max-width: 380px;
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 16px;
+    }
+    .ds-col-episode.is-live { border-color: var(--coral-base); }
+    .ds-col-ep-title {
+      display: flex; justify-content: space-between; align-items: baseline;
+      margin-bottom: 12px;
+    }
+    .ds-col-ep-title strong {
+      font-family: 'Lenia'; font-weight: 500; font-size: 14px; color: var(--ink);
+    }
+    .ds-col-ep-title .meta {
+      font-family: 'Lenia'; font-size: 11px; color: var(--ink-muted); letter-spacing: 0.04em;
+    }
+    .ds-col-ep-live-row {
+      display: flex; justify-content: space-between; align-items: center; gap: 12px;
+    }
+    .ds-col-ep-timer {
+      font-family: 'Lenia'; font-weight: 500;
+      font-size: 32px; letter-spacing: -0.02em; line-height: 1;
+      color: var(--coral-strong);
+      font-variant-numeric: tabular-nums;
+    }
+    .ds-col-ep-cta {
+      background: var(--coral-base); color: #4A2510;
+      border: 0; padding: 10px 14px; border-radius: 999px;
+      font-family: 'Lenia'; font-weight: 500; font-size: 13px;
+      cursor: pointer;
+    }
+    .ds-col-ep-cta.empty {
+      background: var(--paper-soft); color: var(--ink-soft);
+      border: 1px solid var(--line);
+    }
+    .ds-col-ep-summary {
+      font-family: 'Helvena'; font-size: 13px; color: var(--ink-soft); line-height: 1.45;
+    }
+    .ds-col-timer-block {
+      max-width: 380px;
+      background: linear-gradient(180deg, var(--coral-subtle), var(--paper-soft));
+      border-radius: 22px;
+      padding: 26px;
+      text-align: center;
+    }
+    .ds-col-timer-big {
+      font-family: 'Lenia'; font-weight: 500;
+      font-size: 56px; line-height: 1;
+      color: var(--coral-strong);
+      letter-spacing: -0.02em;
+      font-variant-numeric: tabular-nums;
+      margin-bottom: 8px;
+    }
+    .ds-col-timer-sub {
+      font-family: 'Helvena'; font-style: italic;
+      color: var(--ink-soft); font-size: 13px;
+    }
+    .ds-col-intensity {
+      max-width: 380px;
+      display: flex; justify-content: space-between; align-items: center;
+      gap: 8px;
+      padding: 14px;
+      background: var(--paper); border: 1px solid var(--line);
+      border-radius: 16px;
+    }
+    .ds-col-intensity .label {
+      font-family: 'Lenia'; font-size: 10.5px;
+      letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-muted);
+      flex-shrink: 0;
+    }
+    .ds-col-intensity-scale {
+      display: flex; gap: 6px;
+    }
+    .ds-col-intensity-dot {
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      border: 1.5px solid var(--line);
+      background: var(--paper);
+      display: grid; place-items: center;
+      font-family: 'Lenia'; font-size: 12px;
+      color: var(--ink-muted);
+      cursor: pointer;
+    }
+    .ds-col-intensity-dot.active {
+      background: var(--coral-base); color: #4A2510; border-color: var(--coral-base);
+    }
+    .ds-col-week {
+      max-width: 380px;
+      background: var(--paper); border: 1px solid var(--line);
+      border-radius: 18px; padding: 16px;
+    }
+    .ds-col-week-head {
+      display: flex; justify-content: space-between; align-items: baseline;
+      margin-bottom: 14px;
+    }
+    .ds-col-week-head strong {
+      font-family: 'Lenia'; font-weight: 500; font-size: 14px; color: var(--ink);
+    }
+    .ds-col-week-head .sub {
+      font-family: 'Lenia'; font-size: 11px; color: var(--ink-muted);
+      letter-spacing: 0.04em;
+    }
+    .ds-col-stats-row {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 12px;
+    }
+    .ds-col-stat {
+      text-align: center;
+      padding: 8px;
+      background: var(--paper-soft); border-radius: 12px;
+    }
+    .ds-col-stat strong {
+      display: block;
+      font-family: 'Lenia'; font-weight: 500; font-size: 16px;
+      color: var(--coral-strong);
+    }
+    .ds-col-stat span {
+      display: block; font-family: 'Lenia'; font-size: 9px;
+      color: var(--ink-muted); letter-spacing: 0.12em; text-transform: uppercase;
+      margin-top: 3px;
+    }
+  </style>
+  <section class="section">
+    <div class="section-head">
+      <div class="section-num">§ Z — Cólicos · sub-libro PURPLE</div>
+      <div>
+        <h2>Las tres horas más largas del día · trauma-informed.</h2>
+        <div class="desc">
+          Primitives del Sub-libro de Cólicos (<strong>ADR-0006</strong>) ·
+          vive bajo Libro de Salud (ADR-0009) · scope acotado 0-4 meses (regla
+          Wessel + Period of PURPLE NSBSP). 150 primitives canónicos · canon
+          trauma-informed estricto (ADR-0011 · no rojo médico, no gamification).
+          Cross-ref bidireccional Salud↔Cólicos.
+        </div>
+      </div>
+    </div>
+
+    <div class="spec">
+      <div class="spec-head"><h3>Purple sticky · "no es tu culpa · estamos contigo"</h3><span class="meta-r">.colicos-purple-sticky · .colicos-purple-link · NSBSP canon</span></div>
+      <div class="spec-row col" style="padding: 12px 0">
+        <p style="font-size:13px;color:var(--ink-soft);max-width:64ch;line-height:1.55;margin:0">
+          Banner sticky en Hoy del libro de Cólicos · canon trauma-informed
+          ADR-0011. Fondo lavender pastel · border 1.5px violeta suave (NO rojo
+          médico). Mensaje canon: <em>"Esto que estás viviendo es un período. Pasará.
+          No es tu culpa. Aquí estamos."</em> Link "Si no puedes más ›" abre safety
+          frame (NSBSP 4-pasos).
+        </p>
+      </div>
+      <div class="spec-row" style="padding: 16px 0">
+        <div class="ds-col-purple-sticky">
+          <div>Esto que estás viviendo es un período. Pasará. No es tu culpa. Aquí estamos.</div>
+          <button class="ds-col-purple-link">Si no puedes más ›</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="spec">
+      <div class="spec-head"><h3>Cry classifier · escuchar 5 segundos · on-device</h3><span class="meta-r">.colicos-classifier-card · .colicos-classifier-bigbtn</span></div>
+      <div class="spec-row col" style="padding: 12px 0">
+        <p style="font-size:13px;color:var(--ink-soft);max-width:64ch;line-height:1.55;margin:0">
+          Card central de Hoy con CTA grande (80×80 round coral gradient) para
+          analizar llanto del peque. <strong>On-device privado</strong> · nunca
+          sale del móvil. Meta line explica privacidad explícitamente para
+          construir trust.
+        </p>
+      </div>
+      <div class="spec-row" style="padding: 16px 0">
+        <article class="ds-col-classifier">
+          <button class="ds-col-classifier-btn">🎙</button>
+          <strong>Escuchar 5 segundos</strong>
+          <span class="meta">on-device · privado · nunca sale del móvil</span>
+        </article>
+      </div>
+    </div>
+
+    <div class="spec">
+      <div class="spec-head"><h3>Episode card · estados live + empty</h3><span class="meta-r">.colicos-episode-card · .colicos-episode-card.is-live · .ep-timer · .ep-cta</span></div>
+      <div class="spec-row col" style="padding: 12px 0">
+        <p style="font-size:13px;color:var(--ink-soft);max-width:64ch;line-height:1.55;margin:0">
+          Card de estado del episodio actual. <strong>2 estados</strong>:
+          <code>.is-live</code> (border coral · timer corriendo · CTA "Volver al
+          episodio") vs empty (paper · summary del último episodio · CTA
+          "+ Empezar episodio" ghost).
+        </p>
+      </div>
+      <div class="spec-row" style="padding: 16px 0; gap: 14px; flex-wrap: wrap">
+        <article class="ds-col-episode is-live">
+          <div class="ds-col-ep-title">
+            <strong>Episodio activo</strong>
+            <span class="meta">empezó a las 19:34</span>
+          </div>
+          <div class="ds-col-ep-live-row">
+            <span class="ds-col-ep-timer">+42:18</span>
+            <button class="ds-col-ep-cta">Volver al episodio ›</button>
+          </div>
+        </article>
+        <article class="ds-col-episode">
+          <div class="ds-col-ep-title">
+            <strong>Sin episodio activo</strong>
+          </div>
+          <p class="ds-col-ep-summary">Último episodio: hace 1 día · 1h 23min · llanto inconsolable.</p>
+          <button class="ds-col-ep-cta empty" style="margin-top: 12px">+ Empezar episodio</button>
+        </article>
+      </div>
+    </div>
+
+    <div class="spec">
+      <div class="spec-head"><h3>Timer block · episodio en curso</h3><span class="meta-r">.colicos-timer-block · .colicos-timer-big · .colicos-timer-sub</span></div>
+      <div class="spec-row col" style="padding: 12px 0">
+        <p style="font-size:13px;color:var(--ink-soft);max-width:64ch;line-height:1.55;margin:0">
+          Frame B (pantalla episodio en curso) · timer big Lenia 56px con
+          tabular-nums coral-strong + sub italic. Background gradient coral
+          subtle. Mensaje canon: <em>"Acabas de empezar · solas las dos"</em> ·
+          trauma-informed reconoce el momento sin minimizar ni dramatizar.
+        </p>
+      </div>
+      <div class="spec-row" style="padding: 16px 0">
+        <div class="ds-col-timer-block">
+          <div class="ds-col-timer-big">00:42</div>
+          <div class="ds-col-timer-sub">Acabas de empezar · solas las dos</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="spec">
+      <div class="spec-head"><h3>Intensity scale · 5 dots sin alarmismo</h3><span class="meta-r">.colicos-intensity · .colicos-intensity-scale · .colicos-intensity-dot.active</span></div>
+      <div class="spec-row col" style="padding: 12px 0">
+        <p style="font-size:13px;color:var(--ink-soft);max-width:64ch;line-height:1.55;margin:0">
+          Selector 1-5 para medir intensidad del episodio sin etiquetas verbales
+          ("leve" / "moderado" / "severo") que pueden estigmatizar. Solo números.
+          Dot 28×28 round · selected coral-base.
+        </p>
+      </div>
+      <div class="spec-row" style="padding: 16px 0">
+        <div class="ds-col-intensity">
+          <span class="label">Intensidad</span>
+          <div class="ds-col-intensity-scale">
+            <span class="ds-col-intensity-dot">1</span>
+            <span class="ds-col-intensity-dot">2</span>
+            <span class="ds-col-intensity-dot active">3</span>
+            <span class="ds-col-intensity-dot">4</span>
+            <span class="ds-col-intensity-dot">5</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="spec">
+      <div class="spec-head"><h3>Week card · stats + heatmap</h3><span class="meta-r">.colicos-week-card · .colicos-stats-row · .colicos-stat</span></div>
+      <div class="spec-row col" style="padding: 12px 0">
+        <p style="font-size:13px;color:var(--ink-soft);max-width:64ch;line-height:1.55;margin:0">
+          Resumen semanal · stats 3-col (Hoy · Pico · Wessel) + heatmap mini
+          (no mostrado aquí · usa <code>.colicos-heatmap.mini</code>). Stats con
+          número coral-strong + label uppercase Lenia 9px. WESSEL = regla
+          canon Wessel 1954 (&gt;3h/día &gt;3 días/sem &gt;3 sem = cólico).
+        </p>
+      </div>
+      <div class="spec-row" style="padding: 16px 0">
+        <section class="ds-col-week">
+          <header class="ds-col-week-head">
+            <div>
+              <strong>Esta semana</strong>
+              <span class="sub">28 abr - 4 may</span>
+            </div>
+            <a style="font-family: 'Lenia'; font-size: 12px; color: var(--ink-soft); text-decoration: underline; text-underline-offset: 3px">Ver detalle ›</a>
+          </header>
+          <div class="ds-col-stats-row">
+            <div class="ds-col-stat"><strong>2h 14m</strong><span>Hoy</span></div>
+            <div class="ds-col-stat"><strong>19-21h</strong><span>Pico</span></div>
+            <div class="ds-col-stat"><strong>✓</strong><span>Wessel</span></div>
+          </div>
+        </section>
+      </div>
+    </div>
+
+    <div class="spec">
+      <div class="spec-head"><h3>Anatomy · 6 frames del libro</h3><span class="meta-r">ADR-0006 · NSBSP · Wessel · 5 S's</span></div>
+      <div class="spec-row col" style="padding: 12px 0 18px">
+        <ul style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--ink-soft); line-height: 1.7; padding-left: 18px; margin: 0">
+          <li><strong>Frame A · Hoy</strong> · top-header + purple sticky + classifier + episode card + week summary</li>
+          <li><strong>Frame B · Episodio en curso</strong> · timer block + intensity 5-dots + 5 S's tools + save</li>
+          <li><strong>Frame C · Histórico</strong> · weekly bars + heatmap detalle · Wessel canon evaluation</li>
+          <li><strong>Frame D · Cry classifier</strong> · on-device PURPLE classifier · resultado + sheet edu</li>
+          <li><strong>Frame E · Purple education</strong> · 6 cards canon NSBSP (Peak · Resists · Unexpected · Long · Pain-like · Evening)</li>
+          <li><strong>Frame F · Safety frame</strong> · 4-step NSBSP (deja en cuna · sal · respira · vuelve) · "Nunca sacudas al bebé"</li>
+        </ul>
+      </div>
+      <div class="spec-row col" style="padding: 12px 0 18px">
+        <div class="spec-label">Cross-ref bidireccional</div>
+        <ul style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--ink-soft); line-height: 1.7; padding-left: 18px; margin: 0">
+          <li><strong>Salud→Cólicos</strong> · card sub-libro destacada en Hoy del libro de Salud (.health-sublibro-card)</li>
+          <li><strong>Cólicos→Salud</strong> · cross-ref "Si el llanto se acompaña de fiebre → libro de Salud" · canon ADR-0009</li>
+          <li><strong>Chat→Cólicos</strong> · triage tree "crying" (NSBSP outcomes) sugiere abrir el libro</li>
+          <li><strong>Diario→Cólicos</strong> · auto-log de episodios aparecen en timeline diario (tone coral)</li>
+        </ul>
+      </div>
+      <div class="spec-row col" style="padding: 12px 0 18px">
+        <div class="spec-label">Reglas trauma-informed estrictas (ADR-0011)</div>
+        <ul style="font-size:13px;color:var(--ink-soft);line-height:1.65;padding-left:18px;margin:0">
+          <li>NO etiquetas verbales en intensity scale ("severo" estigmatiza · solo números)</li>
+          <li>NO gamification de "días sin episodio" · período morado es FASE no fracaso</li>
+          <li>SI "no es tu culpa · estamos contigo" sticky permanente</li>
+          <li>SI directez canon NSBSP en safety frame · "Nunca sacudas al bebé. Ni siquiera 1 segundo."</li>
+          <li>SI on-device privacy en cry classifier · build trust explícito</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ╔═════════════════════════════════════════════════════════╗
        ║  CHANGELOG (end-marker · no §letter)                     ║
        ╚═════════════════════════════════════════════════════════╝ -->
   <section class="section">
