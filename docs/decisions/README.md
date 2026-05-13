@@ -33,6 +33,7 @@ agentes, resistentes a la rotación. Reemplaza prose en CLAUDE.md.
 - [0003 · Chip primitive DS §E](0003-chip-primitive-DS.md)
 - [0007 · Diary timeline vertical primitive](0007-diary-timeline-vertical.md)
 - [0012 · Action CTAs card-style](0012-action-ctas-card-style.md)
+- [0013 · Post primitives (gallery + page) DS §Q](0013-post-primitives.md)
 
 ### Arquitectura de módulos
 - [0004 · Bottom nav · Perfil reemplaza Hitos](0004-bottom-nav-perfil.md)
