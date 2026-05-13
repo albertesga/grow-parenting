@@ -1,5 +1,5 @@
 ---
-description: Audita la sincronía entre prototype.html y design/Grow Design System v0.2.html. Detecta CSS huérfano, primitives documentados pero no usados, y primitives usados pero no documentados. Úsalo después de un cambio que añade o modifica un primitive canónico.
+description: Auditor de sincronía DS ↔ prototype. Detecta drift entre el Design System y la implementación · CSS huérfano (en uno pero no en otro), primitives documentados sin uso, primitives usados sin documentar. Reporta por categoría (book-hero, chips, navbar, timeline). Úsalo después de cualquier cambio que toque CSS de un primitive canónico o cuando sospeches que el DS está desincronizado. Trigger keywords: sync DS, sincronía, drift, audit DS, gap prototype-DS, design system drift, primitives huérfanos, DS auditoría.
 allowed-tools: Bash(grep *) Bash(rg *)
 ---
 

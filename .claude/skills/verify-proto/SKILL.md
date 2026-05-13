@@ -1,5 +1,5 @@
 ---
-description: Verifica que el prototipo carga (HTTP 200 ambos archivos) y el JS es sintácticamente válido. Úsalo SIEMPRE antes de commit. Detecta también drift de tabla DS si el cambio toca CSS de un primitive canónico.
+description: Pre-commit verification del prototipo Grow. Verifica que prototype.html y design/Grow Design System v0.2.html cargan (HTTP 200) y que el JS extraído del prototype es sintácticamente válido (node --check). Úsalo SIEMPRE antes de commit. Trigger keywords: verificar, verify, check, pre-commit, validar, validate, HTTP, sintaxis, JS, syntax, smoke test, comprobar.
 allowed-tools: Bash(curl *) Bash(node *) Bash(python3 *)
 ---
 

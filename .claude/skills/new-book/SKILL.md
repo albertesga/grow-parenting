@@ -1,5 +1,5 @@
 ---
-description: Scaffold de un libro nuevo siguiendo canon Grow · navbar dedicado + book-hero + tabs + state JS. Úsalo cuando el user pida añadir un libro nuevo a la app.
+description: Scaffold canónico de un libro nuevo en el prototipo Grow · genera shelf-book entry + screen + book-hero tonal + navbar dedicado con tabs + FAB Log central + CSS tonal + state JS + dispatch hook + log filter + opción de ADR. Sigue ADR-0001 (book-hero), ADR-0002 (navbar), ADR-0010 (log filter). Úsalo cuando el user pida añadir un libro nuevo o un módulo nuevo a la app. Trigger keywords: nuevo libro, new book, scaffold, libro nuevo, módulo nuevo, canon, libro de X, añadir libro, crear módulo.
 argument-hint: [nombre-libro] [tono] [tabs...]
 arguments: bookName tone tabs
 ---

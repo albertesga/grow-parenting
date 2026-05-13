@@ -52,4 +52,6 @@ María (embarazo) usa `avatar-coral`. Resto usa `avatar-mint`.
 
 - **Skills** · `.claude/skills/` · `/verify-proto` · `/new-book` · `/sync-ds`
 - **Subagents** · `.claude/agents/` · `ds-auditor` (review independiente DS)
-- **ADRs** · `docs/decisions/` · 4 seed: book-hero · navbar · chips · perfil
+- **ADRs** · `docs/decisions/` · 14 decisiones canon · ver `README.md` index
+  (5 primitives DS · 6 arquitectura módulos · 1 tono · 1 distribución App Store · 1 harness)
+- **Patterns** · `.claude/PATTERNS.md` · patrones implícitos del código (data-goto · tonal · log filter · localStorage · sheet stubs · sub-libros · cross-ref)
