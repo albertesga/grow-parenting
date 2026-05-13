@@ -8860,6 +8860,221 @@
     flex-direction: column;
     gap: 6px;
   }
+
+  /* § Hitos · Carnet view · DS canon · section heads + progress bar +
+     row primitives + action CTAs · siguiendo book-hero canon + chip canon */
+  .milestone-carnet-section {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    padding: 16px;
+    margin-bottom: 12px;
+  }
+  .milestone-carnet-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 14px;
+  }
+  .milestone-carnet-eyebrow {
+    font-family: 'Lenia';
+    font-size: 10.5px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    margin-bottom: 4px;
+  }
+  .milestone-carnet-head h3 {
+    margin: 0;
+    font-family: 'Lenia';
+    font-weight: 500;
+    font-size: 24px;
+    line-height: 1.05;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+  }
+  .milestone-carnet-h3-sub {
+    font-family: 'Helvena';
+    font-weight: 400;
+    font-size: 13px;
+    color: var(--ink-soft);
+    letter-spacing: 0;
+    margin-left: 4px;
+  }
+  .milestone-carnet-chip {
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    padding: 6px 12px;
+    border-radius: 999px;
+    font-family: 'Lenia';
+    font-weight: 500;
+    font-size: 13px;
+    letter-spacing: 0.04em;
+  }
+  .milestone-carnet-chip.mint  { background: var(--mint-subtle);  color: #4F6647; }
+  .milestone-carnet-chip.gold  { background: var(--gold-subtle);  color: #6E5A2A; }
+  .milestone-carnet-chip.coral { background: var(--coral-subtle); color: #8E4A22; }
+
+  /* Progress bar · slim · mint fill */
+  .milestone-carnet-progress-bar {
+    height: 6px;
+    border-radius: 999px;
+    background: var(--paper-soft);
+    overflow: hidden;
+    margin-bottom: 16px;
+  }
+  .milestone-carnet-progress-fill {
+    height: 100%;
+    background: var(--mint-base);
+    border-radius: 999px;
+    transition: width 300ms var(--ease-standard);
+  }
+
+  /* List + row primitives · tonal icon + body */
+  .milestone-carnet-list {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .milestone-carnet-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 4px;
+  }
+  .milestone-carnet-row + .milestone-carnet-row {
+    border-top: 1px solid var(--line-soft, rgba(201,194,178,0.42));
+  }
+  .milestone-carnet-row-icon {
+    flex-shrink: 0;
+    width: 32px;
+    height: 32px;
+    display: grid;
+    place-items: center;
+    border-radius: 10px;
+    background: var(--paper-soft);
+    color: var(--ink-soft);
+  }
+  .milestone-carnet-row-icon.mint  { background: var(--mint-subtle);  color: #4F6647; }
+  .milestone-carnet-row-icon.gold  { background: var(--gold-subtle);  color: #6E5A2A; }
+  .milestone-carnet-row-icon.coral { background: var(--coral-subtle); color: #8E4A22; }
+  .milestone-carnet-row-icon svg {
+    width: 16px;
+    height: 16px;
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .milestone-carnet-row-body {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .milestone-carnet-row-body strong {
+    font-family: 'Lenia';
+    font-weight: 500;
+    font-size: var(--fs-body-sm);
+    line-height: 1.25;
+    color: var(--ink);
+  }
+  .milestone-carnet-row-body span {
+    font-family: 'Helvena';
+    font-size: var(--fs-caption);
+    color: var(--ink-soft);
+    line-height: 1.4;
+  }
+  .milestone-carnet-row.pending strong { color: var(--ink-soft); }
+
+  /* Action CTAs · card-style con icon left + body + arrow right */
+  .milestone-carnet-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 14px;
+  }
+  .milestone-carnet-cta {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 16px;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    text-align: left;
+    transition: transform 150ms var(--ease-standard), border-color 150ms var(--ease-standard), background 150ms var(--ease-standard);
+    width: 100%;
+  }
+  .milestone-carnet-cta:hover {
+    border-color: var(--ink-soft);
+    transform: translateY(-1px);
+  }
+  .milestone-carnet-cta.primary {
+    background:
+      radial-gradient(circle at 86% 8%, rgba(232,201,122,0.32), transparent 36%),
+      linear-gradient(135deg, var(--mint-subtle), var(--paper-soft));
+    border-color: rgba(143,174,133,0.42);
+  }
+  .milestone-carnet-cta.primary:hover {
+    border-color: var(--mint-base);
+  }
+  .milestone-carnet-cta-icon {
+    flex-shrink: 0;
+    width: 44px;
+    height: 44px;
+    display: grid;
+    place-items: center;
+    border-radius: 12px;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    color: var(--ink);
+  }
+  .milestone-carnet-cta.primary .milestone-carnet-cta-icon {
+    background: var(--mint-base);
+    border-color: var(--mint-base);
+    color: #2F4029;
+  }
+  .milestone-carnet-cta-icon svg {
+    width: 22px;
+    height: 22px;
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 1.6;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .milestone-carnet-cta-body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+  }
+  .milestone-carnet-cta-body strong {
+    font-family: 'Lenia';
+    font-weight: 500;
+    font-size: var(--fs-body);
+    color: var(--ink);
+    line-height: 1.2;
+  }
+  .milestone-carnet-cta-body span {
+    font-family: 'Helvena';
+    font-size: var(--fs-caption);
+    color: var(--ink-soft);
+    line-height: 1.35;
+  }
+  .milestone-carnet-cta-arrow {
+    flex-shrink: 0;
+    font-family: 'Lenia';
+    font-size: 18px;
+    color: var(--ink-muted);
+  }
   .timeline-seg {
     display: block; height: 100%; border: 0; padding: 0;
     background: var(--paper-soft); cursor: pointer; position: relative;
@@ -14207,50 +14422,84 @@
     if (!root) return;
     const achieved = milestoneData.filter((m) => m.achieved);
     const pending = milestoneData.filter((m) => !m.achieved);
+    const progressPct = Math.round((achieved.length / milestoneData.length) * 100);
 
     root.innerHTML = `
-      <section class="milestone-section">
-        <div class="milestone-section-head">
-          <span>Logrados</span>
-          <span>${achieved.length} de ${milestoneData.length}</span>
+      <section class="milestone-carnet-section">
+        <header class="milestone-carnet-head">
+          <div>
+            <div class="milestone-carnet-eyebrow">Logrados · Haizea-Llevant</div>
+            <h3>${achieved.length} <span class="milestone-carnet-h3-sub">de ${milestoneData.length} hitos</span></h3>
+          </div>
+          <span class="milestone-carnet-chip mint">${progressPct}%</span>
+        </header>
+        <div class="milestone-carnet-progress-bar" aria-hidden="true">
+          <div class="milestone-carnet-progress-fill" style="width: ${progressPct}%"></div>
         </div>
-        <div class="vaccine-list">
+        <div class="milestone-carnet-list">
           ${achieved.map((m) => `
-            <article class="vaccine-row done">
-              <strong>${escapeHtml(m.title)}</strong>
-              <span>${escapeHtml(formatMilestoneDate(m.achievedDate))} · ${escapeHtml(milestoneStageLabel(m.stage))}</span>
+            <article class="milestone-carnet-row done">
+              <span class="milestone-carnet-row-icon mint" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><use href="#i-check"/></svg>
+              </span>
+              <div class="milestone-carnet-row-body">
+                <strong>${escapeHtml(m.title)}</strong>
+                <span>${escapeHtml(formatMilestoneDate(m.achievedDate))} · ${escapeHtml(milestoneStageLabel(m.stage))}</span>
+              </div>
             </article>
           `).join('')}
         </div>
       </section>
 
-      <section class="milestone-section">
-        <div class="milestone-section-head">
-          <span>Pendientes</span>
-          <span>${pending.length}</span>
-        </div>
-        <div class="vaccine-list">
+      <section class="milestone-carnet-section">
+        <header class="milestone-carnet-head">
+          <div>
+            <div class="milestone-carnet-eyebrow">Pendientes · por venir</div>
+            <h3>${pending.length} <span class="milestone-carnet-h3-sub">hitos en banda</span></h3>
+          </div>
+          <span class="milestone-carnet-chip gold">${pending.length}</span>
+        </header>
+        <div class="milestone-carnet-list">
           ${pending.map((m) => `
-            <article class="vaccine-row">
-              <strong>${escapeHtml(m.title)}</strong>
-              <span>Esperado P50 ${m.p50}m · P95 ${m.p95}m · ${escapeHtml(milestoneStageLabel(m.stage))}</span>
+            <article class="milestone-carnet-row pending">
+              <span class="milestone-carnet-row-icon gold" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+              </span>
+              <div class="milestone-carnet-row-body">
+                <strong>${escapeHtml(m.title)}</strong>
+                <span>P50 ${m.p50}m · P95 ${m.p95}m · ${escapeHtml(milestoneStageLabel(m.stage))}</span>
+              </div>
             </article>
           `).join('')}
         </div>
       </section>
 
-      <div class="vaccine-card-actions">
-        <button class="vaccine-action primary" type="button" data-open-sheet
-          data-sheet-title="Exportar PDF"
-          data-sheet-copy="Stub de PDF del carnet de hitos · Lola. Incluye logrados con fecha y pendientes con rango esperado.">
-          Exportar PDF
+      <section class="milestone-carnet-actions">
+        <button class="milestone-carnet-cta primary" type="button" data-open-sheet
+          data-sheet-title="Exportar carnet de hitos · PDF"
+          data-sheet-copy="Stub · PDF del carnet de hitos de Lola. Incluye los ${achieved.length} logrados con fecha y los ${pending.length} pendientes con rango esperado. Listo para pediatra, colegio o viaje.">
+          <span class="milestone-carnet-cta-icon">
+            <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M12 18v-6"/><path d="m9 15 3 3 3-3"/></svg>
+          </span>
+          <span class="milestone-carnet-cta-body">
+            <strong>Exportar PDF</strong>
+            <span>Para pediatra · colegio · viaje</span>
+          </span>
+          <span class="milestone-carnet-cta-arrow" aria-hidden="true">→</span>
         </button>
-        <button class="vaccine-action" type="button" data-open-sheet
-          data-sheet-title="Compartir con pediatra"
-          data-sheet-copy="Stub · envío al pediatra de cabecera para revisión 18m.">
-          📤 Compartir
+        <button class="milestone-carnet-cta" type="button" data-open-sheet
+          data-sheet-title="Compartir carnet de hitos"
+          data-sheet-copy="Stub · envío por enlace privado (revoca cuando quieras), email al pediatra de cabecera o WhatsApp directo al cuidador/a.">
+          <span class="milestone-carnet-cta-icon">
+            <svg viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.6 13.5 6.9 4"/><path d="m15.5 6.5-6.9 4"/></svg>
+          </span>
+          <span class="milestone-carnet-cta-body">
+            <strong>Compartir</strong>
+            <span>Enlace · email · WhatsApp</span>
+          </span>
+          <span class="milestone-carnet-cta-arrow" aria-hidden="true">→</span>
         </button>
-      </div>
+      </section>
     `;
   }
 
