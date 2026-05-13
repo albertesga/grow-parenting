@@ -5468,24 +5468,10 @@
     color: #4A3815;
     box-shadow: 0 6px 18px rgba(184,151,63,0.32);
   }
-  /* § Hitos · navbar dedicado · 3 cells (Hitos · Log FAB · Carnet) · tonal mint
-     Estrecho + centrado horizontalmente (no stretch full-width como el global). */
+  /* § Hitos · navbar dedicado · 5 cells (Hitos · Aprende · Log FAB · Carnet · Ajustes)
+     Tonal mint · canónico full-width 5-col (hereda .phone-nav default) */
   [data-screen="hitos"] .content { padding-bottom: 110px; }
-  .milestone-phone-nav {
-    background: #EEF7EE;
-    /* 3 columnas iguales · evita que la cell del FAB (60px wide) infle su
-       columna respecto a HITOS / CARNET (labels más estrechos). Padding
-       simétrico 16px · gap 14 entre cells. Total 3×64 + 2×14 + 32 = 252px */
-    grid-template-columns: repeat(3, 64px);
-    column-gap: 14px;
-    width: max-content;
-    left: 0;
-    right: 0;
-    margin-left: auto;
-    margin-right: auto;
-    padding: 0 16px;
-  }
-  .milestone-phone-nav .nav-tab { justify-content: center; }
+  .milestone-phone-nav { background: #EEF7EE; }
   .milestone-phone-nav .nav-tab.active { color: #4F6647; }
   .milestone-phone-nav .fab.milestone-fab {
     background: var(--mint-base);
@@ -8792,6 +8778,351 @@
     border-radius: var(--radius-sm);
     overflow: visible;
   }
+  /* ═══════════════════════════════════════════════════════════════════════
+     § M · Post primitives · galería + post-page · canon DS
+     ───────────────────────────────────────────────────────────────────────
+     Componentes reusables para contenido educativo de cualquier libro
+     (Hitos · Aprende es el primer caller · Salud Educación puede adoptarlo).
+     Markup canon:
+       <section class="post-gallery-section">
+         <header class="post-gallery-head">
+           <div>
+             <div class="post-gallery-eyebrow">EYEBROW</div>
+             <h3>N posts <span class="post-gallery-h3-sub">descripción</span></h3>
+           </div>
+         </header>
+         <div class="post-gallery">
+           <article class="post-card" data-post-open="...">
+             <div class="post-card-illustration tone-mint">
+               <span class="post-card-icon">🌱</span>
+             </div>
+             <div class="post-card-body">
+               <span class="post-card-tag tone-mint">Fundamentos</span>
+               <h4>Título</h4>
+               <p>Excerpt corto</p>
+               <div class="post-card-meta">
+                 <span>4 min</span><span>·</span><span>Fuente · año</span>
+               </div>
+             </div>
+           </article>
+         </div>
+       </section>
+     ─────────────────────────────────────────────────────────────────────── */
+  .post-gallery-section {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    padding: 16px;
+    margin-bottom: 12px;
+  }
+  .post-gallery-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+  .post-gallery-eyebrow {
+    font-family: 'Lenia';
+    font-size: 10.5px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    margin-bottom: 4px;
+  }
+  .post-gallery-head h3 {
+    margin: 0;
+    font-family: 'Lenia';
+    font-weight: 500;
+    font-size: 24px;
+    line-height: 1.05;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+  }
+  .post-gallery-h3-sub {
+    font-family: 'Helvena';
+    font-weight: 400;
+    font-size: 13px;
+    color: var(--ink-soft);
+    letter-spacing: 0;
+    margin-left: 4px;
+  }
+
+  .post-gallery {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .post-card {
+    display: flex;
+    align-items: stretch;
+    gap: 0;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    cursor: pointer;
+    text-align: left;
+    transition: transform 180ms var(--ease-standard), border-color 180ms var(--ease-standard);
+  }
+  .post-card:hover {
+    transform: translateY(-1px);
+    border-color: var(--ink-soft);
+  }
+  .post-card-illustration {
+    flex-shrink: 0;
+    width: 92px;
+    display: grid;
+    place-items: center;
+    background: var(--paper-soft);
+    position: relative;
+  }
+  .post-card-illustration.tone-mint  {
+    background:
+      radial-gradient(circle at 70% 30%, rgba(255,255,255,0.5), transparent 50%),
+      linear-gradient(135deg, var(--mint-subtle), var(--paper-soft));
+  }
+  .post-card-illustration.tone-coral {
+    background:
+      radial-gradient(circle at 70% 30%, rgba(255,255,255,0.5), transparent 50%),
+      linear-gradient(135deg, var(--coral-subtle), var(--paper-soft));
+  }
+  .post-card-illustration.tone-gold {
+    background:
+      radial-gradient(circle at 70% 30%, rgba(255,255,255,0.5), transparent 50%),
+      linear-gradient(135deg, var(--gold-subtle), var(--paper-soft));
+  }
+  .post-card-illustration.tone-blush {
+    background:
+      radial-gradient(circle at 70% 30%, rgba(255,255,255,0.5), transparent 50%),
+      linear-gradient(135deg, var(--blush-subtle), var(--paper-soft));
+  }
+  .post-card-illustration.tone-lavender {
+    background:
+      radial-gradient(circle at 70% 30%, rgba(255,255,255,0.5), transparent 50%),
+      linear-gradient(135deg, #E9E3ED, var(--paper-soft));
+  }
+  .post-card-icon {
+    font-size: 36px;
+    line-height: 1;
+    filter: drop-shadow(0 2px 4px rgba(42,33,27,0.08));
+  }
+
+  .post-card-body {
+    flex: 1;
+    padding: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    min-width: 0;
+  }
+  .post-card-tag {
+    align-self: flex-start;
+    padding: 3px 9px;
+    border-radius: 999px;
+    font-family: 'Lenia';
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    background: var(--paper-soft);
+    color: var(--ink-soft);
+    margin-bottom: 2px;
+  }
+  .post-card-tag.tone-mint  { background: var(--mint-subtle);  color: #4F6647; }
+  .post-card-tag.tone-coral { background: var(--coral-subtle); color: #8E4A22; }
+  .post-card-tag.tone-gold  { background: var(--gold-subtle);  color: #6E5A2A; }
+  .post-card-tag.tone-blush { background: var(--blush-subtle); color: #7A4A3A; }
+  .post-card-tag.tone-lavender { background: #E9E3ED; color: #5A4970; }
+
+  .post-card h4 {
+    margin: 0;
+    font-family: 'Lenia';
+    font-weight: 500;
+    font-size: var(--fs-body);
+    line-height: 1.2;
+    color: var(--ink);
+  }
+  .post-card p {
+    margin: 0;
+    color: var(--ink-soft);
+    font-size: var(--fs-caption);
+    line-height: 1.4;
+  }
+  .post-card-meta {
+    display: flex;
+    gap: 6px;
+    margin-top: 4px;
+    font-family: 'Lenia';
+    font-size: 10.5px;
+    color: var(--ink-muted);
+    letter-spacing: 0.04em;
+  }
+
+  /* ═══════════════════════════════════════════════════════════════════════
+     § M · Post page primitive · pantalla de un post individual
+     ───────────────────────────────────────────────────────────────────────
+     Para drill-down desde post-card · header + body + cite footer.
+     Markup canon:
+       <article class="post-page tone-mint">
+         <header class="post-page-head">
+           <span class="post-page-tag">Tag</span>
+           <h2>Título largo del post</h2>
+           <div class="post-page-meta">
+             <span>4 min</span><span>·</span><span>Fuente · año</span>
+           </div>
+         </header>
+         <div class="post-page-body">
+           <p>Párrafo 1...</p>
+           <h3>Subtítulo</h3>
+           <p>Párrafo 2...</p>
+         </div>
+         <footer class="post-page-cite">
+           <strong>Fuentes</strong>
+           <p>Referencia 1 · Referencia 2</p>
+         </footer>
+       </article>
+     ─────────────────────────────────────────────────────────────────────── */
+  .post-page {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    padding: 0;
+    overflow: hidden;
+  }
+  .post-page-head {
+    padding: 22px 22px 14px;
+    background: var(--paper-soft);
+    border-bottom: 1px solid var(--line);
+  }
+  .post-page.tone-mint  .post-page-head { background: linear-gradient(135deg, var(--mint-subtle),  var(--paper-soft)); }
+  .post-page.tone-coral .post-page-head { background: linear-gradient(135deg, var(--coral-subtle), var(--paper-soft)); }
+  .post-page.tone-gold  .post-page-head { background: linear-gradient(135deg, var(--gold-subtle),  var(--paper-soft)); }
+  .post-page.tone-blush .post-page-head { background: linear-gradient(135deg, var(--blush-subtle), var(--paper-soft)); }
+  .post-page-tag {
+    display: inline-block;
+    padding: 3px 9px;
+    border-radius: 999px;
+    background: var(--paper);
+    font-family: 'Lenia';
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin-bottom: 12px;
+  }
+  .post-page-head h2 {
+    margin: 0 0 10px;
+    font-family: 'Lenia';
+    font-weight: 500;
+    font-size: 26px;
+    line-height: 1.1;
+    letter-spacing: -0.015em;
+    color: var(--ink);
+  }
+  .post-page-meta {
+    display: flex;
+    gap: 6px;
+    font-family: 'Lenia';
+    font-size: 11px;
+    color: var(--ink-muted);
+    letter-spacing: 0.04em;
+  }
+  .post-page-body {
+    padding: 18px 22px;
+    color: var(--ink);
+    font-family: 'Helvena';
+    font-size: var(--fs-body-sm);
+    line-height: 1.55;
+  }
+  .post-page-body p { margin: 0 0 14px; }
+  .post-page-body h3 {
+    margin: 22px 0 10px;
+    font-family: 'Lenia';
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 1.2;
+    color: var(--ink);
+  }
+  .post-page-cite {
+    margin: 0 22px 22px;
+    padding: 12px 14px;
+    background: var(--paper-soft);
+    border-radius: var(--radius-sm);
+    border-left: 3px solid var(--ink-muted);
+  }
+  .post-page-cite strong {
+    display: block;
+    font-family: 'Lenia';
+    font-size: 10.5px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    margin-bottom: 6px;
+  }
+  .post-page-cite p {
+    margin: 0;
+    font-family: 'Helvena';
+    font-size: var(--fs-caption);
+    color: var(--ink-soft);
+    line-height: 1.5;
+  }
+
+  /* § Hitos · Ajustes · row + toggle (reusa profile-switch primitive) */
+  .milestone-list { display: flex; flex-direction: column; gap: 4px; }
+  .milestone-row,
+  .milestone-toggle {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 10px;
+    border: 0;
+    background: transparent;
+    border-radius: 10px;
+    text-align: left;
+    cursor: pointer;
+    width: 100%;
+    font-family: 'Helvena';
+  }
+  .milestone-row + .milestone-row,
+  .milestone-toggle + .milestone-toggle,
+  .milestone-row + .milestone-toggle,
+  .milestone-toggle + .milestone-row {
+    border-top: 1px solid var(--line-soft, rgba(201,194,178,0.42));
+    border-radius: 0;
+  }
+  .milestone-row:hover,
+  .milestone-toggle:hover { background: var(--paper-soft); }
+  .milestone-row-label {
+    flex: 1;
+    color: var(--ink-soft);
+    font-size: var(--fs-body-sm);
+  }
+  .milestone-row-value {
+    font-family: 'Lenia';
+    font-weight: 500;
+    font-size: var(--fs-body-sm);
+    color: var(--ink);
+  }
+  .milestone-row-stack {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+  }
+  .milestone-row-stack strong {
+    font-family: 'Lenia';
+    font-weight: 500;
+    font-size: var(--fs-body-sm);
+    color: var(--ink);
+  }
+  .milestone-row-stack span {
+    font-size: var(--fs-caption);
+    color: var(--ink-soft);
+    line-height: 1.35;
+  }
+
   /* § Hitos · timeline 2-row layout · row 1 = 0-12m, row 2 = 12-60m
      Gap pequeño entre rows · padding generoso top/bottom para respirar
      en el bloque de hero superior y bloque de chips inferior. */
@@ -10899,6 +11230,7 @@
       <symbol id="i-thermo" viewBox="0 0 24 24"><path d="M14 14.76V5a2 2 0 0 0-4 0v9.76a4 4 0 1 0 4 0z"/></symbol>
       <symbol id="i-card" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 10h18"/><path d="M7 15h4"/></symbol>
       <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></symbol>
+      <symbol id="i-book" viewBox="0 0 24 24"><path d="M4 4a2 2 0 0 1 2-2h14v18H6a2 2 0 0 0-2 2z"/><path d="M4 19a2 2 0 0 1 2-2h14"/><path d="M8 6h8M8 10h6"/></symbol>
       <symbol id="i-settings" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 0 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 0 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 0 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 0 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></symbol>
     </defs>
   </svg>
@@ -11347,11 +11679,17 @@
             </div>
 
             <div data-milestone-carnet hidden></div>
+            <div data-milestone-aprende hidden></div>
+            <div data-milestone-ajustes hidden></div>
           </div>
           <nav class="phone-nav milestone-phone-nav" aria-label="Libro de hitos">
             <button class="nav-tab" type="button" data-milestone-view="home" data-milestone-tab="home">
               <svg viewBox="0 0 24 24"><use href="#i-flag"/></svg>
               <span>Hitos</span>
+            </button>
+            <button class="nav-tab" type="button" data-milestone-view="aprende" data-milestone-tab="aprende">
+              <svg viewBox="0 0 24 24"><use href="#i-book"/></svg>
+              <span>Aprende</span>
             </button>
             <div class="nav-tab fab-cell">
               <button class="fab milestone-fab" type="button" data-log-open data-log-type="hito" data-log-source="hitos" aria-label="Añadir hito">
@@ -11362,6 +11700,10 @@
             <button class="nav-tab" type="button" data-milestone-view="carnet" data-milestone-tab="carnet">
               <svg viewBox="0 0 24 24"><use href="#i-card"/></svg>
               <span>Carnet</span>
+            </button>
+            <button class="nav-tab" type="button" data-milestone-view="ajustes" data-milestone-tab="ajustes">
+              <svg viewBox="0 0 24 24"><use href="#i-settings"/></svg>
+              <span>Ajustes</span>
             </button>
           </nav>
         </section>
@@ -14331,17 +14673,20 @@
     });
   }
 
-  /* § Hitos · view routing (home/carnet) + navbar dedicado */
+  /* § Hitos · view routing (home/carnet/aprende/ajustes) + navbar dedicado */
   let milestoneActiveView = 'home';
 
   function setMilestoneView(view) {
     milestoneActiveView = view || 'home';
-    const home = document.querySelector('[data-milestone-home]');
-    const carnet = document.querySelector('[data-milestone-carnet]');
-    if (home) home.toggleAttribute('hidden', milestoneActiveView !== 'home');
-    if (carnet) carnet.toggleAttribute('hidden', milestoneActiveView !== 'carnet');
+    const views = ['home', 'carnet', 'aprende', 'ajustes'];
+    views.forEach((v) => {
+      const el = document.querySelector(`[data-milestone-${v}]`);
+      if (el) el.toggleAttribute('hidden', milestoneActiveView !== v);
+    });
     if (milestoneActiveView === 'home') renderMilestoneBook();
     if (milestoneActiveView === 'carnet') renderMilestoneCarnet();
+    if (milestoneActiveView === 'aprende') renderMilestoneAprende();
+    if (milestoneActiveView === 'ajustes') renderMilestoneAjustes();
     updateMilestoneNavActive();
     document.querySelector('[data-screen="hitos"] .content')?.scrollTo({ top: 0, behavior: 'smooth' });
   }
@@ -14446,6 +14791,161 @@
           </span>
           <span class="milestone-carnet-cta-arrow" aria-hidden="true">→</span>
         </button>
+      </section>
+    `;
+  }
+
+  /* § Hitos · Aprende · galería de posts educativos · DS §M canon
+     post-gallery + post-card primitives reusables por cualquier libro. */
+  const milestonePosts = [
+    {
+      id: 'haizea-intro',
+      tag: 'Fundamentos',
+      tone: 'mint',
+      icon: '🌱',
+      title: '¿Qué son los hitos del desarrollo?',
+      excerpt: 'Cómo Haizea-Llevant y otras escalas observan sin clasificar al peque.',
+      readTime: '4 min',
+      source: 'AEPap · canon Haizea 1991'
+    },
+    {
+      id: 'cuando-preocuparse',
+      tag: 'Señales',
+      tone: 'coral',
+      icon: '⚠️',
+      title: 'Cuándo preocuparse · señales de alerta',
+      excerpt: 'Sin alarmismo. Las bandas P75-P95 son las que importan, no el P50.',
+      readTime: '5 min',
+      source: 'NICE NG43 · 2017'
+    },
+    {
+      id: 'escalas-comparadas',
+      tag: 'Escalas',
+      tone: 'gold',
+      icon: '📐',
+      title: 'Diferencias entre Haizea · ASQ · Denver · Wiechen',
+      excerpt: 'Cuándo usa cada una un pediatra y qué mira diferente.',
+      readTime: '7 min',
+      source: 'AAP Bright Futures · 2024'
+    },
+    {
+      id: 'bayley-iii',
+      tag: 'Premium',
+      tone: 'blush',
+      icon: '🎓',
+      title: 'Bayley-III · cuándo y por qué',
+      excerpt: 'Gold standard clínico. No es para uso casa · solo seguimiento especialista.',
+      readTime: '6 min',
+      source: 'Bayley 2006 · NCS-R'
+    },
+    {
+      id: 'motores-0-12',
+      tag: 'Postural',
+      tone: 'mint',
+      icon: '🚶',
+      title: 'Hitos motores · 0-12 meses',
+      excerpt: 'De sostener la cabeza a los primeros pasos. Sin prisa.',
+      readTime: '5 min',
+      source: 'Haizea-Llevant · OMS'
+    },
+    {
+      id: 'lenguaje-cuando',
+      tag: 'Lenguaje',
+      tone: 'coral',
+      icon: '🗣',
+      title: 'Hitos del lenguaje · cuándo empieza',
+      excerpt: 'Vocalizaciones a 4m · primeras palabras a 12-18m. Variabilidad enorme · normal.',
+      readTime: '6 min',
+      source: 'AEPap NICE NG43'
+    }
+  ];
+
+  function renderMilestoneAprende() {
+    const root = document.querySelector('[data-milestone-aprende]');
+    if (!root) return;
+    root.innerHTML = `
+      <section class="post-gallery-section">
+        <header class="post-gallery-head">
+          <div>
+            <div class="post-gallery-eyebrow">Aprende · educación canon</div>
+            <h3>${milestonePosts.length} posts <span class="post-gallery-h3-sub">para entender los hitos</span></h3>
+          </div>
+        </header>
+        <div class="post-gallery">
+          ${milestonePosts.map((post) => `
+            <article class="post-card" data-post-open="${escapeHtml(post.id)}">
+              <div class="post-card-illustration tone-${escapeHtml(post.tone)}" aria-hidden="true">
+                <span class="post-card-icon">${escapeHtml(post.icon)}</span>
+              </div>
+              <div class="post-card-body">
+                <span class="post-card-tag tone-${escapeHtml(post.tone)}">${escapeHtml(post.tag)}</span>
+                <h4>${escapeHtml(post.title)}</h4>
+                <p>${escapeHtml(post.excerpt)}</p>
+                <div class="post-card-meta">
+                  <span>${escapeHtml(post.readTime)}</span>
+                  <span>·</span>
+                  <span>${escapeHtml(post.source)}</span>
+                </div>
+              </div>
+            </article>
+          `).join('')}
+        </div>
+      </section>
+    `;
+  }
+
+  /* § Hitos · Ajustes · settings del libro */
+  function renderMilestoneAjustes() {
+    const root = document.querySelector('[data-milestone-ajustes]');
+    if (!root) return;
+    root.innerHTML = `
+      <section class="milestone-carnet-section">
+        <header class="milestone-carnet-head">
+          <div>
+            <div class="milestone-carnet-eyebrow">Ajustes · libro de hitos</div>
+            <h3>Preferencias <span class="milestone-carnet-h3-sub">de seguimiento</span></h3>
+          </div>
+        </header>
+        <div class="milestone-list">
+          <button class="milestone-row" type="button" data-open-sheet
+            data-sheet-title="Escala por defecto"
+            data-sheet-copy="Stub · elige Haizea-Llevant · ASQ-3 · Denver II · Van Wiechen como escala default.">
+            <span class="milestone-row-label">Escala por defecto</span>
+            <span class="milestone-row-value">Haizea-Llevant</span>
+          </button>
+          <button class="milestone-row" type="button" data-open-sheet
+            data-sheet-title="Edad corregida"
+            data-sheet-copy="Stub · si el peque fue prematuro, ajusta hitos a edad corregida.">
+            <span class="milestone-row-label">Edad corregida (preemie)</span>
+            <span class="milestone-row-value">Off</span>
+          </button>
+          <button class="milestone-toggle" type="button">
+            <span class="milestone-row-stack">
+              <strong>Notificación al entrar en banda P95</strong>
+              <span>Aviso suave cuando un hito está al límite del rango</span>
+            </span>
+            <span class="profile-switch active"></span>
+          </button>
+          <button class="milestone-toggle" type="button">
+            <span class="milestone-row-stack">
+              <strong>Mostrar percentiles</strong>
+              <span>P50 · P75 · P95 visibles · si off solo P50</span>
+            </span>
+            <span class="profile-switch active"></span>
+          </button>
+          <button class="milestone-toggle" type="button">
+            <span class="milestone-row-stack">
+              <strong>Export auto a Diario</strong>
+              <span>Cada hito logrado crea entrada en Diario</span>
+            </span>
+            <span class="profile-switch"></span>
+          </button>
+        </div>
+      </section>
+
+      <section class="callout with-rule">
+        <strong>Fuentes canónicas</strong>
+        <p>AEPap · Haizea-Llevant 1991 · ASQ-3 (Ages & Stages Questionnaires) · Denver II Developmental Screening · Van Wiechen scheme · Bayley-III. Sin diagnóstico · solo observación.</p>
       </section>
     `;
   }
@@ -20383,11 +20883,25 @@ Grow
       return;
     }
 
-    /* § Perfil · toggle de switches (modos especiales, notificaciones, privacidad) */
-    const profileToggle = event.target.closest('.profile-toggle, [data-profile-mode], [data-profile-notif], [data-profile-priv]');
+    /* § Perfil + Hitos Ajustes · toggle de switches genérico */
+    const profileToggle = event.target.closest('.profile-toggle, .milestone-toggle, [data-profile-mode], [data-profile-notif], [data-profile-priv]');
     if (profileToggle) {
       const sw = profileToggle.querySelector('.profile-switch');
       if (sw) sw.classList.toggle('active');
+      return;
+    }
+
+    /* § Hitos Aprende · post-card click · abre sheet stub con el post */
+    const postCard = event.target.closest('[data-post-open]');
+    if (postCard) {
+      const postId = postCard.dataset.postOpen;
+      const post = milestonePosts.find((p) => p.id === postId);
+      if (post) {
+        openSheet(
+          post.title,
+          `${post.excerpt}\n\n[stub] Aquí abriría la página completa del post · DS §M · .post-page primitive con header tonal + body + cite footer. Tiempo lectura: ${post.readTime} · Fuente: ${post.source}.`
+        );
+      }
       return;
     }
 
