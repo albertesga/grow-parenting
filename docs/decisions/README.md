@@ -27,7 +27,20 @@ agentes, resistentes a la rotación. Reemplaza prose en CLAUDE.md.
 
 ## Index
 
+### Primitives DS
 - [0001 · Book-hero canon (6 tonos)](0001-book-hero-canon.md)
 - [0002 · Navbar dedicado por libro](0002-navbar-dedicado-por-libro.md)
 - [0003 · Chip primitive DS §E](0003-chip-primitive-DS.md)
-- [0004 · Bottom nav Perfil en lugar de Hitos](0004-bottom-nav-perfil.md)
+- [0007 · Diary timeline vertical primitive](0007-diary-timeline-vertical.md)
+- [0012 · Action CTAs card-style](0012-action-ctas-card-style.md)
+
+### Arquitectura de módulos
+- [0004 · Bottom nav · Perfil reemplaza Hitos](0004-bottom-nav-perfil.md)
+- [0005 · Chat IA · single-thread + Modo 3AM efímero](0005-chat-ia-modo-3am.md)
+- [0006 · Sub-libros · librería anidada bajo libro padre](0006-sub-libros-pattern.md)
+- [0008 · Pantalla Perfil · identidad + config global](0008-pantalla-perfil.md)
+- [0009 · Libro de Salud · expediente clínico + Modo emergencia](0009-libro-salud-emergencia.md)
+- [0010 · Log filter por source](0010-log-filter-por-source.md)
+
+### Tono y producto
+- [0011 · Trauma-informed copy canon](0011-trauma-informed-copy.md)
