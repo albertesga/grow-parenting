@@ -2144,25 +2144,10 @@
           </div>
           <div class="response">
             <div class="label">Modo 3 AM · fondo oscuro</div>
-            <!-- Modo 3 AM es chat de triage embebido en el libro de Salud,
-                 no un libro propio. La shelf muestra los libros que el triage
-                 te abre por contexto · vacunas (¿le toca pauta?) y recuerdos
-                 (registro del episodio para el pediatra). -->
-            <div class="r-shelf">
-              <div class="r-shelf-rail">
-                <a class="r-book b-vacunas" href="#libros" aria-label="Libro 04 · Vacunas">
-                  <div class="sb-icon"><svg viewBox="0 0 24 24"><use href="#b-syringe"/></svg></div>
-                  <h4 class="sb-ttl">Libro de<br><em>vacunas</em></h4>
-                  <div class="sb-foot"><span class="count">Libro · 04</span><span>AEPED</span></div>
-                </a>
-                <a class="r-book b-recuerdos" href="#libros" aria-label="Libro 10 · Recuerdos">
-                  <div class="sb-icon"><svg viewBox="0 0 24 24"><use href="#b-bookmark"/></svg></div>
-                  <h4 class="sb-ttl">Libro de<br><em>recuerdos</em></h4>
-                  <div class="sb-foot"><span class="count">Libro · 10</span><span>DIARIO</span></div>
-                </a>
-              </div>
-              <div class="r-shelf-plank"><span class="r-plank-dot l"></span><span class="r-plank-dot r"></span></div>
-            </div>
+            <!-- Modo 3 AM no es un libro · es un chat de triage embebido en el
+                 libro de Salud · por eso aquí no aparece como r-book en la
+                 shelf. La narrativa se sostiene con copy + el preludio del
+                 sticky CTA. -->
             <p>Una pregunta por pantalla, tres taps. Te decimos si es urgencia o casa.</p>
             <p><strong>Sin alarmar, sin minimizar.</strong></p>
           </div>
@@ -2183,7 +2168,7 @@
           </div>
           <div class="response">
             <div class="label">Respuesta Grow</div>
-            <div class="r-shelf is-four">
+            <div class="r-shelf is-six">
               <div class="r-shelf-rail">
                 <a class="r-book b-hitos" href="#libros" aria-label="Libro 08 · Hitos">
                   <div class="sb-icon"><svg viewBox="0 0 24 24"><use href="#b-sprout"/></svg></div>
@@ -2204,6 +2189,16 @@
                   <div class="sb-icon"><svg viewBox="0 0 24 24"><use href="#b-thermo"/></svg></div>
                   <h4 class="sb-ttl">Libro de<br><em>salud</em></h4>
                   <div class="sb-foot"><span class="count">Libro · 06</span><span>AEPap</span></div>
+                </a>
+                <a class="r-book b-vacunas" href="#libros" aria-label="Libro 04 · Vacunas">
+                  <div class="sb-icon"><svg viewBox="0 0 24 24"><use href="#b-syringe"/></svg></div>
+                  <h4 class="sb-ttl">Libro de<br><em>vacunas</em></h4>
+                  <div class="sb-foot"><span class="count">Libro · 04</span><span>AEPED</span></div>
+                </a>
+                <a class="r-book b-recuerdos" href="#libros" aria-label="Libro 10 · Recuerdos">
+                  <div class="sb-icon"><svg viewBox="0 0 24 24"><use href="#b-bookmark"/></svg></div>
+                  <h4 class="sb-ttl">Libro de<br><em>recuerdos</em></h4>
+                  <div class="sb-foot"><span class="count">Libro · 10</span><span>DIARIO</span></div>
                 </a>
               </div>
               <div class="r-shelf-plank"><span class="r-plank-dot l"></span><span class="r-plank-dot r"></span></div>
