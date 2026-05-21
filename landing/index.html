@@ -1512,6 +1512,335 @@
         scroll-behavior: auto !important;
       }
     }
+
+    /* ════════════════════════════════════════════════════════════════════
+       § BOOK-MODAL · shared-element transition (libro embarazo · canon)
+       Phases · 0-150 lift · 150-450 move+scale · 300-700 spine rotate ·
+       500-850 invisible content swap via backface · 750-1000 settle.
+       ════════════════════════════════════════════════════════════════════ */
+    .bm-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 90;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 350ms cubic-bezier(0.22, 0.61, 0.36, 1);
+    }
+    .bm-overlay.is-active { pointer-events: auto; opacity: 1; }
+    .bm-overlay.is-closing { opacity: 0; transition: opacity 320ms cubic-bezier(0.4, 0, 0.6, 1); }
+
+    .bm-backdrop {
+      position: absolute;
+      inset: 0;
+      background: rgba(26, 22, 18, 0.55);
+      backdrop-filter: blur(10px) saturate(130%);
+      -webkit-backdrop-filter: blur(10px) saturate(130%);
+    }
+
+    .bm-stage {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      perspective: 2200px;
+      perspective-origin: 50% 45%;
+      padding: 5vh 4vw;
+    }
+
+    /* El libro abierto · dos páginas + cover encima del derecho */
+    .bm-book {
+      position: relative;
+      width: min(880px, 92vw);
+      aspect-ratio: 16 / 10.5;
+      max-height: 78vh;
+      transform-style: preserve-3d;
+    }
+
+    /* Página derecha · contenido interior (visible cuando el cover gira) */
+    .bm-page-right {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 50%;
+      height: 100%;
+      background:
+        radial-gradient(circle at 0% 0%, rgba(255,255,255,0.6) 0%, transparent 22%),
+        linear-gradient(135deg, #FDFAF1 0%, #F2EBDA 100%);
+      border-radius: 4px 14px 14px 4px;
+      box-shadow:
+        inset 8px 0 18px -10px rgba(80,60,30,0.22),
+        0 24px 50px -22px rgba(80,60,30,0.28);
+      padding: 44px 44px 36px 56px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .bm-page-right::before {
+      /* Fibra de papel sutil */
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image:
+        repeating-linear-gradient(90deg, rgba(80,60,30,0.018) 0 1px, transparent 1px 4px);
+      pointer-events: none;
+      opacity: 0.6;
+    }
+    .bm-page-meta {
+      font-family: var(--font-mono);
+      font-size: 10.5px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--ink-muted);
+    }
+    .bm-page-h {
+      font-family: var(--font-serif);
+      font-weight: 400;
+      font-size: clamp(28px, 2.8vw, 38px);
+      letter-spacing: -0.015em;
+      line-height: 1.05;
+      color: var(--ink);
+      margin: 0;
+    }
+    .bm-page-h em { color: var(--ink-soft); font-style: normal; font-weight: 300; }
+    .bm-page-sub {
+      font-family: var(--font-serif);
+      font-weight: 300;
+      font-size: 15.5px;
+      line-height: 1.45;
+      color: var(--ink-soft);
+      margin: 0 0 6px;
+      max-width: 30ch;
+    }
+    .bm-page-toc {
+      list-style: none;
+      padding: 0;
+      margin: 8px 0 0;
+      display: grid;
+      gap: 9px;
+      font-family: var(--font-text);
+      font-size: 14px;
+      color: var(--ink);
+    }
+    .bm-page-toc li {
+      display: grid;
+      grid-template-columns: 28px 1fr;
+      align-items: baseline;
+      gap: 10px;
+      border-bottom: 1px dashed rgba(80,60,30,0.14);
+      padding-bottom: 9px;
+    }
+    .bm-page-toc li:last-child { border-bottom: 0; }
+    .bm-page-toc li span {
+      font-family: var(--font-mono);
+      font-size: 10.5px;
+      color: var(--ink-muted);
+      letter-spacing: 0.14em;
+    }
+
+    /* Cover frame · maneja la translación + scale del FLIP */
+    .bm-cover-frame {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 50%;
+      height: 100%;
+      transform-style: preserve-3d;
+      will-change: transform;
+      opacity: 0;
+    }
+    .bm-overlay.is-active .bm-cover-frame { opacity: 1; }
+
+    /* Cover spinner · maneja el rotateY (page flip · hinged en el spine) */
+    .bm-cover-spinner {
+      position: absolute;
+      inset: 0;
+      transform-style: preserve-3d;
+      transform-origin: 0% 50%; /* spine = left edge */
+      transform: rotateY(0deg);
+      will-change: transform;
+    }
+
+    /* Cara delantera · clonada del .r-book.b-embarazo (gradient coral) */
+    .bm-cover-front,
+    .bm-cover-back {
+      position: absolute;
+      inset: 0;
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+      display: flex;
+      flex-direction: column;
+      padding: clamp(20px, 3.4%, 36px) clamp(18px, 3.0%, 32px) clamp(18px, 2.8%, 28px);
+      gap: 12px;
+    }
+    .bm-cover-front {
+      background:
+        radial-gradient(circle at 82% 12%, rgba(242,165,122,0.58), transparent 30%),
+        radial-gradient(circle at 15% 0%, rgba(255,255,255,0.70), transparent 32%),
+        linear-gradient(145deg, #FBE0CB 0%, #F0EADC 100%);
+      border-radius: 4px 14px 14px 4px;
+      color: #8B4621;
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,0.68),
+        inset -1px 0 0 rgba(0,0,0,0.05),
+        0 18px 40px -20px rgba(80,60,30,0.45);
+    }
+    .bm-cover-front::before {
+      /* Lomo sutil al lado izquierdo · faja oscura */
+      content: "";
+      position: absolute;
+      top: 6%;
+      bottom: 6%;
+      left: 0;
+      width: 14px;
+      background: linear-gradient(90deg, rgba(80,60,30,0.18), transparent);
+      border-radius: 4px 0 0 4px;
+      pointer-events: none;
+    }
+    .bm-cover-front .bm-icon {
+      width: clamp(42px, 7%, 64px);
+      aspect-ratio: 1;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.42);
+      display: grid;
+      place-items: center;
+      color: inherit;
+      margin-bottom: auto;
+    }
+    .bm-cover-front .bm-icon svg {
+      width: 60%;
+      height: 60%;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 1.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    .bm-cover-front .bm-ttl {
+      font-family: var(--font-serif);
+      font-weight: 400;
+      font-size: clamp(22px, 3vw, 38px);
+      line-height: 1.0;
+      letter-spacing: -0.012em;
+      margin: 0;
+      color: inherit;
+    }
+    .bm-cover-front .bm-ttl em { font-style: normal; font-weight: 300; opacity: 0.85; }
+    .bm-cover-front .bm-foot {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      font-family: var(--font-mono);
+      font-size: clamp(8.5px, 0.9vw, 11px);
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: inherit;
+      opacity: 0.72;
+    }
+
+    .bm-cover-back {
+      /* Back · faja contemplativa · misma tonalidad warmth pero más oscura
+         · simula el reverso del cover de un libro real (endpaper). */
+      transform: rotateY(180deg);
+      background:
+        linear-gradient(220deg, rgba(255,255,255,0.10) 0%, rgba(80,60,30,0.0) 60%),
+        linear-gradient(135deg, #F3DAC1 0%, #E8C9A8 100%);
+      border-radius: 14px 4px 4px 14px; /* rounded LEFT side cuando rota a la izquierda */
+      color: #6E2F18;
+      box-shadow:
+        inset -1px 0 0 rgba(255,255,255,0.42),
+        inset 0 1px 0 rgba(255,255,255,0.48);
+      justify-content: space-between;
+      padding: clamp(28px, 4%, 48px) clamp(24px, 3.5%, 40px);
+    }
+    .bm-cover-back::after {
+      /* Lomo del lado derecho (era el spine antes de girar) */
+      content: "";
+      position: absolute;
+      top: 6%;
+      bottom: 6%;
+      right: 0;
+      width: 14px;
+      background: linear-gradient(-90deg, rgba(80,60,30,0.18), transparent);
+      border-radius: 0 4px 4px 0;
+      pointer-events: none;
+    }
+    .bm-cover-back .bm-back-meta {
+      font-family: var(--font-mono);
+      font-size: clamp(9px, 0.9vw, 11px);
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: inherit;
+      opacity: 0.7;
+    }
+    .bm-cover-back .bm-back-quote {
+      font-family: var(--font-serif);
+      font-weight: 300;
+      font-size: clamp(17px, 1.6vw, 22px);
+      line-height: 1.4;
+      color: inherit;
+      max-width: 22ch;
+      margin: 0;
+    }
+    .bm-cover-back .bm-back-sig {
+      font-family: var(--font-mono);
+      font-size: clamp(9px, 0.85vw, 10.5px);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: inherit;
+      opacity: 0.55;
+    }
+
+    /* Close button · floats top-right of stage */
+    .bm-close {
+      position: absolute;
+      top: 24px;
+      right: 24px;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: rgba(250, 247, 240, 0.94);
+      border: 1px solid rgba(80,60,30,0.12);
+      color: var(--ink);
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+      font-family: var(--font-serif);
+      font-size: 22px;
+      line-height: 1;
+      box-shadow: 0 8px 18px -10px rgba(0,0,0,0.32);
+      transition: transform 240ms cubic-bezier(0.22, 0.61, 0.36, 1), background 240ms;
+      z-index: 2;
+      opacity: 0;
+      pointer-events: none;
+    }
+    .bm-close.is-ready { opacity: 1; pointer-events: auto; }
+    .bm-close:hover { transform: scale(1.06); background: var(--paper); }
+
+    /* Source card · estado "lifted" durante phase 1 */
+    .r-book.is-lifting {
+      z-index: 60;
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,0.68),
+        0 28px 48px -18px rgba(80,60,30,0.5),
+        0 14px 28px -14px rgba(80,60,30,0.32) !important;
+    }
+
+    /* Body lock · evita scroll del documento durante modal */
+    body.bm-locked { overflow: hidden; }
+
+    @media (max-width: 720px) {
+      .bm-book { aspect-ratio: 12 / 15; max-height: 82vh; }
+      .bm-page-right { padding: 26px 22px 22px 34px; }
+      .bm-page-toc { font-size: 13px; }
+      .bm-close { width: 40px; height: 40px; top: 16px; right: 16px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .bm-cover-spinner { transition: none !important; }
+      .bm-cover-frame   { transition: none !important; }
+    }
   </style>
 </head>
 <body>
@@ -2219,6 +2548,50 @@
     <canvas id="m-avatar-canvas" width="168" height="168"></canvas>
   </div>
 
+  <!-- ════════════════════════════════════════════════════════════════════
+       BOOK MODAL · shared-element transition target
+       Cover-front clona el artwork del small card embarazo · cover-back es
+       el endpaper warmth · page-right contiene el TOC del libro.
+       ════════════════════════════════════════════════════════════════════ -->
+  <div class="bm-overlay" id="bm-overlay" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Libro de embarazo">
+    <div class="bm-backdrop" data-bm-close></div>
+    <div class="bm-stage">
+      <button class="bm-close" id="bm-close" type="button" aria-label="Cerrar libro" data-bm-close>×</button>
+      <div class="bm-book" id="bm-book">
+        <div class="bm-page-right" aria-hidden="true">
+          <div class="bm-page-meta">Capítulos · 9</div>
+          <h3 class="bm-page-h">Sem 4 — 40.<br><em>Una sola voz.</em></h3>
+          <p class="bm-page-sub">Basado en SEGO, NICE y AEPED. Sin manual, sin urgencia.</p>
+          <ul class="bm-page-toc">
+            <li><span>01</span> Tu cuerpo · semana a semana</li>
+            <li><span>02</span> Citas y pruebas · qué preguntar</li>
+            <li><span>03</span> Signos de alarma · qué mirar</li>
+            <li><span>04</span> Movimientos fetales</li>
+            <li><span>05</span> Bienestar · sueño · alimentación</li>
+            <li><span>06</span> Preparación al parto</li>
+            <li><span>07</span> Plan de parto · qué incluir</li>
+            <li><span>08</span> Diario gestacional</li>
+            <li><span>09</span> Las primeras horas</li>
+          </ul>
+        </div>
+        <div class="bm-cover-frame" id="bm-cover-frame" aria-hidden="true">
+          <div class="bm-cover-spinner" id="bm-cover-spinner">
+            <div class="bm-cover-front">
+              <div class="bm-icon"><svg viewBox="0 0 24 24"><use href="#b-belly"/></svg></div>
+              <h4 class="bm-ttl">Libro de<br><em>embarazo</em></h4>
+              <div class="bm-foot"><span>Libro · 01</span><span>SEGO</span></div>
+            </div>
+            <div class="bm-cover-back">
+              <div class="bm-back-meta">Libro · 01 · Embarazo</div>
+              <p class="bm-back-quote">"Si algo merece atención, te decimos qué mirar y cuándo llamar."</p>
+              <div class="bm-back-sig">SEGO · NICE · AEPED</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <script>
     (() => {
       'use strict';
@@ -2461,6 +2834,219 @@
           e.preventDefault();
           const btn = signupForm.querySelector("button");
           if (btn) { btn.textContent = "Gracias ✓"; btn.disabled = true; }
+        });
+      }
+
+      /* 6 · Book modal · shared-element transition (libro embarazo)
+         Timeline · 0-150 lift · 150-450 move+scale · 300-700 spine rotate
+         · 500-850 invisible content swap via backface · 750-1000 settle.
+         Implementación · FLIP transform en .bm-cover-frame para el move,
+         rotateY simultáneo en .bm-cover-spinner alrededor del spine.
+         El cover-front + cover-back comparten artwork con el small card
+         (icon + h4 + foot iguales) · perceived continuity. */
+      const bmOverlay = document.getElementById("bm-overlay");
+      const bmStage   = bmOverlay?.querySelector(".bm-stage");
+      const bmBook    = document.getElementById("bm-book");
+      const bmFrame   = document.getElementById("bm-cover-frame");
+      const bmSpinner = document.getElementById("bm-cover-spinner");
+      const bmClose   = document.getElementById("bm-close");
+      const sourceCard = document.querySelector(".r-book.b-embarazo");
+
+      const EASE_OUT  = "cubic-bezier(0.22, 0.61, 0.36, 1)";
+      const EASE_LIFT = "cubic-bezier(0.34, 1.20, 0.64, 1)";
+      const EASE_HINGE = "cubic-bezier(0.32, 0.04, 0.24, 0.99)"; /* hinged · acelera entrando, desacelera saliendo */
+
+      let bmOpen = false;
+      let bmBusy = false;
+      let lastFocused = null;
+
+      function wait(ms) { return new Promise((r) => setTimeout(r, ms)); }
+
+      /* Si el spinner está mid-animation, leemos el rotateY actual para resume.
+         Usamos getComputedStyle + matrix3d parsing simplificado para casos típicos. */
+      function getCurrentRotateY(el) {
+        const cs = getComputedStyle(el);
+        const m = cs.transform;
+        if (!m || m === "none") return 0;
+        if (m.startsWith("matrix3d(")) {
+          const vals = m.slice(9, -1).split(",").map((s) => parseFloat(s));
+          /* matrix3d[0] = cos(θ), matrix3d[8] = sin(θ) para rotateY */
+          const cos = vals[0];
+          const sin = vals[8];
+          return Math.atan2(sin, cos) * 180 / Math.PI;
+        }
+        return 0;
+      }
+
+      async function openBook() {
+        if (bmOpen || bmBusy || !sourceCard || !bmOverlay) return;
+        bmBusy = true;
+        lastFocused = document.activeElement;
+
+        if (reduced) {
+          /* Reduced motion · solo fade. Cover en estado abierto inmediato. */
+          bmOverlay.classList.add("is-active");
+          bmOverlay.setAttribute("aria-hidden", "false");
+          document.body.classList.add("bm-locked");
+          bmSpinner.style.transform = "rotateY(-180deg)";
+          bmFrame.style.transform = "none";
+          bmFrame.style.opacity = "1";
+          bmClose.classList.add("is-ready");
+          bmOpen = true;
+          bmBusy = false;
+          return;
+        }
+
+        /* === Phase 1 · 0-150ms · lift source card ============================ */
+        sourceCard.classList.add("is-lifting");
+        const liftAnim = sourceCard.animate(
+          [
+            { transform: "rotate(var(--lean, -3.2deg)) translateY(var(--lift, -2px)) scale(1)" },
+            { transform: "rotate(0deg) translateY(-8px) scale(1.04)" }
+          ],
+          { duration: 150, easing: EASE_LIFT, fill: "forwards" }
+        );
+        await liftAnim.finished;
+
+        /* === Phase 2 · 150-450ms · move + scale ============================== */
+        /* Activar overlay (backdrop fade) y posicionar el frame en el rect del card */
+        bmOverlay.classList.add("is-active");
+        bmOverlay.setAttribute("aria-hidden", "false");
+        document.body.classList.add("bm-locked");
+
+        /* Reset cover spinner a estado cerrado por si quedó algo de un open previo */
+        bmSpinner.style.transition = "none";
+        bmSpinner.style.transform = "rotateY(0deg)";
+
+        /* Force reflow para asegurar que el frame ya tiene su layout natural */
+        void bmFrame.offsetWidth;
+        const srcRect = sourceCard.getBoundingClientRect();
+        const tgtRect = bmFrame.getBoundingClientRect();
+        const dx = srcRect.left + srcRect.width / 2 - (tgtRect.left + tgtRect.width / 2);
+        const dy = srcRect.top  + srcRect.height / 2 - (tgtRect.top  + tgtRect.height / 2);
+        const sx = srcRect.width  / tgtRect.width;
+        const sy = srcRect.height / tgtRect.height;
+        const scale = Math.max(sx, sy); /* match el lado más grande, evita gap */
+
+        const moveAnim = bmFrame.animate(
+          [
+            { transform: `translate(${dx}px, ${dy}px) scale(${scale})`, opacity: 1, offset: 0 },
+            { transform: "translate(0, 0) scale(1)", opacity: 1, offset: 1 }
+          ],
+          { duration: 300, easing: EASE_OUT, fill: "forwards" }
+        );
+
+        /* Source card desaparece visualmente (no en DOM · queda para el close reverse) */
+        sourceCard.style.transition = "opacity 120ms ease";
+        sourceCard.style.opacity = "0";
+
+        /* === Phase 3 · 300-700ms · spine rotation ============================ */
+        /* Arrancar el rotate a los 150ms de phase 2 (T=300 total) · solapa con el move. */
+        await wait(150);
+        const spinAnim = bmSpinner.animate(
+          [
+            { transform: "rotateY(0deg)" },
+            { transform: "rotateY(-90deg)", offset: 0.5 },
+            { transform: "rotateY(-180deg)" }
+          ],
+          { duration: 400, easing: EASE_HINGE, fill: "forwards" }
+        );
+
+        /* === Phase 4 · 500-850ms · invisible content swap ====================
+           backface-visibility hidden en cover-front + cover-back hace el swap
+           imperceptible cuando el spinner cruza -90°. No hace falta JS extra. */
+
+        await Promise.all([moveAnim.finished, spinAnim.finished]);
+
+        /* === Phase 5 · 750-1000ms · settle ===================================
+           Subtle box-shadow & idle pulse · el spinner queda fijo en -180. */
+        bmClose.classList.add("is-ready");
+        bmOpen = true;
+        bmBusy = false;
+      }
+
+      async function closeBook() {
+        if (!bmOpen || bmBusy || !sourceCard) return;
+        bmBusy = true;
+        bmClose.classList.remove("is-ready");
+
+        if (reduced) {
+          bmOverlay.classList.remove("is-active");
+          bmOverlay.setAttribute("aria-hidden", "true");
+          document.body.classList.remove("bm-locked");
+          sourceCard.style.opacity = "";
+          sourceCard.classList.remove("is-lifting");
+          bmOpen = false;
+          bmBusy = false;
+          lastFocused?.focus?.();
+          return;
+        }
+
+        /* Reverse · cover gira de vuelta, luego frame vuelve al source rect */
+        const closeSpin = bmSpinner.animate(
+          [
+            { transform: "rotateY(-180deg)" },
+            { transform: "rotateY(0deg)" }
+          ],
+          { duration: 320, easing: EASE_HINGE, fill: "forwards" }
+        );
+        await closeSpin.finished;
+        /* Persistir el estado cerrado en CSS para que no haya pop al continuar */
+        bmSpinner.style.transition = "none";
+        bmSpinner.style.transform = "rotateY(0deg)";
+
+        const srcRect = sourceCard.getBoundingClientRect();
+        const tgtRect = bmFrame.getBoundingClientRect();
+        const dx = srcRect.left + srcRect.width / 2 - (tgtRect.left + tgtRect.width / 2);
+        const dy = srcRect.top  + srcRect.height / 2 - (tgtRect.top  + tgtRect.height / 2);
+        const sx = srcRect.width  / tgtRect.width;
+        const sy = srcRect.height / tgtRect.height;
+        const scale = Math.max(sx, sy);
+
+        sourceCard.style.transition = "opacity 200ms ease 100ms";
+        sourceCard.style.opacity = "1";
+
+        const closeMove = bmFrame.animate(
+          [
+            { transform: "translate(0, 0) scale(1)", opacity: 1 },
+            { transform: `translate(${dx}px, ${dy}px) scale(${scale})`, opacity: 0 }
+          ],
+          { duration: 320, easing: EASE_OUT, fill: "forwards" }
+        );
+        bmOverlay.classList.add("is-closing");
+
+        await closeMove.finished;
+
+        /* Cleanup · reset todo y devuelve estilos */
+        bmOverlay.classList.remove("is-active");
+        bmOverlay.classList.remove("is-closing");
+        bmOverlay.setAttribute("aria-hidden", "true");
+        document.body.classList.remove("bm-locked");
+        bmFrame.style.opacity = "";
+        bmFrame.getAnimations().forEach((a) => a.cancel());
+        bmSpinner.getAnimations().forEach((a) => a.cancel());
+        bmSpinner.style.transition = "";
+        bmSpinner.style.transform = "";
+        sourceCard.style.transition = "";
+        sourceCard.style.opacity = "";
+        sourceCard.classList.remove("is-lifting");
+        sourceCard.getAnimations().forEach((a) => a.cancel());
+
+        bmOpen = false;
+        bmBusy = false;
+        lastFocused?.focus?.();
+      }
+
+      if (sourceCard && bmOverlay) {
+        sourceCard.addEventListener("click", (e) => {
+          e.preventDefault();
+          openBook();
+        });
+        bmOverlay.querySelectorAll("[data-bm-close]").forEach((el) => {
+          el.addEventListener("click", () => closeBook());
+        });
+        document.addEventListener("keydown", (e) => {
+          if (e.key === "Escape" && bmOpen) closeBook();
         });
       }
     })();
