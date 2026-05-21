@@ -74,6 +74,12 @@
       --ease-emphasized:  cubic-bezier(0.34, 1.1, 0.4, 1);
       --ease-spring:      cubic-bezier(0.34, 1.56, 0.64, 1);
       --ease-soft:        cubic-bezier(0.4, 0, 0.6, 1);
+      --ease-sheet:       cubic-bezier(0.22, 0.61, 0.36, 1); /* bottom-sheet / FLIP / hero CTAs */
+
+      /* tonal "on" colors · texto sobre fondos tonales */
+      --coral-on:         #FFF7F0; /* texto sobre coral-strong / hero CTA */
+      --ink-embarazo:     #8B4621; /* ink del libro embarazo · matches .r-book.b-embarazo --b-ink */
+      --ink-coral-deep:   #4A2510; /* ink contraste sobre coral-base */
     }
 
     /* ════════════════════════════════════════════════════════════════════
@@ -141,7 +147,7 @@
     }
     .btn-primary {
       background: var(--coral-strong);
-      color: #FFF7F0;
+      color: var(--coral-on);
       box-shadow: 0 6px 18px -8px rgba(214,119,66,0.55);
     }
     .btn-primary:hover { transform: translateY(-1px); filter: brightness(0.96); }
@@ -541,8 +547,10 @@
     .quote-rotator {
       position: relative;
       /* Altura mayor para acomodar frases más largas + tamaño tipográfico
-         más grande · sigue siendo una sola frase visible (las demás opacity 0). */
-      height: 7.5em;
+         más grande · sigue siendo una sola frase visible (las demás opacity 0).
+         8.5em a 22px line-height 1.45 = ~187px · suficiente margen para 4-5 líneas
+         en viewports estrechos (las frases más largas alcanzan 4 líneas a ~360px). */
+      height: 8.5em;
       margin-bottom: 8px;
       max-width: 40ch;
     }
@@ -713,10 +721,8 @@
     }
     .r-book .sb-foot .count { opacity: 1; }
 
-    .r-shelf.is-large .r-book { flex: 0 0 156px; height: 218px; padding: 18px 16px 14px; }
-    .r-shelf.is-large .r-book .sb-icon { width: 36px; height: 36px; }
-    .r-shelf.is-large .r-book .sb-ttl { font-size: 19px; }
-    .r-shelf.is-large .r-book .sb-foot { font-size: 9.5px; }
+    /* (.r-shelf.is-large variant retirado · ningún shelf lo usa tras la
+       restructuración del bloque 1 · 1 libro grande → 3 libros normales) */
 
     .r-shelf-rail .r-book:nth-child(1) { --lean: -3.2deg; --lift: -2px; }
     .r-shelf-rail .r-book:nth-child(2) { --lean:  2.2deg; --lift:  1px; }
@@ -724,7 +730,7 @@
     .r-shelf-rail .r-book:nth-child(4) { --lean:  3.0deg; --lift:  2px; }
     .r-shelf-rail .r-book:nth-child(5) { --lean: -2.4deg; --lift: -2px; }
     .r-shelf-rail .r-book:nth-child(6) { --lean:  2.6deg; --lift:  1px; }
-    .r-shelf.is-large .r-shelf-rail .r-book { --lean: -1.8deg; --lift: -2px; }
+    /* (.r-shelf.is-large override de lean retirado · ver nota anterior) */
 
     .r-shelf-plank {
       position: relative;
@@ -766,7 +772,7 @@
     .block.t-dark .r-plank-dot { background: rgba(232,201,122,0.36); }
 
     /* Book tonal palette */
-    .r-book.b-embarazo    { --book-tint: #FBE0CB; --book-paper: #F0EADC; --book-glow: rgba(242,165,122,0.58); --b-ink: #8B4621; }
+    .r-book.b-embarazo    { --book-tint: #FBE0CB; --book-paper: #F0EADC; --book-glow: rgba(242,165,122,0.58); --b-ink: var(--ink-embarazo); }
     .r-book.b-alimentacion{ --book-tint: #F8E4DD; --book-paper: #F1EDE1; --book-glow: rgba(216,154,137,0.50); --b-ink: #7E4438; }
     .r-book.b-lactancia   { --book-tint: #F5DEE7; --book-paper: #EEF0E3; --book-glow: rgba(216,154,137,0.46); --b-ink: #7A4054; }
     .r-book.b-vacunas     { --book-tint: #F7EBC7; --book-paper: #EEF0E3; --book-glow: rgba(232,201,122,0.64); --b-ink: #7C6429; }
@@ -1061,7 +1067,7 @@
       font-size: 11px;
       color: var(--ink-faint);
     }
-    .comite-card .role {
+    .comite-card .specialty {
       font-family: var(--font-mono);
       font-size: 10px;
       letter-spacing: 0.18em;
@@ -1081,7 +1087,7 @@
       box-shadow: inset 0 1px 0 rgba(255,255,255,0.7);
     }
     .comite-card .avatar svg { width: 30px; height: 30px; stroke: currentColor; fill: none; stroke-width: 1.4; stroke-linecap: round; stroke-linejoin: round; }
-    .comite-card h5 {
+    .comite-card h4 {
       font-family: var(--font-serif);
       font-weight: 400;
       font-size: 22px;
@@ -1284,7 +1290,7 @@
     }
     .plan .cta.coral {
       background: var(--coral-strong);
-      color: #FFF7F0;
+      color: var(--coral-on);
       box-shadow: 0 6px 18px -8px rgba(214,119,66,0.55);
     }
     .plan .cta.coral:hover { transform: translateY(-1px); filter: brightness(0.96); }
@@ -1330,7 +1336,7 @@
     .signup input::placeholder { color: var(--ink-muted); }
     .signup button {
       background: var(--coral-strong);
-      color: #FFF7F0;
+      color: var(--coral-on);
       border: 0;
       padding: 10px 18px;
       border-radius: var(--radius-pill);
@@ -1425,7 +1431,7 @@
       left: 50%;
       transform: translateX(-50%);
       background: var(--coral-strong);
-      color: #FFF7F0;
+      color: var(--coral-on);
       padding: 13px 22px;
       border-radius: var(--radius-pill);
       font-family: var(--font-text);
@@ -1495,7 +1501,7 @@
       .comite-grid { grid-template-columns: 1fr; }
       .quote-rotator { height: 9em; }
       .r-book { flex: 0 0 96px; height: 144px; }
-      .r-book.is-large { flex: 0 0 140px; height: 196px; }
+      /* .r-book.is-large mobile rule retirado · ya no hay shelves is-large */
       .trust-row { grid-template-columns: 1fr; }
       .site-foot .inner { grid-template-columns: 1fr; }
       .site-foot .legal { flex-direction: column; gap: 8px; }
@@ -1534,7 +1540,7 @@
       backdrop-filter: blur(6px) saturate(120%);
       -webkit-backdrop-filter: blur(6px) saturate(120%);
       opacity: 0;
-      transition: opacity 350ms cubic-bezier(0.22, 0.61, 0.36, 1);
+      transition: opacity 350ms var(--ease-sheet);
     }
     .bs-overlay.is-active .bs-backdrop { opacity: 1; }
 
@@ -1557,7 +1563,7 @@
       perspective: 1800px;
       perspective-origin: 50% 30%;
       /* Phase 2 timing · sube 100-450ms (350ms con delay 100ms) */
-      transition: transform 350ms cubic-bezier(0.22, 0.61, 0.36, 1) 100ms;
+      transition: transform 350ms var(--ease-sheet) 100ms;
     }
     .bs-overlay.is-active .bs-sheet { transform: translate(-50%, 0); }
     .bs-overlay.is-closing .bs-sheet {
@@ -1603,7 +1609,7 @@
       font-size: 20px;
       line-height: 1;
       box-shadow: 0 6px 14px -8px rgba(0,0,0,0.22);
-      transition: transform 240ms cubic-bezier(0.22, 0.61, 0.36, 1), background 240ms;
+      transition: transform 240ms var(--ease-sheet), background 240ms;
       z-index: 4;
       opacity: 0;
       pointer-events: none;
@@ -1695,7 +1701,11 @@
       background: rgba(255,255,255,0.5);
     }
 
-    /* Cover frame · maneja translation + scale del FLIP (sin el rotateY) */
+    /* Cover frame · maneja translation + scale del FLIP (sin el rotateY).
+       z-index 2 garantiza que cubre la .bs-page-right antes del rotateY · ese
+       z-index se mantiene durante la rotación · al cruzar -90° el backface
+       sigue ocultando el front, y la página derecha es revelada por la
+       transparencia geométrica del cover-back (no por z-order). */
     .bs-cover-frame {
       position: absolute;
       top: 0;
@@ -1705,7 +1715,9 @@
       transform-style: preserve-3d;
       will-change: transform, opacity;
       opacity: 0;
+      z-index: 2;
     }
+    .bs-page-right { z-index: 1; }
     .bs-overlay.is-active .bs-cover-frame { opacity: 1; }
 
     /* Cover spinner · maneja el rotateY · hinged en el spine izquierdo */
@@ -1737,7 +1749,7 @@
         radial-gradient(circle at 15% 0%, rgba(255,255,255,0.70), transparent 32%),
         linear-gradient(145deg, #FBE0CB 0%, #F0EADC 100%);
       border-radius: 3px 12px 12px 3px;
-      color: #8B4621;
+      color: var(--ink-embarazo);
       box-shadow:
         inset 0 1px 0 rgba(255,255,255,0.68),
         inset -1px 0 0 rgba(0,0,0,0.05),
@@ -1854,8 +1866,8 @@
       padding: 32px 36px 40px;
       opacity: 0;
       transform: translateY(14px);
-      transition: opacity 360ms cubic-bezier(0.22, 0.61, 0.36, 1) 600ms,
-                  transform 360ms cubic-bezier(0.22, 0.61, 0.36, 1) 600ms;
+      transition: opacity 360ms var(--ease-sheet) 600ms,
+                  transform 360ms var(--ease-sheet) 600ms;
     }
     .bs-overlay.is-active .bs-body { opacity: 1; transform: translateY(0); }
     .bs-overlay.is-closing .bs-body {
@@ -1933,7 +1945,7 @@
       font-size: 13.5px;
       color: var(--ink);
       background: var(--paper-soft);
-      transition: border-color var(--duration-base, 240ms) var(--ease, cubic-bezier(0.22, 0.61, 0.36, 1)), background var(--duration-base, 240ms) var(--ease, cubic-bezier(0.22, 0.61, 0.36, 1));
+      transition: border-color var(--duration-base) var(--ease-sheet), background var(--duration-base) var(--ease-sheet);
     }
     .bs-relchip:hover { border-color: var(--ink); background: var(--paper); }
     .bs-relchip .dot {
@@ -1962,11 +1974,11 @@
       font-family: var(--font-text);
       font-weight: 500;
       font-size: 14.5px;
-      transition: transform 240ms cubic-bezier(0.22, 0.61, 0.36, 1), background 240ms;
+      transition: transform 240ms var(--ease-sheet), background 240ms;
     }
     .bs-actions .btn-pri {
       background: var(--coral-base);
-      color: #4A2510;
+      color: var(--ink-coral-deep);
       box-shadow: 0 12px 24px -14px rgba(214,119,66,0.55);
     }
     .bs-actions .btn-pri:hover { transform: translateY(-1px); background: var(--coral-strong); color: var(--paper); }
@@ -2254,7 +2266,7 @@
           </div>
           <div class="response">
             <div class="label">Respuesta Grow</div>
-            <div class="r-shelf is-six">
+            <div class="r-shelf">
               <div class="r-shelf-rail">
                 <a class="r-book b-lactancia" href="#libros" aria-label="Libro 03 · Lactancia">
                   <div class="sb-icon"><svg viewBox="0 0 24 24"><use href="#b-breast"/></svg></div>
@@ -2332,7 +2344,7 @@
           </div>
           <div class="response">
             <div class="label">Respuesta Grow</div>
-            <div class="r-shelf is-six">
+            <div class="r-shelf">
               <div class="r-shelf-rail">
                 <a class="r-book b-hitos" href="#libros" aria-label="Libro 08 · Hitos">
                   <div class="sb-icon"><svg viewBox="0 0 24 24"><use href="#b-sprout"/></svg></div>
@@ -2533,9 +2545,9 @@
         <article class="comite-card t-mint">
           <span class="num">01</span>
           <div>
-            <div class="role">Pediatra · AP</div>
+            <div class="specialty">Pediatra · AP</div>
             <span class="avatar"><svg viewBox="0 0 32 32"><use href="#dr-1"/></svg></span>
-            <h5>Dra. Laia Bonet</h5>
+            <h4>Dra. Laia Bonet</h4>
             <p class="center">ICS Barcelona · Eixample</p>
           </div>
           <span class="creds">CAV-AEP · AEPED</span>
@@ -2543,9 +2555,9 @@
         <article class="comite-card t-coral">
           <span class="num">02</span>
           <div>
-            <div class="role">Neonatología</div>
+            <div class="specialty">Neonatología</div>
             <span class="avatar"><svg viewBox="0 0 32 32"><use href="#dr-2"/></svg></span>
-            <h5>Dr. Andrés Vidal</h5>
+            <h4>Dr. Andrés Vidal</h4>
             <p class="center">UCI Neonatal · Sant Joan de Déu</p>
           </div>
           <span class="creds">SEN · NICE</span>
@@ -2553,9 +2565,9 @@
         <article class="comite-card t-blush">
           <span class="num">03</span>
           <div>
-            <div class="role">Psicología perinatal</div>
+            <div class="specialty">Psicología perinatal</div>
             <span class="avatar"><svg viewBox="0 0 32 32"><use href="#dr-3"/></svg></span>
-            <h5>Mariana Cifuentes</h5>
+            <h4>Mariana Cifuentes</h4>
             <p class="center">Salud Mental Perinatal · La Paz</p>
           </div>
           <span class="creds">EPDS · MARES</span>
@@ -2563,9 +2575,9 @@
         <article class="comite-card t-gold">
           <span class="num">04</span>
           <div>
-            <div class="role">Enfermería pediátrica</div>
+            <div class="specialty">Enfermería pediátrica</div>
             <span class="avatar"><svg viewBox="0 0 32 32"><use href="#dr-4"/></svg></span>
-            <h5>Júlia Romá</h5>
+            <h4>Júlia Romá</h4>
             <p class="center">Pediatría Comunitaria · CAP Sant Andreu</p>
           </div>
           <span class="creds">AENPED · LATCH</span>
@@ -2661,7 +2673,9 @@
   <footer class="site-foot">
     <div class="inner">
       <div class="brand-block">
-        <img src="assets/grow-logo.png" alt="Grow">
+        <!-- alt="" decorativo · "Grow" ya aparece como texto en el topbar
+             y en el tagline · evita lectura duplicada por screen readers (P5). -->
+        <img src="assets/grow-logo.png" alt="">
         <p class="tagline">Tú cuidas a tu hij@. Grow te cuida a ti.</p>
       </div>
       <div class="col">
@@ -3051,13 +3065,23 @@
       const bsClose   = document.getElementById("bs-close");
       const sourceCard = document.querySelector(".r-book.b-embarazo");
 
-      const EASE_OUT   = "cubic-bezier(0.22, 0.61, 0.36, 1)";
+      const EASE_OUT   = "cubic-bezier(0.22, 0.61, 0.36, 1)"; /* mirror de var(--ease-sheet) · WAAPI no resuelve var() */
       const EASE_LIFT  = "cubic-bezier(0.34, 1.20, 0.64, 1)";
       const EASE_HINGE = "cubic-bezier(0.32, 0.04, 0.24, 0.99)";
 
       let bsOpen = false;
       let bsBusy = false;
       let lastFocused = null;
+      /* Pending intent · si el user toca/escapa mientras una animación está
+         en curso, encolamos su intención y la procesamos al terminar.
+         Evita "clicks perdidos" y permite Esc durante el opening. */
+      let bsPending = null;
+      function bsProcessPending() {
+        const next = bsPending;
+        bsPending = null;
+        if (next === "open" && !bsOpen) openBook();
+        else if (next === "close" && bsOpen) closeBook();
+      }
 
       function wait(ms) { return new Promise((r) => setTimeout(r, ms)); }
 
@@ -3082,7 +3106,9 @@
       }
 
       async function openBook() {
-        if (bsOpen || bsBusy || !sourceCard || !bsOverlay) return;
+        if (!sourceCard || !bsOverlay) return;
+        if (bsOpen) return;
+        if (bsBusy) { bsPending = "open"; return; }
         bsBusy = true;
         lastFocused = document.activeElement;
         bsOverlay.setAttribute("aria-hidden", "false");
@@ -3097,6 +3123,7 @@
           bsClose.classList.add("is-ready");
           bsOpen = true;
           bsBusy = false;
+          bsProcessPending();
           return;
         }
 
@@ -3168,10 +3195,13 @@
         bsClose.classList.add("is-ready");
         bsOpen = true;
         bsBusy = false;
+        bsProcessPending();
       }
 
       async function closeBook() {
-        if (!bsOpen || bsBusy || !sourceCard) return;
+        if (!sourceCard) return;
+        if (!bsOpen) return;
+        if (bsBusy) { bsPending = "close"; return; }
         bsBusy = true;
         bsClose.classList.remove("is-ready");
 
@@ -3184,6 +3214,7 @@
           bsOpen = false;
           bsBusy = false;
           lastFocused?.focus?.();
+          bsProcessPending();
           return;
         }
 
@@ -3243,6 +3274,7 @@
         bsOpen = false;
         bsBusy = false;
         lastFocused?.focus?.();
+        bsProcessPending();
       }
 
       if (sourceCard && bsOverlay) {
@@ -3254,7 +3286,9 @@
           el.addEventListener("click", () => closeBook());
         });
         document.addEventListener("keydown", (e) => {
-          if (e.key === "Escape" && bsOpen) closeBook();
+          /* Esc cierra · si todavía no está open pero estamos en mid-animation
+             del open, encolamos close → se procesará al terminar el opening. */
+          if (e.key === "Escape" && (bsOpen || bsBusy)) closeBook();
         });
       }
     })();
