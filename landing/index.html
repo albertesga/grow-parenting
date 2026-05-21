@@ -790,7 +790,8 @@
     .r-book.b-colicos     { --book-tint: #F8DDD2; --book-paper: #F1E9DC; --book-glow: rgba(242,165,122,0.52); --b-ink: #793726; }
     .r-book.b-hitos       { --book-tint: #EFECE2; --book-paper: #F7F3E9; --book-glow: rgba(232,201,122,0.40); --b-ink: #2B2B2B; }
     .r-book.b-desarrollo  { --book-tint: #E9E3ED; --book-paper: #EEF0E6; --book-glow: rgba(191,210,176,0.50); --b-ink: #5A4970; }
-    .r-book.b-night       { --book-tint: #2A2724; --book-paper: #1F1D1B; --book-glow: rgba(232,201,122,0.36); --b-ink: #E8C97A; }
+    /* .r-book.b-night eliminado · era el palette del falso libro "Modo 3 AM"
+       en el bloque 3 · 3 AM es un chat (vive en libro de Salud), no un libro. */
 
     /* ════════════════════════════════════════════════════════════════════
        § 9 · LIBROS GRID (sección 3)
@@ -1761,16 +1762,10 @@
           </div>
           <div class="response">
             <div class="label">Modo 3 AM · fondo oscuro</div>
-            <div class="r-shelf is-large">
-              <div class="r-shelf-rail">
-                <a class="r-book b-night" href="#threeam" aria-label="Modo 3 AM">
-                  <div class="sb-icon"><svg viewBox="0 0 24 24"><use href="#b-thermo"/></svg></div>
-                  <h4 class="sb-ttl">Modo<br><em>3 AM</em></h4>
-                  <div class="sb-foot"><span class="count">Triage</span><span>AUDITADO</span></div>
-                </a>
-              </div>
-              <div class="r-shelf-plank"><span class="r-plank-dot l"></span><span class="r-plank-dot r"></span></div>
-            </div>
+            <!-- Modo 3 AM no es un libro · es un chat de triage embebido en el
+                 libro de Salud · por eso aquí no aparece como r-book en la
+                 shelf. La narrativa se sostiene con copy + el preludio del
+                 sticky CTA. -->
             <p>Una pregunta por pantalla, tres taps. Te decimos si es urgencia o casa.</p>
             <p><strong>Sin alarmar, sin minimizar.</strong></p>
           </div>
