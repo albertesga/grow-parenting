@@ -268,17 +268,30 @@
       pointer-events: none;
       z-index: 0;
     }
-    .hero-avatar img {
+    /* Avatar img · fallback PNG visible mientras carga el video.
+       Cuando #hero-avatar-canvas adquiere .is-ready, el canvas fade-in
+       y la img se oculta · ver .hero-avatar-fallback.is-hidden abajo. */
+    .hero-avatar img,
+    .hero-avatar canvas {
       width: 78%;
       height: 78%;
       object-fit: contain;
-      position: relative;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
       z-index: 1;
       animation: breathe var(--duration-breath) var(--ease-soft) infinite;
     }
+    .hero-avatar canvas {
+      opacity: 0;
+      transition: opacity 360ms var(--ease-sheet);
+    }
+    .hero-avatar canvas.is-ready { opacity: 1; z-index: 2; }
+    .hero-avatar-fallback.is-hidden { opacity: 0; transition: opacity 360ms var(--ease-sheet); }
     @keyframes breathe {
-      0%, 100% { transform: translateY(0) scale(1); }
-      50%      { transform: translateY(-6px) scale(1.015); }
+      0%, 100% { transform: translate(-50%, -50%) translateY(0) scale(1); }
+      50%      { transform: translate(-50%, -50%) translateY(-6px) scale(1.015); }
     }
     .phase-tag {
       position: absolute;
@@ -2157,7 +2170,11 @@
         </div>
       </div>
       <div class="hero-avatar">
-        <img src="assets/avatar-blush.png" alt="Avatar de recién nacido">
+        <!-- Fallback PNG · se ve mientras el video decodea, después es ocultado
+             cuando #hero-avatar-canvas adquiere .is-ready (fade in). Si el
+             video falla (CORS / network), el fallback se queda visible. -->
+        <img class="hero-avatar-fallback" src="assets/avatar-blush.png" alt="Avatar de recién nacido">
+        <canvas id="hero-avatar-canvas" aria-hidden="true"></canvas>
         <div class="phase-tag"><span class="dot"></span> Recién nacido · 0–6m</div>
       </div>
     </div>
@@ -3292,6 +3309,138 @@
           if (e.key === "Escape" && (bsOpen || bsBusy)) closeBook();
         });
       }
+
+      /* 7 · Hero avatar video · Kling animation con chroma key adaptativo
+         · cycle cada 5s (play una vez · hold en frame 0 durante el gap).
+         Chroma key sample-based · detecta el bg color de los 4 corners del
+         primer frame y key-a por distancia euclídea RGB · funciona con
+         cualquier color de fondo (negro, cream, blanco, verde, etc.). */
+      (async () => {
+        const heroCanvas = document.getElementById("hero-avatar-canvas");
+        const heroFallback = document.querySelector(".hero-avatar-fallback");
+        if (!heroCanvas) return;
+        const heroSrc = "assets/hero-avatar.mp4";
+        const HERO_FRAMES = reduced ? 1 : 36;
+        const HERO_CYCLE_MS = 5000;
+        const CHROMA_TOL = 56;   /* distancia RGB · pixels más cercanos al bg son alpha 0 */
+        const CHROMA_SOFT = 26;  /* ramp adicional para borde feathered */
+
+        try {
+          const vid = document.createElement("video");
+          vid.src = heroSrc;
+          vid.muted = true;
+          vid.playsInline = true;
+          vid.preload = "auto";
+          vid.crossOrigin = "anonymous";
+
+          await new Promise((resolve, reject) => {
+            vid.addEventListener("loadedmetadata", resolve, { once: true });
+            vid.addEventListener("error", () => reject(new Error("video load failed")), { once: true });
+            setTimeout(() => reject(new Error("video metadata timeout")), 8000);
+          });
+
+          const w = vid.videoWidth || 480;
+          const h = vid.videoHeight || 480;
+          const durationMs = (vid.duration || 4) * 1000;
+
+          /* Detectar color de fondo · seek a frame 0 + sample 4 corners */
+          await new Promise((r) => {
+            const done = () => { vid.removeEventListener("seeked", done); r(); };
+            vid.addEventListener("seeked", done, { once: true });
+            vid.currentTime = 0;
+          });
+          const probe = document.createElement("canvas");
+          probe.width = w; probe.height = h;
+          const pctx = probe.getContext("2d", { willReadFrequently: true });
+          pctx.drawImage(vid, 0, 0);
+          const corners = [
+            pctx.getImageData(0, 0, 1, 1).data,
+            pctx.getImageData(w - 1, 0, 1, 1).data,
+            pctx.getImageData(0, h - 1, 1, 1).data,
+            pctx.getImageData(w - 1, h - 1, 1, 1).data,
+          ];
+          const bgR = Math.round((corners[0][0] + corners[1][0] + corners[2][0] + corners[3][0]) / 4);
+          const bgG = Math.round((corners[0][1] + corners[1][1] + corners[2][1] + corners[3][1]) / 4);
+          const bgB = Math.round((corners[0][2] + corners[1][2] + corners[2][2] + corners[3][2]) / 4);
+
+          function heroChromaKey(d) {
+            for (let i = 0; i < d.length; i += 4) {
+              const dr = d[i] - bgR, dg = d[i + 1] - bgG, db = d[i + 2] - bgB;
+              const dist = Math.sqrt(dr * dr + dg * dg + db * db);
+              if (dist < CHROMA_TOL) {
+                d[i + 3] = 0;
+              } else if (dist < CHROMA_TOL + CHROMA_SOFT) {
+                d[i + 3] = Math.round((dist - CHROMA_TOL) * 255 / CHROMA_SOFT);
+              }
+            }
+          }
+
+          /* Extraer N frames con el adaptive chroma key aplicado */
+          const frames = [];
+          for (let i = 0; i < HERO_FRAMES; i++) {
+            const t = (i / Math.max(1, HERO_FRAMES - 1)) * (vid.duration || 4);
+            await new Promise((resolve) => {
+              const done = () => { vid.removeEventListener("seeked", done); resolve(); };
+              vid.addEventListener("seeked", done, { once: true });
+              vid.currentTime = t;
+              setTimeout(resolve, 1500); /* timeout safety */
+            });
+            const off = document.createElement("canvas");
+            off.width = w; off.height = h;
+            const ctx = off.getContext("2d", { willReadFrequently: true });
+            ctx.drawImage(vid, 0, 0);
+            try {
+              const img = ctx.getImageData(0, 0, w, h);
+              heroChromaKey(img.data);
+              ctx.putImageData(img, 0, 0);
+            } catch (e) { /* CORS taint · paint sin alpha */ }
+            frames.push(off);
+          }
+
+          if (!frames.length) return;
+
+          /* Setup canvas + cycle loop */
+          heroCanvas.width = w;
+          heroCanvas.height = h;
+          const ctx = heroCanvas.getContext("2d");
+          const playMs = Math.min(durationMs, HERO_CYCLE_MS);
+          const frameMs = playMs / frames.length;
+
+          let cycleStart = performance.now();
+          let lastIdx = -1;
+
+          function tick(now) {
+            const localT = (now - cycleStart);
+            if (localT >= HERO_CYCLE_MS) {
+              cycleStart = now;
+            }
+            const t = now - cycleStart;
+            let idx;
+            if (t < playMs) {
+              idx = Math.min(frames.length - 1, Math.floor(t / frameMs));
+            } else {
+              /* Gap entre cycles · hold en frame 0 (rest pose) */
+              idx = 0;
+            }
+            if (idx !== lastIdx) {
+              ctx.clearRect(0, 0, w, h);
+              ctx.drawImage(frames[idx], 0, 0);
+              lastIdx = idx;
+            }
+            requestAnimationFrame(tick);
+          }
+
+          /* Pintar frame 0 inmediato + mark ready */
+          ctx.drawImage(frames[0], 0, 0);
+          heroCanvas.classList.add("is-ready");
+          heroFallback?.classList.add("is-hidden");
+
+          if (!reduced) requestAnimationFrame(tick);
+        } catch (e) {
+          console.warn("[hero-video] load failed", e);
+          /* Fallback img sigue visible · degradación silenciosa */
+        }
+      })();
     })();
   </script>
 </body>
