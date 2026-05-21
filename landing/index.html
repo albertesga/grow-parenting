@@ -435,7 +435,10 @@
       max-width: 320px;
       margin-bottom: 32px;
     }
-    .avatar-stage video {
+    .avatar-stage canvas {
+      /* Canvas con alpha real · chroma key aplicado en JS al decodear cada
+         frame del MP4 source. No necesita filter SVG ni mix-blend-mode · el
+         negro de fondo ya es transparente per-pixel desde el cache de frames. */
       position: absolute;
       inset: 0;
       width: 100%;
@@ -443,12 +446,8 @@
       object-fit: contain;
       opacity: 0;
       transition: opacity var(--duration-slow) var(--ease-soft);
-      /* Doble defensa anti-halo · filter SVG saca negro principal · mix-blend
-         multiply elimina cualquier residuo oscuro sobre fondo paper. */
-      filter: url(#black-to-alpha);
-      mix-blend-mode: multiply;
     }
-    .avatar-stage video.is-active { opacity: 1; }
+    .avatar-stage canvas.is-ready { opacity: 1; }
     .avatar-phase {
       position: absolute;
       bottom: -28px;
@@ -1430,19 +1429,18 @@
       z-index: 40;
       box-shadow: 0 6px 16px -8px rgba(42,33,27,0.32);
     }
-    .mobile-avatar video {
+    .mobile-avatar canvas {
+      /* Canvas con alpha real · misma técnica que el avatar grande
+         (ver .avatar-stage canvas) · chroma key aplicado en JS por frame. */
       position: absolute;
       inset: 0;
       width: 100%;
       height: 100%;
       object-fit: contain;
-      /* Mismo combo anti-halo del avatar grande · ver .avatar-stage video. */
-      filter: url(#black-to-alpha);
-      mix-blend-mode: multiply;
       opacity: 0;
       transition: opacity var(--duration-slow) var(--ease-soft);
     }
-    .mobile-avatar video.is-active { opacity: 1; }
+    .mobile-avatar canvas.is-ready { opacity: 1; }
 
     /* ════════════════════════════════════════════════════════════════════
        § 15 · RESPONSIVE
@@ -1496,7 +1494,7 @@
 </head>
 <body>
   <!-- ════════════════════════════════════════════════════════════════════
-       SVG SPRITE · iconos + filter black-to-alpha
+       SVG SPRITE · iconos (chroma key del parallax vive en JS, no aquí)
        ════════════════════════════════════════════════════════════════════ -->
   <svg style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true">
     <defs>
@@ -1585,19 +1583,8 @@
         <path d="M15.5 11h1"/>
         <path d="M6 26a10 10 0 0 1 20 0"/>
       </symbol>
-
-      <!-- Black to alpha filter (for parallax video) ·
-           luminance → alpha con threshold agresivo · slope 60 + intercept -0.18
-           elimina halo negro de anti-aliasing y compresión H.264 sin comer el
-           contraste del avatar (los pixels con luminancia > ~0.003 quedan
-           totalmente opacos · resto se transparenta). -->
-      <filter id="black-to-alpha" color-interpolation-filters="sRGB">
-        <feColorMatrix type="luminanceToAlpha" result="lum"/>
-        <feComponentTransfer in="lum" result="lumAmp">
-          <feFuncA type="linear" slope="60" intercept="-0.18"/>
-        </feComponentTransfer>
-        <feComposite in="SourceGraphic" in2="lumAmp" operator="in"/>
-      </filter>
+      <!-- (parallax: el filter SVG black-to-alpha se eliminó · ahora hacemos
+           chroma key per-pixel en JS al cachear los frames · ver IIFE bottom). -->
     </defs>
   </svg>
 
@@ -1674,12 +1661,10 @@
     <div class="narrative-shell">
       <aside class="avatar-stage" aria-hidden="true">
         <div class="frame" id="avatar-frame">
-          <video id="vid-1" class="is-active" muted playsinline preload="auto" loop>
-            <source src="assets/parallax-1-bolita-to-newborn.mp4" type="video/mp4">
-          </video>
-          <video id="vid-2" muted playsinline preload="auto" loop>
-            <source src="assets/parallax-2-newborn-to-baby.mp4" type="video/mp4">
-          </video>
+          <!-- Canvas único · JS decodea ambos MP4 a frame cache offscreen
+               con chroma key, luego pinta el frame correcto por scroll progress.
+               width/height intrínsecos se ajustan en runtime al videoWidth/Height. -->
+          <canvas id="avatar-canvas" width="320" height="320"></canvas>
           <div class="avatar-phase" id="phase-label">
             <span class="dot" id="phase-dot" style="background: var(--coral-base)"></span>
             <span id="phase-text">Embarazo</span>
@@ -2145,12 +2130,8 @@
        ════════════════════════════════════════════════════════════════════ -->
   <a class="sticky-cta" id="sticky-cta" href="#pricing">Apúntate desde €1,99/mes →</a>
   <div class="mobile-avatar" aria-hidden="true">
-    <video id="m-vid-1" class="is-active" muted playsinline preload="auto" loop>
-      <source src="assets/parallax-1-bolita-to-newborn.mp4" type="video/mp4">
-    </video>
-    <video id="m-vid-2" muted playsinline preload="auto" loop>
-      <source src="assets/parallax-2-newborn-to-baby.mp4" type="video/mp4">
-    </video>
+    <!-- Canvas mobile · misma estrategia que el desktop · ver #avatar-canvas. -->
+    <canvas id="m-avatar-canvas" width="168" height="168"></canvas>
   </div>
 
   <script>
@@ -2183,14 +2164,20 @@
         });
       }
 
-      /* 3 · Parallax avatar bound a scroll del .narrative-shell */
-      const phaseText = document.getElementById("phase-text");
-      const phaseDot = document.getElementById("phase-dot");
+      /* 3 · Parallax avatar · canvas chroma key + frame cache.
+         Estrategia · decodear los 2 MP4 (preview-1 bolita→newborn, preview-2
+         newborn→bebé) a un array de frames offscreen al cargar la página,
+         aplicar chroma key per-pixel (negro → alpha 0 con soft edge ramp)
+         y cachear cada frame como HTMLCanvasElement. En scroll, mapeamos
+         progress 0..1 al frame index global y pintamos via drawImage. Esto
+         resuelve los dos problemas del enfoque anterior:
+         - Alpha real sin halo · no dependemos del SVG filter ni multiply.
+         - Animación scroll-locked frame-exacta · sin GOP snapping de MP4. */
+      const phaseText  = document.getElementById("phase-text");
+      const phaseDot   = document.getElementById("phase-dot");
       const avatarFill = document.getElementById("avatar-fill");
-      const vid1 = document.getElementById("vid-1");
-      const vid2 = document.getElementById("vid-2");
-      const mVid1 = document.getElementById("m-vid-1");
-      const mVid2 = document.getElementById("m-vid-2");
+      const avatarCanvas  = document.getElementById("avatar-canvas");
+      const mAvatarCanvas = document.getElementById("m-avatar-canvas");
       const stops = {
         coral: document.getElementById("stop-coral"),
         blush: document.getElementById("stop-blush"),
@@ -2207,14 +2194,90 @@
         mint:  "Bebé"
       };
 
-      function setActiveVideo(which) {
-        if (which === "v1") {
-          vid1?.classList.add("is-active"); vid2?.classList.remove("is-active");
-          mVid1?.classList.add("is-active"); mVid2?.classList.remove("is-active");
-        } else {
-          vid2?.classList.add("is-active"); vid1?.classList.remove("is-active");
-          mVid2?.classList.add("is-active"); mVid1?.classList.remove("is-active");
+      /* Chroma key per-pixel · luminance Rec.709 → alpha con hard cut + soft ramp.
+         Tuneables · si en runtime hay halo subir HARD a 25, si come bordes bajar SOFT. */
+      const CHROMA_HARD = 18;
+      const CHROMA_SOFT = 64;
+      function chromaKey(d) {
+        const range = CHROMA_SOFT - CHROMA_HARD;
+        for (let i = 0; i < d.length; i += 4) {
+          const lum = 0.2126 * d[i] + 0.7152 * d[i + 1] + 0.0722 * d[i + 2];
+          if (lum < CHROMA_HARD)      d[i + 3] = 0;
+          else if (lum < CHROMA_SOFT) d[i + 3] = ((lum - CHROMA_HARD) * 255 / range) | 0;
         }
+      }
+
+      /* Decodea N frames de un MP4 · scrub via currentTime + seeked event.
+         Aplica chroma key + guarda cada frame como canvas. Promise resuelve
+         con el array de canvases listos para drawImage. */
+      function extractFrames(url, count) {
+        return new Promise((resolve, reject) => {
+          const vid = document.createElement("video");
+          vid.src = url;
+          vid.muted = true;
+          vid.playsInline = true;
+          vid.preload = "auto";
+          vid.crossOrigin = "anonymous";
+          const onError = () => reject(new Error("video load failed: " + url));
+          vid.addEventListener("error", onError, { once: true });
+          vid.addEventListener("loadedmetadata", async () => {
+            const w = vid.videoWidth || 320;
+            const h = vid.videoHeight || 320;
+            const frames = [];
+            try {
+              for (let i = 0; i < count; i++) {
+                const t = (i / Math.max(1, count - 1)) * vid.duration;
+                /* Race · seeked event vs 5s timeout per frame · si el browser no
+                   responde reusamos el frame anterior (gracefully degrade). */
+                const seeked = new Promise((r) => {
+                  const done = () => { vid.removeEventListener("seeked", done); r(); };
+                  vid.addEventListener("seeked", done, { once: true });
+                });
+                const timeout = new Promise((r) => setTimeout(r, 5000));
+                vid.currentTime = t;
+                await Promise.race([seeked, timeout]);
+                const off = document.createElement("canvas");
+                off.width = w;
+                off.height = h;
+                const ctx = off.getContext("2d", { willReadFrequently: true });
+                ctx.drawImage(vid, 0, 0);
+                try {
+                  const img = ctx.getImageData(0, 0, w, h);
+                  chromaKey(img.data);
+                  ctx.putImageData(img, 0, 0);
+                } catch (e) {
+                  /* CORS taint · sin alpha real pero al menos pintamos algo. */
+                }
+                frames.push(off);
+              }
+              resolve(frames);
+            } catch (e) {
+              reject(e);
+            }
+          }, { once: true });
+        });
+      }
+
+      let framesA = null;
+      let framesB = null;
+      let totalFrames = 0;
+      let currentProgress = 0;
+
+      function paintCanvas(canvas, frame) {
+        if (!canvas || !frame) return;
+        const ctx = canvas.getContext("2d");
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.drawImage(frame, 0, 0, canvas.width, canvas.height);
+      }
+
+      function renderFrameAt(progress) {
+        if (!framesA || !framesB || totalFrames === 0) return;
+        const idx = Math.max(0, Math.min(totalFrames - 1, Math.round(progress * (totalFrames - 1))));
+        const frame = idx < framesA.length
+          ? framesA[idx]
+          : framesB[idx - framesA.length];
+        paintCanvas(avatarCanvas, frame);
+        paintCanvas(mAvatarCanvas, frame);
       }
 
       function updateParallax() {
@@ -2222,33 +2285,22 @@
         if (!shell) return;
         const rect = shell.getBoundingClientRect();
         const vh = window.innerHeight;
-        const total = rect.height - vh;
+        const total = Math.max(1, rect.height - vh);
         const progress = Math.max(0, Math.min(1, -rect.top / total));
+        currentProgress = progress;
 
-        /* Map progress 0-1 to phases:
-           0.00-0.40 · coral (embarazo · vid1 al inicio)
-           0.40-0.70 · blush (recién nacido · transición vid1→vid2)
-           0.70-1.00 · mint  (bebé · vid2 al final) */
+        /* Map progress 0-1 to phases · ver thresholds:
+           0.00-0.40 · coral (embarazo)
+           0.40-0.70 · blush (recién nacido)
+           0.70-1.00 · mint  (bebé) */
         let phase = "coral";
         if (progress >= 0.70) phase = "mint";
         else if (progress >= 0.40) phase = "blush";
 
-        if (progress < 0.55) {
-          setActiveVideo("v1");
-          if (vid1 && vid1.duration && isFinite(vid1.duration)) {
-            const t = Math.min(1, progress / 0.55);
-            vid1.currentTime = vid1.duration * t;
-          }
-        } else {
-          setActiveVideo("v2");
-          if (vid2 && vid2.duration && isFinite(vid2.duration)) {
-            const t = Math.min(1, (progress - 0.55) / 0.45);
-            vid2.currentTime = vid2.duration * t;
-          }
-        }
+        renderFrameAt(progress);
 
-        if (phaseText) phaseText.textContent = phaseLabels[phase];
-        if (phaseDot)  phaseDot.style.background = phaseColors[phase];
+        if (phaseText)  phaseText.textContent = phaseLabels[phase];
+        if (phaseDot)   phaseDot.style.background = phaseColors[phase];
         if (avatarFill) avatarFill.style.height = (progress * 100).toFixed(1) + "%";
 
         Object.entries(stops).forEach(([key, el]) => {
@@ -2261,6 +2313,38 @@
         });
       }
 
+      /* Boot async · arranca extracción de frames en paralelo. Mientras carga,
+         mostramos los canvases con opacity 0 (CSS); cuando termina pintamos
+         frame 0 y añadimos .is-ready (fade in). Si falla, dejamos el canvas
+         invisible · el bloque sigue narrando con el texto y el tracker. */
+      (async () => {
+        const isMobile = window.matchMedia("(max-width: 960px)").matches;
+        const FRAME_COUNT = reduced ? 2 : (isMobile ? 24 : 40);
+        const URL_1 = "assets/parallax-1-bolita-to-newborn.mp4";
+        const URL_2 = "assets/parallax-2-newborn-to-baby.mp4";
+        try {
+          const [fa, fb] = await Promise.all([
+            extractFrames(URL_1, FRAME_COUNT),
+            extractFrames(URL_2, FRAME_COUNT)
+          ]);
+          framesA = fa;
+          framesB = fb;
+          totalFrames = framesA.length + framesB.length;
+          /* Ajustar canvas size al nativo del primer frame · evita stretch borroso. */
+          const refFrame = framesA[0];
+          if (refFrame) {
+            if (avatarCanvas) { avatarCanvas.width = refFrame.width; avatarCanvas.height = refFrame.height; }
+            if (mAvatarCanvas) { mAvatarCanvas.width = refFrame.width; mAvatarCanvas.height = refFrame.height; }
+          }
+          renderFrameAt(currentProgress);
+          avatarCanvas?.classList.add("is-ready");
+          mAvatarCanvas?.classList.add("is-ready");
+        } catch (e) {
+          /* Decode failed · log + leave canvases hidden. */
+          console.warn("[parallax] frame extraction failed", e);
+        }
+      })();
+
       if (!reduced) {
         let ticking = false;
         window.addEventListener("scroll", () => {
@@ -2269,6 +2353,9 @@
             ticking = true;
           }
         }, { passive: true });
+        updateParallax();
+      } else {
+        /* Reduced motion · solo pintar estado inicial cuando los frames lleguen. */
         updateParallax();
       }
 
