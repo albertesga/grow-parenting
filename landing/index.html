@@ -722,6 +722,8 @@
     .r-shelf-rail .r-book:nth-child(2) { --lean:  2.2deg; --lift:  1px; }
     .r-shelf-rail .r-book:nth-child(3) { --lean: -1.8deg; --lift: -3px; }
     .r-shelf-rail .r-book:nth-child(4) { --lean:  3.0deg; --lift:  2px; }
+    .r-shelf-rail .r-book:nth-child(5) { --lean: -2.4deg; --lift: -2px; }
+    .r-shelf-rail .r-book:nth-child(6) { --lean:  2.6deg; --lift:  1px; }
     .r-shelf.is-large .r-shelf-rail .r-book { --lean: -1.8deg; --lift: -2px; }
 
     .r-shelf-plank {
@@ -773,6 +775,8 @@
     .r-book.b-colicos     { --book-tint: #F8DDD2; --book-paper: #F1E9DC; --book-glow: rgba(242,165,122,0.52); --b-ink: #793726; }
     .r-book.b-hitos       { --book-tint: #EFECE2; --book-paper: #F7F3E9; --book-glow: rgba(232,201,122,0.40); --b-ink: #2B2B2B; }
     .r-book.b-desarrollo  { --book-tint: #E9E3ED; --book-paper: #EEF0E6; --book-glow: rgba(191,210,176,0.50); --b-ink: #5A4970; }
+    .r-book.b-recuerdos   { --book-tint: #F4E0D5; --book-paper: #F5EFE2; --book-glow: rgba(232,201,122,0.34); --b-ink: #6B4A36; }
+    .r-book.b-parto       { --book-tint: #F9D8C5; --book-paper: #F0E9DB; --book-glow: rgba(214,119,66,0.50); --b-ink: #6E2F18; }
     /* .r-book.b-night eliminado · era el palette del falso libro "Modo 3 AM"
        en el bloque 3 · 3 AM es un chat (vive en libro de Salud), no un libro. */
 
@@ -1544,6 +1548,13 @@
       <symbol id="b-heart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
         <path d="M12 21s-8-4.5-8-11a5 5 0 0 1 8-4 5 5 0 0 1 8 4c0 6.5-8 11-8 11z"/>
       </symbol>
+      <symbol id="b-bookmark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M7 3h10a1 1 0 0 1 1 1v17l-6-4-6 4V4a1 1 0 0 1 1-1z"/>
+        <path d="M9 8h6"/>
+      </symbol>
+      <symbol id="b-pulse" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M3 12h4l2-6 4 12 2-6h6"/>
+      </symbol>
 
       <!-- Comité avatars -->
       <symbol id="dr-1" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
@@ -1676,12 +1687,22 @@
           </div>
           <div class="response">
             <div class="label">Respuesta Grow</div>
-            <div class="r-shelf is-large">
+            <div class="r-shelf">
               <div class="r-shelf-rail">
                 <a class="r-book b-embarazo" href="#libros" aria-label="Libro 01 · Embarazo">
                   <div class="sb-icon"><svg viewBox="0 0 24 24"><use href="#b-belly"/></svg></div>
                   <h4 class="sb-ttl">Libro de<br><em>embarazo</em></h4>
                   <div class="sb-foot"><span class="count">Libro · 01</span><span>SEGO</span></div>
+                </a>
+                <a class="r-book b-parto" href="#libros" aria-label="Libro 11 · Preparación al parto">
+                  <div class="sb-icon"><svg viewBox="0 0 24 24"><use href="#b-pulse"/></svg></div>
+                  <h4 class="sb-ttl">Preparación<br><em>al parto</em></h4>
+                  <div class="sb-foot"><span class="count">Libro · 11</span><span>EAPM</span></div>
+                </a>
+                <a class="r-book b-recuerdos" href="#libros" aria-label="Libro 10 · Recuerdos">
+                  <div class="sb-icon"><svg viewBox="0 0 24 24"><use href="#b-bookmark"/></svg></div>
+                  <h4 class="sb-ttl">Libro de<br><em>recuerdos</em></h4>
+                  <div class="sb-foot"><span class="count">Libro · 10</span><span>DIARIO</span></div>
                 </a>
               </div>
               <div class="r-shelf-plank"><span class="r-plank-dot l"></span><span class="r-plank-dot r"></span></div>
@@ -1706,7 +1727,7 @@
           </div>
           <div class="response">
             <div class="label">Respuesta Grow</div>
-            <div class="r-shelf is-four">
+            <div class="r-shelf is-six">
               <div class="r-shelf-rail">
                 <a class="r-book b-lactancia" href="#libros" aria-label="Libro 03 · Lactancia">
                   <div class="sb-icon"><svg viewBox="0 0 24 24"><use href="#b-breast"/></svg></div>
@@ -1727,6 +1748,16 @@
                   <div class="sb-icon"><svg viewBox="0 0 24 24"><use href="#b-bottle"/></svg></div>
                   <h4 class="sb-ttl">Libro de<br><em>alimentación</em></h4>
                   <div class="sb-foot"><span class="count">Libro · 02</span><span>BLW</span></div>
+                </a>
+                <a class="r-book b-vacunas" href="#libros" aria-label="Libro 04 · Vacunas">
+                  <div class="sb-icon"><svg viewBox="0 0 24 24"><use href="#b-syringe"/></svg></div>
+                  <h4 class="sb-ttl">Libro de<br><em>vacunas</em></h4>
+                  <div class="sb-foot"><span class="count">Libro · 04</span><span>AEPED</span></div>
+                </a>
+                <a class="r-book b-recuerdos" href="#libros" aria-label="Libro 10 · Recuerdos">
+                  <div class="sb-icon"><svg viewBox="0 0 24 24"><use href="#b-bookmark"/></svg></div>
+                  <h4 class="sb-ttl">Libro de<br><em>recuerdos</em></h4>
+                  <div class="sb-foot"><span class="count">Libro · 10</span><span>DIARIO</span></div>
                 </a>
               </div>
               <div class="r-shelf-plank"><span class="r-plank-dot l"></span><span class="r-plank-dot r"></span></div>
@@ -1750,10 +1781,25 @@
           </div>
           <div class="response">
             <div class="label">Modo 3 AM · fondo oscuro</div>
-            <!-- Modo 3 AM no es un libro · es un chat de triage embebido en el
-                 libro de Salud · por eso aquí no aparece como r-book en la
-                 shelf. La narrativa se sostiene con copy + el preludio del
-                 sticky CTA. -->
+            <!-- Modo 3 AM es chat de triage embebido en el libro de Salud,
+                 no un libro propio. La shelf muestra los libros que el triage
+                 te abre por contexto · vacunas (¿le toca pauta?) y recuerdos
+                 (registro del episodio para el pediatra). -->
+            <div class="r-shelf">
+              <div class="r-shelf-rail">
+                <a class="r-book b-vacunas" href="#libros" aria-label="Libro 04 · Vacunas">
+                  <div class="sb-icon"><svg viewBox="0 0 24 24"><use href="#b-syringe"/></svg></div>
+                  <h4 class="sb-ttl">Libro de<br><em>vacunas</em></h4>
+                  <div class="sb-foot"><span class="count">Libro · 04</span><span>AEPED</span></div>
+                </a>
+                <a class="r-book b-recuerdos" href="#libros" aria-label="Libro 10 · Recuerdos">
+                  <div class="sb-icon"><svg viewBox="0 0 24 24"><use href="#b-bookmark"/></svg></div>
+                  <h4 class="sb-ttl">Libro de<br><em>recuerdos</em></h4>
+                  <div class="sb-foot"><span class="count">Libro · 10</span><span>DIARIO</span></div>
+                </a>
+              </div>
+              <div class="r-shelf-plank"><span class="r-plank-dot l"></span><span class="r-plank-dot r"></span></div>
+            </div>
             <p>Una pregunta por pantalla, tres taps. Te decimos si es urgencia o casa.</p>
             <p><strong>Sin alarmar, sin minimizar.</strong></p>
           </div>
