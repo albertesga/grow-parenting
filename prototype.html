@@ -5,9 +5,15 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Grow - Prototipo clickable</title>
 <style>
-  @font-face { font-family: "Lenia"; src: url("design/assets/fonts/LeniaSans-Regular.ttf") format("truetype"); font-weight: 400; font-display: swap; }
-  @font-face { font-family: "Lenia"; src: url("design/assets/fonts/LeniaSans-Medium.ttf") format("truetype"); font-weight: 500; font-display: swap; }
-  @font-face { font-family: "Lenia"; src: url("design/assets/fonts/LeniaSans-Bold.ttf") format("truetype"); font-weight: 700; font-display: swap; }
+  /* Fonts · Galiner serif display + Helvena text · canon Nov 2026.
+     Galiner ships con 3 cortes (Light 300 / Regular 400 / Bold 700) · sin italic.
+     Pesos legacy 500/600 mapeados explícitamente (500→Regular, 600→Bold)
+     para evitar synthesis del browser. */
+  @font-face { font-family: "Galiner"; src: url("design/assets/fonts/TBJGaliner-Light.ttf") format("truetype"); font-weight: 300; font-display: swap; }
+  @font-face { font-family: "Galiner"; src: url("design/assets/fonts/TBJGaliner-Regular.ttf") format("truetype"); font-weight: 400; font-display: swap; }
+  @font-face { font-family: "Galiner"; src: url("design/assets/fonts/TBJGaliner-Regular.ttf") format("truetype"); font-weight: 500; font-display: swap; }
+  @font-face { font-family: "Galiner"; src: url("design/assets/fonts/TBJGaliner-Bold.ttf") format("truetype"); font-weight: 600; font-display: swap; }
+  @font-face { font-family: "Galiner"; src: url("design/assets/fonts/TBJGaliner-Bold.ttf") format("truetype"); font-weight: 700; font-display: swap; }
   @font-face { font-family: "Helvena"; src: url("design/assets/fonts/Helvena-Regular.ttf") format("truetype"); font-weight: 400; font-display: swap; }
   @font-face { font-family: "Helvena"; src: url("design/assets/fonts/Helvena-Medium.ttf") format("truetype"); font-weight: 500; font-display: swap; }
   @font-face { font-family: "Helvena"; src: url("design/assets/fonts/Helvena-Semibold.ttf") format("truetype"); font-weight: 600; font-display: swap; }
@@ -223,7 +229,7 @@
   }
 
   .meta-kicker {
-    font-family: "Lenia";
+    font-family: "Galiner";
     font-size: var(--fs-meta);
     font-weight: 500;
     letter-spacing: 0.18em;
@@ -232,7 +238,7 @@
   }
 
   .brief h1 {
-    font-family: "Lenia";
+    font-family: "Galiner";
     font-weight: 500;
     font-size: clamp(34px, 4vw, 54px);
     line-height: 1.02;
@@ -270,14 +276,14 @@
 
   .map button:hover { transform: translateX(3px); border-color: var(--ink); }
   .map button[aria-current="true"] { background: var(--ink); color: var(--paper); border-color: var(--ink); }
-  .map span { font-family: "Lenia"; font-size: var(--fs-meta); letter-spacing: 0.12em; text-transform: uppercase; }
+  .map span { font-family: "Galiner"; font-size: var(--fs-meta); letter-spacing: 0.12em; text-transform: uppercase; }
 
   .note-card { display: grid; gap: var(--space-lg); }
   .note-item { border-top: 1px solid var(--line); padding-top: 14px; }
   .note-item:first-child { border-top: 0; padding-top: 0; }
   .note-item strong {
     display: block;
-    font-family: "Lenia";
+    font-family: "Galiner";
     font-weight: 500;
     font-size: var(--fs-body-sm);
     margin-bottom: 4px;
@@ -481,7 +487,7 @@
   }
 
   .eyebrow {
-    font-family: "Lenia";
+    font-family: "Galiner";
     font-weight: 500;
     font-size: var(--fs-meta);
     letter-spacing: 0.18em;
@@ -491,7 +497,7 @@
   }
 
   h2.screen-title {
-    font-family: "Lenia";
+    font-family: "Galiner";
     font-size: 30px;
     line-height: 1.05;
     letter-spacing: -0.02em;
@@ -623,7 +629,7 @@
   .ready-card h2 {
     position: relative;
     z-index: 2;
-    font-family: "Lenia";
+    font-family: "Galiner";
     font-size: 31px;
     line-height: 1.04;
     letter-spacing: -0.02em;
@@ -655,7 +661,7 @@
     align-items: center;
     justify-content: center;
     gap: 10px;
-    font-family: "Lenia";
+    font-family: "Galiner";
     font-weight: 500;
     font-size: 16px;
     line-height: 1;
@@ -681,7 +687,7 @@
     border: 0;
     border-radius: var(--radius-pill);
     display: inline-flex; align-items: center; justify-content: center; gap: var(--space-sm);
-    font-family: "Lenia"; font-weight: 500; font-size: 14px; line-height: 1;
+    font-family: "Galiner"; font-weight: 500; font-size: 14px; line-height: 1;
     cursor: pointer;
     transition: transform 160ms var(--ease), filter 160ms var(--ease);
   }
@@ -774,7 +780,7 @@
   .input-card strong,
   .care-card strong {
     display: block;
-    font-family: "Lenia";
+    font-family: "Galiner";
     font-weight: 500;
     font-size: 17px;
     margin-bottom: 2px;
@@ -798,7 +804,7 @@
   .check-dot:after { content: ""; width: 8px; height: 5px; border-left: 2px solid currentColor; border-bottom: 2px solid currentColor; transform: rotate(-45deg) translateY(-1px); }
 
   .input-label {
-    font-family: "Lenia";
+    font-family: "Galiner";
     font-size: var(--fs-meta);
     letter-spacing: 0.16em;
     text-transform: uppercase;
@@ -807,7 +813,7 @@
   }
 
   .input-card { cursor: text; min-height: 58px; justify-content: space-between; }
-  .input-card .value { color: var(--ink); font-family: "Lenia"; font-size: 16px; }
+  .input-card .value { color: var(--ink); font-family: "Galiner"; font-size: 16px; }
   .input-card .muted { color: var(--ink-muted); font-size: var(--fs-body-sm); }
   .mini-dot {
     width: 38px;
@@ -818,7 +824,7 @@
     background: var(--mint-subtle);
     color: #4F6647;
     flex: 0 0 38px;
-    font-family: "Lenia";
+    font-family: "Galiner";
     font-weight: 500;
   }
 
@@ -833,12 +839,12 @@
     line-height: 1.5;
     margin: 14px 0;
   }
-  .insight strong { font-family: "Lenia"; font-weight: 500; color: var(--ink); }
+  .insight strong { font-family: "Galiner"; font-weight: 500; color: var(--ink); }
 
   /* Ready card · onboarding success screen.
      Layout: hero row (text + avatar) + body copy + section divider +
      setup-list checklist. Uses DS canon checklist pattern (mint-circle
-     check + Lenia title + Helvena body). */
+     check + Galiner title + Helvena body). */
   .ready-card {
     position: relative;
     border-radius: var(--radius-xl);
@@ -854,7 +860,7 @@
   }
   .ready-text { flex: 1; min-width: 0; }
   .ready-text .eyebrow {
-    font-family: "Lenia"; font-size: var(--fs-meta);
+    font-family: "Galiner"; font-size: var(--fs-meta);
     font-weight: 500; letter-spacing: 0.18em;
     text-transform: uppercase; color: var(--ink-muted);
     margin: 0 0 12px; display: block;
@@ -888,13 +894,13 @@
     margin: 22px 0 16px;
   }
   .ready-section-label {
-    font-family: "Lenia"; font-size: var(--fs-meta);
+    font-family: "Galiner"; font-size: var(--fs-meta);
     font-weight: 500; letter-spacing: 0.18em;
     text-transform: uppercase; color: var(--ink-muted);
     margin: 0 0 14px;
   }
 
-  /* Setup checklist · DS canon (mint-circle marker + Lenia + Helvena) */
+  /* Setup checklist · DS canon (mint-circle marker + Galiner + Helvena) */
   .setup-list,
   .checklist {
     list-style: none; padding: 0; margin: 0;
@@ -914,7 +920,7 @@
     width: 22px; height: 22px;
     background: var(--mint-strong); color: var(--paper);
     border-radius: 50%;
-    font-family: "Lenia"; font-weight: 600; font-size: 12px;
+    font-family: "Galiner"; font-weight: 600; font-size: 12px;
     line-height: 1;
     flex-shrink: 0;
     margin-top: 1px;
@@ -927,7 +933,7 @@
   .setup-body strong,
   .checklist-body strong {
     display: block;
-    font-family: "Lenia"; font-weight: 500;
+    font-family: "Galiner"; font-weight: 500;
     font-size: var(--fs-body);
     color: var(--ink);
     letter-spacing: -0.005em;
@@ -987,14 +993,14 @@
   .pill-row { display: flex; flex-wrap: wrap; gap: 7px; position: relative; z-index: 2; }
   /* Sticker primitive · DS § E canon · all stickers rotate the same -6deg
      for visual consistency. Background is paper, no border, no shadow,
-     uppercase 9 px Lenia 600 with 0.12em tracking. */
+     uppercase 9 px Galiner 600 with 0.12em tracking. */
   .pill {
     display: inline-block;
     border-radius: var(--radius-pill);
     background: var(--paper);
     border: 0;
     padding: 5px 11px 4px;
-    font-family: "Lenia";
+    font-family: "Galiner";
     font-size: var(--fs-eyebrow);
     font-weight: 600;
     letter-spacing: 0.12em;
@@ -1015,7 +1021,7 @@
     bottom: 14px;
     z-index: 2;
   }
-  .hero-person strong { display: block; font-family: "Lenia"; font-size: 21px; font-weight: 500; }
+  .hero-person strong { display: block; font-family: "Galiner"; font-size: 21px; font-weight: 500; }
   .hero-person span { color: var(--ink-soft); font-size: var(--fs-caption); }
 
   .shelf-scene {
@@ -1037,7 +1043,7 @@
     position: absolute;
     top: 6px;
     z-index: 3;
-    font-family: "Lenia";
+    font-family: "Galiner";
     font-weight: 500;
     font-size: var(--fs-eyebrow);
     letter-spacing: 0.22em;
@@ -1160,7 +1166,7 @@
     right: 10px;
     z-index: 2;
     display: inline-block;
-    font-family: "Lenia";
+    font-family: "Galiner";
     font-weight: 600;
     font-size: var(--fs-eyebrow);
     letter-spacing: 0.12em;
@@ -1176,7 +1182,7 @@
     transform-origin: 50% 50%;
   }
   .shelf-book .sb-ttl {
-    font-family: "Lenia";
+    font-family: "Galiner";
     font-weight: 500;
     font-size: 16px;
     line-height: 1.0;
@@ -1194,7 +1200,7 @@
     display: flex;
     justify-content: space-between;
     gap: var(--space-sm);
-    font-family: "Lenia";
+    font-family: "Galiner";
     font-weight: 500;
     font-size: 8px;
     letter-spacing: 0.10em;
@@ -1324,7 +1330,7 @@
     min-height: 36px;
     padding: 0 16px;
     white-space: nowrap;
-    font-family: "Lenia";
+    font-family: "Galiner";
     font-weight: 500;
     font-size: var(--fs-body-sm);
     cursor: pointer;
@@ -1368,7 +1374,7 @@
 
   .feed-label,
   .section-label {
-    font-family: "Lenia";
+    font-family: "Galiner";
     font-weight: 500;
     font-size: var(--fs-meta);
     letter-spacing: 0.18em;
@@ -1410,7 +1416,7 @@
   .calendar-card.ochre { --card-bg: var(--ochre-subtle); --card-ink: var(--ochre-strong); --card-glow: rgba(232,201,122,0.34); border-color: rgba(132,98,56,0.24); }
 
   .tag {
-    font-family: "Lenia";
+    font-family: "Galiner";
     font-weight: 500;
     font-size: var(--fs-meta);
     letter-spacing: 0.16em;
@@ -1420,7 +1426,7 @@
   }
   .feed-card h3,
   .calendar-card h3 {
-    font-family: "Lenia";
+    font-family: "Galiner";
     font-weight: 500;
     font-size: 19px;
     line-height: 1.15;
@@ -1439,7 +1445,7 @@
     color: #4A2614;
     padding: 13px 20px;
     min-height: 46px;
-    font-family: "Lenia";
+    font-family: "Galiner";
     font-weight: 500;
     font-size: var(--fs-body-lg);
     line-height: 1;
@@ -1569,7 +1575,7 @@
   }
 
   .phase-seg-label {
-    font-family: "Lenia";
+    font-family: "Galiner";
     font-size: var(--fs-meta);
     font-weight: 600;
     line-height: 1;
@@ -1579,7 +1585,7 @@
   }
 
   .phase-seg-dur {
-    font-family: "Lenia";
+    font-family: "Galiner";
     font-size: 10px;
     font-weight: 400;
     line-height: 1;
@@ -1618,13 +1624,13 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    font-family: "Lenia";
+    font-family: "Galiner";
     font-weight: 500;
     font-size: var(--fs-body-sm);
     margin: 2px 2px -2px;
     flex: 0 0 auto;
   }
-  .month-section-head [data-calendar-current-title] { color: var(--ink); font-family: "Lenia"; font-size: var(--fs-body-sm); }
+  .month-section-head [data-calendar-current-title] { color: var(--ink); font-family: "Galiner"; font-size: var(--fs-body-sm); }
   .month-section-head [data-calendar-counter] { color: var(--ink-muted); font-family: "Helvena"; font-size: var(--fs-caption); }
 
   .month-carousel-shell {
@@ -1748,7 +1754,7 @@
     justify-content: space-between;
     align-items: center;
     gap: var(--space-md);
-    font-family: "Lenia";
+    font-family: "Galiner";
     font-size: 10.5px;
     font-weight: 500;
     letter-spacing: 0.14em;
@@ -1771,7 +1777,7 @@
   .month-highlight-card h3 {
     position: relative;
     z-index: 2;
-    font-family: "Lenia";
+    font-family: "Galiner";
     font-size: 25px;
     line-height: 1.02;
     letter-spacing: -0.035em;
@@ -1830,7 +1836,7 @@
     border: 0;
     border-radius: var(--radius-pill);
     padding: 10px 14px;
-    font-family: "Lenia";
+    font-family: "Galiner";
     font-size: 12.5px;
     font-weight: 500;
     cursor: pointer;
@@ -1860,7 +1866,7 @@
     display: flex;
     justify-content: space-between;
     gap: var(--space-md);
-    font-family: "Lenia";
+    font-family: "Galiner";
     font-size: 10px;
     font-weight: 500;
     letter-spacing: 0.16em;
@@ -1917,7 +1923,7 @@
     display: flex;
     align-items: center;
     gap: var(--space-xs);
-    font-family: "Lenia";
+    font-family: "Galiner";
     font-weight: 500;
     font-size: 10.5px;
     letter-spacing: 0.18em;
@@ -1937,7 +1943,7 @@
   }
 
   .cat-card .cc-title {
-    font-family: "Lenia";
+    font-family: "Galiner";
     font-weight: 500;
     font-size: 16px;
     line-height: 1.25;
@@ -1954,7 +1960,7 @@
   }
 
   .cat-card .cc-context {
-    font-family: "Lenia";
+    font-family: "Galiner";
     font-style: italic;
     font-size: 11.5px;
     color: var(--ink-muted);
@@ -1968,7 +1974,7 @@
     gap: var(--space-sm);
     background: var(--ink);
     color: var(--paper);
-    font-family: "Lenia";
+    font-family: "Galiner";
     font-weight: 500;
     font-size: 12.5px;
     padding: 9px 14px;
@@ -1994,7 +2000,7 @@
     margin-top: 12px;
     padding-top: 10px;
     border-top: 1px dashed var(--line-strong);
-    font-family: "Lenia";
+    font-family: "Galiner";
     font-size: 10.5px;
     letter-spacing: 0.10em;
     text-transform: uppercase;
@@ -2058,11 +2064,11 @@
     color: #6E5A2A;
     border: 1.5px solid var(--gold-base);
   }
-  .metric strong { display: block; font-family: "Lenia"; font-size: 22px; line-height: 1; }
+  .metric strong { display: block; font-family: "Galiner"; font-size: 22px; line-height: 1; }
   .metric span { display: block; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; margin-top: 5px; }
 
   .diary-month {
-    font-family: "Lenia";
+    font-family: "Galiner";
     font-weight: 500;
     font-size: var(--fs-caption);
     letter-spacing: 0.14em;
@@ -2090,12 +2096,12 @@
     display: grid;
     place-items: center;
     text-align: center;
-    font-family: "Lenia";
+    font-family: "Galiner";
   }
   .date-chip strong { font-size: var(--fs-h3); line-height: 1; }
   .date-chip span { font-size: 10px; color: var(--ink-muted); letter-spacing: 0.08em; text-transform: uppercase; }
-  .entry-body strong { display: block; font-family: "Lenia"; font-size: 16px; font-weight: 500; margin-bottom: 4px; }
-  .entry-tag { color: var(--mint-strong); font-family: "Lenia"; font-size: var(--fs-meta); letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 4px; }
+  .entry-body strong { display: block; font-family: "Galiner"; font-size: 16px; font-weight: 500; margin-bottom: 4px; }
+  .entry-tag { color: var(--mint-strong); font-family: "Galiner"; font-size: var(--fs-meta); letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 4px; }
   .entry-body p { margin: 0; color: var(--ink-soft); font-size: var(--fs-body-sm); line-height: 1.45; }
   .entry-author { margin-top: 6px; color: var(--ink-muted); font-size: var(--fs-meta); }
   .photo-placeholder {
@@ -2152,7 +2158,7 @@
     color: var(--ink);
   }
   .quick-icon svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
-  .quick-tile strong { font-family: "Lenia"; font-size: 18px; font-weight: 500; }
+  .quick-tile strong { font-family: "Galiner"; font-size: 18px; font-weight: 500; }
   .quick-tile span { color: var(--ink-muted); font-size: var(--fs-caption); }
 
   .log-feedback {
@@ -2167,7 +2173,7 @@
     margin: 10px 0 14px;
   }
   .log-feedback.active { display: block; animation: screenIn 220ms var(--ease) forwards; }
-  .log-feedback strong { display: block; font-family: "Lenia"; font-size: 17px; font-weight: 500; margin-bottom: 3px; color: #4F6647; }
+  .log-feedback strong { display: block; font-family: "Galiner"; font-size: 17px; font-weight: 500; margin-bottom: 3px; color: #4F6647; }
   .log-feedback span { display: block; color: #4F6647; font-size: var(--fs-body-sm); line-height: 1.4; }
 
   .log-detail-page {
@@ -2251,7 +2257,7 @@
     stroke-linejoin: round;
   }
   .log-register-hero h2 {
-    font-family: "Lenia";
+    font-family: "Galiner";
     font-size: clamp(26px, 7vw, 36px);
     line-height: 0.95;
     font-weight: 500;
@@ -2298,7 +2304,7 @@
   .log-form-card.dark p,
   .log-form-card.dark .log-field label { color: rgba(250,247,240,0.72); }
   .log-form-title {
-    font-family: "Lenia";
+    font-family: "Galiner";
     font-size: 18px;
     line-height: 1.05;
     font-weight: 500;
@@ -2317,7 +2323,7 @@
   }
   .log-field label,
   .log-choice-label {
-    font-family: "Lenia";
+    font-family: "Galiner";
     font-size: 10.5px;
     font-weight: 500;
     letter-spacing: 0.15em;
@@ -2420,7 +2426,7 @@
   .log-submit-bar button {
     min-height: 48px;
     border-radius: var(--radius-pill);
-    font-family: "Lenia";
+    font-family: "Galiner";
     cursor: pointer;
   }
   .log-submit-bar .secondary {
@@ -2483,7 +2489,7 @@
       0 14px 28px rgba(42,33,27,0.07);
   }
   .growth-kicker {
-    font-family: "Lenia";
+    font-family: "Galiner";
     font-weight: 500;
     font-size: 10.5px;
     letter-spacing: 0.18em;
@@ -2492,7 +2498,7 @@
     margin-bottom: 8px;
   }
   .growth-cover h3 {
-    font-family: "Lenia";
+    font-family: "Galiner";
     font-size: 22px;
     line-height: 1.08;
     letter-spacing: -0.02em;
@@ -2526,7 +2532,7 @@
     background: transparent;
     color: var(--ink-muted);
     padding: 7px 10px;
-    font-family: "Lenia";
+    font-family: "Galiner";
     font-size: var(--fs-meta);
     font-weight: 500;
     cursor: pointer;
@@ -2539,7 +2545,7 @@
     box-shadow: 0 6px 14px rgba(42,33,27,0.07);
   }
   .growth-source {
-    font-family: "Lenia";
+    font-family: "Galiner";
     color: var(--ink-muted);
     font-size: 10px;
     letter-spacing: 0.12em;
@@ -2557,7 +2563,7 @@
   }
   .growth-empty strong {
     display: block;
-    font-family: "Lenia";
+    font-family: "Galiner";
     font-size: var(--fs-h3);
     color: var(--ink);
     margin-bottom: 6px;
@@ -2587,14 +2593,14 @@
     margin-bottom: 8px;
   }
   .growth-curve-title {
-    font-family: "Lenia";
+    font-family: "Galiner";
     font-weight: 700;
     font-size: 18px;
     line-height: 1.1;
     letter-spacing: -0.01em;
   }
   .growth-curve-meta {
-    font-family: "Lenia";
+    font-family: "Galiner";
     font-size: var(--fs-meta);
     letter-spacing: 0.12em;
     color: var(--ink-muted);
@@ -2664,7 +2670,7 @@
     line-height: 1.25;
   }
   .growth-selected-meta strong {
-    font-family: "Lenia";
+    font-family: "Galiner";
     font-weight: 600;
     color: var(--ink);
   }
@@ -2716,7 +2722,7 @@
     border-right: 0;
     border-top: 0;
     background: transparent;
-    font-family: "Lenia";
+    font-family: "Galiner";
     font-size: var(--fs-body-sm);
     text-align: left;
     cursor: pointer;
@@ -2729,7 +2735,7 @@
     background: rgba(242,165,122,0.12);
   }
   .growth-history-row strong {
-    font-family: "Lenia";
+    font-family: "Galiner";
     font-weight: 500;
     color: var(--ink);
   }
@@ -2748,7 +2754,7 @@
     border: 1px dashed rgba(132,98,56,0.36);
     background: rgba(250,247,240,0.58);
     color: var(--ink-soft);
-    font-family: "Lenia";
+    font-family: "Galiner";
     font-size: var(--fs-body-sm);
     font-weight: 500;
     cursor: pointer;
@@ -2757,7 +2763,7 @@
     border: 0;
     background: transparent;
     color: var(--ink-muted);
-    font-family: "Lenia";
+    font-family: "Galiner";
     font-size: var(--fs-caption);
     cursor: pointer;
     justify-self: center;
@@ -2816,7 +2822,7 @@
     display: inline-flex; flex-direction: column; align-items: center;
     gap: 10px;
     background: transparent; border: 0; padding: 4px 4px 0;
-    font-family: "Lenia"; font-weight: 500;
+    font-family: "Galiner"; font-weight: 500;
     font-size: var(--fs-body); line-height: 1;
     color: var(--ink-muted);
     cursor: pointer;
@@ -2861,7 +2867,7 @@
   /* Input field · DS § H · label + native input · for nombre / texto */
   .input-field { display: grid; gap: 6px; max-width: 100%; }
   .input-field label {
-    font-family: "Lenia"; font-size: 10.5px; font-weight: 500;
+    font-family: "Galiner"; font-size: 10.5px; font-weight: 500;
     letter-spacing: 0.15em; text-transform: uppercase; color: var(--ink-muted);
   }
   .input-field input,
@@ -2870,7 +2876,7 @@
     width: 100%; border: 1px solid rgba(201,194,178,0.82); border-radius: 14px;
     background: rgba(250,247,240,0.82); color: var(--ink);
     padding: 14px 16px; outline: 0;
-    font-family: "Lenia"; font-weight: 500;
+    font-family: "Galiner"; font-weight: 500;
     font-size: var(--fs-body-lg);
     letter-spacing: -0.005em;
     transition: border-color 150ms var(--ease), background 150ms var(--ease);
@@ -2905,7 +2911,7 @@
     padding: 24px;
   }
   .oms-head { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 14px; gap: var(--space-md); }
-  .oms-head .ttl { font-family: "Lenia"; font-weight: 500; font-size: 18px; }
+  .oms-head .ttl { font-family: "Galiner"; font-weight: 500; font-size: 18px; }
   .oms-head .meta { font-size: var(--fs-meta); color: var(--ink-muted); letter-spacing: 0.04em; }
   .oms-tabs-wrap { width: fit-content; margin-bottom: 16px; }
   .oms-chart {
@@ -2936,7 +2942,7 @@
     border: 2px solid var(--coral-strong);
   }
   .oms-stats { display: flex; gap: 20px; margin-top: 14px; font-size: var(--fs-caption); color: var(--ink-soft); flex-wrap: wrap; }
-  .oms-stats b { font-family: "Lenia"; font-weight: 500; color: var(--ink); font-size: 16px; display: block; margin-bottom: 2px; }
+  .oms-stats b { font-family: "Galiner"; font-weight: 500; color: var(--ink); font-size: 16px; display: block; margin-bottom: 2px; }
   .oms-history {
     margin-top: 12px;
     border-top: 1px solid rgba(201,194,178,0.50);
@@ -2952,7 +2958,7 @@
     border-right: 0;
     border-top: 0;
     background: transparent;
-    font-family: "Lenia";
+    font-family: "Galiner";
     font-size: var(--fs-body-sm);
     text-align: left;
     cursor: pointer;
@@ -2965,7 +2971,7 @@
     border-bottom-color: transparent;
     background: rgba(242,165,122,0.10);
   }
-  .oms-history-row strong { font-family: "Lenia"; font-weight: 500; color: var(--ink); }
+  .oms-history-row strong { font-family: "Galiner"; font-weight: 500; color: var(--ink); }
   .oms-history-row span { color: var(--ink-muted); }
   .oms-actions { margin-top: 12px; display: grid; gap: var(--space-sm); }
 
@@ -3018,7 +3024,7 @@
     gap: 8px;
   }
   .datepicker-month-label {
-    font-family: "Lenia"; font-weight: 500;
+    font-family: "Galiner"; font-weight: 500;
     font-size: var(--fs-h4);
     letter-spacing: -0.005em;
     color: var(--ink);
@@ -3051,7 +3057,7 @@
     gap: 2px;
   }
   .datepicker-weekday {
-    font-family: "Lenia";
+    font-family: "Galiner";
     font-size: var(--fs-eyebrow);
     letter-spacing: 0.14em;
     text-transform: uppercase;
@@ -3065,7 +3071,7 @@
     display: grid; place-items: center;
     height: 38px;
     border: 0; background: transparent;
-    font-family: "Lenia";
+    font-family: "Galiner";
     font-size: var(--fs-body-sm);
     font-weight: 400;
     color: var(--ink);
@@ -3100,7 +3106,7 @@
     border-top: 1px solid var(--line-soft);
   }
   .datepicker-preset {
-    font-family: "Lenia";
+    font-family: "Galiner";
     font-size: var(--fs-meta);
     letter-spacing: 0.04em;
     font-weight: 500;
@@ -3124,7 +3130,7 @@
   .datepicker-actions button {
     flex: 1; height: 44px;
     border-radius: var(--radius-pill);
-    font-family: "Lenia";
+    font-family: "Galiner";
     font-size: var(--fs-body-sm);
     font-weight: 500;
     cursor: pointer; border: 0;
@@ -3189,7 +3195,7 @@
     margin: 0 auto 16px;
   }
   .measure-sheet h3 {
-    font-family: "Lenia";
+    font-family: "Galiner";
     font-size: 25px;
     font-weight: 500;
     line-height: 1;
@@ -3208,7 +3214,7 @@
   }
   .measure-field label,
   .measure-context-label {
-    font-family: "Lenia";
+    font-family: "Galiner";
     font-size: 10.5px;
     font-weight: 500;
     letter-spacing: 0.15em;
@@ -3232,7 +3238,7 @@
     outline: 0;
     background: transparent;
     color: var(--ink);
-    font-family: "Lenia";
+    font-family: "Galiner";
     font-size: var(--fs-h3);
     font-weight: 500;
   }
@@ -3248,7 +3254,7 @@
   }
   .measure-input-wrap span {
     color: var(--ink-muted);
-    font-family: "Lenia";
+    font-family: "Galiner";
     font-size: var(--fs-body-sm);
   }
   .measure-context {
@@ -3265,7 +3271,7 @@
       linear-gradient(135deg, var(--paper-soft), rgba(250,247,240,0.84));
     color: var(--ink-soft);
     padding: 7px 10px;
-    font-family: "Lenia";
+    font-family: "Galiner";
     font-size: var(--fs-caption);
     cursor: pointer;
   }
@@ -3318,7 +3324,7 @@
   .milestone-hero h3 {
     position: relative;
     z-index: 1;
-    font-family: "Lenia";
+    font-family: "Galiner";
     font-size: 22px;
     font-weight: 500;
     line-height: 1.05;
@@ -3336,7 +3342,7 @@
   }
   .milestone-hero-kicker,
   .milestone-section-label {
-    font-family: "Lenia";
+    font-family: "Galiner";
     font-size: 10.5px;
     letter-spacing: 0.18em;
     text-transform: uppercase;
@@ -3397,7 +3403,7 @@
     position: absolute;
     top: 0;
     transform: translateX(-50%);
-    font-family: "Lenia";
+    font-family: "Galiner";
     font-size: var(--fs-eyebrow);
     color: var(--ink-soft);
   }
@@ -3437,7 +3443,7 @@
       linear-gradient(135deg, color-mix(in srgb, var(--stage-tint) 78%, #fff), rgba(250,247,240,0.88));
     color: var(--ink);
     padding: 15px 14px;
-    font-family: "Lenia";
+    font-family: "Galiner";
     font-size: var(--fs-caption);
     font-weight: 500;
     text-align: left;
@@ -3525,7 +3531,7 @@
     box-shadow: inset 0 0 0 1px rgba(226,221,209,0.72);
     color: var(--stage-ink);
     padding: 5px 8px;
-    font-family: "Lenia";
+    font-family: "Galiner";
     font-size: 10px;
     font-weight: 500;
     line-height: 1;
@@ -3538,7 +3544,7 @@
     display: block;
     margin-top: 18px;
     color: var(--ink);
-    font-family: "Lenia";
+    font-family: "Galiner";
     font-size: 18px;
     font-weight: 600;
     line-height: 1.05;
@@ -3551,7 +3557,7 @@
     display: block;
     max-width: 108px;
     color: var(--ink-muted);
-    font-family: "Lenia";
+    font-family: "Galiner";
     font-size: var(--fs-meta);
     line-height: 1.28;
     white-space: nowrap;
@@ -3592,7 +3598,7 @@
   .scale-label {
     flex: 0 0 auto;
     align-self: center;
-    font-family: "Lenia";
+    font-family: "Galiner";
     font-size: 10px;
     letter-spacing: 0.16em;
     color: var(--ink-muted);
@@ -3611,7 +3617,7 @@
       linear-gradient(135deg, rgba(250,247,240,0.84), rgba(242,237,224,0.50));
     color: var(--ink-soft);
     padding: 0 13px;
-    font-family: "Lenia";
+    font-family: "Galiner";
     font-size: var(--fs-meta);
     font-weight: 500;
     text-transform: uppercase;
@@ -3645,7 +3651,7 @@
     min-width: 0;
   }
   .milestone-stage-title {
-    font-family: "Lenia";
+    font-family: "Galiner";
     font-size: 26px;
     line-height: 1.05;
     font-weight: 700;
@@ -3655,7 +3661,7 @@
   .milestone-stage-meta,
   .milestone-stage-count,
   .milestone-source {
-    font-family: "Lenia";
+    font-family: "Galiner";
     font-size: 10px;
     letter-spacing: 0.16em;
     text-transform: uppercase;
@@ -3672,7 +3678,7 @@
     padding: 0 18px;
     background: var(--coral-base);
     color: #4A2510;
-    font-family: "Lenia";
+    font-family: "Galiner";
     font-size: var(--fs-caption);
     font-weight: 600;
     cursor: pointer;
@@ -3728,7 +3734,7 @@
       radial-gradient(circle at 34% 24%, rgba(255,255,255,0.76), transparent 32%),
       linear-gradient(135deg, var(--paper-soft), rgba(250,247,240,0.66));
     color: var(--ink-soft);
-    font-family: "Lenia";
+    font-family: "Galiner";
     font-size: var(--fs-caption);
     font-weight: 700;
     letter-spacing: 0.06em;
@@ -3745,7 +3751,7 @@
     align-items: flex-start;
   }
   .milestone-title {
-    font-family: "Lenia";
+    font-family: "Galiner";
     font-size: 18px;
     line-height: 1.12;
     font-weight: 700;
@@ -3764,7 +3770,7 @@
     background: rgba(250,247,240,0.66);
     color: var(--ink-soft);
     padding: 7px 10px;
-    font-family: "Lenia";
+    font-family: "Galiner";
     font-size: 9.5px;
     letter-spacing: 0.12em;
     text-transform: uppercase;
@@ -3826,7 +3832,7 @@
     position: absolute;
     top: 15px;
     transform: translateX(-50%);
-    font-family: "Lenia";
+    font-family: "Galiner";
     font-size: 10px;
     color: var(--ink-muted);
   }
@@ -3841,7 +3847,7 @@
     display: grid;
     place-items: center;
     transform: translateX(-50%);
-    font-family: "Lenia";
+    font-family: "Galiner";
     font-size: var(--fs-eyebrow);
     color: var(--ink);
     box-shadow: 0 0 0 7px rgba(242,165,122,0.14);
@@ -3849,7 +3855,7 @@
   .milestone-range-label {
     position: absolute;
     bottom: 11px;
-    font-family: "Lenia";
+    font-family: "Galiner";
     font-size: 10px;
     color: var(--ink-muted);
   }
@@ -3865,7 +3871,7 @@
     border-radius: var(--radius-pill);
     padding: 7px 10px;
     background: rgba(250,247,240,0.62);
-    font-family: "Lenia";
+    font-family: "Galiner";
     font-size: 10px;
     text-transform: uppercase;
     color: var(--ink);
@@ -3892,7 +3898,7 @@
     color: var(--ink);
     min-height: 34px;
     padding: 0 12px;
-    font-family: "Lenia";
+    font-family: "Galiner";
     font-size: var(--fs-meta);
     font-weight: 600;
     cursor: pointer;
@@ -3926,7 +3932,7 @@
     color: var(--ink-soft);
     min-height: 34px;
     padding: 0 11px;
-    font-family: "Lenia";
+    font-family: "Galiner";
     font-size: var(--fs-meta);
     cursor: pointer;
   }
@@ -4011,7 +4017,7 @@
   }
   .milestone-sheet h3,
   .celebration-card h3 {
-    font-family: "Lenia";
+    font-family: "Galiner";
     font-size: 22px;
     line-height: 1.05;
     margin: 0 0 12px;
@@ -4027,7 +4033,7 @@
   }
   .milestone-summary strong {
     display: block;
-    font-family: "Lenia";
+    font-family: "Galiner";
     font-size: var(--fs-body-lg);
     margin-bottom: 4px;
   }
@@ -4044,7 +4050,7 @@
     margin-top: 12px;
   }
   .milestone-field label {
-    font-family: "Lenia";
+    font-family: "Galiner";
     font-size: 10px;
     letter-spacing: 0.12em;
     text-transform: uppercase;
@@ -4086,7 +4092,7 @@
       radial-gradient(circle at 82% 8%, rgba(232,201,122,0.12), transparent 34%),
       linear-gradient(135deg, rgba(250,247,240,0.84), rgba(242,237,224,0.50));
     padding: 8px 11px;
-    font-family: "Lenia";
+    font-family: "Galiner";
     font-size: var(--fs-caption);
   }
   .witness-row button.active {
@@ -4137,7 +4143,7 @@
     animation: avatarFloat 5.4s ease-in-out infinite;
   }
   .celebration-quote {
-    font-family: "Lenia";
+    font-family: "Galiner";
     font-style: italic;
     font-size: 18px;
     line-height: 1.18;
@@ -4155,7 +4161,7 @@
     border: 1px solid rgba(26,26,26,0.76);
     display: grid;
     place-items: center;
-    font-family: "Lenia";
+    font-family: "Galiner";
     font-size: var(--fs-body-sm);
     color: var(--ink);
     background: transparent;
@@ -4208,7 +4214,7 @@
      .sleep-kicker / .sleep-mini-label conservados como aliases canon DS § E kicker. */
   .sleep-kicker,
   .sleep-mini-label {
-    font-family: "Lenia";
+    font-family: "Galiner";
     font-size: 10px;
     letter-spacing: 0.18em;
     text-transform: uppercase;
@@ -4235,7 +4241,7 @@
       radial-gradient(circle at 44% 32%, rgba(255,255,255,0.72), transparent 35%),
       linear-gradient(145deg, rgba(191,210,176,0.88), rgba(232,201,122,0.42));
     color: #4F6647;
-    font-family: "Lenia";
+    font-family: "Galiner";
     font-size: 29px;
     box-shadow: 0 18px 28px rgba(42,33,27,0.10);
   }
@@ -4259,7 +4265,7 @@
     border: 1px solid rgba(201,194,178,0.78);
     background: rgba(250,247,240,0.66);
     padding: 7px 10px;
-    font-family: "Lenia";
+    font-family: "Galiner";
     font-size: var(--fs-meta);
     font-weight: 500;
   }
@@ -4286,7 +4292,7 @@
   .sleep-nav-card strong,
   .module-nav-card strong {
     display: block;
-    font-family: "Lenia";
+    font-family: "Galiner";
     font-size: 17px;
     font-weight: 500;
     line-height: 1.05;
@@ -4325,14 +4331,14 @@
   .sleep-view-head h3,
   .sleep-section h3,
   .module-section h3 {
-    font-family: "Lenia";
+    font-family: "Galiner";
     font-size: 22px;
     line-height: 1.05;
     font-weight: 500;
     margin: 4px 0 7px;
   }
   .sleep-window-time {
-    font-family: "Lenia";
+    font-family: "Galiner";
     font-size: 21px;
     line-height: 1;
     color: var(--sleep-ink);
@@ -4359,7 +4365,7 @@
     border: 1px solid rgba(201,194,178,0.80);
     background: rgba(250,247,240,0.70);
     color: var(--ink);
-    font-family: "Lenia";
+    font-family: "Galiner";
     font-size: var(--fs-caption);
     font-weight: 500;
     padding: 0 13px;
@@ -4450,7 +4456,7 @@
   }
   .sleep-block strong {
     display: block;
-    font-family: "Lenia";
+    font-family: "Galiner";
     font-size: var(--fs-body-lg);
     line-height: 1.1;
     font-weight: 700;
@@ -4464,7 +4470,7 @@
   .sleep-block.night small { color: rgba(250,247,240,0.74); }
   .sleep-block-icon {
     flex: 0 0 auto;
-    font-family: "Lenia";
+    font-family: "Galiner";
     font-size: var(--fs-h3);
     color: var(--ink-muted);
   }
@@ -4482,7 +4488,7 @@
     line-height: 1.45;
     margin-top: 12px;
   }
-  .sleep-total strong { color: var(--ink); font-family: "Lenia"; }
+  .sleep-total strong { color: var(--ink); font-family: "Galiner"; }
   /* ============================================================
      module-strip + module-chip canon — horizontal scrollable
      filter/nav strip across sleep/food/pregnancy/vaccine. Active
@@ -4534,7 +4540,7 @@
     border: 1px solid rgba(201,194,178,0.78);
     background: rgba(250,247,240,0.70);
     color: var(--ink-soft);
-    font-family: "Lenia";
+    font-family: "Galiner";
     font-size: var(--fs-caption);
     padding: 0 13px;
     cursor: pointer;
@@ -4584,7 +4590,7 @@
     left: 50%;
     transform: translateX(-50%);
     color: var(--coral-strong);
-    font-family: "Lenia";
+    font-family: "Galiner";
     font-size: var(--fs-eyebrow);
     letter-spacing: 0.10em;
   }
@@ -4602,7 +4608,7 @@
   }
   .sleep-week-stat strong {
     display: block;
-    font-family: "Lenia";
+    font-family: "Galiner";
     font-size: var(--fs-h3);
     line-height: 1;
   }
@@ -4618,7 +4624,7 @@
     gap: var(--space-sm);
     align-items: center;
     margin-bottom: 7px;
-    font-family: "Lenia";
+    font-family: "Galiner";
     font-size: 10px;
     color: var(--ink-muted);
   }
@@ -4642,7 +4648,7 @@
     display: flex;
     justify-content: space-between;
     color: var(--ink-muted);
-    font-family: "Lenia";
+    font-family: "Galiner";
     font-size: var(--fs-eyebrow);
     padding: 0 48px 0 26px;
     margin-top: 4px;
@@ -4667,13 +4673,13 @@
   .sleep-regression-card strong {
     display: block;
     color: var(--ink);
-    font-family: "Lenia";
+    font-family: "Galiner";
     font-size: 16px;
     margin-bottom: 4px;
   }
   .sleep-regression-state {
     float: right;
-    font-family: "Lenia";
+    font-family: "Galiner";
     font-size: var(--fs-eyebrow);
     letter-spacing: 0.12em;
     text-transform: uppercase;
@@ -4683,7 +4689,7 @@
     white-space: pre-wrap;
     margin: 0;
     color: var(--ink-soft);
-    font-family: "Lenia";
+    font-family: "Galiner";
     font-size: var(--fs-meta);
     line-height: 1.45;
   }
@@ -4707,7 +4713,7 @@
   .sleep-canon-row strong,
   .module-canon-row strong {
     color: var(--ink);
-    font-family: "Lenia";
+    font-family: "Galiner";
   }
 
   .food-book {
@@ -4753,7 +4759,7 @@
      eliminado (no se usa en markup · ADR-0001). */
   .food-kicker,
   .food-mini-label {
-    font-family: "Lenia";
+    font-family: "Galiner";
     font-size: 10px;
     letter-spacing: 0.18em;
     text-transform: uppercase;
@@ -4762,7 +4768,7 @@
   /* food-view-head + food-section h3 mantienen 28px (sección title interna · no hero) */
   .food-view-head h3,
   .food-section h3 {
-    font-family: "Lenia";
+    font-family: "Galiner";
     font-size: 28px;
     line-height: 1.02;
     letter-spacing: -0.04em;
@@ -4790,7 +4796,7 @@
       radial-gradient(circle at 35% 28%, rgba(255,255,255,0.74), transparent 35%),
       linear-gradient(145deg, rgba(191,210,176,0.90), rgba(242,165,122,0.32));
     color: var(--food-leaf);
-    font-family: "Lenia";
+    font-family: "Galiner";
     font-size: 30px;
     box-shadow: 0 18px 28px rgba(42,33,27,0.10);
   }
@@ -4827,7 +4833,7 @@
   }
   .food-stat strong {
     display: block;
-    font-family: "Lenia";
+    font-family: "Galiner";
     font-size: var(--fs-h3);
     line-height: 1;
   }
@@ -4852,7 +4858,7 @@
   }
   .food-nav-card strong {
     display: block;
-    font-family: "Lenia";
+    font-family: "Galiner";
     font-size: 17px;
     line-height: 1.05;
     font-weight: 500;
@@ -4891,7 +4897,7 @@
     background: rgba(250,247,240,0.70);
     color: var(--ink-muted);
     padding: 0 16px;
-    font-family: "Lenia";
+    font-family: "Galiner";
     font-size: var(--fs-h3);
     margin-bottom: 14px;
   }
@@ -4930,7 +4936,7 @@
     margin-bottom: 12px;
   }
   .food-card h4 {
-    font-family: "Lenia";
+    font-family: "Galiner";
     font-size: var(--fs-h3);
     line-height: 1.05;
     font-weight: 700;
@@ -4944,7 +4950,7 @@
   }
   .food-card .danger {
     color: var(--coral-strong);
-    font-family: "Lenia";
+    font-family: "Galiner";
   }
   .food-card .tried-badge {
     display: inline-block;
@@ -4953,12 +4959,12 @@
     background: rgba(229,237,223,0.82);
     color: var(--food-leaf);
     padding: 5px 8px;
-    font-family: "Lenia";
+    font-family: "Galiner";
     font-size: 10px;
   }
   .food-grid-footer {
     color: var(--ink-muted);
-    font-family: "Lenia";
+    font-family: "Galiner";
     font-size: var(--fs-body-sm);
     margin-top: 14px;
   }
@@ -4971,13 +4977,13 @@
       radial-gradient(circle at 78% 12%, rgba(232,201,122,0.30), transparent 34%),
       linear-gradient(135deg, rgba(201,194,178,0.26), rgba(250,247,240,0.52));
     color: var(--ink-muted);
-    font-family: "Lenia";
+    font-family: "Galiner";
     font-size: var(--fs-body-lg);
     text-align: center;
     padding: 18px;
   }
   .food-detail-card h3 {
-    font-family: "Lenia";
+    font-family: "Galiner";
     font-size: 28px;
     line-height: 1.02;
     margin: 14px 0 8px;
@@ -4996,7 +5002,7 @@
   }
   .food-cut-card strong {
     display: block;
-    font-family: "Lenia";
+    font-family: "Galiner";
     font-size: 18px;
     margin-bottom: 10px;
   }
@@ -5007,7 +5013,7 @@
     place-items: center;
     background: rgba(201,194,178,0.28);
     color: var(--ink-muted);
-    font-family: "Lenia";
+    font-family: "Galiner";
     font-size: var(--fs-caption);
     text-align: center;
     padding: var(--space-md);
@@ -5044,7 +5050,7 @@
   }
   .food-allergen-card strong {
     display: block;
-    font-family: "Lenia";
+    font-family: "Galiner";
     font-size: 18px;
     line-height: 1.05;
   }
@@ -5071,7 +5077,7 @@
   .food-canon-row strong,
   .food-diary-row strong {
     color: var(--ink);
-    font-family: "Lenia";
+    font-family: "Galiner";
   }
   .food-recipe-strip {
     display: flex;
@@ -5093,13 +5099,13 @@
     place-items: center;
     background: rgba(201,194,178,0.28);
     color: var(--ink-muted);
-    font-family: "Lenia";
+    font-family: "Galiner";
     font-size: var(--fs-caption);
     margin-bottom: 10px;
   }
   .food-recipe-card strong {
     display: block;
-    font-family: "Lenia";
+    font-family: "Galiner";
     font-size: 18px;
     line-height: 1.08;
   }
@@ -5113,7 +5119,7 @@
     white-space: pre-wrap;
     margin: 0;
     color: var(--ink-soft);
-    font-family: "Lenia";
+    font-family: "Galiner";
     font-size: var(--fs-meta);
     line-height: 1.48;
   }
@@ -5160,7 +5166,7 @@
      eliminado (ADR-0001). */
   .lactation-kicker,
   .lactation-mini-label {
-    font-family: "Lenia";
+    font-family: "Galiner";
     font-size: 10px;
     letter-spacing: 0.18em;
     text-transform: uppercase;
@@ -5169,7 +5175,7 @@
   /* lactation-view-head + lactation-section h3 (sección title · no hero) */
   .lactation-view-head h3,
   .lactation-section h3 {
-    font-family: "Lenia";
+    font-family: "Galiner";
     font-size: 28px;
     line-height: 1.02;
     letter-spacing: -0.04em;
@@ -5197,7 +5203,7 @@
       radial-gradient(circle at 35% 28%, rgba(255,255,255,0.74), transparent 35%),
       linear-gradient(145deg, rgba(245,222,231,0.92), rgba(191,210,176,0.56));
     color: var(--lactation-ink);
-    font-family: "Lenia";
+    font-family: "Galiner";
     font-size: 30px;
     box-shadow: 0 18px 28px rgba(42,33,27,0.10);
   }
@@ -5232,7 +5238,7 @@
   }
   .lactation-stat strong {
     display: block;
-    font-family: "Lenia";
+    font-family: "Galiner";
     font-size: var(--fs-h3);
     line-height: 1;
   }
@@ -5249,7 +5255,7 @@
   }
   .lactation-quick-card strong {
     display: block;
-    font-family: "Lenia";
+    font-family: "Galiner";
     font-size: var(--fs-body-sm);
     line-height: 1.1;
   }
@@ -5268,7 +5274,7 @@
   }
   .lactation-nav-card strong {
     display: block;
-    font-family: "Lenia";
+    font-family: "Galiner";
     font-size: 17px;
     line-height: 1.05;
     font-weight: 500;
@@ -5313,7 +5319,7 @@
   }
   .lactation-feed-row strong {
     color: var(--ink);
-    font-family: "Lenia";
+    font-family: "Galiner";
     font-size: 14px;
   }
   .lactation-latch-card {
@@ -5344,7 +5350,7 @@
       radial-gradient(circle at center, var(--paper) 0 55%, transparent 56%),
       conic-gradient(var(--lactation-ink) calc(var(--score) * 10%), rgba(201,194,178,0.42) 0);
     color: var(--lactation-ink);
-    font-family: "Lenia";
+    font-family: "Galiner";
     font-size: 24px;
     box-shadow: inset 0 1px 0 rgba(255,255,255,0.6);
   }
@@ -5386,7 +5392,7 @@
   }
   .lactation-result-card h3,
   .lactation-med-card h3 {
-    font-family: "Lenia";
+    font-family: "Galiner";
     font-size: 24px;
     line-height: 1.05;
     margin: 0 0 8px;
@@ -5423,7 +5429,7 @@
   .lactation-sensitive-card strong {
     display: block;
     color: var(--ink);
-    font-family: "Lenia";
+    font-family: "Galiner";
     font-size: var(--fs-body-lg);
     margin-bottom: 4px;
   }
@@ -5449,7 +5455,7 @@
     white-space: pre-wrap;
     margin: 0;
     color: var(--ink-soft);
-    font-family: "Lenia";
+    font-family: "Galiner";
     font-size: var(--fs-meta);
     line-height: 1.48;
   }
@@ -5462,7 +5468,7 @@
     border: 1px solid rgba(201,194,178,0.86);
     background: rgba(250,247,240,0.70);
     padding: 0 14px;
-    font-family: "Lenia";
+    font-family: "Galiner";
     color: var(--ink-soft);
     margin: 12px 0;
   }
@@ -5525,7 +5531,7 @@
     justify-content: space-between;
     align-items: baseline;
     margin-bottom: 10px;
-    font-family: 'Lenia';
+    font-family: 'Galiner';
     font-size: 10.5px;
     letter-spacing: 0.18em;
     text-transform: uppercase;
@@ -5560,7 +5566,7 @@
   }
   .profile-row-value {
     color: var(--ink);
-    font-family: 'Lenia';
+    font-family: 'Galiner';
     font-weight: 500;
     font-size: var(--fs-body-sm);
   }
@@ -5572,7 +5578,7 @@
     min-width: 0;
   }
   .profile-row-stack strong {
-    font-family: 'Lenia';
+    font-family: 'Galiner';
     font-weight: 500;
     font-size: var(--fs-body-sm);
     color: var(--ink);
@@ -5586,7 +5592,7 @@
     color: #4F6647;
     padding: 3px 8px;
     border-radius: 999px;
-    font-family: 'Lenia';
+    font-family: 'Galiner';
     font-size: 10px;
     letter-spacing: 0.08em;
     text-transform: uppercase;
@@ -5597,7 +5603,7 @@
     border-radius: 50%;
     display: grid;
     place-items: center;
-    font-family: 'Lenia';
+    font-family: 'Galiner';
     font-weight: 500;
     font-size: 16px;
     flex-shrink: 0;
@@ -5656,7 +5662,7 @@
     min-height: 40px;
     padding: 0 16px;
     border-radius: var(--radius-pill);
-    font-family: 'Lenia';
+    font-family: 'Galiner';
     font-size: var(--fs-body-sm);
     font-weight: 500;
     cursor: pointer;
@@ -5698,7 +5704,7 @@
     border: 1px solid var(--line);
     padding: 3px 9px;
     border-radius: 999px;
-    font-family: 'Lenia';
+    font-family: 'Galiner';
     font-size: 10px;
     letter-spacing: 0.14em;
     text-transform: uppercase;
@@ -5706,7 +5712,7 @@
   }
   .profile-plan-card h3 {
     margin: 0;
-    font-family: 'Lenia';
+    font-family: 'Galiner';
     font-weight: 500;
     font-size: var(--fs-h3);
     line-height: 1.1;
@@ -5727,7 +5733,7 @@
   }
   .profile-about strong {
     display: block;
-    font-family: 'Lenia';
+    font-family: 'Galiner';
     font-weight: 500;
     color: var(--ink-soft);
     font-size: var(--fs-body-sm);
@@ -5743,7 +5749,7 @@
     background: transparent;
     border: 0;
     color: var(--ink-soft);
-    font-family: 'Lenia';
+    font-family: 'Galiner';
     font-size: var(--fs-caption);
     cursor: pointer;
     text-decoration: underline;
@@ -5790,7 +5796,7 @@
     margin-left: -64px;
     margin-bottom: 10px;
     padding-left: 64px;
-    font-family: 'Lenia';
+    font-family: 'Galiner';
     font-size: 11px;
     font-weight: 500;
     letter-spacing: 0.14em;
@@ -5843,7 +5849,7 @@
     top: 14px;
     width: 32px;
     text-align: right;
-    font-family: 'Lenia';
+    font-family: 'Galiner';
     font-size: 10.5px;
     color: var(--ink-muted);
     font-variant-numeric: tabular-nums;
@@ -5870,7 +5876,7 @@
   }
   .diary-entry-body { flex: 1; min-width: 0; }
   .diary-entry-title {
-    font-family: 'Lenia';
+    font-family: 'Galiner';
     font-weight: 500;
     font-size: var(--fs-body-sm);
     line-height: 1.25;
@@ -5887,7 +5893,7 @@
     color: var(--ink-muted);
     font-size: 10.5px;
     margin: 6px 0 0;
-    font-family: 'Lenia';
+    font-family: 'Galiner';
     letter-spacing: 0.04em;
   }
   /* Tonal variants per category · driven by inline custom props from JS */
@@ -5934,7 +5940,7 @@
     margin-bottom: 12px;
   }
   .health-sublibro-tag {
-    font-family: 'Lenia';
+    font-family: 'Galiner';
     font-size: 10.5px;
     letter-spacing: 0.18em;
     text-transform: uppercase;
@@ -5943,7 +5949,7 @@
   }
   .health-sublibro-card h3 {
     margin: 0 0 4px;
-    font-family: 'Lenia';
+    font-family: 'Galiner';
     font-weight: 500;
     font-size: var(--fs-h3);
     color: var(--ink);
@@ -5968,7 +5974,7 @@
     justify-content: space-between;
     align-items: baseline;
     margin-bottom: 10px;
-    font-family: 'Lenia';
+    font-family: 'Galiner';
     font-size: 10.5px;
     letter-spacing: 0.18em;
     text-transform: uppercase;
@@ -6016,7 +6022,7 @@
   .health-entry-icon.tone-gold  { background: var(--gold-subtle); }
   .health-entry-body { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
   .health-entry-body strong {
-    font-family: 'Lenia';
+    font-family: 'Galiner';
     font-weight: 500;
     font-size: var(--fs-body-sm);
   }
@@ -6027,7 +6033,7 @@
   }
   .health-entry-state {
     flex-shrink: 0;
-    font-family: 'Lenia';
+    font-family: 'Galiner';
     font-size: 12px;
     color: var(--ink-muted);
     font-weight: 500;
@@ -6046,7 +6052,7 @@
     margin-bottom: 12px;
   }
   .health-pattern-tag {
-    font-family: 'Lenia';
+    font-family: 'Galiner';
     font-size: 10.5px;
     letter-spacing: 0.16em;
     text-transform: uppercase;
@@ -6072,7 +6078,7 @@
   }
   .health-allergy-banner strong {
     display: block;
-    font-family: 'Lenia';
+    font-family: 'Galiner';
     font-weight: 500;
     font-size: var(--fs-body-sm);
     color: #7E4438;
@@ -6101,7 +6107,7 @@
     min-height: 38px;
     padding: 0 16px;
     border-radius: var(--radius-pill);
-    font-family: 'Lenia';
+    font-family: 'Galiner';
     font-weight: 500;
     font-size: var(--fs-body-sm);
     border: 0;
@@ -6145,7 +6151,7 @@
     padding: 14px 16px;
     margin-bottom: 14px;
     color: var(--ink-muted);
-    font-family: 'Lenia';
+    font-family: 'Galiner';
     font-size: var(--fs-body-sm);
     cursor: pointer;
   }
@@ -6160,7 +6166,7 @@
   }
   .health-history-label {
     padding: 8px 12px 4px;
-    font-family: 'Lenia';
+    font-family: 'Galiner';
     font-size: 10.5px;
     letter-spacing: 0.14em;
     text-transform: uppercase;
@@ -6189,7 +6195,7 @@
     font-size: var(--fs-body-sm);
   }
   .health-row-value {
-    font-family: 'Lenia';
+    font-family: 'Galiner';
     font-weight: 500;
     font-size: var(--fs-body-sm);
     color: var(--ink);
@@ -6204,7 +6210,7 @@
     text-align: center;
   }
   .health-blood-value {
-    font-family: 'Lenia';
+    font-family: 'Galiner';
     font-size: 56px;
     font-weight: 500;
     line-height: 1;
@@ -6234,12 +6240,12 @@
   }
   .health-allergy-icon { font-size: 22px; flex-shrink: 0; }
   .health-allergy-body { flex: 1; display: flex; flex-direction: column; gap: 4px; }
-  .health-allergy-body strong { font-family: 'Lenia'; font-weight: 500; font-size: var(--fs-body-sm); }
+  .health-allergy-body strong { font-family: 'Galiner'; font-weight: 500; font-size: var(--fs-body-sm); }
   .health-allergy-body span { color: var(--ink-soft); font-size: var(--fs-caption); line-height: 1.4; }
   .health-allergy-body em {
     color: #7E4438;
     font-style: normal;
-    font-family: 'Lenia';
+    font-family: 'Galiner';
     font-size: var(--fs-caption);
     font-weight: 500;
   }
@@ -6247,7 +6253,7 @@
     flex-shrink: 0;
     padding: 4px 9px;
     border-radius: 999px;
-    font-family: 'Lenia';
+    font-family: 'Galiner';
     font-size: 10px;
     letter-spacing: 0.1em;
     text-transform: uppercase;
@@ -6268,7 +6274,7 @@
   }
   .health-contact-row + .health-contact-row { border-top: 1px solid var(--line); border-radius: 0; }
   .health-contact-body { flex: 1; display: flex; flex-direction: column; gap: 2px; min-width: 0; }
-  .health-contact-body strong { font-family: 'Lenia'; font-weight: 500; font-size: var(--fs-body-sm); }
+  .health-contact-body strong { font-family: 'Galiner'; font-weight: 500; font-size: var(--fs-body-sm); }
   .health-contact-body span { color: var(--ink-soft); font-size: var(--fs-caption); line-height: 1.35; }
   .health-call-cta {
     flex-shrink: 0;
@@ -6279,7 +6285,7 @@
     border-radius: 999px;
     background: var(--mint-subtle);
     color: #4F6647;
-    font-family: 'Lenia';
+    font-family: 'Galiner';
     font-size: 14px;
     text-decoration: none;
   }
@@ -6293,7 +6299,7 @@
       radial-gradient(circle at 84% 12%, rgba(143,174,133,0.18), transparent 36%),
       var(--paper-soft);
   }
-  .health-center-card strong { display: block; font-family: 'Lenia'; font-weight: 500; font-size: var(--fs-body-sm); margin-bottom: 4px; }
+  .health-center-card strong { display: block; font-family: 'Galiner'; font-weight: 500; font-size: var(--fs-body-sm); margin-bottom: 4px; }
   .health-center-card p { margin: 0 0 10px; color: var(--ink-soft); font-size: var(--fs-caption); line-height: 1.4; }
 
   /* Educación · rows con icon tonal */
@@ -6326,7 +6332,7 @@
   .health-edu-icon.tone-blush { background: var(--blush-subtle); }
   .health-edu-icon.tone-gold  { background: var(--gold-subtle); }
   .health-edu-stack { flex: 1; display: flex; flex-direction: column; gap: 2px; }
-  .health-edu-stack strong { font-family: 'Lenia'; font-weight: 500; font-size: var(--fs-body-sm); }
+  .health-edu-stack strong { font-family: 'Galiner'; font-weight: 500; font-size: var(--fs-body-sm); }
   .health-edu-stack span { color: var(--ink-soft); font-size: var(--fs-caption); }
   .health-edu-arrow { color: var(--ink-muted); font-size: 16px; }
 
@@ -6359,7 +6365,7 @@
     stroke-width: 2;
   }
   .health-emergencia-name {
-    font-family: 'Lenia';
+    font-family: 'Galiner';
     font-weight: 500;
     font-size: 56px;
     line-height: 1;
@@ -6383,7 +6389,7 @@
   }
   .health-emergencia-blood-label {
     display: block;
-    font-family: 'Lenia';
+    font-family: 'Galiner';
     font-size: 10.5px;
     letter-spacing: 0.18em;
     text-transform: uppercase;
@@ -6392,7 +6398,7 @@
   }
   .health-emergencia-blood-value {
     display: block;
-    font-family: 'Lenia';
+    font-family: 'Galiner';
     font-weight: 500;
     font-size: 84px;
     line-height: 1;
@@ -6408,7 +6414,7 @@
     margin-bottom: 22px;
   }
   .health-emergencia-section-head {
-    font-family: 'Lenia';
+    font-family: 'Galiner';
     font-size: 11px;
     letter-spacing: 0.18em;
     text-transform: uppercase;
@@ -6425,7 +6431,7 @@
     gap: 4px;
   }
   .health-emergencia-allergy strong {
-    font-family: 'Lenia';
+    font-family: 'Galiner';
     font-weight: 500;
     font-size: var(--fs-h3);
     color: #7E4438;
@@ -6459,12 +6465,12 @@
     color: #4A2510;
   }
   .health-emergencia-call-name {
-    font-family: 'Lenia';
+    font-family: 'Galiner';
     font-weight: 500;
     font-size: var(--fs-body-sm);
   }
   .health-emergencia-call-action {
-    font-family: 'Lenia';
+    font-family: 'Galiner';
     font-size: var(--fs-caption);
   }
   .pregnancy-hero,
@@ -6505,7 +6511,7 @@
   .pregnancy-mini-label,
   .vaccine-kicker,
   .vaccine-mini-label {
-    font-family: "Lenia";
+    font-family: "Galiner";
     font-size: 10px;
     letter-spacing: 0.18em;
     text-transform: uppercase;
@@ -6516,7 +6522,7 @@
   .pregnancy-section h3,
   .vaccine-view-head h3,
   .vaccine-section h3 {
-    font-family: "Lenia";
+    font-family: "Galiner";
     font-size: 28px;
     line-height: 1.02;
     letter-spacing: -0.04em;
@@ -6565,7 +6571,7 @@
       radial-gradient(circle at 35% 28%, rgba(255,255,255,0.74), transparent 35%),
       linear-gradient(145deg, color-mix(in srgb, var(--module-soft) 94%, #fff), rgba(191,210,176,0.46));
     color: var(--module-ink);
-    font-family: "Lenia";
+    font-family: "Galiner";
     font-size: 30px;
     box-shadow: 0 18px 28px rgba(42,33,27,0.10);
   }
@@ -6608,7 +6614,7 @@
   .vaccine-stat strong,
   .module-stat strong {
     display: block;
-    font-family: "Lenia";
+    font-family: "Galiner";
     font-size: var(--fs-h3);
     line-height: 1;
   }
@@ -6647,7 +6653,7 @@
   .pregnancy-quick-card strong,
   .vaccine-nav-card strong {
     display: block;
-    font-family: "Lenia";
+    font-family: "Galiner";
     font-size: 17px;
     line-height: 1.05;
     font-weight: 500;
@@ -6678,7 +6684,7 @@
   .module-section-head.eyebrow {
     align-items: center;
     color: var(--ink-muted);
-    font-family: "Lenia";
+    font-family: "Galiner";
     font-size: 10px;
     letter-spacing: 0.18em;
     text-transform: uppercase;
@@ -6766,7 +6772,7 @@
   .vaccine-schedule-row strong {
     display: block;
     color: var(--ink);
-    font-family: "Lenia";
+    font-family: "Galiner";
     font-size: var(--fs-body-lg);
     margin-bottom: 4px;
   }
@@ -6815,7 +6821,7 @@
     background: rgba(250,247,240,0.62);
     padding: 13px;
     text-align: left;
-    font-family: "Lenia";
+    font-family: "Galiner";
     cursor: pointer;
   }
   .pregnancy-symptom-card.active {
@@ -6843,7 +6849,7 @@
     border: 2px solid var(--module-dark);
   }
   .pregnancy-kick-count {
-    font-family: "Lenia";
+    font-family: "Galiner";
     font-size: 58px;
     line-height: 1;
     letter-spacing: -0.06em;
@@ -6864,7 +6870,7 @@
     gap: var(--space-md);
   }
   .pregnancy-bp-values strong {
-    font-family: "Lenia";
+    font-family: "Galiner";
     font-size: 40px;
     line-height: 0.95;
   }
@@ -6929,7 +6935,7 @@
   .pregnancy-chart text,
   .vaccine-chart text {
     fill: var(--ink-muted);
-    font-family: "Lenia";
+    font-family: "Galiner";
     font-size: var(--fs-meta);
   }
   .pregnancy-toggle-row,
@@ -6952,7 +6958,7 @@
     background: transparent;
     width: 100%;
     text-align: left;
-    font-family: "Lenia";
+    font-family: "Galiner";
     color: var(--ink-soft);
     font-size: var(--fs-body-sm);
     cursor: pointer;
@@ -6996,7 +7002,7 @@
     border: 1px solid rgba(201,194,178,0.86);
     background: rgba(250,247,240,0.70);
     padding: 0 14px;
-    font-family: "Lenia";
+    font-family: "Galiner";
     color: var(--ink-soft);
     margin-top: 12px;
   }
@@ -7005,7 +7011,7 @@
     white-space: pre-wrap;
     margin: 0;
     color: var(--ink-soft);
-    font-family: "Lenia";
+    font-family: "Galiner";
     font-size: var(--fs-meta);
     line-height: 1.48;
   }
@@ -7028,7 +7034,7 @@
     border-top: 1px dashed rgba(201,194,178,0.66);
     padding-top: 9px;
     margin-top: 9px;
-    font-family: "Lenia";
+    font-family: "Galiner";
     font-size: var(--fs-body-sm);
   }
   .vaccine-dose-grid {
@@ -7049,7 +7055,7 @@
     display: block;
   }
   .vaccine-dose-grid span {
-    font-family: "Lenia";
+    font-family: "Galiner";
     font-size: 17px;
     color: var(--ink);
     margin: 5px 0;
@@ -7096,7 +7102,7 @@
     display: flex; flex-direction: column; align-items: center; gap: var(--space-2xs);
     color: var(--ink-muted);
     cursor: pointer;
-    font-family: "Lenia"; font-size: var(--fs-eyebrow); font-weight: 500;
+    font-family: "Galiner"; font-size: var(--fs-eyebrow); font-weight: 500;
     letter-spacing: 0.08em; text-transform: uppercase;
     transition: color 220ms;
   }
@@ -7145,7 +7151,7 @@
     background: var(--line-strong);
     margin: 0 auto 16px;
   }
-  .sheet h3 { font-family: "Lenia"; font-size: 24px; font-weight: 500; margin: 0 0 8px; }
+  .sheet h3 { font-family: "Galiner"; font-size: 24px; font-weight: 500; margin: 0 0 8px; }
   .sheet p { color: var(--ink-soft); font-size: 14px; line-height: 1.55; margin: 0 0 16px; }
   .sheet .primary { min-height: 48px; }
   .qlog-sheet-shell {
@@ -7200,7 +7206,7 @@
     flex-wrap: wrap;
   }
   .qlog-head h4 {
-    font-family: "Lenia";
+    font-family: "Galiner";
     font-size: 24px;
     line-height: 1;
     font-weight: 500;
@@ -7263,7 +7269,7 @@
   }
   .qlog-tile .label {
     display: block;
-    font-family: "Lenia";
+    font-family: "Galiner";
     font-weight: 500;
     font-size: var(--fs-body-sm);
     line-height: 1.1;
@@ -7332,14 +7338,14 @@
     padding: 14px;
   }
   .qlog-detail .detail-kicker {
-    font-family: "Lenia";
+    font-family: "Galiner";
     font-size: 10px;
     letter-spacing: 0.18em;
     text-transform: uppercase;
     color: var(--ink-muted);
   }
   .qlog-detail h5 {
-    font-family: "Lenia";
+    font-family: "Galiner";
     font-size: 19px;
     line-height: 1.1;
     font-weight: 500;
@@ -7383,7 +7389,7 @@
     border: 1px solid rgba(201,194,178,0.80);
     background: rgba(250,247,240,0.70);
     color: var(--ink);
-    font-family: "Lenia";
+    font-family: "Galiner";
     cursor: pointer;
   }
   .qlog-action.primary {
@@ -8749,13 +8755,13 @@
   }
   .top-header > div:first-child { flex: 1; min-width: 0; }
   .top-header .eyebrow {
-    font-family: "Lenia"; font-size: var(--fs-meta);
+    font-family: "Galiner"; font-size: var(--fs-meta);
     letter-spacing: 0.18em; text-transform: uppercase;
     color: var(--ink-muted); font-weight: 500;
     margin: 0 0 4px; display: block;
   }
   .top-header h1, .top-header h2, .top-header h3 {
-    font-family: "Lenia"; font-weight: 500; line-height: 1.05;
+    font-family: "Galiner"; font-weight: 500; line-height: 1.05;
     letter-spacing: -0.015em; margin: 0;
   }
   .top-header h2 { font-size: var(--fs-h1); }
@@ -8777,7 +8783,7 @@
   .timeline-row + .timeline-row { margin-top: 14px; }
   .timeline-row-label {
     display: flex; justify-content: space-between; align-items: baseline;
-    font-family: 'Lenia'; font-size: var(--fs-eyebrow);
+    font-family: 'Galiner'; font-size: var(--fs-eyebrow);
     letter-spacing: 0.18em; text-transform: uppercase;
     color: var(--ink-muted); margin-bottom: 24px;
     font-weight: 500; gap: var(--space-md);
@@ -8844,7 +8850,7 @@
     margin-bottom: 16px;
   }
   .post-gallery-eyebrow {
-    font-family: 'Lenia';
+    font-family: 'Galiner';
     font-size: 10.5px;
     letter-spacing: 0.18em;
     text-transform: uppercase;
@@ -8853,7 +8859,7 @@
   }
   .post-gallery-head h3 {
     margin: 0;
-    font-family: 'Lenia';
+    font-family: 'Galiner';
     font-weight: 500;
     font-size: 24px;
     line-height: 1.05;
@@ -8942,7 +8948,7 @@
     align-self: flex-start;
     padding: 3px 9px;
     border-radius: 999px;
-    font-family: 'Lenia';
+    font-family: 'Galiner';
     font-size: 10px;
     letter-spacing: 0.12em;
     text-transform: uppercase;
@@ -8958,7 +8964,7 @@
 
   .post-card h4 {
     margin: 0;
-    font-family: 'Lenia';
+    font-family: 'Galiner';
     font-weight: 500;
     font-size: var(--fs-body);
     line-height: 1.2;
@@ -8974,7 +8980,7 @@
     display: flex;
     gap: 6px;
     margin-top: 4px;
-    font-family: 'Lenia';
+    font-family: 'Galiner';
     font-size: 10.5px;
     color: var(--ink-muted);
     letter-spacing: 0.04em;
@@ -9025,7 +9031,7 @@
     padding: 3px 9px;
     border-radius: 999px;
     background: var(--paper);
-    font-family: 'Lenia';
+    font-family: 'Galiner';
     font-size: 10px;
     letter-spacing: 0.14em;
     text-transform: uppercase;
@@ -9034,7 +9040,7 @@
   }
   .post-page-head h2 {
     margin: 0 0 10px;
-    font-family: 'Lenia';
+    font-family: 'Galiner';
     font-weight: 500;
     font-size: 26px;
     line-height: 1.1;
@@ -9044,7 +9050,7 @@
   .post-page-meta {
     display: flex;
     gap: 6px;
-    font-family: 'Lenia';
+    font-family: 'Galiner';
     font-size: 11px;
     color: var(--ink-muted);
     letter-spacing: 0.04em;
@@ -9059,7 +9065,7 @@
   .post-page-body p { margin: 0 0 14px; }
   .post-page-body h3 {
     margin: 22px 0 10px;
-    font-family: 'Lenia';
+    font-family: 'Galiner';
     font-weight: 500;
     font-size: 18px;
     line-height: 1.2;
@@ -9074,7 +9080,7 @@
   }
   .post-page-cite strong {
     display: block;
-    font-family: 'Lenia';
+    font-family: 'Galiner';
     font-size: 10.5px;
     letter-spacing: 0.16em;
     text-transform: uppercase;
@@ -9120,7 +9126,7 @@
     font-size: var(--fs-body-sm);
   }
   .milestone-row-value {
-    font-family: 'Lenia';
+    font-family: 'Galiner';
     font-weight: 500;
     font-size: var(--fs-body-sm);
     color: var(--ink);
@@ -9133,7 +9139,7 @@
     min-width: 0;
   }
   .milestone-row-stack strong {
-    font-family: 'Lenia';
+    font-family: 'Galiner';
     font-weight: 500;
     font-size: var(--fs-body-sm);
     color: var(--ink);
@@ -9177,7 +9183,7 @@
     margin-bottom: 14px;
   }
   .milestone-carnet-eyebrow {
-    font-family: 'Lenia';
+    font-family: 'Galiner';
     font-size: 10.5px;
     letter-spacing: 0.18em;
     text-transform: uppercase;
@@ -9186,7 +9192,7 @@
   }
   .milestone-carnet-head h3 {
     margin: 0;
-    font-family: 'Lenia';
+    font-family: 'Galiner';
     font-weight: 500;
     font-size: 24px;
     line-height: 1.05;
@@ -9207,7 +9213,7 @@
     align-items: center;
     padding: 6px 12px;
     border-radius: 999px;
-    font-family: 'Lenia';
+    font-family: 'Galiner';
     font-weight: 500;
     font-size: 13px;
     letter-spacing: 0.04em;
@@ -9276,7 +9282,7 @@
     gap: 2px;
   }
   .milestone-carnet-row-body strong {
-    font-family: 'Lenia';
+    font-family: 'Galiner';
     font-weight: 500;
     font-size: var(--fs-body-sm);
     line-height: 1.25;
@@ -9356,7 +9362,7 @@
     min-width: 0;
   }
   .milestone-carnet-cta-body strong {
-    font-family: 'Lenia';
+    font-family: 'Galiner';
     font-weight: 500;
     font-size: var(--fs-body);
     color: var(--ink);
@@ -9370,7 +9376,7 @@
   }
   .milestone-carnet-cta-arrow {
     flex-shrink: 0;
-    font-family: 'Lenia';
+    font-family: 'Galiner';
     font-size: 18px;
     color: var(--ink-muted);
   }
@@ -9400,7 +9406,7 @@
     opacity: 1; filter: saturate(1);
   }
   .timeline-track.tall .timeline-seg .seg-label {
-    font-family: 'Lenia';
+    font-family: 'Galiner';
     font-size: var(--fs-meta);
     font-weight: 600;
     line-height: 1;
@@ -9409,7 +9415,7 @@
     color: var(--ink);
   }
   .timeline-track.tall .timeline-seg .seg-dur {
-    font-family: 'Lenia';
+    font-family: 'Galiner';
     font-size: 10px;
     line-height: 1;
     color: var(--ink-muted);
@@ -9438,7 +9444,7 @@
     content: attr(data-now);
     position: absolute; top: -28px; left: 50%; transform: translateX(-50%);
     background: var(--coral-base); color: #4A2614;
-    font-family: 'Lenia'; font-size: var(--fs-eyebrow); font-weight: 600;
+    font-family: 'Galiner'; font-size: var(--fs-eyebrow); font-weight: 600;
     letter-spacing: 0.18em; text-transform: uppercase;
     padding: 3px 8px 2px; border-radius: var(--radius-pill);
     white-space: nowrap;
@@ -9446,13 +9452,13 @@
   .timeline-axis {
     display: flex; justify-content: space-between;
     margin-top: 6px;
-    font-family: 'Lenia'; font-size: var(--fs-eyebrow);
+    font-family: 'Galiner'; font-size: var(--fs-eyebrow);
     color: var(--ink-muted); font-weight: 500; letter-spacing: 0.04em;
   }
   .timeline-legend {
     display: flex; gap: 18px; flex-wrap: wrap;
     margin-top: 14px; justify-content: center;
-    font-family: 'Lenia'; font-size: var(--fs-caption);
+    font-family: 'Galiner'; font-size: var(--fs-caption);
     color: var(--ink-soft);
   }
   .timeline-legend .item { display: inline-flex; align-items: center; gap: 7px; }
@@ -9477,7 +9483,7 @@
   .sleep-day-stat-wrap { margin: 0 0 18px; }
   .sleep-day-divider { height: 1px; background: var(--line); margin: 22px 0; }
   .sleep-day-section-title {
-    font-family: 'Lenia'; font-weight: 500;
+    font-family: 'Galiner'; font-weight: 500;
     font-size: var(--fs-h4); line-height: 1.2;
     margin: 0 0 14px; letter-spacing: -0.01em;
   }
@@ -9523,7 +9529,7 @@
   .sleep-day-phase.now { box-shadow: 0 0 0 2px var(--coral-base); }
   .sleep-day-phase .body { flex: 1; min-width: 0; }
   .sleep-day-phase .body strong {
-    display: block; font-family: 'Lenia'; font-weight: 500;
+    display: block; font-family: 'Galiner'; font-weight: 500;
     font-size: var(--fs-h4); line-height: 1.2;
     letter-spacing: -0.005em;
   }
@@ -9532,7 +9538,7 @@
     color: var(--ink-soft); line-height: 1.5;
   }
   .sleep-day-phase .time {
-    font-family: 'Lenia'; font-size: var(--fs-body-sm);
+    font-family: 'Galiner'; font-size: var(--fs-body-sm);
     color: var(--ink-muted); white-space: nowrap;
     text-align: right; flex-shrink: 0;
   }
@@ -9556,7 +9562,7 @@
     position: relative; z-index: 1;
   }
   .sleep-day-wake .label {
-    flex: 1; font-family: 'Lenia'; font-weight: 500;
+    flex: 1; font-family: 'Galiner'; font-weight: 500;
     font-size: var(--fs-body-sm); color: var(--ink-soft);
     line-height: 1.3;
   }
@@ -9566,7 +9572,7 @@
     font-weight: 400;
   }
   .sleep-day-wake .dur {
-    font-family: 'Lenia'; font-size: var(--fs-meta);
+    font-family: 'Galiner'; font-size: var(--fs-meta);
     color: var(--ink-muted); background: var(--paper-soft);
     border-radius: var(--radius-pill); padding: 4px 10px;
     white-space: nowrap; flex-shrink: 0;
@@ -9632,7 +9638,7 @@
   .callout.stat p { font-size: var(--fs-body-lg); color: var(--ink); letter-spacing: 0; margin: 0 auto; max-width: none; }
   .callout.stat strong {
     color: var(--coral-strong);
-    font-family: "Lenia"; font-weight: 500;
+    font-family: "Galiner"; font-weight: 500;
     font-size: var(--fs-h2);
     display: inline-block; padding: 0 4px;
     line-height: 1; vertical-align: -2px;
@@ -9662,7 +9668,7 @@
   .dose-row:hover { filter: brightness(0.99); transform: translateY(-1px); }
 
   .dose-row .age {
-    font-family: "Lenia";
+    font-family: "Galiner";
     font-weight: 500;
     font-size: var(--fs-h3);
     line-height: 1;
@@ -9676,7 +9682,7 @@
   .dose-row .body .vaccines {
     display: block;
     margin: 0;
-    font-family: "Lenia"; font-weight: 500;
+    font-family: "Galiner"; font-weight: 500;
     font-size: var(--fs-body);
     color: var(--ink);
     line-height: 1.35;
@@ -9685,7 +9691,7 @@
   .dose-row.future .body .vaccines { color: var(--ink-soft); font-weight: 400; }
   .dose-row .body .vaccines .new-badge {
     display: inline-block;
-    font-family: "Lenia"; font-weight: 500;
+    font-family: "Galiner"; font-weight: 500;
     font-size: var(--fs-eyebrow);
     color: var(--ink-muted);
     letter-spacing: 0.14em;
@@ -9706,7 +9712,7 @@
     line-height: 1.4;
   }
   .dose-row .footline .state-icon {
-    font-family: "Lenia";
+    font-family: "Galiner";
     font-weight: 600;
     font-size: var(--fs-body-sm);
     line-height: 1;
@@ -9760,7 +9766,7 @@
   .vax-detail-stat-wrap { margin: 0 0 18px; }
 
   .vax-section-title {
-    font-family: "Lenia"; font-weight: 500;
+    font-family: "Galiner"; font-weight: 500;
     font-size: var(--fs-h4); line-height: 1.2;
     margin: 24px 0 12px;
     letter-spacing: -0.01em;
@@ -9801,7 +9807,7 @@
     gap: 12px; font-size: var(--fs-body-sm);
   }
   .vax-admin-details .label {
-    font-family: "Lenia"; color: var(--ink-muted);
+    font-family: "Galiner"; color: var(--ink-muted);
     letter-spacing: 0.04em;
   }
   .vax-admin-details .value {
@@ -9851,12 +9857,12 @@
   }
   .chat-context > div { display: flex; flex-direction: column; gap: 2px; }
   .chat-context .eyebrow {
-    font-family: "Lenia"; font-size: var(--fs-eyebrow);
+    font-family: "Galiner"; font-size: var(--fs-eyebrow);
     letter-spacing: 0.18em; text-transform: uppercase;
     color: var(--ink-muted); font-weight: 500;
   }
   .chat-context strong {
-    font-family: "Lenia"; font-weight: 500;
+    font-family: "Galiner"; font-weight: 500;
     font-size: var(--fs-body); color: var(--ink);
     letter-spacing: -0.005em;
   }
@@ -9865,7 +9871,7 @@
     border: 1px solid var(--line);
     border-radius: var(--radius-pill);
     padding: 7px 12px;
-    font-family: "Lenia"; font-size: var(--fs-meta);
+    font-family: "Galiner"; font-size: var(--fs-meta);
     color: var(--ink-soft); cursor: pointer;
     display: inline-flex; align-items: center; gap: 6px;
     transition: filter 150ms var(--ease);
@@ -9909,7 +9915,7 @@
     background: transparent;
     border: 0;
     color: var(--ink-muted);
-    font-family: "Lenia";
+    font-family: "Galiner";
     font-size: var(--fs-meta);
     letter-spacing: 0.04em;
     text-align: center;
@@ -9934,7 +9940,7 @@
     color: #4F6647;
     padding: 6px 12px;
     border-radius: var(--radius-pill);
-    font-family: "Lenia"; font-size: var(--fs-meta);
+    font-family: "Galiner"; font-size: var(--fs-meta);
     letter-spacing: 0.04em;
     border: 1px solid rgba(143,174,133,0.32);
   }
@@ -9962,7 +9968,7 @@
     border-radius: var(--radius-pill);
     background: var(--paper-soft);
     padding: 7px 12px;
-    font-family: "Lenia"; font-weight: 500;
+    font-family: "Galiner"; font-weight: 500;
     font-size: var(--fs-meta);
     color: var(--ink-soft);
     cursor: pointer;
@@ -10000,13 +10006,13 @@
     border: 0;
     display: grid; place-items: center;
     cursor: pointer;
-    font-family: "Lenia"; font-weight: 500; font-size: 17px;
+    font-family: "Galiner"; font-weight: 500; font-size: 17px;
     transition: filter 150ms var(--ease);
   }
   .chat-send-btn:hover { filter: brightness(0.97); }
   .chat-canon-foot {
     text-align: center;
-    font-family: "Lenia"; font-size: var(--fs-eyebrow);
+    font-family: "Galiner"; font-size: var(--fs-eyebrow);
     letter-spacing: 0.14em; text-transform: uppercase;
     color: var(--ink-faint);
     margin: 0;
@@ -10025,7 +10031,7 @@
     background: transparent;
     border: 0;
     color: #B7B0A4;
-    font-family: "Lenia"; font-size: var(--fs-meta);
+    font-family: "Galiner"; font-size: var(--fs-meta);
     padding: 14px 18px 0;
     text-align: left;
     cursor: pointer;
@@ -10034,7 +10040,7 @@
     padding: 14px 22px 18px;
   }
   .chat-3am-header h1 {
-    font-family: "Lenia"; font-weight: 500;
+    font-family: "Galiner"; font-weight: 500;
     font-size: var(--fs-h2);
     line-height: 1.05;
     letter-spacing: -0.02em;
@@ -10061,7 +10067,7 @@
     border-radius: var(--radius-lg);
     padding: 18px 20px;
     color: #E6E2DC;
-    font-family: "Lenia"; font-weight: 500;
+    font-family: "Galiner"; font-weight: 500;
     font-size: var(--fs-body-lg);
     line-height: 1.3;
     cursor: pointer;
@@ -10125,7 +10131,7 @@
     gap: 10px;
   }
   .triage-head h3 {
-    font-family: "Lenia"; font-weight: 500;
+    font-family: "Galiner"; font-weight: 500;
     font-size: var(--fs-h4);
     line-height: 1.2;
     letter-spacing: -0.005em;
@@ -10149,7 +10155,7 @@
     gap: 10px;
   }
   .triage-step h4 {
-    font-family: "Lenia"; font-weight: 500;
+    font-family: "Galiner"; font-weight: 500;
     font-size: var(--fs-body);
     color: var(--ink);
     margin: 0 0 4px;
@@ -10165,7 +10171,7 @@
     border: 1px solid var(--line);
     border-radius: var(--radius-lg);
     padding: 14px 16px;
-    font-family: "Lenia"; font-weight: 500;
+    font-family: "Galiner"; font-weight: 500;
     font-size: var(--fs-body-sm);
     color: var(--ink);
     line-height: 1.4;
@@ -10188,7 +10194,7 @@
     align-self: flex-start;
     background: transparent; border: 0;
     color: var(--ink-muted);
-    font-family: "Lenia"; font-size: var(--fs-meta);
+    font-family: "Galiner"; font-size: var(--fs-meta);
     cursor: pointer;
     padding: 4px 0;
     margin-top: -4px;
@@ -10216,7 +10222,7 @@
   }
   .urgency-badge {
     display: inline-flex; align-items: center; gap: 6px;
-    font-family: "Lenia"; font-weight: 500;
+    font-family: "Galiner"; font-weight: 500;
     font-size: var(--fs-meta);
     letter-spacing: 0.12em;
     text-transform: uppercase;
@@ -10228,7 +10234,7 @@
   .urgency-badge.caution { background: var(--gold-base); color: #4A3A12; }
   .urgency-badge.safe { background: var(--mint-base); color: #2F4029; }
   .triage-result h4 {
-    font-family: "Lenia"; font-weight: 500;
+    font-family: "Galiner"; font-weight: 500;
     font-size: var(--fs-body);
     margin: 0;
     color: var(--ink);
@@ -10246,7 +10252,7 @@
     margin-top: 4px;
   }
   .triage-result .triage-source {
-    font-family: "Lenia"; font-size: var(--fs-eyebrow);
+    font-family: "Galiner"; font-size: var(--fs-eyebrow);
     color: var(--ink-muted);
     letter-spacing: 0.14em;
     text-transform: uppercase;
@@ -10302,7 +10308,7 @@
   .tool-card .tc-body { min-width: 0; }
   .tool-card .tc-title {
     display: block;
-    font-family: "Lenia"; font-weight: 500;
+    font-family: "Galiner"; font-weight: 500;
     font-size: var(--fs-body);
     color: var(--ink);
     line-height: 1.3;
@@ -10317,7 +10323,7 @@
     line-height: 1.4;
   }
   .tool-card .tc-action {
-    font-family: "Lenia"; font-size: var(--fs-meta);
+    font-family: "Galiner"; font-size: var(--fs-meta);
     color: var(--ink-soft);
     display: inline-flex; align-items: center; gap: 4px;
     flex-shrink: 0;
@@ -10379,7 +10385,7 @@
   }
   .feed-card.night h3 {
     color: #E6E2DC;
-    font-family: "Lenia"; font-weight: 500;
+    font-family: "Galiner"; font-weight: 500;
   }
   .feed-card.night .context {
     color: #B7B0A4;
@@ -10413,7 +10419,7 @@
   }
   .chat-night-banner .ttl {
     display: block;
-    font-family: "Lenia"; font-weight: 500;
+    font-family: "Galiner"; font-weight: 500;
     font-size: var(--fs-body); color: var(--ink);
     margin-bottom: 2px;
   }
@@ -10425,7 +10431,7 @@
     color: var(--coral-strong);
     padding: 4px 10px;
     border-radius: 999px;
-    font-family: "Lenia"; font-size: var(--fs-meta);
+    font-family: "Galiner"; font-size: var(--fs-meta);
     font-weight: 500;
     cursor: pointer;
   }
@@ -10477,7 +10483,7 @@
 
   /* Safety frame header */
   .safety-frame h2 {
-    font-family: "Lenia"; font-weight: 500;
+    font-family: "Galiner"; font-weight: 500;
     font-size: var(--fs-h3);
     line-height: 1.15;
     letter-spacing: -0.015em;
@@ -10516,7 +10522,7 @@
     display: grid; place-items: center;
     background: var(--ink);
     color: var(--paper);
-    font-family: "Lenia"; font-weight: 500;
+    font-family: "Galiner"; font-weight: 500;
     font-size: 13px;
     line-height: 1;
     flex-shrink: 0;
@@ -10524,7 +10530,7 @@
   }
   .sf-steps .sf-body strong {
     display: block;
-    font-family: "Lenia"; font-weight: 500;
+    font-family: "Galiner"; font-weight: 500;
     font-size: var(--fs-body);
     color: var(--ink);
     line-height: 1.35;
@@ -10552,7 +10558,7 @@
   .sf-canon-foot strong { color: #1F3019; font-style: normal; font-weight: 500; }
   .sf-source {
     text-align: center;
-    font-family: "Lenia"; font-size: var(--fs-eyebrow);
+    font-family: "Galiner"; font-size: var(--fs-eyebrow);
     letter-spacing: 0.14em; text-transform: uppercase;
     color: var(--ink-muted);
     margin: 8px 0 4px;
@@ -10566,7 +10572,7 @@
     width: 100%;
     min-height: 46px;
     border-radius: 999px;
-    font-family: "Lenia"; font-weight: 500;
+    font-family: "Galiner"; font-weight: 500;
     font-size: var(--fs-body-sm);
     cursor: pointer;
     border: 0;
@@ -10583,7 +10589,7 @@
     border-color: rgba(216,154,137,0.38);
   }
   .mental-health-card h2 {
-    font-family: "Lenia"; font-weight: 500;
+    font-family: "Galiner"; font-weight: 500;
     font-size: var(--fs-h3);
     line-height: 1.15;
     letter-spacing: -0.015em;
@@ -10606,7 +10612,7 @@
   }
   .mental-health-card .mh-source {
     text-align: center;
-    font-family: "Lenia"; font-size: var(--fs-eyebrow);
+    font-family: "Galiner"; font-size: var(--fs-eyebrow);
     letter-spacing: 0.14em; text-transform: uppercase;
     color: var(--ink-muted);
     margin: 8px 0 4px;
@@ -10662,14 +10668,14 @@
     gap: 8px;
   }
   .epds-head h2 {
-    font-family: "Lenia"; font-weight: 500;
+    font-family: "Galiner"; font-weight: 500;
     font-size: var(--fs-h4);
     line-height: 1.2;
     margin: 0;
     color: var(--ink);
   }
   .epds-head .epds-progress {
-    font-family: "Lenia"; font-size: var(--fs-eyebrow);
+    font-family: "Galiner"; font-size: var(--fs-eyebrow);
     color: var(--ink-muted);
     letter-spacing: 0.14em;
     text-transform: uppercase;
@@ -10677,7 +10683,7 @@
     margin-top: 4px;
   }
   .epds-step h3 {
-    font-family: "Lenia"; font-weight: 500;
+    font-family: "Galiner"; font-weight: 500;
     font-size: var(--fs-body);
     color: var(--ink);
     line-height: 1.4;
@@ -10705,7 +10711,7 @@
     border-color: var(--coral-base);
   }
   .epds-source {
-    font-family: "Lenia"; font-size: var(--fs-eyebrow);
+    font-family: "Galiner"; font-size: var(--fs-eyebrow);
     color: var(--ink-muted);
     letter-spacing: 0.14em;
     text-transform: uppercase;
@@ -10743,7 +10749,7 @@
     border-color: rgba(214,119,66,0.45);
   }
   .epds-result h3 {
-    font-family: "Lenia"; font-weight: 500;
+    font-family: "Galiner"; font-weight: 500;
     font-size: var(--fs-body);
     margin: 0;
     color: var(--ink);
@@ -10764,7 +10770,7 @@
     width: 100%;
     min-height: 44px;
     border-radius: 999px;
-    font-family: "Lenia"; font-weight: 500;
+    font-family: "Galiner"; font-weight: 500;
     font-size: var(--fs-body-sm);
     cursor: pointer;
     border: 0;
@@ -10776,7 +10782,7 @@
 
   /* Relay sheet · "Avisar a Pablo" */
   .relay-sheet h2 {
-    font-family: "Lenia"; font-weight: 500;
+    font-family: "Galiner"; font-weight: 500;
     font-size: var(--fs-h4);
     line-height: 1.2;
     margin: 0;
@@ -10816,7 +10822,7 @@
     color: var(--paper);
     padding: 12px 18px;
     border-radius: 999px;
-    font-family: "Lenia"; font-size: var(--fs-meta);
+    font-family: "Galiner"; font-size: var(--fs-meta);
     z-index: 60;
     opacity: 0;
     pointer-events: none;
@@ -10855,7 +10861,7 @@
     gap: 14px;
   }
   .chat3am-close-sheet h2 {
-    font-family: "Lenia"; font-weight: 500;
+    font-family: "Galiner"; font-weight: 500;
     font-size: var(--fs-h4);
     line-height: 1.2;
     margin: 0;
@@ -10923,7 +10929,7 @@
   }
   .chat-mode-badge {
     display: inline-flex; align-items: center; gap: 4px;
-    font-family: "Lenia"; font-weight: 500;
+    font-family: "Galiner"; font-weight: 500;
     font-size: var(--fs-eyebrow);
     letter-spacing: 0.06em;
     padding: 3px 8px;
@@ -10958,7 +10964,7 @@
     border-radius: 999px;
     background: var(--paper-soft);
     border: 1px solid var(--line);
-    font-family: "Lenia"; font-weight: 500;
+    font-family: "Galiner"; font-weight: 500;
     font-size: var(--fs-eyebrow);
     letter-spacing: 0.10em;
     text-transform: uppercase;
@@ -10981,7 +10987,7 @@
     color: var(--paper);
     padding: 12px 18px;
     border-radius: 999px;
-    font-family: "Lenia"; font-size: var(--fs-meta);
+    font-family: "Galiner"; font-size: var(--fs-meta);
     z-index: 60;
     opacity: 0;
     pointer-events: none;
@@ -11021,7 +11027,7 @@
     border: 1px solid rgba(184,151,63,0.32);
     padding: 6px 12px;
     border-radius: 999px;
-    font-family: "Lenia"; font-size: var(--fs-meta);
+    font-family: "Galiner"; font-size: var(--fs-meta);
     letter-spacing: 0.04em;
     align-self: center;
     max-width: max-content;
@@ -11032,7 +11038,7 @@
     border: 1px solid rgba(214,119,66,0.30);
     padding: 6px 12px;
     border-radius: 999px;
-    font-family: "Lenia"; font-size: var(--fs-meta);
+    font-family: "Galiner"; font-size: var(--fs-meta);
     letter-spacing: 0.04em;
     align-self: center;
     max-width: max-content;
@@ -11110,7 +11116,7 @@
       radial-gradient(circle at 72% 12%, rgba(232,201,122,0.34), transparent 24%),
       linear-gradient(135deg, #EAE3D0, var(--paper-soft));
   }
-  /* Title canon · matches .hero-person strong de Hoy (21-22px Lenia 500) */
+  /* Title canon · matches .hero-person strong de Hoy (21-22px Galiner 500) */
   .book-hero > h3,
   .milestone-hero > h3,
   .vaccine-hero > h3,
@@ -11121,7 +11127,7 @@
   .growth-cover > h3 {
     position: relative;
     z-index: 1;
-    font-family: "Lenia";
+    font-family: "Galiner";
     font-size: 22px;
     font-weight: 500;
     line-height: 1.05;
@@ -11147,7 +11153,7 @@
     font-size: var(--fs-caption);
     line-height: 1.4;
   }
-  /* Kicker canon · uppercase Lenia 10.5 0.18em */
+  /* Kicker canon · uppercase Galiner 10.5 0.18em */
   .book-hero-kicker,
   .milestone-hero-kicker,
   .vaccine-mini-label,
@@ -11156,7 +11162,7 @@
   .food-kicker,
   .lactation-kicker,
   .growth-kicker {
-    font-family: "Lenia";
+    font-family: "Galiner";
     font-size: 10.5px;
     letter-spacing: 0.18em;
     text-transform: uppercase;
@@ -11227,7 +11233,7 @@
     padding: 3px 8px;
     border-radius: 999px;
     font-size: 10.5px;
-    font-family: "Lenia";
+    font-family: "Galiner";
     letter-spacing: 0.06em;
     color: var(--ink-soft);
     text-transform: none;
@@ -13337,7 +13343,7 @@
       <div class="note-card">
         <div class="note-item"><strong>Click paths</strong><p>Registro lleva a onboarding. Onboarding termina en Hoy. Cards y nav conectan Hoy, Calendario y Log.</p></div>
         <div class="note-item"><strong>Scope</strong><p>Solo un archivo HTML. CSS y JavaScript van inline; los assets salen de `design/assets`.</p></div>
-        <div class="note-item"><strong>Canon visual</strong><p>Tipografias Lenia/Helvena, papel crema, cards suaves, avatar mint para crianza y tratamiento gold para vacunas.</p></div>
+        <div class="note-item"><strong>Canon visual</strong><p>Tipografías Galiner/Helvena, papel crema, cards suaves, avatar mint para crianza y tratamiento gold para vacunas.</p></div>
       </div>
     </aside>
   </main>
@@ -17447,14 +17453,14 @@ Grow
     const axis = axisMonths.map((month) => {
       const x = geometry.left + (month / GROWTH_AXIS_MAX) * (geometry.right - geometry.left);
       const anchor = month === 0 ? 'start' : month === GROWTH_AXIS_MAX ? 'end' : 'middle';
-      return `<text x="${x.toFixed(1)}" y="285" font-family="Lenia" font-size="22" fill="#5C5448" text-anchor="${anchor}">${month}m</text>`;
+      return `<text x="${x.toFixed(1)}" y="285" font-family="Galiner" font-size="22" fill="#5C5448" text-anchor="${anchor}">${month}m</text>`;
     }).join('');
 
     /* 4 Y-axis labels matching the 4 grid lines. */
     const yLabels = gridRatios.map((ratio) => {
       const value = metric.maxValue - ratio * (metric.maxValue - metric.minValue);
       const y = geometry.top + (geometry.bottom - geometry.top) * ratio + 7;
-      return `<text x="34" y="${y.toFixed(1)}" font-family="Lenia" font-size="22" fill="#5C5448" text-anchor="end">${formatNumber(value, metric.precision)}${metric.unit}</text>`;
+      return `<text x="34" y="${y.toFixed(1)}" font-family="Galiner" font-size="22" fill="#5C5448" text-anchor="end">${formatNumber(value, metric.precision)}${metric.unit}</text>`;
     }).join('');
 
     const pointNodes = points.map((point, index) => {
@@ -17483,13 +17489,13 @@ Grow
         ${axis}
         <path d="${GROWTH_BAND_PATH}" fill="#E8E1CF" opacity="0.6"/>
         <path d="${GROWTH_P50_PATH}" stroke="#888" stroke-width="2" stroke-dasharray="6 8" fill="none"/>
-        <text x="590" y="56" font-family="Lenia" font-size="19" fill="#5C5448">P97</text>
-        <text x="590" y="86" font-family="Lenia" font-size="19" fill="#5C5448">P50</text>
-        <text x="590" y="250" font-family="Lenia" font-size="19" fill="#5C5448">P3</text>
+        <text x="590" y="56" font-family="Galiner" font-size="19" fill="#5C5448">P97</text>
+        <text x="590" y="86" font-family="Galiner" font-size="19" fill="#5C5448">P50</text>
+        <text x="590" y="250" font-family="Galiner" font-size="19" fill="#5C5448">P3</text>
         ${childPath ? `<path class="growth-chart-path" d="${childPath}" stroke="#D67742" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>` : ''}
         <line x1="${tooltipX.toFixed(1)}" y1="${selectedPoint.y.toFixed(1)}" x2="${tooltipX.toFixed(1)}" y2="${tooltipY}" stroke="#D67742" stroke-width="1" stroke-dasharray="4 4"/>
         <rect x="${pillX.toFixed(1)}" y="${(tooltipY - 6).toFixed(1)}" width="${pillW.toFixed(1)}" height="${pillH}" rx="15" fill="#D67742"/>
-        <text x="${(pillX + pillW / 2).toFixed(1)}" y="${(tooltipY + 14).toFixed(1)}" font-family="Lenia" font-size="19" fill="white" text-anchor="middle" font-weight="500">${labelText}</text>
+        <text x="${(pillX + pillW / 2).toFixed(1)}" y="${(tooltipY + 14).toFixed(1)}" font-family="Galiner" font-size="19" fill="white" text-anchor="middle" font-weight="500">${labelText}</text>
         ${pointNodes}
       </svg>
     `;
@@ -17557,7 +17563,7 @@ Grow
     }).join('');
 
     const pcNote = ageMonths > growthMetricConfig.head.hideAfterMonths
-      ? '<p style="font-size:11px;color:var(--ink-muted);margin:8px 0 0;font-family:Lenia;">PC · se mide hasta los 36m · canon AEP</p>'
+      ? '<p style="font-size:11px;color:var(--ink-muted);margin:8px 0 0;font-family:Galiner;">PC · se mide hasta los 36m · canon AEP</p>'
       : '';
 
     return `
