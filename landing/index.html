@@ -540,9 +540,11 @@
     }
     .quote-rotator {
       position: relative;
-      height: 6em;
+      /* Altura mayor para acomodar frases más largas + tamaño tipográfico
+         más grande · sigue siendo una sola frase visible (las demás opacity 0). */
+      height: 7.5em;
       margin-bottom: 8px;
-      max-width: 36ch;
+      max-width: 40ch;
     }
     .quote-rotator .q-item {
       position: absolute;
@@ -552,12 +554,13 @@
       opacity: 0;
       transition: opacity 600ms var(--ease-soft);
       /* Quote rotator items · Galiner Light 300 (no italic) · matiz vía
-         weight + ink-soft + comillas reales, sin italic sintético. */
+         weight + ink-soft + comillas reales, sin italic sintético.
+         Tamaño bumped de 16.5px a clamp 18-22 para más presencia editorial. */
       font-family: var(--font-serif);
       font-style: normal;
       font-weight: 300;
-      font-size: 16.5px;
-      line-height: 1.5;
+      font-size: clamp(18px, 1.6vw, 22px);
+      line-height: 1.45;
       color: var(--ink-soft);
     }
     .quote-rotator .q-item.is-active { opacity: 1; }
@@ -1452,7 +1455,7 @@
     @media (max-width: 540px) {
       .libros-grid { grid-template-columns: 1fr; }
       .comite-grid { grid-template-columns: 1fr; }
-      .quote-rotator { height: 7em; }
+      .quote-rotator { height: 9em; }
       .r-book { flex: 0 0 96px; height: 144px; }
       .r-book.is-large { flex: 0 0 140px; height: 196px; }
       .trust-row { grid-template-columns: 1fr; }
@@ -1667,6 +1670,9 @@
             <p class="q-item">"Mañana tengo la ecografía y no he dormido nada."</p>
             <p class="q-item">"Cada cita es una pregunta nueva que olvido cuando llego."</p>
             <p class="q-item">"He visto sangrado. ¿Llamo a urgencias o espero?"</p>
+            <p class="q-item">"Tres semanas con náuseas y nadie me dice si es normal."</p>
+            <p class="q-item">"He subido kilo y medio en siete días. La báscula me asusta."</p>
+            <p class="q-item">"Soñé que no llegaba al parto. Me desperté llorando."</p>
           </div>
           <div class="response">
             <div class="label">Respuesta Grow</div>
@@ -1694,6 +1700,9 @@
             <p class="q-item">"Le doy biberón. Y cada vez que lo digo, alguien opina."</p>
             <p class="q-item">"'Llora por capricho', dicen. Yo solo veo a mi peque."</p>
             <p class="q-item">"Vuelvo al trabajo en seis semanas. No sé cómo voy a poder."</p>
+            <p class="q-item">"Lleva cuatro horas sin pedir teta. ¿Lo despierto o lo dejo?"</p>
+            <p class="q-item">"No siento bajada de leche. Llevo dos días angustiada."</p>
+            <p class="q-item">"Solo duerme encima de mí. Yo no he cerrado los ojos."</p>
           </div>
           <div class="response">
             <div class="label">Respuesta Grow</div>
@@ -1735,6 +1744,9 @@
             <p class="q-item">"No respira igual desde la cena. ¿Espero?"</p>
             <p class="q-item">"Lleva tres días con tos. La saturación, ¿cómo se mide?"</p>
             <p class="q-item">"Está caliente y no tengo termómetro en casa."</p>
+            <p class="q-item">"Le sale un sarpullido nuevo. ¿Espero a mañana?"</p>
+            <p class="q-item">"Le di paracetamol y sigue ardiendo. ¿Cuánto puedo darle?"</p>
+            <p class="q-item">"Lleva diez horas sin orinar. ¿Es deshidratación?"</p>
           </div>
           <div class="response">
             <div class="label">Modo 3 AM · fondo oscuro</div>
@@ -1756,6 +1768,9 @@
             <p class="q-item">"Su prima ya saluda con la mano. El mío no."</p>
             <p class="q-item">"En la guardería dicen que se aisla un poco."</p>
             <p class="q-item">"El pediatra habla de derivar. No sé si entendí bien."</p>
+            <p class="q-item">"Tiene dieciséis meses y aún no anda. Me dicen que espere."</p>
+            <p class="q-item">"No señala lo que quiere. Solo grita y yo adivino."</p>
+            <p class="q-item">"En clase dicen que no busca contacto visual."</p>
           </div>
           <div class="response">
             <div class="label">Respuesta Grow</div>
@@ -1798,6 +1813,9 @@
             <p class="q-item">"Muerde a otros niños. Yo le he visto morder."</p>
             <p class="q-item">"Le cuesta separarse para ir al cole por las mañanas."</p>
             <p class="q-item">"Me grita 'mamá mala' y se me cae el alma al suelo."</p>
+            <p class="q-item">"Tira la comida al suelo cada cena. Estoy agotada."</p>
+            <p class="q-item">"Tiene rabietas de veinte minutos. No sé cómo bajarlas."</p>
+            <p class="q-item">"No me deja salir de la habitación por la noche."</p>
           </div>
           <div class="response">
             <div class="label">Respuesta Grow · conducta</div>
