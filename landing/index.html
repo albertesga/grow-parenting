@@ -11,6 +11,9 @@
     /* ════════════════════════════════════════════════════════════════════
        § 0 · Fonts (Lenia display + Helvena text)
        ════════════════════════════════════════════════════════════════════ */
+    @font-face { font-family: "Galiner"; src: url("assets/fonts/TBJGaliner-Light.ttf") format("truetype"); font-weight: 300; font-display: swap; }
+    @font-face { font-family: "Galiner"; src: url("assets/fonts/TBJGaliner-Regular.ttf") format("truetype"); font-weight: 400; font-display: swap; }
+    @font-face { font-family: "Galiner"; src: url("assets/fonts/TBJGaliner-Bold.ttf") format("truetype"); font-weight: 700; font-display: swap; }
     @font-face { font-family: "Lenia"; src: url("assets/fonts/LeniaSans-Light.ttf") format("truetype"); font-weight: 300; font-display: swap; }
     @font-face { font-family: "Lenia"; src: url("assets/fonts/LeniaSans-Regular.ttf") format("truetype"); font-weight: 400; font-display: swap; }
     @font-face { font-family: "Lenia"; src: url("assets/fonts/LeniaSans-Medium.ttf") format("truetype"); font-weight: 500; font-display: swap; }
@@ -51,7 +54,8 @@
       --module-dark:   #1B1A18;
 
       /* fonts */
-      --font-display: "Lenia", "Helvetica Neue", sans-serif;
+      --font-serif:   "Galiner", "Bodoni Moda", "Playfair Display", Georgia, serif; /* títulos elegantes */
+      --font-display: "Lenia", "Helvetica Neue", sans-serif; /* eyebrows · labels · italics */
       --font-text:    "Helvena", "Inter", sans-serif;
       --font-mono:    "JetBrains Mono", "SF Mono", ui-monospace, monospace;
 
@@ -94,9 +98,11 @@
     img, svg, video { display: block; max-width: 100%; }
     button { font: inherit; cursor: pointer; }
     a { color: inherit; text-decoration: none; }
-    h1, h2, h3, h4, h5, h6 { margin: 0; font-family: var(--font-display); font-weight: 500; }
+    h1, h2, h3, h4, h5, h6 { margin: 0; font-family: var(--font-serif); font-weight: 400; }
     h1, h2 { text-wrap: pretty; }
-    h1 em, h2 em { color: var(--ink-soft); font-style: italic; }
+    /* Galiner no tiene italic · usamos Lenia italic en em para mantener el
+       matiz emocional editorial (color + estilo italic sans contrast). */
+    h1 em, h2 em, h3 em, h4 em, h5 em { color: var(--ink-soft); font-style: italic; font-family: var(--font-display); font-weight: 400; }
     p { margin: 0; }
     ul { margin: 0; padding: 0; list-style: none; }
 
@@ -217,11 +223,11 @@
       min-height: 64vh;
     }
     .hero h1 {
-      font-family: var(--font-display);
-      font-weight: 500;
+      font-family: var(--font-serif);
+      font-weight: 400;
       font-size: clamp(40px, 5.6vw, 68px);
       line-height: 1.02;
-      letter-spacing: -0.022em;
+      letter-spacing: -0.018em;
       max-width: 16ch;
       color: var(--ink);
     }
@@ -537,6 +543,8 @@
     .block:last-child { border-bottom: 0; }
     .block .eyebrow { margin-bottom: 18px; }
     .quote-large {
+      /* Quotes grandes mantienen Lenia italic (Galiner no tiene italic ·
+         las quotes son citas literales que necesitan italic editorial). */
       font-family: var(--font-display);
       font-style: italic;
       font-weight: 400;
@@ -692,6 +700,8 @@
     }
     .r-book .sb-icon svg { width: 100%; height: 100%; stroke: currentColor; fill: none; stroke-width: 1.25; stroke-linecap: round; stroke-linejoin: round; }
     .r-book .sb-ttl {
+      /* Mantenemos Lenia en covers de libros · serif fragile a 15px ·
+         "Libro de" en sans + nombre em italic en Lenia italic. */
       font-family: var(--font-display);
       font-weight: 500;
       font-size: 15px;
@@ -699,7 +709,7 @@
       color: var(--b-ink, var(--ink));
       margin-top: auto;
     }
-    .r-book .sb-ttl em { font-style: italic; font-weight: 500; }
+    .r-book .sb-ttl em { font-style: italic; font-weight: 500; font-family: var(--font-display); }
     .r-book .sb-foot {
       display: flex;
       justify-content: space-between;
@@ -790,11 +800,11 @@
       max-width: 720px;
     }
     .libros-head h2 {
-      font-family: var(--font-display);
-      font-weight: 500;
+      font-family: var(--font-serif);
+      font-weight: 400;
       font-size: clamp(36px, 4.4vw, 54px);
       line-height: 1.05;
-      letter-spacing: -0.018em;
+      letter-spacing: -0.015em;
     }
     .libros-head p {
       font-family: var(--font-text);
@@ -857,10 +867,10 @@
     }
     .libro-card .ico svg { width: 28px; height: 28px; stroke: currentColor; fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
     .libro-card h4 {
-      font-family: var(--font-display);
-      font-weight: 500;
+      font-family: var(--font-serif);
+      font-weight: 400;
       font-size: 24px;
-      letter-spacing: -0.012em;
+      letter-spacing: -0.01em;
       line-height: 1.1;
     }
     .libro-card .age {
@@ -899,11 +909,11 @@
     }
     .threeam .eyebrow { color: var(--gold-base); margin-bottom: 18px; }
     .threeam h2 {
-      font-family: var(--font-display);
-      font-weight: 500;
+      font-family: var(--font-serif);
+      font-weight: 400;
       font-size: clamp(36px, 4.4vw, 52px);
       line-height: 1.05;
-      letter-spacing: -0.018em;
+      letter-spacing: -0.015em;
       color: var(--paper);
       margin-bottom: 22px;
     }
@@ -961,8 +971,8 @@
       margin-bottom: 22px;
     }
     .mockup .mp-title {
-      font-family: var(--font-display);
-      font-weight: 500;
+      font-family: var(--font-serif);
+      font-weight: 400;
       font-size: 24px;
       color: var(--paper);
       margin-bottom: 8px;
@@ -1006,11 +1016,11 @@
     .comite-head { max-width: 720px; margin-bottom: 56px; }
     .comite-head .eyebrow { margin-bottom: 14px; }
     .comite-head h2 {
-      font-family: var(--font-display);
-      font-weight: 500;
+      font-family: var(--font-serif);
+      font-weight: 400;
       font-size: clamp(34px, 4.2vw, 50px);
       line-height: 1.05;
-      letter-spacing: -0.018em;
+      letter-spacing: -0.015em;
       margin-bottom: 14px;
     }
     .comite-head p {
@@ -1056,10 +1066,10 @@
       color: var(--ink-muted);
     }
     .comite-card h5 {
-      font-family: var(--font-display);
-      font-weight: 500;
-      font-size: 19px;
-      letter-spacing: -0.008em;
+      font-family: var(--font-serif);
+      font-weight: 400;
+      font-size: 20px;
+      letter-spacing: -0.005em;
     }
     .comite-card .center {
       font-family: var(--font-text);
@@ -1116,11 +1126,11 @@
     .pricing-head { text-align: center; margin-bottom: 56px; max-width: 640px; margin-left: auto; margin-right: auto; }
     .pricing-head .eyebrow { margin-bottom: 14px; }
     .pricing-head h2 {
-      font-family: var(--font-display);
-      font-weight: 500;
+      font-family: var(--font-serif);
+      font-weight: 400;
       font-size: clamp(34px, 4.2vw, 48px);
       line-height: 1.05;
-      letter-spacing: -0.018em;
+      letter-spacing: -0.015em;
       margin-bottom: 14px;
     }
     .pricing-head p {
@@ -1178,10 +1188,10 @@
       color: var(--ink-muted);
     }
     .plan h3 {
-      font-family: var(--font-display);
-      font-weight: 500;
-      font-size: 22px;
-      letter-spacing: -0.008em;
+      font-family: var(--font-serif);
+      font-weight: 400;
+      font-size: 24px;
+      letter-spacing: -0.005em;
     }
     .plan .price {
       display: flex;
