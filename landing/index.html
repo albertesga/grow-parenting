@@ -330,28 +330,8 @@
       50%      { transform: translate(-1%, 2%) scale(0.98); }
       75%      { transform: translate(1%, 1%) scale(1.02); }
     }
-    .trust-head {
-      display: flex;
-      align-items: baseline;
-      justify-content: space-between;
-      gap: 18px;
-      margin-bottom: 22px;
-      flex-wrap: wrap;
-    }
-    .trust-head .ttl {
-      font-family: var(--font-display);
-      font-weight: 500;
-      font-size: 18px;
-      color: var(--ink);
-    }
-    .trust-head .ttl em { color: var(--ink-soft); font-style: normal; font-weight: 300; }
-    .trust-head .src {
-      font-family: var(--font-mono);
-      font-size: 10.5px;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--ink-muted);
-    }
+    /* .trust-head eliminado · ya no mostramos título "Lo que respalda cada palabra"
+       ni source "Comité clínico Grow · 2026" · los chips se sostienen solos. */
     .trust-row {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
@@ -1616,7 +1596,7 @@
       <div>
         <h1>Tú cuidas a tu hij@.<br><em>Grow te cuida a ti.</em></h1>
         <p class="manifesto-sub">Sin manual, sin juicios, sin urgencia.</p>
-        <p class="micro">De la concepción al 3<sup>er</sup> cumpleaños · ES · web y móvil</p>
+        <p class="micro">De la concepción al 3<sup>er</sup> cumpleaños</p>
         <div class="hero-ctas">
           <a class="btn-primary btn-arrow" href="#pricing">Apúntate desde €1,99/mes</a>
           <a class="btn-ghost" href="#narrative">Ver cómo funciona</a>
@@ -1629,11 +1609,7 @@
     </div>
 
     <!-- TRUST STRIP -->
-    <div class="trust" role="region" aria-label="Lo que respalda Grow">
-      <div class="trust-head">
-        <span class="ttl">Lo que respalda <em>cada palabra.</em></span>
-        <span class="src">Comité clínico Grow · 2026</span>
-      </div>
+    <div class="trust" role="region" aria-label="Respaldo clínico de Grow">
       <div class="trust-row" role="list">
         <div class="trust-chip t-coral" role="listitem" title="Calendario vacunal, hitos y revisiones revisadas por comité clínico Grow.">
           <span class="medal"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-shield"/></svg></span>
