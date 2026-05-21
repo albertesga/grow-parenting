@@ -9,17 +9,14 @@
 
   <style>
     /* ════════════════════════════════════════════════════════════════════
-       § 0 · Fonts (Lenia display + Helvena text)
+       § 0 · Fonts (Galiner serif display + Helvena text)
        ════════════════════════════════════════════════════════════════════ */
+    /* Galiner · serif elegante única para títulos, eyebrows y emphasis.
+       Sin italic en el corte · usamos font-weight 300 (Light) + color ink-soft
+       para crear contraste editorial cuando antes había italic. */
     @font-face { font-family: "Galiner"; src: url("assets/fonts/TBJGaliner-Light.ttf") format("truetype"); font-weight: 300; font-display: swap; }
     @font-face { font-family: "Galiner"; src: url("assets/fonts/TBJGaliner-Regular.ttf") format("truetype"); font-weight: 400; font-display: swap; }
     @font-face { font-family: "Galiner"; src: url("assets/fonts/TBJGaliner-Bold.ttf") format("truetype"); font-weight: 700; font-display: swap; }
-    @font-face { font-family: "Lenia"; src: url("assets/fonts/LeniaSans-Light.ttf") format("truetype"); font-weight: 300; font-display: swap; }
-    @font-face { font-family: "Lenia"; src: url("assets/fonts/LeniaSans-Regular.ttf") format("truetype"); font-weight: 400; font-display: swap; }
-    @font-face { font-family: "Lenia"; src: url("assets/fonts/LeniaSans-Medium.ttf") format("truetype"); font-weight: 500; font-display: swap; }
-    @font-face { font-family: "Lenia"; src: url("assets/fonts/LeniaSans-Bold.ttf") format("truetype"); font-weight: 700; font-display: swap; }
-    @font-face { font-family: "Lenia"; src: url("assets/fonts/LeniaSans-Italic.ttf") format("truetype"); font-weight: 400; font-style: italic; font-display: swap; }
-    @font-face { font-family: "Lenia"; src: url("assets/fonts/LeniaSans-MediumItalic.ttf") format("truetype"); font-weight: 500; font-style: italic; font-display: swap; }
     @font-face { font-family: "Helvena"; src: url("assets/fonts/Helvena-Extralight.ttf") format("truetype"); font-weight: 200; font-display: swap; }
     @font-face { font-family: "Helvena"; src: url("assets/fonts/Helvena-Light.ttf") format("truetype"); font-weight: 300; font-display: swap; }
     @font-face { font-family: "Helvena"; src: url("assets/fonts/Helvena-Regular.ttf") format("truetype"); font-weight: 400; font-display: swap; }
@@ -53,9 +50,9 @@
       --violet-subtle: #E6DFE9;                            --violet-strong: #6A5A7E;
       --module-dark:   #1B1A18;
 
-      /* fonts */
-      --font-serif:   "Galiner", "Bodoni Moda", "Playfair Display", Georgia, serif; /* títulos elegantes */
-      --font-display: "Lenia", "Helvetica Neue", sans-serif; /* eyebrows · labels · italics */
+      /* fonts · Galiner serif único para display · Helvena para body · mono para meta */
+      --font-serif:   "Galiner", "Bodoni Moda", "Playfair Display", Georgia, serif;
+      --font-display: "Galiner", "Bodoni Moda", "Playfair Display", Georgia, serif; /* alias retrocompat */
       --font-text:    "Helvena", "Inter", sans-serif;
       --font-mono:    "JetBrains Mono", "SF Mono", ui-monospace, monospace;
 
@@ -100,9 +97,9 @@
     a { color: inherit; text-decoration: none; }
     h1, h2, h3, h4, h5, h6 { margin: 0; font-family: var(--font-serif); font-weight: 400; }
     h1, h2 { text-wrap: pretty; }
-    /* Galiner no tiene italic · usamos Lenia italic en em para mantener el
-       matiz emocional editorial (color + estilo italic sans contrast). */
-    h1 em, h2 em, h3 em, h4 em, h5 em { color: var(--ink-soft); font-style: italic; font-family: var(--font-display); font-weight: 400; }
+    /* Galiner no tiene italic · matiz emocional via weight 300 Light + color ink-soft.
+       Mantiene el feel editorial sin recurrir a italic sintético (que renderiza mal). */
+    h1 em, h2 em, h3 em, h4 em, h5 em { color: var(--ink-soft); font-style: normal; font-weight: 300; }
     p { margin: 0; }
     ul { margin: 0; padding: 0; list-style: none; }
 
@@ -232,8 +229,10 @@
       color: var(--ink);
     }
     .manifesto-sub {
-      font-family: var(--font-text);
-      font-style: italic;
+      /* Manifesto sub · Galiner Light 300 (no italic) · matiz editorial vía
+         weight + ink-soft, sin recurrir a italic sintético sobre Helvena. */
+      font-family: var(--font-serif);
+      font-style: normal;
       font-weight: 300;
       font-size: clamp(17px, 1.45vw, 20px);
       line-height: 1.4;
@@ -345,7 +344,7 @@
       font-size: 18px;
       color: var(--ink);
     }
-    .trust-head .ttl em { color: var(--ink-soft); font-style: italic; }
+    .trust-head .ttl em { color: var(--ink-soft); font-style: normal; font-weight: 300; }
     .trust-head .src {
       font-family: var(--font-mono);
       font-size: 10.5px;
@@ -543,11 +542,12 @@
     .block:last-child { border-bottom: 0; }
     .block .eyebrow { margin-bottom: 18px; }
     .quote-large {
-      /* Quotes grandes mantienen Lenia italic (Galiner no tiene italic ·
-         las quotes son citas literales que necesitan italic editorial). */
-      font-family: var(--font-display);
-      font-style: italic;
-      font-weight: 400;
+      /* Quotes editoriales · Galiner Light 300 (no italic) · letter-spacing
+         más cerrado para sensación de cita real. Comillas "..." cargan
+         el peso emocional sin necesidad de italic. */
+      font-family: var(--font-serif);
+      font-style: normal;
+      font-weight: 300;
       font-size: clamp(28px, 3.4vw, 40px);
       line-height: 1.28;
       letter-spacing: -0.008em;
@@ -569,8 +569,10 @@
       right: 0;
       opacity: 0;
       transition: opacity 600ms var(--ease-soft);
-      font-family: var(--font-text);
-      font-style: italic;
+      /* Quote rotator items · Galiner Light 300 (no italic) · matiz vía
+         weight + ink-soft + comillas reales, sin italic sintético. */
+      font-family: var(--font-serif);
+      font-style: normal;
       font-weight: 300;
       font-size: 16.5px;
       line-height: 1.5;
@@ -700,16 +702,16 @@
     }
     .r-book .sb-icon svg { width: 100%; height: 100%; stroke: currentColor; fill: none; stroke-width: 1.25; stroke-linecap: round; stroke-linejoin: round; }
     .r-book .sb-ttl {
-      /* Mantenemos Lenia en covers de libros · serif fragile a 15px ·
-         "Libro de" en sans + nombre em italic en Lenia italic. */
-      font-family: var(--font-display);
-      font-weight: 500;
+      /* Book covers · Galiner Regular · "Libro de" en regular + nombre em
+         en Light 300 para crear contraste editorial vintage book sin italic. */
+      font-family: var(--font-serif);
+      font-weight: 400;
       font-size: 15px;
       line-height: 1.1;
       color: var(--b-ink, var(--ink));
       margin-top: auto;
     }
-    .r-book .sb-ttl em { font-style: italic; font-weight: 500; font-family: var(--font-display); }
+    .r-book .sb-ttl em { font-style: normal; font-weight: 300; }
     .r-book .sb-foot {
       display: flex;
       justify-content: space-between;
@@ -978,8 +980,9 @@
       margin-bottom: 8px;
     }
     .mockup .mp-sub {
-      font-family: var(--font-display);
-      font-style: italic;
+      font-family: var(--font-serif);
+      font-style: normal;
+      font-weight: 300;
       font-size: 14px;
       color: rgba(232,225,207,0.62);
       margin-bottom: 22px;
@@ -999,8 +1002,9 @@
     }
     .mp-chip.primary { background: var(--gold-base); color: var(--ink-warm); border-color: var(--gold-base); font-weight: 500; }
     .mockup .mp-foot {
-      font-family: var(--font-display);
-      font-style: italic;
+      font-family: var(--font-serif);
+      font-style: normal;
+      font-weight: 300;
       font-size: 11.5px;
       color: rgba(232,225,207,0.42);
       margin-top: 18px;
@@ -1270,8 +1274,9 @@
     .trial {
       max-width: 60ch;
       margin: 56px auto 32px;
-      font-family: var(--font-display);
-      font-style: italic;
+      font-family: var(--font-serif);
+      font-style: normal;
+      font-weight: 300;
       font-size: 17px;
       color: var(--ink-soft);
       text-align: center;
@@ -1345,8 +1350,11 @@
       margin-bottom: 14px;
     }
     .site-foot .brand-block .tagline {
-      font-family: var(--font-display);
-      font-style: italic;
+      /* Footer tagline · Galiner Light 300 (no italic) · matiz editorial
+         vía weight + opacidad, sin recurrir a italic sintético. */
+      font-family: var(--font-serif);
+      font-style: normal;
+      font-weight: 300;
       font-size: 15px;
       max-width: 30ch;
       color: rgba(250,247,240,0.86);
