@@ -1650,6 +1650,10 @@
     }
 
     /* Página derecha · key info del libro (visible al rotar el cover) */
+    /* Página derecha del libro abierto · ahora contiene un <img>
+       (.bs-page-img) en vez de title-card textual. El img hace fill 100%
+       con object-fit cover · el degradient + inset shadow del page-right
+       siguen visibles en los bordes y unifican el feel del open book. */
     .bs-page-right {
       position: absolute;
       top: 0;
@@ -1663,63 +1667,13 @@
       box-shadow:
         inset 6px 0 14px -8px rgba(80,60,30,0.20),
         0 18px 30px -18px rgba(80,60,30,0.22);
-      padding: 20px 22px 18px 30px;
       overflow: hidden;
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
     }
-    .bs-page-right::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background-image:
-        repeating-linear-gradient(90deg, rgba(80,60,30,0.018) 0 1px, transparent 1px 4px);
-      pointer-events: none;
-      opacity: 0.5;
-    }
-    .bs-page-meta {
-      font-family: var(--font-mono);
-      font-size: 9.5px;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: var(--ink-muted);
-    }
-    .bs-page-h {
-      font-family: var(--font-serif);
-      font-weight: 400;
-      font-size: clamp(22px, 2.6vw, 30px);
-      letter-spacing: -0.015em;
-      line-height: 1.0;
-      color: var(--ink);
-      margin: 4px 0 0;
-    }
-    .bs-page-h em { color: var(--ink-soft); font-style: normal; font-weight: 300; }
-    .bs-page-sub {
-      font-family: var(--font-serif);
-      font-weight: 300;
-      font-size: 13.5px;
-      line-height: 1.4;
-      color: var(--ink-soft);
-      margin: 2px 0 0;
-      max-width: 24ch;
-    }
-    .bs-page-badges {
-      margin-top: auto;
-      display: flex;
-      gap: 6px;
-      flex-wrap: wrap;
-    }
-    .bs-page-badges span {
-      font-family: var(--font-mono);
-      font-size: 9px;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--ink-soft);
-      padding: 4px 8px;
-      border: 1px solid var(--line);
-      border-radius: 999px;
-      background: rgba(255,255,255,0.5);
+    .bs-page-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
     }
 
     /* Cover frame · maneja translation + scale del FLIP (sin el rotateY).
@@ -1853,7 +1807,10 @@
       border-radius: 0 3px 3px 0;
       pointer-events: none;
     }
-    .bs-cover-back .bs-back-meta {
+    /* Cover-back · contenido editorial · eyebrow + frase + sub.
+       Sustituye el endpaper con quote del approach anterior · ahora
+       comunica el valor del libro en lugar de un quote contemplativo. */
+    .bs-cover-back .bs-back-eyebrow {
       font-family: var(--font-mono);
       font-size: clamp(8px, 0.85vw, 10px);
       letter-spacing: 0.22em;
@@ -1861,16 +1818,17 @@
       color: inherit;
       opacity: 0.7;
     }
-    .bs-cover-back .bs-back-quote {
+    .bs-cover-back .bs-back-h {
       font-family: var(--font-serif);
       font-weight: 300;
-      font-size: clamp(13px, 1.4vw, 17px);
-      line-height: 1.35;
+      font-size: clamp(15px, 1.5vw, 22px);
+      line-height: 1.25;
+      letter-spacing: -0.008em;
       color: inherit;
-      max-width: 20ch;
+      max-width: 22ch;
       margin: 0;
     }
-    .bs-cover-back .bs-back-sig {
+    .bs-cover-back .bs-back-sub {
       font-family: var(--font-mono);
       font-size: clamp(7.5px, 0.8vw, 9.5px);
       letter-spacing: 0.2em;
@@ -1918,66 +1876,83 @@
     }
     .bs-section p strong { color: var(--ink); font-weight: 600; }
 
-    .bs-toc {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-      display: grid;
-      gap: 0;
+    /* Feature cards · "Lo que el libro hace por ti" · grid 2×3 desktop /
+       1×6 mobile · icono coral redondo + título serif + copy breve. */
+    .bs-features-section {
+      margin-bottom: 28px;
     }
-    .bs-toc li {
-      display: grid;
-      grid-template-columns: 36px 1fr auto;
-      align-items: baseline;
-      gap: 14px;
-      padding: 12px 0;
-      border-bottom: 1px dashed rgba(80, 60, 30, 0.14);
-      font-family: var(--font-text);
-      font-size: 15px;
-      color: var(--ink);
-    }
-    .bs-toc li:last-child { border-bottom: 0; }
-    .bs-toc li .num {
+    .bs-features-section .bs-eyebrow {
+      display: block;
       font-family: var(--font-mono);
       font-size: 10.5px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
       color: var(--ink-muted);
-      letter-spacing: 0.14em;
+      margin-bottom: 14px;
     }
-    .bs-toc li .wk {
-      font-family: var(--font-mono);
-      font-size: 10px;
-      color: var(--ink-faint);
-      letter-spacing: 0.12em;
+    .bs-features {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
     }
-
-    .bs-related {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-    }
-    .bs-relchip {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 9px 14px;
-      border: 1px solid var(--line);
-      border-radius: 999px;
-      font-family: var(--font-text);
-      font-size: 13.5px;
-      color: var(--ink);
+    .bs-feature {
+      padding: 18px 16px 16px;
       background: var(--paper-soft);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
       transition: border-color var(--duration-base) var(--ease-sheet), background var(--duration-base) var(--ease-sheet);
     }
-    .bs-relchip:hover { border-color: var(--ink); background: var(--paper); }
-    .bs-relchip .dot {
-      width: 8px;
-      height: 8px;
+    .bs-feature:hover { border-color: var(--line-strong); background: var(--paper); }
+    .bs-feature .icn {
+      width: 36px;
+      height: 36px;
       border-radius: 50%;
-      background: var(--coral-base);
+      background: var(--coral-subtle);
+      color: var(--coral-strong);
+      display: grid;
+      place-items: center;
+      margin-bottom: 2px;
     }
-    .bs-relchip .dot.blush { background: var(--blush-base); }
-    .bs-relchip .dot.mint  { background: var(--mint-base); }
-    .bs-relchip .dot.gold  { background: var(--gold-base); }
+    .bs-feature .icn svg {
+      width: 18px;
+      height: 18px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 1.6;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    .bs-feature h5 {
+      font-family: var(--font-serif);
+      font-weight: 400;
+      font-size: 16.5px;
+      letter-spacing: -0.005em;
+      line-height: 1.15;
+      margin: 0;
+      color: var(--ink);
+    }
+    .bs-feature p {
+      font-family: var(--font-text);
+      font-size: 13.5px;
+      line-height: 1.45;
+      color: var(--ink-soft);
+      margin: 0;
+    }
+
+    .bs-aval {
+      padding: 18px 0 4px;
+      margin: 8px 0 24px;
+      border-top: 1px solid var(--line);
+      font-family: var(--font-mono);
+      font-size: 10.5px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--ink-muted);
+      text-align: center;
+    }
 
     .bs-actions {
       display: flex;
@@ -2027,8 +2002,7 @@
       .bs-header { padding: 22px 22px 24px; }
       .bs-book { max-width: 100%; }
       .bs-body { padding: 24px 22px 36px; }
-      .bs-toc li { grid-template-columns: 30px 1fr; }
-      .bs-toc li .wk { display: none; }
+      .bs-features { grid-template-columns: 1fr; }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -2765,13 +2739,10 @@
       <header class="bs-header">
         <button class="bs-close" id="bs-close" type="button" aria-label="Cerrar libro" data-bs-close>×</button>
         <div class="bs-book" id="bs-book">
+          <!-- Lado derecho del libro abierto · imagen del libro embarazo
+               (placeholder · user pasará otra · al recibirla swap del src). -->
           <div class="bs-page-right" aria-hidden="true">
-            <div class="bs-page-meta">Libro · 01</div>
-            <h3 class="bs-page-h">Embarazo</h3>
-            <p class="bs-page-sub">Sem 4 — 40. Una sola voz basada en evidencia.</p>
-            <div class="bs-page-badges">
-              <span>SEGO</span><span>NICE</span><span>AEPED</span>
-            </div>
+            <img class="bs-page-img" src="assets/avatar-coral.png" alt="Libro de embarazo">
           </div>
           <div class="bs-cover-frame" id="bs-cover-frame" aria-hidden="true">
             <div class="bs-cover-spinner" id="bs-cover-spinner">
@@ -2780,46 +2751,55 @@
                 <h4 class="bs-ttl">Libro de<br><em>embarazo</em></h4>
                 <div class="bs-foot"><span>Libro · 01</span><span>SEGO</span></div>
               </div>
+              <!-- Lado izquierdo del libro abierto · frase clave de qué
+                   resuelve el libro · visible al completar la rotación. -->
               <div class="bs-cover-back">
-                <div class="bs-back-meta">Libro · 01 · Embarazo</div>
-                <p class="bs-back-quote">"Si algo merece atención, te decimos qué mirar y cuándo llamar."</p>
-                <div class="bs-back-sig">SEGO · NICE · AEPED</div>
+                <div class="bs-back-eyebrow">Lo que resuelve</div>
+                <h3 class="bs-back-h">"Cuando las opiniones se contradicen, la evidencia te lleva a casa."</h3>
+                <div class="bs-back-sub">Sem 4 → primeras horas · SEGO · NICE · AEPED</div>
               </div>
             </div>
           </div>
         </div>
       </header>
       <div class="bs-body" id="bs-body">
-        <section class="bs-section">
-          <span class="bs-eyebrow">Resumen</span>
-          <p>De la primera ecografía a las primeras horas con tu bebé. <strong>SEGO, NICE y canon AEPED</strong> en una sola voz · sin urgencia, sin manual, sin opiniones contradictorias.</p>
-        </section>
-
-        <section class="bs-section">
-          <span class="bs-eyebrow">9 capítulos · 40 semanas</span>
-          <ul class="bs-toc">
-            <li><span class="num">01</span> Tu cuerpo · semana a semana <span class="wk">Sem 4 — 40</span></li>
-            <li><span class="num">02</span> Citas y pruebas · qué preguntar <span class="wk">Sem 8 — 36</span></li>
-            <li><span class="num">03</span> Signos de alarma · qué mirar <span class="wk">Todo</span></li>
-            <li><span class="num">04</span> Movimientos fetales <span class="wk">Sem 20 — 40</span></li>
-            <li><span class="num">05</span> Bienestar · sueño · alimentación <span class="wk">Todo</span></li>
-            <li><span class="num">06</span> Preparación al parto <span class="wk">Sem 28 — 40</span></li>
-            <li><span class="num">07</span> Plan de parto · qué incluir <span class="wk">Sem 32 — 38</span></li>
-            <li><span class="num">08</span> Diario gestacional <span class="wk">Todo</span></li>
-            <li><span class="num">09</span> Las primeras horas <span class="wk">Sem 40</span></li>
-          </ul>
-        </section>
-
-        <section class="bs-section">
-          <span class="bs-eyebrow">Libros relacionados</span>
-          <div class="bs-related">
-            <a class="bs-relchip" href="#libros"><span class="dot"></span> Preparación al parto</a>
-            <a class="bs-relchip" href="#libros"><span class="dot"></span> Recuerdos</a>
-            <a class="bs-relchip" href="#libros"><span class="dot blush"></span> Lactancia</a>
-            <a class="bs-relchip" href="#libros"><span class="dot mint"></span> Sueño</a>
-            <a class="bs-relchip" href="#libros"><span class="dot gold"></span> Vacunas</a>
+        <section class="bs-features-section">
+          <span class="bs-eyebrow">Lo que el libro hace por ti</span>
+          <div class="bs-features">
+            <article class="bs-feature">
+              <span class="icn" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#b-pulse"/></svg></span>
+              <h5>Patadas</h5>
+              <p>Count the Kicks · 10 movimientos en 2 horas desde la semana 28.</p>
+            </article>
+            <article class="bs-feature">
+              <span class="icn" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#b-thermo"/></svg></span>
+              <h5>Tensión</h5>
+              <p>PPG via cámara del móvil · orientativo · alarma cuando sube.</p>
+            </article>
+            <article class="bs-feature">
+              <span class="icn" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#b-bookmark"/></svg></span>
+              <h5>Plan de parto</h5>
+              <p>Editable · imprimible · checklist hospital incluido.</p>
+            </article>
+            <article class="bs-feature">
+              <span class="icn" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#b-heart"/></svg></span>
+              <h5>Síntomas</h5>
+              <p>Qué mirar · cuándo llamar · qué decir al equipo.</p>
+            </article>
+            <article class="bs-feature">
+              <span class="icn" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#i-cal"/></svg></span>
+              <h5>Citas y pruebas</h5>
+              <p>Ecografías · glucosa · Tdpa · qué preguntar en cada una.</p>
+            </article>
+            <article class="bs-feature">
+              <span class="icn" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#b-syringe"/></svg></span>
+              <h5>APILAM</h5>
+              <p>Medicación segura durante el embarazo · base actualizada.</p>
+            </article>
           </div>
         </section>
+
+        <div class="bs-aval">Avalado por · SEGO · NICE · AEPED · Comité clínico Grow</div>
 
         <section class="bs-actions">
           <a class="btn-pri" href="#pricing">Apúntate desde €1,99/mes →</a>
