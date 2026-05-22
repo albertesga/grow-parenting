@@ -1634,14 +1634,30 @@
       max-height: 92vh;
       transform: translate(-50%, 100%);
       background: var(--paper);
-      border-radius: 28px 28px 0 0;
+      /* Radius más grande · 28→40px · la curva tiene más pixels y los
+         stairsteps del antialiasing se vuelven invisibles a simple vista.
+         La esquina ahora se siente esculpida en vez de "pegada".  */
+      border-radius: 40px 40px 0 0;
+      /* Shadow refactored · una sola capa muy difusa (no dos pegadas con
+         spread negativo, que es lo que creaba la línea "extra pixel" en
+         los corners). Spread positivo + blur amplio = halo orgánico que
+         sigue la curva del radius limpiamente.
+         Inset highlight superior (rgba blanco 0.6) da el "lip" sculpted
+         · efecto de gravedad como en cards de iOS / paper folds. */
       box-shadow:
-        0 -24px 60px -20px rgba(80, 60, 30, 0.42),
-        0 -8px 24px -12px rgba(80, 60, 30, 0.22);
+        0 -16px 48px -8px rgba(80, 60, 30, 0.22),
+        0 -2px 12px -2px rgba(80, 60, 30, 0.10),
+        inset 0 1px 0 rgba(255, 255, 255, 0.78);
       display: flex;
       flex-direction: column;
       perspective: 1800px;
       perspective-origin: 50% 30%;
+      /* will-change + GPU compositing · evita subpixel jitter en el corner
+         curve durante el transform translate. */
+      will-change: transform;
+      transform-style: preserve-3d;
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
       /* Phase 2 timing · sube 100-490ms (390ms con delay 100ms) · spring soft */
       transition: transform 390ms cubic-bezier(0.32, 1.18, 0.42, 1.0) 100ms;
     }
@@ -1669,6 +1685,16 @@
       flex-shrink: 0;
       background: linear-gradient(180deg, var(--paper) 0%, var(--paper-soft) 100%);
       border-bottom: 1px solid var(--line);
+      /* Hereda el radius del sheet en las top-corners · evita que el bg
+         del header asome por las rounded corners y se vea como "extra
+         pixels" rectangulares contra el backdrop. */
+      border-radius: 40px 40px 0 0;
+    }
+    /* Handle también debe respetar el clipping de la corner curve.
+       Lo apartamos del borde para que su 4px line no asome sub-pixel. */
+    .bs-handle {
+      position: relative;
+      z-index: 1;
     }
 
     /* Close button · esquina superior derecha del header.
@@ -2274,7 +2300,8 @@
     body.bs-locked { overflow: hidden; }
 
     @media (max-width: 720px) {
-      .bs-sheet { width: 100vw; height: 92vh; max-height: 92vh; border-radius: 22px 22px 0 0; }
+      .bs-sheet { width: 100vw; height: 92vh; max-height: 92vh; border-radius: 32px 32px 0 0; }
+      .bs-header { border-radius: 32px 32px 0 0; }
       .bs-header { padding: 22px 22px 24px; }
       .bs-book { max-width: 100%; }
       .bs-body { padding: 24px 22px 36px; }
