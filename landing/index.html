@@ -1672,8 +1672,14 @@
     .bs-page-img {
       width: 100%;
       height: 100%;
-      object-fit: cover;
+      /* contain · muestra el personaje completo sin recortar · el espacio
+         vacío arriba/abajo (PNG con alpha) lo rellena el cream gradient
+         del .bs-page-right padre. */
+      object-fit: contain;
+      object-position: center 58%;
       display: block;
+      padding: 12px 8px;
+      box-sizing: border-box;
     }
 
     /* Cover frame · maneja translation + scale del FLIP (sin el rotateY).
@@ -2739,10 +2745,11 @@
       <header class="bs-header">
         <button class="bs-close" id="bs-close" type="button" aria-label="Cerrar libro" data-bs-close>×</button>
         <div class="bs-book" id="bs-book">
-          <!-- Lado derecho del libro abierto · imagen del libro embarazo
-               (placeholder · user pasará otra · al recibirla swap del src). -->
+          <!-- Lado derecho del libro abierto · imagen del libro embarazo.
+               PNG con alpha real · el cream gradient del .bs-page-right se
+               transparenta a través del fondo de la imagen. -->
           <div class="bs-page-right" aria-hidden="true">
-            <img class="bs-page-img" src="assets/avatar-coral.png" alt="Libro de embarazo">
+            <img class="bs-page-img" src="assets/embarazo-hero.png" alt="Libro de embarazo · personaje coral con luz gestacional">
           </div>
           <div class="bs-cover-frame" id="bs-cover-frame" aria-hidden="true">
             <div class="bs-cover-spinner" id="bs-cover-spinner">
