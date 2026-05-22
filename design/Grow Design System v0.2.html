@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Grow · Design System v0.2</title>
 <style>
-  /* ─── Fonts · Galiner serif display + Juturu text ───────────────
+  /* ─── Fonts · Galiner serif display + Grift text ───────────────
      Canon Nov 2026 · Galiner (TBJ) sustituye al serif anterior como display único.
      Galiner ships con 3 cortes (Light 300 / Regular 400 / Bold 700) · sin italic.
      Para matiz editorial donde antes había italic · usar font-weight 300
@@ -17,15 +17,25 @@
   @font-face { font-family: "Galiner"; src: url("assets/fonts/TBJGaliner-Regular.ttf") format("truetype"); font-weight: 500; font-display: swap; }
   @font-face { font-family: "Galiner"; src: url("assets/fonts/TBJGaliner-Bold.ttf") format("truetype"); font-weight: 600; font-display: swap; }
   @font-face { font-family: "Galiner"; src: url("assets/fonts/TBJGaliner-Bold.ttf") format("truetype"); font-weight: 700; font-display: swap; }
-  @font-face { font-family: "Juturu"; src: url("assets/fonts/Juturu-Thin.ttf") format("truetype"); font-weight: 100; font-display: swap; }
-  @font-face { font-family: "Juturu"; src: url("assets/fonts/Juturu-Extralight.ttf") format("truetype"); font-weight: 200; font-display: swap; }
-  @font-face { font-family: "Juturu"; src: url("assets/fonts/Juturu-Light.ttf") format("truetype"); font-weight: 300; font-display: swap; }
-  @font-face { font-family: "Juturu"; src: url("assets/fonts/Juturu-Regular.ttf") format("truetype"); font-weight: 400; font-display: swap; }
-  @font-face { font-family: "Juturu"; src: url("assets/fonts/Juturu-Medium.ttf") format("truetype"); font-weight: 500; font-display: swap; }
-  @font-face { font-family: "Juturu"; src: url("assets/fonts/Juturu-Semibold.ttf") format("truetype"); font-weight: 600; font-display: swap; }
-  @font-face { font-family: "Juturu"; src: url("assets/fonts/Juturu-Bold.ttf") format("truetype"); font-weight: 700; font-display: swap; }
-  @font-face { font-family: "Juturu"; src: url("assets/fonts/Juturu-Extrabold.ttf") format("truetype"); font-weight: 800; font-display: swap; }
-  @font-face { font-family: "Juturu"; src: url("assets/fonts/Juturu-Black.ttf") format("truetype"); font-weight: 900; font-display: swap; }
+  /* Grift · 9 weights × normal + italic = 18 cortes · italic real disponible. */
+  @font-face { font-family: "Grift"; src: url("assets/fonts/Grift-Thin.ttf") format("truetype"); font-weight: 100; font-style: normal; font-display: swap; }
+  @font-face { font-family: "Grift"; src: url("assets/fonts/Grift-ThinItalic.ttf") format("truetype"); font-weight: 100; font-style: italic; font-display: swap; }
+  @font-face { font-family: "Grift"; src: url("assets/fonts/Grift-ExtraLight.ttf") format("truetype"); font-weight: 200; font-style: normal; font-display: swap; }
+  @font-face { font-family: "Grift"; src: url("assets/fonts/Grift-ExtraLightItalic.ttf") format("truetype"); font-weight: 200; font-style: italic; font-display: swap; }
+  @font-face { font-family: "Grift"; src: url("assets/fonts/Grift-Light.ttf") format("truetype"); font-weight: 300; font-style: normal; font-display: swap; }
+  @font-face { font-family: "Grift"; src: url("assets/fonts/Grift-LightItalic.ttf") format("truetype"); font-weight: 300; font-style: italic; font-display: swap; }
+  @font-face { font-family: "Grift"; src: url("assets/fonts/Grift-Regular.ttf") format("truetype"); font-weight: 400; font-style: normal; font-display: swap; }
+  @font-face { font-family: "Grift"; src: url("assets/fonts/Grift-Italic.ttf") format("truetype"); font-weight: 400; font-style: italic; font-display: swap; }
+  @font-face { font-family: "Grift"; src: url("assets/fonts/Grift-Medium.ttf") format("truetype"); font-weight: 500; font-style: normal; font-display: swap; }
+  @font-face { font-family: "Grift"; src: url("assets/fonts/Grift-MediumItalic.ttf") format("truetype"); font-weight: 500; font-style: italic; font-display: swap; }
+  @font-face { font-family: "Grift"; src: url("assets/fonts/Grift-SemiBold.ttf") format("truetype"); font-weight: 600; font-style: normal; font-display: swap; }
+  @font-face { font-family: "Grift"; src: url("assets/fonts/Grift-SemiBoldItalic.ttf") format("truetype"); font-weight: 600; font-style: italic; font-display: swap; }
+  @font-face { font-family: "Grift"; src: url("assets/fonts/Grift-Bold.ttf") format("truetype"); font-weight: 700; font-style: normal; font-display: swap; }
+  @font-face { font-family: "Grift"; src: url("assets/fonts/Grift-BoldItalic.ttf") format("truetype"); font-weight: 700; font-style: italic; font-display: swap; }
+  @font-face { font-family: "Grift"; src: url("assets/fonts/Grift-ExtraBold.ttf") format("truetype"); font-weight: 800; font-style: normal; font-display: swap; }
+  @font-face { font-family: "Grift"; src: url("assets/fonts/Grift-ExtraBoldItalic.ttf") format("truetype"); font-weight: 800; font-style: italic; font-display: swap; }
+  @font-face { font-family: "Grift"; src: url("assets/fonts/Grift-Black.ttf") format("truetype"); font-weight: 900; font-style: normal; font-display: swap; }
+  @font-face { font-family: "Grift"; src: url("assets/fonts/Grift-BlackItalic.ttf") format("truetype"); font-weight: 900; font-style: italic; font-display: swap; }
 
   :root {
     /* paper / ink */
@@ -177,7 +187,7 @@
   :focus-visible { outline: 2px solid var(--coral-base); outline-offset: 2px; border-radius: inherit; }
   html, body { margin: 0; }
   body {
-    font-family: "Juturu", "Helvetica Neue", system-ui, sans-serif;
+    font-family: "Grift", "Helvetica Neue", system-ui, sans-serif;
     background: var(--paper);
     color: var(--ink);
     font-size: var(--fs-body-lg);
@@ -266,7 +276,7 @@
   .btn {
     display: inline-flex; align-items: center; justify-content: center;
     gap: 8px; min-height: 44px; padding: 0 22px;
-    font-family: "Juturu"; font-size: var(--fs-body); font-weight: 500;
+    font-family: "Grift"; font-size: var(--fs-body); font-weight: 500;
     border-radius: 999px; border: none; cursor: pointer;
     transition: transform 220ms var(--ease), background 220ms, color 220ms, filter 220ms;
     letter-spacing: -0.005em; white-space: nowrap;
@@ -847,7 +857,7 @@
     display: flex; align-items: center;
     gap: 6px;
     margin-top: 6px;
-    font-family: 'Juturu';
+    font-family: 'Grift';
     font-size: var(--fs-body-sm);
     color: var(--ink-soft);
     line-height: 1.4;
@@ -1185,7 +1195,7 @@
   .top-header h2 { font-size: var(--fs-h1); }
   .top-header h3 { font-size: var(--fs-h2); }
   .top-header .sub {
-    font-family: "Juturu";
+    font-family: "Grift";
     font-size: var(--fs-body-sm);
     color: var(--ink-muted);
     line-height: 1.4;
@@ -1219,7 +1229,7 @@
   }
   .callout p {
     margin: 0;
-    font-family: "Juturu";
+    font-family: "Grift";
     font-size: var(--fs-body-sm);
     color: var(--ink);
     line-height: 1.55;
@@ -1565,7 +1575,7 @@
   }
   .tool-card .tc-sub {
     display: block; margin-top: 2px;
-    font-family: "Juturu";
+    font-family: "Grift";
     font-size: var(--fs-meta);
     color: var(--ink-muted); line-height: 1.4;
   }
@@ -2635,7 +2645,7 @@
       <div class="spec-row col">
         <ul style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--ink-soft); line-height: 1.7; padding-left: 18px; margin: 0">
           <li><strong>.callout</strong> · default · paper-soft bg, radius-md, padding 18/20, text-align <em>left</em></li>
-          <li><strong>p</strong> · Juturu fs-body-sm, ink, line-height 1.55, max 64ch (no italic by default)</li>
+          <li><strong>p</strong> · Grift fs-body-sm, ink, line-height 1.55, max 64ch (no italic by default)</li>
           <li><strong>strong</strong> · ink colour, weight 600, normal style — used as inline heading "Sin alarmismo."</li>
           <li><strong>.coral / .mint / .gold / .blush</strong> · changes bg to the *-subtle tone, strong stays ink</li>
           <li><strong>.with-rule</strong> · adds short tone-coloured 28×1.5 rule at top, centers, italicises body, strong becomes tone-coloured</li>
@@ -3571,7 +3581,7 @@
         <p style="font-size:13px;color:var(--ink-soft);max-width:64ch;line-height:1.55;margin:0">
           Card-button para navegar entre sub-vistas dentro de un libro (ej. Carnet, Tracker, Educación).
           2 columnas en grid · min-height 104 · radius-lg · padding 14 · text-align left.
-          Title Galiner17 · sub Juturu 11.5 ink-muted.
+          Title Galiner17 · sub Grift 11.5 ink-muted.
         </p>
       </div>
       <div class="spec-row" style="padding: 12px 0">
@@ -4433,7 +4443,7 @@
           <li><strong>.next</strong> · gold-subtle bg + 1.5px gold-base inset ring, ink dot, "próxima · " prefix in #6E5A2A weight 500</li>
           <li><strong>.future</strong> · paper bg + 1px line border, hollow line-strong dot</li>
           <li><strong>.body strong</strong> · Galiner500 fs-body-lg (age label · "2 meses")</li>
-          <li><strong>.body p</strong> · Juturu fs-body-sm ink, vaccines listed with " · " separators</li>
+          <li><strong>.body p</strong> · Grift fs-body-sm ink, vaccines listed with " · " separators</li>
           <li><strong>.body .new-badge</strong> · "Nuevo 2026" tag for newly-added doses</li>
           <li><strong>.meta</strong> · Galiner fs-caption ink-muted, right-aligned, top-aligned for multi-line bodies</li>
         </ul>
@@ -4741,7 +4751,7 @@
     .ds-post-page-body {
       padding: 18px 22px;
       color: var(--ink);
-      font-family: 'Juturu';
+      font-family: 'Grift';
       font-size: 14px; line-height: 1.55;
     }
     .ds-post-page-body p { margin: 0 0 14px; }
@@ -4769,7 +4779,7 @@
     }
     .ds-post-page-cite p {
       margin: 0;
-      font-family: 'Juturu';
+      font-family: 'Grift';
       font-size: 12px; color: var(--ink-soft);
       line-height: 1.5;
     }
@@ -4809,7 +4819,7 @@
           <li><strong>illustration</strong> · 92px ancho · gradient tonal + icono 36px (emoji o SVG)</li>
           <li><strong>tag</strong> · pill 10px Galiner0.12em uppercase · tonal mint/coral/gold/blush</li>
           <li><strong>h4</strong> · Galiner500 · 15px · line-height 1.2</li>
-          <li><strong>p excerpt</strong> · Juturu · 12px · ink-soft · max 2-3 líneas</li>
+          <li><strong>p excerpt</strong> · Grift · 12px · ink-soft · max 2-3 líneas</li>
           <li><strong>meta</strong> · Galiner10.5px · "{X min} · {Fuente · año}"</li>
           <li><strong>hover</strong> · translateY(-1px) + border ink-soft</li>
         </ul>
@@ -4852,7 +4862,7 @@
       <div class="spec-row col" style="padding: 12px 0">
         <p style="font-size:13px;color:var(--ink-soft);max-width:64ch;line-height:1.55;margin:0">
           Drill-down desde <code>.post-card</code>. Header tonal + body con
-          tipografía editorial Juturu 14px + cite footer con border-left ink-muted.
+          tipografía editorial Grift 14px + cite footer con border-left ink-muted.
           Sticky disclaimer canónico al pie: <em>"Aquí no diagnosticamos · aquí estamos"</em>.
         </p>
         <ul style="font-size:12px;color:var(--ink-soft);line-height:1.65;padding-left:18px;margin:8px 0 0">
@@ -4860,7 +4870,7 @@
           <li><strong>tag</strong> · pill paper 10px Galiner· arriba del h2</li>
           <li><strong>h2</strong> · Galiner500 · 26px · letter-spacing -0.015em</li>
           <li><strong>meta</strong> · 11px Galiner· "{X min} · {Fuente · año}"</li>
-          <li><strong>body</strong> · Juturu 14px line-height 1.55 · h3 18px secciones internas</li>
+          <li><strong>body</strong> · Grift 14px line-height 1.55 · h3 18px secciones internas</li>
           <li><strong>cite</strong> · paper-soft · border-left 3px ink-muted · uppercase strong + p caption</li>
         </ul>
       </div>
@@ -5289,7 +5299,7 @@
         <p style="font-size: var(--fs-body-sm); color: var(--ink-soft); max-width: 60ch; line-height: 1.55; margin: 0">
           Cada item: <code>.checklist-icon</code> (mint disc 22px con SVG
           <code>#i-check</code> canónico) + <code>.checklist-body</code>
-          (Galiner title + Juturu body). Alias legacy <code>.setup-list</code>
+          (Galiner title + Grift body). Alias legacy <code>.setup-list</code>
           / <code>.setup-check</code> / <code>.setup-body</code> mapean al
           mismo CSS para no romper markup existente.
         </p>
@@ -5604,7 +5614,7 @@
           <li><strong>.tool-card</strong> · grid 44 / 1fr / auto · gap 12 · radius 14 · paper-soft bg · border line</li>
           <li><strong>.tc-icon</strong> · 44×44 round · paper bg · emoji 22px · tonal-bg según variante</li>
           <li><strong>.tc-title</strong> · Galiner500 · fs-body · letter-spacing -0.005</li>
-          <li><strong>.tc-sub</strong> · Juturu · fs-meta · ink-muted</li>
+          <li><strong>.tc-sub</strong> · Grift · fs-meta · ink-muted</li>
           <li><strong>.tc-action</strong> · Galiner fs-meta · ink-soft · "→" auto-añadido</li>
           <li>Hover · brightness 0.99 · border ink-faint · translateY -1px</li>
           <li>Dark mode (.chat-3am .tool-card) · bg rgba(255,255,255,0.04) · text night-fg</li>
@@ -5693,7 +5703,7 @@
           <li><strong>.safety-frame</strong> · paper bg · radius xl · padding 22</li>
           <li><strong>.sf-steps</strong> · ol list-style none · 4 li paper-soft cards radius 14</li>
           <li><strong>.sf-num</strong> · 28×28 round · ink bg · paper text · Galiner500</li>
-          <li><strong>.sf-canon-foot</strong> · mint-subtle bg · italic Juturu fs-body-sm · text-center</li>
+          <li><strong>.sf-canon-foot</strong> · mint-subtle bg · italic Grift fs-body-sm · text-center</li>
           <li><strong>.sf-actions</strong> · 3 botones · coral (relay) + soft (mental 024) + ghost (cerrar)</li>
         </ul>
       </div>
@@ -5710,7 +5720,7 @@
       </div>
       <div class="spec-row col" style="padding: 6px 0 18px">
         <div class="spec-label">Copy canon</div>
-        <ul style="font-family: 'Juturu', serif; font-size: 13px; color: var(--ink-soft); line-height: 1.65; padding-left: 18px; margin: 0; max-width: 60ch; font-style: italic">
+        <ul style="font-family: 'Grift', serif; font-size: 13px; color: var(--ink-soft); line-height: 1.65; padding-left: 18px; margin: 0; max-width: 60ch; font-style: italic">
           <li>"🤲 No estás sola."</li>
           <li>"Hay personas entrenadas para escucharte ahora mismo."</li>
           <li>"Es gratis. Es 24h. No registran. Solo escuchan."</li>
@@ -5867,7 +5877,7 @@
       font-size: 38px; line-height: 1; color: var(--ink);
       margin-top: 20px; letter-spacing: -0.02em;
     }
-    .ds-health-emergencia-meta { font-family: 'Juturu'; color: var(--ink-soft);
+    .ds-health-emergencia-meta { font-family: 'Grift'; color: var(--ink-soft);
       font-size: 13px; margin: 6px 0 18px;
     }
     .ds-health-emergencia-blood { background: var(--paper); border: 1.5px solid var(--ink);
@@ -5886,7 +5896,7 @@
     .ds-health-emergencia-allergy strong { font-family: 'Galiner'; font-weight: 500;
       font-size: 16px; color: #7E4438;
     }
-    .ds-health-emergencia-allergy span { font-family: 'Juturu'; font-size: 13px; color: var(--ink-soft); }
+    .ds-health-emergencia-allergy span { font-family: 'Grift'; font-size: 13px; color: var(--ink-soft); }
 
     .ds-health-action { display: inline-flex; align-items: center; justify-content: center;
       min-height: 36px; padding: 0 16px; border-radius: 999px;
@@ -6096,7 +6106,7 @@
     .ds-profile-row {
       display: flex; align-items: center; gap: 12px;
       padding: 12px 10px; border-radius: 10px;
-      font-family: 'Juturu';
+      font-family: 'Grift';
     }
     .ds-profile-row-label { flex: 1; color: var(--ink-soft); font-size: 14px; }
     .ds-profile-row-value {
@@ -6128,7 +6138,7 @@
     .ds-profile-toggle {
       display: flex; align-items: center; gap: 12px;
       padding: 12px 10px; border-radius: 10px;
-      font-family: 'Juturu';
+      font-family: 'Grift';
     }
     .ds-profile-switch {
       flex-shrink: 0; width: 36px; height: 20px;
@@ -6401,7 +6411,7 @@
       letter-spacing: -0.01em; color: var(--ink);
     }
     .ds-mc-h3-sub {
-      font-family: 'Juturu'; font-weight: 400;
+      font-family: 'Grift'; font-weight: 400;
       font-size: 13px; color: var(--ink-soft);
       letter-spacing: 0; margin-left: 4px;
     }
@@ -6449,7 +6459,7 @@
       font-size: 14px; line-height: 1.25; color: var(--ink);
     }
     .ds-mc-row-body span {
-      font-family: 'Juturu'; font-size: 12px;
+      font-family: 'Grift'; font-size: 12px;
       color: var(--ink-soft); line-height: 1.4;
     }
     .ds-mc-row.pending strong { color: var(--ink-soft); }
@@ -6485,7 +6495,7 @@
     }
     .ds-mc-cta-body { flex: 1; display: flex; flex-direction: column; gap: 2px; }
     .ds-mc-cta-body strong { font-family: 'Galiner'; font-weight: 500; font-size: 15px; color: var(--ink); }
-    .ds-mc-cta-body span { font-family: 'Juturu'; font-size: 12px; color: var(--ink-soft); }
+    .ds-mc-cta-body span { font-family: 'Grift'; font-size: 12px; color: var(--ink-soft); }
     .ds-mc-cta-arrow { flex-shrink: 0; font-family: 'Galiner'; font-size: 18px; color: var(--ink-muted); }
   </style>
   <section class="section">
@@ -6585,7 +6595,7 @@
         <p style="font-size:13px;color:var(--ink-soft);max-width:64ch;line-height:1.55;margin:0">
           CTAs card-style (no pills planas) para acciones principales · canon
           ADR-0012. Icon tonal 44×44 + body (strong Galiner500 15px + subtitle
-          Juturu 12px informativo) + arrow → derecha. <code>.primary</code>
+          Grift 12px informativo) + arrow → derecha. <code>.primary</code>
           tonal mint con gradient + gold radial.
         </p>
       </div>
@@ -6874,7 +6884,7 @@
       border-radius: 18px;
       padding: 16px 18px;
       max-width: 380px;
-      font-family: 'Juturu'; font-size: 14px; line-height: 1.45;
+      font-family: 'Grift'; font-size: 14px; line-height: 1.45;
       color: #5A4970;
     }
     .ds-col-purple-link {
@@ -6951,7 +6961,7 @@
       border: 1px solid var(--line);
     }
     .ds-col-ep-summary {
-      font-family: 'Juturu'; font-size: 13px; color: var(--ink-soft); line-height: 1.45;
+      font-family: 'Grift'; font-size: 13px; color: var(--ink-soft); line-height: 1.45;
     }
     .ds-col-timer-block {
       max-width: 380px;
@@ -6969,7 +6979,7 @@
       margin-bottom: 8px;
     }
     .ds-col-timer-sub {
-      font-family: 'Juturu'; font-style: italic;
+      font-family: 'Grift'; font-style: italic;
       color: var(--ink-soft); font-size: 13px;
     }
     .ds-col-intensity {

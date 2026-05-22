@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Grow - Prototipo clickable</title>
 <style>
-  /* Fonts · Galiner serif display + Juturu text · canon Nov 2026.
+  /* Fonts · Galiner serif display + Grift text · canon Nov 2026.
      Galiner ships con 3 cortes (Light 300 / Regular 400 / Bold 700) · sin italic.
      Pesos legacy 500/600 mapeados explícitamente (500→Regular, 600→Bold)
      para evitar synthesis del browser. */
@@ -14,15 +14,25 @@
   @font-face { font-family: "Galiner"; src: url("design/assets/fonts/TBJGaliner-Regular.ttf") format("truetype"); font-weight: 500; font-display: swap; }
   @font-face { font-family: "Galiner"; src: url("design/assets/fonts/TBJGaliner-Bold.ttf") format("truetype"); font-weight: 600; font-display: swap; }
   @font-face { font-family: "Galiner"; src: url("design/assets/fonts/TBJGaliner-Bold.ttf") format("truetype"); font-weight: 700; font-display: swap; }
-  @font-face { font-family: "Juturu"; src: url("design/assets/fonts/Juturu-Thin.ttf") format("truetype"); font-weight: 100; font-display: swap; }
-  @font-face { font-family: "Juturu"; src: url("design/assets/fonts/Juturu-Extralight.ttf") format("truetype"); font-weight: 200; font-display: swap; }
-  @font-face { font-family: "Juturu"; src: url("design/assets/fonts/Juturu-Light.ttf") format("truetype"); font-weight: 300; font-display: swap; }
-  @font-face { font-family: "Juturu"; src: url("design/assets/fonts/Juturu-Regular.ttf") format("truetype"); font-weight: 400; font-display: swap; }
-  @font-face { font-family: "Juturu"; src: url("design/assets/fonts/Juturu-Medium.ttf") format("truetype"); font-weight: 500; font-display: swap; }
-  @font-face { font-family: "Juturu"; src: url("design/assets/fonts/Juturu-Semibold.ttf") format("truetype"); font-weight: 600; font-display: swap; }
-  @font-face { font-family: "Juturu"; src: url("design/assets/fonts/Juturu-Bold.ttf") format("truetype"); font-weight: 700; font-display: swap; }
-  @font-face { font-family: "Juturu"; src: url("design/assets/fonts/Juturu-Extrabold.ttf") format("truetype"); font-weight: 800; font-display: swap; }
-  @font-face { font-family: "Juturu"; src: url("design/assets/fonts/Juturu-Black.ttf") format("truetype"); font-weight: 900; font-display: swap; }
+  /* Grift · 9 weights × normal + italic = 18 cortes · italic real disponible. */
+  @font-face { font-family: "Grift"; src: url("design/assets/fonts/Grift-Thin.ttf") format("truetype"); font-weight: 100; font-style: normal; font-display: swap; }
+  @font-face { font-family: "Grift"; src: url("design/assets/fonts/Grift-ThinItalic.ttf") format("truetype"); font-weight: 100; font-style: italic; font-display: swap; }
+  @font-face { font-family: "Grift"; src: url("design/assets/fonts/Grift-ExtraLight.ttf") format("truetype"); font-weight: 200; font-style: normal; font-display: swap; }
+  @font-face { font-family: "Grift"; src: url("design/assets/fonts/Grift-ExtraLightItalic.ttf") format("truetype"); font-weight: 200; font-style: italic; font-display: swap; }
+  @font-face { font-family: "Grift"; src: url("design/assets/fonts/Grift-Light.ttf") format("truetype"); font-weight: 300; font-style: normal; font-display: swap; }
+  @font-face { font-family: "Grift"; src: url("design/assets/fonts/Grift-LightItalic.ttf") format("truetype"); font-weight: 300; font-style: italic; font-display: swap; }
+  @font-face { font-family: "Grift"; src: url("design/assets/fonts/Grift-Regular.ttf") format("truetype"); font-weight: 400; font-style: normal; font-display: swap; }
+  @font-face { font-family: "Grift"; src: url("design/assets/fonts/Grift-Italic.ttf") format("truetype"); font-weight: 400; font-style: italic; font-display: swap; }
+  @font-face { font-family: "Grift"; src: url("design/assets/fonts/Grift-Medium.ttf") format("truetype"); font-weight: 500; font-style: normal; font-display: swap; }
+  @font-face { font-family: "Grift"; src: url("design/assets/fonts/Grift-MediumItalic.ttf") format("truetype"); font-weight: 500; font-style: italic; font-display: swap; }
+  @font-face { font-family: "Grift"; src: url("design/assets/fonts/Grift-SemiBold.ttf") format("truetype"); font-weight: 600; font-style: normal; font-display: swap; }
+  @font-face { font-family: "Grift"; src: url("design/assets/fonts/Grift-SemiBoldItalic.ttf") format("truetype"); font-weight: 600; font-style: italic; font-display: swap; }
+  @font-face { font-family: "Grift"; src: url("design/assets/fonts/Grift-Bold.ttf") format("truetype"); font-weight: 700; font-style: normal; font-display: swap; }
+  @font-face { font-family: "Grift"; src: url("design/assets/fonts/Grift-BoldItalic.ttf") format("truetype"); font-weight: 700; font-style: italic; font-display: swap; }
+  @font-face { font-family: "Grift"; src: url("design/assets/fonts/Grift-ExtraBold.ttf") format("truetype"); font-weight: 800; font-style: normal; font-display: swap; }
+  @font-face { font-family: "Grift"; src: url("design/assets/fonts/Grift-ExtraBoldItalic.ttf") format("truetype"); font-weight: 800; font-style: italic; font-display: swap; }
+  @font-face { font-family: "Grift"; src: url("design/assets/fonts/Grift-Black.ttf") format("truetype"); font-weight: 900; font-style: normal; font-display: swap; }
+  @font-face { font-family: "Grift"; src: url("design/assets/fonts/Grift-BlackItalic.ttf") format("truetype"); font-weight: 900; font-style: italic; font-display: swap; }
 
   :root {
     --paper: #FAF7F0;
@@ -193,7 +203,7 @@
   }
   html, body { min-height: 100%; margin: 0; }
   body {
-    font-family: "Juturu", "Helvetica Neue", sans-serif;
+    font-family: "Grift", "Helvetica Neue", sans-serif;
     color: var(--ink);
     background:
       radial-gradient(circle at 15% 8%, rgba(242,165,122,0.22), transparent 26%),
@@ -850,7 +860,7 @@
   /* Ready card · onboarding success screen.
      Layout: hero row (text + avatar) + body copy + section divider +
      setup-list checklist. Uses DS canon checklist pattern (mint-circle
-     check + Galiner title + Juturu body). */
+     check + Galiner title + Grift body). */
   .ready-card {
     position: relative;
     border-radius: var(--radius-xl);
@@ -887,7 +897,7 @@
     filter: drop-shadow(0 4px 8px rgba(45,38,30,0.10));
   }
   .ready-body {
-    font-family: "Juturu";
+    font-family: "Grift";
     font-size: var(--fs-body);
     color: var(--ink-soft);
     line-height: 1.55;
@@ -906,7 +916,7 @@
     margin: 0 0 14px;
   }
 
-  /* Setup checklist · DS canon (mint-circle marker + Galiner + Juturu) */
+  /* Setup checklist · DS canon (mint-circle marker + Galiner + Grift) */
   .setup-list,
   .checklist {
     list-style: none; padding: 0; margin: 0;
@@ -948,7 +958,7 @@
   .setup-body p,
   .checklist-body p {
     margin: 2px 0 0;
-    font-family: "Juturu";
+    font-family: "Grift";
     font-size: var(--fs-body-sm);
     color: var(--ink-soft);
     line-height: 1.45;
@@ -1637,7 +1647,7 @@
     flex: 0 0 auto;
   }
   .month-section-head [data-calendar-current-title] { color: var(--ink); font-family: "Galiner"; font-size: var(--fs-body-sm); }
-  .month-section-head [data-calendar-counter] { color: var(--ink-muted); font-family: "Juturu"; font-size: var(--fs-caption); }
+  .month-section-head [data-calendar-counter] { color: var(--ink-muted); font-family: "Grift"; font-size: var(--fs-caption); }
 
   .month-carousel-shell {
     position: relative;
@@ -2786,7 +2796,7 @@
   }
   .callout p {
     margin: 0;
-    font-family: "Juturu";
+    font-family: "Grift";
     font-size: var(--fs-body-sm);
     color: var(--ink);
     line-height: 1.55;
@@ -2898,11 +2908,11 @@
     outline: 2px solid var(--coral-base); outline-offset: 0; border-color: var(--coral-base);
   }
   .input-field .hint {
-    font-family: "Juturu"; font-size: var(--fs-meta);
+    font-family: "Grift"; font-size: var(--fs-meta);
     color: var(--ink-muted); margin-top: 2px;
   }
   .input-hint {
-    font-family: "Juturu"; font-size: var(--fs-body-sm);
+    font-family: "Grift"; font-size: var(--fs-body-sm);
     color: var(--ink-muted);
     margin: 6px 2px 0;
     line-height: 1.4;
@@ -3254,7 +3264,7 @@
     border-color: var(--coral-base);
   }
   .measure-input-wrap input[type="date"] {
-    font-family: "Juturu";
+    font-family: "Grift";
     font-size: var(--fs-body-lg);
     font-weight: 500;
   }
@@ -3308,7 +3318,7 @@
 
   .milestone-book {
     color: var(--ink);
-    font-family: "Juturu", sans-serif;
+    font-family: "Grift", sans-serif;
   }
   .milestone-book .top-header {
     margin-bottom: 14px;
@@ -5561,7 +5571,7 @@
     cursor: pointer;
     transition: background 150ms var(--ease-standard);
     width: 100%;
-    font-family: 'Juturu';
+    font-family: 'Grift';
   }
   .profile-row:not(.static):hover { background: var(--paper-soft); }
   .profile-row.static { cursor: default; }
@@ -5630,7 +5640,7 @@
     text-align: left;
     cursor: pointer;
     width: 100%;
-    font-family: 'Juturu';
+    font-family: 'Grift';
   }
   .profile-toggle:hover { background: var(--paper-soft); }
   .profile-switch {
@@ -6191,7 +6201,7 @@
     width: 100%;
     text-align: left;
     cursor: pointer;
-    font-family: 'Juturu';
+    font-family: 'Grift';
   }
   .health-row:not(.static):hover { background: var(--paper-soft); }
   .health-row.static { cursor: default; }
@@ -6321,7 +6331,7 @@
     width: 100%;
     text-align: left;
     cursor: pointer;
-    font-family: 'Juturu';
+    font-family: 'Grift';
   }
   .health-edu-row:hover { background: var(--paper-soft); }
   .health-edu-row + .health-edu-row { border-top: 1px solid var(--line); border-radius: 0; }
@@ -6380,7 +6390,7 @@
     letter-spacing: -0.02em;
   }
   .health-emergencia-meta {
-    font-family: 'Juturu';
+    font-family: 'Grift';
     color: var(--ink-soft);
     font-size: var(--fs-body-sm);
     margin: 6px 0 22px;
@@ -6443,7 +6453,7 @@
     color: #7E4438;
   }
   .health-emergencia-allergy span {
-    font-family: 'Juturu';
+    font-family: 'Grift';
     font-size: var(--fs-body-sm);
     color: var(--ink-soft);
   }
@@ -8773,7 +8783,7 @@
   .top-header h2 { font-size: var(--fs-h1); }
   .top-header h3 { font-size: var(--fs-h2); }
   .top-header .sub {
-    font-family: "Juturu"; font-size: var(--fs-body-sm);
+    font-family: "Grift"; font-size: var(--fs-body-sm);
     color: var(--ink-muted); line-height: 1.4;
     margin: 4px 0 0; max-width: 42ch;
   }
@@ -8873,7 +8883,7 @@
     color: var(--ink);
   }
   .post-gallery-h3-sub {
-    font-family: 'Juturu';
+    font-family: 'Grift';
     font-weight: 400;
     font-size: 13px;
     color: var(--ink-soft);
@@ -9064,7 +9074,7 @@
   .post-page-body {
     padding: 18px 22px;
     color: var(--ink);
-    font-family: 'Juturu';
+    font-family: 'Grift';
     font-size: var(--fs-body-sm);
     line-height: 1.55;
   }
@@ -9095,7 +9105,7 @@
   }
   .post-page-cite p {
     margin: 0;
-    font-family: 'Juturu';
+    font-family: 'Grift';
     font-size: var(--fs-caption);
     color: var(--ink-soft);
     line-height: 1.5;
@@ -9115,7 +9125,7 @@
     text-align: left;
     cursor: pointer;
     width: 100%;
-    font-family: 'Juturu';
+    font-family: 'Grift';
   }
   .milestone-row + .milestone-row,
   .milestone-toggle + .milestone-toggle,
@@ -9206,7 +9216,7 @@
     color: var(--ink);
   }
   .milestone-carnet-h3-sub {
-    font-family: 'Juturu';
+    font-family: 'Grift';
     font-weight: 400;
     font-size: 13px;
     color: var(--ink-soft);
@@ -9295,7 +9305,7 @@
     color: var(--ink);
   }
   .milestone-carnet-row-body span {
-    font-family: 'Juturu';
+    font-family: 'Grift';
     font-size: var(--fs-caption);
     color: var(--ink-soft);
     line-height: 1.4;
@@ -9375,7 +9385,7 @@
     line-height: 1.2;
   }
   .milestone-carnet-cta-body span {
-    font-family: 'Juturu';
+    font-family: 'Grift';
     font-size: var(--fs-caption);
     color: var(--ink-soft);
     line-height: 1.35;
@@ -9603,7 +9613,7 @@
   }
   .callout p {
     margin: 0;
-    font-family: "Juturu"; font-size: var(--fs-body-sm);
+    font-family: "Grift"; font-size: var(--fs-body-sm);
     color: var(--ink); line-height: 1.55;
     letter-spacing: -0.005em; max-width: 64ch;
   }
@@ -9712,7 +9722,7 @@
     display: flex; align-items: center;
     gap: 6px;
     margin-top: 6px;
-    font-family: "Juturu";
+    font-family: "Grift";
     font-size: var(--fs-body-sm);
     color: var(--ink-soft);
     line-height: 1.4;
@@ -9905,7 +9915,7 @@
     max-width: 78%;
     border-radius: 18px;
     padding: 10px 14px;
-    font-family: "Juturu";
+    font-family: "Grift";
     font-size: var(--fs-body-sm);
     line-height: 1.5;
     color: var(--ink);
@@ -9994,7 +10004,7 @@
     border-radius: var(--radius-pill);
     background: var(--paper-soft);
     padding: 11px 16px;
-    font-family: "Juturu"; font-size: var(--fs-body-sm);
+    font-family: "Grift"; font-size: var(--fs-body-sm);
     color: var(--ink); outline: 0;
     transition: border-color 150ms var(--ease);
   }
@@ -10054,7 +10064,7 @@
     margin: 0 0 8px;
   }
   .chat-3am-header p {
-    font-family: "Juturu"; font-size: var(--fs-body-sm);
+    font-family: "Grift"; font-size: var(--fs-body-sm);
     color: #B7B0A4; line-height: 1.5;
     margin: 0; max-width: 32ch;
   }
@@ -10086,7 +10096,7 @@
   .chat-3am-option .sub {
     display: block;
     margin-top: 4px;
-    font-family: "Juturu";
+    font-family: "Grift";
     font-size: var(--fs-meta);
     color: #B7B0A4;
     font-weight: 400;
@@ -10191,7 +10201,7 @@
   .triage-option .sub {
     display: block;
     margin-top: 3px;
-    font-family: "Juturu";
+    font-family: "Grift";
     font-size: var(--fs-meta);
     color: var(--ink-muted);
     font-weight: 400;
@@ -10248,7 +10258,7 @@
   }
   .triage-result p {
     margin: 0;
-    font-family: "Juturu"; font-size: var(--fs-body-sm);
+    font-family: "Grift"; font-size: var(--fs-body-sm);
     color: var(--ink-soft);
     line-height: 1.5;
   }
@@ -10265,7 +10275,7 @@
     margin-top: 4px;
   }
   .triage-canon {
-    font-family: "Juturu"; font-style: italic;
+    font-family: "Grift"; font-style: italic;
     font-size: var(--fs-body-sm);
     color: var(--ink-soft);
     line-height: 1.5;
@@ -10323,7 +10333,7 @@
   .tool-card .tc-sub {
     display: block;
     margin-top: 2px;
-    font-family: "Juturu";
+    font-family: "Grift";
     font-size: var(--fs-meta);
     color: var(--ink-muted);
     line-height: 1.4;
@@ -10416,7 +10426,7 @@
     border: 1px solid var(--coral-base);
     color: var(--ink);
     display: flex; align-items: center; gap: 12px;
-    font-family: "Juturu"; font-size: var(--fs-body-sm);
+    font-family: "Grift"; font-size: var(--fs-body-sm);
     line-height: 1.45;
   }
   .chat-night-banner .moon {
@@ -10497,7 +10507,7 @@
     color: var(--ink);
   }
   .safety-frame .sf-intro {
-    font-family: "Juturu";
+    font-family: "Grift";
     font-size: var(--fs-body-sm);
     color: var(--ink-soft);
     line-height: 1.5;
@@ -10544,7 +10554,7 @@
   }
   .sf-steps .sf-body p {
     margin: 4px 0 0;
-    font-family: "Juturu";
+    font-family: "Grift";
     font-size: var(--fs-body-sm);
     color: var(--ink-soft);
     line-height: 1.45;
@@ -10554,7 +10564,7 @@
     border: 1px solid rgba(143,174,133,0.32);
     border-radius: 14px;
     padding: 14px 16px;
-    font-family: "Juturu"; font-style: italic;
+    font-family: "Grift"; font-style: italic;
     font-size: var(--fs-body-sm);
     color: #2F4029;
     line-height: 1.5;
@@ -10603,14 +10613,14 @@
     color: var(--ink);
   }
   .mental-health-card .mh-intro {
-    font-family: "Juturu";
+    font-family: "Grift";
     font-size: var(--fs-body);
     color: var(--ink);
     line-height: 1.55;
     margin: 0;
   }
   .mental-health-card .mh-sub {
-    font-family: "Juturu";
+    font-family: "Grift";
     font-size: var(--fs-body-sm);
     color: var(--ink-soft);
     line-height: 1.5;
@@ -10705,7 +10715,7 @@
     border: 1px solid var(--line);
     border-radius: var(--radius-lg);
     padding: 12px 16px;
-    font-family: "Juturu";
+    font-family: "Grift";
     font-size: var(--fs-body-sm);
     color: var(--ink);
     cursor: pointer;
@@ -10725,7 +10735,7 @@
     margin-top: 4px;
   }
   .epds-canon {
-    font-family: "Juturu"; font-style: italic;
+    font-family: "Grift"; font-style: italic;
     font-size: var(--fs-body-sm);
     color: var(--ink-soft);
     text-align: center;
@@ -10762,7 +10772,7 @@
   }
   .epds-result p {
     margin: 0;
-    font-family: "Juturu";
+    font-family: "Grift";
     font-size: var(--fs-body-sm);
     color: var(--ink-soft);
     line-height: 1.5;
@@ -10795,7 +10805,7 @@
     color: var(--ink);
   }
   .relay-sheet p {
-    font-family: "Juturu";
+    font-family: "Grift";
     font-size: var(--fs-body-sm);
     color: var(--ink-soft);
     line-height: 1.5;
@@ -10808,7 +10818,7 @@
     background: var(--paper-soft);
     padding: 12px 14px;
     font: inherit;
-    font-family: "Juturu";
+    font-family: "Grift";
     font-size: var(--fs-body-sm);
     color: var(--ink);
     outline: 0;
@@ -10874,7 +10884,7 @@
     color: var(--ink);
   }
   .chat3am-close-sheet p {
-    font-family: "Juturu";
+    font-family: "Grift";
     font-size: var(--fs-body-sm);
     color: var(--ink-soft);
     line-height: 1.5;
@@ -11014,7 +11024,7 @@
     border: 1px solid rgba(242,165,122,0.30);
     border-radius: 14px;
     color: #E6E2DC;
-    font-family: "Juturu"; font-size: var(--fs-body-sm);
+    font-family: "Grift"; font-size: var(--fs-body-sm);
     line-height: 1.45;
     display: flex; align-items: center; gap: 10px;
   }
@@ -13349,7 +13359,7 @@
       <div class="note-card">
         <div class="note-item"><strong>Click paths</strong><p>Registro lleva a onboarding. Onboarding termina en Hoy. Cards y nav conectan Hoy, Calendario y Log.</p></div>
         <div class="note-item"><strong>Scope</strong><p>Solo un archivo HTML. CSS y JavaScript van inline; los assets salen de `design/assets`.</p></div>
-        <div class="note-item"><strong>Canon visual</strong><p>Tipografías Galiner/Juturu, papel crema, cards suaves, avatar mint para crianza y tratamiento gold para vacunas.</p></div>
+        <div class="note-item"><strong>Canon visual</strong><p>Tipografías Galiner/Grift, papel crema, cards suaves, avatar mint para crianza y tratamiento gold para vacunas.</p></div>
       </div>
     </aside>
   </main>

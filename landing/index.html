@@ -9,7 +9,7 @@
 
   <style>
     /* ════════════════════════════════════════════════════════════════════
-       § 0 · Fonts (Galiner serif display + Juturu text)
+       § 0 · Fonts (Galiner serif display + Grift text)
        ════════════════════════════════════════════════════════════════════ */
     /* Galiner · serif elegante única para títulos, eyebrows y emphasis.
        Sin italic en el corte · usamos font-weight 300 (Light) + color ink-soft
@@ -17,15 +17,27 @@
     @font-face { font-family: "Galiner"; src: url("assets/fonts/TBJGaliner-Light.ttf") format("truetype"); font-weight: 300; font-display: swap; }
     @font-face { font-family: "Galiner"; src: url("assets/fonts/TBJGaliner-Regular.ttf") format("truetype"); font-weight: 400; font-display: swap; }
     @font-face { font-family: "Galiner"; src: url("assets/fonts/TBJGaliner-Bold.ttf") format("truetype"); font-weight: 700; font-display: swap; }
-    @font-face { font-family: "Juturu"; src: url("assets/fonts/Juturu-Thin.ttf") format("truetype"); font-weight: 100; font-display: swap; }
-    @font-face { font-family: "Juturu"; src: url("assets/fonts/Juturu-Extralight.ttf") format("truetype"); font-weight: 200; font-display: swap; }
-    @font-face { font-family: "Juturu"; src: url("assets/fonts/Juturu-Light.ttf") format("truetype"); font-weight: 300; font-display: swap; }
-    @font-face { font-family: "Juturu"; src: url("assets/fonts/Juturu-Regular.ttf") format("truetype"); font-weight: 400; font-display: swap; }
-    @font-face { font-family: "Juturu"; src: url("assets/fonts/Juturu-Medium.ttf") format("truetype"); font-weight: 500; font-display: swap; }
-    @font-face { font-family: "Juturu"; src: url("assets/fonts/Juturu-Semibold.ttf") format("truetype"); font-weight: 600; font-display: swap; }
-    @font-face { font-family: "Juturu"; src: url("assets/fonts/Juturu-Bold.ttf") format("truetype"); font-weight: 700; font-display: swap; }
-    @font-face { font-family: "Juturu"; src: url("assets/fonts/Juturu-Extrabold.ttf") format("truetype"); font-weight: 800; font-display: swap; }
-    @font-face { font-family: "Juturu"; src: url("assets/fonts/Juturu-Black.ttf") format("truetype"); font-weight: 900; font-display: swap; }
+    /* Grift · 9 weights (Thin 100 → Black 900) × normal + italic = 18 cortes.
+       Italic real disponible · CSS puede usar font-style: italic sin
+       synthesis del browser. */
+    @font-face { font-family: "Grift"; src: url("assets/fonts/Grift-Thin.ttf") format("truetype"); font-weight: 100; font-style: normal; font-display: swap; }
+    @font-face { font-family: "Grift"; src: url("assets/fonts/Grift-ThinItalic.ttf") format("truetype"); font-weight: 100; font-style: italic; font-display: swap; }
+    @font-face { font-family: "Grift"; src: url("assets/fonts/Grift-ExtraLight.ttf") format("truetype"); font-weight: 200; font-style: normal; font-display: swap; }
+    @font-face { font-family: "Grift"; src: url("assets/fonts/Grift-ExtraLightItalic.ttf") format("truetype"); font-weight: 200; font-style: italic; font-display: swap; }
+    @font-face { font-family: "Grift"; src: url("assets/fonts/Grift-Light.ttf") format("truetype"); font-weight: 300; font-style: normal; font-display: swap; }
+    @font-face { font-family: "Grift"; src: url("assets/fonts/Grift-LightItalic.ttf") format("truetype"); font-weight: 300; font-style: italic; font-display: swap; }
+    @font-face { font-family: "Grift"; src: url("assets/fonts/Grift-Regular.ttf") format("truetype"); font-weight: 400; font-style: normal; font-display: swap; }
+    @font-face { font-family: "Grift"; src: url("assets/fonts/Grift-Italic.ttf") format("truetype"); font-weight: 400; font-style: italic; font-display: swap; }
+    @font-face { font-family: "Grift"; src: url("assets/fonts/Grift-Medium.ttf") format("truetype"); font-weight: 500; font-style: normal; font-display: swap; }
+    @font-face { font-family: "Grift"; src: url("assets/fonts/Grift-MediumItalic.ttf") format("truetype"); font-weight: 500; font-style: italic; font-display: swap; }
+    @font-face { font-family: "Grift"; src: url("assets/fonts/Grift-SemiBold.ttf") format("truetype"); font-weight: 600; font-style: normal; font-display: swap; }
+    @font-face { font-family: "Grift"; src: url("assets/fonts/Grift-SemiBoldItalic.ttf") format("truetype"); font-weight: 600; font-style: italic; font-display: swap; }
+    @font-face { font-family: "Grift"; src: url("assets/fonts/Grift-Bold.ttf") format("truetype"); font-weight: 700; font-style: normal; font-display: swap; }
+    @font-face { font-family: "Grift"; src: url("assets/fonts/Grift-BoldItalic.ttf") format("truetype"); font-weight: 700; font-style: italic; font-display: swap; }
+    @font-face { font-family: "Grift"; src: url("assets/fonts/Grift-ExtraBold.ttf") format("truetype"); font-weight: 800; font-style: normal; font-display: swap; }
+    @font-face { font-family: "Grift"; src: url("assets/fonts/Grift-ExtraBoldItalic.ttf") format("truetype"); font-weight: 800; font-style: italic; font-display: swap; }
+    @font-face { font-family: "Grift"; src: url("assets/fonts/Grift-Black.ttf") format("truetype"); font-weight: 900; font-style: normal; font-display: swap; }
+    @font-face { font-family: "Grift"; src: url("assets/fonts/Grift-BlackItalic.ttf") format("truetype"); font-weight: 900; font-style: italic; font-display: swap; }
 
     /* ════════════════════════════════════════════════════════════════════
        § 1 · Tokens (paleta, tipografía, layout, motion)
@@ -51,10 +63,10 @@
       --violet-subtle: #E6DFE9;                            --violet-strong: #6A5A7E;
       --module-dark:   #1B1A18;
 
-      /* fonts · Galiner serif único para display · Juturu para body · mono para meta */
+      /* fonts · Galiner serif único para display · Grift para body · mono para meta */
       --font-serif:   "Galiner", "Bodoni Moda", "Playfair Display", Georgia, serif;
       --font-display: "Galiner", "Bodoni Moda", "Playfair Display", Georgia, serif; /* alias retrocompat */
-      --font-text:    "Juturu", "Inter", sans-serif;
+      --font-text:    "Grift", "Inter", sans-serif;
       --font-mono:    "JetBrains Mono", "SF Mono", ui-monospace, monospace;
 
       /* radii */
@@ -237,7 +249,7 @@
     }
     .manifesto-sub {
       /* Manifesto sub · Galiner Light 300 (no italic) · matiz editorial vía
-         weight + ink-soft, sin recurrir a italic sintético sobre Juturu. */
+         weight + ink-soft, sin recurrir a italic sintético sobre Grift. */
       font-family: var(--font-serif);
       font-style: normal;
       font-weight: 300;
