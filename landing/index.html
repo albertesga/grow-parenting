@@ -248,79 +248,134 @@
     }
     .hero .micro { margin-top: 28px; }
     .hero-ctas { display: flex; gap: 14px; align-items: center; margin-top: 32px; flex-wrap: wrap; }
+    /* Hero avatar · ahora es columna editorial · avatar 2-frame embarazo
+       (más compacto) + meta (eyebrow + phrase + tags). El conjunto es la
+       carta principal del hero · communica el valor narrativo del libro
+       embarazo como entry point del producto. */
     .hero-avatar {
       position: relative;
       width: 100%;
       max-width: 520px;
-      aspect-ratio: 1 / 1;
       margin-left: auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 18px;
+    }
+    .hero-avatar-art {
+      position: relative;
+      width: 100%;
+      max-width: 360px;
+      aspect-ratio: 1 / 1;
       display: flex;
       align-items: center;
       justify-content: center;
     }
-    .hero-avatar::before {
+    .hero-avatar-art::before {
       content: "";
       position: absolute;
       inset: 6%;
       border-radius: 50%;
-      /* Glow blush · armonía con avatar-blush · #EFC2B5 con alpha 0.28 */
-      background: radial-gradient(circle at 50% 45%, rgba(239,194,181,0.28), transparent 60%);
+      /* Glow coral · matches the embarazo character warmth. */
+      background: radial-gradient(circle at 50% 50%, rgba(242,165,122,0.30), transparent 64%);
       pointer-events: none;
       z-index: 0;
     }
-    /* Avatar fallback PNG y video · ambos centrados absolute, breathing
-       animation compone con el translate(-50%, -50%) del centrado. */
-    .hero-avatar img,
-    .hero-avatar video {
+    .hero-avatar-img-wrap {
+      position: relative;
       width: 86%;
       height: 86%;
-      object-fit: contain;
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
       z-index: 1;
-      animation: breathe var(--duration-breath) var(--ease-soft) infinite;
+      animation: hero-breathe 5400ms var(--ease-soft) infinite;
+      transform-origin: 50% 65%;
     }
-    .hero-avatar video {
-      opacity: 0;
-      transition: opacity 480ms var(--ease-sheet);
-      /* Soft vignette mask · los bordes del video se difuminan radialmente
-         para que el fondo crema del MP4 se funda con el paper de la landing
-         · resultado: el personaje flota dentro de un halo suave sin chroma
-         key ni canvas processing. Stop interior a 50% (subject visible
-         completo) · borde a 78% (fade-out smooth). */
-      -webkit-mask-image: radial-gradient(circle at 50% 48%, #000 50%, rgba(0,0,0,0.55) 65%, transparent 80%);
-              mask-image: radial-gradient(circle at 50% 48%, #000 50%, rgba(0,0,0,0.55) 65%, transparent 80%);
-      mix-blend-mode: multiply;
+    .hero-avatar-img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
     }
-    .hero-avatar video.is-ready { opacity: 1; z-index: 2; }
-    .hero-avatar-fallback.is-hidden { opacity: 0; transition: opacity 480ms var(--ease-sheet); }
-    @keyframes breathe {
-      0%, 100% { transform: translate(-50%, -50%) translateY(0) scale(1); }
-      50%      { transform: translate(-50%, -50%) translateY(-6px) scale(1.015); }
+    .hero-avatar-img--a {
+      animation: bs-img-fade-a 5400ms ease-in-out infinite;
+    }
+    .hero-avatar-img--b {
+      animation: bs-img-fade-b 5400ms ease-in-out infinite;
+    }
+    @keyframes hero-breathe {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      35%      { transform: translateY(-6px) rotate(-1deg); }
+      65%      { transform: translateY(-2px) rotate(0.6deg); }
     }
     .phase-tag {
       position: absolute;
-      bottom: 12px;
+      bottom: -6px;
       left: 50%;
       transform: translateX(-50%);
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      padding: 8px 14px;
+      padding: 7px 13px;
       background: var(--paper);
       border: 1px solid var(--line);
       border-radius: var(--radius-pill);
       font-family: var(--font-display);
-      font-size: 10.5px;
+      font-size: 10px;
       letter-spacing: 0.20em;
       text-transform: uppercase;
       color: var(--ink-soft);
       box-shadow: 0 6px 16px -8px rgba(42,33,27,0.18);
-      z-index: 2;
+      z-index: 3;
     }
-    .phase-tag .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--blush-base); }
+    .phase-tag .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--coral-base); }
+
+    /* Editorial meta debajo del avatar · phrase + tags · misma copy que
+       antes vivía dentro del modal del libro embarazo · ahora aparece
+       en el entry point del landing como manifesto del libro principal. */
+    .hero-avatar-meta {
+      width: 100%;
+      max-width: 380px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      text-align: center;
+    }
+    .hero-avatar-eyebrow {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--ink-muted);
+    }
+    .hero-avatar-phrase {
+      font-family: var(--font-serif);
+      font-weight: 300;
+      font-size: clamp(15px, 1.5vw, 19px);
+      line-height: 1.35;
+      letter-spacing: -0.008em;
+      color: var(--ink);
+      margin: 0;
+      max-width: 28ch;
+    }
+    .hero-avatar-tags {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-top: 2px;
+    }
+    .hero-avatar-tags span {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--ink-soft);
+      padding: 4px 9px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: var(--paper);
+    }
 
     /* ════════════════════════════════════════════════════════════════════
        § 6 · TRUST STRIP
@@ -1501,7 +1556,8 @@
       .hero { padding: 30px 22px 24px; }
       .hero-grid { grid-template-columns: 1fr; gap: 28px; min-height: 0; }
       .hero h1 { font-size: 38px; }
-      .hero-avatar { max-width: 240px; margin: 0 auto; order: -1; }
+      .hero-avatar { max-width: 360px; margin: 0 auto; order: -1; }
+      .hero-avatar-art { max-width: 260px; }
       .narrative-shell { grid-template-columns: 1fr; gap: 0; padding: 24px 22px 32px; }
       .avatar-stage { display: none; }
       .mobile-avatar { display: block; }
@@ -1711,21 +1767,45 @@
         0 18px 30px -18px rgba(80,60,30,0.22);
       overflow: hidden;
     }
-    .bs-page-img {
+    /* Wrap del avatar con 2-frame crossfade · ambas img stack absolute.
+       img-a (orb dentro de la barriga · con sombra) cross-fade con img-b
+       (orb en las manos · sin sombra) · cycle 5.4s con hold de cada frame
+       en su pose por ~2s y crossfade de ~0.7s. Resultado: el orb visualmente
+       sale de la barriga, queda en las manos, vuelve adentro. */
+    .bs-page-img-wrap {
+      position: relative;
       width: 100%;
       height: 100%;
-      /* contain · muestra el personaje completo sin recortar · el espacio
-         vacío arriba/abajo (PNG con alpha) lo rellena el cream gradient
-         del .bs-page-right padre. */
+      /* La animación de float vive aquí · ambas frames se mueven juntas. */
+      animation: bs-img-float 6200ms cubic-bezier(0.4, 0, 0.6, 1) infinite;
+      transform-origin: 50% 65%;
+    }
+    .bs-page-img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
       object-fit: contain;
       object-position: center 58%;
       display: block;
       padding: 12px 8px;
       box-sizing: border-box;
-      /* Animación de flotación · asimétrica (rotación leve a un lado y
-         vuelta al otro) para feel orgánico · 6.2s cycle. */
-      animation: bs-img-float 6200ms cubic-bezier(0.4, 0, 0.6, 1) infinite;
-      transform-origin: 50% 65%;
+    }
+    .bs-page-img--a {
+      animation: bs-img-fade-a 5400ms ease-in-out infinite;
+    }
+    .bs-page-img--b {
+      animation: bs-img-fade-b 5400ms ease-in-out infinite;
+    }
+    @keyframes bs-img-fade-a {
+      0%, 35% { opacity: 1; }
+      50%, 85% { opacity: 0; }
+      100% { opacity: 1; }
+    }
+    @keyframes bs-img-fade-b {
+      0%, 35% { opacity: 0; }
+      50%, 85% { opacity: 1; }
+      100% { opacity: 0; }
     }
     @keyframes bs-img-float {
       0%, 100% { transform: translateY(0) rotate(0deg); }
@@ -1733,7 +1813,9 @@
       65%      { transform: translateY(-3px) rotate(0.8deg); }
     }
     @media (prefers-reduced-motion: reduce) {
-      .bs-page-img { animation: none; }
+      .bs-page-img-wrap { animation: none; }
+      .bs-page-img--a { animation: none; opacity: 1; }
+      .bs-page-img--b { animation: none; opacity: 0; }
     }
 
     /* Cover frame · maneja translation + scale del FLIP (sin el rotateY).
@@ -1843,18 +1925,22 @@
     }
 
     .bs-cover-back {
-      /* Endpaper warmth · más oscura · reverso del cover real */
+      /* Cover-back ahora aloja un mockup de la app · paper-cream bg
+         (en vez de endpaper coral-warm) para que el mockup se sienta
+         como pantalla del producto y no como cuadro enmarcado.
+         Padding reducido · el mockup tiene su propio padding interno. */
       transform: rotateY(180deg);
       background:
-        linear-gradient(220deg, rgba(255,255,255,0.10) 0%, rgba(80,60,30,0.0) 60%),
-        linear-gradient(135deg, #F3DAC1 0%, #E8C9A8 100%);
+        radial-gradient(circle at 0% 0%, rgba(255,255,255,0.7) 0%, transparent 28%),
+        linear-gradient(135deg, #FDFAF1 0%, #F2EBDA 100%);
       border-radius: 12px 3px 3px 12px;
-      color: #6E2F18;
+      color: var(--ink);
       box-shadow:
-        inset -1px 0 0 rgba(255,255,255,0.42),
-        inset 0 1px 0 rgba(255,255,255,0.48);
-      justify-content: space-between;
-      padding: clamp(16px, 3.4%, 28px) clamp(14px, 3%, 24px);
+        inset -2px 0 8px -4px rgba(80,60,30,0.18),
+        inset 0 1px 0 rgba(255,255,255,0.62);
+      justify-content: stretch;
+      align-items: stretch;
+      padding: 0;
     }
     .bs-cover-back::after {
       content: "";
@@ -1867,34 +1953,115 @@
       border-radius: 0 3px 3px 0;
       pointer-events: none;
     }
-    /* Cover-back · contenido editorial · eyebrow + frase + sub.
-       Sustituye el endpaper con quote del approach anterior · ahora
-       comunica el valor del libro en lugar de un quote contemplativo. */
-    .bs-cover-back .bs-back-eyebrow {
-      font-family: var(--font-mono);
-      font-size: clamp(8px, 0.85vw, 10px);
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: inherit;
-      opacity: 0.7;
+    /* Mockup del libro embarazo · mini-app preview en el cover-back ·
+       basado en el pregnancy home del prototype (Hero · 3-stat card · todos).
+       Estilo "screenshot estilizada" con coral subtle bg + paper card
+       interno + tipografía editorial. */
+    .bs-cover-back .bs-mock {
+      display: flex;
+      flex-direction: column;
+      gap: clamp(6px, 0.9vh, 10px);
+      width: 100%;
+      height: 100%;
+      padding: clamp(10px, 1.5vw, 18px) clamp(8px, 1.2vw, 14px);
+      box-sizing: border-box;
+      color: var(--ink);
+      overflow: hidden;
     }
-    .bs-cover-back .bs-back-h {
+    .bs-mock-eyebrow {
+      font-family: var(--font-mono);
+      font-size: clamp(7px, 0.8vw, 9px);
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--coral-strong);
+      opacity: 0.85;
+    }
+    .bs-mock-hero {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      margin-bottom: clamp(4px, 0.5vh, 8px);
+    }
+    .bs-mock-name {
       font-family: var(--font-serif);
-      font-weight: 300;
-      font-size: clamp(15px, 1.5vw, 22px);
-      line-height: 1.25;
-      letter-spacing: -0.008em;
-      color: inherit;
-      max-width: 22ch;
-      margin: 0;
+      font-weight: 400;
+      font-size: clamp(12px, 1.4vw, 17px);
+      line-height: 1.0;
+      color: var(--ink);
     }
-    .bs-cover-back .bs-back-sub {
+    .bs-mock-week {
+      font-family: var(--font-serif);
+      font-weight: 400;
+      font-size: clamp(18px, 2.4vw, 28px);
+      line-height: 1.0;
+      letter-spacing: -0.018em;
+      color: var(--ink);
+    }
+    .bs-mock-week em {
+      font-style: normal;
+      font-weight: 300;
+      color: var(--coral-strong);
+    }
+    .bs-mock-fpp {
+      font-family: var(--font-text);
+      font-size: clamp(9px, 1vw, 11.5px);
+      color: var(--ink-soft);
+      margin-top: 2px;
+    }
+    .bs-mock-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: clamp(4px, 0.6vw, 8px);
+      padding: clamp(8px, 1.2vw, 12px) clamp(6px, 1vw, 10px);
+      background: rgba(255, 255, 255, 0.55);
+      border: 1px solid rgba(110, 47, 24, 0.12);
+      border-radius: 10px;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.7);
+    }
+    .bs-mock-stat {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      text-align: center;
+    }
+    .bs-mock-stat .num {
+      font-family: var(--font-serif);
+      font-weight: 400;
+      font-size: clamp(11px, 1.4vw, 17px);
+      line-height: 1.0;
+      letter-spacing: -0.01em;
+      color: var(--ink);
+    }
+    .bs-mock-stat .num span {
+      font-weight: 300;
+      color: var(--ink-muted);
+      font-size: 0.75em;
+    }
+    .bs-mock-stat .lab {
       font-family: var(--font-mono);
-      font-size: clamp(7.5px, 0.8vw, 9.5px);
-      letter-spacing: 0.2em;
+      font-size: clamp(6.5px, 0.7vw, 8.5px);
+      letter-spacing: 0.14em;
       text-transform: uppercase;
-      color: inherit;
-      opacity: 0.55;
+      color: var(--ink-muted);
+    }
+    .bs-mock-row {
+      display: flex;
+      align-items: center;
+      gap: clamp(6px, 0.8vw, 10px);
+      padding: clamp(5px, 0.8vh, 8px) clamp(6px, 1vw, 10px);
+      background: rgba(255, 255, 255, 0.45);
+      border: 1px solid rgba(110, 47, 24, 0.10);
+      border-radius: 8px;
+      font-family: var(--font-text);
+      font-size: clamp(8px, 1vw, 11px);
+      color: var(--ink-soft);
+    }
+    .bs-mock-row .dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--coral-base);
+      flex-shrink: 0;
     }
 
     /* Body · contenido debajo del libro · NO fade global · cada child
@@ -2260,17 +2427,25 @@
         </div>
       </div>
       <div class="hero-avatar">
-        <!-- Fallback PNG · visible mientras carga el video. Una vez el
-             video puede play, fade-out. Si el video falla, queda visible. -->
-        <img class="hero-avatar-fallback" src="assets/avatar-blush.png" alt="Avatar de recién nacido">
-        <!-- Video con soft mask radial · el fondo crema del MP4 se difumina
-             en los bordes y se funde con el paper de la landing · sin chroma
-             key. Tradeoff aceptado: el fondo del video se ve sutilmente en
-             la zona central, pero como ya es cream-on-cream pasa inadvertido. -->
-        <video id="hero-avatar-video" class="hero-avatar-video" muted playsinline preload="auto" loop aria-hidden="true">
-          <source src="assets/hero-avatar.mp4" type="video/mp4">
-        </video>
-        <div class="phase-tag"><span class="dot"></span> Recién nacido · 0–6m</div>
+        <!-- Avatar embarazo · 2-frame crossfade animation (orb dentro de la
+             barriga → orb en las manos · metáfora gestacional literal).
+             Más pequeño que antes para dejar sitio al editorial meta abajo. -->
+        <div class="hero-avatar-art">
+          <div class="hero-avatar-img-wrap">
+            <img class="hero-avatar-img hero-avatar-img--a" src="assets/embarazo-hero.png" alt="">
+            <img class="hero-avatar-img hero-avatar-img--b" src="assets/embarazo-hero-2.png" alt="Personaje del libro de embarazo">
+          </div>
+          <div class="phase-tag"><span class="dot"></span> Embarazo · sem 4–40</div>
+        </div>
+        <div class="hero-avatar-meta">
+          <div class="hero-avatar-eyebrow">Lo que resuelve</div>
+          <p class="hero-avatar-phrase">"Cuando las opiniones se contradicen, la evidencia te lleva a casa."</p>
+          <div class="hero-avatar-tags">
+            <span>SEGO</span>
+            <span>NICE</span>
+            <span>AEPED</span>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -2852,11 +3027,15 @@
           </svg>
         </button>
         <div class="bs-book" id="bs-book">
-          <!-- Lado derecho del libro abierto · imagen del libro embarazo.
-               PNG con alpha real · el cream gradient del .bs-page-right se
-               transparenta a través del fondo de la imagen. -->
+          <!-- Lado derecho del libro abierto · avatar con 2-frame animation.
+               Las dos imágenes alternan vía CSS crossfade · el orb pasa de
+               la barriga a las manos · metáfora literal del movimiento
+               gestacional · combina con el float (translateY+rotate). -->
           <div class="bs-page-right" aria-hidden="true">
-            <img class="bs-page-img" src="assets/embarazo-hero.png" alt="Libro de embarazo · personaje coral con luz gestacional">
+            <div class="bs-page-img-wrap">
+              <img class="bs-page-img bs-page-img--a" src="assets/embarazo-hero.png" alt="">
+              <img class="bs-page-img bs-page-img--b" src="assets/embarazo-hero-2.png" alt="Personaje del libro de embarazo">
+            </div>
           </div>
           <div class="bs-cover-frame" id="bs-cover-frame" aria-hidden="true">
             <div class="bs-cover-spinner" id="bs-cover-spinner">
@@ -2865,12 +3044,40 @@
                 <h4 class="bs-ttl">Libro de<br><em>embarazo</em></h4>
                 <div class="bs-foot"><span>Libro · 01</span><span>SEGO</span></div>
               </div>
-              <!-- Lado izquierdo del libro abierto · frase clave de qué
-                   resuelve el libro · visible al completar la rotación. -->
+              <!-- Lado izquierdo del libro abierto · mockup en miniatura
+                   del pregnancy dashboard del prototipo · da una "captura"
+                   de lo que el usuario verá dentro del libro. -->
               <div class="bs-cover-back">
-                <div class="bs-back-eyebrow">Lo que resuelve</div>
-                <h3 class="bs-back-h">"Cuando las opiniones se contradicen, la evidencia te lleva a casa."</h3>
-                <div class="bs-back-sub">Sem 4 → primeras horas · SEGO · NICE · AEPED</div>
+                <div class="bs-mock" aria-hidden="true">
+                  <div class="bs-mock-eyebrow">Embarazo · SEGO · sem 28</div>
+                  <div class="bs-mock-hero">
+                    <div class="bs-mock-name">María</div>
+                    <div class="bs-mock-week">semana <em>28</em></div>
+                    <div class="bs-mock-fpp">Faltan 86 días para la FPP</div>
+                  </div>
+                  <div class="bs-mock-stats">
+                    <div class="bs-mock-stat">
+                      <div class="num">6<span>/10</span></div>
+                      <div class="lab">Movimientos</div>
+                    </div>
+                    <div class="bs-mock-stat">
+                      <div class="num">118<span>/76</span></div>
+                      <div class="lab">Tensión</div>
+                    </div>
+                    <div class="bs-mock-stat">
+                      <div class="num">12<span>/18</span></div>
+                      <div class="lab">Bolsa</div>
+                    </div>
+                  </div>
+                  <div class="bs-mock-row">
+                    <span class="dot"></span>
+                    <span>Glucosa · próxima semana</span>
+                  </div>
+                  <div class="bs-mock-row">
+                    <span class="dot"></span>
+                    <span>Plan de parto · editable</span>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -3416,64 +3623,10 @@
         });
       }
 
-      /* 7 · Hero avatar video · Kling animation con soft vignette mask.
-         · No chroma key · el video se reproduce raw y el mask radial
-           difumina los bordes para que el fondo crema del MP4 se funda
-           con el paper de la landing.
-         · Cycle cada 5s · video.duration determina playback, gap = 5000 - duration.
-         · Si reduced motion · video no autoplay, sigue visible primer frame. */
-      (() => {
-        const heroVideo = document.getElementById("hero-avatar-video");
-        const heroFallback = document.querySelector(".hero-avatar-fallback");
-        if (!heroVideo) return;
-        const HERO_CYCLE_MS = 5000;
-        let cycleTimer = null;
-
-        function showVideo() {
-          heroVideo.classList.add("is-ready");
-          heroFallback?.classList.add("is-hidden");
-        }
-
-        if (reduced) {
-          /* Reduced motion · solo mostrar primer frame */
-          heroVideo.addEventListener("loadeddata", () => {
-            try { heroVideo.currentTime = 0; } catch (_) {}
-            showVideo();
-          }, { once: true });
-          heroVideo.load();
-          return;
-        }
-
-        /* Cycle · play → wait (5s total) → reset → play */
-        function startCycle() {
-          try {
-            heroVideo.currentTime = 0;
-            const playPromise = heroVideo.play();
-            if (playPromise && typeof playPromise.catch === "function") {
-              playPromise.catch(() => { /* autoplay block · ignore */ });
-            }
-          } catch (_) {}
-          /* Programar el siguiente cycle a los 5s · si el video es más
-             corto que 5s, hace un pause natural en su último frame antes
-             del reset. Si es más largo que 5s, lo cortamos al 5s y reset. */
-          cycleTimer = setTimeout(() => {
-            heroVideo.pause();
-            startCycle();
-          }, HERO_CYCLE_MS);
-        }
-
-        heroVideo.addEventListener("loadeddata", () => {
-          showVideo();
-          startCycle();
-        }, { once: true });
-
-        heroVideo.addEventListener("error", () => {
-          /* Fallback img sigue visible · degradación silenciosa */
-          if (cycleTimer) clearTimeout(cycleTimer);
-        }, { once: true });
-
-        heroVideo.load();
-      })();
+      /* (Módulo 7 · Hero avatar video removido · el hero ahora usa el
+         personaje embarazo con 2-frame crossfade CSS · cero JS necesario.
+         Las clases .hero-avatar-img--a / --b alternan vía bs-img-fade-a/b
+         keyframes definidas en CSS · el float compuesto en hero-breathe.) */
     })();
   </script>
 </body>
