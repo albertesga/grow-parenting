@@ -2341,12 +2341,12 @@
             <div class="label">Respuesta Grow</div>
             <div class="r-shelf">
               <div class="r-shelf-rail">
-                <a class="r-book b-embarazo" href="#libros" aria-label="Libro 01 · Embarazo">
+                <a class="r-book b-embarazo" href="#libros" data-book="embarazo" aria-label="Libro 01 · Embarazo">
                   <div class="sb-icon"><svg viewBox="0 0 24 24"><use href="#b-belly"/></svg></div>
                   <h4 class="sb-ttl">Libro de<br><em>embarazo</em></h4>
                   <div class="sb-foot"><span class="count">Libro · 01</span><span>SEGO</span></div>
                 </a>
-                <a class="r-book b-parto" href="#libros" aria-label="Libro 11 · Preparación al parto">
+                <a class="r-book b-parto" href="#libros" data-book="parto" aria-label="Libro 11 · Preparación al parto">
                   <div class="sb-icon"><svg viewBox="0 0 24 24"><use href="#b-pulse"/></svg></div>
                   <h4 class="sb-ttl">Preparación<br><em>al parto</em></h4>
                   <div class="sb-foot"><span class="count">Libro · 11</span><span>EAPM</span></div>
@@ -3188,11 +3188,99 @@
       const bsFrame   = document.getElementById("bs-cover-frame");
       const bsSpinner = document.getElementById("bs-cover-spinner");
       const bsClose   = document.getElementById("bs-close");
-      const sourceCard = document.querySelector(".r-book.b-embarazo");
 
       const EASE_OUT   = "cubic-bezier(0.22, 0.61, 0.36, 1)"; /* mirror de var(--ease-sheet) · WAAPI no resuelve var() */
       const EASE_LIFT  = "cubic-bezier(0.34, 1.20, 0.64, 1)";
       const EASE_HINGE = "cubic-bezier(0.32, 0.04, 0.24, 0.99)";
+
+      /* ────────────────────────────────────────────────────────────────
+         Book config · data-driven modal · single overlay HTML, contenido
+         se populates desde aquí según la card clicada (.r-book[data-book]).
+         Para añadir un libro nuevo · entrada en BOOK_DATA + data-book en
+         la card. Cero cambios HTML adicionales. */
+      const BOOK_DATA = {
+        embarazo: {
+          tone: "coral", /* clase tonal aplicada al .bs-sheet o cover · futuro */
+          coverIcon: "#b-belly",
+          coverTitle: 'Libro de<br><em>embarazo</em>',
+          coverFootCount: "Libro · 01",
+          coverFootMethod: "SEGO",
+          backEyebrow: "Lo que resuelve",
+          backPhrase: '"Cuando las opiniones se contradicen, la evidencia te lleva a casa."',
+          backSub: "Sem 4 → primeras horas · SEGO · NICE · AEPED",
+          pageImg: "assets/embarazo-hero.png",
+          pageImgAlt: "Libro de embarazo",
+          featuresLabel: "Lo que el libro hace por ti",
+          features: [
+            { icon: "#b-pulse",    title: "Patadas",         copy: "Count the Kicks · 10 movimientos en 2 horas desde la semana 28." },
+            { icon: "#b-thermo",   title: "Tensión",         copy: "PPG via cámara del móvil · orientativo · alarma cuando sube." },
+            { icon: "#b-bookmark", title: "Plan de parto",   copy: "Sub-libro propio · editable · imprimible · checklist hospital." },
+            { icon: "#b-heart",    title: "Síntomas",        copy: "Qué mirar · cuándo llamar · qué decir al equipo." },
+            { icon: "#i-cal",      title: "Citas y pruebas", copy: "Ecografías · glucosa · Tdpa · qué preguntar en cada una." },
+            { icon: "#b-syringe",  title: "APILAM",          copy: "Medicación segura durante el embarazo · base actualizada." }
+          ],
+          aval: "Avalado por · SEGO · NICE · AEPED · Comité clínico Grow"
+        },
+        parto: {
+          tone: "coral",
+          coverIcon: "#b-pulse",
+          coverTitle: 'Preparación<br><em>al parto</em>',
+          coverFootCount: "Libro · 11",
+          coverFootMethod: "EAPM",
+          backEyebrow: "Para llegar lista",
+          backPhrase: '"Saber qué pasa en cada fase es lo que cambia el miedo por confianza."',
+          backSub: "Sem 28 → primeras horas · EAPM · NICE · OMS",
+          pageImg: "assets/parto-hero.png",
+          pageImgAlt: "Libro de preparación al parto",
+          featuresLabel: "Lo que el libro hace por ti",
+          features: [
+            { icon: "#b-pulse",  title: "Signos de parto",   copy: "Contracciones · rotura de aguas · cuándo ir al hospital." },
+            { icon: "#i-cal",    title: "Fases del parto",   copy: "Dilatación · transición · expulsivo · alumbramiento." },
+            { icon: "#b-sprout", title: "Posiciones",        copy: "Movimiento · gravedad · cuerpo · todo el repertorio." },
+            { icon: "#b-heart",  title: "Manejo del dolor",  copy: "Respiración · epidural · masaje · agua caliente." },
+            { icon: "#b-thermo", title: "Cesárea",           copy: "Programada o de urgencia · piel a piel también." },
+            { icon: "#b-tear",   title: "Primeras horas",    copy: "Piel a piel · primer enganche · postpartum 24h." }
+          ],
+          aval: "Avalado por · EAPM · NICE · OMS · Comité clínico Grow"
+        }
+      };
+
+      /* Card actualmente activa · se setea en el click handler antes de openBook */
+      let sourceCard = null;
+      let activeBookKey = null;
+
+      function populateModal(bookKey) {
+        const data = BOOK_DATA[bookKey];
+        if (!data) return false;
+        /* Cover front */
+        bsOverlay.querySelector(".bs-cover-front .bs-icon svg use").setAttribute("href", data.coverIcon);
+        bsOverlay.querySelector(".bs-cover-front .bs-ttl").innerHTML = data.coverTitle;
+        const foot = bsOverlay.querySelectorAll(".bs-cover-front .bs-foot span");
+        if (foot[0]) foot[0].textContent = data.coverFootCount;
+        if (foot[1]) foot[1].textContent = data.coverFootMethod;
+        /* Cover back */
+        bsOverlay.querySelector(".bs-back-eyebrow").textContent = data.backEyebrow;
+        bsOverlay.querySelector(".bs-back-h").textContent = data.backPhrase;
+        bsOverlay.querySelector(".bs-back-sub").textContent = data.backSub;
+        /* Page right · img */
+        const pageImg = bsOverlay.querySelector(".bs-page-img");
+        pageImg.src = data.pageImg;
+        pageImg.alt = data.pageImgAlt;
+        /* Body · features */
+        bsOverlay.querySelector(".bs-features-section .bs-eyebrow").textContent = data.featuresLabel;
+        const features = bsOverlay.querySelectorAll(".bs-feature");
+        data.features.forEach((f, i) => {
+          if (!features[i]) return;
+          features[i].querySelector(".icn svg use").setAttribute("href", f.icon);
+          features[i].querySelector("h5").textContent = f.title;
+          features[i].querySelector("p").textContent = f.copy;
+        });
+        /* Aval */
+        bsOverlay.querySelector(".bs-aval").textContent = data.aval;
+        /* ARIA label del overlay para SR */
+        bsOverlay.setAttribute("aria-label", data.pageImgAlt);
+        return true;
+      }
 
       let bsOpen = false;
       let bsBusy = false;
@@ -3402,9 +3490,22 @@
         bsProcessPending();
       }
 
-      if (sourceCard && bsOverlay) {
-        sourceCard.addEventListener("click", (e) => {
+      /* Event delegation · cualquier .r-book[data-book] abre el modal con
+         su data populated. Permite añadir libros nuevos sin tocar event
+         listeners individuales. */
+      if (bsOverlay) {
+        document.addEventListener("click", (e) => {
+          const card = e.target.closest("a.r-book[data-book]");
+          if (!card) return;
+          const bookKey = card.dataset.book;
+          if (!BOOK_DATA[bookKey]) return; /* libro sin config · click normal nav */
           e.preventDefault();
+          /* Si ya hay un modal open con otro libro, cerramos primero · luego
+             abrimos el nuevo cuando termine. Mismo libro · noop si ya está open. */
+          if (bsOpen && activeBookKey === bookKey) return;
+          sourceCard = card;
+          activeBookKey = bookKey;
+          populateModal(bookKey);
           openBook();
         });
         bsOverlay.querySelectorAll("[data-bs-close]").forEach((el) => {
