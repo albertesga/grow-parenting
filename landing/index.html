@@ -1561,11 +1561,14 @@
       backdrop-filter: blur(6px) saturate(120%);
       -webkit-backdrop-filter: blur(6px) saturate(120%);
       opacity: 0;
-      transition: opacity 350ms var(--ease-sheet);
+      transition: opacity 420ms var(--ease-sheet);
     }
     .bs-overlay.is-active .bs-backdrop { opacity: 1; }
+    .bs-overlay.is-closing .bs-backdrop { transition: opacity 260ms cubic-bezier(0.4, 0, 0.6, 1); }
 
-    /* Bottom sheet · sube desde abajo con rounded top corners */
+    /* Bottom sheet · sube desde abajo con rounded top corners.
+       Bezier con overshoot (y2 = 1.06) · subtle bounce al asentarse arriba
+       sin sentir snap · Close usa ease-in normal y duración más corta. */
     .bs-sheet {
       position: absolute;
       left: 50%;
@@ -1583,13 +1586,13 @@
       flex-direction: column;
       perspective: 1800px;
       perspective-origin: 50% 30%;
-      /* Phase 2 timing · sube 100-450ms (350ms con delay 100ms) */
-      transition: transform 350ms var(--ease-sheet) 100ms;
+      /* Phase 2 timing · sube 100-490ms (390ms con delay 100ms) · spring soft */
+      transition: transform 390ms cubic-bezier(0.32, 1.18, 0.42, 1.0) 100ms;
     }
     .bs-overlay.is-active .bs-sheet { transform: translate(-50%, 0); }
     .bs-overlay.is-closing .bs-sheet {
       transform: translate(-50%, 100%);
-      transition: transform 320ms cubic-bezier(0.4, 0, 0.6, 1);
+      transition: transform 300ms cubic-bezier(0.45, 0, 0.7, 0.2);
     }
 
     /* Drag handle visual */
@@ -1612,31 +1615,70 @@
       border-bottom: 1px solid var(--line);
     }
 
-    /* Close button · esquina superior derecha del header */
+    /* Close button · esquina superior derecha del header.
+       SVG real (en vez de × char) · shadow más rica · entrance con spring
+       (scale 0.8 + ease overshoot) · hover rotate del SVG 90° + lift suave
+       · press feedback con scale-down. */
     .bs-close {
       position: absolute;
-      top: 18px;
-      right: 18px;
-      width: 36px;
-      height: 36px;
+      top: 20px;
+      right: 20px;
+      width: 42px;
+      height: 42px;
       border-radius: 50%;
-      background: rgba(250, 247, 240, 0.94);
+      background: var(--paper);
       border: 1px solid var(--line);
-      color: var(--ink);
+      color: var(--ink-soft);
       display: grid;
       place-items: center;
       cursor: pointer;
-      font-family: var(--font-serif);
-      font-size: 20px;
-      line-height: 1;
-      box-shadow: 0 6px 14px -8px rgba(0,0,0,0.22);
-      transition: transform 240ms var(--ease-sheet), background 240ms;
+      box-shadow:
+        0 8px 20px -10px rgba(0, 0, 0, 0.22),
+        0 2px 6px -3px rgba(0, 0, 0, 0.14),
+        inset 0 1px 0 rgba(255, 255, 255, 0.7);
+      transition:
+        opacity 320ms var(--ease-sheet),
+        transform 420ms cubic-bezier(0.34, 1.45, 0.42, 1.0),
+        background 240ms var(--ease-sheet),
+        border-color 240ms var(--ease-sheet),
+        color 240ms var(--ease-sheet),
+        box-shadow 280ms var(--ease-sheet);
       z-index: 4;
       opacity: 0;
+      transform: scale(0.7) translateY(-6px);
       pointer-events: none;
     }
-    .bs-close.is-ready { opacity: 1; pointer-events: auto; }
-    .bs-close:hover { transform: scale(1.06); background: var(--paper); }
+    .bs-close svg {
+      width: 16px;
+      height: 16px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      transition: transform 360ms cubic-bezier(0.34, 1.45, 0.42, 1.0);
+    }
+    .bs-close.is-ready {
+      opacity: 1;
+      transform: scale(1) translateY(0);
+      pointer-events: auto;
+    }
+    .bs-close:hover {
+      background: var(--paper-soft);
+      border-color: var(--line-strong);
+      color: var(--ink);
+      transform: scale(1.08);
+      box-shadow:
+        0 12px 26px -10px rgba(0, 0, 0, 0.28),
+        0 3px 8px -3px rgba(0, 0, 0, 0.18),
+        inset 0 1px 0 rgba(255, 255, 255, 0.85);
+    }
+    .bs-close:hover svg { transform: rotate(90deg); }
+    .bs-close:active { transform: scale(0.96); }
+    .bs-close:focus-visible {
+      outline: 2px solid var(--coral-strong);
+      outline-offset: 3px;
+    }
 
     /* El libro abierto · más compacto que en modal centrado · aspect ratio
        16/9 para que sirva como header en lugar de hero centrado. */
@@ -1680,6 +1722,18 @@
       display: block;
       padding: 12px 8px;
       box-sizing: border-box;
+      /* Animación de flotación · asimétrica (rotación leve a un lado y
+         vuelta al otro) para feel orgánico · 6.2s cycle. */
+      animation: bs-img-float 6200ms cubic-bezier(0.4, 0, 0.6, 1) infinite;
+      transform-origin: 50% 65%;
+    }
+    @keyframes bs-img-float {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      35%      { transform: translateY(-7px) rotate(-1.4deg); }
+      65%      { transform: translateY(-3px) rotate(0.8deg); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .bs-page-img { animation: none; }
     }
 
     /* Cover frame · maneja translation + scale del FLIP (sin el rotateY).
@@ -1843,22 +1897,71 @@
       opacity: 0.55;
     }
 
-    /* Body · contenido debajo del libro · fade+slide in 700-1000ms */
+    /* Body · contenido debajo del libro · NO fade global · cada child
+       hace su propio fade+stagger para sensación de cascade orgánica.
+       Solo translate ligero del container para "subir desde abajo". */
     .bs-body {
       flex: 1;
       min-height: 0;
       overflow-y: auto;
       padding: 32px 36px 40px;
-      opacity: 0;
-      transform: translateY(14px);
-      transition: opacity 360ms var(--ease-sheet) 600ms,
-                  transform 360ms var(--ease-sheet) 600ms;
+      transform: translateY(10px);
+      transition: transform 340ms var(--ease-sheet) 460ms;
     }
-    .bs-overlay.is-active .bs-body { opacity: 1; transform: translateY(0); }
+    .bs-overlay.is-active .bs-body { transform: translateY(0); }
     .bs-overlay.is-closing .bs-body {
+      transform: translateY(6px);
+      transition: transform 180ms cubic-bezier(0.4,0,0.6,1);
+    }
+
+    /* Stagger · eyebrow, feature cards, aval y actions hacen fade-up
+       individuales con delays escalonados (480ms a 1040ms total). En
+       .is-closing los delays se anulan para fade-out simultáneo rápido. */
+    .bs-features-section > .bs-eyebrow,
+    .bs-feature,
+    .bs-aval,
+    .bs-actions {
       opacity: 0;
-      transform: translateY(8px);
-      transition: opacity 200ms cubic-bezier(0.4,0,0.6,1), transform 200ms cubic-bezier(0.4,0,0.6,1);
+      transform: translateY(12px);
+      transition:
+        opacity 420ms var(--ease-sheet),
+        transform 420ms var(--ease-sheet);
+    }
+    .bs-feature {
+      transform: translateY(14px) scale(0.96);
+      transition:
+        opacity 460ms var(--ease-sheet),
+        transform 460ms cubic-bezier(0.32, 1.18, 0.42, 1.0),
+        border-color var(--duration-base) var(--ease-sheet),
+        background var(--duration-base) var(--ease-sheet);
+    }
+    .bs-overlay.is-active .bs-features-section > .bs-eyebrow,
+    .bs-overlay.is-active .bs-feature,
+    .bs-overlay.is-active .bs-aval,
+    .bs-overlay.is-active .bs-actions {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+    .bs-overlay.is-active .bs-features-section > .bs-eyebrow { transition-delay: 500ms; }
+    .bs-overlay.is-active .bs-feature:nth-child(1) { transition-delay: 560ms; }
+    .bs-overlay.is-active .bs-feature:nth-child(2) { transition-delay: 620ms; }
+    .bs-overlay.is-active .bs-feature:nth-child(3) { transition-delay: 680ms; }
+    .bs-overlay.is-active .bs-feature:nth-child(4) { transition-delay: 740ms; }
+    .bs-overlay.is-active .bs-feature:nth-child(5) { transition-delay: 800ms; }
+    .bs-overlay.is-active .bs-feature:nth-child(6) { transition-delay: 860ms; }
+    .bs-overlay.is-active .bs-aval    { transition-delay: 940ms; }
+    .bs-overlay.is-active .bs-actions { transition-delay: 1000ms; }
+
+    /* Close · cancela delays y acelera fade-out · todo se va junto en 180ms */
+    .bs-overlay.is-closing .bs-features-section > .bs-eyebrow,
+    .bs-overlay.is-closing .bs-feature,
+    .bs-overlay.is-closing .bs-aval,
+    .bs-overlay.is-closing .bs-actions {
+      opacity: 0;
+      transform: translateY(6px);
+      transition:
+        opacity 180ms cubic-bezier(0.4, 0, 0.6, 1) 0ms,
+        transform 180ms cubic-bezier(0.4, 0, 0.6, 1) 0ms;
     }
 
     .bs-section { margin-bottom: 32px; }
@@ -2743,7 +2846,11 @@
     <div class="bs-sheet" id="bs-sheet">
       <div class="bs-handle" aria-hidden="true"></div>
       <header class="bs-header">
-        <button class="bs-close" id="bs-close" type="button" aria-label="Cerrar libro" data-bs-close>×</button>
+        <button class="bs-close" id="bs-close" type="button" aria-label="Cerrar libro" data-bs-close>
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M6 6l12 12M18 6L6 18"/>
+          </svg>
+        </button>
         <div class="bs-book" id="bs-book">
           <!-- Lado derecho del libro abierto · imagen del libro embarazo.
                PNG con alpha real · el cream gradient del .bs-page-right se
