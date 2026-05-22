@@ -248,36 +248,26 @@
     }
     .hero .micro { margin-top: 28px; }
     .hero-ctas { display: flex; gap: 14px; align-items: center; margin-top: 32px; flex-wrap: wrap; }
-    /* Hero avatar · ahora es columna editorial · avatar 2-frame embarazo
-       (más compacto) + meta (eyebrow + phrase + tags). El conjunto es la
-       carta principal del hero · communica el valor narrativo del libro
-       embarazo como entry point del producto. */
+    /* Hero avatar · estructura simple · img centrado en cuadrado + phase
+       tag posicionado al pie. Sin meta editorial · el manifest vive en
+       el modal del libro embarazo cuando el user hace tap. */
     .hero-avatar {
       position: relative;
       width: 100%;
       max-width: 520px;
-      margin-left: auto;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 18px;
-    }
-    .hero-avatar-art {
-      position: relative;
-      width: 100%;
-      max-width: 360px;
       aspect-ratio: 1 / 1;
+      margin-left: auto;
       display: flex;
       align-items: center;
       justify-content: center;
     }
-    .hero-avatar-art::before {
+    .hero-avatar::before {
       content: "";
       position: absolute;
       inset: 6%;
       border-radius: 50%;
-      /* Glow coral · matches the embarazo character warmth. */
-      background: radial-gradient(circle at 50% 50%, rgba(242,165,122,0.30), transparent 64%);
+      /* Glow coral · armoniza con el personaje embarazo. */
+      background: radial-gradient(circle at 50% 50%, rgba(242,165,122,0.28), transparent 62%);
       pointer-events: none;
       z-index: 0;
     }
@@ -285,6 +275,7 @@
       width: 86%;
       height: 86%;
       object-fit: contain;
+      position: relative;
       z-index: 1;
       animation: hero-breathe 5400ms var(--ease-soft) infinite;
       transform-origin: 50% 65%;
@@ -296,73 +287,25 @@
     }
     .phase-tag {
       position: absolute;
-      bottom: -6px;
+      bottom: 12px;
       left: 50%;
       transform: translateX(-50%);
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      padding: 7px 13px;
+      padding: 8px 14px;
       background: var(--paper);
       border: 1px solid var(--line);
       border-radius: var(--radius-pill);
       font-family: var(--font-display);
-      font-size: 10px;
+      font-size: 10.5px;
       letter-spacing: 0.20em;
       text-transform: uppercase;
       color: var(--ink-soft);
       box-shadow: 0 6px 16px -8px rgba(42,33,27,0.18);
-      z-index: 3;
+      z-index: 2;
     }
-    .phase-tag .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--coral-base); }
-
-    /* Editorial meta debajo del avatar · phrase + tags · misma copy que
-       antes vivía dentro del modal del libro embarazo · ahora aparece
-       en el entry point del landing como manifesto del libro principal. */
-    .hero-avatar-meta {
-      width: 100%;
-      max-width: 380px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 10px;
-      text-align: center;
-    }
-    .hero-avatar-eyebrow {
-      font-family: var(--font-mono);
-      font-size: 10px;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: var(--ink-muted);
-    }
-    .hero-avatar-phrase {
-      font-family: var(--font-serif);
-      font-weight: 300;
-      font-size: clamp(15px, 1.5vw, 19px);
-      line-height: 1.35;
-      letter-spacing: -0.008em;
-      color: var(--ink);
-      margin: 0;
-      max-width: 28ch;
-    }
-    .hero-avatar-tags {
-      display: flex;
-      gap: 6px;
-      flex-wrap: wrap;
-      justify-content: center;
-      margin-top: 2px;
-    }
-    .hero-avatar-tags span {
-      font-family: var(--font-mono);
-      font-size: 9px;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--ink-soft);
-      padding: 4px 9px;
-      border: 1px solid var(--line);
-      border-radius: 999px;
-      background: var(--paper);
-    }
+    .phase-tag .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--coral-base); }
 
     /* ════════════════════════════════════════════════════════════════════
        § 6 · TRUST STRIP
@@ -1544,7 +1487,6 @@
       .hero-grid { grid-template-columns: 1fr; gap: 28px; min-height: 0; }
       .hero h1 { font-size: 38px; }
       .hero-avatar { max-width: 360px; margin: 0 auto; order: -1; }
-      .hero-avatar-art { max-width: 260px; }
       .narrative-shell { grid-template-columns: 1fr; gap: 0; padding: 24px 22px 32px; }
       .avatar-stage { display: none; }
       .mobile-avatar { display: block; }
@@ -2324,22 +2266,11 @@
         </div>
       </div>
       <div class="hero-avatar">
-        <!-- Avatar embarazo · 2-frame crossfade animation (orb dentro de la
-             barriga → orb en las manos · metáfora gestacional literal).
-             Más pequeño que antes para dejar sitio al editorial meta abajo. -->
-        <div class="hero-avatar-art">
-          <img class="hero-avatar-img" src="assets/embarazo-hero.png" alt="Personaje del libro de embarazo">
-          <div class="phase-tag"><span class="dot"></span> Embarazo · sem 4–40</div>
-        </div>
-        <div class="hero-avatar-meta">
-          <div class="hero-avatar-eyebrow">Lo que resuelve</div>
-          <p class="hero-avatar-phrase">"Cuando las opiniones se contradicen, la evidencia te lleva a casa."</p>
-          <div class="hero-avatar-tags">
-            <span>SEGO</span>
-            <span>NICE</span>
-            <span>AEPED</span>
-          </div>
-        </div>
+        <!-- Avatar embarazo · single image · animación de respiración orgánica
+             (hero-breathe keyframes) · sin meta editorial debajo · solo el
+             phase tag como en el approach original del hero. -->
+        <img class="hero-avatar-img" src="assets/embarazo-hero.png" alt="Personaje del libro de embarazo">
+        <div class="phase-tag"><span class="dot"></span> Embarazo · sem 4–40</div>
       </div>
     </div>
 
