@@ -592,17 +592,16 @@
       color: var(--coral-strong);
       margin-bottom: 10px;
     }
-    .narrative-intro p {
+    .narrative-headline {
       font-family: var(--font-serif);
       font-weight: 400;
-      font-size: clamp(17px, 1.6vw, 21px);
-      line-height: 1.5;
-      letter-spacing: -0.008em;
+      font-size: clamp(22px, 2.4vw, 32px);
+      line-height: 1.2;
+      letter-spacing: -0.012em;
       color: var(--ink);
-      max-width: 56ch;
       margin: 0 auto;
     }
-    .narrative-intro em {
+    .narrative-headline em {
       font-style: normal;
       font-weight: 300;
       color: var(--coral-strong);
@@ -611,11 +610,9 @@
       .narrative-intro { padding: 22px 22px 0; margin-bottom: 18px; }
     }
 
-    /* Closing del parallax · línea honesta que nombra explícito las
-       familias no estándar (research v0.3 hallazgo #1). Sin grid de
-       6 configs · una sola frase de manifesto antes de los libros.
-       Galiner serif Light + ink-soft + em weight 300 para los
-       nombramientos · respira como cierre editorial. */
+    /* Closing del parallax · eyebrow corto + chips de paths familiares
+       · más scannable que un párrafo prose · cada chip es una señal
+       independiente de "te vemos" (preemie, adopción, etc). */
     .narrative-closing {
       max-width: 720px;
       margin: 56px auto 0;
@@ -623,19 +620,36 @@
       border-top: 1px solid var(--line);
       text-align: center;
     }
-    .narrative-closing p {
-      font-family: var(--font-serif);
-      font-weight: 400;
-      font-size: clamp(18px, 1.8vw, 24px);
-      line-height: 1.45;
-      letter-spacing: -0.008em;
-      color: var(--ink);
-      margin: 0;
+    .narrative-closing .eyebrow {
+      display: block;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--coral-strong);
+      margin-bottom: 18px;
     }
-    .narrative-closing em {
-      font-style: normal;
-      font-weight: 300;
+    .closing-paths {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 8px;
+    }
+    .closing-paths span {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
       color: var(--ink-soft);
+      padding: 8px 14px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: var(--paper);
+      transition: border-color var(--duration-base) var(--ease), color var(--duration-base) var(--ease);
+    }
+    .closing-paths span:hover {
+      border-color: var(--line-strong);
+      color: var(--ink);
     }
     @media (max-width: 720px) {
       .narrative-closing { padding: 28px 22px 0; margin-top: 40px; }
