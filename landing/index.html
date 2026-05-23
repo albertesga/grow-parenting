@@ -404,7 +404,7 @@
        ════════════════════════════════════════════════════════════════════ -->
   <section class="full libros" id="libros" data-section="3">
     <div class="wrap">
-      <div class="libros-head">
+      <div class="section-head libros-head">
         <span class="eyebrow">Los libros · 9 destinos · se activan en tu ahora</span>
         <h2>Todo lo que necesitas, en nueve libros.</h2>
         <p>Cada libro con su color, su evidencia y su voz · se enciende cuando entra en su edad activa y se apaga cuando deja de serte útil. Lo que te toca ahora, sin más.</p>
@@ -531,7 +531,7 @@
        ════════════════════════════════════════════════════════════════════ -->
   <section class="full comite" id="comite" data-section="5">
     <div class="wrap">
-      <div class="comite-head">
+      <div class="section-head comite-head">
         <span class="eyebrow">Comité clínico Grow</span>
         <h2>Validado por quien sabe.</h2>
         <p>Pediatra de Atención Primaria, neonatólogo, psicóloga perinatal, enfermera pediátrica. Cuatro perfiles que revisan cada palabra y cada cita.</p>
@@ -540,7 +540,7 @@
         <article class="comite-card t-mint">
           <span class="num">01</span>
           <div>
-            <div class="specialty">Pediatra · AP</div>
+            <div class="specialty t-mint">Pediatra · AP</div>
             <span class="avatar"><svg viewBox="0 0 32 32"><use href="#dr-1"/></svg></span>
             <h4>Dra. Laia Bonet</h4>
             <p class="center">ICS Barcelona · Eixample</p>
@@ -550,7 +550,7 @@
         <article class="comite-card t-coral">
           <span class="num">02</span>
           <div>
-            <div class="specialty">Neonatología</div>
+            <div class="specialty t-coral">Neonatología</div>
             <span class="avatar"><svg viewBox="0 0 32 32"><use href="#dr-2"/></svg></span>
             <h4>Dr. Andrés Vidal</h4>
             <p class="center">UCI Neonatal · Sant Joan de Déu</p>
@@ -560,7 +560,7 @@
         <article class="comite-card t-blush">
           <span class="num">03</span>
           <div>
-            <div class="specialty">Psicología perinatal</div>
+            <div class="specialty t-blush">Psicología perinatal</div>
             <span class="avatar"><svg viewBox="0 0 32 32"><use href="#dr-3"/></svg></span>
             <h4>Mariana Cifuentes</h4>
             <p class="center">Salud Mental Perinatal · La Paz</p>
@@ -570,7 +570,7 @@
         <article class="comite-card t-gold">
           <span class="num">04</span>
           <div>
-            <div class="specialty">Enfermería pediátrica</div>
+            <div class="specialty t-gold">Enfermería pediátrica</div>
             <span class="avatar"><svg viewBox="0 0 32 32"><use href="#dr-4"/></svg></span>
             <h4>Júlia Romá</h4>
             <p class="center">Pediatría Comunitaria · CAP Sant Andreu</p>
@@ -600,7 +600,7 @@
        ════════════════════════════════════════════════════════════════════ -->
   <section class="full pricing" id="pricing" data-section="6">
     <div class="wrap">
-      <div class="pricing-head">
+      <div class="section-head pricing-head">
         <span class="eyebrow">Precio · canon transparente</span>
         <h2>Te acompañamos también con el bolsillo.</h2>
         <p>Cuatro formas de entrar · la primera es gratis para siempre. Empieza con 14 días de Plus completo sin tarjeta — si no es para ti, te quedas en gratis sin perder nada.</p>
@@ -780,38 +780,50 @@
       <div class="bs-body" id="bs-body">
         <section class="bs-features-section">
           <span class="bs-eyebrow">Lo que el libro hace por ti</span>
-          <div class="bs-features">
-            <article class="bs-feature">
-              <span class="icn" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#b-pulse"/></svg></span>
-              <h5>Patadas</h5>
-              <p>Count the Kicks · 10 movimientos en 2 horas desde la semana 28.</p>
-            </article>
-            <article class="bs-feature">
-              <span class="icn" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#b-thermo"/></svg></span>
-              <h5>Tensión</h5>
-              <p>PPG via cámara del móvil · orientativo · alarma cuando sube.</p>
-            </article>
-            <article class="bs-feature">
-              <span class="icn" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#b-bookmark"/></svg></span>
-              <h5>Plan de parto</h5>
-              <p>Editable · imprimible · checklist hospital incluido.</p>
-            </article>
-            <article class="bs-feature">
-              <span class="icn" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#b-heart"/></svg></span>
-              <h5>Síntomas</h5>
-              <p>Qué mirar · cuándo llamar · qué decir al equipo.</p>
-            </article>
-            <article class="bs-feature">
-              <span class="icn" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#i-cal"/></svg></span>
-              <h5>Citas y pruebas</h5>
-              <p>Ecografías · glucosa · Tdpa · qué preguntar en cada una.</p>
-            </article>
-            <article class="bs-feature">
-              <span class="icn" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#b-syringe"/></svg></span>
-              <h5>APILAM</h5>
-              <p>Medicación segura durante el embarazo · base actualizada.</p>
-            </article>
-          </div>
+          <ul class="bs-features">
+            <li class="bs-feature">
+              <span class="bs-check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="5 13 9 17 19 7"/></svg></span>
+              <div class="bs-feature-text">
+                <h5>Patadas</h5>
+                <p>Count the Kicks · 10 movimientos en 2 horas desde la semana 28.</p>
+              </div>
+            </li>
+            <li class="bs-feature">
+              <span class="bs-check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="5 13 9 17 19 7"/></svg></span>
+              <div class="bs-feature-text">
+                <h5>Tensión</h5>
+                <p>PPG via cámara del móvil · orientativo · alarma cuando sube.</p>
+              </div>
+            </li>
+            <li class="bs-feature">
+              <span class="bs-check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="5 13 9 17 19 7"/></svg></span>
+              <div class="bs-feature-text">
+                <h5>Plan de parto</h5>
+                <p>Editable · imprimible · checklist hospital incluido.</p>
+              </div>
+            </li>
+            <li class="bs-feature">
+              <span class="bs-check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="5 13 9 17 19 7"/></svg></span>
+              <div class="bs-feature-text">
+                <h5>Síntomas</h5>
+                <p>Qué mirar · cuándo llamar · qué decir al equipo.</p>
+              </div>
+            </li>
+            <li class="bs-feature">
+              <span class="bs-check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="5 13 9 17 19 7"/></svg></span>
+              <div class="bs-feature-text">
+                <h5>Citas y pruebas</h5>
+                <p>Ecografías · glucosa · Tdpa · qué preguntar en cada una.</p>
+              </div>
+            </li>
+            <li class="bs-feature">
+              <span class="bs-check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="5 13 9 17 19 7"/></svg></span>
+              <div class="bs-feature-text">
+                <h5>APILAM</h5>
+                <p>Medicación segura durante el embarazo · base actualizada.</p>
+              </div>
+            </li>
+          </ul>
         </section>
 
         <div class="bs-aval">Avalado por · SEGO · NICE · AEPED · Comité clínico Grow</div>

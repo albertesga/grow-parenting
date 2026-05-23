@@ -339,12 +339,12 @@
         const pageImg = bsOverlay.querySelector(".bs-page-img");
         pageImg.src = data.pageImg;
         pageImg.alt = data.pageImgAlt;
-        /* Body · features */
+        /* Body · features · checklist DS canon · check mark uniforme
+           para todos los items (no se populates · sólo title + copy). */
         bsOverlay.querySelector(".bs-features-section .bs-eyebrow").textContent = data.featuresLabel;
         const features = bsOverlay.querySelectorAll(".bs-feature");
         data.features.forEach((f, i) => {
           if (!features[i]) return;
-          features[i].querySelector(".icn svg use").setAttribute("href", f.icon);
           features[i].querySelector("h5").textContent = f.title;
           features[i].querySelector("p").textContent = f.copy;
         });

@@ -946,28 +946,40 @@
        § 9 · LIBROS GRID (sección 3)
        ════════════════════════════════════════════════════════════════════ */
     .libros { border-top: 1px solid var(--line); }
-    .libros-head {
+
+    /* ════════════════════════════════════════════════════════════════════
+       § Section head · canon unificado · eyebrow + h2 + p · DS module
+       Patrón compartido por las 4 secciones grandes del landing (libros,
+       comité, pricing, etc). Variants per section vía clase adicional
+       (.libros-head, .comite-head, .pricing-head) sólo para overrides
+       puntuales (center align, narrower max-width, etc).
+       ════════════════════════════════════════════════════════════════════ */
+    .section-head {
       display: flex;
       flex-direction: column;
       gap: 14px;
-      margin-bottom: 56px;
       max-width: 720px;
+      margin-bottom: 56px;
     }
-    .libros-head h2 {
+    .section-head h2 {
       font-family: var(--font-serif);
       font-weight: 400;
-      font-size: clamp(36px, 4.4vw, 54px);
+      font-size: clamp(34px, 4.4vw, 54px);
       line-height: 1.05;
       letter-spacing: -0.015em;
+      color: var(--ink);
+      margin: 0;
     }
-    .libros-head p {
+    .section-head p {
       font-family: var(--font-text);
       font-weight: 300;
-      font-size: 17px;
-      line-height: 1.5;
+      font-size: 16.5px;
+      line-height: 1.55;
       color: var(--ink-soft);
       max-width: 56ch;
+      margin: 0;
     }
+    /* (.libros-head sin overrides · ya es el patrón canónico) */
     .libros-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -1183,24 +1195,7 @@
        § 11 · COMITÉ
        ════════════════════════════════════════════════════════════════════ */
     .comite { background: var(--paper-deep); border-top: 1px solid rgba(0,0,0,0.04); }
-    .comite-head { max-width: 720px; margin-bottom: 56px; }
-    .comite-head .eyebrow { margin-bottom: 14px; }
-    .comite-head h2 {
-      font-family: var(--font-serif);
-      font-weight: 400;
-      font-size: clamp(34px, 4.2vw, 50px);
-      line-height: 1.05;
-      letter-spacing: -0.015em;
-      margin-bottom: 14px;
-    }
-    .comite-head p {
-      font-family: var(--font-text);
-      font-weight: 300;
-      font-size: 16.5px;
-      line-height: 1.55;
-      color: var(--ink-soft);
-      max-width: 56ch;
-    }
+    /* .comite-head usa el canon .section-head · sin overrides propios */
     .comite-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
@@ -1237,14 +1232,28 @@
       font-size: 11px;
       color: var(--ink-faint);
     }
+    /* Specialty · badge tonal (DS canon) en lugar de texto plano ·
+       acelera lectura · coherente con .closing-paths y .libro-mode
+       que ya usan el patrón tonal · cada especialidad tiene su color
+       semánticamente alineado con la card padre. */
     .comite-card .specialty {
+      display: inline-block;
+      align-self: flex-start;
       font-family: var(--font-mono);
-      font-size: 10px;
+      font-size: 9.5px;
       letter-spacing: 0.18em;
       text-transform: uppercase;
-      color: var(--ink-soft);
+      padding: 5px 10px;
+      border-radius: 999px;
+      background: var(--accent-subtle, var(--paper-soft));
+      color: var(--accent-strong, var(--ink-soft));
+      border: 1px solid var(--accent-base, var(--line));
       margin-bottom: 14px;
     }
+    .comite-card .specialty.t-coral { --accent-subtle: var(--coral-subtle); --accent-base: var(--coral-base); --accent-strong: var(--coral-strong); }
+    .comite-card .specialty.t-blush { --accent-subtle: var(--blush-subtle); --accent-base: var(--blush-base); --accent-strong: var(--blush-strong); }
+    .comite-card .specialty.t-mint  { --accent-subtle: var(--mint-subtle);  --accent-base: var(--mint-base);  --accent-strong: var(--mint-strong); }
+    .comite-card .specialty.t-gold  { --accent-subtle: var(--gold-subtle);  --accent-base: var(--gold-base);  --accent-strong: var(--gold-strong); }
     .comite-card .avatar {
       width: 64px;
       height: 64px;
@@ -1327,25 +1336,15 @@
        § 12 · PRICING
        ════════════════════════════════════════════════════════════════════ */
     .pricing { border-top: 1px solid var(--line); }
-    .pricing-head { text-align: center; margin-bottom: 56px; max-width: 640px; margin-left: auto; margin-right: auto; }
-    .pricing-head .eyebrow { margin-bottom: 14px; }
-    .pricing-head h2 {
-      font-family: var(--font-serif);
-      font-weight: 400;
-      font-size: clamp(34px, 4.2vw, 48px);
-      line-height: 1.05;
-      letter-spacing: -0.015em;
-      margin-bottom: 14px;
+    /* Pricing-head · variant del canon .section-head · centered + narrower */
+    .section-head.pricing-head {
+      text-align: center;
+      max-width: 640px;
+      margin-left: auto;
+      margin-right: auto;
+      align-items: center;
     }
-    .pricing-head p {
-      font-family: var(--font-text);
-      font-weight: 300;
-      font-size: 16.5px;
-      line-height: 1.55;
-      color: var(--ink-soft);
-      max-width: 56ch;
-      margin: 0 auto;
-    }
+    .section-head.pricing-head p { margin: 0 auto; }
     .pricing-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
@@ -2222,47 +2221,50 @@
       color: var(--ink-muted);
       margin-bottom: 14px;
     }
+    /* Features ahora · checklist DS canon (mint-circle marker + texto)
+       en lugar de feature cards. Research v0.3 reportó "¿qué hace
+       exactamente?" → checklist answers faster que cards · cada item
+       es una declaración con check, no un card visualmente pesado. */
     .bs-features {
+      list-style: none;
+      padding: 0;
+      margin: 0;
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 12px;
+      grid-template-columns: 1fr;
+      gap: 0;
     }
     .bs-feature {
-      padding: 18px 16px 16px;
-      background: var(--paper-soft);
-      border: 1px solid var(--line);
-      border-radius: 14px;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      transition: border-color var(--duration-base) var(--ease-sheet), background var(--duration-base) var(--ease-sheet);
+      display: grid;
+      grid-template-columns: 28px 1fr;
+      align-items: start;
+      gap: 14px;
+      padding: 14px 0;
+      border-bottom: 1px dashed rgba(80, 60, 30, 0.14);
     }
-    .bs-feature:hover { border-color: var(--line-strong); background: var(--paper); }
-    .bs-feature .icn {
-      width: 36px;
-      height: 36px;
+    .bs-feature:last-child { border-bottom: 0; }
+    .bs-check {
+      width: 22px;
+      height: 22px;
       border-radius: 50%;
-      background: var(--coral-subtle);
-      color: var(--coral-strong);
+      background: var(--mint-subtle);
+      color: var(--mint-strong);
       display: grid;
       place-items: center;
-      margin-bottom: 2px;
+      flex-shrink: 0;
+      margin-top: 2px;
     }
-    .bs-feature .icn svg {
-      width: 18px;
-      height: 18px;
-      stroke: currentColor;
-      fill: none;
-      stroke-width: 1.6;
-      stroke-linecap: round;
-      stroke-linejoin: round;
+    .bs-check svg { width: 12px; height: 12px; }
+    .bs-feature-text {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
     }
     .bs-feature h5 {
       font-family: var(--font-serif);
       font-weight: 400;
       font-size: 16.5px;
       letter-spacing: -0.005em;
-      line-height: 1.15;
+      line-height: 1.2;
       margin: 0;
       color: var(--ink);
     }
