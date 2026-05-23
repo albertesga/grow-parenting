@@ -1215,18 +1215,18 @@
     }
     .pricing-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 18px;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
       align-items: stretch;
-      max-width: 1080px;
+      max-width: 1200px;
       margin: 0 auto;
     }
     .plan {
       position: relative;
       display: grid;
       grid-template-rows: auto auto auto 1fr auto;
-      gap: 18px;
-      padding: 32px 28px;
+      gap: 16px;
+      padding: 28px 22px;
       background: var(--paper);
       border-radius: var(--radius-xl);
       border: 1px solid var(--line);
@@ -1236,6 +1236,16 @@
       box-shadow: 0 18px 40px -16px rgba(214,119,66,0.30);
       border-color: rgba(214,119,66,0.32);
     }
+    /* Plan Free · misma escala visual que los pagos · NO "lite" framing.
+       Tono mint subtle (calm, inclusive, accessible) en lugar de paper plano
+       para que destaque como "primer paso digno". Border y radius idénticos
+       a los otros plans · cero jerarquía visual inferior. */
+    .plan.plan-free {
+      background: linear-gradient(180deg, var(--mint-subtle) 0%, var(--paper) 100%);
+      border-color: var(--mint-base);
+    }
+    .plan.plan-free .price .amt { color: var(--mint-strong); }
+    .plan.plan-free .tier { color: var(--mint-strong); }
     .plan .ribbon {
       position: absolute;
       top: -14px;
@@ -1340,7 +1350,7 @@
 
     .trial {
       max-width: 60ch;
-      margin: 56px auto 32px;
+      margin: 56px auto 14px;
       font-family: var(--font-serif);
       font-style: normal;
       font-weight: 300;
@@ -1348,6 +1358,20 @@
       color: var(--ink-soft);
       text-align: center;
       line-height: 1.5;
+    }
+    /* Free dignity · microcopy bajo el trial · honra el tier gratuito
+       como elección legítima · sin "lite" framing · sin guilt-trip.
+       Mint-strong para conectar con el plan-free arriba. */
+    .free-dignity {
+      max-width: 56ch;
+      margin: 0 auto 32px;
+      font-family: var(--font-text);
+      font-weight: 400;
+      font-size: 14.5px;
+      line-height: 1.55;
+      color: var(--mint-strong);
+      text-align: center;
+      letter-spacing: 0.005em;
     }
     .signup {
       max-width: 480px;
@@ -1526,7 +1550,8 @@
       .libros-grid { grid-template-columns: 1fr 1fr; }
       .threeam .wrap { grid-template-columns: 1fr; gap: 36px; }
       .comite-grid { grid-template-columns: 1fr 1fr; }
-      .pricing-grid { grid-template-columns: 1fr; gap: 14px; max-width: 460px; }
+      /* Tablet/mid · 2x2 grid · evita 4 cols apretadas */
+      .pricing-grid { grid-template-columns: repeat(2, 1fr); gap: 14px; max-width: 720px; }
       .plan.is-featured { transform: none; }
       .site-foot .inner { grid-template-columns: 1fr 1fr; gap: 32px; }
       .sticky-cta.armed { display: block; }
@@ -1542,6 +1567,8 @@
       .trust-row { grid-template-columns: 1fr; }
       .site-foot .inner { grid-template-columns: 1fr; }
       .site-foot .legal { flex-direction: column; gap: 8px; }
+      /* Mobile · stack vertical · cada plan full width */
+      .pricing-grid { grid-template-columns: 1fr; max-width: 420px; }
     }
 
     /* ════════════════════════════════════════════════════════════════════
@@ -2298,7 +2325,7 @@
         <p class="hero-functional">Tu embarazo y la crianza, semana a semana · <strong>contenido con criterio clínico</strong>, <strong>seguimiento del peque</strong> y un <strong>chat que ya lo conoce</strong>.</p>
         <p class="micro">App para familias hispanohablantes · de la concepción al 3<sup>er</sup> cumpleaños</p>
         <div class="hero-ctas">
-          <a class="btn-primary btn-arrow" href="#pricing">Apúntate desde €1,99/mes</a>
+          <a class="btn-primary btn-arrow" href="#pricing">Entra en la lista</a>
           <a class="btn-ghost" href="#narrative">Ver cómo funciona</a>
         </div>
       </div>
@@ -2758,9 +2785,26 @@
       <div class="pricing-head">
         <span class="eyebrow">Precio · canon transparente</span>
         <h2>Te acompañamos también con el bolsillo.</h2>
-        <p>Tres formas de entrar. Empieza con 14 días de Plus completo sin tarjeta — si no es para ti, sigues con el tier gratuito.</p>
+        <p>Cuatro formas de entrar · la primera es gratis para siempre. Empieza con 14 días de Plus completo sin tarjeta — si no es para ti, te quedas en gratis sin perder nada.</p>
       </div>
       <div class="pricing-grid">
+        <!-- Tier Gratis · primero porque el research v0.3 marcó la inclusividad
+             del free como prerrequisito (renta baja + prescripción médica).
+             Visualmente igual de digno que los pagos · cero "lite" framing. -->
+        <article class="plan plan-free">
+          <span class="tier">Para empezar</span>
+          <h3>Gratis</h3>
+          <div class="price"><span class="amt">€0</span><span class="per">/ siempre</span></div>
+          <p class="price-foot">Sin tarjeta · sin permanencia · sin caducidad</p>
+          <ul class="features">
+            <li>1 libro a elegir · embarazo, hitos o sueño</li>
+            <li>Chat IA · 5 preguntas al día</li>
+            <li>Modo 3 AM · triage en madrugadas</li>
+            <li>Calendario · vacunas y revisiones</li>
+            <li>Diario sin límite de entradas</li>
+          </ul>
+          <button class="cta ghost" type="button">Crear cuenta gratis</button>
+        </article>
         <article class="plan is-featured">
           <span class="ribbon">Solo lanzamiento · 1.000 plazas</span>
           <span class="tier">Founding</span>
@@ -2774,7 +2818,7 @@
             <li>Cuenta compartida co-cuidador</li>
             <li>Badge Founding member permanente</li>
           </ul>
-          <button class="cta coral" type="button">Apúntate desde €1,99</button>
+          <button class="cta coral" type="button">Reservar plaza</button>
         </article>
         <article class="plan">
           <span class="tier">Plus · por defecto</span>
@@ -2805,10 +2849,11 @@
           <button class="cta ghost" type="button">Reservar plaza</button>
         </article>
       </div>
-      <p class="trial">14 días de Plus completo sin tarjeta. Si no es para ti, sigues con el tier gratuito sin perder nada.</p>
+      <p class="trial">14 días de Plus completo sin tarjeta · si decides quedarte en gratis, sigues con todo lo esencial.</p>
+      <p class="free-dignity">Gratis no es una versión "lite". Es Grow contigo desde el día uno con lo que necesitas para el día a día. Pagar es opcional · no condiciona el cuidado.</p>
       <form class="signup" id="signup" autocomplete="off" onsubmit="return false;">
         <input type="email" placeholder="tu@email.com" aria-label="Email" required>
-        <button type="submit">Apúntate desde €1,99</button>
+        <button type="submit">Entrar en la lista</button>
       </form>
       <div class="signup-foot">
         <p>Te escribimos cuando podamos abrirte la puerta · Q3 2026.</p>
@@ -2865,7 +2910,7 @@
   <!-- ════════════════════════════════════════════════════════════════════
        STICKY ELEMENTS (mobile)
        ════════════════════════════════════════════════════════════════════ -->
-  <a class="sticky-cta" id="sticky-cta" href="#pricing">Apúntate desde €1,99/mes →</a>
+  <a class="sticky-cta" id="sticky-cta" href="#pricing">Entra en la lista →</a>
   <div class="mobile-avatar" aria-hidden="true">
     <!-- Canvas mobile · misma estrategia que el desktop · ver #avatar-canvas. -->
     <canvas id="m-avatar-canvas" width="168" height="168"></canvas>
@@ -2954,7 +2999,7 @@
         <div class="bs-aval">Avalado por · SEGO · NICE · AEPED · Comité clínico Grow</div>
 
         <section class="bs-actions">
-          <a class="btn-pri" href="#pricing">Apúntate desde €1,99/mes →</a>
+          <a class="btn-pri" href="#pricing">Entra en la lista →</a>
           <a class="btn-ghost" href="#libros">Ver todos los libros</a>
         </section>
       </div>
