@@ -1858,6 +1858,7 @@
         radial-gradient(circle at 0% 0%, rgba(255,255,255,0.6) 0%, transparent 22%),
         linear-gradient(135deg, #FDFAF1 0%, #F2EBDA 100%);
       border-radius: 3px 12px 12px 3px;
+      transition: opacity 240ms cubic-bezier(0.4, 0, 0.6, 1);
       box-shadow:
         inset 6px 0 14px -8px rgba(80,60,30,0.20),
         0 18px 30px -18px rgba(80,60,30,0.22);
@@ -2058,6 +2059,13 @@
     .bs-overlay.is-closing .bs-body {
       transform: translateY(6px);
       transition: transform 180ms cubic-bezier(0.4,0,0.6,1);
+    }
+    /* Page-right fade durante el close · evita que el avatar image quede
+       visible mientras el cover-frame shrinkea de vuelta al source rect.
+       Sin esto, la imagen del libro abierto "sobresale" tras el cierre. */
+    .bs-overlay.is-closing .bs-page-right {
+      opacity: 0;
+      transition: opacity 200ms cubic-bezier(0.4, 0, 0.6, 1);
     }
 
     /* Stagger · eyebrow, feature cards, aval y actions hacen fade-up
