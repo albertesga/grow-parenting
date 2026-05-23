@@ -504,22 +504,16 @@
           return;
         }
 
-        /* Reverse · cover gira de vuelta primero, luego sheet baja + frame vuelve al source */
-        const closeSpin = bsSpinner.animate(
-          [
-            { transform: "rotateY(-180deg)" },
-            { transform: "rotateY(0deg)" }
-          ],
-          { duration: 280, easing: EASE_HINGE, fill: "forwards" }
-        );
-        await closeSpin.finished;
-        bsSpinner.style.transition = "none";
-        bsSpinner.style.transform = "rotateY(0deg)";
-
-        /* Sheet baja · CSS transition se encarga del transform.
-           Necesitamos también shrinkear el cover-frame de vuelta al source rect
-           SINCRONIZADO con el descenso del sheet para que el book "vuelva a su sitio". */
-        const tgtRect = bsFrame.getBoundingClientRect(); /* current natural rect */
+        /* Close simultáneo · TODAS las animaciones disparan en T=0 ·
+           cero pausa muerta como antes (rotateSpin awaited 280ms con todo
+           lo demás quieto). Trace en DevTools Performance · close en ~300ms.
+           · is-closing aplicado primero · dispara CSS transitions del sheet,
+             body, backdrop, page-right, features (todo en paralelo).
+           · closeMove WAAPI para el cover-frame (shrink + fade al source rect).
+           · NO hay closeSpin · el cover ya no necesita un-rotate · al hacer
+             fade + shrink simultáneo el user no nota la pose final del cover.
+           · sourceCard opacity 1 sin delay (close más rápido · no necesario). */
+        const tgtRect = bsFrame.getBoundingClientRect();
         const srcRect = sourceCard.getBoundingClientRect();
         const dx = (srcRect.left + srcRect.width / 2) - (tgtRect.left + tgtRect.width / 2);
         const dy = (srcRect.top  + srcRect.height / 2) - (tgtRect.top  + tgtRect.height / 2);
@@ -527,17 +521,17 @@
         const sy = srcRect.height / tgtRect.height;
         const scale = Math.max(sx, sy);
 
-        sourceCard.style.transition = "opacity 240ms ease 80ms";
+        sourceCard.style.transition = "opacity 200ms ease 40ms";
         sourceCard.style.opacity = "1";
 
         bsOverlay.classList.add("is-closing");
+
         const closeMove = bsFrame.animate(
           [
             { transform: "translate(0, 0) scale(1)", opacity: 1 },
-            { transform: `translate(${dx}px, ${dy}px) scale(${scale})`, opacity: 0, offset: 0.95 },
             { transform: `translate(${dx}px, ${dy}px) scale(${scale})`, opacity: 0 }
           ],
-          { duration: 320, easing: EASE_OUT, fill: "forwards" }
+          { duration: 300, easing: EASE_OUT, fill: "forwards" }
         );
 
         await closeMove.finished;

@@ -1680,7 +1680,14 @@
       transition: opacity 420ms var(--ease-sheet);
     }
     .bs-overlay.is-active .bs-backdrop { opacity: 1; }
-    .bs-overlay.is-closing .bs-backdrop { transition: opacity 260ms cubic-bezier(0.4, 0, 0.6, 1); }
+    /* Close · backdrop opacity 0 explícito (gana sobre .is-active porque
+       is-closing aparece después en el stylesheet · cascade order). Sin esto,
+       el backdrop espera al cleanup para empezar a desvanecerse · linger de
+       420ms post-sheet-drop · sensación de "todo se va menos el oscuro". */
+    .bs-overlay.is-closing .bs-backdrop {
+      opacity: 0;
+      transition: opacity 280ms cubic-bezier(0.4, 0, 0.6, 1);
+    }
 
     /* Bottom sheet · sube desde abajo con rounded top corners.
        Bezier con overshoot (y2 = 1.06) · subtle bounce al asentarse arriba
@@ -2048,6 +2055,16 @@
     .bs-overlay.is-closing .bs-body {
       transform: translateY(6px);
       transition: transform 180ms cubic-bezier(0.4,0,0.6,1);
+    }
+    /* Page-right (avatar img) fade explícito durante close · sin esto, el
+       cover-frame se encoge hacia el source rect mientras la page-right
+       sigue al 100% opacity en el slot, exponiendo el avatar momentáneamente.
+       El sheet drop arrastra todo abajo pero el cover-frame va al source
+       (arriba-izquierda) · esos 200-300ms de discrepancia es lo que el user
+       ve como "se cierra y aún aparece el avatar". */
+    .bs-overlay.is-closing .bs-page-right {
+      opacity: 0;
+      transition: opacity 200ms cubic-bezier(0.4, 0, 0.6, 1);
     }
 
     /* Stagger · eyebrow, feature cards, aval y actions hacen fade-up
