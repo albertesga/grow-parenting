@@ -371,11 +371,13 @@
       gap: 4px;
       align-items: stretch;
     }
+    /* Trust chip · una afirmación clara con icono DS en ink · sin medal
+       circular · cero descripción secundaria · máximo contraste editorial. */
     .trust-chip {
       display: flex;
       align-items: center;
-      gap: 12px;
-      padding: 14px 18px;
+      gap: 14px;
+      padding: 18px 20px;
       position: relative;
     }
     .trust-chip + .trust-chip::before {
@@ -387,37 +389,23 @@
       width: 1px;
       background: linear-gradient(180deg, transparent, var(--line-strong), transparent);
     }
-    .trust-chip .medal {
+    .trust-icn {
       flex-shrink: 0;
-      width: 32px;
-      height: 32px;
-      display: grid;
-      place-items: center;
-      border-radius: 50%;
-      background: var(--paper);
-      color: var(--medal-color, var(--ink));
-      border: 1px solid var(--line);
+      width: 24px;
+      height: 24px;
+      stroke: var(--ink);
+      fill: none;
+      stroke-width: 1.6;
+      stroke-linecap: round;
+      stroke-linejoin: round;
     }
-    .trust-chip .medal svg { width: 16px; height: 16px; }
-    .trust-chip.t-coral { --medal-color: var(--coral-strong); }
-    .trust-chip.t-blush { --medal-color: var(--blush-strong); }
-    .trust-chip.t-gold  { --medal-color: var(--gold-strong); }
-    .trust-chip.t-mint  { --medal-color: var(--mint-strong); }
-    .trust-chip .txt strong {
-      display: block;
+    .trust-chip strong {
       font-family: var(--font-text);
-      font-weight: 600;
-      font-size: 13.5px;
+      font-weight: 500;
+      font-size: 14px;
       color: var(--ink);
       line-height: 1.3;
-    }
-    .trust-chip .txt span {
-      display: block;
-      font-family: var(--font-text);
-      font-weight: 400;
-      font-size: 12.5px;
-      color: var(--ink-soft);
-      margin-top: 2px;
+      letter-spacing: -0.005em;
     }
 
     /* ════════════════════════════════════════════════════════════════════
