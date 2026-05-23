@@ -560,6 +560,36 @@
 
     /* Narrative stream */
     .narrative-stream { padding: 24px 0; }
+
+    /* Closing del parallax · línea honesta que nombra explícito las
+       familias no estándar (research v0.3 hallazgo #1). Sin grid de
+       6 configs · una sola frase de manifesto antes de los libros.
+       Galiner serif Light + ink-soft + em weight 300 para los
+       nombramientos · respira como cierre editorial. */
+    .narrative-closing {
+      max-width: 720px;
+      margin: 56px auto 0;
+      padding: 36px 32px 0;
+      border-top: 1px solid var(--line);
+      text-align: center;
+    }
+    .narrative-closing p {
+      font-family: var(--font-serif);
+      font-weight: 400;
+      font-size: clamp(18px, 1.8vw, 24px);
+      line-height: 1.45;
+      letter-spacing: -0.008em;
+      color: var(--ink);
+      margin: 0;
+    }
+    .narrative-closing em {
+      font-style: normal;
+      font-weight: 300;
+      color: var(--ink-soft);
+    }
+    @media (max-width: 720px) {
+      .narrative-closing { padding: 28px 22px 0; margin-top: 40px; }
+    }
     .block {
       padding: 84px 0;
       border-bottom: 1px solid var(--line);
@@ -913,6 +943,20 @@
       font-size: 12.5px;
       color: var(--ink-soft);
       margin-top: 4px;
+    }
+    /* Libro-mode badge · señal funcional discreta para libros que tienen
+       modos especiales · prematuros/adopción/post-UCIN (research v0.3
+       hallazgo #1). Tiny mono uppercase · inherita color del tono del
+       libro padre · no compite con la jerarquía visual del card. */
+    .libro-card .libro-mode {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.05em;
+      color: var(--ink-soft);
+      margin-top: 8px;
+      padding-top: 6px;
+      border-top: 1px dashed rgba(80, 60, 30, 0.18);
+      opacity: 0.86;
     }
     .libro-card .more {
       font-family: var(--font-text);
@@ -2581,6 +2625,16 @@
           </div>
         </article>
       </div>
+
+      <!-- Closing del parallax · señal honesta de inclusividad funcional
+           (research v0.3 hallazgo #1 · familias preemie / adopción /
+           subrogación / dos madres / monoparental dijeron "si no me nombráis
+           asumo que no me pensasteis"). Nombra explícito en una sola línea ·
+           NO un grid de 6 configs (anti-patrón del brief v3) · NO decorativo
+           · funcional (apunta a los modes reales del producto). -->
+      <div class="narrative-closing">
+        <p>Vengas de donde vengas tu historia —<br><em>gestación, adopción, acogida, una pérdida antes, una UCIN</em>— Grow se adapta a la tuya.</p>
+      </div>
     </div>
   </section>
 
@@ -2646,6 +2700,7 @@
             <span class="ico"><svg viewBox="0 0 24 24"><use href="#b-thermo"/></svg></span>
             <h4>Salud</h4>
             <p class="age">0 — 3 años</p>
+            <p class="libro-mode">+ modo post-UCIN · follow-up neonatal</p>
           </div>
           <span class="more">Ver libro</span>
         </article>
@@ -2664,6 +2719,7 @@
             <span class="ico"><svg viewBox="0 0 24 24"><use href="#b-sprout"/></svg></span>
             <h4>Hitos</h4>
             <p class="age">0 — 3 años</p>
+            <p class="libro-mode">+ edad corregida · prematuros</p>
           </div>
           <span class="more">Ver libro</span>
         </article>
@@ -2673,6 +2729,7 @@
             <span class="ico"><svg viewBox="0 0 24 24"><use href="#b-heart"/></svg></span>
             <h4>Desarrollo</h4>
             <p class="age">0 — 3 años</p>
+            <p class="libro-mode">+ modo arcoíris · adopción</p>
           </div>
           <span class="more">Ver libro</span>
         </article>
