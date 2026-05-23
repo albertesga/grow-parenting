@@ -164,7 +164,7 @@
 
         if (phaseText)  phaseText.textContent = phaseLabels[phase];
         if (phaseDot)   phaseDot.style.background = phaseColors[phase];
-        if (avatarFill) avatarFill.style.height = (progress * 100).toFixed(1) + "%";
+        if (avatarFill) avatarFill.style.width = (progress * 100).toFixed(1) + "%";
 
         Object.entries(stops).forEach(([key, el]) => {
           if (!el) return;

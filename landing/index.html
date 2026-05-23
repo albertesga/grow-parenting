@@ -210,12 +210,24 @@
             <span id="phase-text">Embarazo</span>
           </div>
         </div>
-        <div class="avatar-progress" id="avatar-progress">
-          <div class="track"><div class="fill" id="avatar-fill"></div></div>
+        <div class="avatar-progress" id="avatar-progress" aria-label="Etapas del recorrido">
+          <div class="track" aria-hidden="true"><div class="fill" id="avatar-fill"></div></div>
           <div class="stops">
-            <div class="stop is-active" data-phase="coral" id="stop-coral"><span class="node"></span><span class="lbl">Embarazo</span></div>
-            <div class="stop" data-phase="blush" id="stop-blush"><span class="node"></span><span class="lbl">Recién nacido</span></div>
-            <div class="stop" data-phase="mint" id="stop-mint"><span class="node"></span><span class="lbl">Bebé</span></div>
+            <div class="stop is-active" data-phase="coral" id="stop-coral">
+              <span class="node"></span>
+              <span class="lbl">Embarazo</span>
+              <span class="range">Sem 4 — 40</span>
+            </div>
+            <div class="stop" data-phase="blush" id="stop-blush">
+              <span class="node"></span>
+              <span class="lbl">Recién nacido</span>
+              <span class="range">0 — 6 m</span>
+            </div>
+            <div class="stop" data-phase="mint" id="stop-mint">
+              <span class="node"></span>
+              <span class="lbl">Bebé</span>
+              <span class="range">6 m — 3 a</span>
+            </div>
           </div>
         </div>
       </aside>

@@ -481,72 +481,93 @@
       box-shadow: 0 6px 16px -8px rgba(42,33,27,0.18);
     }
     .avatar-phase .dot { width: 8px; height: 8px; border-radius: 50%; }
+    /* ════════════════════════════════════════════════════════════════════
+       § Avatar progress · horizontal stepper · 3 etapas del recorrido
+       (Embarazo · Recién nacido · Bebé) con dot + label + rango de edad.
+       Track horizontal con fill tonal gradient (coral → blush → mint).
+       ════════════════════════════════════════════════════════════════════ */
     .avatar-progress {
-      margin-top: 56px;
-      padding: 0 8px;
+      margin-top: 28px;
+      padding: 0 12px;
+      position: relative;
     }
     .avatar-progress .track {
-      width: 2px;
-      height: 280px;
-      background: var(--line);
-      margin: 0 auto;
       position: relative;
+      height: 2px;
+      background: var(--line);
       border-radius: 1px;
+      margin: 0 8px; /* alinea con el centro del primer y último dot */
     }
     .avatar-progress .fill {
       position: absolute;
       top: 0;
       left: 0;
-      width: 100%;
-      height: 0;
-      background: linear-gradient(180deg, var(--coral-base) 0%, var(--blush-base) 50%, var(--mint-base) 100%);
+      height: 100%;
+      width: 0;
+      background: linear-gradient(90deg, var(--coral-base) 0%, var(--blush-base) 50%, var(--mint-base) 100%);
       border-radius: 1px;
-      transition: height var(--duration-base) var(--ease);
+      transition: width var(--duration-base) var(--ease);
     }
     .avatar-progress .stops {
-      margin-top: -280px;
-      position: relative;
-      height: 280px;
       display: flex;
-      flex-direction: column;
       justify-content: space-between;
       align-items: flex-start;
-      padding-left: 28px;
+      margin-top: -8px; /* overlap del dot con el track */
+      position: relative;
     }
     .avatar-progress .stop {
       display: flex;
+      flex-direction: column;
       align-items: center;
-      gap: 12px;
+      gap: 10px;
+      flex: 0 0 auto;
       position: relative;
     }
     .avatar-progress .stop .node {
-      position: absolute;
-      left: -22px;
-      width: 12px;
-      height: 12px;
+      width: 14px;
+      height: 14px;
       border-radius: 50%;
       background: var(--paper);
       border: 1.5px solid var(--line-strong);
-      transition: all var(--duration-base) var(--ease);
+      transition:
+        background var(--duration-base) var(--ease),
+        border-color var(--duration-base) var(--ease),
+        transform var(--duration-base) var(--ease-spring),
+        box-shadow var(--duration-base) var(--ease);
+      position: relative;
+      z-index: 1;
     }
     .avatar-progress .stop.is-passed .node { background: var(--coral-base); border-color: var(--coral-base); }
     .avatar-progress .stop[data-phase="blush"].is-passed .node { background: var(--blush-base); border-color: var(--blush-base); }
     .avatar-progress .stop[data-phase="mint"].is-passed .node { background: var(--mint-base); border-color: var(--mint-base); }
     .avatar-progress .stop.is-active .node {
-      transform: scale(1.4);
-      box-shadow: 0 0 0 6px rgba(242,165,122,0.22);
+      transform: scale(1.5);
+      box-shadow: 0 0 0 7px rgba(242,165,122,0.22);
     }
-    .avatar-progress .stop[data-phase="blush"].is-active .node { box-shadow: 0 0 0 6px rgba(216,154,137,0.22); }
-    .avatar-progress .stop[data-phase="mint"].is-active .node { box-shadow: 0 0 0 6px rgba(143,174,133,0.22); }
+    .avatar-progress .stop[data-phase="blush"].is-active .node { box-shadow: 0 0 0 7px rgba(216,154,137,0.22); }
+    .avatar-progress .stop[data-phase="mint"].is-active .node { box-shadow: 0 0 0 7px rgba(143,174,133,0.22); }
     .avatar-progress .stop .lbl {
-      font-family: var(--font-display);
-      font-size: 10.5px;
-      letter-spacing: 0.18em;
+      font-family: var(--font-mono);
+      font-size: 9.5px;
+      letter-spacing: 0.20em;
       text-transform: uppercase;
       color: var(--ink-muted);
       transition: color var(--duration-fast) var(--ease);
+      white-space: nowrap;
+      text-align: center;
     }
     .avatar-progress .stop.is-active .lbl { color: var(--ink); }
+    .avatar-progress .stop .range {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 0.10em;
+      color: var(--ink-faint);
+      white-space: nowrap;
+      text-align: center;
+      margin-top: -4px;
+      transition: color var(--duration-fast) var(--ease);
+    }
+    .avatar-progress .stop.is-active .range { color: var(--ink-soft); }
 
     /* Narrative stream */
     .narrative-stream { padding: 24px 0; }
