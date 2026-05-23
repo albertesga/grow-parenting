@@ -2675,16 +2675,14 @@
           </div>
         </article>
       </div>
+    </div>
 
-      <!-- Closing del parallax · señal honesta de inclusividad funcional
-           (research v0.3 hallazgo #1 · familias preemie / adopción /
-           subrogación / dos madres / monoparental dijeron "si no me nombráis
-           asumo que no me pensasteis"). Nombra explícito en una sola línea ·
-           NO un grid de 6 configs (anti-patrón del brief v3) · NO decorativo
-           · funcional (apunta a los modes reales del producto). -->
-      <div class="narrative-closing">
-        <p>Vengas de donde vengas tu historia —<br><em>gestación, adopción, acogida, una pérdida antes, una UCIN</em>— Grow se adapta a la tuya.</p>
-      </div>
+    <!-- Closing del parallax · FUERA del .narrative-shell (que es grid
+         360px 1fr con avatar-stage sticky) · si vive dentro, el avatar
+         tracker se solapa visualmente con el texto del closing. Aquí
+         queda como sibling de .narrative-shell, full width, sin overlap. -->
+    <div class="narrative-closing">
+      <p>Vengas de donde vengas tu historia —<br><em>gestación, adopción, acogida, una pérdida antes, una UCIN</em>— Grow se adapta a la tuya.</p>
     </div>
   </section>
 
