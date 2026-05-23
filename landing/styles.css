@@ -1855,10 +1855,20 @@
         radial-gradient(circle at 0% 0%, rgba(255,255,255,0.6) 0%, transparent 22%),
         linear-gradient(135deg, #FDFAF1 0%, #F2EBDA 100%);
       border-radius: 3px 12px 12px 3px;
-      box-shadow:
-        inset 6px 0 14px -8px rgba(80,60,30,0.20),
-        0 18px 30px -18px rgba(80,60,30,0.22);
+      /* Opacity 0 por defecto · page-right NO debe verse durante la subida
+         del sheet · solo aparece cuando el cover-spinner ha pasado -90° y
+         libera el slot. Sin esto, el avatar es visible desde el primer
+         frame de la subida (cover-frame aún viajando desde el source rect). */
+      opacity: 0;
       overflow: hidden;
+    }
+    /* Fade in con delay 400ms · alineado con el momento en que el
+       cover-spinner cruza -90° (~ T=375-400ms desde is-active añadido) ·
+       el avatar aparece exactamente cuando el cover-back se hace visible,
+       cohesivo con la animación de apertura del libro. */
+    .bs-overlay.is-active .bs-page-right {
+      opacity: 1;
+      transition: opacity 240ms cubic-bezier(0.22, 0.61, 0.36, 1) 400ms;
     }
     .bs-page-img {
       width: 100%;
