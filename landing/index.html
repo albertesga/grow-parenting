@@ -259,7 +259,25 @@
       max-width: 32ch;
       margin-top: 24px;
     }
-    .hero .micro { margin-top: 28px; }
+    /* Línea funcional bajo el manifesto · Grift body · responde QUÉ HACE
+       la app (research v0.3 · 24 users no entendían si era tracker /
+       contenido / chat). Las tres patas SABER·REGISTRAR·PREGUNTAR
+       articuladas en una frase corta sin bullets. */
+    .hero-functional {
+      font-family: var(--font-text);
+      font-weight: 400;
+      font-size: clamp(15.5px, 1.3vw, 18px);
+      line-height: 1.5;
+      letter-spacing: -0.002em;
+      color: var(--ink);
+      max-width: 44ch;
+      margin-top: 18px;
+    }
+    .hero-functional strong {
+      font-weight: 600;
+      color: var(--ink);
+    }
+    .hero .micro { margin-top: 18px; }
     .hero-ctas { display: flex; gap: 14px; align-items: center; margin-top: 32px; flex-wrap: wrap; }
     /* Hero avatar · estructura simple · img centrado en cuadrado + phase
        tag posicionado al pie. Sin meta editorial · el manifest vive en
@@ -2272,7 +2290,13 @@
       <div>
         <h1>Tú cuidas a tu hij@.<br><em>Grow te cuida a ti.</em></h1>
         <p class="manifesto-sub">Sin manual, sin juicios, sin urgencia.</p>
-        <p class="micro">De la concepción al 3<sup>er</sup> cumpleaños</p>
+        <!-- Línea funcional · responde "qué hace la app" en una sola frase ·
+             nombra las tres patas SABER (contenido criterio clínico) ·
+             REGISTRAR (seguimiento) · PREGUNTAR (chat personalizado) ·
+             ancla "app" para que el rango de edad del micro no se lea como
+             material de lectura. -->
+        <p class="hero-functional">Tu embarazo y la crianza, semana a semana · <strong>contenido con criterio clínico</strong>, <strong>seguimiento del peque</strong> y un <strong>chat que ya lo conoce</strong>.</p>
+        <p class="micro">App para familias hispanohablantes · de la concepción al 3<sup>er</sup> cumpleaños</p>
         <div class="hero-ctas">
           <a class="btn-primary btn-arrow" href="#pricing">Apúntate desde €1,99/mes</a>
           <a class="btn-ghost" href="#narrative">Ver cómo funciona</a>
