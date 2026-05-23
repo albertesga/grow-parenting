@@ -1335,10 +1335,10 @@
     .section-head.pricing-head p { margin: 0 auto; }
     .pricing-grid {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 14px;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
       align-items: stretch;
-      max-width: 1200px;
+      max-width: 960px;
       margin: 0 auto;
     }
     .plan {
@@ -1670,8 +1670,8 @@
       .libros-grid { grid-template-columns: 1fr 1fr; }
       .threeam .wrap { grid-template-columns: 1fr; gap: 36px; }
       .comite-grid { grid-template-columns: 1fr 1fr; }
-      /* Tablet/mid · 2x2 grid · evita 4 cols apretadas */
-      .pricing-grid { grid-template-columns: repeat(2, 1fr); gap: 14px; max-width: 720px; }
+      /* Tablet/mid · stack 1-col (con 3 plans, 2-col dejaría 1 lonely) */
+      .pricing-grid { grid-template-columns: 1fr; gap: 14px; max-width: 480px; }
       .plan.is-featured { transform: none; }
       .site-foot .inner { grid-template-columns: 1fr 1fr; gap: 32px; }
       .sticky-cta.armed { display: block; }
@@ -1687,8 +1687,7 @@
       .trust-row { grid-template-columns: 1fr; }
       .site-foot .inner { grid-template-columns: 1fr; }
       .site-foot .legal { flex-direction: column; gap: 8px; }
-      /* Mobile · stack vertical · cada plan full width */
-      .pricing-grid { grid-template-columns: 1fr; max-width: 420px; }
+      /* .pricing-grid · ya stack 1-col desde 960px breakpoint · no necesita override aquí */
     }
 
     /* ════════════════════════════════════════════════════════════════════
