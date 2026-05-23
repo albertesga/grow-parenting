@@ -561,6 +561,45 @@
     /* Narrative stream */
     .narrative-stream { padding: 24px 0; }
 
+    /* Intro del parallax · framing line que descentra el supuesto
+       cronológico antes de que el user vea la historia secuencial.
+       Eyebrow mono + frase serif corta · paper-soft bg sutil para
+       diferenciar visualmente sin compitir con los blocks de abajo.
+       Posición · ANTES del .narrative-shell para pre-empt la lectura. */
+    .narrative-intro {
+      max-width: 1240px;
+      margin: 0 auto 24px;
+      padding: 28px 40px 0;
+      text-align: center;
+    }
+    .narrative-intro .eyebrow {
+      display: block;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--coral-strong);
+      margin-bottom: 10px;
+    }
+    .narrative-intro p {
+      font-family: var(--font-serif);
+      font-weight: 400;
+      font-size: clamp(17px, 1.6vw, 21px);
+      line-height: 1.5;
+      letter-spacing: -0.008em;
+      color: var(--ink);
+      max-width: 56ch;
+      margin: 0 auto;
+    }
+    .narrative-intro em {
+      font-style: normal;
+      font-weight: 300;
+      color: var(--coral-strong);
+    }
+    @media (max-width: 720px) {
+      .narrative-intro { padding: 22px 22px 0; margin-bottom: 18px; }
+    }
+
     /* Closing del parallax · línea honesta que nombra explícito las
        familias no estándar (research v0.3 hallazgo #1). Sin grid de
        6 configs · una sola frase de manifesto antes de los libros.
@@ -2411,6 +2450,15 @@
        § 2 · PARALLAX NARRATIVE
        ════════════════════════════════════════════════════════════════════ -->
   <section class="narrative" id="narrative" data-section="2">
+    <!-- Framing line · señal que descentra el supuesto cronológico (research
+         v0.3 · embarazada de 34 sem siente que "la web le habla a la semana 8";
+         madre de toddler casi-3 siente que "se acaba pronto"). El parallax
+         sigue contando la historia en orden, pero esta línea pre-empt el
+         "esto no es para mí ahora" de quien no está al principio. -->
+    <div class="narrative-intro">
+      <span class="eyebrow">El recorrido</span>
+      <p>Vengas con <em>8 semanas</em> o con tu peque <em>casi 3</em> · este recorrido se ajusta a tu ahora. Cada etapa se enciende cuando la vives, no antes ni después.</p>
+    </div>
     <div class="narrative-shell">
       <aside class="avatar-stage" aria-hidden="true">
         <div class="frame" id="avatar-frame">
@@ -2437,7 +2485,7 @@
         <!-- Bloque 1 · Embarazo -->
         <article class="block t-coral" data-phase="coral">
           <div class="eyebrow">Bloque 1 · Embarazo</div>
-          <h3 class="quote-large">"Mi cuñada me dice una cosa, mi madre otra, internet quince. Y aún no he salido del primer trimestre."</h3>
+          <h3 class="quote-large">"Mi cuñada me dice una cosa, mi madre otra, internet quince. Y cada semana cambia el motivo."</h3>
           <div class="quote-rotator" aria-live="polite">
             <p class="q-item is-active">"Llevo dos horas sin notar pataditas. ¿Es para preocuparme?"</p>
             <p class="q-item">"Mañana tengo la ecografía y no he dormido nada."</p>
@@ -2646,9 +2694,9 @@
   <section class="full libros" id="libros" data-section="3">
     <div class="wrap">
       <div class="libros-head">
-        <span class="eyebrow">Los libros · 9 destinos</span>
+        <span class="eyebrow">Los libros · 9 destinos · se activan en tu ahora</span>
         <h2>Todo lo que necesitas, en nueve libros.</h2>
-        <p>Cada libro con su color, su evidencia y su voz. Cuando los necesitas, están. Cuando no, no estorban.</p>
+        <p>Cada libro con su color, su evidencia y su voz · se enciende cuando entra en su edad activa y se apaga cuando deja de serte útil. Lo que te toca ahora, sin más.</p>
       </div>
       <div class="libros-grid" role="list">
         <article class="libro-card t-coral" role="listitem">
