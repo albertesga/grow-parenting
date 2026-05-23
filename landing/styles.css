@@ -1278,47 +1278,10 @@
     .comite-card.t-blush { --accent-soft: var(--blush-subtle); }
     .comite-card.t-mint  { --accent-soft: var(--mint-subtle); }
     .comite-card.t-gold  { --accent-soft: var(--gold-subtle); }
-    .badges {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 12px;
-      max-width: 720px;
-    }
-    .badge-cred {
-      display: flex;
-      gap: 14px;
-      padding: 18px 22px;
-      background: var(--paper);
-      border-radius: var(--radius-lg);
-      border: 1px solid var(--line);
-    }
-    .badge-cred .seal {
-      flex-shrink: 0;
-      width: 36px;
-      height: 36px;
-      border-radius: 50%;
-      background: var(--coral-subtle);
-      color: var(--coral-strong);
-      display: grid;
-      place-items: center;
-      font-family: var(--font-display);
-      font-weight: 600;
-      font-size: 14px;
-    }
-    .badge-cred strong {
-      display: block;
-      font-family: var(--font-text);
-      font-weight: 600;
-      font-size: 14px;
-      color: var(--ink);
-      margin-bottom: 2px;
-    }
-    .badge-cred span {
-      font-family: var(--font-text);
-      font-size: 13px;
-      color: var(--ink-soft);
-      line-height: 1.45;
-    }
+    /* .badges + .badge-cred eliminados · los 3 badge-cred al pie del comité
+       (calendario pediatras / tests profesionales / camino producto sanitario)
+       fueron removidos · ya redundaban con los trust-chip de la sección 1. */
+
 
     /* ════════════════════════════════════════════════════════════════════
        § 12 · PRICING
