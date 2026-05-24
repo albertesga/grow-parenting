@@ -14,16 +14,18 @@ import HeroRevealSection from './HeroRevealSection';
  * IntroPhotoSection · sección fusionada 1+2.
  *
  * Estructura:
- *  - Wrapper de 200vh (2 viewports de scroll).
+ *  - Wrapper de 320vh (3.2 viewports de scroll · da tiempo a apreciar
+ *    todo el hero antes de soltar al usuario hacia la sección 3).
  *  - Sticky inner de 100vh donde la foto se ancla.
  *  - useScroll(target: wrapper, offset: ['start start', 'end end'])
  *    devuelve scrollYProgress de 0 → 1 mientras el wrapper sale del viewport.
- *  - 0   · foto centrada, grande (intro)
- *  - 0.5 · foto reducida + desplazada a la derecha + rotada (en transición)
- *  - 1   · foto en posición polaroid hero · texto + arrows visibles
  *
- * Las transformaciones aplican durante 0 → 0.55 aproximadamente · luego se
- * mantiene estable mientras el texto y arrows revelan (0.45 → 1).
+ * Timeline narrativo (progress 0 → 1):
+ *  · 0.00 → 0.35 · foto se reduce + desplaza + rota · frame polaroid aparece
+ *  · 0.30 → 0.55 · texto "Este es Inti." + subrayado handwritten reveal
+ *  · 0.50 → 0.75 · párrafo + 4 flechas handwritten con stagger
+ *  · 0.75 → 1.00 · HOLD · composición completa visible · le da tiempo al
+ *                  usuario a leer y absorber antes de continuar el scroll
  *
  * En mobile · simplificamos el parallax · la foto se reduce sin desplazarse
  * a la derecha (queda arriba) y el texto va debajo.
@@ -44,28 +46,31 @@ export default function IntroPhotoSection() {
   });
 
   // Transform values · timeline 0 → 1
-  //  · 0      foto fullscreen
-  //  · 0.55   foto en posición polaroid hero
-  //  · 0.55→1 texto + arrows revealan
-  const scale = useTransform(progress, [0, 0.55], [1, 0.62]);
-  const xPercent = useTransform(progress, [0, 0.55], [0, 28]);
-  const yPercent = useTransform(progress, [0, 0.55], [0, 4]);
-  const rotate = useTransform(progress, [0, 0.55], [0, 3]);
+  //  · 0 → 0.35   foto se transforma a polaroid hero (más lento · más cinema)
+  //  · 0.35 → 0.75  texto + arrows revealan
+  //  · 0.75 → 1.00  HOLD · todo visible, nada cambia · el scroll continúa
+  //                  consumiendo viewport hasta que el wrapper sale del top
+  const scale = useTransform(progress, [0, 0.35], [1, 0.62]);
+  const xPercent = useTransform(progress, [0, 0.35], [0, 28]);
+  const yPercent = useTransform(progress, [0, 0.35], [0, 4]);
+  const rotate = useTransform(progress, [0, 0.35], [0, 3]);
   // Frame · de foto limpia (frameOpacity 0) a polaroid (1)
-  const frameOpacity = useTransform(progress, [0.05, 0.55], [0, 1]);
+  const frameOpacity = useTransform(progress, [0.05, 0.35], [0, 1]);
   // Padding del marco · de 0 a 16/16/56 (polaroid)
-  const framePadding = useTransform(progress, [0.05, 0.55], [0, 16]);
-  const framePaddingBottom = useTransform(progress, [0.05, 0.55], [0, 56]);
+  const framePadding = useTransform(progress, [0.05, 0.35], [0, 16]);
+  const framePaddingBottom = useTransform(progress, [0.05, 0.35], [0, 56]);
   // Shadow intensity · sube cuando el frame aparece
-  const shadowStrength = useTransform(progress, [0.1, 0.55], [0, 1]);
+  const shadowStrength = useTransform(progress, [0.1, 0.35], [0, 1]);
 
-  // Reveal del bloque de texto (sólo a partir de 0.5 progress)
-  const textProgress = useTransform(progress, [0.45, 0.95], [0, 1]);
+  // Reveal del bloque de texto (empieza cuando foto ya está en posición)
+  // Termina en 0.75 · luego HOLD hasta 1.0 para que el usuario tenga
+  // tiempo de leer todo antes de seguir scrolleando a la siguiente sección.
+  const textProgress = useTransform(progress, [0.3, 0.75], [0, 1]);
 
   return (
     <section
       ref={wrapperRef}
-      className="relative h-[200vh] w-full"
+      className="relative h-[320vh] w-full"
       aria-label="Presentación de Inti"
     >
       {/* Sticky inner · ocupa 100vh mientras el wrapper se desplaza */}
@@ -178,7 +183,7 @@ function DesktopChoreography({
           {/* Foto · siempre fills el contenedor interno */}
           <div className="relative h-full w-full overflow-hidden">
             <img
-              src="/img/inti.svg"
+              src="/img/inti.png"
               alt="Inti sonriendo en una foto tipo polaroid"
               className="h-full w-full object-cover"
               draggable={false}
@@ -247,7 +252,7 @@ function MobileChoreography({
         >
           <div className="relative h-full w-full overflow-hidden">
             <img
-              src="/img/inti.svg"
+              src="/img/inti.png"
               alt="Inti sonriendo en una foto tipo polaroid"
               className="h-full w-full object-cover"
               draggable={false}

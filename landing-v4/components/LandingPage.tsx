@@ -2,7 +2,6 @@
 
 import IntroPhotoSection from './IntroPhotoSection';
 import EmotionalStatementSection from './EmotionalStatementSection';
-import GrowLogo from './GrowLogo';
 
 /**
  * LandingPage · orquesta las 3 secciones narrativas de Inti.
@@ -23,8 +22,12 @@ export default function LandingPage() {
     <main className="relative w-full overflow-x-hidden">
       {/* Logo persistente top-left · siempre visible, discreto */}
       <header className="fixed left-6 top-6 z-50 md:left-10 md:top-8">
-        <GrowLogo className="h-9 w-auto md:h-11" />
-        <span className="sr-only">Grow</span>
+        <img
+          src="/img/grow-logo.png"
+          alt="Grow"
+          className="h-9 w-auto md:h-11"
+          draggable={false}
+        />
       </header>
 
       {/* Sección 1 + 2 fusionadas · sticky scroll narrative */}
