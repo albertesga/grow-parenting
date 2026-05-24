@@ -81,33 +81,34 @@ interface HandwrittenAssetProps {
   className?: string;
 }
 
-// Aspect ratios + paths · una entrada por asset
+// Aspect ratios reales post-crop (whitespace eliminado con PIL bbox crop).
+// Estos ratios son la dimensión exacta de cada PNG · usar para calcular height.
 const ASSET_META: Record<HandwrittenVariant, { aspect: number; src: string }> = {
   // Decorativos
-  cloud:         { aspect: 1.4,  src: '/img/handwritten/cloud.png' },
-  sparkle:       { aspect: 1.0,  src: '/img/handwritten/sparkle.png' },
-  sparkleAlt:    { aspect: 1.0,  src: '/img/handwritten/sparkle-alt.png' },
-  circle:        { aspect: 1.4,  src: '/img/handwritten/circle.png' },
-  circleLarge:   { aspect: 1.4,  src: '/img/handwritten/circle-large.png' },
-  wave:          { aspect: 4.0,  src: '/img/handwritten/wave.png' },
-  doubleLine:    { aspect: 4.0,  src: '/img/handwritten/double-line.png' },
-  curve:         { aspect: 5.0,  src: '/img/handwritten/curve.png' },
-  swash:         { aspect: 3.5,  src: '/img/handwritten/swash.png' },
+  cloud:         { aspect: 1.45,  src: '/img/handwritten/cloud.png' },
+  sparkle:       { aspect: 0.97,  src: '/img/handwritten/sparkle.png' },
+  sparkleAlt:    { aspect: 1.03,  src: '/img/handwritten/sparkle-alt.png' },
+  circle:        { aspect: 1.65,  src: '/img/handwritten/circle.png' },
+  circleLarge:   { aspect: 1.31,  src: '/img/handwritten/circle-large.png' },
+  wave:          { aspect: 22.9,  src: '/img/handwritten/wave.png' },
+  doubleLine:    { aspect: 9.81,  src: '/img/handwritten/double-line.png' },
+  curve:         { aspect: 16.04, src: '/img/handwritten/curve.png' },
+  swash:         { aspect: 11.6,  src: '/img/handwritten/swash.png' },
   // Direccionales horizontales
-  arrowDouble:   { aspect: 4.0,  src: '/img/handwritten/arrow-double.png' },
-  arrowWave:     { aspect: 3.5,  src: '/img/handwritten/arrow-wave.png' },
-  arrowThinRight:{ aspect: 1.3,  src: '/img/handwritten/arrow-thin-right.png' },
-  arrowThinLeft: { aspect: 1.3,  src: '/img/handwritten/arrow-thin-left.png' },
-  arrowRight:    { aspect: 1.3,  src: '/img/handwritten/arrow-right.png' },
+  arrowDouble:   { aspect: 5.88,  src: '/img/handwritten/arrow-double.png' },
+  arrowWave:     { aspect: 12.11, src: '/img/handwritten/arrow-wave.png' },
+  arrowThinRight:{ aspect: 2.56,  src: '/img/handwritten/arrow-thin-right.png' },
+  arrowThinLeft: { aspect: 3.73,  src: '/img/handwritten/arrow-thin-left.png' },
+  arrowRight:    { aspect: 4.14,  src: '/img/handwritten/arrow-right.png' },
   // Direccionales verticales
-  arrowDown:     { aspect: 0.67, src: '/img/handwritten/arrow-down.png' },
+  arrowDown:     { aspect: 0.17,  src: '/img/handwritten/arrow-down.png' },
   // Direccionales con loops
-  arrowLoop:     { aspect: 1.0,  src: '/img/handwritten/arrow-loop.png' },
-  arrowLoopDown: { aspect: 1.0,  src: '/img/handwritten/arrow-loop-down.png' },
-  arrowSmallLoop:{ aspect: 1.0,  src: '/img/handwritten/arrow-small-loop.png' },
+  arrowLoop:     { aspect: 1.2,   src: '/img/handwritten/arrow-loop.png' },
+  arrowLoopDown: { aspect: 1.57,  src: '/img/handwritten/arrow-loop-down.png' },
+  arrowSmallLoop:{ aspect: 1.95,  src: '/img/handwritten/arrow-small-loop.png' },
   // Curvas grandes
-  arrowUpLeft:   { aspect: 1.3,  src: '/img/handwritten/arrow-up-left.png' },
-  arrowCurve:    { aspect: 1.3,  src: '/img/handwritten/arrow-curve.png' },
+  arrowUpLeft:   { aspect: 3.5,   src: '/img/handwritten/arrow-up-left.png' },
+  arrowCurve:    { aspect: 3.38,  src: '/img/handwritten/arrow-curve.png' },
 };
 
 export default function HandwrittenAsset({

@@ -58,21 +58,19 @@ export default function HeroRevealSection({
         Este es <span className="font-extrabold">Inti.</span>
       </motion.h1>
 
-      {/* Subrayado handwritten bajo "Inti." · usa el asset swash.png
-          (línea sinuosa con loop al final · estilo handwritten real) */}
+      {/* Subrayado handwritten bajo "Inti." · usa swash.png cropped.
+          Margin-top negativo para que quede PEGADO a la baseline del h1
+          (el h1 tiene leading-[0.95] que deja algo de espacio inferior). */}
       <motion.div
-        className="relative mt-2 origin-left"
+        className="relative -mt-1 origin-left md:-mt-2"
         style={{
           scaleX: underlineProgress,
           opacity: underlineProgress,
-          width: mobile ? '70%' : '58%',
-          maxWidth: 480,
         }}
       >
         <HandwrittenAsset
           variant="swash"
-          width={480}
-          className="block h-auto w-full"
+          width={mobile ? 320 : 520}
         />
       </motion.div>
 
@@ -88,61 +86,50 @@ export default function HeroRevealSection({
         {' '}con su hermana y sus padres.
       </motion.p>
 
-      {/* Flechas handwritten · assets reales direccionales · grandes y prominentes
-          Distribución matchea la referencia editorial:
-          - arrow-curve top apuntando a la foto desde top-left
-          - arrow-thin-left apuntando a la foto desde la derecha
-          - arrow-up-left apuntando a la foto desde abajo-derecha
-          - arrow-loop espiral decorativa bottom-left
-          - sparkle decorativo cerca de "Inti." */}
+      {/* Flechas handwritten · matchea composición referencia.
+          Posiciones relativas al hero text block (que tiene ml-[8vw] y
+          max-w-[52vw] · está en la mitad-izquierda del viewport).
+          La foto está absolutamente posicionada a la derecha del viewport. */}
       {!mobile && (
         <>
-          {/* Arrow 1 · curva grande top entre texto y foto (arrowCurve es la
-              curva descendente perfecta para apuntar a la foto desde top-left) */}
+          {/* Arrow 1 · arrow-curve · entre el texto y la foto, en el top.
+              Apunta hacia abajo-derecha (hacia el top de la foto polaroid).
+              Right negativo para que se posicione fuera del text block hacia la foto. */}
           <motion.div
-            className="pointer-events-none absolute right-[26vw] -top-[18vh] z-30"
+            className="pointer-events-none absolute -right-[8vw] -top-[10vh] z-30"
             style={{ opacity: arrow1Opacity }}
             aria-hidden="true"
           >
-            <HandwrittenAsset variant="arrowCurve" width={300} />
+            <HandwrittenAsset variant="arrowCurve" width={240} />
           </motion.div>
 
-          {/* Arrow 2 · curva delgada con punta a la izquierda · apunta a foto
-              desde la derecha · bien separada de la foto para no solapar */}
+          {/* Arrow 2 · arrow-thin-left · a la derecha de la foto, apuntando
+              hacia la foto. Visualmente "viene de fuera" hacia la foto. */}
           <motion.div
-            className="pointer-events-none absolute -right-[20vw] top-[8vh] z-30"
+            className="pointer-events-none absolute -right-[20vw] top-[18vh] z-30"
             style={{ opacity: arrow2Opacity }}
             aria-hidden="true"
           >
-            <HandwrittenAsset variant="arrowThinLeft" width={220} />
+            <HandwrittenAsset variant="arrowThinLeft" width={180} />
           </motion.div>
 
-          {/* Arrow 3 · curva apuntando arriba-izquierda · sube hacia la foto
-              desde abajo-derecha */}
+          {/* Arrow 3 · arrow-up-left · debajo de la foto, apuntando arriba-izq
+              hacia la foto. Hace de "subraya/conecta con la foto desde abajo". */}
           <motion.div
-            className="pointer-events-none absolute -right-[14vw] top-[34vh] z-30"
+            className="pointer-events-none absolute -right-[2vw] top-[40vh] z-30"
             style={{ opacity: arrow3Opacity }}
             aria-hidden="true"
           >
             <HandwrittenAsset variant="arrowUpLeft" width={210} />
           </motion.div>
 
-          {/* Arrow 4 · espiral con loop decorativo bottom-left bajo el párrafo */}
+          {/* Arrow 4 · arrow-loop · garabato decorativo bottom-left bajo el párrafo */}
           <motion.div
-            className="pointer-events-none absolute -bottom-[14vh] left-[1vw] z-30"
+            className="pointer-events-none absolute -bottom-[12vh] -left-[1vw] z-30"
             style={{ opacity: arrow4Opacity }}
             aria-hidden="true"
           >
-            <HandwrittenAsset variant="arrowLoop" width={150} />
-          </motion.div>
-
-          {/* Sparkle decorativo · más arriba para no tapar el texto */}
-          <motion.div
-            className="pointer-events-none absolute right-[10vw] -top-[6vh] z-30"
-            style={{ opacity: arrow3Opacity }}
-            aria-hidden="true"
-          >
-            <HandwrittenAsset variant="sparkle" width={100} />
+            <HandwrittenAsset variant="arrowLoop" width={130} />
           </motion.div>
         </>
       )}
