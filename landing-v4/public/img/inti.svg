@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 500" width="400" height="500">
+  <rect width="400" height="500" fill="#E8E1CF"/>
+  <rect x="0" y="0" width="400" height="500" fill="url(#noise)" opacity="0.3"/>
+  <text x="50%" y="48%" font-family="system-ui, sans-serif" font-size="22" fill="#888" text-anchor="middle" font-weight="700">PLACEHOLDER</text>
+  <text x="50%" y="54%" font-family="system-ui, sans-serif" font-size="14" fill="#888" text-anchor="middle">reemplazar con inti.jpg</text>
+  <defs>
+    <filter id="noise">
+      <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2"/>
+      <feColorMatrix values="0 0 0 0 0.5 0 0 0 0 0.45 0 0 0 0 0.4 0 0 0 0.3 0"/>
+    </filter>
+  </defs>
+</svg>
