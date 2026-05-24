@@ -409,19 +409,25 @@
       width: 1px;
       background: linear-gradient(180deg, transparent, var(--line-strong), transparent);
     }
+    .trust-row .trust-icn,
     .trust-icn {
       flex-shrink: 0;
       width: 24px;
       height: 24px;
       stroke: var(--ink);
       fill: none;
-      stroke-width: 1.6;
+      stroke-width: 0.9;
       stroke-linecap: round;
       stroke-linejoin: round;
     }
+    /* `.trust-chip strong` debe ser Light 300 explícito · sobreescribimos el
+       user-agent default de <strong> (font-weight: bolder → 700 en body 400).
+       Usamos selector más específico + !important para evitar cualquier cascade
+       conflict. */
+    .trust .trust-chip strong,
     .trust-chip strong {
       font-family: var(--font-text);
-      font-weight: 500;
+      font-weight: 300 !important;
       font-size: 14px;
       color: var(--ink);
       line-height: 1.3;
