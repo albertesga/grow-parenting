@@ -1,5 +1,5 @@
     /* ════════════════════════════════════════════════════════════════════
-       § 0 · Fonts (Galiner serif display + Grift text)
+       § 0 · Fonts (Galiner serif display + Inter body + Grift solo precio)
        ════════════════════════════════════════════════════════════════════ */
     /* Galiner · serif elegante única para títulos, eyebrows y emphasis.
        Sin italic en el corte · usamos font-weight 300 (Light) + color ink-soft
@@ -7,9 +7,28 @@
     @font-face { font-family: "Galiner"; src: url("assets/fonts/TBJGaliner-Light.ttf") format("truetype"); font-weight: 300; font-display: swap; }
     @font-face { font-family: "Galiner"; src: url("assets/fonts/TBJGaliner-Regular.ttf") format("truetype"); font-weight: 400; font-display: swap; }
     @font-face { font-family: "Galiner"; src: url("assets/fonts/TBJGaliner-Bold.ttf") format("truetype"); font-weight: 700; font-display: swap; }
+    /* Inter Variable · body font (industry standard, designed by Rasmus Andersson
+       para legibility en pantalla). 1 woff2 cubre 100-900 normal + 1 woff2 italic.
+       Sustituye Grift como body text en toda la landing. */
+    @font-face {
+      font-family: "Inter";
+      src: url("assets/fonts/InterVariable.woff2") format("woff2-variations"),
+           url("assets/fonts/InterVariable.woff2") format("woff2");
+      font-weight: 100 900;
+      font-style: normal;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: "Inter";
+      src: url("assets/fonts/InterVariable-Italic.woff2") format("woff2-variations"),
+           url("assets/fonts/InterVariable-Italic.woff2") format("woff2");
+      font-weight: 100 900;
+      font-style: italic;
+      font-display: swap;
+    }
     /* Grift · 9 weights (Thin 100 → Black 900) × normal + italic = 18 cortes.
-       Italic real disponible · CSS puede usar font-style: italic sin
-       synthesis del browser. */
+       USO RESTRINGIDO · solo `.plan .price .amt` (número grande del precio).
+       Se mantiene como acento geométrico distintivo en el pricing. */
     @font-face { font-family: "Grift"; src: url("assets/fonts/Grift-Thin.ttf") format("truetype"); font-weight: 100; font-style: normal; font-display: swap; }
     @font-face { font-family: "Grift"; src: url("assets/fonts/Grift-ThinItalic.ttf") format("truetype"); font-weight: 100; font-style: italic; font-display: swap; }
     @font-face { font-family: "Grift"; src: url("assets/fonts/Grift-ExtraLight.ttf") format("truetype"); font-weight: 200; font-style: normal; font-display: swap; }
@@ -53,10 +72,11 @@
       --violet-subtle: #E6DFE9;                            --violet-strong: #6A5A7E;
       --module-dark:   #1B1A18;
 
-      /* fonts · Galiner serif único para display · Grift para body · mono para meta */
+      /* fonts · Galiner serif único para display · Inter para body · Grift solo para precio */
       --font-serif:   "Galiner", "Bodoni Moda", "Playfair Display", Georgia, serif;
       --font-display: "Galiner", "Bodoni Moda", "Playfair Display", Georgia, serif; /* alias retrocompat */
-      --font-text:    "Grift", "Inter", sans-serif;
+      --font-text:    "Inter", system-ui, -apple-system, sans-serif;
+      --font-price:   "Grift", "Inter", sans-serif; /* SOLO `.plan .price .amt` (número grande €X,XX) */
       --font-mono:    "JetBrains Mono", "SF Mono", ui-monospace, monospace;
 
       /* radii */
@@ -239,7 +259,7 @@
     }
     .manifesto-sub {
       /* Manifesto sub · Galiner Light 300 (no italic) · matiz editorial vía
-         weight + ink-soft, sin recurrir a italic sintético sobre Grift. */
+         weight + ink-soft, sin recurrir a italic sintético sobre Inter. */
       font-family: var(--font-serif);
       font-style: normal;
       font-weight: 300;
@@ -249,7 +269,7 @@
       max-width: 32ch;
       margin-top: 24px;
     }
-    /* Línea funcional bajo el manifesto · Grift body · responde QUÉ HACE
+    /* Línea funcional bajo el manifesto · Inter body · responde QUÉ HACE
        la app (research v0.3 · 24 users no entendían si era tracker /
        contenido / chat). Las tres patas SABER·REGISTRAR·PREGUNTAR
        articuladas en una frase corta sin bullets. */
@@ -1364,7 +1384,10 @@
       flex-wrap: wrap;
     }
     .plan .price .amt {
-      font-family: var(--font-text);
+      /* Único uso de Grift en la landing · acento geométrico distintivo para el
+         número grande del precio (€0 / €1,99 / €7,99). El `.per` y `.price-foot`
+         siguen en Inter para mantener jerarquía visual clara. */
+      font-family: var(--font-price);
       font-weight: 900;
       font-size: clamp(36px, 4.6vw, 44px);
       letter-spacing: -0.035em;
