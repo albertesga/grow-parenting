@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useRef } from 'react';
 import {
   motion,
   useScroll,
@@ -9,6 +9,13 @@ import {
   MotionValue,
 } from 'framer-motion';
 import HeroRevealSection from './HeroRevealSection';
+import FrameSequence from './FrameSequence';
+
+// Pattern para los frames extraídos del video con ffmpeg.
+// 104 frames a 20fps · paddings 3 dígitos · /public/frames/f-001.jpg ... f-104.jpg
+const FRAME_COUNT = 104;
+const frameSrc = (i: number) =>
+  `/frames/f-${String(i).padStart(3, '0')}.jpg`;
 
 /**
  * IntroPhotoSection · sección fusionada 1+2.
@@ -77,53 +84,9 @@ export default function IntroPhotoSection() {
   // consumir todo el wrapper.
   const textProgress = useTransform(progress, [0.2, 0.52], [0, 1]);
 
-  // Video scroll-sync · 1 ref compartido entre desktop y mobile (solo uno
-  // está visible en cada momento). currentTime = progress * duration.
-  // Usamos progress.on('change') directamente · más fiable que useMotionValueEvent.
-  const videoRef = useRef<HTMLVideoElement>(null);
-  const videoRefMobile = useRef<HTMLVideoElement>(null);
-
-  // Video scroll-sync · rAF loop comparando scrollY cada frame.
-  // Más fiable que scroll events (scrollTo programático puede no dispararlos).
-  // No-op cuando scroll no cambia · overhead mínimo en idle.
-  useEffect(() => {
-    let rafId = 0;
-    let lastScrollY = -1;
-
-    const tick = () => {
-      const currentScrollY = window.scrollY;
-      if (currentScrollY !== lastScrollY) {
-        lastScrollY = currentScrollY;
-        const wrapper = wrapperRef.current;
-        if (wrapper) {
-          const rect = wrapper.getBoundingClientRect();
-          const wrapperTopDoc = rect.top + currentScrollY;
-          const scrolled = currentScrollY - wrapperTopDoc;
-          const totalScrollable = rect.height - window.innerHeight;
-          const progressValue =
-            totalScrollable > 0
-              ? Math.max(0, Math.min(1, scrolled / totalScrollable))
-              : 0;
-          [videoRef.current, videoRefMobile.current].forEach((video) => {
-            if (!video || !video.duration || isNaN(video.duration)) return;
-            const target = progressValue * video.duration;
-            if (Math.abs(video.currentTime - target) > 0.02) {
-              video.currentTime = target;
-            }
-          });
-        }
-      }
-      rafId = requestAnimationFrame(tick);
-    };
-
-    // Pausa videos · controlados solo por scroll
-    [videoRef.current, videoRefMobile.current].forEach((video) => {
-      if (video) video.pause();
-    });
-
-    rafId = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(rafId);
-  }, []);
+  // Frame sequence reemplaza video MP4 scroll-scrubbing (que tenía stuttering
+  // por re-decode de H.264 en cada seek). FrameSequence preload + swap src
+  // es instantáneo. wrapperRef se pasa para que calcule su propio progress.
 
   return (
     <section
@@ -145,7 +108,7 @@ export default function IntroPhotoSection() {
             framePaddingBottom={framePaddingBottom}
             shadowStrength={shadowStrength}
             textProgress={textProgress}
-            videoRef={videoRef}
+            wrapperRef={wrapperRef}
           />
         </div>
 
@@ -158,7 +121,7 @@ export default function IntroPhotoSection() {
             framePadding={framePadding}
             framePaddingBottom={framePaddingBottom}
             textProgress={textProgress}
-            videoRef={videoRefMobile}
+            wrapperRef={wrapperRef}
           />
         </div>
       </div>
@@ -180,7 +143,7 @@ function DesktopChoreography({
   framePaddingBottom,
   shadowStrength,
   textProgress,
-  videoRef,
+  wrapperRef,
 }: {
   scale: MotionValue<number>;
   xPercent: MotionValue<number>;
@@ -191,7 +154,7 @@ function DesktopChoreography({
   framePaddingBottom: MotionValue<number>;
   shadowStrength: MotionValue<number>;
   textProgress: MotionValue<number>;
-  videoRef: React.RefObject<HTMLVideoElement>;
+  wrapperRef: React.RefObject<HTMLElement | null>;
 }) {
   // Construcción dinámica del box-shadow (de 0 a sombra polaroid completa)
   const boxShadow = useTransform(
@@ -243,17 +206,16 @@ function DesktopChoreography({
             boxShadow,
           }}
         >
-          {/* Video · scroll-synced · currentTime se actualiza con scrollY */}
+          {/* FrameSequence · 104 JPG precargados · swap src instantáneo
+              al scroll · sin stutter de decode de video. */}
           <div className="relative h-full w-full overflow-hidden">
-            <video
-              ref={videoRef}
-              src="/video/inti.mp4"
+            <FrameSequence
+              frameCount={FRAME_COUNT}
+              frameSrc={frameSrc}
+              wrapperRef={wrapperRef}
+              alt="Inti sonriendo en una foto tipo polaroid"
               className="h-full w-full object-cover"
-              muted
-              playsInline
-              preload="auto"
-              disablePictureInPicture
-              aria-label="Inti sonriendo en un video tipo polaroid"
+              style={{ display: 'block' }}
             />
           </div>
         </motion.div>
@@ -273,7 +235,7 @@ function MobileChoreography({
   framePadding,
   framePaddingBottom,
   textProgress,
-  videoRef,
+  wrapperRef,
 }: {
   scale: MotionValue<number>;
   yPercent: MotionValue<number>;
@@ -281,7 +243,7 @@ function MobileChoreography({
   framePadding: MotionValue<number>;
   framePaddingBottom: MotionValue<number>;
   textProgress: MotionValue<number>;
-  videoRef: React.RefObject<HTMLVideoElement>;
+  wrapperRef: React.RefObject<HTMLElement | null>;
 }) {
   return (
     <div className="flex h-full w-full flex-col items-center justify-start pt-20">
@@ -320,15 +282,13 @@ function MobileChoreography({
           }}
         >
           <div className="relative h-full w-full overflow-hidden">
-            <video
-              ref={videoRef}
-              src="/video/inti.mp4"
+            <FrameSequence
+              frameCount={FRAME_COUNT}
+              frameSrc={frameSrc}
+              wrapperRef={wrapperRef}
+              alt="Inti sonriendo en una foto tipo polaroid"
               className="h-full w-full object-cover"
-              muted
-              playsInline
-              preload="auto"
-              disablePictureInPicture
-              aria-label="Inti sonriendo en un video tipo polaroid"
+              style={{ display: 'block' }}
             />
           </div>
         </motion.div>
