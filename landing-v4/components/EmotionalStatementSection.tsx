@@ -2,7 +2,7 @@
 
 import { useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import HandwrittenArrow from './HandwrittenArrow';
+import HandwrittenAsset from './HandwrittenAsset';
 
 /**
  * EmotionalStatementSection · sección 3 · declaración íntima del padre.
@@ -51,7 +51,7 @@ export default function EmotionalStatementSection() {
           className="pointer-events-none absolute -top-10 left-[8vw] hidden md:block"
           style={{ opacity: arrowTopOpacity }}
         >
-          <HandwrittenArrow variant="curve-down" size={110} />
+          <HandwrittenAsset variant="arrowDown" width={120} />
         </motion.div>
 
         {/* Texto principal · 3 líneas grandes */}
@@ -91,7 +91,7 @@ export default function EmotionalStatementSection() {
           className="pointer-events-none absolute bottom-[6vh] right-[4vw] hidden md:block"
           style={{ opacity: arrowSideOpacity }}
         >
-          <HandwrittenArrow variant="loop" size={90} />
+          <HandwrittenAsset variant="cloud" width={220} />
         </motion.div>
       </div>
     </section>
