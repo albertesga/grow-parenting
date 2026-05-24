@@ -1,6 +1,22 @@
 # Grow · Claude instructions
 
-Pointer file. Una línea por fracaso conocido. Detalle en pointers.
+**GENERATED POINTER.** Fuente canónica: `.agent/agents.md`. Si actualizas
+reglas profundas · edita `.agent/agents.md` y propaga aquí los puntos
+críticos.
+
+## Read-order
+
+1. `AGENTS.md` raíz · qué es Grow (1 min)
+2. `.agent/agents.md` · brain · loop + guardrails (3 min)
+3. `.agent/rules/{topic}.md` · 9 reglas duras por dominio (1 min cada)
+4. `CLAUDE.md` (este archivo) · alias condensado · lectura rápida
+5. `docs/HANDBOOK.md` · onboarding humano + glosario
+6. `docs/decisions/*.md` · 16 ADRs vigentes
+7. Código real · `prototype.html`, `landing/`, `design/`
+
+## Loop
+
+`explore → plan → implement → verify → memoria` · skills en `.agent/skills/`.
 
 ## Stack
 
