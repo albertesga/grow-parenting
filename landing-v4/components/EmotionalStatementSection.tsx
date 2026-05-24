@@ -111,8 +111,9 @@ export default function EmotionalStatementSection() {
           aria-hidden="true"
         />
 
-        {/* Desktop layout · 3 columnas */}
-        <div className="relative hidden h-full w-full md:block">
+        {/* Desktop layout · 3 columnas · lg+ (1024+)
+            Tablet/mobile usan MobileLayout (vertical stack) */}
+        <div className="relative hidden h-full w-full lg:block">
           <DesktopLayout
             line1Opacity={line1Opacity}
             line1Y={line1Y}
@@ -154,9 +155,33 @@ export default function EmotionalStatementSection() {
           />
         </div>
 
-        {/* Mobile layout · vertical · animations CSS-only */}
-        <div className="flex h-full w-full flex-col md:hidden">
-          <MobileLayout />
+        {/* Mobile + Tablet · vertical · mismas MotionValues (scroll-driven) */}
+        <div className="flex h-full w-full flex-col lg:hidden">
+          <MobileLayout
+            line1Opacity={line1Opacity}
+            line1Y={line1Y}
+            line2Opacity={line2Opacity}
+            line2Y={line2Y}
+            line3Opacity={line3Opacity}
+            line3Y={line3Y}
+            underlineLeftProgress={underlineLeftProgress}
+            subLeftOpacity={subLeftOpacity}
+            subLeftY={subLeftY}
+            polaroidOpacity={polaroidOpacity}
+            polaroidScale={polaroidScale}
+            polaroidY={polaroidY}
+            r1Opacity={r1Opacity}
+            r1Y={r1Y}
+            underlineRightProgress={underlineRightProgress}
+            r2Opacity={r2Opacity}
+            r2Y={r2Y}
+            r3Opacity={r3Opacity}
+            r3Y={r3Y}
+            r4Opacity={r4Opacity}
+            r4Y={r4Y}
+            r5Opacity={r5Opacity}
+            r5Y={r5Y}
+          />
         </div>
       </div>
     </section>
@@ -193,8 +218,9 @@ interface DesktopProps {
 function DesktopLayout(p: DesktopProps) {
   return (
     <>
-      {/* Bloque izquierdo · texto "Probablemente..." */}
-      <div className="absolute left-[7vw] top-1/2 z-20 w-[36vw] -translate-y-1/2">
+      {/* Bloque izquierdo · texto "Probablemente..." · width responsive
+          tablet (md): w-[34vw] · desktop (lg+): w-[36vw] */}
+      <div className="absolute left-[6vw] top-1/2 z-20 w-[34vw] -translate-y-1/2 lg:left-[7vw] lg:w-[36vw]">
         <div className="font-grift text-ink">
           <motion.div
             className="text-[clamp(48px,5.4vw,86px)] font-light leading-[1.0] tracking-tight"
@@ -249,9 +275,10 @@ function DesktopLayout(p: DesktopProps) {
         </motion.div>
       </div>
 
-      {/* Polaroid central · scroll-driven entry */}
+      {/* Polaroid central · scroll-driven entry · width responsive
+          tablet: w-[26vw] · desktop: w-[24vw] */}
       <motion.div
-        className="absolute left-[48%] top-1/2 z-10 w-[24vw] max-w-[360px] -translate-x-1/2 -translate-y-1/2"
+        className="absolute left-[48%] top-1/2 z-10 w-[26vw] max-w-[360px] -translate-x-1/2 -translate-y-1/2 lg:w-[24vw]"
         style={{
           opacity: p.polaroidOpacity,
           scale: p.polaroidScale,
@@ -287,7 +314,7 @@ function DesktopLayout(p: DesktopProps) {
       </motion.div>
 
       {/* Bloque derecho · texto "Aquí estoy yo..." · scroll-driven escalonado */}
-      <div className="absolute right-[6vw] top-1/2 z-20 w-[28vw] -translate-y-1/2">
+      <div className="absolute right-[5vw] top-1/2 z-20 w-[26vw] -translate-y-1/2 lg:right-[6vw] lg:w-[28vw]">
         <motion.h2
           className="font-grift text-[clamp(28px,2.6vw,40px)] font-extrabold leading-[1.05] tracking-tight text-ink"
           style={{ opacity: p.r1Opacity, y: p.r1Y, x: p.r1X }}
@@ -410,43 +437,127 @@ function FloatingPolaroid() {
 }
 
 /* ────────────────────────────────────────────────────────────────────
-   Mobile layout · vertical · animations CSS fade simples
+   Mobile/Tablet layout · vertical stack · scroll-driven storytelling
    ──────────────────────────────────────────────────────────────────── */
 
-function MobileLayout() {
+interface MobileProps {
+  line1Opacity: MV; line1Y: MV;
+  line2Opacity: MV; line2Y: MV;
+  line3Opacity: MV; line3Y: MV;
+  underlineLeftProgress: MV;
+  subLeftOpacity: MV; subLeftY: MV;
+  polaroidOpacity: MV; polaroidScale: MV; polaroidY: MV;
+  r1Opacity: MV; r1Y: MV;
+  underlineRightProgress: MV;
+  r2Opacity: MV; r2Y: MV;
+  r3Opacity: MV; r3Y: MV;
+  r4Opacity: MV; r4Y: MV;
+  r5Opacity: MV; r5Y: MV;
+}
+
+function MobileLayout(p: MobileProps) {
   return (
-    <div className="flex h-full w-full flex-col items-center justify-center gap-8 px-6 py-12">
-      <div className="font-grift text-ink">
-        <div className="text-[10vw] font-light leading-[1.0] tracking-tight">
+    <div className="flex h-full w-full flex-col items-center justify-center gap-6 px-6 pt-16 pb-10">
+      {/* Bloque 1 · texto "Probablemente..." */}
+      <div className="w-full max-w-[480px] font-grift text-ink">
+        <motion.div
+          className="text-[clamp(36px,10vw,56px)] font-light leading-[1.0] tracking-tight"
+          style={{ opacity: p.line1Opacity, y: p.line1Y }}
+        >
           Probablemente
-        </div>
-        <div className="text-[10vw] font-extrabold leading-[1.0] tracking-tight">
-          es el mejor niño
-        </div>
-        <div className="text-[10vw] font-extrabold leading-[1.0] tracking-tight">
+        </motion.div>
+        <motion.div
+          className="text-[clamp(36px,10vw,56px)] font-light leading-[1.0] tracking-tight"
+          style={{ opacity: p.line2Opacity, y: p.line2Y }}
+        >
+          es el <span className="font-extrabold">mejor niño</span>
+        </motion.div>
+        <motion.div
+          className="text-[clamp(36px,10vw,56px)] font-extrabold leading-[1.0] tracking-tight"
+          style={{ opacity: p.line3Opacity, y: p.line3Y }}
+        >
           del mundo.
-        </div>
-        <div className="mt-3 font-grift text-[16px] font-medium leading-[1.45] text-ink-soft">
+        </motion.div>
+
+        <motion.div
+          className="mt-2 origin-left"
+          style={{
+            scaleX: p.underlineLeftProgress,
+            opacity: p.underlineLeftProgress,
+            width: '40%',
+            maxWidth: 160,
+          }}
+        >
+          <HandwrittenAsset variant="doubleLine" width={160} />
+        </motion.div>
+
+        <motion.div
+          className="mt-5 text-[clamp(14px,3.8vw,16px)] font-medium leading-[1.45] text-ink-soft"
+          style={{ opacity: p.subLeftOpacity, y: p.subLeftY }}
+        >
           ¿qué cómo lo sé?, pues porque soy su padre.
-        </div>
+        </motion.div>
       </div>
 
-      <div
-        className="relative w-[70vw] max-w-[320px]"
-        style={{ aspectRatio: '4 / 5' }}
+      {/* Polaroid · scroll-driven entry */}
+      <motion.div
+        className="relative w-[58vw] max-w-[280px]"
+        style={{
+          opacity: p.polaroidOpacity,
+          scale: p.polaroidScale,
+          y: p.polaroidY,
+          aspectRatio: '4 / 5',
+        }}
       >
         <FloatingPolaroid />
-      </div>
+      </motion.div>
 
-      <div className="font-grift text-ink">
-        <h2 className="text-[24px] font-extrabold leading-[1.05] tracking-tight">
+      {/* Bloque 2 · texto "Aquí estoy yo..." */}
+      <div className="w-full max-w-[480px] font-grift text-ink">
+        <motion.h2
+          className="text-[clamp(24px,6vw,32px)] font-extrabold leading-[1.05] tracking-tight"
+          style={{ opacity: p.r1Opacity, y: p.r1Y }}
+        >
           Aquí estoy yo.
-        </h2>
-        <div className="mt-2 text-[16px] font-bold">Padre de Inti y Llivia.</div>
-        <p className="mt-4 text-[14px] font-medium leading-[1.5] text-ink-soft">
-          Muy orgulloso de cada uno de mis peques. Aún que nadie me enseñó a ser
-          padre. Y nadie me avisó de lo complejo que es.
-        </p>
+        </motion.h2>
+
+        <motion.div
+          className="mt-1 origin-left"
+          style={{
+            scaleX: p.underlineRightProgress,
+            opacity: p.underlineRightProgress,
+            width: '60%',
+            maxWidth: 180,
+          }}
+        >
+          <HandwrittenAsset variant="swash" width={180} />
+        </motion.div>
+
+        <motion.div
+          className="mt-3 text-[clamp(14px,4vw,18px)] font-bold"
+          style={{ opacity: p.r2Opacity, y: p.r2Y }}
+        >
+          Padre de Inti y Llivia.
+        </motion.div>
+
+        <motion.p
+          className="mt-3 text-[clamp(13px,3.6vw,15px)] font-medium leading-[1.5] text-ink-soft"
+          style={{ opacity: p.r3Opacity, y: p.r3Y }}
+        >
+          Muy orgulloso de cada uno de mis peques.
+        </motion.p>
+        <motion.p
+          className="mt-2 text-[clamp(13px,3.6vw,15px)] font-medium leading-[1.5] text-ink-soft"
+          style={{ opacity: p.r4Opacity, y: p.r4Y }}
+        >
+          Aún que nadie me enseñó a ser padre.
+        </motion.p>
+        <motion.p
+          className="mt-2 text-[clamp(13px,3.6vw,15px)] font-medium leading-[1.5] text-ink-soft"
+          style={{ opacity: p.r5Opacity, y: p.r5Y }}
+        >
+          Y nadie me avisó de lo complejo que es.
+        </motion.p>
       </div>
     </div>
   );

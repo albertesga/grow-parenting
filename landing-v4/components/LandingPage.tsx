@@ -20,12 +20,13 @@ import EmotionalStatementSection from './EmotionalStatementSection';
 export default function LandingPage() {
   return (
     <main className="relative w-full overflow-x-clip">
-      {/* Logo persistente top-left · siempre visible, discreto */}
-      <header className="fixed left-6 top-6 z-50 md:left-10 md:top-8">
+      {/* Logo persistente top-left · 3 tamaños responsive
+          mobile: h-9 (compacto) · tablet: h-11 · desktop: h-14 */}
+      <header className="fixed left-5 top-5 z-50 md:left-8 md:top-7 lg:left-10 lg:top-8">
         <img
           src="/img/grow-logo.png"
           alt="Grow"
-          className="h-12 w-auto md:h-14"
+          className="h-9 w-auto md:h-11 lg:h-14"
           draggable={false}
         />
       </header>

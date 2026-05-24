@@ -96,8 +96,9 @@ export default function IntroPhotoSection() {
     >
       {/* Sticky inner · ocupa 100vh mientras el wrapper se desplaza */}
       <div className="sticky top-0 h-screen w-full overflow-hidden">
-        {/* Desktop · foto + texto en layout absolute · controlado por scroll */}
-        <div className="hidden h-full w-full md:block">
+        {/* Desktop (lg+) · layout horizontal complejo · breakpoint 1024px
+            Tablet/mobile usan MobileChoreography (stack vertical) */}
+        <div className="hidden h-full w-full lg:block">
           <DesktopChoreography
             scale={scale}
             xPercent={xPercent}
@@ -112,8 +113,8 @@ export default function IntroPhotoSection() {
           />
         </div>
 
-        {/* Mobile · layout vertical simple · sin parallax horizontal */}
-        <div className="flex h-full w-full flex-col md:hidden">
+        {/* Mobile + Tablet · layout vertical · stack foto+texto */}
+        <div className="flex h-full w-full flex-col lg:hidden">
           <MobileChoreography
             scale={scale}
             yPercent={yPercent}
@@ -246,14 +247,14 @@ function MobileChoreography({
   wrapperRef: React.RefObject<HTMLElement | null>;
 }) {
   return (
-    <div className="flex h-full w-full flex-col items-center justify-start pt-20">
-      {/* Foto · centra y reduce con scroll */}
+    <div className="flex h-full w-full flex-col items-center justify-start pt-16 sm:pt-20">
+      {/* Foto · centra y reduce con scroll · tamaño responsive */}
       <motion.div
         className="relative"
         style={{
           scale,
           y: useTransform(yPercent, (v) => `${v}vh`),
-          width: 'min(80vw, 60vh)',
+          width: 'min(78vw, 52vh)',
           aspectRatio: '4 / 5',
           willChange: 'transform',
         }}
@@ -294,8 +295,8 @@ function MobileChoreography({
         </motion.div>
       </motion.div>
 
-      {/* Texto debajo · reveal progresivo */}
-      <div className="w-full px-6 pt-8">
+      {/* Texto debajo · reveal progresivo · padding generoso lateral */}
+      <div className="w-full px-6 pt-6 sm:px-8 sm:pt-8">
         <HeroRevealSection progress={textProgress} mobile />
       </div>
     </div>

@@ -40,13 +40,15 @@ export default function HeroRevealSection({
   const arrow3Opacity = useTransform(progress, [0.71, 0.91], [0, 1]);
   const arrow4Opacity = useTransform(progress, [0.79, 1.0], [0, 1]);
 
-  // Tamaños responsive · matchea referencia (composición editorial grande)
+  // Tamaños responsive · 3 breakpoints
+  // mobile: text grande proporcional al viewport
+  // tablet+desktop: clamp con vw para escalado fluido
   const titleSize = mobile
-    ? 'text-[14vw] leading-[0.95]'
-    : 'text-[clamp(80px,10vw,160px)] leading-[0.95]';
+    ? 'text-[15vw] leading-[0.95]'
+    : 'text-[clamp(56px,8vw,160px)] leading-[0.95]';
   const paragraphSize = mobile
-    ? 'text-lg leading-relaxed'
-    : 'text-[clamp(22px,1.75vw,32px)] leading-[1.4]';
+    ? 'text-[clamp(15px,4.2vw,18px)] leading-[1.5]'
+    : 'text-[clamp(18px,1.6vw,32px)] leading-[1.45]';
 
   return (
     <div className="relative">
@@ -70,7 +72,7 @@ export default function HeroRevealSection({
       >
         <HandwrittenAsset
           variant="swash"
-          width={mobile ? 320 : 520}
+          width={mobile ? 280 : 520}
         />
       </motion.div>
 
