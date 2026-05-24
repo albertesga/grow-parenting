@@ -59,10 +59,10 @@ export default function IntroPhotoSection() {
 
   // Transform values · timeline 0 → 1 · TODOS los cambios ocurren en el
   // primer 52% del scroll · el 48% restante es HOLD (composición estática)
-  const scale = useTransform(progress, [0, 0.25], [1, 0.62]);
-  const xPercent = useTransform(progress, [0, 0.25], [0, 28]);
-  const yPercent = useTransform(progress, [0, 0.25], [0, 4]);
-  const rotate = useTransform(progress, [0, 0.25], [0, 3]);
+  const scale = useTransform(progress, [0, 0.25], [1, 0.72]);
+  const xPercent = useTransform(progress, [0, 0.25], [0, 26]);
+  const yPercent = useTransform(progress, [0, 0.25], [0, 3]);
+  const rotate = useTransform(progress, [0, 0.25], [0, 5]);
   // Frame · de foto limpia (frameOpacity 0) a polaroid (1)
   const frameOpacity = useTransform(progress, [0.05, 0.25], [0, 1]);
   // Padding del marco · de 0 a 16/16/56 (polaroid)
@@ -153,9 +153,10 @@ function DesktopChoreography({
 
   return (
     <>
-      {/* Texto hero (capa inferior · aparece progresivo) */}
+      {/* Texto hero (capa inferior · aparece progresivo) ·
+          max-w generoso para que "Este es Inti." entre en una línea */}
       <div className="absolute inset-0 z-0 flex items-center">
-        <div className="ml-[6vw] max-w-[42vw] xl:ml-[8vw]">
+        <div className="ml-[6vw] max-w-[52vw] xl:ml-[8vw]">
           <HeroRevealSection progress={textProgress} />
         </div>
       </div>

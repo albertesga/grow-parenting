@@ -40,13 +40,13 @@ export default function HeroRevealSection({
   const arrow3Opacity = useTransform(progress, [0.71, 0.91], [0, 1]);
   const arrow4Opacity = useTransform(progress, [0.79, 1.0], [0, 1]);
 
-  // Tamaños responsive
+  // Tamaños responsive · matchea referencia (composición editorial grande)
   const titleSize = mobile
     ? 'text-[14vw] leading-[0.95]'
-    : 'text-[clamp(64px,8.5vw,128px)] leading-[1.0]';
+    : 'text-[clamp(80px,10vw,160px)] leading-[0.95]';
   const paragraphSize = mobile
     ? 'text-lg leading-relaxed'
-    : 'text-[clamp(20px,1.55vw,28px)] leading-[1.45]';
+    : 'text-[clamp(22px,1.75vw,32px)] leading-[1.4]';
 
   return (
     <div className="relative">
@@ -58,21 +58,27 @@ export default function HeroRevealSection({
         Este es <span className="font-extrabold">Inti.</span>
       </motion.h1>
 
-      {/* Subrayado handwritten bajo "Inti." */}
+      {/* Subrayado handwritten bajo "Inti." · grueso y visible.
+          Sin preserveAspectRatio · mantiene proporción natural del SVG.
+          Stroke generoso (3px en viewBox 320x16 → escala uniforme). */}
       <motion.div
-        className="relative mt-2 h-3 w-[58%] origin-left md:w-[42%]"
-        style={{ scaleX: underlineProgress, opacity: underlineProgress }}
+        className="relative mt-2 origin-left"
+        style={{
+          scaleX: underlineProgress,
+          opacity: underlineProgress,
+          width: '64%',
+          maxWidth: 360,
+        }}
       >
         <svg
-          viewBox="0 0 320 14"
-          className="h-full w-full"
-          preserveAspectRatio="none"
+          viewBox="0 0 320 16"
+          className="block h-auto w-full"
           aria-hidden="true"
         >
           <path
             className="handwritten-path"
-            d="M4,8 Q40,2 80,7 T160,6 Q200,3 240,8 T316,7"
-            strokeWidth="2.4"
+            d="M4,10 Q40,4 80,9 T160,7 Q200,4 240,10 T316,8"
+            strokeWidth="3"
           />
         </svg>
       </motion.div>
@@ -90,43 +96,48 @@ export default function HeroRevealSection({
       </motion.p>
 
       {/* Flechas handwritten · solo en desktop · 4 elementos en posiciones
-          absolutas relativas al hero · en mobile son demasiado caóticas. */}
+          absolutas relativas al hero · matchea la composición de referencia:
+          - 1 curva grande top apuntando a la foto desde arriba-centro
+          - 1 curva derecha apuntando a la foto desde la derecha
+          - 1 curva sube-derecha apuntando a la foto desde abajo
+          - 1 loop garabato bottom-left (decorativo) */}
       {!mobile && (
         <>
-          {/* Arrow 1 · curva desde el centro hacia la foto (top-right) */}
+          {/* Arrow 1 · curva grande desde centro-top hacia la foto (right) */}
           <motion.div
-            className="pointer-events-none absolute -right-[14vw] top-[6vh] z-30"
+            className="pointer-events-none absolute -right-[8vw] -top-[14vh] z-30"
             style={{ opacity: arrow1Opacity }}
             aria-hidden="true"
           >
-            <HandwrittenArrow variant="curve-right" size={140} />
+            <HandwrittenArrow variant="curve-right" size={180} />
           </motion.div>
 
-          {/* Arrow 2 · pequeña apuntando a la foto (mid-right) */}
+          {/* Arrow 2 · pequeña apuntando a la foto desde la derecha · mid-right */}
           <motion.div
-            className="pointer-events-none absolute -right-[10vw] top-[28vh] z-30"
+            className="pointer-events-none absolute -right-[18vw] top-[10vh] z-30"
             style={{ opacity: arrow2Opacity }}
             aria-hidden="true"
           >
-            <HandwrittenArrow variant="short-right" size={90} />
+            <HandwrittenArrow variant="short-right" size={130} />
           </motion.div>
 
-          {/* Arrow 3 · garabato circular bottom-left */}
+          {/* Arrow 3 · curva subiendo hacia la foto desde abajo-derecha */}
           <motion.div
-            className="pointer-events-none absolute -bottom-[8vh] -left-[2vw] z-30"
+            className="pointer-events-none absolute -right-[2vw] top-[28vh] z-30"
             style={{ opacity: arrow3Opacity }}
             aria-hidden="true"
           >
-            <HandwrittenArrow variant="loop" size={80} />
+            <HandwrittenArrow variant="curve-up" size={130} />
           </motion.div>
 
-          {/* Arrow 4 · suave apuntando al texto desde arriba */}
+          {/* Arrow 4 · garabato loop decorativo bottom-left · más abajo
+              del párrafo (separado para no solapar con el texto) */}
           <motion.div
-            className="pointer-events-none absolute -top-[6vh] left-[6vw] z-30"
+            className="pointer-events-none absolute -bottom-[18vh] -left-[1vw] z-30"
             style={{ opacity: arrow4Opacity }}
             aria-hidden="true"
           >
-            <HandwrittenArrow variant="curve-down" size={100} />
+            <HandwrittenArrow variant="loop" size={110} />
           </motion.div>
         </>
       )}

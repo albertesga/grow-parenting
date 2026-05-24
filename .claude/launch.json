@@ -6,6 +6,13 @@
       "runtimeExecutable": "python3",
       "runtimeArgs": ["-m", "http.server", "5050"],
       "port": 5050
+    },
+    {
+      "name": "landing-v4",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "dev"],
+      "cwd": "landing-v4",
+      "port": 3000
     }
   ]
 }
