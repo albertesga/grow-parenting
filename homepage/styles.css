@@ -699,12 +699,13 @@
     }
     .quote-rotator {
       position: relative;
-      /* Altura mayor para acomodar frases más largas + tamaño tipográfico
-         más grande · sigue siendo una sola frase visible (las demás opacity 0).
-         8.5em a 22px line-height 1.45 = ~187px · suficiente margen para 4-5 líneas
-         en viewports estrechos (las frases más largas alcanzan 4 líneas a ~360px). */
-      height: 8.5em;
-      margin-bottom: 8px;
+      /* Altura acotada para que el gap entre la frase activa y la Respuesta
+         Grow sea coherente · 5.5em ~118px a 22px line-height 1.45 cubre 3-4
+         líneas (las frases largas wrap a 4 líneas en viewports estrechos).
+         Frases más largas se truncan visualmente · prioridad legibilidad
+         del flow narrativo sobre completitud de cada frase. */
+      height: 5.5em;
+      margin-bottom: 4px;
       max-width: 40ch;
     }
     .quote-rotator .q-item {
@@ -727,7 +728,7 @@
     .quote-rotator .q-item.is-active { opacity: 1; }
     .response {
       position: relative;
-      margin-top: 18px;
+      margin-top: 8px;
       border-radius: var(--radius-lg);
       padding: 26px 28px;
       max-width: 540px;
@@ -1720,7 +1721,7 @@
     @media (max-width: 540px) {
       .libros-grid { grid-template-columns: 1fr; }
       .comite-grid { grid-template-columns: 1fr; }
-      .quote-rotator { height: 9em; }
+      .quote-rotator { height: 6.5em; }
       .r-book { flex: 0 0 96px; height: 144px; }
       /* .r-book.is-large mobile rule retirado · ya no hay shelves is-large */
       .trust-row { grid-template-columns: 1fr; }
