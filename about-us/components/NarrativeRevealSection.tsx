@@ -168,17 +168,19 @@ function FillBlock({
   block: BlockSpec;
   progress: MotionValue<number>;
 }) {
-  // max-w generoso (50ch) · pocas líneas por frase · todo el manifesto
-  // condensado cabe en 100vh. text-balance OFF para que el wrap sea
-  // natural por punctuation / espacios y no fuerze líneas cortas.
+  // Tipografía Grift Extrabold (canon legacy · uso experimental para
+  // manifesto personal · NO para resto del producto). Baseline 800 ·
+  // acentos Black 900 (ver FillWord). max-w-[48ch] mantiene líneas
+  // naturales sin saltos forzados. Font-size ligeramente menor que
+  // Galiner porque Grift Extrabold ocupa más visual.
   return (
     <p
-      className="font-serif max-w-[48ch]"
+      className="font-grift max-w-[48ch]"
       style={{
-        fontSize: 'clamp(20px, 2.6vw, 38px)',
+        fontSize: 'clamp(18px, 2.3vw, 34px)',
         lineHeight: 1.22,
-        letterSpacing: '-0.012em',
-        fontWeight: 300,
+        letterSpacing: '-0.005em',
+        fontWeight: 800,
       }}
     >
       <FillLine line={block} progress={progress} />
@@ -200,8 +202,10 @@ interface FillWordProps {
 
 function FillWord({ word, start, end, progress, bold = false }: FillWordProps) {
   const color = useTransform(progress, [start, end], [COLOR_OFF, COLOR_ON]);
+  // Acentos en Grift Black 900 sobre baseline Extrabold 800 · diferencia
+  // visual sutil pero perceptible para palabras enfáticas
   return (
-    <motion.span style={{ color, fontWeight: bold ? 700 : undefined }}>
+    <motion.span style={{ color, fontWeight: bold ? 900 : undefined }}>
       {word}
     </motion.span>
   );
