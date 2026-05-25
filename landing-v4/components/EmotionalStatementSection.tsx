@@ -518,9 +518,9 @@ function FloatingPolaroid({
   alt = 'Padre · Tito · sonriendo',
   floatRotate = 1,
 }: FloatingPolaroidProps) {
-  // La imagen ya viene con su marco polaroid físico (crema con sombra
-  // y label inferior). NO añadimos otro frame CSS · solo aspect ratio
-  // del original (4:5) + sombra suave para "elevarla" sobre el paper.
+  // Las imágenes están cropeadas (sin marco físico) y son aspect 4:5.
+  // El componente añade el frame polaroid digital · crema · label inferior
+  // · sombra realista · todo proporcionado para look auténtico.
   return (
     <motion.div
       className="relative"
@@ -535,18 +535,23 @@ function FloatingPolaroid({
         ease: 'easeInOut',
       }}
     >
-      <img
-        src={src}
-        alt={alt}
-        className="block h-full w-full object-cover"
+      {/* Frame polaroid · marco crema con label area inferior */}
+      <div
+        className="relative h-full w-full bg-[#FBF8EE]"
         style={{
-          aspectRatio: '4 / 5',
+          padding: '14px 14px 56px 14px',
           borderRadius: 3,
           boxShadow:
             '0 1px 2px rgba(20,18,12,0.06), 0 14px 32px rgba(20,18,12,0.16), 0 28px 70px rgba(20,18,12,0.10)',
         }}
-        draggable={false}
-      />
+      >
+        <img
+          src={src}
+          alt={alt}
+          className="block h-full w-full object-cover"
+          draggable={false}
+        />
+      </div>
     </motion.div>
   );
 }
