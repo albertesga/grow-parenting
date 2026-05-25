@@ -52,48 +52,50 @@ interface BlockSpec {
   end: number;
 }
 
-// 5 bloques del manifesto · headline + 4 frases · mismo tamaño visual
+// 4 bloques del manifesto · headline + 3 frases · mismo tamaño visual
 const BLOCKS: BlockSpec[] = [
+  // Headline
   {
-    start: 0.06, end: 0.22,
+    start: 0.06, end: 0.24,
     words: [
       { text: 'Nadie' }, { text: 'me' }, { text: 'preparó', bold: true },
       { text: 'para' }, { text: 'ser' }, { text: 'padre.', bold: true },
     ],
   },
+  // Frase 1 · noches + cansancio + problemas día siguiente (combinada)
   {
-    start: 0.22, end: 0.38,
+    start: 0.22, end: 0.46,
     words: [
-      { text: 'Nadie' }, { text: 'me' }, { text: 'explicó' }, { text: 'que' },
-      { text: 'me', bold: true }, { text: 'despertaría', bold: true },
-      { text: 'varias' }, { text: 'veces' }, { text: 'de' }, { text: 'madrugada.' },
-    ],
-  },
-  {
-    start: 0.36, end: 0.52,
-    words: [
-      { text: 'Y' }, { text: 'nadie' }, { text: 'me' }, { text: 'explicó' },
-      { text: 'cómo' }, { text: 'eso' }, { text: 'multiplicaría' }, { text: 'los' },
+      { text: 'Nadie' }, { text: 'me' }, { text: 'explicó' },
+      { text: 'las' },
+      { text: 'noches', bold: true }, { text: 'sin', bold: true }, { text: 'dormir.', bold: true },
+      { text: 'Ni' }, { text: 'cómo' }, { text: 'el' },
+      { text: 'cansancio', bold: true },
+      { text: 'multiplica' }, { text: 'los' },
       { text: 'problemas', bold: true }, { text: 'del', bold: true },
       { text: 'día', bold: true }, { text: 'siguiente.', bold: true },
     ],
   },
+  // Frase 2 · miedo en el cuerpo
   {
-    start: 0.50, end: 0.66,
+    start: 0.44, end: 0.62,
     words: [
       { text: 'Nadie' }, { text: 'me' }, { text: 'explicó' }, { text: 'el' },
       { text: 'miedo', bold: true },
-      { text: 'que' }, { text: 'te' }, { text: 'entra' }, { text: 'en' },
-      { text: 'el' }, { text: 'cuerpo' }, { text: 'por' }, { text: 'cualquier' },
+      { text: 'que' }, { text: 'entra' }, { text: 'en' }, { text: 'el' },
+      { text: 'cuerpo' }, { text: 'por' }, { text: 'cualquier' },
       { text: 'tontería.' },
     ],
   },
+  // Frase 3 · potencia inmensa cada vez que me mira (cierre emocional)
   {
-    start: 0.64, end: 0.82,
+    start: 0.60, end: 0.84,
     words: [
-      { text: 'Tampoco' }, { text: 'nadie' }, { text: 'me' }, { text: 'explicó' },
-      { text: 'la' }, { text: 'potencia' }, { text: 'de' }, { text: 'la' },
-      { text: 'sensación' },
+      { text: 'Y' }, { text: 'nadie' }, { text: 'me' }, { text: 'avisó' },
+      { text: 'de' }, { text: 'esto:' },
+      { text: 'de' }, { text: 'la' },
+      { text: 'potencia', bold: true }, { text: 'inmensa', bold: true },
+      { text: 'de' },
       { text: 'cada', bold: true }, { text: 'vez', bold: true },
       { text: 'que', bold: true }, { text: 'me', bold: true },
       { text: 'mira.', bold: true },
