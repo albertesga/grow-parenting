@@ -8,88 +8,61 @@ import {
   useSpring,
   MotionValue,
 } from 'framer-motion';
-import Chip, { ChipTono } from './Chip';
-import TonalUnderline from './TonalUnderline';
 
 /**
- * NarrativeRevealSection v3 · "Postales del padre"
+ * NarrativeRevealSection v4 · "Solo texto"
  *
- * Sección 3 con manifesto + 4 phrase-cards numeradas. Cada queja del
- * padre se renderiza como una "postal" con número editorial 01-04,
- * chip-book tonal arriba a la derecha, y border-left del libro Grow
- * que la atiende.
+ * Sección 3 minimalista · 5 bloques de texto al mismo tamaño grande,
+ * centrados, con fill-on-scroll word-by-word de gris (ink-faint) a
+ * carbón (ink). Cero chips · cero cards · cero handwritten.
  *
- * Tipografía DS canon May 2026:
- *  - Galiner (font-serif) · eyebrow, headline, números 01-04
- *  - Inter (font-text)    · body de las frases, chips
+ * Tipografía:
+ *  - Galiner (font-serif) · headline + frases · weight 300 baseline,
+ *    bold en palabras enfáticas
  *
  * Composición:
- *  - Eyebrow caps "Manifiesto · Un padre"
- *  - Headline grande "Nadie me preparó / para ser padre." con fill-on-scroll
- *  - TonalUnderline mint centrada
- *  - 4 cards postales stacked · cada una con:
- *    · Número Galiner Light (01-04)
- *    · Chip-book sm tono libro
- *    · Phrase Inter Light · fill-on-scroll ink-faint → ink
- *    · Background paper-soft · border-radius 12px
- *    · border-left 4px tono-base · firma visual del libro
- *  - Closing callout · Chip ink "Por eso nace Grow." con dot
+ *  - 1 headline · "Nadie me preparó para ser padre."
+ *  - 4 frases · cada una en su bloque, mismo tamaño que headline
+ *  - Todo centrado horizontal + vertical
+ *  - Gap generoso entre bloques
+ *
+ * Animación:
+ *  - Spring-smoothed scroll progress 0 → 1
+ *  - Cada bloque tiene su window · cascada secuencial
+ *  - Fill word-by-word · color animado por scroll
  *
  * Timeline (progress 0 → 1):
- *  · 0.00 → 0.05  · entrada bloque
- *  · 0.05 → 0.16  · eyebrow caps
- *  · 0.10 → 0.32  · headline fill word-by-word
- *  · 0.28 → 0.40  · TonalUnderline scaleX
- *  · 0.36 → 0.78  · 4 cards stagger pop · fill texto dentro de cada
- *  · 0.84 → 0.92  · closing callout
- *
- * Wrapper sticky 220vh · spring smoothing.
+ *  · 0.00 → 0.05  · entrada bloque (opacity + y)
+ *  · 0.06 → 0.22  · headline fill
+ *  · 0.22 → 0.38  · phrase 1
+ *  · 0.36 → 0.52  · phrase 2
+ *  · 0.50 → 0.66  · phrase 3
+ *  · 0.64 → 0.82  · phrase 4
+ *  · 0.82 → 1.00  · HOLD
  */
 
-// Colors · DS tokens (string interpolables para framer-motion)
+// Color tokens DS (string interpolables para framer-motion)
 const COLOR_OFF = '#BFBAA8'; // var(--ink-faint)
 const COLOR_ON = '#1A1A1A';  // var(--ink)
 
 interface WordTok { text: string; bold?: boolean; }
-
-interface LineSpec {
+interface BlockSpec {
   words: WordTok[];
   start: number;
   end: number;
 }
 
-// Headline · "Nadie me preparó / para ser padre."
-const HEADLINE_LINE_1: LineSpec = {
-  start: 0.10, end: 0.22,
-  words: [
-    { text: 'Nadie' },
-    { text: 'me' },
-    { text: 'preparó', bold: true },
-  ],
-};
-const HEADLINE_LINE_2: LineSpec = {
-  start: 0.18, end: 0.32,
-  words: [
-    { text: 'para' },
-    { text: 'ser' },
-    { text: 'padre.', bold: true },
-  ],
-};
-
-// 4 phrase cards · cada una mapea a un libro Grow vía tono
-interface PhraseCard {
-  number: string;      // "01" .. "04"
-  tono: ChipTono;
-  label: string;       // chip-book label
-  words: WordTok[];
-  start: number;       // window inicio (card pops in)
-  end: number;         // window fin (texto fully filled)
-}
-
-const CARDS: PhraseCard[] = [
+// 5 bloques del manifesto · headline + 4 frases · mismo tamaño visual
+const BLOCKS: BlockSpec[] = [
   {
-    number: '01', tono: 'mint', label: 'Sueño',
-    start: 0.36, end: 0.50,
+    start: 0.06, end: 0.22,
+    words: [
+      { text: 'Nadie' }, { text: 'me' }, { text: 'preparó', bold: true },
+      { text: 'para' }, { text: 'ser' }, { text: 'padre.', bold: true },
+    ],
+  },
+  {
+    start: 0.22, end: 0.38,
     words: [
       { text: 'Nadie' }, { text: 'me' }, { text: 'explicó' }, { text: 'que' },
       { text: 'me', bold: true }, { text: 'despertaría', bold: true },
@@ -97,8 +70,7 @@ const CARDS: PhraseCard[] = [
     ],
   },
   {
-    number: '02', tono: 'coral', label: 'Cólicos',
-    start: 0.46, end: 0.62,
+    start: 0.36, end: 0.52,
     words: [
       { text: 'Y' }, { text: 'nadie' }, { text: 'me' }, { text: 'explicó' },
       { text: 'cómo' }, { text: 'eso' }, { text: 'multiplicaría' }, { text: 'los' },
@@ -107,8 +79,7 @@ const CARDS: PhraseCard[] = [
     ],
   },
   {
-    number: '03', tono: 'gold', label: 'Salud',
-    start: 0.56, end: 0.72,
+    start: 0.50, end: 0.66,
     words: [
       { text: 'Nadie' }, { text: 'me' }, { text: 'explicó' }, { text: 'el' },
       { text: 'miedo', bold: true },
@@ -118,8 +89,7 @@ const CARDS: PhraseCard[] = [
     ],
   },
   {
-    number: '04', tono: 'blush', label: 'Diario',
-    start: 0.66, end: 0.82,
+    start: 0.64, end: 0.82,
     words: [
       { text: 'Tampoco' }, { text: 'nadie' }, { text: 'me' }, { text: 'explicó' },
       { text: 'la' }, { text: 'potencia' }, { text: 'de' }, { text: 'la' },
@@ -130,18 +100,6 @@ const CARDS: PhraseCard[] = [
     ],
   },
 ];
-
-// Tono → tailwind border class · firma visual del libro en cada card
-const TONO_BORDER: Record<ChipTono, string> = {
-  mint: 'border-mint-base',
-  coral: 'border-coral-base',
-  gold: 'border-gold-base',
-  blush: 'border-blush-base',
-  violet: 'border-violet-strong',
-  ink: 'border-ink',
-  soft: 'border-line-strong',
-  paper: 'border-line-strong',
-};
 
 export default function NarrativeRevealSection() {
   const wrapperRef = useRef<HTMLElement>(null);
@@ -158,25 +116,13 @@ export default function NarrativeRevealSection() {
   });
 
   // Block entrance suave
-  const blockOpacity = useTransform(progress, [0, 0.05], [0.92, 1]);
+  const blockOpacity = useTransform(progress, [0, 0.05], [0.9, 1]);
   const blockY = useTransform(progress, [0, 0.05], [16, 0]);
-
-  // Eyebrow caps fade
-  const eyebrowOpacity = useTransform(progress, [0.05, 0.16], [0, 1]);
-  const eyebrowY = useTransform(progress, [0.05, 0.16], [8, 0]);
-
-  // TonalUnderline mint bajo headline
-  const underlineProgress = useTransform(progress, [0.28, 0.40], [0, 1]);
-
-  // Closing callout · pop in al final
-  const closingOpacity = useTransform(progress, [0.84, 0.92], [0, 1]);
-  const closingScale = useTransform(progress, [0.84, 0.92], [0.86, 1]);
-  const closingY = useTransform(progress, [0.84, 0.92], [14, 0]);
 
   return (
     <section
       ref={wrapperRef}
-      className="relative h-[220vh] w-full bg-paper"
+      className="relative h-[260vh] w-full bg-paper"
       aria-label="Nadie me preparó para ser padre"
     >
       <div className="sticky top-0 flex h-screen w-full items-center justify-center overflow-hidden">
@@ -192,75 +138,18 @@ export default function NarrativeRevealSection() {
         />
 
         <motion.div
-          className="relative z-10 flex w-full max-w-[1100px] flex-col items-center px-6 text-center md:px-10 lg:px-16"
+          className="relative z-10 flex w-full max-w-[1200px] flex-col items-center px-6 text-center md:px-10 lg:px-16"
           style={{ opacity: blockOpacity, y: blockY }}
         >
-          {/* Eyebrow caps Galiner */}
-          <motion.p
-            className="mb-5 font-serif font-light uppercase text-ink-soft md:mb-7"
-            style={{
-              opacity: eyebrowOpacity,
-              y: eyebrowY,
-              fontSize: 'clamp(11px, 0.9vw, 13px)',
-              letterSpacing: '0.22em',
-            }}
-          >
-            Manifiesto · Un padre
-          </motion.p>
-
-          {/* Headline Galiner · 2 líneas · fill on scroll */}
-          <h2
-            className="font-serif text-balance leading-[0.95]"
-            style={{
-              fontSize: 'clamp(48px, 8.4vw, 138px)',
-              letterSpacing: '-0.018em',
-              fontWeight: 300,
-            }}
-          >
-            <FillLine line={HEADLINE_LINE_1} progress={progress} as="span" displayBlock />
-            <FillLine line={HEADLINE_LINE_2} progress={progress} as="span" displayBlock />
-          </h2>
-
-          {/* TonalUnderline mint centrada · scaleX animado */}
-          <div className="mt-5 flex justify-center md:mt-7">
-            <TonalUnderline
-              tono="mint"
-              width={160}
-              height={4}
-              progress={underlineProgress}
-            />
-          </div>
-
-          {/* Aire entre headline y cards */}
-          <div className="h-[6vh] min-h-[36px] md:h-[8vh] md:min-h-[56px]" />
-
-          {/* 4 phrase cards · stack vertical · stagger entry */}
+          {/* 5 bloques · todos mismo tamaño · centrados · stack vertical */}
           <div
-            className="flex w-full max-w-[780px] flex-col"
-            style={{ gap: 'clamp(14px, 1.8vh, 24px)' }}
+            className="flex w-full flex-col items-center"
+            style={{ gap: 'clamp(28px, 4.5vh, 64px)' }}
           >
-            {CARDS.map((card, i) => (
-              <PostalCard key={card.number} card={card} index={i} progress={progress} />
+            {BLOCKS.map((block, i) => (
+              <FillBlock key={i} block={block} progress={progress} />
             ))}
           </div>
-
-          {/* Closing callout · ink chip con dot · bridge a Grow */}
-          <motion.div
-            className="mt-[7vh] md:mt-[9vh]"
-            style={{
-              opacity: closingOpacity,
-              scale: closingScale,
-              y: closingY,
-            }}
-          >
-            <Chip tono="ink" size="md" className="px-5">
-              <span
-                className="mr-2 inline-block h-1.5 w-1.5 rounded-full bg-paper"
-                aria-hidden="true"
-              />
-              Por eso nace Grow.
-            </Chip>
-          </motion.div>
         </motion.div>
       </div>
     </section>
@@ -268,78 +157,28 @@ export default function NarrativeRevealSection() {
 }
 
 /* ────────────────────────────────────────────────────────────────────
-   PostalCard · una postal por queja · número + chip-book + texto fill
+   FillBlock · un bloque del manifesto · todos mismo tamaño editorial
    ──────────────────────────────────────────────────────────────────── */
 
-function PostalCard({
-  card,
-  index,
+function FillBlock({
+  block,
   progress,
 }: {
-  card: PhraseCard;
-  index: number;
+  block: BlockSpec;
   progress: MotionValue<number>;
 }) {
-  // Card pop entry · primeros 25% del window
-  const span = card.end - card.start;
-  const popEnd = card.start + span * 0.25;
-  const cardOpacity = useTransform(progress, [card.start, popEnd], [0, 1]);
-  const cardScale = useTransform(progress, [card.start, popEnd], [0.94, 1]);
-  const cardY = useTransform(progress, [card.start, popEnd], [16, 0]);
-
-  // Texto fill empieza al 30% del window · termina al end
-  const textLine: LineSpec = {
-    words: card.words,
-    start: card.start + span * 0.3,
-    end: card.end,
-  };
-
-  const borderClass = TONO_BORDER[card.tono];
-
   return (
-    <motion.article
-      className={`flex items-start gap-4 rounded-xl border-l-4 bg-paper-soft px-5 py-5 text-left md:gap-6 md:px-7 md:py-6 ${borderClass}`}
+    <p
+      className="font-serif text-balance max-w-[24ch] md:max-w-[18ch]"
       style={{
-        opacity: cardOpacity,
-        scale: cardScale,
-        y: cardY,
-        transformOrigin: 'center center',
+        fontSize: 'clamp(28px, 4.2vw, 64px)',
+        lineHeight: 1.15,
+        letterSpacing: '-0.018em',
+        fontWeight: 300,
       }}
     >
-      {/* Columna izq · número editorial Galiner Light */}
-      <div className="flex-shrink-0 pt-1">
-        <span
-          className="font-serif font-light text-ink-faint tabular-nums"
-          style={{
-            fontSize: 'clamp(22px, 2.4vw, 36px)',
-            letterSpacing: '-0.02em',
-          }}
-        >
-          {card.number}
-        </span>
-      </div>
-
-      {/* Columna der · chip-book arriba + texto fill abajo */}
-      <div className="flex min-w-0 flex-1 flex-col gap-2.5 md:gap-3">
-        <div className="flex items-center justify-between">
-          <Chip tono={card.tono} size="sm">
-            {card.label}
-          </Chip>
-        </div>
-
-        <FillLine
-          line={textLine}
-          progress={progress}
-          as="p"
-          className="font-text font-light"
-          style={{
-            fontSize: 'clamp(16px, 1.6vw, 22px)',
-            lineHeight: 1.5,
-            letterSpacing: '-0.005em',
-          }}
-        />
-      </div>
-    </motion.article>
+      <FillLine line={block} progress={progress} />
+    </p>
   );
 }
 
@@ -364,57 +203,35 @@ function FillWord({ word, start, end, progress, bold = false }: FillWordProps) {
   );
 }
 
-interface FillLineProps {
-  line: LineSpec;
-  progress: MotionValue<number>;
-  as?: 'p' | 'span';
-  displayBlock?: boolean;
-  className?: string;
-  style?: React.CSSProperties;
-}
-
 function FillLine({
   line,
   progress,
-  as = 'p',
-  displayBlock = false,
-  className = '',
-  style,
-}: FillLineProps) {
+}: {
+  line: BlockSpec;
+  progress: MotionValue<number>;
+}) {
   const duration = line.end - line.start;
   const step = duration / Math.max(line.words.length, 1);
   const fillSpan = step * 1.7;
 
-  const content = line.words.map((w, i) => {
-    const wStart = line.start + i * step * 0.55;
-    const wEnd = Math.min(wStart + fillSpan, line.end + duration * 0.1);
-    return (
-      <span key={`${line.start}-${i}`}>
-        <FillWord
-          word={w.text}
-          start={wStart}
-          end={wEnd}
-          progress={progress}
-          bold={w.bold}
-        />
-        {i < line.words.length - 1 && ' '}
-      </span>
-    );
-  });
-
-  if (as === 'span') {
-    return (
-      <span
-        className={className}
-        style={{ ...(displayBlock ? { display: 'block' } : {}), ...(style ?? {}) }}
-      >
-        {content}
-      </span>
-    );
-  }
   return (
-    <p className={className} style={style}>
-      {content}
-    </p>
+    <>
+      {line.words.map((w, i) => {
+        const wStart = line.start + i * step * 0.55;
+        const wEnd = Math.min(wStart + fillSpan, line.end + duration * 0.1);
+        return (
+          <span key={`${line.start}-${i}`}>
+            <FillWord
+              word={w.text}
+              start={wStart}
+              end={wEnd}
+              progress={progress}
+              bold={w.bold}
+            />
+            {i < line.words.length - 1 && ' '}
+          </span>
+        );
+      })}
+    </>
   );
 }

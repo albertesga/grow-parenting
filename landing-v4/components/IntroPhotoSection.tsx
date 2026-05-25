@@ -222,11 +222,13 @@ function DesktopChoreography({
           </div>
 
           {/* Chip label dentro del label area de la polaroid (padding bottom 56px).
-              Visible solo cuando el polaroid está formado (frame ≥ 0.6). */}
+              Visible solo cuando el polaroid está formado (frame ≥ 0.6).
+              Tilt -3deg estilo DS chip-strip-tilt. */}
           <motion.div
             className="pointer-events-none absolute bottom-[14px] left-1/2 z-10 -translate-x-1/2"
             style={{
               opacity: useTransform(frameOpacity, [0.6, 1], [0, 1]),
+              rotate: -3,
             }}
           >
             <Chip tono="mint" size="xs">
@@ -307,11 +309,12 @@ function MobileChoreography({
             />
           </div>
 
-          {/* Chip label · misma idea que desktop · centrado en label area */}
+          {/* Chip label · misma idea que desktop · centrado en label area · tilt -3deg */}
           <motion.div
             className="pointer-events-none absolute bottom-[12px] left-1/2 z-10 -translate-x-1/2"
             style={{
               opacity: useTransform(frameOpacity, [0.6, 1], [0, 1]),
+              rotate: -3,
             }}
           >
             <Chip tono="mint" size="xs">

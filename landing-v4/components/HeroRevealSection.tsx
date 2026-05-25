@@ -1,7 +1,7 @@
 'use client';
 
 import { motion, MotionValue, useTransform } from 'framer-motion';
-import Chip, { ChipStripTilt, ChipTono } from './Chip';
+import Chip, { ChipTono } from './Chip';
 import TonalUnderline from './TonalUnderline';
 
 interface HeroRevealSectionProps {
@@ -31,11 +31,11 @@ interface HeroRevealSectionProps {
  * Sin handwritten doodles · sustituidos por DS primitives.
  */
 
-// 3 attribute chips · tonos canon (mint default · blush suave · gold info)
-const ATTRIBUTE_CHIPS: { tono: ChipTono; label: string }[] = [
-  { tono: 'mint', label: 'feliz' },
-  { tono: 'blush', label: 'sensible' },
-  { tono: 'gold', label: 'tranquilo' },
+// 3 attribute chips · tonos canon + tilt deg (DS chip-strip-tilt pattern)
+const ATTRIBUTE_CHIPS: { tono: ChipTono; label: string; tilt: number }[] = [
+  { tono: 'mint', label: 'feliz', tilt: -3 },
+  { tono: 'blush', label: 'sensible', tilt: 2 },
+  { tono: 'gold', label: 'tranquilo', tilt: -2 },
 ];
 
 export default function HeroRevealSection({
@@ -114,21 +114,21 @@ export default function HeroRevealSection({
         {' '}con su hermana y sus padres.
       </motion.p>
 
-      {/* 3 attribute chips · chip-strip-tilt · stagger fade-in
-          Reemplaza las 4 flechas handwritten · DS-native */}
-      <div className="mt-7 md:mt-9">
-        <ChipStripTilt className="justify-start">
-          {ATTRIBUTE_CHIPS.map((c, i) => (
-            <AttrChip
-              key={c.label}
-              index={i}
-              progress={progress}
-              tono={c.tono}
-              label={c.label}
-              size={mobile ? 'sm' : 'md'}
-            />
-          ))}
-        </ChipStripTilt>
+      {/* 3 attribute chips · tilt -3/+2/-2 estilo DS chip-strip-tilt ·
+          stagger fade-in · rotate aplicado vía framer style (sino el
+          transform de stagger override la rotación CSS) */}
+      <div className="mt-7 flex flex-wrap items-center gap-2 md:mt-9">
+        {ATTRIBUTE_CHIPS.map((c, i) => (
+          <AttrChip
+            key={c.label}
+            index={i}
+            progress={progress}
+            tono={c.tono}
+            label={c.label}
+            size={mobile ? 'sm' : 'md'}
+            tilt={c.tilt}
+          />
+        ))}
       </div>
     </div>
   );
@@ -144,12 +144,14 @@ function AttrChip({
   tono,
   label,
   size,
+  tilt,
 }: {
   index: number;
   progress: MotionValue<number>;
   tono: ChipTono;
   label: string;
   size: 'sm' | 'md';
+  tilt: number;
 }) {
   const start = 0.55 + index * 0.04;
   const end = 0.7 + index * 0.04;
@@ -158,7 +160,7 @@ function AttrChip({
   const scale = useTransform(progress, [start, end], [0.88, 1]);
 
   return (
-    <motion.div style={{ opacity, y, scale }}>
+    <motion.div style={{ opacity, y, scale, rotate: tilt }}>
       <Chip tono={tono} size={size}>
         {label}
       </Chip>

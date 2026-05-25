@@ -341,7 +341,7 @@ function DesktopLayout(p: DesktopProps) {
           floatRotate={-4}
           zIndex={10}
           labelChip={
-            <motion.div style={{ opacity: p.chipLabelAloneOpacity }}>
+            <motion.div style={{ opacity: p.chipLabelAloneOpacity, rotate: -2 }}>
               <Chip tono="paper" size="xs">Tito</Chip>
             </motion.div>
           }
@@ -364,7 +364,7 @@ function DesktopLayout(p: DesktopProps) {
             floatRotate={6}
             labelChip={
               <motion.div
-                className="flex items-center gap-1"
+                className="flex items-center justify-center gap-1.5 [&>*:nth-child(1)]:-rotate-[4deg] [&>*:nth-child(2)]:rotate-[2deg] [&>*:nth-child(3)]:-rotate-[3deg]"
                 style={{ opacity: p.chipLabelKidsOpacity }}
               >
                 <Chip tono="paper" size="xs">Tito</Chip>
@@ -414,9 +414,9 @@ function DesktopLayout(p: DesktopProps) {
           />
         </div>
 
-        {/* Chip-strip familia · 3 identidades */}
+        {/* Chip-strip familia · 3 identidades · tilt -3/+2/-2 estilo DS */}
         <motion.div
-          className="mt-5 flex flex-wrap items-center gap-2"
+          className="mt-5 flex flex-wrap items-center gap-2 [&>*:nth-child(1)]:-rotate-[3deg] [&>*:nth-child(2)]:rotate-[2deg] [&>*:nth-child(3)]:-rotate-[2deg]"
           style={{ opacity: p.familyStripOpacity }}
         >
           {FAMILY_CHIPS.map((c) => (
@@ -477,13 +477,14 @@ function DesktopLayout(p: DesktopProps) {
           <span className="font-bold text-ink">complejo</span> que es.
         </motion.p>
 
-        {/* Closing callout-pill · bridge a sección 3 · ink chip con dot */}
+        {/* Closing callout-pill · bridge a sección 3 · ink chip con dot · tilt -2deg */}
         <motion.div
           className="mt-7"
           style={{
             opacity: p.closingOpacity,
             y: p.closingY,
             scale: p.closingScale,
+            rotate: -2,
           }}
         >
           <Chip tono="ink" size="md" className="px-5">
@@ -703,7 +704,7 @@ function MobileLayout(p: MobileProps) {
             floatRotate={3}
             labelChip={
               <motion.div
-                className="flex items-center gap-1"
+                className="flex items-center justify-center gap-1.5 [&>*:nth-child(1)]:-rotate-[4deg] [&>*:nth-child(2)]:rotate-[2deg] [&>*:nth-child(3)]:-rotate-[3deg]"
                 style={{ opacity: p.chipLabelKidsOpacity }}
               >
                 <Chip tono="paper" size="xs">Tito</Chip>
@@ -768,9 +769,9 @@ function MobileLayout(p: MobileProps) {
           />
         </div>
 
-        {/* Family chip-strip mobile · más compacto */}
+        {/* Family chip-strip mobile · más compacto · tilt -3/+2/-2 */}
         <motion.div
-          className="mt-4 flex flex-wrap items-center gap-1.5"
+          className="mt-4 flex flex-wrap items-center gap-1.5 [&>*:nth-child(1)]:-rotate-[3deg] [&>*:nth-child(2)]:rotate-[2deg] [&>*:nth-child(3)]:-rotate-[2deg]"
           style={{ opacity: p.familyStripOpacity }}
         >
           {FAMILY_CHIPS.map((c) => (
@@ -811,13 +812,14 @@ function MobileLayout(p: MobileProps) {
           <span className="font-bold text-ink">complejo</span> que es.
         </motion.p>
 
-        {/* Closing callout-pill · bridge a sección 3 */}
+        {/* Closing callout-pill · bridge a sección 3 · tilt -2deg */}
         <motion.div
           className="mt-5"
           style={{
             opacity: p.closingOpacity,
             y: p.closingY,
             scale: p.closingScale,
+            rotate: -2,
           }}
         >
           <Chip tono="ink" size="sm" className="px-4">
