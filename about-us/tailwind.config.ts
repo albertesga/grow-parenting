@@ -41,10 +41,20 @@ const config: Config = {
         'gold-base': '#E8C97A',
         'gold-strong': '#B8973F',
         'gold-ink': '#6E5A2A',
-        // Violet · desarrollo
+        // Violet · desarrollo (sin base · solo subtle/strong)
         'violet-subtle': '#E6DFE9',
         'violet-strong': '#6A5A7E',
         'violet-ink': '#4A3D55',
+        // Sky · lenguaje · feed-cards info (sin base · solo subtle/strong)
+        'sky-subtle': '#DDE6E8',
+        'sky-strong': '#4D6770',
+        'sky-ink': '#2E4750',
+        // Ochre · alimentación complementaria · cálido tierra (sin base)
+        'ochre-subtle': '#EBE0D2',
+        'ochre-strong': '#846238',
+        'ochre-ink': '#5A421E',
+        // Polaroid paper · color crema específico del marco fotográfico
+        'polaroid-paper': '#FBF8EE',
       },
       fontFamily: {
         // DS canon May 2026 · Galiner display + Inter body

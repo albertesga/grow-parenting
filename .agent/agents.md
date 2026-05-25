@@ -148,9 +148,10 @@ Detalle: `.agent/rules/typography.md`.
 
 ### G4 · Palette tonal
 
-5 familias × 3 tiers · siempre via CSS variables, nunca hex literal en JS.
-Mapping libro → tono fijo (extender de `CLAUDE.md`). Rojo médico
-prohibido · `coral-strong` para urgencias. Detalle:
+7 familias (4 completas 3 tiers · coral/blush/mint/gold · + 3 parciales
+subtle/strong · violet/sky/ochre) · siempre via CSS variables, nunca hex
+literal en JS. Mapping libro → tono fijo (extender de `CLAUDE.md`). Rojo
+médico prohibido · `coral-strong` para urgencias. Detalle:
 `.agent/rules/palette-tonal.md`.
 
 ### G5 · Motion canon

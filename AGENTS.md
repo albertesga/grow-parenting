@@ -51,8 +51,9 @@ Los 5 que rompen cualquier merge:
    `.agent/rules/copy-canon.md` + ADR-0011
 3. **Typography canon** · Galiner display · Inter body · Grift SOLO en
    `.plan .price .amt`. Detalle: `.agent/rules/typography.md`
-4. **Palette tonal** · 5 familias (coral, blush, mint, gold, violet) × 3
-   tiers · siempre `var(--{tono}-{tier})`, nunca hex literal. Detalle:
+4. **Palette tonal** · 7 familias · 4 completas (coral · blush · mint · gold ×
+   3 tiers) + 3 parciales (violet · sky · ochre × subtle/strong) · siempre
+   `var(--{tono}-{tier})`, nunca hex literal. Detalle:
    `.agent/rules/palette-tonal.md`
 5. **Verificación pre-commit** · HTTP 200 + JS check + auditor si tocaste
    primitive canon o copy user-facing. Detalle: `.agent/rules/verification.md`
@@ -63,7 +64,7 @@ Los 5 que rompen cualquier merge:
 |---|---|
 | **Libro** | Módulo del app (Hitos, Vacunas, Embarazo, etc.). Cada uno tiene tono canon. |
 | **Primitive** | Componente reusable del DS (`.book-hero`, `.chip`, `.phone-nav`). |
-| **Tono** | Familia de color tonal (coral, blush, mint, gold, violet, paper-deep). |
+| **Tono** | Familia de color tonal (coral, blush, mint, gold, violet, sky, ochre, paper-deep). |
 | **Kicker** | Eyebrow corto sobre title del hero · mayúsculas + ink-soft. |
 | **Eyebrow** | Microcopy serif (Galiner Light 300) sobre headlines · context label. |
 | **FAB** | Floating Action Button central del navbar · acción primaria del libro. |

@@ -573,7 +573,7 @@ function FloatingPolaroid({
     >
       {/* Frame polaroid · marco crema con label area inferior */}
       <div
-        className="relative h-full w-full bg-[#FBF8EE]"
+        className="relative h-full w-full bg-polaroid-paper"
         style={{
           padding: '14px 14px 56px 14px',
           borderRadius: 3,

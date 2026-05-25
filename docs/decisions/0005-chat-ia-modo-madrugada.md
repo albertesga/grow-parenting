@@ -1,8 +1,14 @@
 # ADR-0005 · Chat IA · single-thread + Modo madrugada efímero
 
 **Status:** Accepted
-**Date:** 2026-05-09 → 2026-05-11 (Fases A-F)
-**Commit:** `cdb5779` (skeleton) · `a66bee1` (DS) · `050e645` (Fase A) · `8421209` (B) · `f6a03ac` (C.1) · `04543dd` (C.2) · `abea206` (D) · `7b977b4` (E) · `56fd863` (F DS) · `2a8104c` (revision)
+**Date:** 2026-05-09 → 2026-05-11 (Fases A-F) · renombrado 2026-05-25
+**Commit:** `cdb5779` (skeleton) · `a66bee1` (DS) · `050e645` (Fase A) · `8421209` (B) · `f6a03ac` (C.1) · `04543dd` (C.2) · `abea206` (D) · `7b977b4` (E) · `56fd863` (F DS) · `2a8104c` (revision) · `e8b3108` (rename Modo 3AM → Modo madrugada)
+
+> **Nota terminológica (mayo 2026)** · Brand renombrado de "Modo 3AM" a
+> "Modo madrugada" para texto user-visible. JS internals mantenidos como
+> implementación · `data-screen="chat-3am"`, `chat3AMSaveAndExit()`,
+> localStorage `grow.chat.3am.optedIn` siguen así por compatibilidad
+> con localStorage existente · refactor candidato futuro no urgente.
 
 ## Context
 

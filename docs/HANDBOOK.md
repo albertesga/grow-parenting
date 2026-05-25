@@ -25,7 +25,7 @@ para detectar a tiempo, conversación con criterio.
 - **Galiner** (serif TBJ) · display único · pesos 300/400/700 sin italic
 - **Inter** Variable · body, micro, CTAs · 100-900 normal + italic
 - **Grift** · acento geométrico · SOLO en el número grande del pricing
-- **5 tonal families** · coral, blush, mint, gold, violet · × 3 tiers
+- **7 tonal families** · coral, blush, mint, gold (× 3 tiers) + violet, sky, ochre (× subtle/strong)
   (subtle/base/strong)
 
 Detalle: `.agent/rules/typography.md` · `.agent/rules/palette-tonal.md`.
@@ -81,7 +81,7 @@ Detalle completo: `.agent/rules/file-structure.md`.
 |---|---|
 | **Libro** | Módulo del app (Hitos, Vacunas, Embarazo, Lactancia, Sueño, Desarrollo, Diario, Salud, Alimentación, Cólicos, Perfil). Cada libro tiene tono canon y avatar. |
 | **Primitive** | Componente reusable del DS (`.book-hero`, `.chip`, `.phone-nav`, `.book-card`). |
-| **Tono** | Familia de color tonal (coral, blush, mint, gold, violet, paper-deep). |
+| **Tono** | Familia de color tonal (coral, blush, mint, gold, violet, sky, ochre, paper-deep). |
 | **Kicker** | Microcopy serif (Galiner Light 300) sobre headlines · context label. |
 | **Eyebrow** | Texto pequeño sobre headlines · puede ser serif o ink-soft. |
 | **Hero** | Card grande superior de un libro con tono + avatar. |
@@ -174,7 +174,7 @@ Spawn en paralelo si el cambio toca UI y copy a la vez.
 | ADR-0002 | navbar dedicado por libro · `.phone-nav .{libro}-phone-nav` |
 | ADR-0003 | chip primitive · 1 sola clase `.chip` + tono + active "vacío" |
 | ADR-0004 | bottom nav perfil · acceso global a configuración |
-| ADR-0005 | chat IA modo 3am · tono nocturno cuando aplica |
+| ADR-0005 | chat IA Modo madrugada · tono nocturno cuando aplica |
 | ADR-0006 | sub-libros pattern · navegación interna jerárquica |
 | ADR-0007 | diary timeline vertical · pattern de lanes calculadas |
 | ADR-0008 | pantalla perfil · estructura canon |

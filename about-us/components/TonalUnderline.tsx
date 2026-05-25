@@ -16,7 +16,7 @@ import { motion, MotionValue } from 'framer-motion';
  * subrayado handwritten · más en línea con el DS canon May 2026.
  */
 
-export type UnderlineTono = 'coral' | 'blush' | 'mint' | 'gold' | 'violet' | 'ink';
+export type UnderlineTono = 'coral' | 'blush' | 'mint' | 'gold' | 'violet' | 'sky' | 'ochre' | 'ink';
 
 interface TonalUnderlineProps {
   /** Tono del trazo · usa los tokens tailwind {tono}-base */
@@ -40,7 +40,9 @@ const TONO_BG: Record<UnderlineTono, string> = {
   blush: 'bg-blush-base',
   mint: 'bg-mint-base',
   gold: 'bg-gold-base',
-  violet: 'bg-violet-strong', // violet no tiene base, usa strong
+  violet: 'bg-violet-strong', // violet · sin base, usa strong
+  sky: 'bg-sky-strong',       // sky · sin base, usa strong
+  ochre: 'bg-ochre-strong',   // ochre · sin base, usa strong
   ink: 'bg-ink',
 };
 

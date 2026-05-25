@@ -38,7 +38,7 @@ Para cualquier cambio visual/UI · **lee el DS antes de inventar nada**. Casi to
 |---|---|---|---|
 | Hitos | mint | Lactancia | blush |
 | Vacunas | gold | Sueño | mint nocturno |
-| Desarrollo | lavender | Diario | blush |
+| Desarrollo | violet | Diario | blush |
 | Embarazo | coral | Salud | paper-deep |
 | Alimentación | coral | Cólicos | coral |
 | Perfil | mint | | |

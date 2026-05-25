@@ -1,58 +1,88 @@
 # grow
 
-Prototipo HTML de **grow** — app de parenting con curvas de desarrollo OMS DS.
+Prototipo HTML de **Grow** — app de parenting con curvas de desarrollo OMS, Haizea-Llevant clínico y 9 libros tonales canon Fase 0.
 
-`prototype.html` es la única superficie ejecutable: un único archivo autocontenido que carga assets y fuentes desde `design/assets/`. Los archivos en `design/*.html` son documentos del sistema de diseño (foundations, primitives, components, flows, avatars vocab) y se abren independientemente.
+## Superficies
+
+- **`prototype.html`** · simulación de la app (single-file HTML/CSS/JS, ~21k líneas)
+- **`homepage/`** · marketing site público canon Fase 0 (vanilla HTML/CSS/JS · 3 archivos)
+- **`about-us/`** · prototipo personal del founder (Next.js + Tailwind + Framer Motion · NO production)
+- **`design/Grow Design System v0.2.html`** · DS canónico · single source of truth
+
+Cualquier discrepancia entre archivos se resuelve siempre a favor del DS canónico.
 
 ## Estructura
 
 ```
 .
-├── prototype.html                          # prototipo principal (single-file app)
+├── AGENTS.md                                  # entry-point canónico (lee primero)
+├── CLAUDE.md                                  # alias condensado Claude Code
+├── prototype.html                             # prototipo app (single-file)
+├── homepage/
+│   ├── index.html                             # landing canon
+│   ├── styles.css
+│   ├── main.js
+│   └── assets/fonts/
+│       ├── TBJGaliner-{Light,Regular,Bold}.ttf    # serif display canon
+│       ├── InterVariable{,-Italic}.woff2          # body sans canon
+│       └── Grift-{18 cortes}.ttf                  # acento pricing .amt
+├── about-us/
+│   ├── app/                                   # Next.js app dir
+│   ├── components/                            # React components
+│   ├── public/fonts/                          # mismas fonts canon
+│   └── package.json
 ├── design/
-│   ├── Grow Foundations v0.1.html          # tokens, color, tipografía
-│   ├── Grow Foundations v0.1 (standalone-src).html
-│   ├── Grow Foundations v0.1 (standalone).html
-│   ├── Grow Primitives v0.1.html           # botones, inputs, nav
-│   ├── Grow Product Components v0.1.html   # componentes de producto
-│   ├── Grow Flows v0.1.html                # flujos
-│   ├── Grow Avatars Vocab v0.1.html        # vocabulario de avatares
-│   └── assets/
-│       ├── avatar-{blush,coral,mint}.png
-│       ├── grow-logo.png
-│       ├── mood-{cansados,contentos,durmiendo}.png
-│       └── fonts/
-│           ├── Helvena-{Bold,Light,Medium,Regular,Semibold}.ttf
-│           └── LeniaSans-{Bold,Italic,Light,Medium,MediumItalic,Regular}.ttf
-├── .replit                                 # workflow Replit (opcional)
+│   ├── Grow Design System v0.2.html           # DS canónico (~7k líneas)
+│   ├── assets/fonts/                          # mismas fonts canon
+│   └── v0.1/                                  # histórico (no tocar)
+├── docs/
+│   ├── HANDBOOK.md                            # onboarding humano + glosario
+│   └── decisions/                             # 16 ADRs vigentes
+├── .agent/
+│   ├── agents.md                              # brain del proyecto
+│   ├── rules/                                 # 9 reglas duras
+│   └── skills/                                # 5 skills loop
+├── .replit                                    # workflow Replit (opcional)
 └── replit.nix
 ```
 
 ## Ejecutar localmente
 
-`prototype.html` necesita un servidor HTTP (no funciona con `file://` por las fuentes locales). Desde la raíz del repo:
+### Prototype + homepage (vanilla)
+
+Servidor HTTP desde la raíz (las fuentes son locales · no funciona con `file://`):
 
 ```sh
 python3 -m http.server 5000
-# luego abre http://localhost:5000/prototype.html
+# luego abre:
+# http://localhost:5000/prototype.html
+# http://localhost:5000/homepage/index.html
+# http://localhost:5000/design/Grow%20Design%20System%20v0.2.html
 ```
 
-Los documentos del sistema de diseño:
+### About-us (Next.js)
 
 ```sh
-# tras lanzar el servidor:
-open http://localhost:5000/design/Grow%20Foundations%20v0.1.html
+cd about-us && npm install && npm run dev
+# luego abre http://localhost:3000
 ```
 
 ## Ejecutar en Replit
 
-El repo conserva `.replit` y `replit.nix`. El workflow `Project` ejecuta `python3 -m http.server 5000` y expone el puerto 5000.
+El repo conserva `.replit` y `replit.nix`. El workflow `Project` ejecuta `python3 -m http.server 5000` y expone el puerto 5000 para prototype + homepage.
 
-## Marca (resumen rápido)
+## Marca (resumen rápido · canon May 2026)
 
-- Color principal de marca: `#B6C5B2`
-- Color principal de texto: `#3E3D34`
-- Fondo preferente: blanco o crema `#FAF6EE`
-- Logo: `design/assets/grow-logo.png`
-- Avatares: blush, coral, mint (`design/assets/avatar-*.png`)
-- Tipografías: Helvena (texto), LeniaSans (display/UI)
+- **Paper canvas** · `#FAF7F0` (paper) / `#F2EDE0` (paper-soft) / `#E8E1CF` (paper-deep)
+- **Ink hierarchy** · `#1A1A1A` (ink) / `#4D4D4D` (ink-soft) / `#888888` (ink-muted) / `#BFBAA8` (ink-faint)
+- **Paleta tonal** · 7 familias (coral · blush · mint · gold completas 3 tiers · violet · sky · ochre parciales subtle/strong)
+- **Tipografía** · **Galiner** display serif · **Inter Variable** body sans · **Grift** acento pricing (`.amt` único)
+- **Avatares** · blush (bebé) / coral (embarazo) / mint (crianza)
+
+Detalle completo · `.agent/rules/typography.md` + `.agent/rules/palette-tonal.md` + `design/Grow Design System v0.2.html` § Foundations.
+
+## Stack canon
+
+100% vanilla HTML/CSS/JS para `prototype.html` + `homepage/` + DS. **No build, no bundler, no `package.json`** en estos folders. Excepción · `about-us/` usa Next.js como prototipo personal.
+
+Detalle workflow + harness · `AGENTS.md` raíz.

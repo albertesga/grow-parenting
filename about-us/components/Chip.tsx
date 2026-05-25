@@ -26,7 +26,9 @@ export type ChipTono =
   | 'mint'      // hitos/sueño/perfil/default
   | 'gold'      // vacunas
   | 'blush'     // lactancia/diario
-  | 'violet';   // desarrollo
+  | 'violet'    // desarrollo
+  | 'sky'       // lenguaje · feed-cards info
+  | 'ochre';    // alimentación complementaria · cálido tierra
 
 export interface ChipProps {
   children: ReactNode;
@@ -46,6 +48,8 @@ const TONE_CLASSES: Record<ChipTono, string> = {
   gold:   'bg-gold-subtle text-gold-ink',
   blush:  'bg-blush-subtle text-blush-ink',
   violet: 'bg-violet-subtle text-violet-ink',
+  sky:    'bg-sky-subtle text-sky-ink',
+  ochre:  'bg-ochre-subtle text-ochre-ink',
 };
 
 export default function Chip({
