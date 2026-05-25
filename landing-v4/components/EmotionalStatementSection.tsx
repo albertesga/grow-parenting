@@ -1,28 +1,41 @@
 'use client';
 
-import { useRef } from 'react';
+import { useRef, ReactNode } from 'react';
 import { motion, useScroll, useTransform, useSpring, MotionValue } from 'framer-motion';
-import HandwrittenAsset from './HandwrittenAsset';
+import Chip, { ChipTono } from './Chip';
+import TonalUnderline from './TonalUnderline';
 
 /**
- * EmotionalStatementSection · sección 2 con storytelling scroll-driven.
+ * EmotionalStatementSection v2 · DS-aligned · "Probablemente / Aquí estoy yo."
  *
- * Wrapper sticky de 320vh permite secuenciar 3 momentos narrativos:
+ * Sección 2 con storytelling scroll-driven · 3 columnas desktop ·
+ * polaroid stack animation (titoAlone behind + titoKids drops on top).
  *
- * Scroll progress 0 → 1:
- *  · 0.00 → 0.20 · Bloque izquierdo "Probablemente es el mejor niño del mundo"
- *                  + subrayado + subtexto · reveal escalonado por línea
- *  · 0.20 → 0.40 · Polaroid del padre entra (scale + fade + rotate)
- *  · 0.40 → 0.70 · Bloque derecho "Aquí estoy yo. Padre de Inti..."
- *                  reveal escalonado de 5 elementos
- *  · 0.55 → 0.85 · Doodles handwritten distribuidos
- *  · 0.85 → 1.00 · HOLD · todo visible · usuario absorbe la composición
+ * Tipografía DS canon May 2026:
+ *  - Galiner (font-serif) · headlines, eyebrows
+ *  - Inter (font-text)    · body, chips, captions
  *
- * Reverso al scroll up · todos los elementos vuelven a ocultarse en orden
- * inverso porque las animaciones están atadas al scroll progress.
+ * Composición:
+ *  - Bloque IZQ · eyebrow "EL HIJO" + headline Galiner mix + TonalUnderline
+ *    + body Inter "¿cómo lo sé? porque soy su padre"
+ *  - CENTER · stack 2 polaroids con chip-labels dentro
+ *    · titoAlone label "Tito" · titoKids cluster "Inti+Llivia+Tito"
+ *  - Bloque DER · eyebrow "EL PADRE" + headline "Aquí estoy yo." +
+ *    TonalUnderline ink + chip-strip family + body + closing callout
+ *    "Y de eso nace Grow."
  *
- * Layout · 3 columnas desktop / vertical mobile.
+ * Wrapper sticky 320vh · timeline 0→0.95 cambios · 0.95→1.0 HOLD.
+ *
+ * Cero handwritten doodles · 100% DS primitives.
  */
+
+// Family chips · identidades visibles a la derecha
+const FAMILY_CHIPS: { tono: ChipTono; label: string }[] = [
+  { tono: 'mint', label: 'Inti · 7' },
+  { tono: 'coral', label: 'Llivia · 3' },
+  { tono: 'paper', label: 'Tito' },
+];
+
 export default function EmotionalStatementSection() {
   const wrapperRef = useRef<HTMLElement>(null);
 
@@ -31,7 +44,6 @@ export default function EmotionalStatementSection() {
     offset: ['start start', 'end end'],
   });
 
-  // Spring sutil · suaviza el scroll en trackpads · evita jitter
   const progress = useSpring(scrollYProgress, {
     stiffness: 120,
     damping: 28,
@@ -39,77 +51,62 @@ export default function EmotionalStatementSection() {
   });
 
   // ═══════════════════════════════════════════════════════
-  // Timeline · MOMENTO 1 · Bloque izquierdo (0.00 → 0.20)
+  // MOMENTO 1 · Bloque izquierdo (0.00 → 0.25)
   // ═══════════════════════════════════════════════════════
-  const line1Opacity = useTransform(progress, [0.00, 0.06], [0, 1]);
-  const line1Y = useTransform(progress, [0.00, 0.06], [40, 0]);
-  const line2Opacity = useTransform(progress, [0.04, 0.10], [0, 1]);
-  const line2Y = useTransform(progress, [0.04, 0.10], [40, 0]);
-  const line3Opacity = useTransform(progress, [0.08, 0.14], [0, 1]);
-  const line3Y = useTransform(progress, [0.08, 0.14], [40, 0]);
-  const underlineLeftProgress = useTransform(progress, [0.12, 0.18], [0, 1]);
-  const subLeftOpacity = useTransform(progress, [0.15, 0.22], [0, 1]);
-  const subLeftY = useTransform(progress, [0.15, 0.22], [24, 0]);
-  const loopBottomOpacity = useTransform(progress, [0.18, 0.25], [0, 1]);
-  const loopBottomScale = useTransform(progress, [0.18, 0.25], [0.7, 1]);
+  const eyebrowLeftOpacity = useTransform(progress, [0.00, 0.04], [0, 1]);
+  const eyebrowLeftY = useTransform(progress, [0.00, 0.04], [8, 0]);
+  const line1Opacity = useTransform(progress, [0.02, 0.08], [0, 1]);
+  const line1Y = useTransform(progress, [0.02, 0.08], [40, 0]);
+  const line2Opacity = useTransform(progress, [0.06, 0.12], [0, 1]);
+  const line2Y = useTransform(progress, [0.06, 0.12], [40, 0]);
+  const line3Opacity = useTransform(progress, [0.10, 0.16], [0, 1]);
+  const line3Y = useTransform(progress, [0.10, 0.16], [40, 0]);
+  const underlineLeftProgress = useTransform(progress, [0.14, 0.22], [0, 1]);
+  const subLeftOpacity = useTransform(progress, [0.18, 0.25], [0, 1]);
+  const subLeftY = useTransform(progress, [0.18, 0.25], [24, 0]);
 
   // ═══════════════════════════════════════════════════════
-  // Timeline · MOMENTO 2 · Polaroid stack (0.20 → 0.65)
-  // 2 polaroids con storytelling:
-  //  · titoAlone (padre solo) entra primero · rotate -3° → 2°
-  //  · titoKids (padre con hijas) entra después · viene desde detrás
-  //  · al final, la titoAlone se desliza ligeramente al lado revelando
-  //    titoKids · ambas visibles formando un álbum scrapbook
+  // MOMENTO 2 · Polaroid stack (0.20 → 0.65)
   // ═══════════════════════════════════════════════════════
   const polaroidOpacity = useTransform(progress, [0.22, 0.38], [0, 1]);
   const polaroidScale = useTransform(progress, [0.22, 0.42], [0.85, 1]);
   const polaroidY = useTransform(progress, [0.22, 0.42], [80, 0]);
-  // Polaroid 1 (titoAlone · DETRÁS) · entra primero centrada
-  // Después de aparecer la 2ª polaroid encima, se desliza a la izquierda
-  // y rota más como mostrándose desde detrás del nuevo elemento.
+  // Polaroid 1 (titoAlone · DETRÁS)
   const polaroid1X = useTransform(progress, [0.40, 0.65], [0, -110]);
   const polaroid1Y = useTransform(progress, [0.40, 0.65], [0, 12]);
   const polaroid1Rotate = useTransform(progress, [0.22, 0.42, 0.65], [-5, -3, -10]);
-  // Polaroid 2 (titoKids · DELANTE) · "cae" desde arriba-derecha
-  // con escala mayor para entrada dramática + rotación opuesta a la 1ª
-  // Termina ligeramente a la derecha + arriba · creando un fan scrapbook
+  // Polaroid 2 (titoKids · DELANTE) · cae desde arriba con overshoot
   const polaroid2Opacity = useTransform(progress, [0.42, 0.58], [0, 1]);
   const polaroid2Scale = useTransform(progress, [0.42, 0.55, 0.65], [0.72, 1.04, 1]);
   const polaroid2Y = useTransform(progress, [0.42, 0.65], [-80, -8]);
   const polaroid2X = useTransform(progress, [0.42, 0.65], [60, 95]);
   const polaroid2Rotate = useTransform(progress, [0.42, 0.55, 0.85], [18, 9, 7]);
-
-  // Doodles polaroid · entran junto con la polaroid
-  const arrowCurveTop1Opacity = useTransform(progress, [0.28, 0.42], [0, 1]);
-  const arrowCurveTop1Scale = useTransform(progress, [0.28, 0.42], [0.7, 1]);
-  const arrowCurveTop2Opacity = useTransform(progress, [0.32, 0.46], [0, 1]);
-  const arrowCurveTop2Scale = useTransform(progress, [0.32, 0.46], [0.7, 1]);
+  // Chip labels · sincronizados con la aparición de cada polaroid
+  const chipLabelAloneOpacity = useTransform(progress, [0.30, 0.42], [0, 1]);
+  const chipLabelKidsOpacity = useTransform(progress, [0.50, 0.62], [0, 1]);
 
   // ═══════════════════════════════════════════════════════
-  // Timeline · MOMENTO 3 · Bloque derecho (0.40 → 0.70)
+  // MOMENTO 3 · Bloque derecho (0.40 → 0.78)
   // ═══════════════════════════════════════════════════════
+  const eyebrowRightOpacity = useTransform(progress, [0.38, 0.44], [0, 1]);
+  const eyebrowRightY = useTransform(progress, [0.38, 0.44], [8, 0]);
   const r1Opacity = useTransform(progress, [0.42, 0.50], [0, 1]);
   const r1Y = useTransform(progress, [0.42, 0.50], [30, 0]);
   const r1X = useTransform(progress, [0.42, 0.55], [40, 0]);
   const underlineRightProgress = useTransform(progress, [0.48, 0.56], [0, 1]);
-  const r2Opacity = useTransform(progress, [0.52, 0.60], [0, 1]);
-  const r2Y = useTransform(progress, [0.52, 0.60], [20, 0]);
-  const r3Opacity = useTransform(progress, [0.58, 0.66], [0, 1]);
-  const r3Y = useTransform(progress, [0.58, 0.66], [16, 0]);
-  const r4Opacity = useTransform(progress, [0.62, 0.70], [0, 1]);
-  const r4Y = useTransform(progress, [0.62, 0.70], [16, 0]);
-  const r5Opacity = useTransform(progress, [0.66, 0.74], [0, 1]);
-  const r5Y = useTransform(progress, [0.66, 0.74], [16, 0]);
-
-  // ═══════════════════════════════════════════════════════
-  // Timeline · MOMENTO FINAL · Doodles bottom (0.55 → 0.85)
-  // ═══════════════════════════════════════════════════════
-  const sparkleOpacity = useTransform(progress, [0.55, 0.70], [0, 1]);
-  const sparkleScale = useTransform(progress, [0.55, 0.70], [0.5, 1]);
-  const loopCenterOpacity = useTransform(progress, [0.65, 0.78], [0, 1]);
-  const loopCenterScale = useTransform(progress, [0.65, 0.78], [0.7, 1]);
-  const arrowBottomRightOpacity = useTransform(progress, [0.72, 0.85], [0, 1]);
-  const arrowBottomRightScale = useTransform(progress, [0.72, 0.85], [0.7, 1]);
+  const familyStripOpacity = useTransform(progress, [0.54, 0.64], [0, 1]);
+  const r2Opacity = useTransform(progress, [0.58, 0.66], [0, 1]);
+  const r2Y = useTransform(progress, [0.58, 0.66], [20, 0]);
+  const r3Opacity = useTransform(progress, [0.62, 0.70], [0, 1]);
+  const r3Y = useTransform(progress, [0.62, 0.70], [16, 0]);
+  const r4Opacity = useTransform(progress, [0.66, 0.74], [0, 1]);
+  const r4Y = useTransform(progress, [0.66, 0.74], [16, 0]);
+  const r5Opacity = useTransform(progress, [0.70, 0.78], [0, 1]);
+  const r5Y = useTransform(progress, [0.70, 0.78], [16, 0]);
+  // Closing callout · bridge a sección 3
+  const closingOpacity = useTransform(progress, [0.80, 0.90], [0, 1]);
+  const closingY = useTransform(progress, [0.80, 0.90], [16, 0]);
+  const closingScale = useTransform(progress, [0.80, 0.90], [0.88, 1]);
 
   return (
     <section
@@ -118,7 +115,7 @@ export default function EmotionalStatementSection() {
       aria-label="Probablemente es el mejor niño del mundo"
     >
       <div className="sticky top-0 h-screen w-full overflow-hidden">
-        {/* Paper texture overlay extra · sutil noise sobre paper crema base */}
+        {/* Paper texture overlay sutil */}
         <div
           className="pointer-events-none absolute inset-0 z-0 opacity-[0.04] mix-blend-multiply"
           style={{
@@ -129,10 +126,11 @@ export default function EmotionalStatementSection() {
           aria-hidden="true"
         />
 
-        {/* Desktop layout · 3 columnas · lg+ (1024+)
-            Tablet/mobile usan MobileLayout (vertical stack) */}
+        {/* Desktop layout · 3 columnas · lg+ (1024+) */}
         <div className="relative hidden h-full w-full lg:block">
           <DesktopLayout
+            eyebrowLeftOpacity={eyebrowLeftOpacity}
+            eyebrowLeftY={eyebrowLeftY}
             line1Opacity={line1Opacity}
             line1Y={line1Y}
             line2Opacity={line2Opacity}
@@ -142,8 +140,6 @@ export default function EmotionalStatementSection() {
             underlineLeftProgress={underlineLeftProgress}
             subLeftOpacity={subLeftOpacity}
             subLeftY={subLeftY}
-            loopBottomOpacity={loopBottomOpacity}
-            loopBottomScale={loopBottomScale}
             polaroidOpacity={polaroidOpacity}
             polaroidScale={polaroidScale}
             polaroidY={polaroidY}
@@ -155,14 +151,15 @@ export default function EmotionalStatementSection() {
             polaroid2Y={polaroid2Y}
             polaroid2X={polaroid2X}
             polaroid2Rotate={polaroid2Rotate}
-            arrowCurveTop1Opacity={arrowCurveTop1Opacity}
-            arrowCurveTop1Scale={arrowCurveTop1Scale}
-            arrowCurveTop2Opacity={arrowCurveTop2Opacity}
-            arrowCurveTop2Scale={arrowCurveTop2Scale}
+            chipLabelAloneOpacity={chipLabelAloneOpacity}
+            chipLabelKidsOpacity={chipLabelKidsOpacity}
+            eyebrowRightOpacity={eyebrowRightOpacity}
+            eyebrowRightY={eyebrowRightY}
             r1Opacity={r1Opacity}
             r1Y={r1Y}
             r1X={r1X}
             underlineRightProgress={underlineRightProgress}
+            familyStripOpacity={familyStripOpacity}
             r2Opacity={r2Opacity}
             r2Y={r2Y}
             r3Opacity={r3Opacity}
@@ -171,18 +168,17 @@ export default function EmotionalStatementSection() {
             r4Y={r4Y}
             r5Opacity={r5Opacity}
             r5Y={r5Y}
-            sparkleOpacity={sparkleOpacity}
-            sparkleScale={sparkleScale}
-            loopCenterOpacity={loopCenterOpacity}
-            loopCenterScale={loopCenterScale}
-            arrowBottomRightOpacity={arrowBottomRightOpacity}
-            arrowBottomRightScale={arrowBottomRightScale}
+            closingOpacity={closingOpacity}
+            closingY={closingY}
+            closingScale={closingScale}
           />
         </div>
 
-        {/* Mobile + Tablet · vertical · mismas MotionValues (scroll-driven) */}
+        {/* Mobile + Tablet · vertical · mismas MotionValues */}
         <div className="flex h-full w-full flex-col lg:hidden">
           <MobileLayout
+            eyebrowLeftOpacity={eyebrowLeftOpacity}
+            eyebrowLeftY={eyebrowLeftY}
             line1Opacity={line1Opacity}
             line1Y={line1Y}
             line2Opacity={line2Opacity}
@@ -198,9 +194,14 @@ export default function EmotionalStatementSection() {
             polaroid2Opacity={polaroid2Opacity}
             polaroid2Scale={polaroid2Scale}
             polaroid2Y={polaroid2Y}
+            chipLabelAloneOpacity={chipLabelAloneOpacity}
+            chipLabelKidsOpacity={chipLabelKidsOpacity}
+            eyebrowRightOpacity={eyebrowRightOpacity}
+            eyebrowRightY={eyebrowRightY}
             r1Opacity={r1Opacity}
             r1Y={r1Y}
             underlineRightProgress={underlineRightProgress}
+            familyStripOpacity={familyStripOpacity}
             r2Opacity={r2Opacity}
             r2Y={r2Y}
             r3Opacity={r3Opacity}
@@ -209,6 +210,9 @@ export default function EmotionalStatementSection() {
             r4Y={r4Y}
             r5Opacity={r5Opacity}
             r5Y={r5Y}
+            closingOpacity={closingOpacity}
+            closingY={closingY}
+            closingScale={closingScale}
           />
         </div>
       </div>
@@ -217,104 +221,114 @@ export default function EmotionalStatementSection() {
 }
 
 /* ────────────────────────────────────────────────────────────────────
-   Desktop layout · scroll-driven storytelling
+   Desktop layout · 3 columnas storytelling
    ──────────────────────────────────────────────────────────────────── */
 
 type MV = MotionValue<number>;
 
 interface DesktopProps {
+  eyebrowLeftOpacity: MV; eyebrowLeftY: MV;
   line1Opacity: MV; line1Y: MV;
   line2Opacity: MV; line2Y: MV;
   line3Opacity: MV; line3Y: MV;
   underlineLeftProgress: MV;
   subLeftOpacity: MV; subLeftY: MV;
-  loopBottomOpacity: MV; loopBottomScale: MV;
   polaroidOpacity: MV; polaroidScale: MV; polaroidY: MV;
   polaroid1X: MV; polaroid1Y: MV; polaroid1Rotate: MV;
   polaroid2Opacity: MV; polaroid2Scale: MV; polaroid2Y: MV;
   polaroid2X: MV; polaroid2Rotate: MV;
-  arrowCurveTop1Opacity: MV; arrowCurveTop1Scale: MV;
-  arrowCurveTop2Opacity: MV; arrowCurveTop2Scale: MV;
+  chipLabelAloneOpacity: MV;
+  chipLabelKidsOpacity: MV;
+  eyebrowRightOpacity: MV; eyebrowRightY: MV;
   r1Opacity: MV; r1Y: MV; r1X: MV;
   underlineRightProgress: MV;
+  familyStripOpacity: MV;
   r2Opacity: MV; r2Y: MV;
   r3Opacity: MV; r3Y: MV;
   r4Opacity: MV; r4Y: MV;
   r5Opacity: MV; r5Y: MV;
-  sparkleOpacity: MV; sparkleScale: MV;
-  loopCenterOpacity: MV; loopCenterScale: MV;
-  arrowBottomRightOpacity: MV; arrowBottomRightScale: MV;
+  closingOpacity: MV; closingY: MV; closingScale: MV;
 }
 
 function DesktopLayout(p: DesktopProps) {
   return (
     <>
-      {/* Bloque izquierdo · texto "Probablemente..." · width responsive
-          tablet (md): w-[34vw] · desktop (lg+): w-[36vw] */}
+      {/* Bloque izquierdo · eyebrow + headline + body */}
       <div className="absolute left-[6vw] top-1/2 z-20 w-[34vw] -translate-y-1/2 lg:left-[7vw] lg:w-[36vw]">
-        <div className="font-grift text-ink">
+        {/* Eyebrow caps Galiner Light */}
+        <motion.p
+          className="mb-4 font-serif font-light uppercase text-ink-soft"
+          style={{
+            opacity: p.eyebrowLeftOpacity,
+            y: p.eyebrowLeftY,
+            fontSize: 'clamp(11px, 0.85vw, 13px)',
+            letterSpacing: '0.22em',
+          }}
+        >
+          El Hijo
+        </motion.p>
+
+        <div className="font-serif text-ink">
           <motion.div
             className="text-[clamp(48px,5.4vw,86px)] font-light leading-[1.0] tracking-tight"
-            style={{ opacity: p.line1Opacity, y: p.line1Y }}
+            style={{
+              opacity: p.line1Opacity,
+              y: p.line1Y,
+              letterSpacing: '-0.018em',
+            }}
           >
             Probablemente
           </motion.div>
           <motion.div
             className="text-[clamp(48px,5.4vw,86px)] font-light leading-[1.0] tracking-tight"
-            style={{ opacity: p.line2Opacity, y: p.line2Y }}
+            style={{
+              opacity: p.line2Opacity,
+              y: p.line2Y,
+              letterSpacing: '-0.018em',
+            }}
           >
-            es el <span className="font-extrabold">mejor niño</span>
+            es el <span className="font-bold">mejor niño</span>
           </motion.div>
           <motion.div
-            className="text-[clamp(48px,5.4vw,86px)] font-extrabold leading-[1.0] tracking-tight"
-            style={{ opacity: p.line3Opacity, y: p.line3Y }}
+            className="text-[clamp(48px,5.4vw,86px)] font-bold leading-[1.0] tracking-tight"
+            style={{
+              opacity: p.line3Opacity,
+              y: p.line3Y,
+              letterSpacing: '-0.018em',
+            }}
           >
             del mundo.
           </motion.div>
 
-          {/* Subrayado doble bajo el headline */}
-          <motion.div
-            className="mt-3 origin-left"
-            style={{
-              scaleX: p.underlineLeftProgress,
-              opacity: p.underlineLeftProgress,
-              width: '24%',
-              maxWidth: 200,
-            }}
-          >
-            <HandwrittenAsset variant="doubleLine" width={200} />
-          </motion.div>
+          {/* TonalUnderline mint · reemplaza doubleLine handwritten */}
+          <div className="mt-4">
+            <TonalUnderline
+              tono="mint"
+              width={200}
+              height={4}
+              progress={p.underlineLeftProgress}
+            />
+          </div>
         </div>
 
-        {/* Subtexto izquierdo · light con "soy su padre" en extrabold */}
+        {/* Subtexto izquierdo · Inter Light + Bold en énfasis */}
         <motion.div
-          className="mt-12 max-w-[28ch] font-grift text-[clamp(16px,1.25vw,22px)] font-light leading-[1.45] text-ink-soft"
-          style={{ opacity: p.subLeftOpacity, y: p.subLeftY }}
+          className="mt-10 max-w-[28ch] font-text text-[clamp(16px,1.25vw,22px)] font-light leading-[1.45] text-ink-soft"
+          style={{
+            opacity: p.subLeftOpacity,
+            y: p.subLeftY,
+            letterSpacing: '-0.005em',
+          }}
         >
-          ¿qué cómo lo sé?,
+          ¿cómo lo sé?,
           <br />
-          pues porque <span className="font-extrabold text-ink">soy su padre</span>.
-        </motion.div>
-
-        {/* Loop garabato bajo el subtexto */}
-        <motion.div
-          className="pointer-events-none mt-6"
-          style={{ opacity: p.loopBottomOpacity, scale: p.loopBottomScale }}
-          aria-hidden="true"
-        >
-          <HandwrittenAsset variant="arrowLoop" width={90} />
+          pues porque <span className="font-bold text-ink">soy su padre</span>.
         </motion.div>
       </div>
 
-      {/* Polaroid stack · 2 fotos centradas · scroll-driven storytelling
-          Order narrativo:
-          - Polaroid 1 (titoAlone · padre solo) entra primero · queda DETRÁS
-          - Polaroid 2 (titoKids · padre con hijas) ENTRA ENCIMA · z-30 delante
-          - Al avanzar scroll, ambas se separan formando un fan scrapbook
-            con titoKids encima y ligeramente offset */}
+      {/* Polaroid stack centro · 2 fotos con chip-labels dentro */}
       <div className="absolute left-[48%] top-1/2 z-10 w-[26vw] max-w-[360px] -translate-x-1/2 -translate-y-1/2 lg:w-[24vw]">
-        {/* Polaroid 1 (DETRÁS) · titoAlone · entra primero · z-10
-            Usa Y combinado · polaroidY entry + polaroid1Y desplazamiento final */}
+        {/* Polaroid 1 (DETRÁS) · titoAlone · chip "Tito" en label area */}
         <PolaroidWithCombinedY
           opacity={p.polaroidOpacity}
           scale={p.polaroidScale}
@@ -326,10 +340,14 @@ function DesktopLayout(p: DesktopProps) {
           alt="Padre · Tito · sonriendo"
           floatRotate={-4}
           zIndex={10}
+          labelChip={
+            <motion.div style={{ opacity: p.chipLabelAloneOpacity }}>
+              <Chip tono="paper" size="xs">Tito</Chip>
+            </motion.div>
+          }
         />
 
-        {/* Polaroid 2 (DELANTE) · titoKids · entra después CAYENDO ENCIMA · z-30
-            superpone a titoAlone con offset derecha + rotación opuesta */}
+        {/* Polaroid 2 (DELANTE) · titoKids · cluster 3 chips en label */}
         <motion.div
           className="absolute inset-0 z-30"
           style={{
@@ -340,130 +358,151 @@ function DesktopLayout(p: DesktopProps) {
             rotate: p.polaroid2Rotate,
           }}
         >
-          <FloatingPolaroid src="/img/titoKids.jpg" alt="Padre con sus hijas" floatRotate={6} />
+          <FloatingPolaroid
+            src="/img/titoKids.jpg"
+            alt="Padre con sus hijas"
+            floatRotate={6}
+            labelChip={
+              <motion.div
+                className="flex items-center gap-1"
+                style={{ opacity: p.chipLabelKidsOpacity }}
+              >
+                <Chip tono="paper" size="xs">Tito</Chip>
+                <Chip tono="mint" size="xs">Inti</Chip>
+                <Chip tono="coral" size="xs">Llivia</Chip>
+              </motion.div>
+            }
+          />
         </motion.div>
       </div>
 
-      {/* Doodles arriba de la polaroid · aparecen con la polaroid */}
-      <motion.div
-        className="pointer-events-none absolute left-[40vw] top-[10vh] z-30"
-        style={{
-          opacity: p.arrowCurveTop1Opacity,
-          scale: p.arrowCurveTop1Scale,
-          rotate: 15,
-        }}
-        aria-hidden="true"
-      >
-        <HandwrittenAsset variant="arrowCurve" width={140} />
-      </motion.div>
-      <motion.div
-        className="pointer-events-none absolute left-[60vw] top-[12vh] z-30"
-        style={{
-          opacity: p.arrowCurveTop2Opacity,
-          scale: p.arrowCurveTop2Scale,
-          rotate: -10,
-        }}
-        aria-hidden="true"
-      >
-        <HandwrittenAsset variant="arrowCurve" width={130} flipX />
-      </motion.div>
-
-      {/* Bloque derecho · texto "Aquí estoy yo..." · más ancho para acomodar
-          el body de tamaño aumentado */}
+      {/* Bloque derecho · eyebrow + headline + chip-strip family + body + closing */}
       <div className="absolute right-[4vw] top-1/2 z-20 w-[30vw] max-w-[460px] -translate-y-1/2 lg:right-[5vw] lg:w-[32vw]">
-        {/* Headline · gran tamaño, peso extra bold */}
+        {/* Eyebrow caps Galiner Light */}
+        <motion.p
+          className="mb-3 font-serif font-light uppercase text-ink-soft"
+          style={{
+            opacity: p.eyebrowRightOpacity,
+            y: p.eyebrowRightY,
+            fontSize: 'clamp(11px, 0.85vw, 13px)',
+            letterSpacing: '0.22em',
+          }}
+        >
+          El Padre
+        </motion.p>
+
+        {/* Headline Galiner Bold */}
         <motion.h2
-          className="font-grift text-[clamp(28px,2.6vw,42px)] font-extrabold leading-[1.0] tracking-tight text-ink"
-          style={{ opacity: p.r1Opacity, y: p.r1Y, x: p.r1X }}
+          className="font-serif text-[clamp(28px,2.6vw,42px)] font-bold leading-[1.0] tracking-tight text-ink"
+          style={{
+            opacity: p.r1Opacity,
+            y: p.r1Y,
+            x: p.r1X,
+            letterSpacing: '-0.018em',
+          }}
         >
           Aquí estoy yo.
         </motion.h2>
 
-        {/* Subrayado handwritten · pegado al baseline del h2 */}
+        {/* TonalUnderline ink · reemplaza swash handwritten */}
+        <div className="mt-3">
+          <TonalUnderline
+            tono="ink"
+            width={140}
+            height={3}
+            progress={p.underlineRightProgress}
+          />
+        </div>
+
+        {/* Chip-strip familia · 3 identidades */}
         <motion.div
-          className="-mt-1 origin-left"
+          className="mt-5 flex flex-wrap items-center gap-2"
+          style={{ opacity: p.familyStripOpacity }}
+        >
+          {FAMILY_CHIPS.map((c) => (
+            <Chip key={c.label} tono={c.tono} size="sm">
+              {c.label}
+            </Chip>
+          ))}
+        </motion.div>
+
+        {/* Sub-headline Inter Light · "Padre de Inti y Llivia" */}
+        <motion.div
+          className="mt-5 font-text text-[clamp(18px,1.6vw,28px)] font-light leading-[1.3] text-ink"
           style={{
-            scaleX: p.underlineRightProgress,
-            opacity: p.underlineRightProgress,
-            width: '70%',
-            maxWidth: 240,
+            opacity: p.r2Opacity,
+            y: p.r2Y,
+            letterSpacing: '-0.005em',
           }}
         >
-          <HandwrittenAsset variant="swash" width={240} />
+          <span className="font-bold">Padre</span> de{' '}
+          <span className="font-bold">Inti</span> y{' '}
+          <span className="font-bold">Llivia</span>.
         </motion.div>
 
-        {/* Sub-headline · tamaño matchea body de sección 1 */}
+        {/* 3 frases body · Inter */}
+        <motion.p
+          className="mt-3 font-text text-[clamp(18px,1.6vw,28px)] font-light leading-[1.4] text-ink-soft"
+          style={{
+            opacity: p.r3Opacity,
+            y: p.r3Y,
+            letterSpacing: '-0.005em',
+          }}
+        >
+          <span className="font-bold text-ink">Muy orgulloso</span> de cada uno de mis{' '}
+          <span className="font-bold text-ink">peques</span>.
+        </motion.p>
+
+        <motion.p
+          className="mt-2 font-text text-[clamp(18px,1.6vw,28px)] font-light leading-[1.4] text-ink-soft"
+          style={{
+            opacity: p.r4Opacity,
+            y: p.r4Y,
+            letterSpacing: '-0.005em',
+          }}
+        >
+          Aunque <span className="font-bold text-ink">nadie</span> me enseñó a{' '}
+          <span className="font-bold text-ink">ser padre</span>.
+        </motion.p>
+
+        <motion.p
+          className="mt-2 font-text text-[clamp(18px,1.6vw,28px)] font-light leading-[1.4] text-ink-soft"
+          style={{
+            opacity: p.r5Opacity,
+            y: p.r5Y,
+            letterSpacing: '-0.005em',
+          }}
+        >
+          Y <span className="font-bold text-ink">nadie</span> me avisó de lo{' '}
+          <span className="font-bold text-ink">complejo</span> que es.
+        </motion.p>
+
+        {/* Closing callout-pill · bridge a sección 3 · ink chip con dot */}
         <motion.div
-          className="mt-5 font-grift text-[clamp(18px,1.6vw,28px)] font-light leading-[1.3] text-ink"
-          style={{ opacity: p.r2Opacity, y: p.r2Y }}
+          className="mt-7"
+          style={{
+            opacity: p.closingOpacity,
+            y: p.closingY,
+            scale: p.closingScale,
+          }}
         >
-          <span className="font-extrabold">Padre</span> de{' '}
-          <span className="font-extrabold">Inti</span> y{' '}
-          <span className="font-extrabold">Llivia</span>.
+          <Chip tono="ink" size="md" className="px-5">
+            <span
+              className="mr-2 inline-block h-1.5 w-1.5 rounded-full bg-paper"
+              aria-hidden="true"
+            />
+            Y de eso nace Grow.
+          </Chip>
         </motion.div>
-
-        {/* 3 frases body · todas en clamp(18,1.6vw,28px) matchea body 1a sección */}
-        <motion.p
-          className="mt-3 font-grift text-[clamp(18px,1.6vw,28px)] font-light leading-[1.4] text-ink-soft"
-          style={{ opacity: p.r3Opacity, y: p.r3Y }}
-        >
-          <span className="font-extrabold text-ink">Muy orgulloso</span> de cada uno de mis{' '}
-          <span className="font-extrabold text-ink">peques</span>.
-        </motion.p>
-
-        <motion.p
-          className="mt-2 font-grift text-[clamp(18px,1.6vw,28px)] font-light leading-[1.4] text-ink-soft"
-          style={{ opacity: p.r4Opacity, y: p.r4Y }}
-        >
-          Aún que <span className="font-extrabold text-ink">nadie</span> me enseñó a{' '}
-          <span className="font-extrabold text-ink">ser padre</span>.
-        </motion.p>
-
-        <motion.p
-          className="mt-2 font-grift text-[clamp(18px,1.6vw,28px)] font-light leading-[1.4] text-ink-soft"
-          style={{ opacity: p.r5Opacity, y: p.r5Y }}
-        >
-          Y <span className="font-extrabold text-ink">nadie</span> me avisó de lo{' '}
-          <span className="font-extrabold text-ink">complejo</span> que es.
-        </motion.p>
       </div>
-
-      {/* Doodles bottom · aparecen al final · refuerzan composición scrapbook */}
-      <motion.div
-        className="pointer-events-none absolute left-[42vw] bottom-[22vh] z-30"
-        style={{ opacity: p.sparkleOpacity, scale: p.sparkleScale }}
-        aria-hidden="true"
-      >
-        <HandwrittenAsset variant="sparkleAlt" width={60} />
-      </motion.div>
-      <motion.div
-        className="pointer-events-none absolute bottom-[8vh] left-[38vw] z-30"
-        style={{ opacity: p.loopCenterOpacity, scale: p.loopCenterScale }}
-        aria-hidden="true"
-      >
-        <HandwrittenAsset variant="arrowSmallLoop" width={110} />
-      </motion.div>
-      <motion.div
-        className="pointer-events-none absolute bottom-[6vh] left-[58vw] z-30"
-        style={{
-          opacity: p.arrowBottomRightOpacity,
-          scale: p.arrowBottomRightScale,
-          rotate: -15,
-        }}
-        aria-hidden="true"
-      >
-        <HandwrittenAsset variant="arrowUpLeft" width={150} />
-      </motion.div>
     </>
   );
 }
 
 /* ────────────────────────────────────────────────────────────────────
-   Polaroid · marco crema + foto + floating loop infinito
+   Polaroid · marco crema + foto + chip label + floating loop infinito
    ──────────────────────────────────────────────────────────────────── */
 
-/* Helper · combina 2 motion values de Y para 1 transform.
-   Usado para polaroid1 que necesita entry Y + offset Y final. */
 interface PolaroidWithCombinedYProps {
   opacity: MV;
   scale: MV;
@@ -475,13 +514,13 @@ interface PolaroidWithCombinedYProps {
   alt: string;
   floatRotate: number;
   zIndex: number;
+  labelChip?: ReactNode;
 }
 
 function PolaroidWithCombinedY({
   opacity, scale, baseY, extraY, x, rotate,
-  src, alt, floatRotate, zIndex,
+  src, alt, floatRotate, zIndex, labelChip,
 }: PolaroidWithCombinedYProps) {
-  // Combina 2 Y values · suma pixel
   const combinedY = useTransform(
     [baseY, extraY] as MV[],
     (latest: number[]) => latest[0] + latest[1]
@@ -498,29 +537,25 @@ function PolaroidWithCombinedY({
         rotate,
       }}
     >
-      <FloatingPolaroid src={src} alt={alt} floatRotate={floatRotate} />
+      <FloatingPolaroid src={src} alt={alt} floatRotate={floatRotate} labelChip={labelChip} />
     </motion.div>
   );
 }
 
 interface FloatingPolaroidProps {
-  /** Path a la foto · default titoAlone */
   src?: string;
-  /** Alt text · descriptivo de la foto */
   alt?: string;
-  /** Rotación base para el floating loop · da carácter individual a
-      cada polaroid en el stack · default 1° */
   floatRotate?: number;
+  /** Chip/cluster a renderizar dentro del label area (bottom 56px del frame) */
+  labelChip?: ReactNode;
 }
 
 function FloatingPolaroid({
   src = '/img/titoAlone.jpg',
   alt = 'Padre · Tito · sonriendo',
   floatRotate = 1,
+  labelChip,
 }: FloatingPolaroidProps) {
-  // Las imágenes están cropeadas (sin marco físico) y son aspect 4:5.
-  // El componente añade el frame polaroid digital · crema · label inferior
-  // · sombra realista · todo proporcionado para look auténtico.
   return (
     <motion.div
       className="relative"
@@ -551,16 +586,24 @@ function FloatingPolaroid({
           className="block h-full w-full object-cover"
           draggable={false}
         />
+
+        {/* Chip label dentro del label area · centrado · bottom 14px del frame */}
+        {labelChip && (
+          <div className="pointer-events-none absolute bottom-[14px] left-1/2 -translate-x-1/2">
+            {labelChip}
+          </div>
+        )}
       </div>
     </motion.div>
   );
 }
 
 /* ────────────────────────────────────────────────────────────────────
-   Mobile/Tablet layout · vertical stack · scroll-driven storytelling
+   Mobile/Tablet layout · vertical stack
    ──────────────────────────────────────────────────────────────────── */
 
 interface MobileProps {
+  eyebrowLeftOpacity: MV; eyebrowLeftY: MV;
   line1Opacity: MV; line1Y: MV;
   line2Opacity: MV; line2Y: MV;
   line3Opacity: MV; line3Y: MV;
@@ -568,78 +611,110 @@ interface MobileProps {
   subLeftOpacity: MV; subLeftY: MV;
   polaroidOpacity: MV; polaroidScale: MV; polaroidY: MV;
   polaroid2Opacity: MV; polaroid2Scale: MV; polaroid2Y: MV;
+  chipLabelAloneOpacity: MV;
+  chipLabelKidsOpacity: MV;
+  eyebrowRightOpacity: MV; eyebrowRightY: MV;
   r1Opacity: MV; r1Y: MV;
   underlineRightProgress: MV;
+  familyStripOpacity: MV;
   r2Opacity: MV; r2Y: MV;
   r3Opacity: MV; r3Y: MV;
   r4Opacity: MV; r4Y: MV;
   r5Opacity: MV; r5Y: MV;
+  closingOpacity: MV; closingY: MV; closingScale: MV;
 }
 
 function MobileLayout(p: MobileProps) {
   return (
     <div className="flex h-full w-full flex-col items-center justify-center gap-6 px-6 pt-16 pb-10">
-      {/* Bloque 1 · texto "Probablemente..." */}
-      <div className="w-full max-w-[480px] font-grift text-ink">
-        <motion.div
-          className="text-[clamp(36px,10vw,56px)] font-light leading-[1.0] tracking-tight"
-          style={{ opacity: p.line1Opacity, y: p.line1Y }}
-        >
-          Probablemente
-        </motion.div>
-        <motion.div
-          className="text-[clamp(36px,10vw,56px)] font-light leading-[1.0] tracking-tight"
-          style={{ opacity: p.line2Opacity, y: p.line2Y }}
-        >
-          es el <span className="font-extrabold">mejor niño</span>
-        </motion.div>
-        <motion.div
-          className="text-[clamp(36px,10vw,56px)] font-extrabold leading-[1.0] tracking-tight"
-          style={{ opacity: p.line3Opacity, y: p.line3Y }}
-        >
-          del mundo.
-        </motion.div>
-
-        <motion.div
-          className="mt-2 origin-left"
+      {/* Bloque 1 · eyebrow + headline + body */}
+      <div className="w-full max-w-[480px] text-ink">
+        <motion.p
+          className="mb-2 font-serif font-light uppercase text-ink-soft"
           style={{
-            scaleX: p.underlineLeftProgress,
-            opacity: p.underlineLeftProgress,
-            width: '40%',
-            maxWidth: 160,
+            opacity: p.eyebrowLeftOpacity,
+            y: p.eyebrowLeftY,
+            fontSize: '10px',
+            letterSpacing: '0.22em',
           }}
         >
-          <HandwrittenAsset variant="doubleLine" width={160} />
-        </motion.div>
+          El Hijo
+        </motion.p>
+
+        <div className="font-serif">
+          <motion.div
+            className="text-[clamp(36px,10vw,56px)] font-light leading-[1.0] tracking-tight"
+            style={{ opacity: p.line1Opacity, y: p.line1Y, letterSpacing: '-0.018em' }}
+          >
+            Probablemente
+          </motion.div>
+          <motion.div
+            className="text-[clamp(36px,10vw,56px)] font-light leading-[1.0] tracking-tight"
+            style={{ opacity: p.line2Opacity, y: p.line2Y, letterSpacing: '-0.018em' }}
+          >
+            es el <span className="font-bold">mejor niño</span>
+          </motion.div>
+          <motion.div
+            className="text-[clamp(36px,10vw,56px)] font-bold leading-[1.0] tracking-tight"
+            style={{ opacity: p.line3Opacity, y: p.line3Y, letterSpacing: '-0.018em' }}
+          >
+            del mundo.
+          </motion.div>
+
+          <div className="mt-3">
+            <TonalUnderline
+              tono="mint"
+              width={140}
+              height={3}
+              progress={p.underlineLeftProgress}
+            />
+          </div>
+        </div>
 
         <motion.div
-          className="mt-5 text-[clamp(14px,3.8vw,16px)] font-light leading-[1.45] text-ink-soft"
-          style={{ opacity: p.subLeftOpacity, y: p.subLeftY }}
+          className="mt-5 font-text text-[clamp(14px,3.8vw,16px)] font-light leading-[1.45] text-ink-soft"
+          style={{
+            opacity: p.subLeftOpacity,
+            y: p.subLeftY,
+            letterSpacing: '-0.005em',
+          }}
         >
-          ¿qué cómo lo sé?, pues porque{' '}
-          <span className="font-extrabold text-ink">soy su padre</span>.
+          ¿cómo lo sé?, pues porque{' '}
+          <span className="font-bold text-ink">soy su padre</span>.
         </motion.div>
       </div>
 
-      {/* Polaroid stack mobile · 2 fotos · misma idea de scroll storytelling
-          La 2ª (titoKids) detrás · 1ª (titoAlone) delante se desliza al
-          aparecer la 2ª · ambas visibles al final del scroll */}
+      {/* Polaroid stack mobile · 2 fotos · chips dentro de los label areas */}
       <div className="relative w-[64vw] max-w-[300px]" style={{ aspectRatio: '4 / 5' }}>
-        {/* Polaroid 2 (atrás) · titoKids */}
+        {/* Polaroid 2 (atrás) · titoKids · cluster 3 chips */}
         <motion.div
           className="absolute inset-0 z-10"
           style={{
             opacity: p.polaroid2Opacity,
             scale: p.polaroid2Scale,
             y: p.polaroid2Y,
-            x: 28, // offset fijo en mobile · sin scroll horizontal complejo
+            x: 28,
             rotate: 6,
           }}
         >
-          <FloatingPolaroid src="/img/titoKids.jpg" alt="Padre con sus hijas" floatRotate={3} />
+          <FloatingPolaroid
+            src="/img/titoKids.jpg"
+            alt="Padre con sus hijas"
+            floatRotate={3}
+            labelChip={
+              <motion.div
+                className="flex items-center gap-1"
+                style={{ opacity: p.chipLabelKidsOpacity }}
+              >
+                <Chip tono="paper" size="xs">Tito</Chip>
+                <Chip tono="mint" size="xs">Inti</Chip>
+                <Chip tono="coral" size="xs">Llivia</Chip>
+              </motion.div>
+            }
+          />
         </motion.div>
 
-        {/* Polaroid 1 (delante) · titoAlone */}
+        {/* Polaroid 1 (delante) · titoAlone · chip "Tito" */}
         <motion.div
           className="relative z-20"
           style={{
@@ -650,65 +725,109 @@ function MobileLayout(p: MobileProps) {
             rotate: -3,
           }}
         >
-          <FloatingPolaroid src="/img/titoAlone.jpg" alt="Padre · Tito · sonriendo" floatRotate={-1} />
+          <FloatingPolaroid
+            src="/img/titoAlone.jpg"
+            alt="Padre · Tito · sonriendo"
+            floatRotate={-1}
+            labelChip={
+              <motion.div style={{ opacity: p.chipLabelAloneOpacity }}>
+                <Chip tono="paper" size="xs">Tito</Chip>
+              </motion.div>
+            }
+          />
         </motion.div>
       </div>
 
-      {/* Bloque 2 · texto "Aquí estoy yo..." · espaciado consistente */}
-      <div className="w-full max-w-[420px] font-grift text-ink">
+      {/* Bloque 2 · eyebrow + headline + family strip + body + closing */}
+      <div className="w-full max-w-[420px] text-ink">
+        <motion.p
+          className="mb-2 font-serif font-light uppercase text-ink-soft"
+          style={{
+            opacity: p.eyebrowRightOpacity,
+            y: p.eyebrowRightY,
+            fontSize: '10px',
+            letterSpacing: '0.22em',
+          }}
+        >
+          El Padre
+        </motion.p>
+
         <motion.h2
-          className="text-[clamp(26px,6.5vw,34px)] font-extrabold leading-[1.0] tracking-tight"
-          style={{ opacity: p.r1Opacity, y: p.r1Y }}
+          className="font-serif text-[clamp(26px,6.5vw,34px)] font-bold leading-[1.0] tracking-tight"
+          style={{ opacity: p.r1Opacity, y: p.r1Y, letterSpacing: '-0.018em' }}
         >
           Aquí estoy yo.
         </motion.h2>
 
+        <div className="mt-2">
+          <TonalUnderline
+            tono="ink"
+            width={110}
+            height={3}
+            progress={p.underlineRightProgress}
+          />
+        </div>
+
+        {/* Family chip-strip mobile · más compacto */}
         <motion.div
-          className="-mt-1 origin-left"
+          className="mt-4 flex flex-wrap items-center gap-1.5"
+          style={{ opacity: p.familyStripOpacity }}
+        >
+          {FAMILY_CHIPS.map((c) => (
+            <Chip key={c.label} tono={c.tono} size="xs">
+              {c.label}
+            </Chip>
+          ))}
+        </motion.div>
+
+        <motion.div
+          className="mt-4 font-text text-[clamp(15px,4.4vw,18px)] font-light leading-[1.3]"
+          style={{ opacity: p.r2Opacity, y: p.r2Y, letterSpacing: '-0.005em' }}
+        >
+          <span className="font-bold">Padre</span> de{' '}
+          <span className="font-bold">Inti</span> y{' '}
+          <span className="font-bold">Llivia</span>.
+        </motion.div>
+
+        <motion.p
+          className="mt-2 font-text text-[clamp(14px,3.8vw,17px)] font-light leading-[1.4] text-ink-soft"
+          style={{ opacity: p.r3Opacity, y: p.r3Y, letterSpacing: '-0.005em' }}
+        >
+          <span className="font-bold text-ink">Muy orgulloso</span> de cada uno de mis{' '}
+          <span className="font-bold text-ink">peques</span>.
+        </motion.p>
+        <motion.p
+          className="mt-1.5 font-text text-[clamp(16px,4.4vw,20px)] font-light leading-[1.4] text-ink-soft"
+          style={{ opacity: p.r4Opacity, y: p.r4Y, letterSpacing: '-0.005em' }}
+        >
+          Aunque <span className="font-bold text-ink">nadie</span> me enseñó a{' '}
+          <span className="font-bold text-ink">ser padre</span>.
+        </motion.p>
+        <motion.p
+          className="mt-1.5 font-text text-[clamp(16px,4.4vw,20px)] font-light leading-[1.4] text-ink-soft"
+          style={{ opacity: p.r5Opacity, y: p.r5Y, letterSpacing: '-0.005em' }}
+        >
+          Y <span className="font-bold text-ink">nadie</span> me avisó de lo{' '}
+          <span className="font-bold text-ink">complejo</span> que es.
+        </motion.p>
+
+        {/* Closing callout-pill · bridge a sección 3 */}
+        <motion.div
+          className="mt-5"
           style={{
-            scaleX: p.underlineRightProgress,
-            opacity: p.underlineRightProgress,
-            width: '60%',
-            maxWidth: 180,
+            opacity: p.closingOpacity,
+            y: p.closingY,
+            scale: p.closingScale,
           }}
         >
-          <HandwrittenAsset variant="swash" width={180} />
+          <Chip tono="ink" size="sm" className="px-4">
+            <span
+              className="mr-2 inline-block h-1.5 w-1.5 rounded-full bg-paper"
+              aria-hidden="true"
+            />
+            Y de eso nace Grow.
+          </Chip>
         </motion.div>
-
-        {/* Sub-headline mobile · interlineado compacto */}
-        <motion.div
-          className="mt-3 text-[clamp(15px,4.4vw,18px)] font-light leading-[1.3]"
-          style={{ opacity: p.r2Opacity, y: p.r2Y }}
-        >
-          <span className="font-extrabold">Padre</span> de{' '}
-          <span className="font-extrabold">Inti</span> y{' '}
-          <span className="font-extrabold">Llivia</span>.
-        </motion.div>
-
-        {/* Frase 1 (sutil) */}
-        <motion.p
-          className="mt-2 text-[clamp(14px,3.8vw,17px)] font-light leading-[1.4] text-ink-soft"
-          style={{ opacity: p.r3Opacity, y: p.r3Y }}
-        >
-          <span className="font-extrabold text-ink">Muy orgulloso</span> de cada uno de mis{' '}
-          <span className="font-extrabold text-ink">peques</span>.
-        </motion.p>
-        {/* Frase 2 (énfasis · tamaño mayor) */}
-        <motion.p
-          className="mt-1.5 text-[clamp(16px,4.4vw,20px)] font-light leading-[1.4] text-ink-soft"
-          style={{ opacity: p.r4Opacity, y: p.r4Y }}
-        >
-          Aún que <span className="font-extrabold text-ink">nadie</span> me enseñó a{' '}
-          <span className="font-extrabold text-ink">ser padre</span>.
-        </motion.p>
-        {/* Frase 3 (énfasis · tamaño mayor) */}
-        <motion.p
-          className="mt-1.5 text-[clamp(16px,4.4vw,20px)] font-light leading-[1.4] text-ink-soft"
-          style={{ opacity: p.r5Opacity, y: p.r5Y }}
-        >
-          Y <span className="font-extrabold text-ink">nadie</span> me avisó de lo{' '}
-          <span className="font-extrabold text-ink">complejo</span> que es.
-        </motion.p>
       </div>
     </div>
   );
