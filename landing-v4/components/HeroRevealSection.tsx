@@ -1,7 +1,8 @@
 'use client';
 
 import { motion, MotionValue, useTransform } from 'framer-motion';
-import HandwrittenAsset from './HandwrittenAsset';
+import Chip, { ChipStripTilt, ChipTono } from './Chip';
+import TonalUnderline from './TonalUnderline';
 
 interface HeroRevealSectionProps {
   /** Progreso de scroll del wrapper padre (0 → 1) */
@@ -11,38 +12,46 @@ interface HeroRevealSectionProps {
 }
 
 /**
- * HeroRevealSection · texto "Este es Inti." + párrafo + arrows handwritten.
+ * HeroRevealSection v2 · DS-aligned · "Este es Inti."
  *
- * Reveal staged controlado por `progress` (0 → 1):
- *  - 0.00 → 0.20  · "Este es Inti." fade in + slight Y
- *  - 0.20 → 0.55  · subrayado handwritten dibuja
- *  - 0.30 → 0.70  · párrafo aparece línea por línea
- *  - 0.55 → 1.00  · 4 flechas handwritten entran con stagger
+ * Composición (mantiene parallax · cero handwritten):
+ *  - Eyebrow caps Galiner Light · "TESTIMONIO · CAP. 01"
+ *  - Headline Galiner mix Light + Bold · "Este es Inti."
+ *  - TonalUnderline mint debajo · scaleX animado (reemplaza swash)
+ *  - Body Inter Light + Bold · 3 líneas con énfasis en palabras clave
+ *  - ChipStripTilt · 3 chips de atributos (feliz · sensible · tranquilo)
  *
- * Usado dentro de IntroPhotoSection (sticky scroll). Texto se queda
- * visible al final del scroll · luego la página continua a
- * EmotionalStatementSection.
+ * Timeline (progress 0 → 1):
+ *  · 0.00 → 0.05  · eyebrow fades in
+ *  · 0.00 → 0.22  · headline reveal con leve translateY
+ *  · 0.20 → 0.35  · TonalUnderline mint scaleX
+ *  · 0.30 → 0.70  · paragraph fade
+ *  · 0.55 → 0.78  · 3 attribute chips stagger
+ *
+ * Sin handwritten doodles · sustituidos por DS primitives.
  */
+
+// 3 attribute chips · tonos canon (mint default · blush suave · gold info)
+const ATTRIBUTE_CHIPS: { tono: ChipTono; label: string }[] = [
+  { tono: 'mint', label: 'feliz' },
+  { tono: 'blush', label: 'sensible' },
+  { tono: 'gold', label: 'tranquilo' },
+];
+
 export default function HeroRevealSection({
   progress,
   mobile = false,
 }: HeroRevealSectionProps) {
   // Reveal opacities
-  const titleOpacity = useTransform(progress, [0, 0.25], [0, 1]);
-  const titleY = useTransform(progress, [0, 0.25], [24, 0]);
-  const underlineProgress = useTransform(progress, [0.2, 0.55], [0, 1]);
+  const eyebrowOpacity = useTransform(progress, [0, 0.05], [0, 1]);
+  const eyebrowY = useTransform(progress, [0, 0.05], [8, 0]);
+  const titleOpacity = useTransform(progress, [0, 0.22], [0, 1]);
+  const titleY = useTransform(progress, [0, 0.22], [24, 0]);
+  const underlineProgress = useTransform(progress, [0.2, 0.4], [0, 1]);
   const paragraphOpacity = useTransform(progress, [0.3, 0.7], [0, 1]);
   const paragraphY = useTransform(progress, [0.3, 0.7], [20, 0]);
 
-  // Arrows con stagger (0.55 → 1.00, cada flecha empieza 0.08 después)
-  const arrow1Opacity = useTransform(progress, [0.55, 0.75], [0, 1]);
-  const arrow2Opacity = useTransform(progress, [0.63, 0.83], [0, 1]);
-  const arrow3Opacity = useTransform(progress, [0.71, 0.91], [0, 1]);
-  const arrow4Opacity = useTransform(progress, [0.79, 1.0], [0, 1]);
-
-  // Tamaños responsive · 3 breakpoints
-  // mobile: text grande proporcional al viewport
-  // tablet+desktop: clamp con vw para escalado fluido
+  // Tamaños responsive
   const titleSize = mobile
     ? 'text-[15vw] leading-[0.95]'
     : 'text-[clamp(56px,8vw,160px)] leading-[0.95]';
@@ -52,92 +61,107 @@ export default function HeroRevealSection({
 
   return (
     <div className="relative">
-      {/* Headline · "Este es Inti." */}
-      <motion.h1
-        className={`font-grift font-light tracking-tight text-ink ${titleSize}`}
-        style={{ opacity: titleOpacity, y: titleY }}
-      >
-        Este es <span className="font-extrabold">Inti.</span>
-      </motion.h1>
-
-      {/* Subrayado handwritten bajo "Inti." · usa swash.png cropped.
-          Margin-top negativo para que quede PEGADO a la baseline del h1
-          (el h1 tiene leading-[0.95] que deja algo de espacio inferior). */}
-      <motion.div
-        className="relative -mt-1 origin-left md:-mt-2"
+      {/* Eyebrow caps · Galiner Light · letter-spacing wide */}
+      <motion.p
+        className="mb-3 font-serif font-light uppercase text-ink-soft md:mb-4"
         style={{
-          scaleX: underlineProgress,
-          opacity: underlineProgress,
+          opacity: eyebrowOpacity,
+          y: eyebrowY,
+          fontSize: mobile ? '10px' : 'clamp(11px, 0.85vw, 13px)',
+          letterSpacing: '0.22em',
         }}
       >
-        <HandwrittenAsset
-          variant="swash"
-          width={mobile ? 280 : 520}
-        />
-      </motion.div>
+        Testimonio · Cap. 01
+      </motion.p>
 
-      {/* Párrafo · 3 líneas · mix tipográfico light + extrabold
-          Light 300 baseline · palabras emotivas en extrabold para acento */}
-      <motion.p
-        className={`mt-8 max-w-[28ch] font-grift font-light text-ink-soft ${paragraphSize}`}
-        style={{ opacity: paragraphOpacity, y: paragraphY }}
+      {/* Headline · "Este es Inti." · Galiner mix Light + Bold */}
+      <motion.h1
+        className={`font-serif font-light tracking-tight text-ink ${titleSize}`}
+        style={{
+          opacity: titleOpacity,
+          y: titleY,
+          letterSpacing: '-0.02em',
+        }}
       >
-        Un niño <span className="font-extrabold text-ink">feliz</span>, sensible y{' '}
-        <span className="font-extrabold text-ink">tranquilo</span>
+        Este es <span className="font-bold">Inti.</span>
+      </motion.h1>
+
+      {/* TonalUnderline mint · scaleX animado · reemplaza swash handwritten */}
+      <TonalUnderline
+        tono="mint"
+        width={mobile ? 220 : 320}
+        height={mobile ? 3 : 4}
+        progress={underlineProgress}
+        marginTop={mobile ? 8 : 14}
+        className="origin-left"
+      />
+
+      {/* Párrafo · Inter Light + Bold en palabras clave */}
+      <motion.p
+        className={`mt-8 max-w-[28ch] font-text font-light text-ink-soft ${paragraphSize}`}
+        style={{
+          opacity: paragraphOpacity,
+          y: paragraphY,
+          letterSpacing: '-0.005em',
+        }}
+      >
+        Un niño <span className="font-bold text-ink">feliz</span>, sensible y{' '}
+        <span className="font-bold text-ink">tranquilo</span>
         <br className="hidden md:block" />
-        {' '}de <span className="font-extrabold text-ink">7 años</span> que vive en{' '}
-        <span className="font-extrabold text-ink">Barcelona</span>
+        {' '}de <span className="font-bold text-ink">7 años</span> que vive en{' '}
+        <span className="font-bold text-ink">Barcelona</span>
         <br className="hidden md:block" />
         {' '}con su hermana y sus padres.
       </motion.p>
 
-      {/* Flechas handwritten · matchea composición referencia.
-          Posiciones relativas al hero text block (que tiene ml-[8vw] y
-          max-w-[52vw] · está en la mitad-izquierda del viewport).
-          La foto está absolutamente posicionada a la derecha del viewport. */}
-      {!mobile && (
-        <>
-          {/* Arrow 1 · arrow-curve · entre el texto y la foto, en el top.
-              Apunta hacia abajo-derecha (hacia el top de la foto polaroid).
-              Right negativo para que se posicione fuera del text block hacia la foto. */}
-          <motion.div
-            className="pointer-events-none absolute -right-[8vw] -top-[10vh] z-30"
-            style={{ opacity: arrow1Opacity }}
-            aria-hidden="true"
-          >
-            <HandwrittenAsset variant="arrowCurve" width={240} />
-          </motion.div>
-
-          {/* Arrow 2 · arrow-thin-left · a la derecha de la foto, apuntando
-              hacia la foto. Visualmente "viene de fuera" hacia la foto. */}
-          <motion.div
-            className="pointer-events-none absolute -right-[20vw] top-[18vh] z-30"
-            style={{ opacity: arrow2Opacity }}
-            aria-hidden="true"
-          >
-            <HandwrittenAsset variant="arrowThinLeft" width={180} />
-          </motion.div>
-
-          {/* Arrow 3 · arrow-up-left · debajo de la foto, apuntando arriba-izq
-              hacia la foto. Hace de "subraya/conecta con la foto desde abajo". */}
-          <motion.div
-            className="pointer-events-none absolute -right-[2vw] top-[40vh] z-30"
-            style={{ opacity: arrow3Opacity }}
-            aria-hidden="true"
-          >
-            <HandwrittenAsset variant="arrowUpLeft" width={210} />
-          </motion.div>
-
-          {/* Arrow 4 · arrow-loop · garabato decorativo bottom-left bajo el párrafo */}
-          <motion.div
-            className="pointer-events-none absolute -bottom-[12vh] -left-[1vw] z-30"
-            style={{ opacity: arrow4Opacity }}
-            aria-hidden="true"
-          >
-            <HandwrittenAsset variant="arrowLoop" width={130} />
-          </motion.div>
-        </>
-      )}
+      {/* 3 attribute chips · chip-strip-tilt · stagger fade-in
+          Reemplaza las 4 flechas handwritten · DS-native */}
+      <div className="mt-7 md:mt-9">
+        <ChipStripTilt className="justify-start">
+          {ATTRIBUTE_CHIPS.map((c, i) => (
+            <AttrChip
+              key={c.label}
+              index={i}
+              progress={progress}
+              tono={c.tono}
+              label={c.label}
+              size={mobile ? 'sm' : 'md'}
+            />
+          ))}
+        </ChipStripTilt>
+      </div>
     </div>
+  );
+}
+
+/* ────────────────────────────────────────────────────────────────────
+   AttrChip · chip con stagger fade-in tied to scroll progress
+   ──────────────────────────────────────────────────────────────────── */
+
+function AttrChip({
+  index,
+  progress,
+  tono,
+  label,
+  size,
+}: {
+  index: number;
+  progress: MotionValue<number>;
+  tono: ChipTono;
+  label: string;
+  size: 'sm' | 'md';
+}) {
+  const start = 0.55 + index * 0.04;
+  const end = 0.7 + index * 0.04;
+  const opacity = useTransform(progress, [start, end], [0, 1]);
+  const y = useTransform(progress, [start, end], [10, 0]);
+  const scale = useTransform(progress, [start, end], [0.88, 1]);
+
+  return (
+    <motion.div style={{ opacity, y, scale }}>
+      <Chip tono={tono} size={size}>
+        {label}
+      </Chip>
+    </motion.div>
   );
 }

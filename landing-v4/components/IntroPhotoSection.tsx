@@ -10,6 +10,7 @@ import {
 } from 'framer-motion';
 import HeroRevealSection from './HeroRevealSection';
 import FrameSequence from './FrameSequence';
+import Chip from './Chip';
 
 // Pattern para los frames extraídos del video con ffmpeg.
 // 104 frames a 20fps · paddings 3 dígitos · /public/frames/f-001.jpg ... f-104.jpg
@@ -219,6 +220,19 @@ function DesktopChoreography({
               style={{ display: 'block' }}
             />
           </div>
+
+          {/* Chip label dentro del label area de la polaroid (padding bottom 56px).
+              Visible solo cuando el polaroid está formado (frame ≥ 0.6). */}
+          <motion.div
+            className="pointer-events-none absolute bottom-[14px] left-1/2 z-10 -translate-x-1/2"
+            style={{
+              opacity: useTransform(frameOpacity, [0.6, 1], [0, 1]),
+            }}
+          >
+            <Chip tono="mint" size="xs">
+              Inti · 2024
+            </Chip>
+          </motion.div>
         </motion.div>
       </motion.div>
     </>
@@ -292,6 +306,18 @@ function MobileChoreography({
               style={{ display: 'block' }}
             />
           </div>
+
+          {/* Chip label · misma idea que desktop · centrado en label area */}
+          <motion.div
+            className="pointer-events-none absolute bottom-[12px] left-1/2 z-10 -translate-x-1/2"
+            style={{
+              opacity: useTransform(frameOpacity, [0.6, 1], [0, 1]),
+            }}
+          >
+            <Chip tono="mint" size="xs">
+              Inti · 2024
+            </Chip>
+          </motion.div>
         </motion.div>
       </motion.div>
 
