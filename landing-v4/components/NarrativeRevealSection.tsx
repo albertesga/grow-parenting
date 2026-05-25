@@ -40,65 +40,54 @@ export default function NarrativeRevealSection() {
     mass: 0.3,
   });
 
-  // Headline · 3 líneas reveal por palabra
-  // Líneas: "La verdad es" / "que nadie te" / "prepara para esto."
-  // Cada palabra mapeada a una ventana de progress (start, end)
-  // con stagger natural · todas en el rango 0.00 → 0.30
+  // Headline · 2 líneas reveal por palabra · "Nadie me preparó / para ser padre."
+  // "Nadie" + "para ser padre." en extrabold · narrativa potente y directa
   const headlineWords: WordSpec[] = [
-    { text: 'La',       start: 0.00, end: 0.04 },
-    { text: 'verdad',   start: 0.02, end: 0.06 },
-    { text: 'es',       start: 0.04, end: 0.08 },
-    { text: 'que',      start: 0.07, end: 0.11 },
-    { text: 'nadie',    start: 0.09, end: 0.14, bold: true },
-    { text: 'te',       start: 0.11, end: 0.16, bold: true },
-    { text: 'prepara',  start: 0.14, end: 0.19, bold: true },
-    { text: 'para',     start: 0.17, end: 0.22, bold: true },
-    { text: 'esto.',    start: 0.20, end: 0.26, bold: true },
+    { text: 'Nadie',    start: 0.00, end: 0.06, bold: true },
+    { text: 'me',       start: 0.04, end: 0.10 },
+    { text: 'preparó',  start: 0.07, end: 0.13 },
+    { text: 'para',     start: 0.12, end: 0.18, bold: true },
+    { text: 'ser',      start: 0.15, end: 0.21, bold: true },
+    { text: 'padre.',   start: 0.18, end: 0.24, bold: true },
   ];
 
-  // Subrayado del headline · empieza a dibujarse después de "esto."
-  const underlineHeadlineProgress = useTransform(progress, [0.26, 0.36], [0, 1]);
+  // Subrayado del headline · empieza tras "padre."
+  const underlineHeadlineProgress = useTransform(progress, [0.24, 0.34], [0, 1]);
 
-  // Columna izquierda · "Nadie me explicó el miedo que te entra en el cuerpo
-  // por cualquier tontería."
+  // Columna izquierda · "Nadie me explicó que me despertaría varias veces
+  // de madrugada."
   const leftWords: WordSpec[] = [
-    { text: 'Nadie',       start: 0.32, end: 0.36 },
+    { text: 'Nadie',       start: 0.32, end: 0.36, bold: true },
     { text: 'me',          start: 0.33, end: 0.37 },
     { text: 'explicó',     start: 0.34, end: 0.38 },
-    { text: 'el',          start: 0.36, end: 0.40 },
-    { text: 'miedo',       start: 0.37, end: 0.41, bold: true },
-    { text: 'que',         start: 0.39, end: 0.43 },
-    { text: 'te',          start: 0.40, end: 0.44 },
-    { text: 'entra',       start: 0.41, end: 0.45 },
-    { text: 'en',          start: 0.43, end: 0.47 },
-    { text: 'el',          start: 0.44, end: 0.48 },
-    { text: 'cuerpo',      start: 0.45, end: 0.49 },
-    { text: 'por',         start: 0.47, end: 0.51 },
-    { text: 'cualquier',   start: 0.48, end: 0.52 },
-    { text: 'tontería.',   start: 0.50, end: 0.54 },
+    { text: 'que',         start: 0.36, end: 0.40 },
+    { text: 'me',          start: 0.37, end: 0.41 },
+    { text: 'despertaría', start: 0.39, end: 0.43, bold: true },
+    { text: 'varias',      start: 0.41, end: 0.45 },
+    { text: 'veces',       start: 0.43, end: 0.47 },
+    { text: 'de',          start: 0.45, end: 0.49 },
+    { text: 'madrugada.',  start: 0.46, end: 0.50, bold: true },
   ];
 
-  // Columna derecha · "Tampoco nadie me explicó la potencia de la sensación
-  // cada vez que me mira."
+  // Columna derecha · "Y nadie me explicó cómo eso multiplicaría los
+  // problemas del día siguiente."
   const rightWords: WordSpec[] = [
-    { text: 'Tampoco',     start: 0.42, end: 0.46 },
-    { text: 'nadie',       start: 0.43, end: 0.47 },
-    { text: 'me',          start: 0.44, end: 0.48 },
-    { text: 'explicó',     start: 0.45, end: 0.49 },
-    { text: 'la',          start: 0.47, end: 0.51 },
-    { text: 'potencia',    start: 0.48, end: 0.52 },
-    { text: 'de',          start: 0.50, end: 0.54 },
-    { text: 'la',          start: 0.51, end: 0.55 },
-    { text: 'sensación',   start: 0.52, end: 0.56 },
-    { text: 'cada',        start: 0.54, end: 0.58 },
-    { text: 'vez',         start: 0.55, end: 0.59 },
-    { text: 'que',         start: 0.57, end: 0.61 },
-    { text: 'me',          start: 0.58, end: 0.62, bold: true },
-    { text: 'mira.',       start: 0.60, end: 0.64, bold: true },
+    { text: 'Y',            start: 0.46, end: 0.50 },
+    { text: 'nadie',        start: 0.47, end: 0.51, bold: true },
+    { text: 'me',           start: 0.48, end: 0.52 },
+    { text: 'explicó',      start: 0.49, end: 0.53 },
+    { text: 'cómo',         start: 0.51, end: 0.55 },
+    { text: 'eso',          start: 0.52, end: 0.56 },
+    { text: 'multiplicaría', start: 0.54, end: 0.58, bold: true },
+    { text: 'los',          start: 0.56, end: 0.60 },
+    { text: 'problemas',    start: 0.57, end: 0.61, bold: true },
+    { text: 'del',          start: 0.59, end: 0.63 },
+    { text: 'día',          start: 0.60, end: 0.64 },
+    { text: 'siguiente.',   start: 0.62, end: 0.66, bold: true },
   ];
 
-  // Subrayado bajo "me mira." (derecha)
-  const underlineRightProgress = useTransform(progress, [0.64, 0.74], [0, 1]);
+  // Subrayado bajo "siguiente." (derecha)
+  const underlineRightProgress = useTransform(progress, [0.66, 0.76], [0, 1]);
 
   // Doodles · 5 elementos con fade-in stagger
   const doodle1 = useTransform(progress, [0.62, 0.74], [0, 1]);
@@ -111,7 +100,7 @@ export default function NarrativeRevealSection() {
     <section
       ref={wrapperRef}
       className="relative h-[220vh] w-full"
-      aria-label="La verdad es que nadie te prepara para esto"
+      aria-label="Nadie me preparó para ser padre"
     >
       <div className="sticky top-0 h-screen w-full overflow-hidden">
         {/* Paper texture overlay sutil */}
@@ -231,20 +220,17 @@ interface LayoutProps {
 }
 
 function DesktopLayout(p: LayoutProps) {
-  // Para el headline necesitamos las 3 líneas separadas visualmente
-  // pero el reveal es continuo. Splitamos por palabras según líneas:
-  const line1 = p.headlineWords.slice(0, 3); // "La verdad es"
-  const line2 = p.headlineWords.slice(3, 6); // "que nadie te"
-  const line3 = p.headlineWords.slice(6, 9); // "prepara para esto."
+  // Headline 2 líneas · "Nadie me preparó / para ser padre."
+  const line1 = p.headlineWords.slice(0, 3); // "Nadie me preparó"
+  const line2 = p.headlineWords.slice(3, 6); // "para ser padre."
 
   return (
     <>
-      {/* Headline · 3 líneas con word reveal · GIGANTE editorial · llena viewport */}
-      <div className="absolute left-[6vw] top-[8vh] z-20 max-w-[88vw]">
+      {/* Headline · 2 líneas con word reveal · GIGANTE editorial */}
+      <div className="absolute left-[6vw] top-[16vh] z-20 max-w-[88vw]">
         <h2 className="font-grift text-[clamp(80px,10.5vw,200px)] font-light leading-[0.98] tracking-tight text-ink">
           <WordReveal words={line1} progress={p.progress} className="block" />
           <WordReveal words={line2} progress={p.progress} className="block" />
-          <WordReveal words={line3} progress={p.progress} className="block" />
         </h2>
 
         {/* Subrayado doble bajo línea 3 "prepara para esto." · ancho controlado
