@@ -141,10 +141,11 @@ export default function NarrativeRevealSection() {
           className="relative z-10 flex w-full max-w-[1200px] flex-col items-center px-6 text-center md:px-10 lg:px-16"
           style={{ opacity: blockOpacity, y: blockY }}
         >
-          {/* 5 bloques · todos mismo tamaño · centrados · stack vertical */}
+          {/* 5 bloques · todos mismo tamaño · centrados · stack vertical
+              gap reducido para que el manifesto entero quepa en 100vh */}
           <div
             className="flex w-full flex-col items-center"
-            style={{ gap: 'clamp(28px, 4.5vh, 64px)' }}
+            style={{ gap: 'clamp(14px, 2vh, 28px)' }}
           >
             {BLOCKS.map((block, i) => (
               <FillBlock key={i} block={block} progress={progress} />
@@ -167,13 +168,16 @@ function FillBlock({
   block: BlockSpec;
   progress: MotionValue<number>;
 }) {
+  // max-w generoso (50ch) · pocas líneas por frase · todo el manifesto
+  // condensado cabe en 100vh. text-balance OFF para que el wrap sea
+  // natural por punctuation / espacios y no fuerze líneas cortas.
   return (
     <p
-      className="font-serif text-balance max-w-[24ch] md:max-w-[18ch]"
+      className="font-serif max-w-[48ch]"
       style={{
-        fontSize: 'clamp(28px, 4.2vw, 64px)',
-        lineHeight: 1.15,
-        letterSpacing: '-0.018em',
+        fontSize: 'clamp(20px, 2.6vw, 38px)',
+        lineHeight: 1.22,
+        letterSpacing: '-0.012em',
         fontWeight: 300,
       }}
     >
