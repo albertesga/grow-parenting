@@ -813,51 +813,53 @@
       transition: opacity 300ms cubic-bezier(0.4, 0, 0.6, 1);
       z-index: 2;
     }
-    /* Indicador shelf-end · alineado con DS canon · pill chip-style.
-       Hereda tonal del bloque (--accent-soft bg · --accent-line border ·
-       --accent-label color del chevron) para variar coral/blush/mint según
-       contexto narrativo. Sombra paper-inspired sutil (NO Material). Stroke
-       chevron 1.5px = canon iconografía DS (reasonal-style). */
+    /* Indicador shelf-end · minimal book-spine peek alineado con DS canon.
+       Vertical bar tonal (3px ancho · ~70% del alto del libro) que sugiere
+       "lomo de libro escondido" en lugar de un botón flotante explícito.
+       Mucho más editorial · respeta la metáfora estantería sin añadir
+       elementos UI extraños. Tonal del bloque vía --accent-base. */
     .r-shelf-arrow {
       position: absolute;
       top: 50%;
-      right: 10px;
-      height: 38px;
-      min-width: 38px;
-      padding: 0 12px;
-      border-radius: var(--radius-pill);
-      background: var(--accent-soft, var(--paper-soft));
-      border: 1px solid var(--accent-line, var(--line));
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 4px;
+      right: 14px;
+      width: 3px;
+      height: 64%;
+      border-radius: 2px;
+      background: var(--accent-base, var(--line-strong));
       pointer-events: none;
-      box-shadow:
-        0 1px 2px rgba(80, 60, 30, 0.04),
-        0 6px 18px -10px rgba(80, 60, 30, 0.18);
       transform: translateY(-50%);
-      opacity: 1;
+      opacity: 0.55;
       transition: opacity 300ms cubic-bezier(0.4, 0, 0.6, 1);
       z-index: 3;
-      color: var(--accent-label, var(--ink-soft));
+      box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.18) inset;
     }
+    /* Mini chevron · sigue al book-spine peek a la derecha · ancla discreta
+       que dice "scroll horizontal disponible" sin chip ni botón. */
+    .r-shelf-arrow::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 100%;
+      margin-left: 6px;
+      width: 7px;
+      height: 7px;
+      border-top: 1.5px solid var(--accent-base, var(--line-strong));
+      border-right: 1.5px solid var(--accent-base, var(--line-strong));
+      transform: translateY(-50%) rotate(45deg);
+      border-radius: 1px;
+    }
+    /* Label SR-only · ya no se renderiza visualmente pero el JS lo inyecta
+       para accesibilidad. Hidden visualmente, leído por screen reader. */
     .r-shelf-arrow .r-shelf-arrow-lbl {
-      font-family: var(--font-display);
-      font-weight: 500;
-      font-size: 10px;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: inherit;
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
     }
     .r-shelf-arrow svg {
-      width: 12px;
-      height: 12px;
-      stroke: currentColor;
-      fill: none;
-      stroke-width: 1.5;
-      stroke-linecap: round;
-      stroke-linejoin: round;
+      display: none;
     }
     .r-shelf.is-scrolled-end::after,
     .r-shelf.is-scrolled-end .r-shelf-arrow {
@@ -867,9 +869,11 @@
       background: linear-gradient(90deg, transparent 0%, var(--module-dark) 80%);
     }
     .block.t-dark .r-shelf-arrow {
-      background: rgba(232, 201, 122, 0.10);
-      border-color: rgba(232, 201, 122, 0.32);
-      color: var(--gold-base);
+      background: rgba(232, 201, 122, 0.55);
+      box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.2) inset;
+    }
+    .block.t-dark .r-shelf-arrow::after {
+      border-color: rgba(232, 201, 122, 0.75);
     }
     .r-book {
       flex: 0 0 172px;
