@@ -428,11 +428,9 @@ function FloatingPolaroid() {
             '0 1px 2px rgba(20,18,12,0.06), 0 14px 32px rgba(20,18,12,0.16), 0 28px 70px rgba(20,18,12,0.10)',
         }}
       >
-        {/* Por ahora usa padre.svg placeholder · cuando user guarde
-            padre.jpg, cambiar este src a /img/padre.jpg */}
         <img
-          src="/img/padre.svg"
-          alt="Padre · Albert · sonriendo"
+          src="/img/titoAlone.jpg"
+          alt="Padre · Tito · sonriendo"
           className="block h-full w-full object-cover"
           style={{ aspectRatio: '4 / 5' }}
           draggable={false}
