@@ -611,7 +611,9 @@
          (.r-shelf-arrow) + atacha listener al .r-shelf-rail que toggle
          clase .is-scrolled-end cuando el scroll horizontal llega al
          final. CSS fade out la flecha + el gradiente del edge. */
-      const shelfArrowSVG = '<svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="9 6 15 12 9 18"/></svg>';
+      /* Chip-style indicator · "MÁS" en Galiner caps + chevron 1.5px stroke.
+         Hereda tonal del bloque via --accent-* vars (coral/blush/mint). */
+      const shelfArrowHTML = '<span class="r-shelf-arrow-lbl">Más</span><svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="9 6 15 12 9 18"/></svg>';
       document.querySelectorAll(".r-shelf").forEach((shelf) => {
         const rail = shelf.querySelector(".r-shelf-rail");
         if (!rail) return;
@@ -624,7 +626,7 @@
           arrow = document.createElement("div");
           arrow.className = "r-shelf-arrow";
           arrow.setAttribute("aria-hidden", "true");
-          arrow.innerHTML = shelfArrowSVG;
+          arrow.innerHTML = shelfArrowHTML;
           shelf.appendChild(arrow);
         };
         const update = () => {
