@@ -783,12 +783,76 @@
       display: flex;
       align-items: flex-end;
       gap: 14px;
-      padding: 8px 4px 0;
+      padding: 18px 4px 4px;
       flex-wrap: nowrap;
+      /* Scroll horizontal solo · oculta scroll vertical que aparecía por
+         los libros rotados + hover translateY -10px. Padding-top 18px da
+         margen para el lift sin clipping visible. */
       overflow-x: auto;
+      overflow-y: hidden;
       scrollbar-width: none;
+      scroll-snap-type: x proximity;
     }
     .r-shelf-rail::-webkit-scrollbar { display: none; }
+    .r-shelf-rail > .r-book { scroll-snap-align: start; }
+
+    /* Indicador edge-right · gradiente + chevron cuando hay más libros
+       fuera del viewport. JS hace toggle de .is-scrolled-end en .r-shelf
+       cuando el rail llega al final del scroll horizontal. */
+    .r-shelf::after {
+      content: "";
+      position: absolute;
+      top: 18px;
+      right: 0;
+      bottom: 4px;
+      width: 56px;
+      pointer-events: none;
+      background: linear-gradient(90deg, transparent 0%, var(--paper) 80%);
+      opacity: 1;
+      transition: opacity 300ms cubic-bezier(0.4, 0, 0.6, 1);
+      z-index: 2;
+    }
+    .r-shelf-arrow {
+      position: absolute;
+      top: 50%;
+      right: 8px;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--paper-soft);
+      border: 1px solid var(--line-strong);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
+      box-shadow: 0 4px 12px -4px rgba(80, 60, 30, 0.18);
+      transform: translateY(-50%);
+      opacity: 1;
+      transition: opacity 300ms cubic-bezier(0.4, 0, 0.6, 1);
+      z-index: 3;
+      color: var(--ink-soft);
+    }
+    .r-shelf-arrow svg {
+      width: 16px;
+      height: 16px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    .r-shelf.is-scrolled-end::after,
+    .r-shelf.is-scrolled-end .r-shelf-arrow {
+      opacity: 0;
+    }
+    .block.t-dark .r-shelf::after {
+      background: linear-gradient(90deg, transparent 0%, var(--module-dark) 80%);
+    }
+    .block.t-dark .r-shelf-arrow {
+      background: rgba(80, 68, 56, 0.92);
+      border-color: rgba(232, 201, 122, 0.28);
+      color: rgba(232, 201, 122, 0.85);
+    }
     .r-book {
       flex: 0 0 140px;
       height: 210px;

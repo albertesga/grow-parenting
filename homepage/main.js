@@ -604,4 +604,40 @@
       /* (Módulo 7 · Hero avatar video removido · el hero ahora usa el
          personaje embarazo con animación de respiración orgánica (hero-breathe
          keyframes) · cero JS necesario · todo CSS.) */
+
+      /* ────────────────────────────────────────────────────────────────
+         Módulo 8 · Shelf scroll hint
+         Para cada .r-shelf · inyecta una flecha indicadora a la derecha
+         (.r-shelf-arrow) + atacha listener al .r-shelf-rail que toggle
+         clase .is-scrolled-end cuando el scroll horizontal llega al
+         final. CSS fade out la flecha + el gradiente del edge. */
+      const shelfArrowSVG = '<svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="9 6 15 12 9 18"/></svg>';
+      document.querySelectorAll(".r-shelf").forEach((shelf) => {
+        const rail = shelf.querySelector(".r-shelf-rail");
+        if (!rail) return;
+        /* Skip si el contenido no necesita scroll (todos los libros caben) */
+        const needsScroll = () => rail.scrollWidth > rail.clientWidth + 4;
+        /* Inyecta flecha solo si hace falta · si no, ni la creamos */
+        let arrow = null;
+        const ensureArrow = () => {
+          if (arrow) return;
+          arrow = document.createElement("div");
+          arrow.className = "r-shelf-arrow";
+          arrow.setAttribute("aria-hidden", "true");
+          arrow.innerHTML = shelfArrowSVG;
+          shelf.appendChild(arrow);
+        };
+        const update = () => {
+          if (!needsScroll()) {
+            shelf.classList.add("is-scrolled-end");
+            return;
+          }
+          ensureArrow();
+          const atEnd = rail.scrollLeft + rail.clientWidth >= rail.scrollWidth - 4;
+          shelf.classList.toggle("is-scrolled-end", atEnd);
+        };
+        rail.addEventListener("scroll", update, { passive: true });
+        window.addEventListener("resize", update);
+        update();
+      });
     })();
