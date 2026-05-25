@@ -286,14 +286,14 @@ function DesktopLayout(p: DesktopProps) {
           </motion.div>
         </div>
 
-        {/* Subtexto izquierdo */}
+        {/* Subtexto izquierdo · light con "soy su padre" en extrabold */}
         <motion.div
-          className="mt-12 max-w-[28ch] font-grift text-[clamp(16px,1.25vw,22px)] font-medium leading-[1.45] text-ink-soft"
+          className="mt-12 max-w-[28ch] font-grift text-[clamp(16px,1.25vw,22px)] font-light leading-[1.45] text-ink-soft"
           style={{ opacity: p.subLeftOpacity, y: p.subLeftY }}
         >
           ¿qué cómo lo sé?,
           <br />
-          pues porque soy su padre.
+          pues porque <span className="font-extrabold text-ink">soy su padre</span>.
         </motion.div>
 
         {/* Loop garabato bajo el subtexto */}
@@ -393,35 +393,39 @@ function DesktopLayout(p: DesktopProps) {
           <HandwrittenAsset variant="swash" width={240} />
         </motion.div>
 
-        {/* Sub-headline · separación generosa del headline */}
+        {/* Sub-headline · mix light + extrabold · nombres en bold */}
         <motion.div
-          className="mt-7 font-grift text-[clamp(17px,1.4vw,22px)] font-bold leading-[1.3] text-ink"
+          className="mt-7 font-grift text-[clamp(17px,1.4vw,22px)] font-light leading-[1.3] text-ink"
           style={{ opacity: p.r2Opacity, y: p.r2Y }}
         >
-          Padre de Inti y Llivia.
+          <span className="font-extrabold">Padre</span> de{' '}
+          <span className="font-extrabold">Inti</span> y{' '}
+          <span className="font-extrabold">Llivia</span>.
         </motion.div>
 
-        {/* 3 frases body · espaciado uniforme entre ellas (mt-4) y mayor
-            del sub-headline (mt-7) para separación clara */}
+        {/* 3 frases body · light 300 baseline · palabras emotivas extrabold */}
         <motion.p
-          className="mt-7 font-grift text-[clamp(13px,1vw,16px)] font-medium leading-[1.55] text-ink-soft"
+          className="mt-7 font-grift text-[clamp(15px,1.15vw,19px)] font-light leading-[1.55] text-ink-soft"
           style={{ opacity: p.r3Opacity, y: p.r3Y }}
         >
-          Muy orgulloso de cada uno de mis peques.
+          <span className="font-extrabold text-ink">Muy orgulloso</span> de cada uno de mis{' '}
+          <span className="font-extrabold text-ink">peques</span>.
         </motion.p>
 
         <motion.p
-          className="mt-4 font-grift text-[clamp(13px,1vw,16px)] font-medium leading-[1.55] text-ink-soft"
+          className="mt-4 font-grift text-[clamp(15px,1.15vw,19px)] font-light leading-[1.55] text-ink-soft"
           style={{ opacity: p.r4Opacity, y: p.r4Y }}
         >
-          Aún que nadie me enseñó a ser padre.
+          Aún que <span className="font-extrabold text-ink">nadie</span> me enseñó a{' '}
+          <span className="font-extrabold text-ink">ser padre</span>.
         </motion.p>
 
         <motion.p
-          className="mt-4 font-grift text-[clamp(13px,1vw,16px)] font-medium leading-[1.55] text-ink-soft"
+          className="mt-4 font-grift text-[clamp(15px,1.15vw,19px)] font-light leading-[1.55] text-ink-soft"
           style={{ opacity: p.r5Opacity, y: p.r5Y }}
         >
-          Y nadie me avisó de lo complejo que es.
+          Y <span className="font-extrabold text-ink">nadie</span> me avisó de lo{' '}
+          <span className="font-extrabold text-ink">complejo</span> que es.
         </motion.p>
       </div>
 
@@ -607,10 +611,11 @@ function MobileLayout(p: MobileProps) {
         </motion.div>
 
         <motion.div
-          className="mt-5 text-[clamp(14px,3.8vw,16px)] font-medium leading-[1.45] text-ink-soft"
+          className="mt-5 text-[clamp(14px,3.8vw,16px)] font-light leading-[1.45] text-ink-soft"
           style={{ opacity: p.subLeftOpacity, y: p.subLeftY }}
         >
-          ¿qué cómo lo sé?, pues porque soy su padre.
+          ¿qué cómo lo sé?, pues porque{' '}
+          <span className="font-extrabold text-ink">soy su padre</span>.
         </motion.div>
       </div>
 
@@ -668,32 +673,37 @@ function MobileLayout(p: MobileProps) {
           <HandwrittenAsset variant="swash" width={180} />
         </motion.div>
 
-        {/* Sub-headline · separación generosa (mt-5) */}
+        {/* Sub-headline · mix light + extrabold · nombres en bold */}
         <motion.div
-          className="mt-5 text-[clamp(15px,4.4vw,18px)] font-bold leading-[1.3]"
+          className="mt-5 text-[clamp(15px,4.4vw,18px)] font-light leading-[1.3]"
           style={{ opacity: p.r2Opacity, y: p.r2Y }}
         >
-          Padre de Inti y Llivia.
+          <span className="font-extrabold">Padre</span> de{' '}
+          <span className="font-extrabold">Inti</span> y{' '}
+          <span className="font-extrabold">Llivia</span>.
         </motion.div>
 
-        {/* Body · separación clara del sub-headline (mt-5) · entre frases mt-3 */}
+        {/* Body · light 300 con palabras clave extrabold */}
         <motion.p
-          className="mt-5 text-[clamp(13px,3.6vw,15px)] font-medium leading-[1.55] text-ink-soft"
+          className="mt-5 text-[clamp(14px,3.8vw,17px)] font-light leading-[1.55] text-ink-soft"
           style={{ opacity: p.r3Opacity, y: p.r3Y }}
         >
-          Muy orgulloso de cada uno de mis peques.
+          <span className="font-extrabold text-ink">Muy orgulloso</span> de cada uno de mis{' '}
+          <span className="font-extrabold text-ink">peques</span>.
         </motion.p>
         <motion.p
-          className="mt-3 text-[clamp(13px,3.6vw,15px)] font-medium leading-[1.55] text-ink-soft"
+          className="mt-3 text-[clamp(14px,3.8vw,17px)] font-light leading-[1.55] text-ink-soft"
           style={{ opacity: p.r4Opacity, y: p.r4Y }}
         >
-          Aún que nadie me enseñó a ser padre.
+          Aún que <span className="font-extrabold text-ink">nadie</span> me enseñó a{' '}
+          <span className="font-extrabold text-ink">ser padre</span>.
         </motion.p>
         <motion.p
-          className="mt-3 text-[clamp(13px,3.6vw,15px)] font-medium leading-[1.55] text-ink-soft"
+          className="mt-3 text-[clamp(14px,3.8vw,17px)] font-light leading-[1.55] text-ink-soft"
           style={{ opacity: p.r5Opacity, y: p.r5Y }}
         >
-          Y nadie me avisó de lo complejo que es.
+          Y <span className="font-extrabold text-ink">nadie</span> me avisó de lo{' '}
+          <span className="font-extrabold text-ink">complejo</span> que es.
         </motion.p>
       </div>
     </div>

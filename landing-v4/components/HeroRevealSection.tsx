@@ -76,14 +76,17 @@ export default function HeroRevealSection({
         />
       </motion.div>
 
-      {/* Párrafo · 3 líneas */}
+      {/* Párrafo · 3 líneas · mix tipográfico light + extrabold
+          Light 300 baseline · palabras emotivas en extrabold para acento */}
       <motion.p
-        className={`mt-8 max-w-[28ch] font-grift font-normal text-ink-soft ${paragraphSize}`}
+        className={`mt-8 max-w-[28ch] font-grift font-light text-ink-soft ${paragraphSize}`}
         style={{ opacity: paragraphOpacity, y: paragraphY }}
       >
-        Un niño feliz, sensible y tranquilo
+        Un niño <span className="font-extrabold text-ink">feliz</span>, sensible y{' '}
+        <span className="font-extrabold text-ink">tranquilo</span>
         <br className="hidden md:block" />
-        {' '}de 7 años que vive en Barcelona
+        {' '}de <span className="font-extrabold text-ink">7 años</span> que vive en{' '}
+        <span className="font-extrabold text-ink">Barcelona</span>
         <br className="hidden md:block" />
         {' '}con su hermana y sus padres.
       </motion.p>
