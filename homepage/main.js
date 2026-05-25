@@ -261,6 +261,22 @@
       const bsFrame   = document.getElementById("bs-cover-frame");
       const bsSpinner = document.getElementById("bs-cover-spinner");
       const bsClose   = document.getElementById("bs-close");
+      const bsHeader  = bsSheet ? bsSheet.querySelector(".bs-header") : null;
+      const bsBody    = document.getElementById("bs-body");
+
+      /* Scroll forwarding · cuando el usuario hace wheel/scroll DENTRO del
+         .bs-header (cover del libro · NO scrollable nativo) reenviamos el
+         delta a .bs-body.scrollTop para que el contenido del libro avance
+         como si fuera un solo flujo continuo. Sin esto, el header capturaba
+         el wheel sin hacer nada (UX confuso · user reporta "no scrollea"). */
+      if (bsHeader && bsBody) {
+        bsHeader.addEventListener("wheel", (e) => {
+          // Solo cuando el overlay está abierto
+          if (!bsOverlay.classList.contains("is-active")) return;
+          e.preventDefault();
+          bsBody.scrollTop += e.deltaY;
+        }, { passive: false });
+      }
 
       const EASE_OUT   = "cubic-bezier(0.22, 0.61, 0.36, 1)"; /* mirror de var(--ease-sheet) · WAAPI no resuelve var() */
       const EASE_LIFT  = "cubic-bezier(0.34, 1.20, 0.64, 1)";
