@@ -2,6 +2,7 @@
 
 import IntroPhotoSection from './IntroPhotoSection';
 import EmotionalStatementSection from './EmotionalStatementSection';
+import NarrativeRevealSection from './NarrativeRevealSection';
 
 /**
  * LandingPage · orquesta las 3 secciones narrativas de Inti.
@@ -34,8 +35,11 @@ export default function LandingPage() {
       {/* Sección 1 + 2 fusionadas · sticky scroll narrative */}
       <IntroPhotoSection />
 
-      {/* Sección 3 · declaración emocional */}
+      {/* Sección 3 · declaración emocional · "Probablemente es el mejor niño" */}
       <EmotionalStatementSection />
+
+      {/* Sección 4 · text reveal · "La verdad es que nadie te prepara para esto" */}
+      <NarrativeRevealSection />
     </main>
   );
 }
