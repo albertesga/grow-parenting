@@ -54,52 +54,89 @@ export default function NarrativeRevealSection() {
   // Subrayado del headline · empieza tras "padre."
   const underlineHeadlineProgress = useTransform(progress, [0.24, 0.34], [0, 1]);
 
-  // Columna izquierda · "Nadie me explicó que me despertaría varias veces
-  // de madrugada."
+  // Row 1 izq · "Nadie me explicó que me despertaría varias veces de madrugada."
   const leftWords: WordSpec[] = [
-    { text: 'Nadie',       start: 0.32, end: 0.36, bold: true },
-    { text: 'me',          start: 0.33, end: 0.37 },
-    { text: 'explicó',     start: 0.34, end: 0.38 },
-    { text: 'que',         start: 0.36, end: 0.40 },
-    { text: 'me',          start: 0.37, end: 0.41 },
-    { text: 'despertaría', start: 0.39, end: 0.43, bold: true },
-    { text: 'varias',      start: 0.41, end: 0.45 },
-    { text: 'veces',       start: 0.43, end: 0.47 },
-    { text: 'de',          start: 0.45, end: 0.49 },
-    { text: 'madrugada.',  start: 0.46, end: 0.50, bold: true },
+    { text: 'Nadie',       start: 0.30, end: 0.34, bold: true },
+    { text: 'me',          start: 0.31, end: 0.35 },
+    { text: 'explicó',     start: 0.32, end: 0.36 },
+    { text: 'que',         start: 0.34, end: 0.38 },
+    { text: 'me',          start: 0.35, end: 0.39 },
+    { text: 'despertaría', start: 0.37, end: 0.41, bold: true },
+    { text: 'varias',      start: 0.39, end: 0.43 },
+    { text: 'veces',       start: 0.41, end: 0.45 },
+    { text: 'de',          start: 0.43, end: 0.47 },
+    { text: 'madrugada.',  start: 0.44, end: 0.48, bold: true },
   ];
 
-  // Columna derecha · "Y nadie me explicó cómo eso multiplicaría los
-  // problemas del día siguiente."
+  // Row 1 der · "Y nadie me explicó cómo eso multiplicaría los problemas
+  // del día siguiente."
   const rightWords: WordSpec[] = [
-    { text: 'Y',            start: 0.46, end: 0.50 },
-    { text: 'nadie',        start: 0.47, end: 0.51, bold: true },
-    { text: 'me',           start: 0.48, end: 0.52 },
-    { text: 'explicó',      start: 0.49, end: 0.53 },
-    { text: 'cómo',         start: 0.51, end: 0.55 },
-    { text: 'eso',          start: 0.52, end: 0.56 },
-    { text: 'multiplicaría', start: 0.54, end: 0.58, bold: true },
-    { text: 'los',          start: 0.56, end: 0.60 },
-    { text: 'problemas',    start: 0.57, end: 0.61, bold: true },
-    { text: 'del',          start: 0.59, end: 0.63 },
-    { text: 'día',          start: 0.60, end: 0.64 },
-    { text: 'siguiente.',   start: 0.62, end: 0.66, bold: true },
+    { text: 'Y',            start: 0.36, end: 0.40 },
+    { text: 'nadie',        start: 0.37, end: 0.41, bold: true },
+    { text: 'me',           start: 0.38, end: 0.42 },
+    { text: 'explicó',      start: 0.39, end: 0.43 },
+    { text: 'cómo',         start: 0.41, end: 0.45 },
+    { text: 'eso',          start: 0.42, end: 0.46 },
+    { text: 'multiplicaría', start: 0.44, end: 0.48, bold: true },
+    { text: 'los',          start: 0.46, end: 0.50 },
+    { text: 'problemas',    start: 0.47, end: 0.51, bold: true },
+    { text: 'del',          start: 0.49, end: 0.53 },
+    { text: 'día',          start: 0.50, end: 0.54 },
+    { text: 'siguiente.',   start: 0.52, end: 0.56, bold: true },
   ];
 
-  // Subrayado bajo "siguiente." (derecha)
-  const underlineRightProgress = useTransform(progress, [0.66, 0.76], [0, 1]);
+  // Row 2 izq · "Nadie me explicó el miedo que te entra en el cuerpo
+  // por cualquier tontería."
+  const left2Words: WordSpec[] = [
+    { text: 'Nadie',       start: 0.56, end: 0.60, bold: true },
+    { text: 'me',          start: 0.57, end: 0.61 },
+    { text: 'explicó',     start: 0.58, end: 0.62 },
+    { text: 'el',          start: 0.60, end: 0.64 },
+    { text: 'miedo',       start: 0.61, end: 0.65, bold: true },
+    { text: 'que',         start: 0.63, end: 0.67 },
+    { text: 'te',          start: 0.64, end: 0.68 },
+    { text: 'entra',       start: 0.65, end: 0.69 },
+    { text: 'en',          start: 0.67, end: 0.71 },
+    { text: 'el',          start: 0.68, end: 0.72 },
+    { text: 'cuerpo',      start: 0.69, end: 0.73, bold: true },
+    { text: 'por',         start: 0.71, end: 0.75 },
+    { text: 'cualquier',   start: 0.72, end: 0.76 },
+    { text: 'tontería.',   start: 0.74, end: 0.78, bold: true },
+  ];
 
-  // Doodles · 5 elementos con fade-in stagger
-  const doodle1 = useTransform(progress, [0.62, 0.74], [0, 1]);
-  const doodle2 = useTransform(progress, [0.66, 0.78], [0, 1]);
-  const doodle3 = useTransform(progress, [0.70, 0.82], [0, 1]);
-  const doodle4 = useTransform(progress, [0.74, 0.86], [0, 1]);
-  const doodle5 = useTransform(progress, [0.78, 0.90], [0, 1]);
+  // Row 2 der · "Tampoco nadie me explicó la potencia de la sensación
+  // cada vez que me mira."
+  const right2Words: WordSpec[] = [
+    { text: 'Tampoco',     start: 0.62, end: 0.66 },
+    { text: 'nadie',       start: 0.63, end: 0.67, bold: true },
+    { text: 'me',          start: 0.64, end: 0.68 },
+    { text: 'explicó',     start: 0.65, end: 0.69 },
+    { text: 'la',          start: 0.67, end: 0.71 },
+    { text: 'potencia',    start: 0.68, end: 0.72, bold: true },
+    { text: 'de',          start: 0.70, end: 0.74 },
+    { text: 'la',          start: 0.71, end: 0.75 },
+    { text: 'sensación',   start: 0.72, end: 0.76, bold: true },
+    { text: 'cada',        start: 0.74, end: 0.78 },
+    { text: 'vez',         start: 0.75, end: 0.79 },
+    { text: 'que',         start: 0.76, end: 0.80 },
+    { text: 'me',          start: 0.78, end: 0.82, bold: true },
+    { text: 'mira.',       start: 0.80, end: 0.84, bold: true },
+  ];
+
+  // Subrayado bajo "mira." (row 2 der · al final)
+  const underlineRightProgress = useTransform(progress, [0.84, 0.92], [0, 1]);
+
+  // Doodles · 5 elementos con fade-in stagger · empiezan tras las 4 frases
+  const doodle1 = useTransform(progress, [0.78, 0.86], [0, 1]);
+  const doodle2 = useTransform(progress, [0.80, 0.88], [0, 1]);
+  const doodle3 = useTransform(progress, [0.82, 0.90], [0, 1]);
+  const doodle4 = useTransform(progress, [0.84, 0.92], [0, 1]);
+  const doodle5 = useTransform(progress, [0.86, 0.94], [0, 1]);
 
   return (
     <section
       ref={wrapperRef}
-      className="relative h-[220vh] w-full"
+      className="relative h-[300vh] w-full"
       aria-label="Nadie me preparó para ser padre"
     >
       <div className="sticky top-0 h-screen w-full overflow-hidden">
@@ -121,6 +158,8 @@ export default function NarrativeRevealSection() {
             headlineWords={headlineWords}
             leftWords={leftWords}
             rightWords={rightWords}
+            left2Words={left2Words}
+            right2Words={right2Words}
             underlineHeadlineProgress={underlineHeadlineProgress}
             underlineRightProgress={underlineRightProgress}
             doodle1={doodle1}
@@ -131,13 +170,15 @@ export default function NarrativeRevealSection() {
           />
         </div>
 
-        {/* Mobile/Tablet (<lg) · headline + 2 frases en stack vertical */}
+        {/* Mobile/Tablet (<lg) · headline + 4 frases en stack vertical */}
         <div className="flex h-full w-full flex-col lg:hidden">
           <MobileLayout
             progress={progress}
             headlineWords={headlineWords}
             leftWords={leftWords}
             rightWords={rightWords}
+            left2Words={left2Words}
+            right2Words={right2Words}
             underlineHeadlineProgress={underlineHeadlineProgress}
             underlineRightProgress={underlineRightProgress}
           />
@@ -210,6 +251,8 @@ interface LayoutProps {
   headlineWords: WordSpec[];
   leftWords: WordSpec[];
   rightWords: WordSpec[];
+  left2Words: WordSpec[];
+  right2Words: WordSpec[];
   underlineHeadlineProgress: MV;
   underlineRightProgress: MV;
   doodle1?: MV;
@@ -226,56 +269,73 @@ function DesktopLayout(p: LayoutProps) {
 
   return (
     <>
-      {/* Headline · 2 líneas con word reveal · GIGANTE editorial */}
-      <div className="absolute left-[6vw] top-[16vh] z-20 max-w-[88vw]">
-        <h2 className="font-grift text-[clamp(80px,10.5vw,200px)] font-light leading-[0.98] tracking-tight text-ink">
+      {/* Headline · 2 líneas con word reveal · compacto top para dejar
+          espacio a las 4 frases bottom */}
+      <div className="absolute left-[6vw] top-[8vh] z-20 max-w-[88vw]">
+        <h2 className="font-grift text-[clamp(64px,8.5vw,160px)] font-light leading-[0.98] tracking-tight text-ink">
           <WordReveal words={line1} progress={p.progress} className="block" />
           <WordReveal words={line2} progress={p.progress} className="block" />
         </h2>
 
-        {/* Subrayado doble bajo línea 3 "prepara para esto." · ancho controlado
-            para que no se extienda más allá del texto */}
+        {/* Subrayado doble */}
         <motion.div
           className="-mt-1 origin-left"
           style={{
             scaleX: p.underlineHeadlineProgress,
             opacity: p.underlineHeadlineProgress,
-            width: '44%',
-            maxWidth: 520,
+            width: '40%',
+            maxWidth: 460,
           }}
         >
-          <HandwrittenAsset variant="doubleLine" width={520} />
+          <HandwrittenAsset variant="doubleLine" width={460} />
         </motion.div>
       </div>
 
-      {/* 2 columnas inferiores · texto secundario · grande y legible */}
-      <div className="absolute bottom-[8vh] left-[6vw] z-20 w-[38vw] max-w-[500px]">
-        <WordReveal
-          words={p.leftWords}
-          progress={p.progress}
-          className="font-grift text-[clamp(22px,1.85vw,32px)] leading-[1.35] text-ink"
-        />
-      </div>
+      {/* Grid 2x2 frases inferiores · 4 confesiones del padre */}
+      <div className="absolute inset-x-0 bottom-[6vh] z-20 px-[6vw]">
+        <div className="grid grid-cols-2 gap-x-[5vw] gap-y-7">
+          {/* Row 1 · Frase izq · "despertaría madrugada" */}
+          <WordReveal
+            words={p.leftWords}
+            progress={p.progress}
+            className="font-grift text-[clamp(18px,1.45vw,26px)] leading-[1.4] text-ink"
+          />
 
-      <div className="absolute bottom-[8vh] right-[6vw] z-20 w-[38vw] max-w-[500px]">
-        <WordReveal
-          words={p.rightWords}
-          progress={p.progress}
-          className="font-grift text-[clamp(22px,1.85vw,32px)] leading-[1.35] text-ink"
-        />
+          {/* Row 1 · Frase der · "multiplicaría problemas día siguiente" */}
+          <WordReveal
+            words={p.rightWords}
+            progress={p.progress}
+            className="font-grift text-[clamp(18px,1.45vw,26px)] leading-[1.4] text-ink"
+          />
 
-        {/* Subrayado handwritten bajo "me mira." */}
-        <motion.div
-          className="-mt-1 origin-left"
-          style={{
-            scaleX: p.underlineRightProgress,
-            opacity: p.underlineRightProgress,
-            width: '54%',
-            maxWidth: 270,
-          }}
-        >
-          <HandwrittenAsset variant="swash" width={270} />
-        </motion.div>
+          {/* Row 2 · Frase izq · "miedo cuerpo tontería" */}
+          <WordReveal
+            words={p.left2Words}
+            progress={p.progress}
+            className="font-grift text-[clamp(18px,1.45vw,26px)] leading-[1.4] text-ink"
+          />
+
+          {/* Row 2 · Frase der · "potencia sensación me mira" + swash */}
+          <div>
+            <WordReveal
+              words={p.right2Words}
+              progress={p.progress}
+              className="font-grift text-[clamp(18px,1.45vw,26px)] leading-[1.4] text-ink"
+            />
+            {/* Subrayado swash bajo "me mira." */}
+            <motion.div
+              className="-mt-1 origin-left"
+              style={{
+                scaleX: p.underlineRightProgress,
+                opacity: p.underlineRightProgress,
+                width: '50%',
+                maxWidth: 240,
+              }}
+            >
+              <HandwrittenAsset variant="swash" width={240} />
+            </motion.div>
+          </div>
+        </div>
       </div>
 
       {/* 5 Doodles distribuidos · matchea posiciones referencia · más grandes */}
@@ -343,14 +403,12 @@ function DesktopLayout(p: LayoutProps) {
 
 function MobileLayout(p: LayoutProps) {
   return (
-    <div className="flex h-full w-full flex-col items-start justify-center gap-8 px-6 py-16">
-      {/* Headline · word reveal en 1 bloque (sin separar líneas · wrap natural) */}
+    <div className="flex h-full w-full flex-col items-start justify-center gap-5 px-6 py-12">
+      {/* Headline · compact mobile */}
       <div className="w-full max-w-[640px]">
-        <h2 className="font-grift text-[clamp(36px,9vw,64px)] font-light leading-[1.05] tracking-tight text-ink">
+        <h2 className="font-grift text-[clamp(32px,8vw,56px)] font-light leading-[1.05] tracking-tight text-ink">
           <WordReveal words={p.headlineWords} progress={p.progress} />
         </h2>
-
-        {/* Subrayado handwritten · más estrecho mobile */}
         <motion.div
           className="mt-2 origin-left"
           style={{
@@ -364,22 +422,28 @@ function MobileLayout(p: LayoutProps) {
         </motion.div>
       </div>
 
-      {/* 2 frases en stack vertical · sin columnas */}
+      {/* 4 frases stack vertical compacto */}
+      <WordReveal
+        words={p.leftWords}
+        progress={p.progress}
+        className="font-grift text-[clamp(14px,3.6vw,18px)] leading-[1.45] text-ink"
+      />
+      <WordReveal
+        words={p.rightWords}
+        progress={p.progress}
+        className="font-grift text-[clamp(14px,3.6vw,18px)] leading-[1.45] text-ink"
+      />
+      <WordReveal
+        words={p.left2Words}
+        progress={p.progress}
+        className="font-grift text-[clamp(14px,3.6vw,18px)] leading-[1.45] text-ink"
+      />
       <div className="w-full max-w-[640px]">
         <WordReveal
-          words={p.leftWords}
+          words={p.right2Words}
           progress={p.progress}
-          className="font-grift text-[clamp(15px,4vw,20px)] leading-[1.5] text-ink"
+          className="font-grift text-[clamp(14px,3.6vw,18px)] leading-[1.45] text-ink"
         />
-      </div>
-
-      <div className="w-full max-w-[640px]">
-        <WordReveal
-          words={p.rightWords}
-          progress={p.progress}
-          className="font-grift text-[clamp(15px,4vw,20px)] leading-[1.5] text-ink"
-        />
-
         <motion.div
           className="mt-2 origin-left"
           style={{

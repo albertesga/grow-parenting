@@ -368,10 +368,9 @@ function DesktopLayout(p: DesktopProps) {
         <HandwrittenAsset variant="arrowCurve" width={130} flipX />
       </motion.div>
 
-      {/* Bloque derecho · texto "Aquí estoy yo..." · scroll-driven escalonado
-          Width responsive · más estrecho en tablet/notebook para no solapar
-          polaroid. Espaciado vertical generoso y consistente. */}
-      <div className="absolute right-[5vw] top-1/2 z-20 w-[24vw] max-w-[380px] -translate-y-1/2 lg:right-[6vw] lg:w-[26vw]">
+      {/* Bloque derecho · texto "Aquí estoy yo..." · más ancho para acomodar
+          el body de tamaño aumentado */}
+      <div className="absolute right-[4vw] top-1/2 z-20 w-[30vw] max-w-[460px] -translate-y-1/2 lg:right-[5vw] lg:w-[32vw]">
         {/* Headline · gran tamaño, peso extra bold */}
         <motion.h2
           className="font-grift text-[clamp(28px,2.6vw,42px)] font-extrabold leading-[1.0] tracking-tight text-ink"
@@ -393,9 +392,9 @@ function DesktopLayout(p: DesktopProps) {
           <HandwrittenAsset variant="swash" width={240} />
         </motion.div>
 
-        {/* Sub-headline · interlineado compacto · "Padre de Inti y Llivia." */}
+        {/* Sub-headline · tamaño matchea body de sección 1 */}
         <motion.div
-          className="mt-5 font-grift text-[clamp(17px,1.4vw,22px)] font-light leading-[1.3] text-ink"
+          className="mt-5 font-grift text-[clamp(18px,1.6vw,28px)] font-light leading-[1.3] text-ink"
           style={{ opacity: p.r2Opacity, y: p.r2Y }}
         >
           <span className="font-extrabold">Padre</span> de{' '}
@@ -403,27 +402,25 @@ function DesktopLayout(p: DesktopProps) {
           <span className="font-extrabold">Llivia</span>.
         </motion.div>
 
-        {/* Frase 1 (sutil) · "Muy orgulloso..." */}
+        {/* 3 frases body · todas en clamp(18,1.6vw,28px) matchea body 1a sección */}
         <motion.p
-          className="mt-3 font-grift text-[clamp(15px,1.15vw,19px)] font-light leading-[1.45] text-ink-soft"
+          className="mt-3 font-grift text-[clamp(18px,1.6vw,28px)] font-light leading-[1.4] text-ink-soft"
           style={{ opacity: p.r3Opacity, y: p.r3Y }}
         >
           <span className="font-extrabold text-ink">Muy orgulloso</span> de cada uno de mis{' '}
           <span className="font-extrabold text-ink">peques</span>.
         </motion.p>
 
-        {/* Frase 2 (énfasis · tamaño mayor) · "Aún que nadie me enseñó..." */}
         <motion.p
-          className="mt-2 font-grift text-[clamp(17px,1.35vw,22px)] font-light leading-[1.4] text-ink-soft"
+          className="mt-2 font-grift text-[clamp(18px,1.6vw,28px)] font-light leading-[1.4] text-ink-soft"
           style={{ opacity: p.r4Opacity, y: p.r4Y }}
         >
           Aún que <span className="font-extrabold text-ink">nadie</span> me enseñó a{' '}
           <span className="font-extrabold text-ink">ser padre</span>.
         </motion.p>
 
-        {/* Frase 3 (énfasis · tamaño mayor) · "Y nadie me avisó..." */}
         <motion.p
-          className="mt-2 font-grift text-[clamp(17px,1.35vw,22px)] font-light leading-[1.4] text-ink-soft"
+          className="mt-2 font-grift text-[clamp(18px,1.6vw,28px)] font-light leading-[1.4] text-ink-soft"
           style={{ opacity: p.r5Opacity, y: p.r5Y }}
         >
           Y <span className="font-extrabold text-ink">nadie</span> me avisó de lo{' '}
