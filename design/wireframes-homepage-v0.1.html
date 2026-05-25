@@ -1,0 +1,1089 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Grow — Wireframes Homepage v0.1 · IA + Parallax avatar 3 fases</title>
+<style>
+  :root {
+    --paper: #FAF7F0;
+    --paper-soft: #F2EDE0;
+    --paper-deep: #E8E1CF;
+    --ink: #1A1A1A;
+    --ink-soft: #4D4D4D;
+    --ink-muted: #888888;
+    --ink-faint: #BFBAA8;
+    --line: #E2DDD1;
+    --line-strong: #C9C2B2;
+    --note: #fff8c4;
+    --note-line: #d9c460;
+    --new: #e3f0e3;
+    --new-line: #6b9e6b;
+    --night-bg: #1A1D24;
+    --night-fg: #E8E6DF;
+    --night-muted: #908A7E;
+    --coral-base: #F2A57A;
+    --blush-base: #EFC2B5;
+    --mint-base: #BFD2B0;
+    --gold-base: #E8C97A;
+    --cat-salud-tint: #E6E2D6;
+    --cat-salud-ink: #5C5648;
+  }
+  * { box-sizing: border-box; }
+  body {
+    font: 14px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    margin: 0;
+    padding: 32px 24px 96px;
+  }
+  .doc-header { max-width: 1400px; margin: 0 auto 24px; border-bottom: 2px solid var(--ink); padding-bottom: 16px; }
+  .doc-header h1 { font-size: 24px; margin: 0 0 4px; font-weight: 600; }
+  .doc-header .meta { color: #555; font-size: 13px; margin: 0; }
+  .container { max-width: 1400px; margin: 0 auto; }
+
+  h2.section-title { font-size: 16px; margin: 40px 0 12px; padding-bottom: 6px; border-bottom: 1px solid var(--line-strong); text-transform: uppercase; letter-spacing: 0.08em; }
+  .section-intro { font-size: 13px; color: #555; max-width: 720px; margin: 0 0 16px; }
+
+  /* === Frame · landing-style 360 mobile + 1024 desktop preview ============= */
+  .frame-row { display: flex; flex-wrap: wrap; gap: 28px; align-items: flex-start; margin-bottom: 28px; }
+  .frame {
+    border: 2px solid var(--ink);
+    background: white;
+    border-radius: 16px;
+    overflow: hidden;
+    position: relative;
+    flex-shrink: 0;
+  }
+  .frame.mobile { width: 360px; }
+  .frame.desktop { width: 720px; }
+  .frame-label {
+    background: var(--ink); color: white;
+    padding: 8px 14px; font-size: 11px; font-weight: 600;
+    letter-spacing: 0.06em; display: flex; justify-content: space-between;
+  }
+  .frame-body { background: var(--paper); padding: 0; }
+
+  /* Sections inside a landing frame */
+  .b { padding: 20px 18px; border-bottom: 1px dashed var(--line-strong); position: relative; }
+  .b:last-child { border-bottom: none; }
+  .b.alt { background: var(--paper-soft); }
+  .b.deep { background: var(--paper-deep); }
+  .b.dark { background: var(--night-bg); color: var(--night-fg); }
+  .b.dark .b-eyebrow { color: var(--night-muted); }
+  .b-number {
+    position: absolute; top: 12px; right: 14px;
+    font-size: 9px; letter-spacing: 0.18em; color: var(--ink-muted);
+    font-weight: 700; text-transform: uppercase;
+  }
+  .b.dark .b-number { color: var(--night-muted); }
+
+  .b-eyebrow {
+    font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--ink-muted); font-weight: 700; margin-bottom: 8px;
+  }
+  .b-claim {
+    font-family: Georgia, "Galiner", serif;
+    font-size: 24px; line-height: 1.15; font-weight: 600;
+    margin: 0 0 8px;
+  }
+  .b.dark .b-claim { color: var(--night-fg); }
+  .b-claim.big { font-size: 32px; }
+  .b-claim.huge { font-size: 38px; }
+  .b-claim em { font-style: italic; font-weight: 500; color: var(--ink-soft); }
+  .b-sub { font-size: 13px; color: var(--ink-soft); line-height: 1.5; margin: 0 0 12px; max-width: 320px; }
+  .b.dark .b-sub { color: var(--night-muted); }
+
+  .cta-row { display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap; }
+  .cta {
+    display: inline-block;
+    padding: 8px 14px; border-radius: 999px;
+    font-size: 12px; font-weight: 500;
+  }
+  .cta.primary { background: var(--ink); color: white; }
+  .cta.ghost { background: white; color: var(--ink); border: 1px solid var(--ink); }
+  .cta.link { color: var(--ink-soft); text-decoration: underline; padding: 8px 0; }
+
+  /* Top header global */
+  .topbar {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 12px 18px; background: white;
+    border-bottom: 1px solid var(--line);
+    font-size: 11px;
+  }
+  .topbar .logo { font-family: Georgia, serif; font-size: 16px; font-weight: 600; }
+  .topbar .nav-links { display: flex; gap: 14px; color: var(--ink-soft); }
+  .topbar .right { display: flex; gap: 8px; align-items: center; }
+  .topbar .right .lang { font-size: 10px; color: var(--ink-muted); }
+  .topbar .right .access { font-size: 11px; background: var(--ink); color: white; padding: 5px 10px; border-radius: 999px; }
+
+  /* Parallax sticky avatar lateral · solo desktop preview */
+  .parallax-col {
+    position: sticky; top: 80px;
+    width: 280px; height: 360px;
+    align-self: flex-start;
+    border: 1.5px dashed var(--line-strong);
+    border-radius: 14px;
+    padding: 24px;
+    background: var(--paper-soft);
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    text-align: center;
+  }
+  .parallax-stage {
+    width: 200px; height: 200px;
+    position: relative;
+    margin-bottom: 14px;
+  }
+  .parallax-stage .avatar {
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    transition: opacity 600ms ease-out, transform 600ms ease-out;
+    opacity: 0;
+  }
+  .parallax-stage .avatar.show { opacity: 1; }
+  .parallax-stage .avatar svg { width: 100%; height: 100%; }
+  .parallax-stage .avatar.coral svg circle.body { fill: var(--coral-base); }
+  .parallax-stage .avatar.blush svg circle.body { fill: var(--blush-base); }
+  .parallax-stage .avatar.mint svg circle.body { fill: var(--mint-base); }
+  .parallax-stage .scale-hint {
+    position: absolute; left: 50%; bottom: -16px; transform: translateX(-50%);
+    font-size: 9px; color: var(--ink-muted); letter-spacing: 0.15em; text-transform: uppercase;
+    white-space: nowrap;
+  }
+  .parallax-progress {
+    width: 100%; height: 4px; background: var(--line);
+    border-radius: 999px; position: relative; margin: 18px 0 8px;
+  }
+  .parallax-progress .fill {
+    position: absolute; left: 0; top: 0; bottom: 0;
+    background: var(--ink); border-radius: 999px;
+    width: 0%; transition: width 200ms linear;
+  }
+  .parallax-tick {
+    position: absolute; top: -3px; width: 10px; height: 10px;
+    border-radius: 50%; background: white; border: 1.5px solid var(--ink-muted);
+    transform: translateX(-50%);
+  }
+  .parallax-tick.t1 { left: 0%; }
+  .parallax-tick.t2 { left: 33%; }
+  .parallax-tick.t3 { left: 66%; }
+  .parallax-tick.t4 { left: 100%; }
+  .parallax-tick.active { background: var(--ink); border-color: var(--ink); }
+  .parallax-phases { display: flex; justify-content: space-between; width: 100%; font-size: 9px; color: var(--ink-muted); letter-spacing: 0.1em; margin-top: 4px; }
+
+  /* Library cards (libros block) */
+  .libros-grid {
+    display: grid; grid-template-columns: repeat(2, 1fr); gap: 6px;
+    margin: 8px 0;
+  }
+  .libro-card {
+    border: 1px solid var(--line-strong); border-radius: 8px;
+    padding: 10px; font-size: 11px;
+    background: white;
+  }
+  .libro-card .tint { display: block; height: 6px; border-radius: 4px; margin-bottom: 6px; }
+  .libro-card.t-coral .tint { background: var(--coral-base); }
+  .libro-card.t-blush .tint { background: var(--blush-base); }
+  .libro-card.t-mint .tint { background: var(--mint-base); }
+  .libro-card.t-gold .tint { background: var(--gold-base); }
+  .libro-card.t-salud .tint { background: var(--cat-salud-tint); }
+  .libro-card.t-lilac .tint { background: #C9B5D2; }
+  .libro-card .ttl { font-weight: 600; font-size: 12px; }
+  .libro-card .sub { color: var(--ink-muted); margin-top: 2px; }
+
+  /* 3 phases timeline */
+  .phases-track { position: relative; height: 60px; margin: 16px 0 8px; padding: 0 8px; }
+  .phases-line { position: absolute; left: 14px; right: 14px; top: 20px; height: 2px; background: var(--line-strong); }
+  .phases-tick {
+    position: absolute; top: 14px; width: 14px; height: 14px; border-radius: 50%;
+    background: white; border: 2px solid var(--ink); transform: translateX(-50%);
+  }
+  .phases-tick.t1 { left: 8%; }
+  .phases-tick.t2 { left: 33%; }
+  .phases-tick.t3 { left: 66%; }
+  .phases-tick.t4 { left: 92%; }
+  .phases-label {
+    position: absolute; top: 36px; transform: translateX(-50%);
+    font-size: 9px; color: var(--ink-soft); letter-spacing: 0.06em;
+    text-align: center; white-space: nowrap;
+  }
+  .phases-label.t1 { left: 8%; }
+  .phases-label.t2 { left: 33%; }
+  .phases-label.t3 { left: 66%; }
+  .phases-label.t4 { left: 92%; }
+
+  /* Mini phone mockup */
+  .mini-phone {
+    width: 140px; height: 240px;
+    border: 1.5px solid var(--ink);
+    border-radius: 16px; overflow: hidden;
+    background: white; display: inline-block;
+    margin: 8px 6px;
+    vertical-align: top;
+    font-size: 10px;
+    padding: 8px;
+  }
+  .mini-phone.dark { background: var(--night-bg); color: var(--night-fg); border-color: var(--night-fg); }
+  .mini-phone .mp-tag { font-size: 8px; letter-spacing: 0.15em; color: var(--ink-muted); text-transform: uppercase; margin-bottom: 6px; }
+  .mini-phone .mp-title { font-family: Georgia, serif; font-size: 13px; line-height: 1.2; }
+  .mini-phone .mp-chip { display: block; margin: 6px 0; padding: 5px 8px; background: var(--paper-soft); border-radius: 6px; font-size: 9px; }
+  .mini-phone.dark .mp-chip { background: var(--night-muted); color: var(--night-bg); opacity: 0.85; }
+  .mini-phone .mp-chip:first-of-type { background: var(--ink); color: white; }
+
+  /* Family configs */
+  .family-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px;
+    margin: 10px 0;
+  }
+  .family-cell {
+    background: white; border: 1px solid var(--line);
+    border-radius: 8px; padding: 8px; text-align: center;
+    font-size: 10px;
+  }
+  .family-cell .ico {
+    width: 32px; height: 32px; margin: 0 auto 4px;
+    border: 1.5px solid var(--ink-soft); border-radius: 50%;
+  }
+
+  /* Diff cards (clinical) */
+  .diff-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 6px;
+    margin: 10px 0;
+  }
+  .diff-card {
+    background: white; border: 1px solid var(--line);
+    border-radius: 8px; padding: 8px;
+    font-size: 11px;
+  }
+  .diff-card .ico { font-size: 14px; }
+  .diff-card .ttl { font-weight: 600; margin: 4px 0 2px; font-size: 11px; }
+
+  /* FAQ accordion mock */
+  .faq-row {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 8px 0; border-bottom: 1px solid var(--line);
+    font-size: 12px;
+  }
+  .faq-row:last-child { border-bottom: none; }
+  .faq-row .chev { color: var(--ink-muted); }
+
+  /* Footer mock */
+  .footer-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px;
+    font-size: 10px; color: var(--ink-soft);
+  }
+  .footer-grid h5 { font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-muted); margin: 0 0 6px; font-weight: 700; }
+  .footer-grid ul { list-style: none; padding: 0; margin: 0; }
+  .footer-grid li { padding: 2px 0; }
+
+  /* Notes */
+  .notes { flex: 1; min-width: 280px; max-width: 380px; }
+  .note { background: var(--note); border: 1px solid var(--note-line); padding: 10px 12px; margin-bottom: 8px; font-size: 12px; line-height: 1.45; border-radius: 2px; }
+  .note.new { background: var(--new); border-color: var(--new-line); }
+  .note strong { display: block; margin-bottom: 2px; }
+
+  /* Parallax indicator dot · attached to scroll */
+  .scroll-tracker {
+    position: fixed; right: 24px; top: 50%; transform: translateY(-50%);
+    background: white; border: 1.5px solid var(--ink); border-radius: 999px;
+    padding: 6px 10px; font-size: 10px; letter-spacing: 0.05em;
+    z-index: 100;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    display: flex; align-items: center; gap: 6px;
+  }
+  .scroll-tracker .dot {
+    width: 10px; height: 10px; border-radius: 50%; background: var(--coral-base);
+    transition: background 600ms ease-out;
+  }
+  .scroll-tracker .dot.coral { background: var(--coral-base); }
+  .scroll-tracker .dot.blush { background: var(--blush-base); }
+  .scroll-tracker .dot.mint { background: var(--mint-base); }
+
+  /* Annotated layout · full preview row */
+  .preview-row {
+    display: flex; gap: 28px; align-items: flex-start; flex-wrap: wrap;
+    margin-top: 16px;
+  }
+  table.tbl { border-collapse: collapse; width: 100%; max-width: 880px; font-size: 12px; margin: 12px 0; }
+  table.tbl th, table.tbl td { border: 1px solid var(--line-strong); padding: 6px 8px; text-align: left; vertical-align: top; }
+  table.tbl th { background: var(--paper-soft); font-size: 11px; text-transform: uppercase; letter-spacing: 0.04em; font-weight: 600; }
+</style>
+</head>
+<body>
+
+<header class="doc-header">
+  <h1>Grow — Wireframes Homepage v0.1 + Parallax avatar 3 fases</h1>
+  <p class="meta">Landing pública · 13 bloques canon · IA `design/IA-homepage-v0.1.md` · parallax con scroll que evoluciona el avatar embarazo → bebé → toddler · estética editorial cream · DS v0.2 placeholders Galiner/Inter.</p>
+</header>
+
+<!-- Scroll tracker fijo · simula el avatar 3 fases evolucionando -->
+<div class="scroll-tracker" id="tracker">
+  <span class="dot coral" id="tracker-dot"></span>
+  <span id="tracker-label">Embarazo</span>
+</div>
+
+<div class="container">
+
+  <!-- ============================================================ -->
+  <h2 class="section-title">1 · Concepto</h2>
+  <!-- ============================================================ -->
+
+  <p class="section-intro">La homepage es <strong>una columna editorial larga</strong> de 13 bloques + header global + footer. Cada bloque cumple una promesa del manifesto. El bloque protagonista (visualmente más grande) es <strong>5 · Los libros</strong>. La <strong>parallax del avatar 3 fases</strong> (coral → blush → mint) acompaña el scroll y conecta visualmente las etapas del journey de 1.000 días.</p>
+
+  <h2 class="section-title">2 · Parallax avatar 3 fases · cómo funciona</h2>
+
+  <p class="section-intro">A medida que el usuari@ hace scroll, un avatar fijo en una columna lateral (desktop) o pequeño tracker top-right (mobile) <strong>cambia entre las 3 fases</strong> con crossfade: coral (embarazo) en bloques 0-3 · blush (bebé) en bloques 4-7 · mint (toddler) en bloques 8-13. La progresión visualiza el journey de 1.000 días sin que el usuario tenga que leerlo.</p>
+
+  <div class="preview-row">
+    <div class="parallax-col" style="position: static; box-shadow: 0 2px 6px rgba(0,0,0,0.04)">
+      <div class="parallax-stage">
+        <div class="avatar coral show">
+          <svg viewBox="0 0 200 200">
+            <circle class="body" cx="100" cy="115" r="75"/>
+            <circle cx="82" cy="98" r="6" fill="#1a1a1a"/>
+            <circle cx="118" cy="98" r="6" fill="#1a1a1a"/>
+            <path d="M 84 122 Q 100 132 116 122" fill="none" stroke="#1a1a1a" stroke-width="3" stroke-linecap="round"/>
+            <ellipse cx="100" cy="148" rx="18" ry="20" fill="#E8C97A" opacity="0.8"/>
+          </svg>
+        </div>
+        <div class="scale-hint">FASE · EMBARAZO</div>
+      </div>
+      <div class="parallax-progress">
+        <div class="fill" style="width:8%"></div>
+        <div class="parallax-tick t1 active"></div>
+        <div class="parallax-tick t2"></div>
+        <div class="parallax-tick t3"></div>
+        <div class="parallax-tick t4"></div>
+      </div>
+      <div class="parallax-phases">
+        <span>concep.</span><span>embarazo</span><span>bebé</span><span>3 a</span>
+      </div>
+      <div style="font-size:10px;color:var(--ink-muted);margin-top:14px;line-height:1.4">
+        coral embarazo · bloques 0-3
+      </div>
+    </div>
+
+    <div class="parallax-col" style="position: static; box-shadow: 0 2px 6px rgba(0,0,0,0.04)">
+      <div class="parallax-stage">
+        <div class="avatar blush show">
+          <svg viewBox="0 0 200 200">
+            <circle class="body" cx="100" cy="110" r="62"/>
+            <circle cx="84" cy="100" r="5" fill="#1a1a1a"/>
+            <circle cx="116" cy="100" r="5" fill="#1a1a1a"/>
+            <path d="M 86 118 Q 100 125 114 118" fill="none" stroke="#1a1a1a" stroke-width="2.5" stroke-linecap="round"/>
+            <ellipse cx="78" cy="175" rx="10" ry="6" fill="#EFC2B5"/>
+            <ellipse cx="122" cy="175" rx="10" ry="6" fill="#EFC2B5"/>
+          </svg>
+        </div>
+        <div class="scale-hint">FASE · BEBÉ</div>
+      </div>
+      <div class="parallax-progress">
+        <div class="fill" style="width:45%"></div>
+        <div class="parallax-tick t1 active"></div>
+        <div class="parallax-tick t2 active"></div>
+        <div class="parallax-tick t3"></div>
+        <div class="parallax-tick t4"></div>
+      </div>
+      <div class="parallax-phases">
+        <span>concep.</span><span>embarazo</span><span>bebé</span><span>3 a</span>
+      </div>
+      <div style="font-size:10px;color:var(--ink-muted);margin-top:14px;line-height:1.4">
+        blush bebé · bloques 4-7
+      </div>
+    </div>
+
+    <div class="parallax-col" style="position: static; box-shadow: 0 2px 6px rgba(0,0,0,0.04)">
+      <div class="parallax-stage">
+        <div class="avatar mint show">
+          <svg viewBox="0 0 200 200">
+            <circle class="body" cx="100" cy="100" r="78"/>
+            <circle cx="82" cy="88" r="5" fill="#1a1a1a"/>
+            <circle cx="118" cy="88" r="5" fill="#1a1a1a"/>
+            <path d="M 84 108 Q 100 118 116 108" fill="none" stroke="#1a1a1a" stroke-width="2.5" stroke-linecap="round"/>
+            <path d="M 100 175 Q 96 188 90 192" fill="none" stroke="#BFD2B0" stroke-width="10" stroke-linecap="round"/>
+            <path d="M 100 175 Q 104 188 110 192" fill="none" stroke="#BFD2B0" stroke-width="10" stroke-linecap="round"/>
+            <path d="M 60 90 Q 50 84 46 76" fill="none" stroke="#BFD2B0" stroke-width="9" stroke-linecap="round"/>
+            <path d="M 140 90 Q 150 84 154 76" fill="none" stroke="#BFD2B0" stroke-width="9" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="scale-hint">FASE · TODDLER</div>
+      </div>
+      <div class="parallax-progress">
+        <div class="fill" style="width:90%"></div>
+        <div class="parallax-tick t1 active"></div>
+        <div class="parallax-tick t2 active"></div>
+        <div class="parallax-tick t3 active"></div>
+        <div class="parallax-tick t4 active"></div>
+      </div>
+      <div class="parallax-phases">
+        <span>concep.</span><span>embarazo</span><span>bebé</span><span>3 a</span>
+      </div>
+      <div style="font-size:10px;color:var(--ink-muted);margin-top:14px;line-height:1.4">
+        mint toddler · bloques 8-13
+      </div>
+    </div>
+  </div>
+
+  <table class="tbl">
+    <tr><th>Aspecto</th><th>Detalle</th></tr>
+    <tr><td>Trigger</td><td>scroll progress · 0-100% del documento (o de la sección hero+libros si preferimos limitar)</td></tr>
+    <tr><td>Tecnología</td><td>CSS <code>animation-timeline: scroll()</code> + fallback IntersectionObserver / scrollY · canon DS v0.3</td></tr>
+    <tr><td>Crossfade</td><td>3 capas apiladas con <code>opacity</code> 600ms ease-out · 0-33% coral · 33-66% blush · 66-100% mint</td></tr>
+    <tr><td>Tamaño avatar</td><td>desktop · 200px sticky lateral. mobile · 32px en tracker top-right (con avatar mini)</td></tr>
+    <tr><td>Posición desktop</td><td>columna izquierda 280px · sticky top:80px durante todo el scroll</td></tr>
+    <tr><td>Posición mobile</td><td>tracker compacto fijo top-right · ocupa 80×24px · sin tapar contenido</td></tr>
+    <tr><td>Accesibilidad</td><td>respeta <code>prefers-reduced-motion</code> · sin parallax si activado · solo crossfade simple</td></tr>
+    <tr><td>Lectores pantalla</td><td><code>aria-hidden="true"</code> · es decoración · el journey explícito vive en bloque 4</td></tr>
+  </table>
+
+  <!-- ============================================================ -->
+  <h2 class="section-title">3 · Wireframe completo · landing desktop 720px preview</h2>
+  <!-- ============================================================ -->
+
+  <p class="section-intro">Mock-up vertical de la landing completa en desktop con todos los 13 bloques. Acompaña la columna sticky con el avatar parallax (placeholder lateral · en mobile va arriba como tracker). Notas a la derecha de cada bloque.</p>
+
+  <div class="frame-row">
+    <div class="frame desktop">
+      <div class="frame-label"><span>HOMEPAGE GROW · 720 × scroll</span><span>desktop preview + parallax</span></div>
+      <div class="frame-body">
+
+        <!-- HEADER GLOBAL -->
+        <div class="topbar">
+          <div class="logo">Grow</div>
+          <div class="nav-links">
+            <span>Libros</span><span>Para clínicos</span><span>Por qué Grow</span>
+          </div>
+          <div class="right">
+            <span class="lang">ES / EN</span>
+            <span class="access">Acceder →</span>
+          </div>
+        </div>
+
+        <!-- 1 · HERO -->
+        <div class="b" style="padding: 40px 30px 36px">
+          <span class="b-number">01 · HERO</span>
+          <div class="b-eyebrow">GROW · LOS 1.000 PRIMEROS DÍAS</div>
+          <h1 class="b-claim huge">Tú cuidas a tu hij@,<br><em>y Grow te cuida a ti.</em></h1>
+          <p class="b-sub" style="max-width:420px">La compañera que faltaba para el embarazo, la crianza y todo lo que viene en medio.</p>
+          <div class="cta-row">
+            <span class="cta primary">Apúntate a la lista →</span>
+            <span class="cta ghost">Ver cómo funciona</span>
+          </div>
+          <!-- placeholder avatar 3 fases hero -->
+          <div style="margin-top:24px;display:flex;gap:16px;align-items:flex-end;justify-content:center">
+            <div style="text-align:center">
+              <svg width="80" height="80" viewBox="0 0 200 200">
+                <circle cx="100" cy="115" r="75" fill="#F2A57A"/>
+                <circle cx="82" cy="98" r="6" fill="#1a1a1a"/>
+                <circle cx="118" cy="98" r="6" fill="#1a1a1a"/>
+                <path d="M 84 122 Q 100 132 116 122" fill="none" stroke="#1a1a1a" stroke-width="3" stroke-linecap="round"/>
+                <ellipse cx="100" cy="148" rx="18" ry="20" fill="#E8C97A" opacity="0.8"/>
+              </svg>
+              <div style="font-size:9px;color:var(--ink-muted);letter-spacing:0.1em;margin-top:4px">EMBARAZO</div>
+            </div>
+            <div style="text-align:center">
+              <svg width="90" height="90" viewBox="0 0 200 200">
+                <circle cx="100" cy="110" r="62" fill="#EFC2B5"/>
+                <circle cx="84" cy="100" r="5" fill="#1a1a1a"/>
+                <circle cx="116" cy="100" r="5" fill="#1a1a1a"/>
+                <path d="M 86 118 Q 100 125 114 118" fill="none" stroke="#1a1a1a" stroke-width="2.5" stroke-linecap="round"/>
+                <ellipse cx="78" cy="175" rx="10" ry="6" fill="#EFC2B5"/>
+                <ellipse cx="122" cy="175" rx="10" ry="6" fill="#EFC2B5"/>
+              </svg>
+              <div style="font-size:9px;color:var(--ink-muted);letter-spacing:0.1em;margin-top:4px">BEBÉ</div>
+            </div>
+            <div style="text-align:center">
+              <svg width="100" height="100" viewBox="0 0 200 200">
+                <circle cx="100" cy="100" r="78" fill="#BFD2B0"/>
+                <circle cx="82" cy="88" r="5" fill="#1a1a1a"/>
+                <circle cx="118" cy="88" r="5" fill="#1a1a1a"/>
+                <path d="M 84 108 Q 100 118 116 108" fill="none" stroke="#1a1a1a" stroke-width="2.5" stroke-linecap="round"/>
+                <path d="M 100 175 Q 96 188 90 192" fill="none" stroke="#BFD2B0" stroke-width="10" stroke-linecap="round"/>
+                <path d="M 100 175 Q 104 188 110 192" fill="none" stroke="#BFD2B0" stroke-width="10" stroke-linecap="round"/>
+              </svg>
+              <div style="font-size:9px;color:var(--ink-muted);letter-spacing:0.1em;margin-top:4px">CRIANZA</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2 · MANIFESTO EXTENDIDO -->
+        <div class="b alt" style="padding:36px 30px;text-align:center">
+          <span class="b-number">02 · MANIFESTO</span>
+          <div style="max-width:480px;margin:0 auto">
+            <p style="font-family:Georgia,serif;font-size:24px;font-style:italic;line-height:1.4;color:var(--ink-soft);margin:0 0 14px">No hay una manera correcta. Hay la tuya. Y la tuya nace del amor.</p>
+            <p style="font-size:12px;color:var(--ink-muted);letter-spacing:0.08em;margin:0">· · ·</p>
+            <p style="font-size:13px;color:var(--ink-soft);margin-top:14px">Made by humans, for humans. Acompañamos sin diagnosticar, sin juzgar, sin militancia.</p>
+          </div>
+        </div>
+
+        <!-- 3 · ¿PARA QUIÉN? -->
+        <div class="b">
+          <span class="b-number">03 · PARA QUIÉN</span>
+          <div class="b-eyebrow">INCLUSIVO · SIN GÉNERO FORZADO</div>
+          <h2 class="b-claim big">Para cualquier familia.</h2>
+          <p class="b-sub">Madre · padre · pareja del mismo sexo · adopción · subrogación · monoparental · acogimiento · abuel@s tutor@s.</p>
+          <div class="family-grid" style="max-width:480px">
+            <div class="family-cell"><div class="ico"></div>Madre + padre</div>
+            <div class="family-cell"><div class="ico"></div>2 madres / 2 padres</div>
+            <div class="family-cell"><div class="ico"></div>Monoparental</div>
+            <div class="family-cell"><div class="ico"></div>Adopción</div>
+            <div class="family-cell"><div class="ico"></div>Subrogación</div>
+            <div class="family-cell"><div class="ico"></div>Abuel@s tutor@s</div>
+          </div>
+          <p style="font-family:Georgia,serif;font-style:italic;font-size:14px;color:var(--ink-soft);max-width:380px;margin-top:14px">"Si tu corazón cuida de alguien pequeño, esto es para ti."</p>
+        </div>
+
+        <!-- 4 · 1.000 DÍAS -->
+        <div class="b alt">
+          <span class="b-number">04 · 1.000 DÍAS</span>
+          <div class="b-eyebrow">EL JOURNEY</div>
+          <h2 class="b-claim big">Los primeros 1.000 días · contigo.</h2>
+          <p class="b-sub">Desde la concepción hasta el tercer cumpleaños. Una conversación que dura años.</p>
+          <div class="phases-track">
+            <div class="phases-line"></div>
+            <div class="phases-tick t1"></div>
+            <div class="phases-tick t2"></div>
+            <div class="phases-tick t3"></div>
+            <div class="phases-tick t4"></div>
+            <div class="phases-label t1">🤰 Concepción</div>
+            <div class="phases-label t2">👶 Recién nacido</div>
+            <div class="phases-label t3">🐣 Bebé</div>
+            <div class="phases-label t4">🌱 Crianza</div>
+          </div>
+          <p style="font-size:11px;color:var(--ink-muted);text-align:center;margin-top:14px">Sem 0 ━━━━━━━━━━━━━━ 3 años</p>
+        </div>
+
+        <!-- 5 · LOS LIBROS · bloque protagonista -->
+        <div class="b" style="padding:36px 30px">
+          <span class="b-number">05 · LOS LIBROS</span>
+          <div class="b-eyebrow">BLOQUE PROTAGONISTA</div>
+          <h2 class="b-claim huge">8 libros para acompañarte.</h2>
+          <p class="b-sub" style="max-width:420px">Cada libro es un destino con sentido. Vacunas, sueño, cólicos, alimentación, y todo lo que pasa entre medias. Cuando los necesitas, están. Cuando no, no estorban.</p>
+          <div class="libros-grid" style="grid-template-columns:repeat(4, 1fr);margin-top:20px">
+            <div class="libro-card t-coral"><span class="tint"></span><div class="ttl">🤰 Embarazo</div><div class="sub">sem 0-40</div></div>
+            <div class="libro-card t-coral"><span class="tint"></span><div class="ttl">🍼 Alimentación</div><div class="sub">tomas + AC</div></div>
+            <div class="libro-card t-blush"><span class="tint"></span><div class="ttl">🤱 Lactancia</div><div class="sub">LATCH · LLI</div></div>
+            <div class="libro-card t-gold"><span class="tint"></span><div class="ttl">💉 Vacunas</div><div class="sub">AEPED 2026</div></div>
+            <div class="libro-card t-mint"><span class="tint"></span><div class="ttl">🌙 Sueño</div><div class="sub">Huckleberry</div></div>
+            <div class="libro-card t-salud"><span class="tint"></span><div class="ttl">🌡 Salud</div><div class="sub">expediente</div></div>
+            <div class="libro-card t-mint"><span class="tint"></span><div class="ttl">🌱 Hitos</div><div class="sub">Haizea-Llevant</div></div>
+            <div class="libro-card t-lilac"><span class="tint"></span><div class="ttl">📊 Desarrollo</div><div class="sub">curvas OMS</div></div>
+          </div>
+          <p style="font-style:italic;font-size:12px;color:var(--ink-muted);margin-top:16px;text-align:center">También está el Modo madrugada y el Diario · te lo enseñamos abajo</p>
+        </div>
+
+        <!-- 6 · MODO 3AM -->
+        <div class="b dark" style="padding:36px 30px">
+          <span class="b-number">06 · MODO 3AM</span>
+          <div class="b-eyebrow">DIFERENCIAL EMOCIONAL</div>
+          <h2 class="b-claim big">A las 3 de la mañana, también.</h2>
+          <p class="b-sub" style="color:var(--night-muted);max-width:420px">El llanto inconsolable, la fiebre que no baja, el sentir que no puedes más. El Modo madrugada cambia el tono cuando lo necesitas.</p>
+
+          <div style="display:flex;gap:14px;margin-top:18px;flex-wrap:wrap">
+            <div class="mini-phone dark">
+              <div class="mp-tag">🌙 03:42 · MODO URGENCIA</div>
+              <div class="mp-title">Este es un modo urgencia.<br><span style="color:var(--night-muted);font-style:italic">Las respuestas son más rápidas, más directas y sin juzgar.</span></div>
+              <div style="margin-top:10px">
+                <div class="mp-chip">😢 No para de llorar</div>
+                <div class="mp-chip">🌡 Le pasa algo</div>
+                <div class="mp-chip">💔 No puedo más</div>
+              </div>
+            </div>
+            <div style="flex:1;min-width:200px;color:var(--night-muted);font-size:12px;line-height:1.55">
+              <p>· Activación automática 22:00-06:00.</p>
+              <p>· Thread efímero · no contamina el chat principal.</p>
+              <p>· 3 opciones edad-aware según etapa del peque.</p>
+              <p>· Safety frame anti-shaken-baby canon NSBSP.</p>
+              <p>· Escalada a 112 y salud mental sin fricción.</p>
+              <p style="margin-top:12px"><span style="color:var(--night-fg);text-decoration:underline">Conocer el Modo madrugada →</span></p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 7 · CO-CUIDADO -->
+        <div class="b">
+          <span class="b-number">07 · CO-CUIDADO</span>
+          <div class="b-eyebrow">CUENTA COMPARTIDA · SIN GÉNERO FORZADO</div>
+          <h2 class="b-claim big">Para los dos · y para vuestra red.</h2>
+          <p class="b-sub">Una cuenta compartida que entiende que no cuida una sola persona.</p>
+          <div style="display:flex;gap:14px;margin-top:16px;flex-wrap:wrap">
+            <div class="mini-phone">
+              <div class="mp-tag">MARÍA · 22:14</div>
+              <div class="mp-title">Lola lleva 30 min llorando.<br>¿Paso a Pablo?</div>
+              <div class="mp-chip" style="margin-top:10px">Avisar a Pablo →</div>
+            </div>
+            <div class="mini-phone">
+              <div class="mp-tag">PABLO · 22:16</div>
+              <div class="mp-title">María necesita relevo.<br><span style="color:var(--ink-muted);font-style:italic">Llevas 22 min sola.</span></div>
+              <div class="mp-chip" style="margin-top:10px">Voy en 5 min</div>
+              <div class="mp-chip" style="background:var(--paper-soft)">8 min</div>
+              <div class="mp-chip" style="background:var(--paper-soft)">Llamar</div>
+            </div>
+            <div style="flex:1;min-width:180px;font-size:12px;color:var(--ink-soft);line-height:1.5">
+              <p>· Roles simétricos · sin "futuro papá".</p>
+              <p>· Push síncrono tiempo real.</p>
+              <p>· Parejas del mismo sexo · monoparental con red · abuel@s · adopción · subrogación.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 8 · MODOS ESPECIALES -->
+        <div class="b alt">
+          <span class="b-number">08 · MODOS ESPECIALES</span>
+          <div class="b-eyebrow">INCLUSIVIDAD · TRAUMA-INFORMED</div>
+          <h2 class="b-claim big">Hay muchas maneras de empezar.</h2>
+          <p class="b-sub">Embarazo arcoíris, preemie, monoparental, adopción. Grow se adapta sin que tengas que pedirlo.</p>
+          <div class="libros-grid" style="grid-template-columns:repeat(3,1fr);margin-top:14px">
+            <div class="libro-card"><div class="ttl">🌈 Arcoíris</div><div class="sub">post-pérdida · sin contadores celebratorios</div></div>
+            <div class="libro-card"><div class="ttl">🐣 Preemie</div><div class="sub">edad corregida default</div></div>
+            <div class="libro-card"><div class="ttl">👤 Monoparental</div><div class="sub">red de apoyo en lugar de pareja</div></div>
+            <div class="libro-card"><div class="ttl">🏳️‍🌈 Mismo sexo</div><div class="sub">roles simétricos · sin género asumido</div></div>
+            <div class="libro-card"><div class="ttl">💛 Adopción</div><div class="sub">hitos desde la llegada</div></div>
+            <div class="libro-card"><div class="ttl">🤝 Subrogación</div><div class="sub">lenguaje + journey adaptados</div></div>
+          </div>
+          <p style="font-family:Georgia,serif;font-style:italic;font-size:13px;color:var(--ink-soft);margin-top:14px">Si tu caso no aparece aquí, igual te acompañamos. Escríbenos.</p>
+        </div>
+
+        <!-- 9 · DIFERENCIALES CLÍNICOS -->
+        <div class="b">
+          <span class="b-number">09 · CLÍNICO</span>
+          <div class="b-eyebrow">CANON · INFORMACIÓN HONESTA</div>
+          <h2 class="b-claim big">Información honesta. Tono cuidado.</h2>
+          <p class="b-sub">La diferencia entre una app de tracking y una compañera clínica está en de dónde viene cada palabra.</p>
+          <div class="diff-grid">
+            <div class="diff-card"><div class="ico">📐</div><div class="ttl">Canon AEPED 2026</div>Calendario vacunal de tu país. Hitos Haizea-Llevant.</div>
+            <div class="diff-card"><div class="ico">🔬</div><div class="ttl">Escalas validadas</div>EPDS · M-CHAT-R · ASQ-3 embebidas en conversación.</div>
+            <div class="diff-card"><div class="ico">📷</div><div class="ttl">Vitales sin hardware</div>Frec. respiratoria, presión arterial, frec. card. con cámara · PPG.</div>
+            <div class="diff-card"><div class="ico">🤝</div><div class="ttl">Aquí no diagnosticamos</div>Acompañamos · escalamos a tu pediatra · trauma-informed canon.</div>
+          </div>
+          <p style="font-size:10px;color:var(--ink-muted);margin-top:12px;letter-spacing:0.04em">Fuentes · AEPap · CAV-AEP 2026 · NICE · AAP · WHO LMS · NSBSP · Haizea-Llevant</p>
+        </div>
+
+        <!-- 10 · PRIVACY -->
+        <div class="b deep">
+          <span class="b-number">10 · PRIVACY</span>
+          <div class="b-eyebrow">DIFERENCIAL ANTI-MERCADO</div>
+          <h2 class="b-claim big">Tus datos. Tuyos.</h2>
+          <p class="b-sub">Sin ads. Sin venta a terceros. Sin entrenar modelos de IA con vuestra conversación. Cifrado y exportable.</p>
+          <ul style="margin:14px 0 0;padding-left:18px;font-size:12px;color:var(--ink-soft);line-height:1.8">
+            <li>✅ Cero anuncios · siempre.</li>
+            <li>✅ Cifrado E2E · GDPR · canon EU.</li>
+            <li>✅ Audio (cólicos · llanto) procesado on-device.</li>
+            <li>✅ Export PDF total cuando quieras · derecho borrado completo.</li>
+          </ul>
+          <p style="margin-top:14px"><span class="cta link">Leer política de privacidad →</span></p>
+        </div>
+
+        <!-- 11 · ACCESO -->
+        <div class="b" style="padding:36px 30px;text-align:center">
+          <span class="b-number">11 · ACCESO</span>
+          <h2 class="b-claim huge">Cuando lo necesites, aquí.</h2>
+          <p class="b-sub" style="margin:0 auto 18px">Estamos en pruebas con familias. Apúntate, te avisaremos cuando podamos abrirte la puerta.</p>
+          <div style="max-width:380px;margin:0 auto;display:flex;gap:8px">
+            <div style="flex:1;background:white;border:1px solid var(--line-strong);border-radius:999px;padding:8px 14px;font-size:12px;color:var(--ink-muted);text-align:left">tu email...</div>
+            <span class="cta primary" style="white-space:nowrap">Apúntate</span>
+          </div>
+          <p style="font-size:11px;color:var(--ink-muted);margin-top:12px">Sin spam. Te escribimos cuando podamos abrirte el acceso.</p>
+        </div>
+
+        <!-- 12 · PARA CLÍNICOS B2B -->
+        <div class="b deep">
+          <span class="b-number">12 · B2B</span>
+          <div class="b-eyebrow">PARA CLÍNICOS Y ASEGURADORAS</div>
+          <h2 class="b-claim big">Si trabajas con familias, hablemos.</h2>
+          <p class="b-sub">Grow está en pilot con aseguradoras y centros pediátricos. Aplicaciones clínicas + reducción de visitas innecesarias + cribados validados.</p>
+          <div class="diff-grid" style="grid-template-columns:repeat(3,1fr)">
+            <div class="diff-card"><div class="ttl">Aseguradoras</div>Pilot DKV-style · CE-marked roadmap · MDR Class IIa.</div>
+            <div class="diff-card"><div class="ttl">Pediatras</div>Tu paciente llega con el carnet sanitario listo.</div>
+            <div class="diff-card"><div class="ttl">Doulas · lactancieras</div>Tu trabajo profesional sale del WhatsApp.</div>
+          </div>
+          <p style="margin-top:14px"><span class="cta ghost">Solicitar demo o pilot →</span></p>
+        </div>
+
+        <!-- 13 · FAQ -->
+        <div class="b">
+          <span class="b-number">13 · FAQ</span>
+          <div class="b-eyebrow">PREGUNTAS FRECUENTES</div>
+          <h2 class="b-claim big">Lo que solemos respondernos.</h2>
+          <div style="margin-top:14px">
+            <div class="faq-row"><span>¿Sustituye Grow al pediatra?</span><span class="chev">+</span></div>
+            <div class="faq-row"><span>¿Funciona si solo está mi pareja?</span><span class="chev">+</span></div>
+            <div class="faq-row"><span>¿Y si mi peque es prematuro?</span><span class="chev">+</span></div>
+            <div class="faq-row"><span>¿Y si tuve una pérdida gestacional?</span><span class="chev">+</span></div>
+            <div class="faq-row"><span>¿Qué idiomas hay?</span><span class="chev">+</span></div>
+            <div class="faq-row"><span>¿Funciona offline?</span><span class="chev">+</span></div>
+            <div class="faq-row"><span>¿Mi pediatra puede ver mis datos?</span><span class="chev">+</span></div>
+            <div class="faq-row"><span>¿De dónde vienen las citas clínicas?</span><span class="chev">+</span></div>
+            <div class="faq-row"><span>¿Cómo se cobra?</span><span class="chev">+</span></div>
+          </div>
+        </div>
+
+        <!-- FOOTER -->
+        <div class="b" style="background:var(--paper-soft);padding:28px 30px">
+          <div class="footer-grid">
+            <div>
+              <h5>Producto</h5>
+              <ul><li>Libros</li><li>Modo madrugada</li><li>Diario</li><li>Co-cuidado</li></ul>
+            </div>
+            <div>
+              <h5>Compañía</h5>
+              <ul><li>Quiénes</li><li>Manifiesto</li><li>Blog</li><li>Prensa</li></ul>
+            </div>
+            <div>
+              <h5>Legal</h5>
+              <ul><li>Privacy · sin ads</li><li>Términos</li><li>Cookies</li><li>Compliance MDR</li></ul>
+            </div>
+            <div>
+              <h5>Para clínicos</h5>
+              <ul><li>Pediatras</li><li>Aseguradoras</li><li>Doulas</li></ul>
+            </div>
+            <div>
+              <h5>Contacto</h5>
+              <ul><li>hola@grow.app</li><li>LinkedIn</li><li>X / Bluesky</li></ul>
+            </div>
+            <div>
+              <h5>Fuentes clínicas</h5>
+              <ul style="font-size:9px;color:var(--ink-faint)">
+                <li>AEPap · CAV-AEP 2026</li>
+                <li>NICE · AAP · WHO</li>
+                <li>Haizea-Llevant · NSBSP</li>
+              </ul>
+            </div>
+          </div>
+          <p style="margin-top:18px;font-size:10px;color:var(--ink-muted);text-align:center;font-style:italic">Hecho con cuidado en Barcelona · Antai Venture Studio · 2026</p>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="notes">
+      <div class="note new"><strong>Header sticky</strong>Logo · Libros · Para clínicos · Por qué Grow · selector ES/EN · CTA Acceder. Bg paper-soft al hacer scroll. En mobile → hamburguesa drawer.</div>
+      <div class="note new"><strong>01 · Hero</strong>Claim canon Fase 0 Galiner bold 56-72px. CTA dual (Apúntate + Ver cómo funciona). Avatar 3 fases lateral o central · pico de impacto editorial. NO video · NO carrusel.</div>
+      <div class="note new"><strong>02 · Manifiesto extendido</strong>Bloque calmo · centrado · paper-soft bg · Galiner italic 24-32px. Divisor "· · ·". Tiene que sentirse como un suspiro entre el hero y la lista.</div>
+      <div class="note new"><strong>03 · Para quién</strong>Inclusividad · 6 configs familias con ilustraciones outline (placeholder círculos en wireframe). Frase italic cierre canon "Si tu corazón cuida..."</div>
+      <div class="note new"><strong>04 · 1.000 días</strong>Timeline horizontal 4 fases con ticks. La parallax del avatar 3 fases se sincroniza con esta sección como anchor visual del journey.</div>
+      <div class="note new"><strong>05 · Los libros · BLOQUE PROTAGONISTA</strong>Grid 4×2 (8 libros canon) · cada uno con su tonal DS v0.2. Bloque más extenso. Cada card es tap-able · abre drawer con detalle del libro. Frase cierre "También está el Modo madrugada y el Diario..."</div>
+      <div class="note new"><strong>06 · Modo madrugada · dark</strong>Fondo night-bg · Galiner bold sobre night-fg. Mockup phone canon con apertura. 3 chips edad-aware. Diferencial emocional fuerte · pocos competidores tienen esto.</div>
+      <div class="note new"><strong>07 · Co-cuidado</strong>2 phone mockups lado a lado · cuidador/a + co-cuidador/a · push síncrono. Inclusivo sin "futuro papá". 3 bullets canon.</div>
+      <div class="note new"><strong>08 · Modos especiales</strong>6 cards · arcoíris · preemie · monoparental · mismo sexo · adopción · subrogación. Frase canon "si tu caso no aparece...".</div>
+      <div class="note new"><strong>09 · Clínico</strong>4 diff-cards · canon AEPED · escalas · PPG · "no diagnosticamos". Fuentes footer pequeño · trust signal sin alardes.</div>
+      <div class="note new"><strong>10 · Privacy</strong>Bg paper-deep para diferenciar. 4 bullets canon · CTA link discreto. Anti-mercado explícito.</div>
+      <div class="note new"><strong>11 · Acceso</strong>Form simple · 1 input email · botón Apúntate. Microcopy "sin spam". Cierre conversión.</div>
+      <div class="note new"><strong>12 · B2B</strong>Bg paper-deep · 3 columnas (aseguradoras · pediatras · doulas). CTA "Solicitar demo o pilot →" lleva a form contacto B2B.</div>
+      <div class="note new"><strong>13 · FAQ</strong>Accordion · 9 preguntas canon · sin animaciones agresivas · solo expand al tap.</div>
+      <div class="note"><strong>Footer</strong>6 columnas · sin redes sociales gigantes · sin newsletter ni pop-ups · fuentes clínicas reiteradas en pequeño · firma "Hecho con cuidado en Barcelona".</div>
+      <div class="note"><strong>Parallax avatar 3 fases</strong>Sticky columna izquierda 280px en desktop · sticky tracker top-right 80×24px en mobile. Crossfade entre 3 capas SVG/PNG (coral · blush · mint) con scroll progress. Respeta prefers-reduced-motion.</div>
+    </div>
+  </div>
+
+
+  <!-- ============================================================ -->
+  <h2 class="section-title">4 · Wireframe mobile · 360px equivalencias</h2>
+  <!-- ============================================================ -->
+
+  <p class="section-intro">La misma estructura · stack vertical responsive · header colapsado a hamburguesa · libros grid 2×4 en lugar de 4×2 · tracker parallax compacto top-right (sin columna lateral).</p>
+
+  <div class="frame-row">
+    <div class="frame mobile">
+      <div class="frame-label"><span>HOMEPAGE · 360 mobile</span><span>top 4 bloques</span></div>
+      <div class="frame-body">
+        <!-- header colapsado -->
+        <div class="topbar" style="padding:10px 14px">
+          <div class="logo">Grow</div>
+          <div style="display:flex;gap:8px;align-items:center">
+            <span style="font-size:10px;color:var(--ink-muted)">ES</span>
+            <span style="font-size:18px">≡</span>
+          </div>
+        </div>
+
+        <!-- 1 hero mobile -->
+        <div class="b" style="padding:24px 18px">
+          <div class="b-eyebrow">GROW · 1.000 PRIMEROS DÍAS</div>
+          <h1 class="b-claim" style="font-size:28px">Tú cuidas a tu hij@, <em>y Grow te cuida a ti.</em></h1>
+          <p class="b-sub" style="font-size:13px">La compañera que faltaba.</p>
+          <div class="cta-row" style="flex-direction:column">
+            <span class="cta primary" style="text-align:center">Apúntate →</span>
+            <span class="cta ghost" style="text-align:center">Ver cómo funciona</span>
+          </div>
+          <div style="display:flex;justify-content:center;gap:8px;margin-top:18px">
+            <svg width="50" height="50" viewBox="0 0 200 200"><circle cx="100" cy="115" r="75" fill="#F2A57A"/></svg>
+            <svg width="58" height="58" viewBox="0 0 200 200"><circle cx="100" cy="110" r="62" fill="#EFC2B5"/></svg>
+            <svg width="62" height="62" viewBox="0 0 200 200"><circle cx="100" cy="100" r="78" fill="#BFD2B0"/></svg>
+          </div>
+        </div>
+
+        <!-- 2 manifesto mobile -->
+        <div class="b alt" style="padding:24px 18px;text-align:center">
+          <p style="font-family:Georgia,serif;font-size:18px;font-style:italic;line-height:1.4;color:var(--ink-soft)">No hay una manera correcta. Hay la tuya. Y la tuya nace del amor.</p>
+        </div>
+
+        <!-- 3 para quién -->
+        <div class="b">
+          <h2 class="b-claim">Para cualquier familia.</h2>
+          <p class="b-sub" style="font-size:12px">Madre · padre · pareja del mismo sexo · adopción · subrogación · monoparental · abuel@s.</p>
+          <div class="family-grid" style="grid-template-columns:1fr 1fr;font-size:9px">
+            <div class="family-cell"><div class="ico"></div>Madre + padre</div>
+            <div class="family-cell"><div class="ico"></div>2 madres / 2 padres</div>
+            <div class="family-cell"><div class="ico"></div>Monoparental</div>
+            <div class="family-cell"><div class="ico"></div>Adopción</div>
+          </div>
+        </div>
+
+        <!-- 4 1000 días -->
+        <div class="b alt">
+          <h2 class="b-claim">Los primeros 1.000 días.</h2>
+          <p class="b-sub" style="font-size:12px">Desde la concepción hasta el tercer cumpleaños.</p>
+          <div class="phases-track" style="height:50px">
+            <div class="phases-line"></div>
+            <div class="phases-tick t1"></div>
+            <div class="phases-tick t2"></div>
+            <div class="phases-tick t3"></div>
+            <div class="phases-tick t4"></div>
+            <div class="phases-label t1" style="font-size:8px">🤰</div>
+            <div class="phases-label t2" style="font-size:8px">👶</div>
+            <div class="phases-label t3" style="font-size:8px">🐣</div>
+            <div class="phases-label t4" style="font-size:8px">🌱</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="frame mobile">
+      <div class="frame-label"><span>HOMEPAGE · 360 mobile</span><span>bloques 5-8</span></div>
+      <div class="frame-body">
+
+        <!-- 5 libros -->
+        <div class="b" style="padding:24px 18px">
+          <h2 class="b-claim">8 libros para acompañarte.</h2>
+          <p class="b-sub" style="font-size:12px">Cada libro es un destino con sentido.</p>
+          <div class="libros-grid" style="grid-template-columns:1fr 1fr;font-size:10px">
+            <div class="libro-card t-coral"><span class="tint"></span><div class="ttl" style="font-size:11px">🤰 Embarazo</div></div>
+            <div class="libro-card t-coral"><span class="tint"></span><div class="ttl" style="font-size:11px">🍼 Alimentación</div></div>
+            <div class="libro-card t-blush"><span class="tint"></span><div class="ttl" style="font-size:11px">🤱 Lactancia</div></div>
+            <div class="libro-card t-gold"><span class="tint"></span><div class="ttl" style="font-size:11px">💉 Vacunas</div></div>
+            <div class="libro-card t-mint"><span class="tint"></span><div class="ttl" style="font-size:11px">🌙 Sueño</div></div>
+            <div class="libro-card t-salud"><span class="tint"></span><div class="ttl" style="font-size:11px">🌡 Salud</div></div>
+            <div class="libro-card t-mint"><span class="tint"></span><div class="ttl" style="font-size:11px">🌱 Hitos</div></div>
+            <div class="libro-card t-lilac"><span class="tint"></span><div class="ttl" style="font-size:11px">📊 Desarrollo</div></div>
+          </div>
+        </div>
+
+        <!-- 6 modo 3am mobile -->
+        <div class="b dark" style="padding:24px 18px">
+          <h2 class="b-claim" style="font-size:22px">A las 3 de la mañana, también.</h2>
+          <div class="mini-phone dark" style="width:100%;height:auto;margin:14px 0 0">
+            <div class="mp-tag">🌙 03:42 · URGENCIA</div>
+            <div class="mp-title" style="font-size:11px">Este es un modo urgencia.<br><span style="color:var(--night-muted);font-style:italic">Respuestas más rápidas, más directas y sin juzgar.</span></div>
+            <div style="margin-top:10px">
+              <div class="mp-chip">😢 No para de llorar</div>
+              <div class="mp-chip">🌡 Le pasa algo</div>
+              <div class="mp-chip">💔 No puedo más</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 7 co-cuidado mobile -->
+        <div class="b">
+          <h2 class="b-claim">Para los dos.</h2>
+          <p class="b-sub" style="font-size:12px">Una cuenta compartida que entiende que no cuida una sola persona.</p>
+          <div class="mini-phone" style="width:100%;height:auto">
+            <div class="mp-tag">MARÍA · 22:14</div>
+            <div class="mp-title" style="font-size:11px">Lola lleva 30 min llorando.<br><span style="color:var(--ink-muted);font-style:italic">¿Paso a Pablo?</span></div>
+            <div class="mp-chip" style="margin-top:8px">Avisar a Pablo →</div>
+          </div>
+        </div>
+
+        <!-- 8 modos especiales mobile -->
+        <div class="b alt">
+          <h2 class="b-claim">Hay muchas maneras de empezar.</h2>
+          <div class="libros-grid" style="grid-template-columns:1fr 1fr">
+            <div class="libro-card" style="font-size:9px"><div class="ttl">🌈 Arcoíris</div></div>
+            <div class="libro-card" style="font-size:9px"><div class="ttl">🐣 Preemie</div></div>
+            <div class="libro-card" style="font-size:9px"><div class="ttl">👤 Mono.</div></div>
+            <div class="libro-card" style="font-size:9px"><div class="ttl">🏳️‍🌈 Mismo sexo</div></div>
+            <div class="libro-card" style="font-size:9px"><div class="ttl">💛 Adopción</div></div>
+            <div class="libro-card" style="font-size:9px"><div class="ttl">🤝 Subrog.</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="frame mobile">
+      <div class="frame-label"><span>HOMEPAGE · 360 mobile</span><span>bloques 9-13 + footer</span></div>
+      <div class="frame-body">
+
+        <!-- 9 clínico mobile -->
+        <div class="b" style="padding:24px 18px">
+          <h2 class="b-claim">Información honesta.<br><em>Tono cuidado.</em></h2>
+          <div class="diff-grid" style="grid-template-columns:1fr">
+            <div class="diff-card"><div class="ttl">📐 Canon AEPED 2026</div>Vacunas y hitos canon España.</div>
+            <div class="diff-card"><div class="ttl">🔬 Escalas validadas</div>EPDS · M-CHAT-R · ASQ-3.</div>
+            <div class="diff-card"><div class="ttl">📷 Vitales sin hardware</div>PPG via cámara · DKV pilot.</div>
+            <div class="diff-card"><div class="ttl">🤝 Aquí no diagnosticamos</div>Trauma-informed canon.</div>
+          </div>
+        </div>
+
+        <!-- 10 privacy mobile -->
+        <div class="b deep">
+          <h2 class="b-claim">Tus datos. Tuyos.</h2>
+          <ul style="margin:10px 0 0;padding-left:18px;font-size:11px;color:var(--ink-soft);line-height:1.8">
+            <li>✅ Cero anuncios.</li>
+            <li>✅ Cifrado E2E.</li>
+            <li>✅ On-device audio.</li>
+            <li>✅ Export · borrado.</li>
+          </ul>
+        </div>
+
+        <!-- 11 acceso mobile -->
+        <div class="b" style="padding:28px 18px;text-align:center">
+          <h2 class="b-claim">Cuando lo necesites, aquí.</h2>
+          <div style="margin:14px 0;display:flex;flex-direction:column;gap:6px">
+            <div style="background:white;border:1px solid var(--line-strong);border-radius:999px;padding:8px 14px;font-size:11px;color:var(--ink-muted);text-align:left">tu email...</div>
+            <span class="cta primary" style="text-align:center">Apúntate →</span>
+          </div>
+        </div>
+
+        <!-- 12 B2B mobile -->
+        <div class="b deep">
+          <h2 class="b-claim">Si trabajas con familias.</h2>
+          <p class="b-sub" style="font-size:11px">Pilot DKV-style · CE-marked roadmap · MDR Class IIa.</p>
+          <span class="cta ghost">Demo o pilot →</span>
+        </div>
+
+        <!-- 13 FAQ mobile -->
+        <div class="b">
+          <h2 class="b-claim">Preguntas frecuentes.</h2>
+          <div style="margin-top:10px">
+            <div class="faq-row" style="font-size:11px"><span>¿Sustituye al pediatra?</span><span class="chev">+</span></div>
+            <div class="faq-row" style="font-size:11px"><span>¿Funciona con pareja?</span><span class="chev">+</span></div>
+            <div class="faq-row" style="font-size:11px"><span>¿Y si es preemie?</span><span class="chev">+</span></div>
+            <div class="faq-row" style="font-size:11px"><span>¿Arcoíris?</span><span class="chev">+</span></div>
+          </div>
+        </div>
+
+        <!-- footer mobile -->
+        <div class="b" style="background:var(--paper-soft);padding:18px;text-align:center;font-size:10px;color:var(--ink-soft)">
+          <p style="margin:0 0 8px"><strong>Grow</strong> · Los 1.000 primeros días</p>
+          <p style="margin:0 0 6px">Producto · Compañía · Legal · Clínico · Contacto</p>
+          <p style="font-style:italic;color:var(--ink-muted);margin:6px 0 0">Hecho con cuidado en Barcelona</p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ============================================================ -->
+  <h2 class="section-title">5 · Implementación técnica · parallax avatar 3 fases</h2>
+  <!-- ============================================================ -->
+
+  <h3 style="font-size:13px;text-transform:uppercase;letter-spacing:0.05em;margin:14px 0 8px;color:#444">5.1 · CSS scroll-driven (canon · Chrome 115+, Firefox 130+)</h3>
+  <pre style="background:var(--paper-soft);border:1px solid var(--line);padding:14px;border-radius:8px;font-size:11px;line-height:1.5;overflow-x:auto"><code>/* Parallax avatar 3 fases · canon DS v0.3 */
+@supports (animation-timeline: scroll()) {
+  .parallax-avatar .avatar.coral {
+    animation: phase-coral linear;
+    animation-timeline: scroll(root);
+    animation-range: 0% 33%;
+  }
+  .parallax-avatar .avatar.blush {
+    animation: phase-blush linear;
+    animation-timeline: scroll(root);
+    animation-range: 25% 66%;
+  }
+  .parallax-avatar .avatar.mint {
+    animation: phase-mint linear;
+    animation-timeline: scroll(root);
+    animation-range: 58% 100%;
+  }
+  @keyframes phase-coral {
+    0% { opacity: 1; transform: scale(1); }
+    100% { opacity: 0; transform: scale(0.92) translateY(-12px); }
+  }
+  @keyframes phase-blush {
+    0% { opacity: 0; transform: scale(0.92) translateY(12px); }
+    50% { opacity: 1; transform: scale(1); }
+    100% { opacity: 0; transform: scale(0.92) translateY(-12px); }
+  }
+  @keyframes phase-mint {
+    0% { opacity: 0; transform: scale(0.92) translateY(12px); }
+    100% { opacity: 1; transform: scale(1); }
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .parallax-avatar .avatar { transition: none; }
+  /* solo crossfade simple por bloque, sin escalado */
+}</code></pre>
+
+  <h3 style="font-size:13px;text-transform:uppercase;letter-spacing:0.05em;margin:18px 0 8px;color:#444">5.2 · JS fallback con IntersectionObserver (Safari · navegadores antiguos)</h3>
+  <pre style="background:var(--paper-soft);border:1px solid var(--line);padding:14px;border-radius:8px;font-size:11px;line-height:1.5;overflow-x:auto"><code>// Fallback canon DS v0.3
+const PHASES = [
+  { id: 'coral', threshold: 0,    label: 'Embarazo' },
+  { id: 'blush', threshold: 0.35, label: 'Bebé' },
+  { id: 'mint',  threshold: 0.65, label: 'Crianza' }
+];
+const avatars = document.querySelectorAll('.parallax-avatar .avatar');
+const tracker = document.getElementById('tracker-dot');
+const label   = document.getElementById('tracker-label');
+
+function updatePhase() {
+  const progress = window.scrollY / (document.body.scrollHeight - window.innerHeight);
+  const phase = [...PHASES].reverse().find(p => progress >= p.threshold);
+  avatars.forEach(a => a.classList.toggle('show', a.dataset.phase === phase.id));
+  tracker.className = 'dot ' + phase.id;
+  label.textContent = phase.label;
+}
+window.addEventListener('scroll', updatePhase, { passive: true });
+updatePhase();</code></pre>
+
+  <h3 style="font-size:13px;text-transform:uppercase;letter-spacing:0.05em;margin:18px 0 8px;color:#444">5.3 · Anclaje · qué bloques disparan cada fase</h3>
+
+  <table class="tbl">
+    <tr><th>Fase avatar</th><th>Bloques activos</th><th>% scroll · approx</th></tr>
+    <tr><td>🤰 Coral · embarazo</td><td>0 (header) · 1 hero · 2 manifesto · 3 ¿para quién?</td><td>0 - 25 %</td></tr>
+    <tr><td>👶 Blush · bebé</td><td>4 · 1.000 días · 5 libros · 6 Modo madrugada · 7 co-cuidado</td><td>25 - 65 %</td></tr>
+    <tr><td>🌱 Mint · toddler</td><td>8 modos especiales · 9 clínico · 10 privacy · 11 acceso · 12 B2B · 13 FAQ · footer</td><td>65 - 100 %</td></tr>
+  </table>
+
+
+  <!-- ============================================================ -->
+  <h2 class="section-title">6 · Notas de diseño finales</h2>
+  <!-- ============================================================ -->
+
+  <div class="frame-row" style="display:block">
+    <div class="note new"><strong>Tipografía canon</strong>Display Galiner Bold 32-72px · sub-headings Galiner Medium 18-28 · body Inter Regular 14-16 · captions Inter Medium 11 uppercase letter-spacing 0.18em.</div>
+    <div class="note new"><strong>Paleta</strong>Bg principal paper #FAF7F0 · bg alterno paper-soft #F2EDE0 · bg deep para B2B/privacy paper-deep #E8E1CF · dark único en bloque Modo madrugada #1A1D24 · ink principal #1A1A1A.</div>
+    <div class="note new"><strong>Avatares</strong>3 PNG canon (avatar-coral · avatar-blush · avatar-mint) en /design/assets/. En hero stacked horizontal con leves rotaciones tipo sticker (-3° a +3°). Parallax usa los mismos PNG con crossfade.</div>
+    <div class="note new"><strong>Estética guía</strong>Editorial calmo tipo reasonal.co · whitespace generoso · asimetría con gracia · ilustración minimalista outline · cero efectos de scroll agresivos.</div>
+    <div class="note new"><strong>Componentes DS v0.2 reutilizados</strong>· .cat-card (libros) · .chip (Modo madrugada opciones) · .callout (manifesto) · .phn-nav mini-phone mockups · button primary/ghost canon · accordion (FAQ · a definir como primitive v0.3) · sticky tracker (a canon en DS v0.3).</div>
+    <div class="note"><strong>SEO + metadata</strong>title canon · meta description Galiner · OG image hero · schema.org WebApplication + Organization · keywords: app embarazo español · calendario vacunas AEPED · hitos Haizea-Llevant · modo 3AM · cólicos lactante app · co-cuidador app · EPDS postparto app.</div>
+    <div class="note"><strong>Accesibilidad</strong>AAA body sobre cream · AA captions · prefers-reduced-motion respetado (sin parallax si activado) · touch targets ≥ 44×44 · skip-to-content link · ARIA labels en avatares decorativos · sin auto-play.</div>
+    <div class="note"><strong>Performance</strong>Lazy load below the fold · WebP/AVIF responsive · fonts auto-subset display:swap · target Lighthouse > 90 · LCP < 2.5s mobile + desktop.</div>
+    <div class="note"><strong>Decisiones abiertas pending</strong>(1) CTA hero "Probar gratis" vs "Apúntate" según si hay app pública v0 · (2) bloque pricing v0 o solo "gratis durante beta" · (3) testimonios solo cuando haya genuine · (4) blog NO en header v0 · (5) galería screenshots NO en hero · sí dentro de cards libros.</div>
+  </div>
+
+</div>
+
+<!-- Parallax tracker JS · canon scroll progress -->
+<script>
+(function() {
+  const dot = document.getElementById('tracker-dot');
+  const label = document.getElementById('tracker-label');
+  if (!dot || !label) return;
+
+  function update() {
+    const max = document.body.scrollHeight - window.innerHeight;
+    const progress = max > 0 ? (window.scrollY / max) : 0;
+    let phase, lbl;
+    if (progress < 0.33) { phase = 'coral'; lbl = 'Embarazo'; }
+    else if (progress < 0.66) { phase = 'blush'; lbl = 'Bebé'; }
+    else { phase = 'mint'; lbl = 'Crianza'; }
+    dot.className = 'dot ' + phase;
+    label.textContent = lbl;
+  }
+  window.addEventListener('scroll', update, { passive: true });
+  update();
+})();
+</script>
+
+</body>
+</html>
