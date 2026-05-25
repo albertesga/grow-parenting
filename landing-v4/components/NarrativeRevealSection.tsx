@@ -239,111 +239,112 @@ function DesktopLayout(p: LayoutProps) {
 
   return (
     <>
-      {/* Headline · 3 líneas con word reveal */}
-      <div className="absolute left-[7vw] top-[14vh] z-20 max-w-[80vw]">
-        <h2 className="font-grift text-[clamp(56px,7vw,120px)] font-light leading-[1.05] tracking-tight text-ink">
+      {/* Headline · 3 líneas con word reveal · GIGANTE editorial · llena viewport */}
+      <div className="absolute left-[6vw] top-[8vh] z-20 max-w-[88vw]">
+        <h2 className="font-grift text-[clamp(80px,10.5vw,200px)] font-light leading-[0.98] tracking-tight text-ink">
           <WordReveal words={line1} progress={p.progress} className="block" />
           <WordReveal words={line2} progress={p.progress} className="block" />
           <WordReveal words={line3} progress={p.progress} className="block" />
         </h2>
 
-        {/* Subrayado doble bajo el headline · debajo de "esto." */}
+        {/* Subrayado doble bajo línea 3 "prepara para esto." · ancho controlado
+            para que no se extienda más allá del texto */}
         <motion.div
-          className="mt-2 origin-left"
+          className="-mt-1 origin-left"
           style={{
             scaleX: p.underlineHeadlineProgress,
             opacity: p.underlineHeadlineProgress,
-            width: '40%',
-            maxWidth: 360,
+            width: '44%',
+            maxWidth: 520,
           }}
         >
-          <HandwrittenAsset variant="doubleLine" width={360} />
+          <HandwrittenAsset variant="doubleLine" width={520} />
         </motion.div>
       </div>
 
-      {/* 2 columnas inferiores · texto secundario */}
-      <div className="absolute bottom-[12vh] left-[7vw] z-20 w-[36vw] max-w-[420px]">
+      {/* 2 columnas inferiores · texto secundario · grande y legible */}
+      <div className="absolute bottom-[8vh] left-[6vw] z-20 w-[38vw] max-w-[500px]">
         <WordReveal
           words={p.leftWords}
           progress={p.progress}
-          className="font-grift text-[clamp(18px,1.5vw,24px)] leading-[1.45] text-ink"
+          className="font-grift text-[clamp(22px,1.85vw,32px)] leading-[1.35] text-ink"
         />
       </div>
 
-      <div className="absolute bottom-[12vh] right-[7vw] z-20 w-[36vw] max-w-[420px]">
+      <div className="absolute bottom-[8vh] right-[6vw] z-20 w-[38vw] max-w-[500px]">
         <WordReveal
           words={p.rightWords}
           progress={p.progress}
-          className="font-grift text-[clamp(18px,1.5vw,24px)] leading-[1.45] text-ink"
+          className="font-grift text-[clamp(22px,1.85vw,32px)] leading-[1.35] text-ink"
         />
 
-        {/* Subrayado handwritten bajo "me mira." al final del párrafo derecha */}
+        {/* Subrayado handwritten bajo "me mira." */}
         <motion.div
-          className="mt-2 origin-left"
+          className="-mt-1 origin-left"
           style={{
             scaleX: p.underlineRightProgress,
             opacity: p.underlineRightProgress,
-            width: '50%',
-            maxWidth: 220,
+            width: '54%',
+            maxWidth: 270,
           }}
         >
-          <HandwrittenAsset variant="swash" width={220} />
+          <HandwrittenAsset variant="swash" width={270} />
         </motion.div>
       </div>
 
-      {/* 5 Doodles distribuidos · ver referencia user */}
-      {/* Doodle 1 · arrow-curve top-right apuntando abajo */}
+      {/* 5 Doodles distribuidos · matchea posiciones referencia · más grandes */}
+      {/* Doodle 1 · arrow-curve top-right apuntando abajo al headline */}
       {p.doodle1 && (
         <motion.div
-          className="pointer-events-none absolute right-[15vw] top-[8vh] z-30"
-          style={{ opacity: p.doodle1, rotate: -10 }}
+          className="pointer-events-none absolute right-[16vw] top-[6vh] z-30"
+          style={{ opacity: p.doodle1, rotate: -12 }}
           aria-hidden="true"
         >
-          <HandwrittenAsset variant="arrowCurve" width={130} />
+          <HandwrittenAsset variant="arrowCurve" width={170} />
         </motion.div>
       )}
 
       {/* Doodle 2 · loop espiral right-mid */}
       {p.doodle2 && (
         <motion.div
-          className="pointer-events-none absolute right-[10vw] top-[42vh] z-30"
+          className="pointer-events-none absolute right-[5vw] top-[36vh] z-30"
           style={{ opacity: p.doodle2 }}
           aria-hidden="true"
         >
-          <HandwrittenAsset variant="arrowLoop" width={110} />
+          <HandwrittenAsset variant="arrowLoop" width={150} />
         </motion.div>
       )}
 
       {/* Doodle 3 · arrow-up-left esquina izquierda apuntando al headline */}
       {p.doodle3 && (
         <motion.div
-          className="pointer-events-none absolute left-[2vw] top-[48vh] z-30"
+          className="pointer-events-none absolute left-[1vw] top-[52vh] z-30"
           style={{ opacity: p.doodle3, rotate: -10 }}
           aria-hidden="true"
         >
-          <HandwrittenAsset variant="arrowUpLeft" width={120} />
+          <HandwrittenAsset variant="arrowUpLeft" width={150} />
         </motion.div>
       )}
 
-      {/* Doodle 4 · arrow-curve apuntando hacia la columna derecha desde el centro-bottom */}
+      {/* Doodle 4 · arrow-curve apuntando hacia col derecha desde el centro-bottom */}
       {p.doodle4 && (
         <motion.div
-          className="pointer-events-none absolute bottom-[8vh] left-[42vw] z-30"
-          style={{ opacity: p.doodle4, rotate: 18 }}
+          className="pointer-events-none absolute bottom-[5vh] left-[44vw] z-30"
+          style={{ opacity: p.doodle4, rotate: 22 }}
           aria-hidden="true"
         >
-          <HandwrittenAsset variant="arrowCurve" width={140} flipX />
+          <HandwrittenAsset variant="arrowCurve" width={170} flipX />
         </motion.div>
       )}
 
       {/* Doodle 5 · sparkle decorativo bottom-right */}
       {p.doodle5 && (
         <motion.div
-          className="pointer-events-none absolute bottom-[6vh] right-[3vw] z-30"
+          className="pointer-events-none absolute bottom-[6vh] right-[2vw] z-30"
           style={{ opacity: p.doodle5 }}
           aria-hidden="true"
         >
-          <HandwrittenAsset variant="sparkleAlt" width={60} />
+          <HandwrittenAsset variant="sparkleAlt" width={80} />
         </motion.div>
       )}
     </>

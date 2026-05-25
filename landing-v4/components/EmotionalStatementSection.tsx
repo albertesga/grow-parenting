@@ -64,16 +64,20 @@ export default function EmotionalStatementSection() {
   const polaroidOpacity = useTransform(progress, [0.22, 0.38], [0, 1]);
   const polaroidScale = useTransform(progress, [0.22, 0.42], [0.85, 1]);
   const polaroidY = useTransform(progress, [0.22, 0.42], [80, 0]);
-  // Polaroid 1 (titoAlone) · entra primero, después se desliza a la
-  // izquierda y rota más al llegar el momento de la segunda polaroid
-  const polaroid1X = useTransform(progress, [0.40, 0.65], [0, -45]);
-  const polaroid1Rotate = useTransform(progress, [0.22, 0.42, 0.65], [-3, 2, -6]);
-  // Polaroid 2 (titoKids) · entra después de la primera, sube desde detrás
+  // Polaroid 1 (titoAlone · DETRÁS) · entra primero centrada
+  // Después de aparecer la 2ª polaroid encima, se desliza a la izquierda
+  // y rota más como mostrándose desde detrás del nuevo elemento.
+  const polaroid1X = useTransform(progress, [0.40, 0.65], [0, -110]);
+  const polaroid1Y = useTransform(progress, [0.40, 0.65], [0, 12]);
+  const polaroid1Rotate = useTransform(progress, [0.22, 0.42, 0.65], [-5, -3, -10]);
+  // Polaroid 2 (titoKids · DELANTE) · "cae" desde arriba-derecha
+  // con escala mayor para entrada dramática + rotación opuesta a la 1ª
+  // Termina ligeramente a la derecha + arriba · creando un fan scrapbook
   const polaroid2Opacity = useTransform(progress, [0.42, 0.58], [0, 1]);
-  const polaroid2Scale = useTransform(progress, [0.42, 0.62], [0.8, 1]);
-  const polaroid2Y = useTransform(progress, [0.42, 0.62], [60, 0]);
-  const polaroid2X = useTransform(progress, [0.42, 0.65], [0, 55]);
-  const polaroid2Rotate = useTransform(progress, [0.42, 0.65], [8, 4]);
+  const polaroid2Scale = useTransform(progress, [0.42, 0.55, 0.65], [0.72, 1.04, 1]);
+  const polaroid2Y = useTransform(progress, [0.42, 0.65], [-80, -8]);
+  const polaroid2X = useTransform(progress, [0.42, 0.65], [60, 95]);
+  const polaroid2Rotate = useTransform(progress, [0.42, 0.55, 0.85], [18, 9, 7]);
 
   // Doodles polaroid · entran junto con la polaroid
   const arrowCurveTop1Opacity = useTransform(progress, [0.28, 0.42], [0, 1]);
@@ -144,6 +148,7 @@ export default function EmotionalStatementSection() {
             polaroidScale={polaroidScale}
             polaroidY={polaroidY}
             polaroid1X={polaroid1X}
+            polaroid1Y={polaroid1Y}
             polaroid1Rotate={polaroid1Rotate}
             polaroid2Opacity={polaroid2Opacity}
             polaroid2Scale={polaroid2Scale}
@@ -225,7 +230,7 @@ interface DesktopProps {
   subLeftOpacity: MV; subLeftY: MV;
   loopBottomOpacity: MV; loopBottomScale: MV;
   polaroidOpacity: MV; polaroidScale: MV; polaroidY: MV;
-  polaroid1X: MV; polaroid1Rotate: MV;
+  polaroid1X: MV; polaroid1Y: MV; polaroid1Rotate: MV;
   polaroid2Opacity: MV; polaroid2Scale: MV; polaroid2Y: MV;
   polaroid2X: MV; polaroid2Rotate: MV;
   arrowCurveTop1Opacity: MV; arrowCurveTop1Scale: MV;
@@ -302,15 +307,31 @@ function DesktopLayout(p: DesktopProps) {
       </div>
 
       {/* Polaroid stack · 2 fotos centradas · scroll-driven storytelling
-          - Polaroid 1 (titoAlone · padre solo) entra primero z-20
-          - Polaroid 2 (titoKids · padre con hijas) entra después z-10 detrás
-          - Al avanzar scroll, 1 se desliza a la izq + rota más,
-            revelando 2 a la derecha · ambas visibles formando álbum */}
+          Order narrativo:
+          - Polaroid 1 (titoAlone · padre solo) entra primero · queda DETRÁS
+          - Polaroid 2 (titoKids · padre con hijas) ENTRA ENCIMA · z-30 delante
+          - Al avanzar scroll, ambas se separan formando un fan scrapbook
+            con titoKids encima y ligeramente offset */}
       <div className="absolute left-[48%] top-1/2 z-10 w-[26vw] max-w-[360px] -translate-x-1/2 -translate-y-1/2 lg:w-[24vw]">
-        {/* Polaroid 2 (atrás) · titoKids · entra después, sale ligeramente
-            a la derecha cuando la primera se desliza a la izquierda. */}
+        {/* Polaroid 1 (DETRÁS) · titoAlone · entra primero · z-10
+            Usa Y combinado · polaroidY entry + polaroid1Y desplazamiento final */}
+        <PolaroidWithCombinedY
+          opacity={p.polaroidOpacity}
+          scale={p.polaroidScale}
+          baseY={p.polaroidY}
+          extraY={p.polaroid1Y}
+          x={p.polaroid1X}
+          rotate={p.polaroid1Rotate}
+          src="/img/titoAlone.jpg"
+          alt="Padre · Tito · sonriendo"
+          floatRotate={-4}
+          zIndex={10}
+        />
+
+        {/* Polaroid 2 (DELANTE) · titoKids · entra después CAYENDO ENCIMA · z-30
+            superpone a titoAlone con offset derecha + rotación opuesta */}
         <motion.div
-          className="absolute inset-0 z-10"
+          className="absolute inset-0 z-30"
           style={{
             opacity: p.polaroid2Opacity,
             scale: p.polaroid2Scale,
@@ -319,22 +340,7 @@ function DesktopLayout(p: DesktopProps) {
             rotate: p.polaroid2Rotate,
           }}
         >
-          <FloatingPolaroid src="/img/titoKids.jpg" alt="Padre con sus hijas" floatRotate={4} />
-        </motion.div>
-
-        {/* Polaroid 1 (delante) · titoAlone · entra primero, después
-            se desliza a la izquierda revelando la 2. */}
-        <motion.div
-          className="relative z-20"
-          style={{
-            opacity: p.polaroidOpacity,
-            scale: p.polaroidScale,
-            y: p.polaroidY,
-            x: p.polaroid1X,
-            rotate: p.polaroid1Rotate,
-          }}
-        >
-          <FloatingPolaroid src="/img/titoAlone.jpg" alt="Padre · Tito · sonriendo" floatRotate={2} />
+          <FloatingPolaroid src="/img/titoKids.jpg" alt="Padre con sus hijas" floatRotate={6} />
         </motion.div>
       </div>
 
@@ -452,6 +458,47 @@ function DesktopLayout(p: DesktopProps) {
 /* ────────────────────────────────────────────────────────────────────
    Polaroid · marco crema + foto + floating loop infinito
    ──────────────────────────────────────────────────────────────────── */
+
+/* Helper · combina 2 motion values de Y para 1 transform.
+   Usado para polaroid1 que necesita entry Y + offset Y final. */
+interface PolaroidWithCombinedYProps {
+  opacity: MV;
+  scale: MV;
+  baseY: MV;
+  extraY: MV;
+  x: MV;
+  rotate: MV;
+  src: string;
+  alt: string;
+  floatRotate: number;
+  zIndex: number;
+}
+
+function PolaroidWithCombinedY({
+  opacity, scale, baseY, extraY, x, rotate,
+  src, alt, floatRotate, zIndex,
+}: PolaroidWithCombinedYProps) {
+  // Combina 2 Y values · suma pixel
+  const combinedY = useTransform(
+    [baseY, extraY] as MV[],
+    (latest: number[]) => latest[0] + latest[1]
+  );
+  return (
+    <motion.div
+      className="relative"
+      style={{
+        zIndex,
+        opacity,
+        scale,
+        y: combinedY,
+        x,
+        rotate,
+      }}
+    >
+      <FloatingPolaroid src={src} alt={alt} floatRotate={floatRotate} />
+    </motion.div>
+  );
+}
 
 interface FloatingPolaroidProps {
   /** Path a la foto · default titoAlone */
