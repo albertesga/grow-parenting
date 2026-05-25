@@ -9889,7 +9889,7 @@
     font-size: var(--fs-body); color: var(--ink);
     letter-spacing: -0.005em;
   }
-  .chat-3am-toggle {
+  .chat-madrugada-toggle {
     background: var(--paper-soft);
     border: 1px solid var(--line);
     border-radius: var(--radius-pill);
@@ -9899,7 +9899,7 @@
     display: inline-flex; align-items: center; gap: 6px;
     transition: filter 150ms var(--ease);
   }
-  .chat-3am-toggle:hover { filter: brightness(0.97); }
+  .chat-madrugada-toggle:hover { filter: brightness(0.97); }
 
   .chat-thread {
     flex: 1 1 auto;
@@ -9957,7 +9957,7 @@
   .chat-thread .bubble strong { font-weight: 500; color: inherit; }
 
   /* Sticky note for resolved madrugada session in main thread */
-  .chat-thread .chat-note-3am {
+  .chat-thread .chat-note-madrugada {
     align-self: center;
     background: var(--mint-subtle);
     color: #4F6647;
@@ -10043,14 +10043,14 @@
   }
 
   /* ─── Modo madrugada · variante dark ─── */
-  .chat-3am {
+  .chat-madrugada {
     background: #0E0F12;
     color: #E6E2DC;
   }
-  .chat-3am .status,
-  .chat-3am .status span,
-  .chat-3am .status .status-dots span { color: #E6E2DC; background: transparent; }
-  .chat-3am .chat-3am-back {
+  .chat-madrugada .status,
+  .chat-madrugada .status span,
+  .chat-madrugada .status .status-dots span { color: #E6E2DC; background: transparent; }
+  .chat-madrugada .chat-madrugada-back {
     background: transparent;
     border: 0;
     color: #B7B0A4;
@@ -10059,10 +10059,10 @@
     text-align: left;
     cursor: pointer;
   }
-  .chat-3am-header {
+  .chat-madrugada-header {
     padding: 14px 22px 18px;
   }
-  .chat-3am-header h1 {
+  .chat-madrugada-header h1 {
     font-family: "Galiner"; font-weight: 500;
     font-size: var(--fs-h2);
     line-height: 1.05;
@@ -10070,18 +10070,18 @@
     color: #F2A57A;
     margin: 0 0 8px;
   }
-  .chat-3am-header p {
+  .chat-madrugada-header p {
     font-family: "Inter"; font-size: var(--fs-body-sm);
     color: #B7B0A4; line-height: 1.5;
     margin: 0; max-width: 32ch;
   }
-  .chat-3am-options {
+  .chat-madrugada-options {
     flex: 1 1 auto;
     display: flex; flex-direction: column;
     gap: 12px;
     padding: 6px 22px 16px;
   }
-  .chat-3am-option {
+  .chat-madrugada-option {
     display: block;
     width: 100%;
     text-align: left;
@@ -10096,11 +10096,11 @@
     cursor: pointer;
     transition: background 180ms var(--ease), transform 180ms var(--ease);
   }
-  .chat-3am-option:hover {
+  .chat-madrugada-option:hover {
     background: rgba(242,165,122,0.10);
     transform: translateY(-1px);
   }
-  .chat-3am-option .sub {
+  .chat-madrugada-option .sub {
     display: block;
     margin-top: 4px;
     font-family: "Inter";
@@ -10108,7 +10108,7 @@
     color: #B7B0A4;
     font-weight: 400;
   }
-  .chat-3am .chat-canon-foot {
+  .chat-madrugada .chat-canon-foot {
     color: rgba(183,176,164,0.5);
     padding: 14px 22px 18px;
   }
@@ -10362,27 +10362,27 @@
   .tool-card.ink   .tc-action { color: var(--coral-strong); font-weight: 500; }
 
   /* In dark madrugada thread · contrast adjusted */
-  .chat-3am .tool-card {
+  .chat-madrugada .tool-card {
     background: rgba(255,255,255,0.04);
     border-color: rgba(255,255,255,0.08);
     color: #E6E2DC;
   }
-  .chat-3am .tool-card .tc-icon { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.08); }
-  .chat-3am .tool-card .tc-title { color: #E6E2DC; }
-  .chat-3am .tool-card .tc-sub { color: #B7B0A4; }
+  .chat-madrugada .tool-card .tc-icon { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.08); }
+  .chat-madrugada .tool-card .tc-title { color: #E6E2DC; }
+  .chat-madrugada .tool-card .tc-sub { color: #B7B0A4; }
 
 
   /* § V.B · Night mode visual cues
      Real-time check de getHours(). Si 22:00-06:00 → indicador visible
      en chat header + card "🌙 No estás sola" inyectada al feed Hoy. */
-  .chat-context.is-night .chat-3am-toggle {
+  .chat-context.is-night .chat-madrugada-toggle {
     border-color: var(--coral-base);
     background: linear-gradient(135deg, rgba(242,165,122,0.10), var(--paper-soft));
     color: var(--coral-strong);
     font-weight: 500;
     position: relative;
   }
-  .chat-context.is-night .chat-3am-toggle::before {
+  .chat-context.is-night .chat-madrugada-toggle::before {
     content: "";
     width: 6px; height: 6px;
     border-radius: 999px;
@@ -10858,7 +10858,7 @@
 
 
   /* § V.D · madrugada close-flow sheet · ofrece guardar / borrar / quedarse */
-  .chat3am-close-shell {
+  .chat-madrugada-close-shell {
     position: absolute;
     left: 12px; right: 12px; bottom: 10px;
     z-index: 38;
@@ -10867,12 +10867,12 @@
     transition: transform 260ms var(--ease), opacity 180ms ease, visibility 0s linear 260ms;
     max-height: 80%;
   }
-  .chat3am-close-shell.active {
+  .chat-madrugada-close-shell.active {
     opacity: 1; visibility: visible; pointer-events: auto;
     transform: translateY(0);
     transition: transform 260ms var(--ease), opacity 180ms ease, visibility 0s;
   }
-  .chat3am-close-sheet {
+  .chat-madrugada-close-sheet {
     background: var(--paper);
     border: 1px solid var(--line);
     border-radius: var(--radius-xl);
@@ -10883,21 +10883,21 @@
     display: flex; flex-direction: column;
     gap: 14px;
   }
-  .chat3am-close-sheet h2 {
+  .chat-madrugada-close-sheet h2 {
     font-family: "Galiner"; font-weight: 500;
     font-size: var(--fs-h4);
     line-height: 1.2;
     margin: 0;
     color: var(--ink);
   }
-  .chat3am-close-sheet p {
+  .chat-madrugada-close-sheet p {
     font-family: "Inter";
     font-size: var(--fs-body-sm);
     color: var(--ink-soft);
     line-height: 1.5;
     margin: 0;
   }
-  .chat3am-close-sheet em { font-style: italic; color: var(--ink); }
+  .chat-madrugada-close-sheet em { font-style: italic; color: var(--ink); }
 
 
   /* § V.E.1 · Streaming dots indicator · "IA escribiendo" placeholder.
@@ -11024,7 +11024,7 @@
 
   /* § V.revision · Last-action banner en Modo madrugada
      Muestra contexto después de safety/mental para no dejar al usuario sin pista. */
-  .chat-3am-last-action {
+  .chat-madrugada-last-action {
     margin: 12px 22px;
     padding: 12px 14px;
     background: rgba(242,165,122,0.10);
@@ -11035,15 +11035,15 @@
     line-height: 1.45;
     display: flex; align-items: center; gap: 10px;
   }
-  .chat-3am-last-action .icon { font-size: 18px; line-height: 1; flex-shrink: 0; }
-  .chat-3am-last-action strong { color: #F2A57A; font-weight: 500; }
-  .chat-3am-last-action .dismiss {
+  .chat-madrugada-last-action .icon { font-size: 18px; line-height: 1; flex-shrink: 0; }
+  .chat-madrugada-last-action strong { color: #F2A57A; font-weight: 500; }
+  .chat-madrugada-last-action .dismiss {
     margin-left: auto; flex-shrink: 0;
     background: transparent; border: 0; color: rgba(183,176,164,0.6);
     cursor: pointer; font-size: 18px; line-height: 1; padding: 0 4px;
   }
 
-  /* § V.revision · note-3am-epds rendering · sticky pill mint para EPDS */
+  /* § V.revision · note-madrugada-epds rendering · sticky pill mint para EPDS */
   .bubble.system.chat-note-epds {
     background: rgba(232,201,122,0.20);
     color: #6E5A2A;
@@ -12406,9 +12406,9 @@
                   <span class="profile-row-stack"><strong>Hitos</strong><span>Sugerencia cuando entra en banda P95</span></span>
                   <span class="profile-switch active" data-profile-switch="notif-hitos"></span>
                 </button>
-                <button class="profile-toggle" type="button" data-profile-notif="3am">
+                <button class="profile-toggle" type="button" data-profile-notif="madrugada">
                   <span class="profile-row-stack"><strong>Modo madrugada</strong><span>Disponibilidad nocturna 22-06h</span></span>
-                  <span class="profile-switch active" data-profile-switch="notif-3am"></span>
+                  <span class="profile-switch active" data-profile-switch="notif-madrugada"></span>
                 </button>
               </div>
             </section>
@@ -12670,7 +12670,7 @@
                 <!-- badges injected by JS based on flags -->
               </span>
             </div>
-            <button class="chat-3am-toggle" type="button" data-goto="chat-3am" aria-label="Modo madrugada">
+            <button class="chat-madrugada-toggle" type="button" data-goto="chat-madrugada" aria-label="Modo madrugada">
               <span aria-hidden="true">🌙</span> Modo madrugada
             </button>
           </header>
@@ -12711,14 +12711,14 @@
         <!-- ═══════════════════════════════════════════════════════════
              § V.2 · Modo madrugada · dark, ephemeral, 3 age-aware options
              ═══════════════════════════════════════════════════════════ -->
-        <section class="screen no-nav chat-3am" data-screen="chat-3am">
+        <section class="screen no-nav chat-madrugada" data-screen="chat-madrugada">
           <div class="status"><span>3:14</span><div class="status-dots"><span></span><span></span><span></span></div></div>
-          <button class="chat-3am-back" type="button" data-3am-close-trigger aria-label="Volver al chat">← Volver al chat</button>
-          <div class="chat-3am-header">
+          <button class="chat-madrugada-back" type="button" data-madrugada-close-trigger aria-label="Volver al chat">← Volver al chat</button>
+          <div class="chat-madrugada-header">
             <h1>Modo urgencia</h1>
             <p>Las respuestas son más rápidas, más directas y sin juzgar.</p>
           </div>
-          <div class="chat-3am-options" data-3am-options aria-label="Opciones madrugada">
+          <div class="chat-madrugada-options" data-madrugada-options aria-label="Opciones madrugada">
             <!-- options render here based on baby age -->
           </div>
           <p class="chat-canon-foot">Aquí no diagnosticamos · aquí estamos</p>
@@ -12831,15 +12831,15 @@
         <!-- ═══════════════════════════════════════════════════════════
              § V.D · Close-flow sheet para Modo madrugada
              ═══════════════════════════════════════════════════════════ -->
-        <aside class="chat3am-close-shell" id="chat3am-close-modal" aria-label="Cerrar Modo madrugada">
-          <div class="chat3am-close-sheet">
+        <aside class="chat-madrugada-close-shell" id="chat-madrugada-close-modal" aria-label="Cerrar Modo madrugada">
+          <div class="chat-madrugada-close-sheet">
             <div class="safety-frame-grabber"></div>
             <h2>¿Guardamos esta noche en el diario?</h2>
             <p>Solo lo verás tú. Si guardas, aparecerá como nota en tu chat principal. Si no, se borra · solo queda un agregado anonimizado para mejorar Grow.</p>
             <div class="sf-actions">
-              <button class="btn coral" type="button" data-3am-close-action="save">Sí · guardar resumen</button>
-              <button class="btn soft" type="button" data-3am-close-action="discard">No · borrar todo</button>
-              <button class="btn ghost" type="button" data-3am-close-action="stay">Quedarme en madrugada</button>
+              <button class="btn coral" type="button" data-madrugada-close-action="save">Sí · guardar resumen</button>
+              <button class="btn soft" type="button" data-madrugada-close-action="discard">No · borrar todo</button>
+              <button class="btn ghost" type="button" data-madrugada-close-action="stay">Quedarme en madrugada</button>
             </div>
           </div>
         </aside>
@@ -18258,7 +18258,7 @@ Grow
       updatePregnancyNavActive();
     }
     /* Cleanup streaming dots si dejamos chat */
-    if (name !== 'chat' && name !== 'chat-3am') {
+    if (name !== 'chat' && name !== 'chat-madrugada') {
       if (typeof chatCleanupOnLeave === 'function') chatCleanupOnLeave();
     }
     if (name === 'chat') {
@@ -18269,8 +18269,8 @@ Grow
         if (input && document.activeElement !== input) input.focus({ preventScroll: true });
       });
     }
-    if (name === 'chat-3am') {
-      renderChat3AM();
+    if (name === 'chat-madrugada') {
+      renderChatMadrugada();
     }
     if (name === 'hoy') {
       chatInjectHoyNightCard();
@@ -18913,8 +18913,8 @@ Grow
     if (epdsMod) epdsMod.classList.remove('active');
     const relayMod = document.getElementById('relay-modal');
     if (relayMod) relayMod.classList.remove('active');
-    const c3amMod = document.getElementById('chat3am-close-modal');
-    if (c3amMod) c3amMod.classList.remove('active');
+    const cmadrugadaMod = document.getElementById('chat-madrugada-close-modal');
+    if (cmadrugadaMod) cmadrugadaMod.classList.remove('active');
     scrim.classList.remove('active');
   }
 
@@ -19040,12 +19040,12 @@ Grow
     const h = new Date().getHours();
     return h >= 22 || h < 6;
   }
-  function chatGet3AMOptedIn() {
-    try { return localStorage.getItem('grow.chat.3am.optedIn') === '1'; }
+  function chatGetmadrugadaOptedIn() {
+    try { return localStorage.getItem('grow.chat.madrugada.optedIn') === '1'; }
     catch (e) { return false; }
   }
-  function chatSet3AMOptedIn(v) {
-    try { localStorage.setItem('grow.chat.3am.optedIn', v ? '1' : '0'); }
+  function chatSetmadrugadaOptedIn(v) {
+    try { localStorage.setItem('grow.chat.madrugada.optedIn', v ? '1' : '0'); }
     catch (e) {}
   }
   function chatUpdateNightState() {
@@ -19057,7 +19057,7 @@ Grow
     if (!thread) return;
     /* Remove existing banner */
     thread.querySelectorAll('.chat-night-banner').forEach((el) => el.remove());
-    if (isNight && !chatGet3AMOptedIn()) {
+    if (isNight && !chatGetmadrugadaOptedIn()) {
       const banner = document.createElement('div');
       banner.className = 'chat-night-banner';
       banner.innerHTML = `
@@ -19066,7 +19066,7 @@ Grow
           <span class="ttl">Modo madrugada disponible</span>
           Respuestas más rápidas y directas. Sin juzgar.
         </div>
-        <button class="opt-toggle" type="button" data-3am-opt-in>Activar</button>
+        <button class="opt-toggle" type="button" data-madrugada-opt-in>Activar</button>
       `;
       thread.appendChild(banner);
     }
@@ -19089,7 +19089,7 @@ Grow
       <h3>No estás sola.</h3>
       <div class="meta-line">Modo madrugada · disponible ahora</div>
       <p class="context">Las respuestas son más rápidas, más directas y sin juzgar. Si necesitas algo, estoy aquí.</p>
-      <button class="card-button" type="button" data-goto="chat-3am">Abrir Modo madrugada</button>
+      <button class="card-button" type="button" data-goto="chat-madrugada">Abrir Modo madrugada</button>
       <div class="soft-actions">
         <button type="button" data-goto="chat">Chat normal</button>
       </div>
@@ -19097,8 +19097,8 @@ Grow
     label.insertAdjacentElement('afterend', card);
   }
 
-  /* 3AM options · 4 age buckets (returns array of {title, sub, action}) */
-  function chat3AMOptionsForAge(months) {
+  /* madrugada options · 4 age buckets (returns array of {title, sub, action}) */
+  function chatMadrugadaOptionsForAge(months) {
     if (months < 0) {  /* embarazo · negative semantics not used; placeholder */
       return [
         { title: '"Algo no va bien con mi cuerpo"', sub: 'Síntomas físicos · sangrados · contracciones', action: 'embarazo-body' },
@@ -19380,9 +19380,9 @@ Grow
   }
 
   /* § V.D · Persistencia · localStorage para chat principal (resilient)
-     y para 3AM (ephemeral · solo durante sesión). */
+     y para madrugada (ephemeral · solo durante sesión). */
   const CHAT_MAIN_KEY = 'grow.chat.main.v1';
-  const CHAT_3AM_KEY  = 'grow.chat.3am.v1';
+  const CHAT_MADRUGADA_KEY  = 'grow.chat.madrugada.v1';
 
   function chatSaveMain() {
     try {
@@ -19412,19 +19412,19 @@ Grow
     try { localStorage.removeItem(CHAT_MAIN_KEY); } catch (e) {}
   }
 
-  /* 3AM session tracking · array de actions hechas en esta sesión */
-  let chat3AMSession = null;  /* { startedAt, route, actions: [] } */
-  function chat3AMStart(route) {
-    chat3AMSession = { startedAt: Date.now(), route: route || 'unknown', actions: [] };
+  /* madrugada session tracking · array de actions hechas en esta sesión */
+  let chatMadrugadaSession = null;  /* { startedAt, route, actions: [] } */
+  function chatMadrugadaStart(route) {
+    chatMadrugadaSession = { startedAt: Date.now(), route: route || 'unknown', actions: [] };
   }
-  function chat3AMLogAction(action) {
-    if (!chat3AMSession) chat3AMStart('manual');
-    chat3AMSession.actions.push({ action, at: Date.now() });
+  function chatMadrugadaLogAction(action) {
+    if (!chatMadrugadaSession) chatMadrugadaStart('manual');
+    chatMadrugadaSession.actions.push({ action, at: Date.now() });
   }
 
-  /* Genera un resumen sintético de la sesión 3AM para sticky en chat main */
-  function chat3AMSummary() {
-    if (!chat3AMSession) return null;
+  /* Genera un resumen sintético de la sesión madrugada para sticky en chat main */
+  function chatMadrugadaSummary() {
+    if (!chatMadrugadaSession) return null;
     const routeLabels = {
       'crying': 'llanto inconsolable',
       'support': 'acompañamiento · no puedo más',
@@ -19435,23 +19435,23 @@ Grow
       'nightmare': 'pesadilla nocturna',
       'triage-menu': 'cribaje rápido'
     };
-    const label = routeLabels[chat3AMSession.route] || chat3AMSession.route;
+    const label = routeLabels[chatMadrugadaSession.route] || chatMadrugadaSession.route;
     return `Anoche madrugada · ${label} · resuelto`;
   }
 
-  /* Sheet de cierre 3AM · 3 botones (guardar / borrar / quedarme) */
-  function openChat3AMClose() {
-    document.getElementById('chat3am-close-modal')?.classList.add('active');
+  /* Sheet de cierre madrugada · 3 botones (guardar / borrar / quedarme) */
+  function openChatMadrugadaClose() {
+    document.getElementById('chat-madrugada-close-modal')?.classList.add('active');
     scrim.classList.add('active');
   }
-  function closeChat3AMClose() {
-    document.getElementById('chat3am-close-modal')?.classList.remove('active');
+  function closeChatMadrugadaClose() {
+    document.getElementById('chat-madrugada-close-modal')?.classList.remove('active');
     scrim.classList.remove('active');
   }
-  function chat3AMSaveAndExit() {
-    const summary = chat3AMSummary();
+  function chatMadrugadaSaveAndExit() {
+    const summary = chatMadrugadaSummary();
     if (summary) {
-      chatMessages.push({ role: 'system', text: summary, class: 'chat-note-3am' });
+      chatMessages.push({ role: 'system', text: summary, class: 'chat-note-madrugada' });
       /* Companion follow-up · trauma-informed canon · NO juzgar, presencia */
       chatMessages.push({
         role: 'companion',
@@ -19460,14 +19460,14 @@ Grow
       });
       chatSaveMain();
     }
-    chat3AMSession = null;
-    closeChat3AMClose();
+    chatMadrugadaSession = null;
+    closeChatMadrugadaClose();
     document.querySelector('[data-goto="chat"]')?.click();
   }
-  function chat3AMDiscardAndExit() {
+  function chatMadrugadaDiscardAndExit() {
     /* Solo agregado anonimizado en métricas (placeholder · no-op) */
-    chat3AMSession = null;
-    closeChat3AMClose();
+    chatMadrugadaSession = null;
+    closeChatMadrugadaClose();
     document.querySelector('[data-goto="chat"]')?.click();
   }
 
@@ -20008,38 +20008,38 @@ Grow
     }, 700);
   }
 
-  /* 3AM render */
-  let chat3AMLastAction = null;  /* { type: 'safety'|'mental'|'epds'|'relay', label } */
-  function chat3AMSetLastAction(type) {
+  /* madrugada render */
+  let chatMadrugadaLastAction = null;  /* { type: 'safety'|'mental'|'epds'|'relay', label } */
+  function chatMadrugadaSetLastAction(type) {
     const labels = {
       safety: { icon: '🤲', label: 'Has revisado el safety frame' },
       mental: { icon: '🤲', label: 'Has visto la línea 024' },
       epds:   { icon: '📋', label: 'Has hecho el EPDS rápido' },
       relay:  { icon: '👋', label: 'Has avisado a Pablo' }
     };
-    chat3AMLastAction = labels[type] || null;
-    renderChat3AM();
+    chatMadrugadaLastAction = labels[type] || null;
+    renderChatMadrugada();
   }
-  function renderChat3AM() {
-    const root = document.querySelector('[data-3am-options]');
+  function renderChatMadrugada() {
+    const root = document.querySelector('[data-madrugada-options]');
     if (!root) return;
     const months = chatGetBabyMonths();
-    const opts = chat3AMOptionsForAge(months);
+    const opts = chatMadrugadaOptionsForAge(months);
     /* Remove previous last-action banner */
-    document.querySelectorAll('.chat-3am-last-action').forEach((el) => el.remove());
+    document.querySelectorAll('.chat-madrugada-last-action').forEach((el) => el.remove());
     /* Inject last-action banner before options if exists */
-    if (chat3AMLastAction) {
+    if (chatMadrugadaLastAction) {
       const banner = document.createElement('div');
-      banner.className = 'chat-3am-last-action';
+      banner.className = 'chat-madrugada-last-action';
       banner.innerHTML = `
-        <span class="icon" aria-hidden="true">${chat3AMLastAction.icon}</span>
-        <div><strong>${escapeHtml(chat3AMLastAction.label)}.</strong> Si quieres, sigue · o vuelve al chat principal.</div>
-        <button class="dismiss" type="button" data-3am-dismiss-action aria-label="Cerrar nota">×</button>
+        <span class="icon" aria-hidden="true">${chatMadrugadaLastAction.icon}</span>
+        <div><strong>${escapeHtml(chatMadrugadaLastAction.label)}.</strong> Si quieres, sigue · o vuelve al chat principal.</div>
+        <button class="dismiss" type="button" data-madrugada-dismiss-action aria-label="Cerrar nota">×</button>
       `;
       root.parentNode.insertBefore(banner, root);
     }
     root.innerHTML = opts.map((opt) => `
-      <button class="chat-3am-option" type="button" data-3am-action="${escapeHtml(opt.action)}">
+      <button class="chat-madrugada-option" type="button" data-madrugada-action="${escapeHtml(opt.action)}">
         ${escapeHtml(opt.title)}
         <span class="sub">${escapeHtml(opt.sub)}</span>
       </button>
@@ -20708,12 +20708,12 @@ Grow
     }
 
     /* § V.B · Night mode opt-in handler */
-    if (event.target.closest('[data-3am-opt-in]')) {
-      chatSet3AMOptedIn(true);
+    if (event.target.closest('[data-madrugada-opt-in]')) {
+      chatSetmadrugadaOptedIn(true);
       document.querySelectorAll('.chat-night-banner').forEach((el) => el.remove());
-      /* Route to chat-3am immediately */
+      /* Route to chat-madrugada immediately */
       const btn = document.createElement('button');
-      btn.dataset.goto = 'chat-3am';
+      btn.dataset.goto = 'chat-madrugada';
       document.body.appendChild(btn);
       btn.click();
       btn.remove();
@@ -20773,27 +20773,27 @@ Grow
       return;
     }
 
-    /* § V.D · 3AM close-flow trigger from "← Volver al chat" button */
-    if (event.target.closest('[data-3am-close-trigger]')) {
-      openChat3AMClose();
+    /* § V.D · madrugada close-flow trigger from "← Volver al chat" button */
+    if (event.target.closest('[data-madrugada-close-trigger]')) {
+      openChatMadrugadaClose();
       return;
     }
-    /* § V.D · 3AM close actions */
-    const cAct = event.target.closest('[data-3am-close-action]');
+    /* § V.D · madrugada close actions */
+    const cAct = event.target.closest('[data-madrugada-close-action]');
     if (cAct) {
-      const t = cAct.dataset['3amCloseAction'];
-      if (t === 'save')        chat3AMSaveAndExit();
-      else if (t === 'discard') chat3AMDiscardAndExit();
-      else if (t === 'stay')    closeChat3AMClose();
+      const t = cAct.dataset['madrugadaCloseAction'];
+      if (t === 'save')        chatMadrugadaSaveAndExit();
+      else if (t === 'discard') chatMadrugadaDiscardAndExit();
+      else if (t === 'stay')    closeChatMadrugadaClose();
       return;
     }
 
-    /* § V · 3AM option · routes to triage / safety frame / mental health / echo */
-    const tamOpt = event.target.closest('[data-3am-action]');
+    /* § V · madrugada option · routes to triage / safety frame / mental health / echo */
+    const tamOpt = event.target.closest('[data-madrugada-action]');
     if (tamOpt) {
-      const action = tamOpt.dataset['3amAction'];
-      chat3AMStart(action);
-      chat3AMLogAction(action);
+      const action = tamOpt.dataset['madrugadaAction'];
+      chatMadrugadaStart(action);
+      chatMadrugadaLogAction(action);
       if (action === 'triage-menu') {
         document.querySelector('[data-goto="chat"]')?.click();
       } else if (action === 'support' || action === 'crying') {
@@ -20805,7 +20805,7 @@ Grow
       } else {
         /* Resto (sleep · nightmare · embarazo-body · embarazo-sleep) · echo +
            ofrecer guardar via close-flow sheet en vez de salida silenciosa. */
-        openChat3AMClose();
+        openChatMadrugadaClose();
       }
       return;
     }
@@ -20815,15 +20815,15 @@ Grow
     if (sfAction) {
       const t = sfAction.dataset.safetyAction;
       document.getElementById('safety-frame-modal')?.classList.remove('active');
-      chat3AMSetLastAction('safety');
-      if (t === 'mental') { openMentalHealth(); chat3AMSetLastAction('mental'); }
-      else if (t === 'relay') { openRelay(); chat3AMSetLastAction('relay'); }
+      chatMadrugadaSetLastAction('safety');
+      if (t === 'mental') { openMentalHealth(); chatMadrugadaSetLastAction('mental'); }
+      else if (t === 'relay') { openRelay(); chatMadrugadaSetLastAction('relay'); }
       return;
     }
     /* Dismiss last-action banner */
-    if (event.target.closest('[data-3am-dismiss-action]')) {
-      chat3AMLastAction = null;
-      renderChat3AM();
+    if (event.target.closest('[data-madrugada-dismiss-action]')) {
+      chatMadrugadaLastAction = null;
+      renderChatMadrugada();
       return;
     }
     if (event.target.closest('[data-mental-call]')) {
@@ -20841,8 +20841,8 @@ Grow
     if (epdsAct) {
       const t = epdsAct.dataset.epdsAction;
       closeEpds();
-      chat3AMSetLastAction('epds');
-      if (t === 'mental') { openMentalHealth(); chat3AMSetLastAction('mental'); }
+      chatMadrugadaSetLastAction('epds');
+      if (t === 'mental') { openMentalHealth(); chatMadrugadaSetLastAction('mental'); }
       else if (t === 'library') {
         if (typeof sheet !== 'undefined' && sheetTitle && sheetCopy) {
           sheetTitle.textContent = 'Libro de bienestar materno';

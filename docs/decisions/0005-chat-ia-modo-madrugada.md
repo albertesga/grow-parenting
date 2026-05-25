@@ -1,14 +1,20 @@
 # ADR-0005 · Chat IA · single-thread + Modo madrugada efímero
 
 **Status:** Accepted
-**Date:** 2026-05-09 → 2026-05-11 (Fases A-F) · renombrado 2026-05-25
-**Commit:** `cdb5779` (skeleton) · `a66bee1` (DS) · `050e645` (Fase A) · `8421209` (B) · `f6a03ac` (C.1) · `04543dd` (C.2) · `abea206` (D) · `7b977b4` (E) · `56fd863` (F DS) · `2a8104c` (revision) · `e8b3108` (rename Modo 3AM → Modo madrugada)
+**Date:** 2026-05-09 → 2026-05-11 (Fases A-F) · rename brand 2026-05-25 · refactor JS internals 2026-05-25
+**Commit:** `cdb5779` (skeleton) · `a66bee1` (DS) · `050e645` (Fase A) · `8421209` (B) · `f6a03ac` (C.1) · `04543dd` (C.2) · `abea206` (D) · `7b977b4` (E) · `56fd863` (F DS) · `2a8104c` (revision) · `e8b3108` (rename brand Modo 3AM → Modo madrugada) · `pending` (refactor JS internals chat-3am → chat-madrugada)
 
-> **Nota terminológica (mayo 2026)** · Brand renombrado de "Modo 3AM" a
-> "Modo madrugada" para texto user-visible. JS internals mantenidos como
-> implementación · `data-screen="chat-3am"`, `chat3AMSaveAndExit()`,
-> localStorage `grow.chat.3am.optedIn` siguen así por compatibilidad
-> con localStorage existente · refactor candidato futuro no urgente.
+> **Historial terminológico** · El feature se llamó originalmente "Modo 3AM"
+> (mayo 2026) · renombrado a **"Modo madrugada"** (25 may 2026) en todo el
+> stack · brand user-visible + JS internals + CSS classes + DOM IDs +
+> data-attributes + localStorage keys. **Cero refs `3am`/`3AM`** en el
+> codebase actual. Identificadores canon:
+>
+> - `data-screen="chat-madrugada"` (screen routing)
+> - `chatMadrugadaSession`, `chatMadrugadaStart()`, `renderChatMadrugada()` (JS)
+> - `CHAT_MADRUGADA_KEY` (localStorage const)
+> - `.chat-madrugada-toggle`, `.chat-madrugada-options` (CSS classes)
+> - `grow.chat.madrugada.optedIn`, `grow.chat.madrugada.v1` (localStorage keys)
 
 ## Context
 
@@ -25,7 +31,7 @@ Alternativas: chat multi-thread por libro (rechazado, fragmentaba experiencia), 
 **Dos screens canon:**
 
 1. **`data-screen="chat"`** · single-thread principal · persistente · UI cálida
-2. **`data-screen="chat-3am"`** · efímero · dark mode · solo accesible 22-06h o vía opt-in localStorage `grow.chat.3am.optedIn`
+2. **`data-screen="chat-madrugada"`** · efímero · dark mode · solo accesible 22-06h o vía opt-in localStorage `grow.chat.madrugada.optedIn`
 
 **Componentes canon:**
 - `.bubble.{you|companion|pediatra|system}` · primitive de mensaje
@@ -38,7 +44,7 @@ Alternativas: chat multi-thread por libro (rechazado, fragmentaba experiencia), 
 
 **Estado persistido:** `logEntries`, `chatMessages` en localStorage con prefix `grow.chat.*`.
 
-**26 funciones JS** modulares (chatIsNightTime, openSafetyFrame, openEpds, chat3AMSaveAndExit, etc.).
+**26 funciones JS** modulares (chatIsNightTime, openSafetyFrame, openEpds, chatMadrugadaSaveAndExit, etc.).
 
 DS § V · 13 sub-secciones canonical · documenta toda la architecture.
 
@@ -55,4 +61,4 @@ DS § V · 13 sub-secciones canonical · documenta toda la architecture.
 
 - **Chat per-libro**: fragmenta. Cada libro tiene su contexto pero el peque es uno · NO.
 - **Wizard estructurado**: pierde calidez "doula bilingüe" · NO.
-- **Auto-trigger 3AM sin opt-in**: paternalista · resp. PRD canon · opt-in 1ª vez · NO auto.
+- **Auto-trigger madrugada sin opt-in**: paternalista · resp. PRD canon · opt-in 1ª vez · NO auto.
