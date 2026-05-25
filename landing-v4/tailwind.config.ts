@@ -47,13 +47,15 @@ const config: Config = {
         'violet-ink': '#4A3D55',
       },
       fontFamily: {
-        // Grift · legacy (sigue siendo body default para no romper secs 1-2)
-        grift: ['Grift', 'system-ui', 'sans-serif'],
-        sans: ['Grift', 'system-ui', 'sans-serif'],
         // DS canon May 2026 · Galiner display + Inter body
         serif: ['Galiner', 'Bodoni Moda', 'Playfair Display', 'Georgia', 'serif'],
         display: ['Galiner', 'Bodoni Moda', 'Playfair Display', 'Georgia', 'serif'],
         text: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
+        // Sans default · Inter (alineado con DS canon · ex-Grift)
+        sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
+        // Grift · legacy · solo accesible vía font-grift class si surge
+        // caso puntual · no usar en código nuevo
+        grift: ['Grift', 'system-ui', 'sans-serif'],
       },
       transitionTimingFunction: {
         'soft': 'cubic-bezier(0.4, 0, 0.6, 1)',

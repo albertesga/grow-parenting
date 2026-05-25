@@ -185,13 +185,14 @@
 }
 
 /* ════════════════════════════════════════════════════════════════════
-   Base · paper canvas + Grift everywhere
+   Base · paper canvas + Inter sans default (DS canon May 2026)
+   Headlines usan .font-serif (Galiner) · todo el resto hereda Inter
    ════════════════════════════════════════════════════════════════════ */
 
 html, body {
   background: #FAF7F0;
   color: #1A1A1A;
-  font-family: 'Grift', system-ui, sans-serif;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;

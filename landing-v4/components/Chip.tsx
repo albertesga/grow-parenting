@@ -33,7 +33,7 @@ export interface ChipProps {
   tono?: ChipTono;
   active?: boolean;
   premium?: boolean;
-  size?: 'sm' | 'md';
+  size?: 'xs' | 'sm' | 'md';
   className?: string;
 }
 
@@ -59,7 +59,9 @@ export default function Chip({
   const base =
     'inline-flex items-center justify-center rounded-full font-text font-medium tracking-normal whitespace-nowrap select-none transition-[filter,box-shadow] duration-200';
   const sizing =
-    size === 'sm'
+    size === 'xs'
+      ? 'h-7 min-h-[28px] px-2.5 text-[11px]'
+      : size === 'sm'
       ? 'h-8 min-h-[32px] px-3 text-[12px]'
       : 'h-11 min-h-[44px] px-4 text-[13px]';
   // Active = "vacío" canon DS · paper bg + inset ring 1.5px ink
