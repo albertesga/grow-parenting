@@ -54,12 +54,26 @@ export default function EmotionalStatementSection() {
   const loopBottomScale = useTransform(progress, [0.18, 0.25], [0.7, 1]);
 
   // ═══════════════════════════════════════════════════════
-  // Timeline · MOMENTO 2 · Polaroid (0.20 → 0.40)
+  // Timeline · MOMENTO 2 · Polaroid stack (0.20 → 0.65)
+  // 2 polaroids con storytelling:
+  //  · titoAlone (padre solo) entra primero · rotate -3° → 2°
+  //  · titoKids (padre con hijas) entra después · viene desde detrás
+  //  · al final, la titoAlone se desliza ligeramente al lado revelando
+  //    titoKids · ambas visibles formando un álbum scrapbook
   // ═══════════════════════════════════════════════════════
   const polaroidOpacity = useTransform(progress, [0.22, 0.38], [0, 1]);
   const polaroidScale = useTransform(progress, [0.22, 0.42], [0.85, 1]);
   const polaroidY = useTransform(progress, [0.22, 0.42], [80, 0]);
-  const polaroidRotate = useTransform(progress, [0.22, 0.42], [-3, 1]);
+  // Polaroid 1 (titoAlone) · entra primero, después se desliza a la
+  // izquierda y rota más al llegar el momento de la segunda polaroid
+  const polaroid1X = useTransform(progress, [0.40, 0.65], [0, -45]);
+  const polaroid1Rotate = useTransform(progress, [0.22, 0.42, 0.65], [-3, 2, -6]);
+  // Polaroid 2 (titoKids) · entra después de la primera, sube desde detrás
+  const polaroid2Opacity = useTransform(progress, [0.42, 0.58], [0, 1]);
+  const polaroid2Scale = useTransform(progress, [0.42, 0.62], [0.8, 1]);
+  const polaroid2Y = useTransform(progress, [0.42, 0.62], [60, 0]);
+  const polaroid2X = useTransform(progress, [0.42, 0.65], [0, 55]);
+  const polaroid2Rotate = useTransform(progress, [0.42, 0.65], [8, 4]);
 
   // Doodles polaroid · entran junto con la polaroid
   const arrowCurveTop1Opacity = useTransform(progress, [0.28, 0.42], [0, 1]);
@@ -129,7 +143,13 @@ export default function EmotionalStatementSection() {
             polaroidOpacity={polaroidOpacity}
             polaroidScale={polaroidScale}
             polaroidY={polaroidY}
-            polaroidRotate={polaroidRotate}
+            polaroid1X={polaroid1X}
+            polaroid1Rotate={polaroid1Rotate}
+            polaroid2Opacity={polaroid2Opacity}
+            polaroid2Scale={polaroid2Scale}
+            polaroid2Y={polaroid2Y}
+            polaroid2X={polaroid2X}
+            polaroid2Rotate={polaroid2Rotate}
             arrowCurveTop1Opacity={arrowCurveTop1Opacity}
             arrowCurveTop1Scale={arrowCurveTop1Scale}
             arrowCurveTop2Opacity={arrowCurveTop2Opacity}
@@ -170,6 +190,9 @@ export default function EmotionalStatementSection() {
             polaroidOpacity={polaroidOpacity}
             polaroidScale={polaroidScale}
             polaroidY={polaroidY}
+            polaroid2Opacity={polaroid2Opacity}
+            polaroid2Scale={polaroid2Scale}
+            polaroid2Y={polaroid2Y}
             r1Opacity={r1Opacity}
             r1Y={r1Y}
             underlineRightProgress={underlineRightProgress}
@@ -201,7 +224,10 @@ interface DesktopProps {
   underlineLeftProgress: MV;
   subLeftOpacity: MV; subLeftY: MV;
   loopBottomOpacity: MV; loopBottomScale: MV;
-  polaroidOpacity: MV; polaroidScale: MV; polaroidY: MV; polaroidRotate: MV;
+  polaroidOpacity: MV; polaroidScale: MV; polaroidY: MV;
+  polaroid1X: MV; polaroid1Rotate: MV;
+  polaroid2Opacity: MV; polaroid2Scale: MV; polaroid2Y: MV;
+  polaroid2X: MV; polaroid2Rotate: MV;
   arrowCurveTop1Opacity: MV; arrowCurveTop1Scale: MV;
   arrowCurveTop2Opacity: MV; arrowCurveTop2Scale: MV;
   r1Opacity: MV; r1Y: MV; r1X: MV;
@@ -275,19 +301,42 @@ function DesktopLayout(p: DesktopProps) {
         </motion.div>
       </div>
 
-      {/* Polaroid central · scroll-driven entry · width responsive
-          tablet: w-[26vw] · desktop: w-[24vw] */}
-      <motion.div
-        className="absolute left-[48%] top-1/2 z-10 w-[26vw] max-w-[360px] -translate-x-1/2 -translate-y-1/2 lg:w-[24vw]"
-        style={{
-          opacity: p.polaroidOpacity,
-          scale: p.polaroidScale,
-          y: p.polaroidY,
-          rotate: p.polaroidRotate,
-        }}
-      >
-        <FloatingPolaroid />
-      </motion.div>
+      {/* Polaroid stack · 2 fotos centradas · scroll-driven storytelling
+          - Polaroid 1 (titoAlone · padre solo) entra primero z-20
+          - Polaroid 2 (titoKids · padre con hijas) entra después z-10 detrás
+          - Al avanzar scroll, 1 se desliza a la izq + rota más,
+            revelando 2 a la derecha · ambas visibles formando álbum */}
+      <div className="absolute left-[48%] top-1/2 z-10 w-[26vw] max-w-[360px] -translate-x-1/2 -translate-y-1/2 lg:w-[24vw]">
+        {/* Polaroid 2 (atrás) · titoKids · entra después, sale ligeramente
+            a la derecha cuando la primera se desliza a la izquierda. */}
+        <motion.div
+          className="absolute inset-0 z-10"
+          style={{
+            opacity: p.polaroid2Opacity,
+            scale: p.polaroid2Scale,
+            y: p.polaroid2Y,
+            x: p.polaroid2X,
+            rotate: p.polaroid2Rotate,
+          }}
+        >
+          <FloatingPolaroid src="/img/titoKids.jpg" alt="Padre con sus hijas" floatRotate={4} />
+        </motion.div>
+
+        {/* Polaroid 1 (delante) · titoAlone · entra primero, después
+            se desliza a la izquierda revelando la 2. */}
+        <motion.div
+          className="relative z-20"
+          style={{
+            opacity: p.polaroidOpacity,
+            scale: p.polaroidScale,
+            y: p.polaroidY,
+            x: p.polaroid1X,
+            rotate: p.polaroid1Rotate,
+          }}
+        >
+          <FloatingPolaroid src="/img/titoAlone.jpg" alt="Padre · Tito · sonriendo" floatRotate={2} />
+        </motion.div>
+      </div>
 
       {/* Doodles arriba de la polaroid · aparecen con la polaroid */}
       <motion.div
@@ -404,14 +453,28 @@ function DesktopLayout(p: DesktopProps) {
    Polaroid · marco crema + foto + floating loop infinito
    ──────────────────────────────────────────────────────────────────── */
 
-function FloatingPolaroid() {
+interface FloatingPolaroidProps {
+  /** Path a la foto · default titoAlone */
+  src?: string;
+  /** Alt text · descriptivo de la foto */
+  alt?: string;
+  /** Rotación base para el floating loop · da carácter individual a
+      cada polaroid en el stack · default 1° */
+  floatRotate?: number;
+}
+
+function FloatingPolaroid({
+  src = '/img/titoAlone.jpg',
+  alt = 'Padre · Tito · sonriendo',
+  floatRotate = 1,
+}: FloatingPolaroidProps) {
   return (
     <motion.div
       className="relative"
       style={{ aspectRatio: '4 / 5' }}
       animate={{
         y: [0, -6, 0],
-        rotate: [1, 1.5, 1],
+        rotate: [floatRotate, floatRotate + 0.5, floatRotate],
       }}
       transition={{
         duration: 6,
@@ -429,8 +492,8 @@ function FloatingPolaroid() {
         }}
       >
         <img
-          src="/img/titoAlone.jpg"
-          alt="Padre · Tito · sonriendo"
+          src={src}
+          alt={alt}
           className="block h-full w-full object-cover"
           style={{ aspectRatio: '4 / 5' }}
           draggable={false}
@@ -451,6 +514,7 @@ interface MobileProps {
   underlineLeftProgress: MV;
   subLeftOpacity: MV; subLeftY: MV;
   polaroidOpacity: MV; polaroidScale: MV; polaroidY: MV;
+  polaroid2Opacity: MV; polaroid2Scale: MV; polaroid2Y: MV;
   r1Opacity: MV; r1Y: MV;
   underlineRightProgress: MV;
   r2Opacity: MV; r2Y: MV;
@@ -503,18 +567,38 @@ function MobileLayout(p: MobileProps) {
         </motion.div>
       </div>
 
-      {/* Polaroid · scroll-driven entry */}
-      <motion.div
-        className="relative w-[58vw] max-w-[280px]"
-        style={{
-          opacity: p.polaroidOpacity,
-          scale: p.polaroidScale,
-          y: p.polaroidY,
-          aspectRatio: '4 / 5',
-        }}
-      >
-        <FloatingPolaroid />
-      </motion.div>
+      {/* Polaroid stack mobile · 2 fotos · misma idea de scroll storytelling
+          La 2ª (titoKids) detrás · 1ª (titoAlone) delante se desliza al
+          aparecer la 2ª · ambas visibles al final del scroll */}
+      <div className="relative w-[64vw] max-w-[300px]" style={{ aspectRatio: '4 / 5' }}>
+        {/* Polaroid 2 (atrás) · titoKids */}
+        <motion.div
+          className="absolute inset-0 z-10"
+          style={{
+            opacity: p.polaroid2Opacity,
+            scale: p.polaroid2Scale,
+            y: p.polaroid2Y,
+            x: 28, // offset fijo en mobile · sin scroll horizontal complejo
+            rotate: 6,
+          }}
+        >
+          <FloatingPolaroid src="/img/titoKids.jpg" alt="Padre con sus hijas" floatRotate={3} />
+        </motion.div>
+
+        {/* Polaroid 1 (delante) · titoAlone */}
+        <motion.div
+          className="relative z-20"
+          style={{
+            opacity: p.polaroidOpacity,
+            scale: p.polaroidScale,
+            y: p.polaroidY,
+            x: -18,
+            rotate: -3,
+          }}
+        >
+          <FloatingPolaroid src="/img/titoAlone.jpg" alt="Padre · Tito · sonriendo" floatRotate={-1} />
+        </motion.div>
+      </div>
 
       {/* Bloque 2 · texto "Aquí estoy yo..." · espaciado consistente */}
       <div className="w-full max-w-[420px] font-grift text-ink">
