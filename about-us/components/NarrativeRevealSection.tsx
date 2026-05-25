@@ -142,10 +142,11 @@ export default function NarrativeRevealSection() {
           style={{ opacity: blockOpacity, y: blockY }}
         >
           {/* 5 bloques · todos mismo tamaño · centrados · stack vertical
-              gap reducido para que el manifesto entero quepa en 100vh */}
+              gap muy compacto (clamp 6-14px) · bloques casi pegados ·
+              editorial dense look */}
           <div
             className="flex w-full flex-col items-center"
-            style={{ gap: 'clamp(14px, 2vh, 28px)' }}
+            style={{ gap: 'clamp(6px, 1vh, 14px)' }}
           >
             {BLOCKS.map((block, i) => (
               <FillBlock key={i} block={block} progress={progress} />
@@ -168,19 +169,18 @@ function FillBlock({
   block: BlockSpec;
   progress: MotionValue<number>;
 }) {
-  // Tipografía Grift Extrabold (canon legacy · uso experimental para
-  // manifesto personal · NO para resto del producto). Baseline 800 ·
-  // acentos Black 900 (ver FillWord). max-w-[48ch] mantiene líneas
-  // naturales sin saltos forzados. Font-size ligeramente menor que
-  // Galiner porque Grift Extrabold ocupa más visual.
+  // Tipografía Grift mix · Light 300 baseline + Extrabold 800 acentos.
+  // Editorial poster look · font-size grande · line-height muy tight
+  // (1.05) para que las palabras se peguen · max-w generoso 52ch para
+  // longitudes naturales sin saltos forzados.
   return (
     <p
-      className="font-grift max-w-[48ch]"
+      className="font-grift max-w-[52ch]"
       style={{
-        fontSize: 'clamp(18px, 2.3vw, 34px)',
-        lineHeight: 1.22,
-        letterSpacing: '-0.005em',
-        fontWeight: 800,
+        fontSize: 'clamp(24px, 3.4vw, 52px)',
+        lineHeight: 1.05,
+        letterSpacing: '-0.012em',
+        fontWeight: 300,
       }}
     >
       <FillLine line={block} progress={progress} />
@@ -202,10 +202,10 @@ interface FillWordProps {
 
 function FillWord({ word, start, end, progress, bold = false }: FillWordProps) {
   const color = useTransform(progress, [start, end], [COLOR_OFF, COLOR_ON]);
-  // Acentos en Grift Black 900 sobre baseline Extrabold 800 · diferencia
-  // visual sutil pero perceptible para palabras enfáticas
+  // Acentos en Grift Extrabold 800 sobre baseline Light 300 · contraste
+  // dramático tipo editorial poster
   return (
-    <motion.span style={{ color, fontWeight: bold ? 900 : undefined }}>
+    <motion.span style={{ color, fontWeight: bold ? 800 : undefined }}>
       {word}
     </motion.span>
   );
