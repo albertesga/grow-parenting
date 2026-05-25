@@ -313,51 +313,57 @@ function DesktopLayout(p: DesktopProps) {
         <HandwrittenAsset variant="arrowCurve" width={130} flipX />
       </motion.div>
 
-      {/* Bloque derecho · texto "Aquí estoy yo..." · scroll-driven escalonado */}
-      <div className="absolute right-[5vw] top-1/2 z-20 w-[26vw] -translate-y-1/2 lg:right-[6vw] lg:w-[28vw]">
+      {/* Bloque derecho · texto "Aquí estoy yo..." · scroll-driven escalonado
+          Width responsive · más estrecho en tablet/notebook para no solapar
+          polaroid. Espaciado vertical generoso y consistente. */}
+      <div className="absolute right-[5vw] top-1/2 z-20 w-[24vw] max-w-[380px] -translate-y-1/2 lg:right-[6vw] lg:w-[26vw]">
+        {/* Headline · gran tamaño, peso extra bold */}
         <motion.h2
-          className="font-grift text-[clamp(28px,2.6vw,40px)] font-extrabold leading-[1.05] tracking-tight text-ink"
+          className="font-grift text-[clamp(28px,2.6vw,42px)] font-extrabold leading-[1.0] tracking-tight text-ink"
           style={{ opacity: p.r1Opacity, y: p.r1Y, x: p.r1X }}
         >
           Aquí estoy yo.
         </motion.h2>
 
-        {/* Subrayado handwritten bajo "Aquí estoy yo." */}
+        {/* Subrayado handwritten · pegado al baseline del h2 */}
         <motion.div
-          className="mt-1 origin-left"
+          className="-mt-1 origin-left"
           style={{
             scaleX: p.underlineRightProgress,
             opacity: p.underlineRightProgress,
-            width: '60%',
+            width: '70%',
             maxWidth: 240,
           }}
         >
           <HandwrittenAsset variant="swash" width={240} />
         </motion.div>
 
+        {/* Sub-headline · separación generosa del headline */}
         <motion.div
-          className="mt-6 font-grift text-[clamp(18px,1.5vw,24px)] font-bold leading-[1.3] text-ink"
+          className="mt-7 font-grift text-[clamp(17px,1.4vw,22px)] font-bold leading-[1.3] text-ink"
           style={{ opacity: p.r2Opacity, y: p.r2Y }}
         >
           Padre de Inti y Llivia.
         </motion.div>
 
+        {/* 3 frases body · espaciado uniforme entre ellas (mt-4) y mayor
+            del sub-headline (mt-7) para separación clara */}
         <motion.p
-          className="mt-8 font-grift text-[clamp(14px,1.1vw,18px)] font-medium leading-[1.5] text-ink-soft"
+          className="mt-7 font-grift text-[clamp(13px,1vw,16px)] font-medium leading-[1.55] text-ink-soft"
           style={{ opacity: p.r3Opacity, y: p.r3Y }}
         >
           Muy orgulloso de cada uno de mis peques.
         </motion.p>
 
         <motion.p
-          className="mt-5 font-grift text-[clamp(14px,1.1vw,18px)] font-medium leading-[1.5] text-ink-soft"
+          className="mt-4 font-grift text-[clamp(13px,1vw,16px)] font-medium leading-[1.55] text-ink-soft"
           style={{ opacity: p.r4Opacity, y: p.r4Y }}
         >
           Aún que nadie me enseñó a ser padre.
         </motion.p>
 
         <motion.p
-          className="mt-5 font-grift text-[clamp(14px,1.1vw,18px)] font-medium leading-[1.5] text-ink-soft"
+          className="mt-4 font-grift text-[clamp(13px,1vw,16px)] font-medium leading-[1.55] text-ink-soft"
           style={{ opacity: p.r5Opacity, y: p.r5Y }}
         >
           Y nadie me avisó de lo complejo que es.
@@ -512,17 +518,17 @@ function MobileLayout(p: MobileProps) {
         <FloatingPolaroid />
       </motion.div>
 
-      {/* Bloque 2 · texto "Aquí estoy yo..." */}
-      <div className="w-full max-w-[480px] font-grift text-ink">
+      {/* Bloque 2 · texto "Aquí estoy yo..." · espaciado consistente */}
+      <div className="w-full max-w-[420px] font-grift text-ink">
         <motion.h2
-          className="text-[clamp(24px,6vw,32px)] font-extrabold leading-[1.05] tracking-tight"
+          className="text-[clamp(26px,6.5vw,34px)] font-extrabold leading-[1.0] tracking-tight"
           style={{ opacity: p.r1Opacity, y: p.r1Y }}
         >
           Aquí estoy yo.
         </motion.h2>
 
         <motion.div
-          className="mt-1 origin-left"
+          className="-mt-1 origin-left"
           style={{
             scaleX: p.underlineRightProgress,
             opacity: p.underlineRightProgress,
@@ -533,27 +539,29 @@ function MobileLayout(p: MobileProps) {
           <HandwrittenAsset variant="swash" width={180} />
         </motion.div>
 
+        {/* Sub-headline · separación generosa (mt-5) */}
         <motion.div
-          className="mt-3 text-[clamp(14px,4vw,18px)] font-bold"
+          className="mt-5 text-[clamp(15px,4.4vw,18px)] font-bold leading-[1.3]"
           style={{ opacity: p.r2Opacity, y: p.r2Y }}
         >
           Padre de Inti y Llivia.
         </motion.div>
 
+        {/* Body · separación clara del sub-headline (mt-5) · entre frases mt-3 */}
         <motion.p
-          className="mt-3 text-[clamp(13px,3.6vw,15px)] font-medium leading-[1.5] text-ink-soft"
+          className="mt-5 text-[clamp(13px,3.6vw,15px)] font-medium leading-[1.55] text-ink-soft"
           style={{ opacity: p.r3Opacity, y: p.r3Y }}
         >
           Muy orgulloso de cada uno de mis peques.
         </motion.p>
         <motion.p
-          className="mt-2 text-[clamp(13px,3.6vw,15px)] font-medium leading-[1.5] text-ink-soft"
+          className="mt-3 text-[clamp(13px,3.6vw,15px)] font-medium leading-[1.55] text-ink-soft"
           style={{ opacity: p.r4Opacity, y: p.r4Y }}
         >
           Aún que nadie me enseñó a ser padre.
         </motion.p>
         <motion.p
-          className="mt-2 text-[clamp(13px,3.6vw,15px)] font-medium leading-[1.5] text-ink-soft"
+          className="mt-3 text-[clamp(13px,3.6vw,15px)] font-medium leading-[1.55] text-ink-soft"
           style={{ opacity: p.r5Opacity, y: p.r5Y }}
         >
           Y nadie me avisó de lo complejo que es.
