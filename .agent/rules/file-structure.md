@@ -46,7 +46,7 @@ consumer vs producer. No mezclar dominios (landing vs prototype vs DS).
 │   ├── IA-homepage-v0.1.md           (info architecture briefs)
 │   ├── claude-design-*.md            (briefs de iteración)
 │   └── wireframes-homepage-v0.1.html (wireframes baja fidelidad)
-├── landing/                          (marketing site público · consumer del DS)
+├── homepage/                          (marketing site público · consumer del DS)
 │   ├── index.html
 │   ├── styles.css
 │   ├── main.js
@@ -56,7 +56,7 @@ consumer vs producer. No mezclar dominios (landing vs prototype vs DS).
 │   └── propuesta-v3.html
 ├── prototype.html                    (app simulation · consumer del DS · single-file ~20k líneas)
 ├── prd/                              (Product Requirement Docs · read-only para diseño)
-│   ├── PRD-chat-modo-3am-v0.1.md
+│   ├── PRD-chat-modo-madrugada-v0.1.md
 │   ├── PRD-libro-colicos-v0.1.md
 │   └── PRD-libro-salud-v0.1.md
 ├── research/                         (User research · read-only para diseño)
@@ -83,7 +83,7 @@ consumer vs producer. No mezclar dominios (landing vs prototype vs DS).
    - Cambiar `.book-hero` solo en landing sin actualizar DS = drift = ⚠
 
 2. **Landing ≠ prototype**:
-   - Landing tiene su propio `landing/styles.css` y `landing/main.js`
+   - Landing tiene su propio `homepage/styles.css` y `homepage/main.js`
    - Prototype es single-file (CSS y JS inline en `prototype.html`)
    - NO importes lógica del prototype en landing
    - NO compartas componentes JS entre los dos (cada uno tiene su propio
@@ -99,7 +99,7 @@ consumer vs producer. No mezclar dominios (landing vs prototype vs DS).
    - Si el copy o spec cambia · el PRD lo actualiza un humano
    - Si necesitas un PRD nuevo · pide al user
 
-5. **Fonts assets** · ambos paths (`landing/assets/fonts/` y
+5. **Fonts assets** · ambos paths (`homepage/assets/fonts/` y
    `design/assets/fonts/`) están sincronizados manualmente. Si añades
    una font nueva · `cp` a ambos. No symlinks porque rompe en algunos
    filesystems.
@@ -107,7 +107,7 @@ consumer vs producer. No mezclar dominios (landing vs prototype vs DS).
 6. **NO crear `*.md` nuevos** salvo que el user pida · regla del repo.
 
 7. **NO crear nuevas carpetas en raíz** sin razón fuerte. Si necesitas
-   organizar · usa subcarpetas de `landing/`, `design/`, `docs/`.
+   organizar · usa subcarpetas de `homepage/`, `design/`, `docs/`.
 
 8. **Archivos draft / propuesta** · OK temporalmente con sufijo `-v2`,
    `-v3`. Cuando se canoniza · merge al canon principal y borrar el draft.
@@ -116,7 +116,7 @@ consumer vs producer. No mezclar dominios (landing vs prototype vs DS).
 
 | Carpeta | Propósito | Read/Write para agente diseño |
 |---|---|---|
-| `landing/` | Marketing site público | R/W |
+| `homepage/` | Marketing site público | R/W |
 | `prototype.html` | App simulation | R/W |
 | `design/` (DS principal) | Single source of truth visual | R/W |
 | `design/v0.1/` | Histórico | R only |
@@ -133,9 +133,9 @@ consumer vs producer. No mezclar dominios (landing vs prototype vs DS).
 ### ✓ Canon
 
 - Necesito añadir un chip nuevo · lo añado en DS HTML primero · luego
-  propago a `prototype.html` y a `landing/styles.css`
+  propago a `prototype.html` y a `homepage/styles.css`
 - Necesito un avatar nuevo · `cp avatar.png design/assets/img/ && cp
-  avatar.png landing/assets/img/`
+  avatar.png homepage/assets/img/`
 - Necesito documentar una decisión · ADR nueva en `docs/decisions/`
 
 ### ✗ Anti-canon
@@ -144,7 +144,7 @@ consumer vs producer. No mezclar dominios (landing vs prototype vs DS).
 - Modifico un archivo en `design/v0.1/` para "fix" algo · es histórico
 - Edito un PRD para que coincida con lo que implementé · al revés · el PRD
   define el scope · si cambió · pide al user actualizar el PRD
-- Creo `landing/components/` o `landing/utils/` · over-engineering ·
+- Creo `homepage/components/` o `homepage/utils/` · over-engineering ·
   todo en 3 archivos
 
 ## Workflow
@@ -152,6 +152,6 @@ consumer vs producer. No mezclar dominios (landing vs prototype vs DS).
 1. Necesito tocar X
 2. ¿Es un primitive visual? · empieza en `design/Grow Design System v0.2.html`
 3. ¿Es copy del app? · `prototype.html`
-4. ¿Es copy de marketing? · `landing/index.html`
+4. ¿Es copy de marketing? · `homepage/index.html`
 5. ¿Es spec / requirement? · NO toques · lee `prd/`
 6. ¿Es metodología? · `.agent/` o ADR nueva

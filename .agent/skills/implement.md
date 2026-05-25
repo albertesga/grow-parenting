@@ -140,7 +140,7 @@ Si push falla por rebase · `git pull --rebase` · re-test · re-push.
 5. **NO instalar deps** · stack es vanilla, sin package.json
 6. **NO modificar `.git/`, `.replit`, `replit.nix`** salvo razón explícita
 7. **NO ejecutar scripts arbitrarios** del DS HTML · es read-only para
-   landing/prototype como consumers
+   homepage/prototype como consumers
 
 ## Anti-patterns
 

@@ -8,10 +8,10 @@
       "port": 5050
     },
     {
-      "name": "landing-v4",
+      "name": "about-us",
       "runtimeExecutable": "npm",
       "runtimeArgs": ["run", "dev"],
-      "cwd": "landing-v4",
+      "cwd": "about-us",
       "port": 3000
     }
   ]

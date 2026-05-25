@@ -9,7 +9,7 @@
      Canon May 2026 · Galiner (TBJ) display único · Inter Variable como body.
      Galiner ships con 3 cortes (Light 300 / Regular 400 / Bold 700) · sin italic.
      Para matiz editorial donde antes había italic · usar font-weight 300
-     + color ink-soft (ver landing/index.html como referencia).
+     + color ink-soft (ver homepage/index.html como referencia).
      Componentes legacy con weight 500/600 se mapean explícitamente abajo
      (500→Regular 400, 600→Bold 700) para evitar synthesis del browser.
      Inter Variable cubre 100-900 en un único woff2 (normal + italic).
@@ -2102,7 +2102,7 @@
       <div class="spec-row col" style="padding: 12px 0 18px">
         <p style="font-size:13px;color:var(--ink-soft);max-width:64ch;line-height:1.55;margin:0">
           El rojo puro es alarmante y contraproducente en momentos de crisis
-          (3AM, post-pérdida, primer parto). Canon:
+          (madrugada, post-pérdida, primer parto). Canon:
         </p>
         <ul style="font-size:13px;color:var(--ink-soft);line-height:1.65;padding-left:18px;margin:8px 0 0">
           <li><strong>Urgencias reales</strong> (112, anafilaxia, modo emergencia) · <code>var(--coral-base) #F2A57A</code></li>
@@ -5462,11 +5462,11 @@
     <div class="section-head">
       <div class="section-num">§ V — Chat</div>
       <div>
-        <h2>Single thread + Modo 3AM + 8 árboles cribaje.</h2>
+        <h2>Single thread + Modo madrugada + 8 árboles cribaje.</h2>
         <div class="desc">
           Chat principal · un único hilo continuo a lo largo del journey,
           contextualizado con la edad del peque, módulo activo y modos especiales
-          (arcoíris/preemie). Modo 3AM · variante dark, thread efímero, 3 opciones
+          (arcoíris/preemie). Modo madrugada · variante dark, thread efímero, 3 opciones
           edad-aware. 8 árboles de cribaje rápido basados en NICE / AAP / AEPED · cada
           uno cita su fuente. Tono trauma-informed canon: cero "tu peque está mal",
           siempre "esto puede ser X o Y · hablamos de qué hacer".
@@ -5479,16 +5479,16 @@
       <div class="spec-row col" style="padding: 12px 0">
         <ul style="font-size:13px;color:var(--ink-soft);max-width:64ch;line-height:1.7;padding-left:18px;margin:0">
           <li><strong>Chat principal</strong> · screen <code>data-screen="chat"</code> · navbar slot 4 (active)</li>
-          <li><strong>Modo 3AM</strong> · screen <code>data-screen="chat-3am"</code> · variante dark efímera</li>
+          <li><strong>Modo madrugada</strong> · screen <code>data-screen="chat-3am"</code> · variante dark efímera</li>
           <li><strong>Triage sheet</strong> · overlay <code>#triage-modal</code> con sequential Q&A</li>
-          <li><strong>Entry points</strong> · navbar Chat · 8 chips encima del input · "Le pasa algo" en 3AM</li>
-          <li><strong>Frase canon footer</strong> · sticky en chat principal y 3AM: "Aquí no diagnosticamos · aquí estamos"</li>
+          <li><strong>Entry points</strong> · navbar Chat · 8 chips encima del input · "Le pasa algo" en madrugada</li>
+          <li><strong>Frase canon footer</strong> · sticky en chat principal y madrugada: "Aquí no diagnosticamos · aquí estamos"</li>
         </ul>
       </div>
     </div>
 
     <div class="spec">
-      <div class="spec-head"><h3>3 opciones del Modo 3AM por edad</h3><span class="meta-r">data-3am-options</span></div>
+      <div class="spec-head"><h3>3 opciones del Modo madrugada por edad</h3><span class="meta-r">data-3am-options</span></div>
       <div class="spec-row col" style="padding: 12px 0 18px">
         <table style="font-size:12.5px;color:var(--ink-soft);border-collapse:collapse;width:100%;max-width:760px">
           <thead>
@@ -5639,14 +5639,14 @@
     </div>
 
     <div class="spec">
-      <div class="spec-head"><h3>Mensajes canon Modo 3AM</h3></div>
+      <div class="spec-head"><h3>Mensajes canon Modo madrugada</h3></div>
       <div class="spec-row col" style="padding: 12px 0 18px">
         <ul style="font-size:13px;color:var(--ink-soft);line-height:1.7;padding-left:18px;margin:0;max-width:62ch">
           <li><strong>Apertura</strong> · "Este es un modo urgencia. Las respuestas son más rápidas, más directas y sin juzgar."</li>
           <li><strong>Si tarda &gt;5s</strong> · "Estoy aquí. Un momento."</li>
           <li><strong>Cierre</strong> · "¿Guardamos esta noche en el diario? Solo para ti." (guardar / no / luego)</li>
           <li><strong>Si árbol detecta urgencia</strong> · "Llama al 112 ahora. Si quieres, me quedo contigo mientras llaman."</li>
-          <li><strong>Vuelta al chat principal</strong> · sticky note "Anoche 3AM · resuelto" en mint-subtle pill</li>
+          <li><strong>Vuelta al chat principal</strong> · sticky note "Anoche madrugada · resuelto" en mint-subtle pill</li>
         </ul>
       </div>
     </div>
@@ -5684,7 +5684,7 @@
           Frase canon Fase 0 siempre visible al final del chat input bar.
           <strong>"Aquí no diagnosticamos · aquí estamos"</strong>. Uppercase 0.14em
           letter-spacing · color ink-faint · centro. Mismo placement en chat principal
-          y Modo 3AM (con color ajustado para dark).
+          y Modo madrugada (con color ajustado para dark).
         </p>
       </div>
     </div>
@@ -5693,7 +5693,7 @@
       <div class="spec-head"><h3>Safety frame · NSBSP 4 pasos</h3><span class="meta-r">.safety-frame · .sf-steps · .sf-canon-foot</span></div>
       <div class="spec-row col" style="padding: 12px 0">
         <p style="font-size:13px;color:var(--ink-soft);max-width:64ch;line-height:1.55;margin:0">
-          Sheet overlay que se abre desde ruta 3AM "No puedo más". 4 cards numeradas con
+          Sheet overlay que se abre desde ruta madrugada "No puedo más". 4 cards numeradas con
           pasos de regulación + footer mint canon "Nunca sacudas al bebé. Ni siquiera 1 segundo."
           Trauma-informed canon · cero rojo médico · NSBSP/dontshake.org.
         </p>
@@ -5733,7 +5733,7 @@
       <div class="spec-head"><h3>Night palette canon</h3><span class="meta-r">--night-bg · --night-surface · --night-fg · --night-accent</span></div>
       <div class="spec-row col" style="padding: 12px 0">
         <p style="font-size:13px;color:var(--ink-soft);max-width:64ch;line-height:1.55;margin:0">
-          Paleta dark usada SOLO en Modo 3AM · variante intencional, no opcional.
+          Paleta dark usada SOLO en Modo madrugada · variante intencional, no opcional.
           No es "tema oscuro" del producto · es marca semántica: estás en modo urgencia.
         </p>
       </div>
@@ -6375,7 +6375,7 @@
           <li><strong>3 · Cuidadores</strong> · avatar tonal + name/sub + tag activa + CTA "Invitar a otra persona"</li>
           <li><strong>4 · Modos especiales</strong> · 🌈 Arcoíris · 🐣 Preemie · 💪 Monoparental (toggles)</li>
           <li><strong>5 · País + emergencias</strong> · 🇪🇸 ES · 112 · 024 (auto-detect via navigator.language)</li>
-          <li><strong>6 · Notificaciones</strong> · por libro: Vacunas · Sueño · Hitos · Modo 3AM</li>
+          <li><strong>6 · Notificaciones</strong> · por libro: Vacunas · Sueño · Hitos · Modo madrugada</li>
           <li><strong>7 · Plan</strong> · Free actual + CTA Mejorar a Premium (callout coral)</li>
           <li><strong>8 · Privacidad</strong> · Solo local · Compartir pediatra · Analytics + Export JSON GDPR</li>
           <li><strong>9 · Cuenta</strong> · Email · Cambiar password · Cerrar sesión · Eliminar cuenta (danger)</li>

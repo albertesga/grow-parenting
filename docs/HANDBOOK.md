@@ -62,7 +62,7 @@ Grow/
 │   ├── assets/{fonts, img}/
 │   ├── v0.1/                          (histórico · solo arqueología)
 │   └── briefs *.md                    (iteración pasada · read-only)
-├── landing/                           (marketing site público)
+├── homepage/                           (marketing site público)
 │   ├── index.html
 │   ├── styles.css
 │   ├── main.js
@@ -102,7 +102,7 @@ python3 -m http.server 5050
 ```
 
 URLs:
-- Landing · http://localhost:5050/landing/
+- Landing · http://localhost:5050/homepage/
 - Prototype · http://localhost:5050/prototype.html
 - DS · http://localhost:5050/design/Grow%20Design%20System%20v0.2.html
 

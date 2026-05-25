@@ -12,7 +12,7 @@ críticos.
 4. `CLAUDE.md` (este archivo) · alias condensado · lectura rápida
 5. `docs/HANDBOOK.md` · onboarding humano + glosario
 6. `docs/decisions/*.md` · 16 ADRs vigentes
-7. Código real · `prototype.html`, `landing/`, `design/`
+7. Código real · `prototype.html`, `homepage/`, `design/`
 
 ## Loop
 

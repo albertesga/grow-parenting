@@ -63,7 +63,7 @@ motion** (no confetti, no streak animations, no celebraciones performativas).
 
 5. **Modal / bottom sheet** · usa `--ease-sheet` + `--duration-slow` (400ms)
    para enter, `--duration-base` (220ms) para exit. Pattern documentado
-   en `prototype.html` (book opening) y `landing/main.js` (bs-overlay).
+   en `prototype.html` (book opening) y `homepage/main.js` (bs-overlay).
 
 6. **FLIP para shared element transitions** (book opening cover → modal):
    - Captura bounding rect del cover
@@ -87,8 +87,8 @@ motion** (no confetti, no streak animations, no celebraciones performativas).
 
 | Pattern | Where | Easing | Duration |
 |---|---|---|---|
-| Book opening (cover → modal) | `landing/main.js` openCover() | `--ease-sheet` | 400ms |
-| Bottom sheet close | `landing/main.js` closeSheet() | `--ease-sheet` | 220ms |
+| Book opening (cover → modal) | `homepage/main.js` openCover() | `--ease-sheet` | 400ms |
+| Bottom sheet close | `homepage/main.js` closeSheet() | `--ease-sheet` | 220ms |
 | Spinner 3D rotation | landing modal spin | `--ease-sheet` | 700ms |
 | FAB pulse | prototype `.fab` | `--ease-spring` | 150ms |
 | Hero CTA press | landing `.btn-primary` | `--ease-emphasized` | 220ms |

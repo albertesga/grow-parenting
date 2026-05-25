@@ -9,7 +9,7 @@ App para familias hispanohablantes · del embarazo a los 3 años del peque ·
 trauma-informed, sin gamification, sin urgencia. Single-developer repo.
 
 - **App** · simulada en `prototype.html` (single-file HTML/CSS/JS, ~20k líneas)
-- **Landing** · marketing site en `landing/` (3 archivos: `index.html` +
+- **Landing** · marketing site en `homepage/` (3 archivos: `index.html` +
   `styles.css` + `main.js`)
 - **Design System** · `design/Grow Design System v0.2.html` · single source
   of truth para tokens, primitives, copy canon
@@ -27,7 +27,7 @@ solo lo necesario (no leas todo cada vez).
 4. **`CLAUDE.md`** · 1 min · alias condensado para Claude Code (rápido)
 5. **`docs/HANDBOOK.md`** · 5 min · onboarding humano + glosario
 6. **`docs/decisions/*.md`** · 16 ADRs vigentes · canon histórico evaluable
-7. **Código real** · `prototype.html`, `landing/`, `design/` · cuando ya
+7. **Código real** · `prototype.html`, `homepage/`, `design/` · cuando ya
    sabes qué tocar
 
 ## Loop · `explore → plan → implement → verify → memoria`
@@ -117,5 +117,5 @@ Detalle: `.agent/rules/escalation.md`.
   `Co-Authored-By: Claude Opus 4.7 <noreply@anthropic.com>`
 - **Push** · después de cada commit (single-developer)
 - **Server local** · `python3 -m http.server 5050` desde la raíz del repo
-- **URLs** · `http://localhost:5050/landing/` · `/prototype.html` ·
+- **URLs** · `http://localhost:5050/homepage/` · `/prototype.html` ·
   `/design/Grow%20Design%20System%20v0.2.html`

@@ -37,7 +37,7 @@ agentes, resistentes a la rotación. Reemplaza prose en CLAUDE.md.
 
 ### Arquitectura de módulos
 - [0004 · Bottom nav · Perfil reemplaza Hitos](0004-bottom-nav-perfil.md)
-- [0005 · Chat IA · single-thread + Modo 3AM efímero](0005-chat-ia-modo-3am.md)
+- [0005 · Chat IA · single-thread + Modo madrugada efímero](0005-chat-ia-modo-madrugada.md)
 - [0006 · Sub-libros · librería anidada bajo libro padre](0006-sub-libros-pattern.md)
 - [0008 · Pantalla Perfil · identidad + config global](0008-pantalla-perfil.md)
 - [0009 · Libro de Salud · expediente clínico + Modo emergencia](0009-libro-salud-emergencia.md)

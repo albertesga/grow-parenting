@@ -19,7 +19,7 @@ HTTP 200 + JS check + spawn auditor si aplica + visual diff si aplica.
 ### 1 · HTTP 200 en los 3 entry points (siempre)
 
 ```bash
-curl -s -o /dev/null -w "landing:    %{http_code}\n" "http://localhost:5050/landing/index.html"
+curl -s -o /dev/null -w "landing:    %{http_code}\n" "http://localhost:5050/homepage/index.html"
 curl -s -o /dev/null -w "prototype:  %{http_code}\n" "http://localhost:5050/prototype.html"
 curl -s -o /dev/null -w "DS:         %{http_code}\n" "http://localhost:5050/design/Grow%20Design%20System%20v0.2.html"
 ```
@@ -39,10 +39,10 @@ node --check /tmp/grow-extracted.js
 
 Si syntax error · localiza línea con el error · fix · re-extract · re-check.
 
-Para `landing/main.js` directamente:
+Para `homepage/main.js` directamente:
 
 ```bash
-node --check landing/main.js
+node --check homepage/main.js
 ```
 
 ### 3 · Spawn `ds-auditor` si tocaste primitive canónico

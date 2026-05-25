@@ -73,7 +73,7 @@ Ejemplo:
 ### 6 · Cambio que afecta a ≥3 archivos críticos
 
 Si el cambio toca 3+ de los entry points principales (`prototype.html`,
-`landing/*`, `design/Grow Design System v0.2.html`) simultáneamente:
+`homepage/*`, `design/Grow Design System v0.2.html`) simultáneamente:
 
 - Pausa y propone un plan
 - Spawn `Plan` agent si la complejidad lo justifica

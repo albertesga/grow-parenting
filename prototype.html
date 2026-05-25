@@ -9853,7 +9853,7 @@
   /* ═════════════════════════════════════════════════════════════
      § V · CHAT
      Chat principal · un único hilo contextual.
-     Modo 3AM · variante dark, thread efímero, 3 opciones edad-aware.
+     Modo madrugada · variante dark, thread efímero, 3 opciones edad-aware.
      8 árboles de cribaje rápido · NICE / AAP / AEPED canon.
      ═════════════════════════════════════════════════════════════ */
 
@@ -9948,7 +9948,7 @@
   }
   .chat-thread .bubble strong { font-weight: 500; color: inherit; }
 
-  /* Sticky note for resolved 3AM session in main thread */
+  /* Sticky note for resolved madrugada session in main thread */
   .chat-thread .chat-note-3am {
     align-self: center;
     background: var(--mint-subtle);
@@ -10034,7 +10034,7 @@
     padding-top: 4px;
   }
 
-  /* ─── Modo 3AM · variante dark ─── */
+  /* ─── Modo madrugada · variante dark ─── */
   .chat-3am {
     background: #0E0F12;
     color: #E6E2DC;
@@ -10353,7 +10353,7 @@
   .tool-card.ink   .tc-icon  { background: var(--ink); color: var(--paper); }
   .tool-card.ink   .tc-action { color: var(--coral-strong); font-weight: 500; }
 
-  /* In dark 3AM thread · contrast adjusted */
+  /* In dark madrugada thread · contrast adjusted */
   .chat-3am .tool-card {
     background: rgba(255,255,255,0.04);
     border-color: rgba(255,255,255,0.08);
@@ -10454,7 +10454,7 @@
 
 
   /* § V.C.1 · Safety frame & mental-health banner
-     Sheets que se abren desde 3AM ruta "No puedo más" + ruta embarazo-fear. */
+     Sheets que se abren desde madrugada ruta "No puedo más" + ruta embarazo-fear. */
   .safety-frame-shell,
   .mental-health-shell {
     position: absolute;
@@ -10849,7 +10849,7 @@
   }
 
 
-  /* § V.D · 3AM close-flow sheet · ofrece guardar / borrar / quedarse */
+  /* § V.D · madrugada close-flow sheet · ofrece guardar / borrar / quedarse */
   .chat3am-close-shell {
     position: absolute;
     left: 12px; right: 12px; bottom: 10px;
@@ -11014,7 +11014,7 @@
   }
 
 
-  /* § V.revision · Last-action banner en Modo 3AM
+  /* § V.revision · Last-action banner en Modo madrugada
      Muestra contexto después de safety/mental para no dejar al usuario sin pista. */
   .chat-3am-last-action {
     margin: 12px 22px;
@@ -12399,7 +12399,7 @@
                   <span class="profile-switch active" data-profile-switch="notif-hitos"></span>
                 </button>
                 <button class="profile-toggle" type="button" data-profile-notif="3am">
-                  <span class="profile-row-stack"><strong>Modo 3AM</strong><span>Disponibilidad nocturna 22-06h</span></span>
+                  <span class="profile-row-stack"><strong>Modo madrugada</strong><span>Disponibilidad nocturna 22-06h</span></span>
                   <span class="profile-switch active" data-profile-switch="notif-3am"></span>
                 </button>
               </div>
@@ -12662,8 +12662,8 @@
                 <!-- badges injected by JS based on flags -->
               </span>
             </div>
-            <button class="chat-3am-toggle" type="button" data-goto="chat-3am" aria-label="Modo 3AM">
-              <span aria-hidden="true">🌙</span> Modo 3AM
+            <button class="chat-3am-toggle" type="button" data-goto="chat-3am" aria-label="Modo madrugada">
+              <span aria-hidden="true">🌙</span> Modo madrugada
             </button>
           </header>
           <div class="chat-thread" data-chat-thread aria-live="polite">
@@ -12701,7 +12701,7 @@
         </section>
 
         <!-- ═══════════════════════════════════════════════════════════
-             § V.2 · Modo 3AM · dark, ephemeral, 3 age-aware options
+             § V.2 · Modo madrugada · dark, ephemeral, 3 age-aware options
              ═══════════════════════════════════════════════════════════ -->
         <section class="screen no-nav chat-3am" data-screen="chat-3am">
           <div class="status"><span>3:14</span><div class="status-dots"><span></span><span></span><span></span></div></div>
@@ -12710,7 +12710,7 @@
             <h1>Modo urgencia</h1>
             <p>Las respuestas son más rápidas, más directas y sin juzgar.</p>
           </div>
-          <div class="chat-3am-options" data-3am-options aria-label="Opciones 3AM">
+          <div class="chat-3am-options" data-3am-options aria-label="Opciones madrugada">
             <!-- options render here based on baby age -->
           </div>
           <p class="chat-canon-foot">Aquí no diagnosticamos · aquí estamos</p>
@@ -12821,9 +12821,9 @@
         <div class="chat-toast" id="chat-toast" aria-live="polite"></div>
 
         <!-- ═══════════════════════════════════════════════════════════
-             § V.D · Close-flow sheet para Modo 3AM
+             § V.D · Close-flow sheet para Modo madrugada
              ═══════════════════════════════════════════════════════════ -->
-        <aside class="chat3am-close-shell" id="chat3am-close-modal" aria-label="Cerrar Modo 3AM">
+        <aside class="chat3am-close-shell" id="chat3am-close-modal" aria-label="Cerrar Modo madrugada">
           <div class="chat3am-close-sheet">
             <div class="safety-frame-grabber"></div>
             <h2>¿Guardamos esta noche en el diario?</h2>
@@ -12831,7 +12831,7 @@
             <div class="sf-actions">
               <button class="btn coral" type="button" data-3am-close-action="save">Sí · guardar resumen</button>
               <button class="btn soft" type="button" data-3am-close-action="discard">No · borrar todo</button>
-              <button class="btn ghost" type="button" data-3am-close-action="stay">Quedarme en 3AM</button>
+              <button class="btn ghost" type="button" data-3am-close-action="stay">Quedarme en madrugada</button>
             </div>
           </div>
         </aside>
@@ -18910,7 +18910,7 @@ Grow
     scrim.classList.remove('active');
   }
 
-  /* ═════════════════ § V · CHAT · single thread + 3AM + 8 triage trees ═════════════════ */
+  /* ═════════════════ § V · CHAT · single thread + Modo madrugada + 8 triage trees ═════════════════ */
 
   /* Initial chat messages — contextual welcome */
   let chatMessages = [
@@ -19055,7 +19055,7 @@ Grow
       banner.innerHTML = `
         <span class="moon" aria-hidden="true">🌙</span>
         <div>
-          <span class="ttl">Modo 3AM disponible</span>
+          <span class="ttl">Modo madrugada disponible</span>
           Respuestas más rápidas y directas. Sin juzgar.
         </div>
         <button class="opt-toggle" type="button" data-3am-opt-in>Activar</button>
@@ -19079,9 +19079,9 @@ Grow
     card.innerHTML = `
       <div class="tag">🌙 Noche</div>
       <h3>No estás sola.</h3>
-      <div class="meta-line">Modo 3AM · disponible ahora</div>
+      <div class="meta-line">Modo madrugada · disponible ahora</div>
       <p class="context">Las respuestas son más rápidas, más directas y sin juzgar. Si necesitas algo, estoy aquí.</p>
-      <button class="card-button" type="button" data-goto="chat-3am">Abrir Modo 3AM</button>
+      <button class="card-button" type="button" data-goto="chat-3am">Abrir Modo madrugada</button>
       <div class="soft-actions">
         <button type="button" data-goto="chat">Chat normal</button>
       </div>
@@ -19428,7 +19428,7 @@ Grow
       'triage-menu': 'cribaje rápido'
     };
     const label = routeLabels[chat3AMSession.route] || chat3AMSession.route;
-    return `Anoche 3AM · ${label} · resuelto`;
+    return `Anoche madrugada · ${label} · resuelto`;
   }
 
   /* Sheet de cierre 3AM · 3 botones (guardar / borrar / quedarme) */

@@ -12,14 +12,14 @@ Grow es un proyecto **100% diseño** · sin backend, sin build, sin auth.
 | File | Qué es | Tamaño |
 |---|---|---|
 | `prototype.html` | Single-file app prototype (HTML + CSS + JS inline) | ~20k líneas |
-| `landing/index.html` + `landing/styles.css` + `landing/main.js` | Marketing site | 3 archivos |
+| `homepage/index.html` + `homepage/styles.css` + `homepage/main.js` | Marketing site | 3 archivos |
 | `design/Grow Design System v0.2.html` | DS canónico · single source of truth | ~5k líneas |
 
 ### Assets compartidos
 
-- `landing/assets/fonts/` · Galiner (TBJ 3 weights) + Inter Variable (woff2) + Grift (18 TTFs)
+- `homepage/assets/fonts/` · Galiner (TBJ 3 weights) + Inter Variable (woff2) + Grift (18 TTFs)
 - `design/assets/fonts/` · espejo · mismas familias
-- `landing/assets/img/`, `design/assets/img/` · fotos avatares, covers libros, ilustraciones
+- `homepage/assets/img/`, `design/assets/img/` · fotos avatares, covers libros, ilustraciones
 
 ### Tooling
 
@@ -35,7 +35,7 @@ Grow es un proyecto **100% diseño** · sin backend, sin build, sin auth.
 1. `.agent/rules/ds-canon.md` (¿estoy reusando primitive existente?)
 2. `design/Grow Design System v0.2.html` · sección del primitive (grep)
 3. `docs/decisions/*.md` · ADR del primitive si existe
-4. CSS actual del primitive en `prototype.html` o `landing/styles.css`
+4. CSS actual del primitive en `prototype.html` o `homepage/styles.css`
 5. Edit
 
 ### Cambio de copy user-facing
@@ -169,7 +169,7 @@ icon-only, `role` + `aria-current` en navs, contraste AA+, respeta
 ### G7 · File structure
 
 Sabe qué va dónde · no metas lógica de landing en prototype, no metas
-copy del prototype en landing. DS es read-only desde landing/prototype
+copy del prototype en landing. DS es read-only desde homepage/prototype
 (ellos consumen, no modifican el DS). Detalle:
 `.agent/rules/file-structure.md`.
 

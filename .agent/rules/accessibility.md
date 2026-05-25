@@ -107,7 +107,7 @@ Cualquier string usuario / dinámico que se interpole en innerHTML debe
 pasar por `escapeHtml()`:
 
 ```js
-// helper canónico (existe en prototype.html y landing/main.js)
+// helper canónico (existe en prototype.html y homepage/main.js)
 function escapeHtml(str) {
   return String(str ?? '')
     .replace(/&/g, '&amp;')
@@ -171,7 +171,7 @@ Cuando abre un modal o bottom sheet:
 - `Esc` cierra
 - Al cerrar · devolver focus al trigger
 
-Pattern documentado en `landing/main.js` (book modal).
+Pattern documentado en `homepage/main.js` (book modal).
 
 ## Ejemplos
 

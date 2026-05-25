@@ -40,7 +40,7 @@ Si sí · ADR primero · luego implementación.
 ### 3 · ¿Qué archivos toco?
 
 Listado preciso:
-- `landing/styles.css` · líneas {X-Y} · cambio · {descripción}
+- `homepage/styles.css` · líneas {X-Y} · cambio · {descripción}
 - `prototype.html` · líneas {X-Y} · cambio · {descripción}
 - `design/Grow Design System v0.2.html` · sección {X} · cambio · {descripción}
 
@@ -103,7 +103,7 @@ Si sí · screenshot before/after en el plan.
 1. **Bajo 200 palabras total** · si más · estás sobre-planeando
 2. **No proponer alternativas** · una sola recomendación + razón corta
 3. **Citar paths concretos** · no "el archivo de pricing", sino
-   `landing/styles.css:1380-1395`
+   `homepage/styles.css:1380-1395`
 4. **Incluir verification** · plan sin checklist post-implementación es plan
    incompleto
 

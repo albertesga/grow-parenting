@@ -1,8 +1,14 @@
 # Rule · Palette tonal
 
-5 familias tonales × 3 tiers (subtle / base / strong) + paleta paper / ink.
-Mapping libro → tono fijo. Cero hex literal en código aplicación · todo
-via CSS variables.
+**7 familias tonales** + paleta paper/ink. Mapping libro → tono fijo. Cero
+hex literal en código aplicación · todo via CSS variables.
+
+- 4 familias completas (3 tiers · subtle/base/strong) · **coral, blush, mint, gold**
+- 3 familias parciales (2 tiers · subtle/strong, sin base) · **violet, sky, ochre**
+
+> **Nota terminológica** · El canon repo usa `violet`. Algunos docs legacy
+> (incluida Fase 0 v0.1) lo mencionan como `lilac` · es el mismo tono · la
+> ruta canon es `--violet-{subtle|strong}`.
 
 ## Por qué
 
@@ -66,6 +72,28 @@ via CSS variables.
 **Libro asignado** · Desarrollo.
 
 (No tiene `--violet-base` definido · usa subtle + strong solamente.)
+
+### Sky (lenguaje / comunicación / nocturno frío)
+
+| Tier | Hex | Uso |
+|---|---|---|
+| `--sky-subtle` | `#DDE6E8` | Fondos área-lenguaje, feed-cards info |
+| `--sky-strong` | `#4D6770` | Texto / iconos área-lenguaje |
+
+**Uso** · milestones área lenguaje · feed-card / calendar-card .sky.
+
+(No tiene `--sky-base` definido · usa subtle + strong solamente.)
+
+### Ochre (alimentación complementaria / cálido tierra)
+
+| Tier | Hex | Uso |
+|---|---|---|
+| `--ochre-subtle` | `#EBE0D2` | Fondos feed-card / calendar-card .ochre |
+| `--ochre-strong` | `#846238` | Texto emphasis ochre |
+
+**Uso** · feed-card / calendar-card .ochre · alternativa cálida a gold.
+
+(No tiene `--ochre-base` definido · usa subtle + strong solamente.)
 
 ### Paper / Ink (base canvas)
 

@@ -1,7 +1,7 @@
-# PRD · Chat IA + Modo 3AM
+# PRD · Chat IA + Modo madrugada
 ## Grow · v0.1 · canon Fase 0
 
-> Producto: **Grow by The Child Lens** · Módulo: **Chat IA contextual con triage trees + Modo 3AM** · Categoría DS: cross-categoría (chat es transversal · triage trees pintan el color de su categoría · Modo 3AM = paleta dark dedicada).
+> Producto: **Grow by The Child Lens** · Módulo: **Chat IA contextual con triage trees + Modo madrugada** · Categoría DS: cross-categoría (chat es transversal · triage trees pintan el color de su categoría · Modo madrugada = paleta dark dedicada).
 > Status: ready for Claude Design + ingeniería · siguiendo `Grow Design System v0.2`.
 
 ---
@@ -10,13 +10,13 @@
 
 El **chat de Grow** es la conversación viva del producto · una sola hebra continua donde la IA acompaña a la familia con citas clínicas siempre con fuente y año, contexto pre-cargado del peque (edad, módulos activos, modo arcoíris/preemie/3AM), y **8 chips de cribaje rápido** que disparan árboles de triage validados clínicamente (NICE, AAP, NSBSP).
 
-El **Modo 3AM** es un sub-modo del chat que se activa siempre en `dark` (22:00-06:00 default · opt-in/out), abre **un thread efímero independiente** del chat principal, y arranca con el mensaje canon:
+El **Modo madrugada** es un sub-modo del chat que se activa siempre en `dark` (22:00-06:00 default · opt-in/out), abre **un thread efímero independiente** del chat principal, y arranca con el mensaje canon:
 
 > *"Este es un modo urgencia. Las respuestas son más rápidas, más directas y sin juzgar."*
 
 Tras esa apertura presenta **3 opciones edad-aware** (embarazo · 0-3 m · 3-12 m · 12-36 m), cada una conectada a un flujo específico (triage tree · ruta cólicos · ruta urgencias · ruta apoyo emocional).
 
-**Por qué importa**: el chat es la diferencia entre "una app más" y "una doula bilingüe que no se cansa". El Modo 3AM es la diferencia entre llamar a urgencias por miedo y resolver con calma a las 4 a.m.
+**Por qué importa**: el chat es la diferencia entre "una app más" y "una doula bilingüe que no se cansa". El Modo madrugada es la diferencia entre llamar a urgencias por miedo y resolver con calma a las 4 a.m.
 
 ---
 
@@ -66,7 +66,7 @@ Lola lleva 1 h 20 min llorando. María durmió 2 h. Pablo trabaja mañana y duer
 ### 2.2 Personas secundarias
 
 - **Pablo · co-cuidador/a no gestante**: usa el chat principal de día para entender qué pasa con el peque y para coordinar con María.
-- **Carmen · monoparental**: usa Modo 3AM como único interlocutor a las 4 a.m.
+- **Carmen · monoparental**: usa Modo madrugada como único interlocutor a las 4 a.m.
 - **Lucía · embarazo arcoíris previo**: usa el chat para ansiedad anticipatoria · jamás en tono celebratorio.
 - **Familia adoptiva o subrogada**: lactancia no aplica · todo lo demás sí · canon ajustado.
 
@@ -75,15 +75,15 @@ Lola lleva 1 h 20 min llorando. María durmió 2 h. Pablo trabaja mañana y duer
 | ID | Caso | Surface |
 | --- | --- | --- |
 | UC-1 | Pregunta clínica diurna ("¿es normal que babee así?") | Chat principal |
-| UC-2 | Triage rápido de fiebre nocturna | Modo 3AM ruta 2 |
-| UC-3 | Cólicos a las 22:00 · ruta cuidado | Modo 3AM ruta 1 |
-| UC-4 | Llanto inconsolable madrugada · cuidador/a al límite | Modo 3AM ruta 3 |
-| UC-5 | Pesadilla toddler · necesita pista | Modo 3AM ruta 1 toddler |
-| UC-6 | Embarazo · síntoma raro 02:00 a.m. | Modo 3AM ruta embarazo |
+| UC-2 | Triage rápido de fiebre nocturna | Modo madrugada ruta 2 |
+| UC-3 | Cólicos a las 22:00 · ruta cuidado | Modo madrugada ruta 1 |
+| UC-4 | Llanto inconsolable madrugada · cuidador/a al límite | Modo madrugada ruta 3 |
+| UC-5 | Pesadilla toddler · necesita pista | Modo madrugada ruta 1 toddler |
+| UC-6 | Embarazo · síntoma raro 02:00 a.m. | Modo madrugada ruta embarazo |
 | UC-7 | Discusión con pareja sobre crianza · necesita 2nd opinion | Chat principal |
 | UC-8 | Cribado canon (EPDS, M-CHAT-R) inducido por chat | Chat principal con tool |
 | UC-9 | Recordar dosis paracetamol pediátrica | Chat principal con calculadora |
-| UC-10 | Sospecha urgencia real · escalada 112 | Modo 3AM ruta 2 alarma |
+| UC-10 | Sospecha urgencia real · escalada 112 | Modo madrugada ruta 2 alarma |
 
 ---
 
@@ -96,13 +96,13 @@ Lola lleva 1 h 20 min llorando. María durmió 2 h. Pablo trabaja mañana y duer
 | Reducción visitas urgencias innecesarias | Self-report "consulté Grow en lugar de urgencias y resolví" | ≥ 30 % usuarios mensuales |
 | Reducción ansiedad nocturna | EPDS/PBA-5 pre/post · diff | -1.5 puntos vs cohorte sin chat |
 | Confianza en marco clínico | Encuesta NPS clínico chat | ≥ 50 NPS |
-| Apertura conversación emocional | % usuari@s que activan ruta 3 Modo 3AM al menos 1 vez | ≥ 15 % |
+| Apertura conversación emocional | % usuari@s que activan ruta 3 Modo madrugada al menos 1 vez | ≥ 15 % |
 | Adherencia a citas pediatra | Conversión "te recomendamos llamar" → llamada real | ≥ 70 % |
 
 ### 3.2 KPIs operativos
 
 - Latencia primera respuesta chat principal · objetivo p50 ≤ 1.5 s · p95 ≤ 4 s.
-- Latencia primera respuesta Modo 3AM · objetivo p50 ≤ 0.8 s · p95 ≤ 2 s (Haiku 4.5).
+- Latencia primera respuesta Modo madrugada · objetivo p50 ≤ 0.8 s · p95 ≤ 2 s (Haiku 4.5).
 - Mensajes/usuari@/sem.
 - % conversaciones con cita clínica fuente+año.
 - % triage trees completados.
@@ -116,7 +116,7 @@ Lola lleva 1 h 20 min llorando. María durmió 2 h. Pablo trabaja mañana y duer
 ### 4.1 In scope · v0 (MVP · 6 m)
 
 - **Chat principal** único · una hebra continua por peque.
-- **Modo 3AM** como sub-modo (no app aparte) · thread efímero · 3 opciones edad-aware.
+- **Modo madrugada** como sub-modo (no app aparte) · thread efímero · 3 opciones edad-aware.
 - **8 chips de cribaje rápido** con triage trees validados.
 - **Contexto pre-cargado** (edad peque, módulos activos, eventos 7 d, modos especiales).
 - **Citas clínicas** siempre con fuente y año · validadas en knowledge base curada.
@@ -221,14 +221,14 @@ Modo3AMThread (efímero, paralelo, NO contamina chatpeque)
 Bottom nav canon · Hoy · Calendario · ⊕ · Chat · Yo
                                           │
                                           ├── Chat principal (default)
-                                          └── Modo 3AM (auto si dentro 22-06h
+                                          └── Modo madrugada (auto si dentro 22-06h
                                               + opt-in al menos 1 vez · banner
                                               switch siempre visible)
 
-Entry adicionales al Modo 3AM:
+Entry adicionales al Modo madrugada:
 - Card "🌙 No estás sola" en Hoy 22:00-06:00
 - Notification "¿necesitas hablar?" si epis cólicos > 30 min
-- Quick log ⊕ → "Algo va mal" → ofrece Modo 3AM
+- Quick log ⊕ → "Algo va mal" → ofrece Modo madrugada
 ```
 
 ### 6.3 Estados del chat
@@ -242,7 +242,7 @@ Chat principal
 ├── Cita clínica embebida (block paper-soft + fuente + año)
 └── Escalada activa (banner persistente · llamar 112 · borde 2px ink)
 
-Modo 3AM
+Modo madrugada
 ├── Pre-apertura (opt-in primera vez)
 ├── Apertura canon (mensaje fijo)
 ├── Selección de 3 opciones (chips grandes dark)
@@ -256,7 +256,7 @@ Modo 3AM
 | Surface | Modelo | Razón |
 | --- | --- | --- |
 | Chat principal · respuestas largas · cribados | **Claude Sonnet 4.6** | Calidad · matiz · trauma-informed |
-| Modo 3AM · triage rápido | **Claude Haiku 4.5** | Latencia · directo |
+| Modo madrugada · triage rápido | **Claude Haiku 4.5** | Latencia · directo |
 | Tool calling (calc dosis · EPDS · M-CHAT-R) | **Claude Haiku 4.5** | Coste + latencia |
 | Resumen al cerrar chat · etiquetas | **Claude Haiku 4.5** | Background |
 
@@ -283,7 +283,7 @@ Modo 3AM
 - Cero diminutivos forzados.
 - Cero religiosidad.
 
-### 7.2 Modo 3AM · 3 opciones edad-aware
+### 7.2 Modo madrugada · 3 opciones edad-aware
 
 **Mensaje canon de apertura** (siempre, sin variación):
 > *"Este es un modo urgencia. Las respuestas son más rápidas, más directas y sin juzgar."*
@@ -353,7 +353,7 @@ EMBARAZO
 
 Disponibles desde:
 - Chips persistentes encima del input del chat principal.
-- Modo 3AM ruta 2 "Le pasa algo a mi peque".
+- Modo madrugada ruta 2 "Le pasa algo a mi peque".
 - Quick log ⊕ → contexto.
 
 **Los 8 árboles** (con detalle clínico ya documentado en respuesta canon previa):
@@ -381,7 +381,7 @@ Cada árbol = mini-encuesta de 2-4 preguntas · output `🚨 / ⚠ / 🟢` + acc
 | `milestone_lookup` | "¿cuándo debería caminar?" | Rango Haizea-Llevant + canon activo |
 | `library_open` | "¿qué hago si llora 1 h?" | Abre Libro de Cólicos |
 | `urgent_call` | Triage devuelve `🚨` | Llamar 112 / 911 / 999 con 1 tap |
-| `relay_partner` | Modo 3AM ruta 3 si pareja en cuenta | Push síncrono al co-cuidador/a |
+| `relay_partner` | Modo madrugada ruta 3 si pareja en cuenta | Push síncrono al co-cuidador/a |
 
 ### 7.5 Contexto pre-cargado en cada mensaje IA
 
@@ -406,7 +406,7 @@ Cada árbol = mini-encuesta de 2-4 preguntas · output `🚨 / ⚠ / 🟢` + acc
 - Quien escribe: María (madre · cuenta principal)
 - Co-cuidador/a en cuenta: Pablo (pareja · sync activo)
 - Idioma preferido: es-ES
-- Hora local: Madrid CET · 03:42 (Modo 3AM activo)
+- Hora local: Madrid CET · 03:42 (Modo madrugada activo)
 
 [Modos especiales]
 - Modo arcoíris: NO
@@ -450,7 +450,7 @@ Las citas se renderizan como tag pill `paper-soft` con fuente + año · tap abre
 - Botón secundario: `Avisar Pablo` (si co-cuidador/a en cuenta).
 - Mensaje: *"Esto necesita atención médica ahora. Si quieres, me quedo contigo mientras llaman."*
 
-**Escalada salud mental** (si Modo 3AM ruta 3 + EPDS positivo o ideación):
+**Escalada salud mental** (si Modo madrugada ruta 3 + EPDS positivo o ideación):
 
 - Banner cat-bienestar-tint borde ink 1.5 px.
 - Botón primario: `Llamar a la línea de ayuda · [número local]`.
@@ -467,7 +467,7 @@ Las citas se renderizan como tag pill `paper-soft` con fuente + año · tap abre
 - Tipografía: títulos **Lenia** medium 18-22 · body **Helvena** regular 14-15.
 - Burbujas IA: `paper-soft` background · ink texto · radius 14 · max 85 % width.
 - Burbujas usuari@: `ink` background · paper texto · radius 14 · alineadas derecha.
-- Modo 3AM: `night` background `#1A1D24` · `night-fg` `#E8E6DF` texto · sin sombras.
+- Modo madrugada: `night` background `#1A1D24` · `night-fg` `#E8E6DF` texto · sin sombras.
 - Cero color brand fuerte en burbujas default.
 - 1 sola CTA primaria por mensaje IA.
 
@@ -483,7 +483,7 @@ Las citas se renderizan como tag pill `paper-soft` con fuente + año · tap abre
 7. **Sticky footer 3**: Disclaimer `Aquí no diagnosticamos. Aquí estamos.`
 8. **Bottom nav canon**.
 
-### 8.3 Frame B · Modo 3AM · apertura
+### 8.3 Frame B · Modo madrugada · apertura
 
 **Composición**:
 1. Background `night` `#1A1D24`.
@@ -495,7 +495,7 @@ Las citas se renderizan como tag pill `paper-soft` con fuente + año · tap abre
    - Cada chip: icon (24 px) + label Lenia medium 17 + sub-label Helvena 12 caption.
 5. **Footer**: link discreto *"volver al chat normal"* · 11 px ink-faint.
 
-### 8.4 Frame C · Modo 3AM · ruta "Le pasa algo" (cribaje)
+### 8.4 Frame C · Modo madrugada · ruta "Le pasa algo" (cribaje)
 
 **Composición**:
 1. Header `← 🌙 Modo urgencia · Lola 18m`.
@@ -509,7 +509,7 @@ Las citas se renderizan como tag pill `paper-soft` con fuente + año · tap abre
    - 🟢 normal: borde dashed + sugerencia + cita.
 6. Footer: chip `Llevarme esto al chat principal cuando me despierte`.
 
-### 8.5 Frame D · Modo 3AM · ruta "No puedo más"
+### 8.5 Frame D · Modo madrugada · ruta "No puedo más"
 
 **Composición trauma-informed canon**:
 1. Header `← 🌙 Estamos aquí · 03:42`.
@@ -527,7 +527,7 @@ Las citas se renderizan como tag pill `paper-soft` con fuente + año · tap abre
    - 5 preguntas validadas.
    - Si score ≥ 13 o ideación → escalada salud mental obligatoria.
 
-### 8.6 Frame E · Cierre Modo 3AM
+### 8.6 Frame E · Cierre Modo madrugada
 
 **Composición**:
 1. Cuando el usuari@ termina un flujo o pulsa `cerrar`.
@@ -611,7 +611,7 @@ If user mentions self-harm or harm to baby → IMMEDIATELY trigger
 mental_health_escalation tool. Do not ask follow-up clarification.
 ```
 
-### 9.3 System prompt Modo 3AM (delta sobre el principal)
+### 9.3 System prompt Modo madrugada (delta sobre el principal)
 
 ```
 You are now in 3AM mode. The user is likely:
@@ -705,7 +705,7 @@ const tools = [
   },
   {
     name: "save_to_chat_main",
-    description: "Cierra Modo 3AM y guarda resumen al chat principal",
+    description: "Cierra Modo madrugada y guarda resumen al chat principal",
     input_schema: { thread_id: "uuid", summary: "string" }
   }
 ];
@@ -740,7 +740,7 @@ const fiebreTree: TriageTree = {
 - *"Buenos días. Te leo."*
 - *"Hola. Estoy aquí."*
 
-### 10.2 Aperturas Modo 3AM
+### 10.2 Aperturas Modo madrugada
 
 - *"Este es un modo urgencia. Las respuestas son más rápidas, más directas y sin juzgar."* **(canon · siempre)**
 
@@ -832,7 +832,7 @@ type TriageRun = {
 ### 11.2 Privacy canon
 
 - Conversaciones cifradas at-rest (AES-256 · Supabase encryption keys).
-- Modo 3AM thread efímero · si usuari@ pulsa "borrar", solo queda agregado anonimizado.
+- Modo madrugada thread efímero · si usuari@ pulsa "borrar", solo queda agregado anonimizado.
 - Cero entrenamiento de modelos de Anthropic con conversaciones de Grow (Anthropic API zero-retention).
 - Cero envío de PII al modelo · solo edad/etapa del peque · nunca nombre completo.
 - Derecho borrado GDPR: usuari@ puede borrar todo el chat por peque.
@@ -871,7 +871,7 @@ type TriageRun = {
 
 ### 12.2 Métricas clínicas
 
-- **Time-to-resolution Modo 3AM mediano** por ruta.
+- **Time-to-resolution Modo madrugada mediano** por ruta.
 - **% triage outcomes urgent_call que llamaron** (self-report 24h después).
 - **% triage normal que NO acabaron en urgencias** (validación clínica).
 - **EPDS detection rate** desde chat.
@@ -884,7 +884,7 @@ type TriageRun = {
 ### 13.1 v0 · MVP · 6 meses
 
 - Chat principal monothread por peque.
-- Modo 3AM con 3 opciones edad-aware.
+- Modo madrugada con 3 opciones edad-aware.
 - 8 triage trees state-machine.
 - 10 tools registradas.
 - Sonnet 4.6 + Haiku 4.5 stack.
@@ -921,24 +921,24 @@ type TriageRun = {
 | **Burnout dependencia chat** | 🟡 media | Chat reconoce patrones · sugiere humanos cuando aplica |
 | **Tono frío en momento vulnerable** | 🟡 media | A/B test tonos · dogfood interno · feedback loop |
 | **Cita clínica desactualizada** | 🟡 media | Update trimestral RAG · alert si guideline > 3 años |
-| **Modo 3AM no accesible cuando se necesita** | 🟡 media | Card persistente Hoy 22:00-06:00 · entry desde widgets · push si epis cólicos > 30 min |
+| **Modo madrugada no accesible cuando se necesita** | 🟡 media | Card persistente Hoy 22:00-06:00 · entry desde widgets · push si epis cólicos > 30 min |
 | **Privacy leak conversación** | 🔴 alta | E2E encryption · zero-retention API · audit anual |
 | **Liability medical advice** | 🔴 alta | Disclaimer canon Fase 0 · canon "no diagnosticamos" en cada respuesta · escalada urgencias automatizada · seguro RC |
 | **Multilingüe inconsistente** | 🟡 media | Eval por idioma · no traducción literal · canon adaptado |
-| **Modo 3AM contamina chat principal con ansiedad** | 🟡 media | Thread efímero opt-in para guardar · resumen sintético si guarda |
+| **Modo madrugada contamina chat principal con ansiedad** | 🟡 media | Thread efímero opt-in para guardar · resumen sintético si guarda |
 
 ---
 
 ## 15 · Decisiones abiertas
 
 1. **Modelo chat principal**: Sonnet 4.6 vs Sonnet 4.7 (1M context). Recomendación: 4.6 por coste · 4.7 si presupuesto.
-2. **Modo 3AM auto-activación**: pasiva (banner switch) vs activa (default si dentro de 22-06h tras opt-in). Recomendación: opt-in primera vez · luego auto.
+2. **Modo madrugada auto-activación**: pasiva (banner switch) vs activa (default si dentro de 22-06h tras opt-in). Recomendación: opt-in primera vez · luego auto.
 3. **Voice v0**: incluir o no. Recomendación: NO · v1.5.
-4. **Borrado completo Modo 3AM**: ¿borra hasta de métricas agregadas? Recomendación: solo conversación · agregado anonimizado se mantiene.
+4. **Borrado completo Modo madrugada**: ¿borra hasta de métricas agregadas? Recomendación: solo conversación · agregado anonimizado se mantiene.
 5. **Multi-perfil chat**: ¿chat compartido pareja o individual? Recomendación: chat por cuenta · cada cuidador/a el suyo · pero con visibilidad sincronizada (canon §14 cuenta compartida).
 6. **Embedding model**: Voyage-3-large vs OpenAI text-embedding-3-large. Recomendación: Voyage por dominio clínico.
 7. **Triage tree determinismo**: state machine puro vs IA-modulated. Recomendación: state machine puro · IA solo añade glosa.
-8. **Latencia objetivo Modo 3AM**: p50 0.5s vs 0.8s. Recomendación: 0.8 inicial · iterar.
+8. **Latencia objetivo Modo madrugada**: p50 0.5s vs 0.8s. Recomendación: 0.8 inicial · iterar.
 
 ---
 
@@ -962,10 +962,10 @@ type TriageRun = {
 ### 16.3 Cross-ref con otros docs canon
 
 - `wireframes-v2.html · §11 Chat IA contextual` (frames lo-fi base).
-- `wireframes-v2.html · §12 Modo 3AM` (5 rutas canónicas previas · ahora canónico 3 rutas edad-aware).
+- `wireframes-v2.html · §12 Modo madrugada` (5 rutas canónicas previas · ahora canónico 3 rutas edad-aware).
 - `wireframes-v2.html · §13 Screening EPDS` (cribado embebido).
 - `wireframes-v2.html · §14 Cuenta compartida` (relevo + visibilidad).
-- `wireframes-v2.html · §16 Settings` (toggle Modo 3AM auto / manual).
+- `wireframes-v2.html · §16 Settings` (toggle Modo madrugada auto / manual).
 - `PRD-libro-colicos-v0.1.md` (cross-ref bidireccional).
 - `prototype.html · landing` (entry chat desde web).
 - `Notion · Diferenciales Grow` (canon trauma-informed).
@@ -994,4 +994,4 @@ type TriageRun = {
 
 ---
 
-*PRD · Chat IA + Modo 3AM · Grow v0.1 · canon Fase 0 · alineado con DS Grow v0.2 · abril 2026*
+*PRD · Chat IA + Modo madrugada · Grow v0.1 · canon Fase 0 · alineado con DS Grow v0.2 · abril 2026*

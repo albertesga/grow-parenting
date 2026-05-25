@@ -16,7 +16,7 @@ todo está documentado · si lo necesitas, busca antes de crear.
 1. **Antes de crear cualquier `.{algo}` nuevo en CSS** · grep el DS y el
    prototype:
    ```bash
-   grep -n "\.{primitive}" "design/Grow Design System v0.2.html" prototype.html landing/styles.css
+   grep -n "\.{primitive}" "design/Grow Design System v0.2.html" prototype.html homepage/styles.css
    ```
    Si existe en cualquier sitio · **reusa**, no recrees.
 

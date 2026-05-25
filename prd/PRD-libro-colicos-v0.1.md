@@ -16,7 +16,7 @@ Los cólicos del lactante afectan a **~20 % de los bebés sanos** en los primero
 4. **Plan IA de descarte** (APLV · frenillo · reflujo · sobre-cansancio · fiebre) cross-linkeado con Caca tracker, Lactancia, Sueño y Salud.
 5. **Educación PURPLE Crying + safety frame** anti-shaken-baby con NSBSP.
 6. **Relevo de co-cuidador/a** vía cuenta compartida.
-7. **Modo 3AM** ruta canónica "No para de llorar".
+7. **Modo madrugada** ruta canónica "No para de llorar".
 
 Todo siguiendo el DS Grow v0.2 (Lenia + Helvena · 8 categorías canon · `.cat-card` salud + estados doing/done/snoozed · paleta paper/ink + tints).
 
@@ -90,7 +90,7 @@ Fuente: Kurth et al. *J Adv Nurs* 2011 · canon NSBSP.
 | UC-2 | Episodio en curso · pánico parental nocturno | Pico crítico |
 | UC-3 | Patrón recurrente · "¿es cólico de verdad?" | Validación Wessel |
 | UC-4 | Sospecha causa tratable · "¿es APLV?" | Plan descarte |
-| UC-5 | Agotamiento extremo · "no puedo más" | Modo 3AM ruta 3 |
+| UC-5 | Agotamiento extremo · "no puedo más" | Modo madrugada ruta 3 |
 | UC-6 | Pareja necesita relevar · "ven, ya no puedo" | Cuenta compartida |
 | UC-7 | Educación preventiva · 1ª sem postparto | Onboarding pasivo |
 | UC-8 | Escalada urgencias · síntoma de alarma | Triage tree |
@@ -130,7 +130,7 @@ Fuente: Kurth et al. *J Adv Nurs* 2011 · canon NSBSP.
 - Wessel auto-detect.
 - Diario de episodios persistente.
 - Cross-ref a Caca tracker, Lactancia, Sueño.
-- Modo 3AM ruta "No para de llorar".
+- Modo madrugada ruta "No para de llorar".
 - Relevo co-cuidador/a vía cuenta compartida.
 - Educación PURPLE Crying con safety frame anti-shaken-baby.
 - Idioma: ES (España) + EN (paralelo).
@@ -175,7 +175,7 @@ Fuente: Kurth et al. *J Adv Nurs* 2011 · canon NSBSP.
 | **PURPLE Crying** (NSBSP) | Educación normalizadora · anti-shaken-baby | Frame F + sticky en Home |
 | **L. reuteri DSM 17938** (Indrio 2014, Sung 2018 metaanálisis) | Evidencia probiótica EXCLUSIVAMENTE en lactantes maternos · NO en formula-fed | Educación pasiva v0 · recomendación activa v1.5 con disclaimer |
 | **Cochrane breastfeeding analgesia** | Lactancia reduce dolor en procedimientos | Cross-ref Lactancia |
-| **NSBSP 4-step safety plan** | Si no puedes más: cuna + alejarse 5 min + respirar + pedir relevo | Frame F + Modo 3AM ruta 3 |
+| **NSBSP 4-step safety plan** | Si no puedes más: cuna + alejarse 5 min + respirar + pedir relevo | Frame F + Modo madrugada ruta 3 |
 
 ### 5.2 Adaptado
 
@@ -208,7 +208,7 @@ El bottom nav canon de Grow es **5-tab + FAB central coral**:
 
 1. **Card categoría 🌡 Salud en Hoy** durante 1-6 sem postparto (educación preventiva pasiva).
 2. **Card categoría 🌡 Salud en Calendario · pestaña Hitos** durante 1 sem - 4 m (acceso longitudinal).
-3. **Modo 3AM · ruta "No para de llorar"** (entry crítico nocturno).
+3. **Modo madrugada · ruta "No para de llorar"** (entry crítico nocturno).
 4. **Cry classifier desde Quick log ⊕** (entry rápido para análisis puntual).
 
 ### 6.2 Diferencia vs Libro de Vacunas
@@ -234,7 +234,7 @@ Estado del Libro
 │   ├── Trigger A · auto: 3 episodios > 30 min en 1 sem
 │   ├── Trigger B · cry classifier detecta patrón cólico
 │   ├── Trigger C · usuari@ activa manual desde Hoy
-│   └── Trigger D · Modo 3AM ruta 1 lo abre on-the-fly
+│   └── Trigger D · Modo madrugada ruta 1 lo abre on-the-fly
 │
 ├── Activo (1 sem - 4 m)
 │   ├── Card destacada en Hoy todos los días
@@ -259,7 +259,7 @@ Estado del Libro
 | **§10.3 Lactancia** | LATCH score → descartar frenillo · descartar agarre |
 | **§10.5 Salud** | Tabla síntomas alarma vs cólicos clásicos |
 | **§11 Chat IA** | Contexto pre-cargado "+ episodio cólicos en curso" |
-| **§12 Modo 3AM** | Ruta "No para de llorar" entry directo |
+| **§12 Modo madrugada** | Ruta "No para de llorar" entry directo |
 | **§13 EPDS** | Trigger EPDS si Wessel + agotamiento severo |
 | **§14 Cuenta compartida** | Push síncrono "María lleva 30 min · ¿paso a Pablo?" |
 
@@ -430,12 +430,12 @@ Su cuello no aguanta.
 **Edge case · solo cuidador/a**:
 - Si no hay co-cuidador/a, sugerir red de apoyo (configurada en onboarding) o llamada a emergencia emocional (modo arcoíris).
 
-### 7.7 Modo 3AM · ruta "No para de llorar"
+### 7.7 Modo madrugada · ruta "No para de llorar"
 
 Ya canon en `grow-wireframes-v2.html` §12 + spec chat. Aquí solo recap:
 
 ```
-Modo 3AM (22:00-06:00) · ruta 1 "No para de llorar"
+Modo madrugada (22:00-06:00) · ruta 1 "No para de llorar"
 │
 ├── Quick triage (3 preguntas dark mode)
 │   ├── ¿Tiene fiebre? → triage fiebre
@@ -571,7 +571,7 @@ TRIGGER B · Cry classifier prolongado
 TRIGGER C · Manual
   Card en Hoy "🌡 Activar libro de cólicos" siempre disponible 1 sem - 4 m
 
-TRIGGER D · Modo 3AM ruta 1
+TRIGGER D · Modo madrugada ruta 1
   Abre el libro on-the-fly sin pedir confirmación
 ```
 
@@ -670,7 +670,7 @@ Si flag_semana(actual) = true para 3 sem consecutivas:
 **Safety frame · 4 pasos**:
 > *"Si sientes que no puedes más: pon a Lola en la cuna boca arriba · aléjate 5 min · respira · vuelve cuando estés mejor. La cuna es lo más seguro. Tú eres lo más importante."*
 
-**Modo 3AM apertura**:
+**Modo madrugada apertura**:
 > *"Es de noche. Vamos por orden. Primero, ¿tiene fiebre?"*
 
 ### 10.3 Lo que NUNCA decimos
@@ -720,7 +720,7 @@ type LibroColicosState = {
   estado: 'pre-activacion'|'activable'|'activo'|'resuelto';
   activadoTs: Date | null;
   resueltoTs: Date | null;
-  triggerActivacion: 'auto-3eps'|'cry-classifier'|'manual'|'modo-3am';
+  triggerActivacion: 'auto-3eps'|'cry-classifier'|'manual'|'modo-madrugada';
 };
 ```
 
@@ -783,7 +783,7 @@ type LibroColicosState = {
 - Wessel auto-detect.
 - Diario persistente sincronizado.
 - Cross-ref Caca tracker, Lactancia, Sueño.
-- Modo 3AM ruta 1.
+- Modo madrugada ruta 1.
 - Relevo cuenta compartida.
 - PURPLE education + safety.
 - ES + EN.
@@ -819,7 +819,7 @@ type LibroColicosState = {
 | **Privacy leak audio** | 🔴 alta | Audit técnico independiente + tests on-device + audit logs |
 | **Liability si peque tiene problema serio** | 🔴 alta | Disclaimer canon Fase 0 + escalada urgente automatizada + insurance B2C |
 | **L. reuteri recomendación equivocada** (formula-fed) | 🟡 media | Cross-check tipo alimentación antes de mostrar · canon "solo lactantes maternos" |
-| **Adopción baja** (padres no abren libro) | 🟢 baja | Activación auto + entry desde Modo 3AM + card persistente Hoy |
+| **Adopción baja** (padres no abren libro) | 🟢 baja | Activación auto + entry desde Modo madrugada + card persistente Hoy |
 
 ---
 
@@ -868,7 +868,7 @@ type LibroColicosState = {
 ### 16.3 Cross-ref con otros docs canon
 
 - `wireframes-v2.html · §10.5 Módulo Cólicos` (frames lo-fi base).
-- `wireframes-v2.html · §12 Modo 3AM` (ruta nocturna).
+- `wireframes-v2.html · §12 Modo madrugada` (ruta nocturna).
 - `wireframes-v2.html · §14 Cuenta compartida` (relevo).
 - `wireframes-v2.html · §10.2 Caca tracker` (BITSS · descartar APLV).
 - `wireframes-v2.html · §10.3 Lactancia` (LATCH · descartar frenillo).

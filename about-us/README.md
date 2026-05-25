@@ -13,7 +13,7 @@ Landing narrativa con scroll parallax · Next.js 14 + Tailwind + Framer Motion.
 ## Estructura
 
 ```
-landing-v4/
+about-us/
 ├── app/
 │   ├── layout.tsx          # html lang="es" · body class Grift
 │   ├── page.tsx            # renders <LandingPage />
@@ -35,7 +35,7 @@ landing-v4/
 ## Setup
 
 ```bash
-cd landing-v4
+cd about-us
 npm install
 npm run dev
 ```
@@ -50,8 +50,8 @@ El componente espera `/img/inti.svg` (placeholder actual).
 
 **Para usar tu foto real:**
 
-1. Guarda la foto como `landing-v4/public/img/inti.jpg`
-2. Edita `landing-v4/components/IntroPhotoSection.tsx`
+1. Guarda la foto como `about-us/public/img/inti.jpg`
+2. Edita `about-us/components/IntroPhotoSection.tsx`
 3. Reemplaza ambas instancias de `src="/img/inti.svg"` por `src="/img/inti.jpg"`
 4. Para versión optimizada · considera migrar a `<Image>` de `next/image`
    (más performance, lazy load automático)
@@ -61,7 +61,7 @@ El componente espera `/img/inti.svg` (placeholder actual).
 El componente `GrowLogo.tsx` renderiza un SVG inline aproximado al wordmark.
 Si tienes el SVG real:
 
-1. Guarda como `landing-v4/public/img/grow-logo.svg`
+1. Guarda como `about-us/public/img/grow-logo.svg`
 2. Edita `LandingPage.tsx` para usar `<img src="/img/grow-logo.svg" alt="Grow" />`
    en lugar de `<GrowLogo />`
 
@@ -131,7 +131,7 @@ Actualmente carga TTFs. Para mejor performance (~40% más pequeños):
 - **No backend** · 100% static · deployable a Vercel/Netlify sin config extra
 - **Grift como única font** · contradice el typography canon del repo Grow
   (ver `.agent/rules/typography.md`) · es decisión explícita del user para
-  esta landing-v4 específica
+  esta about-us específica
 - **Stack independiente del harness** · este proyecto no aplica las rules de
   `.agent/rules/` del repo Grow
 

@@ -1,4 +1,4 @@
-# ADR-0005 · Chat IA · single-thread + Modo 3AM efímero
+# ADR-0005 · Chat IA · single-thread + Modo madrugada efímero
 
 **Status:** Accepted
 **Date:** 2026-05-09 → 2026-05-11 (Fases A-F)
@@ -39,7 +39,7 @@ DS § V · 13 sub-secciones canonical · documenta toda la architecture.
 ## Consequences
 
 - ✓ Continuidad emocional · una sola conversación, no fragmentada
-- ✓ Modo 3AM no estigmatiza · efímero por diseño (no historial visible)
+- ✓ Modo madrugada no estigmatiza · efímero por diseño (no historial visible)
 - ✓ Triage trees con outcome estructurado · `urgent / caution / safe` badges
 - ✓ Cross-ref a libros vía tool-cards · no requiere context switch mental
 - ⚠ Single thread puede crecer mucho · v1.5 considerar archivo por mes

@@ -26,7 +26,7 @@ Además faltaba un sitio canónico para:
 | 3 | Cuidadores | Lista María (admin) + Pablo · CTA Invitar a otra persona |
 | 4 | Modos especiales | 🌈 Arcoíris · 🐣 Preemie · 💪 Monoparental (toggles iOS-style) |
 | 5 | País + emergencias | 🇪🇸 ES · 112 · 024 (auto-detect via navigator.language) |
-| 6 | Notificaciones | Por libro: Vacunas · Sueño · Hitos · Modo 3AM (toggles) |
+| 6 | Notificaciones | Por libro: Vacunas · Sueño · Hitos · Modo madrugada (toggles) |
 | 7 | Plan | Free actual + CTA Mejorar a Premium (callout coral) |
 | 8 | Privacidad | Solo local · Compartir pediatra · Analytics + Export JSON GDPR |
 | 9 | Cuenta | Email · Cambiar password · Cerrar sesión · Eliminar cuenta (danger) |

@@ -123,7 +123,7 @@ h1 { font-family: var(--font-text); }
 ## Archivos de fonts
 
 ```
-landing/assets/fonts/
+homepage/assets/fonts/
   ├── TBJGaliner-Light.ttf  TBJGaliner-Regular.ttf  TBJGaliner-Bold.ttf
   ├── InterVariable.woff2  InterVariable-Italic.woff2
   └── Grift-{Thin..Black}.ttf  +  Grift-{...}Italic.ttf  (18 archivos)

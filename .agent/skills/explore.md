@@ -38,7 +38,7 @@ NO leas `.agent/rules/*` enteros · solo los que aplican.
 
 ```bash
 # ¿Existe ya un primitive como el que necesito?
-grep -n "\.{candidato}" "design/Grow Design System v0.2.html" prototype.html landing/styles.css
+grep -n "\.{candidato}" "design/Grow Design System v0.2.html" prototype.html homepage/styles.css
 
 # ¿Qué ADRs hablan de este primitive / dominio?
 grep -l "{keyword}" docs/decisions/*.md
