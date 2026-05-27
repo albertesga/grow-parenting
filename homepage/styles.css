@@ -305,10 +305,6 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      /* isolation: isolate · crea stacking context para que mix-blend-mode
-         de los videos hijo solo afecte al area del hero-avatar (NO blende
-         contra TODA la página). Crítico para que el blend funcione bien. */
-      isolation: isolate;
     }
     .hero-avatar::before {
       content: "";
@@ -320,10 +316,12 @@
       pointer-events: none;
       z-index: 0;
     }
-    /* Hero avatar · 2 videos kling apilados · CSS mix-blend-mode: lighten
-       elimina el fondo negro (cada píxel · max(source, dest) · negro pierde
-       contra paper cream). Approach CSS-only · cero canvas · zero JS chroma.
-       Funciona en todos los browsers modernos (Safari + Chrome + FF + Edge). */
+    /* Hero avatar · 2 videos kling apilados · SVG filter "luma-to-alpha"
+       (definido en index.html sprite) convierte el fondo negro del MP4
+       directamente en alpha 0 (transparente). feColorMatrix mapping ·
+       alpha = R+G+B (clamped 0-1) · negro puro → 0 · avatar claro → ~1.
+       Mucho más reliable que mix-blend-mode porque NO depende del stacking
+       context · funciona en cualquier background (paper · dark · ink). */
     .hero-avatar-vid {
       position: absolute;
       inset: 7%;
@@ -333,12 +331,8 @@
       z-index: 1;
       pointer-events: none;
       transition: opacity 400ms cubic-bezier(0.4, 0, 0.6, 1);
-      /* Blend mode · "lighten" toma el pixel más claro entre video y
-         background paper-cream · negro del MP4 → paper visible · avatar
-         (más claro que paper) → avatar visible.
-         IMPORTANTE · requiere isolation:isolate en el contenedor para
-         crear stacking context (sino blende contra TODA la página). */
-      mix-blend-mode: lighten;
+      filter: url(#luma-to-alpha);
+      -webkit-filter: url(#luma-to-alpha); /* Safari < 15.4 */
     }
     .hero-avatar-vid--tap {
       opacity: 0;
