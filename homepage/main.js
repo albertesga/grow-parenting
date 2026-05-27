@@ -680,16 +680,19 @@
         (async () => {
           const isMobile = window.matchMedia("(max-width: 960px)").matches;
           const HERO_FRAMES = reduced ? 2 : (isMobile ? 20 : 36);
+          console.log("[hero-avatar] boot · frames=" + HERO_FRAMES);
           try {
             const [fs, ft] = await Promise.all([
               extractFrames("assets/hero-scroll.mp4", HERO_FRAMES),
               extractFrames("assets/hero-tap.mp4", HERO_FRAMES)
             ]);
+            console.log("[hero-avatar] frames decoded · scroll=" + fs.length + " tap=" + ft.length);
             heroFramesScroll = fs;
             heroFramesTap = ft;
             /* Ajustar canvas internal size al nativo · evita stretch borroso */
             const ref = heroFramesScroll[0];
             if (ref) {
+              console.log("[hero-avatar] frame size · " + ref.width + "x" + ref.height);
               heroCanvasScroll.width = ref.width;
               heroCanvasScroll.height = ref.height;
               const refTap = heroFramesTap[0] || ref;
@@ -701,12 +704,18 @@
             paintCanvas(heroCanvasTap, heroFramesTap[0]);
             heroCanvasScroll.classList.add("is-ready");
             heroCanvasTap.classList.add("is-ready");
+            console.log("[hero-avatar] is-ready · canvases visibles");
             /* Hook scroll listener · primer paint con progreso actual */
             window.addEventListener("scroll", onHeroScroll, { passive: true });
             onHeroScroll();
           } catch (e) {
-            /* Si falla la extracción · el hero se queda sin avatar visible
-               pero el resto de la página funciona · graceful degradation. */
+            /* Si falla la extracción · loguea el error · fallback sin chroma. */
+            console.error("[hero-avatar] chroma extraction failed:", e);
+            /* Fallback · usar <video> direct play sin chroma (fondo negro pero
+               algo visible mejor que nada). Recurso al elemento canvas como
+               <video> via background trick. */
+            heroCanvasScroll.style.opacity = "0.4";
+            heroCanvasScroll.style.background = "rgba(255,0,0,0.1)";
           }
         })();
 
