@@ -253,55 +253,67 @@
         const HALO_SIZE = 460; // matches CSS width/height
         const HALO_HALF = HALO_SIZE / 2;
 
-        function center(el) {
-          const r = el.getBoundingClientRect();
-          return { x: r.left + r.width / 2, y: r.top + r.height / 2, w: r.width };
-        }
-
-        // Sticky offset del .avatar-stage en CSS (top: 96px) · progress=1
-        // cuando el STAGE alcanza esta posición · medimos sobre .avatar-stage
-        // (NO sobre .frame · el frame está 60px más abajo por padding y
-        // hace que progress se quede en ~0.92 perpetuamente cuando sticky
-        // está activo · el halo aparecía siempre por encima del avatar).
+        // Sticky offset del .avatar-stage en CSS (top: 96px). Cuando el
+        // scrollY hace que stage_pageY - scrollY = 96, sticky activa.
         const SEC2_STICKY_TOP = 96;
-        // Empieza la interpolación antes de que el stage llegue al sticky
-        // (cuando aparece a 60% del viewport desde abajo) · así el halo
-        // llega a su posición final exactamente al activarse el sticky,
-        // no después.
-        const SEC2_START_RATIO = 0.6;
+        // Cuándo arranca la transición de halo · 40% del scroll del hero ·
+        // antes de esto halo queda anchored en hero · evita movimientos
+        // raros mientras el user está leyendo el hero.
+        const HERO_KICKOFF_RATIO = 0.4;
         // Nudge Y para alinear el centro del halo con el visible avatar
         // dentro del canvas (kling parallax mp4 no está exactamente al
         // centro geométrico del frame · este offset lo empuja hacia abajo).
         const SEC2_Y_NUDGE = 30;
 
+        function rectInfo(el) {
+          const r = el.getBoundingClientRect();
+          return {
+            cx: r.left + r.width / 2,
+            cy: r.top + r.height / 2,
+            top: r.top,
+            w: r.width,
+            h: r.height,
+          };
+        }
+
         let ticking = false;
         function update() {
           ticking = false;
-          const vh = window.innerHeight;
-          const hero = center(heroAvatar);
+          const scrollY = window.scrollY || window.pageYOffset || 0;
+          const hero = rectInfo(heroAvatar);
 
           if (!sec2Stage || !sec2Frame) {
             // No parallax · halo siempre en hero
             halo.style.transform =
-              `translate(${(hero.x - HALO_HALF).toFixed(1)}px, ${(hero.y - HALO_HALF).toFixed(1)}px) scale(1)`;
+              `translate(${(hero.cx - HALO_HALF).toFixed(1)}px, ${(hero.cy - HALO_HALF).toFixed(1)}px) scale(1)`;
             return;
           }
 
-          // Progress basado en .avatar-stage (no en .frame) · clave para
-          // que progress alcance 1.0 EXACTO al activarse sticky en vez de
-          // quedarse en ~0.92 (que dejaba el halo siempre por encima).
-          const stageRect = sec2Stage.getBoundingClientRect();
-          const stageTop = stageRect.top;
-          const start = vh * SEC2_START_RATIO;  // empieza interpolar antes
-          const end   = SEC2_STICKY_TOP;        // progress=1 al activarse sticky
-          const progress = Math.max(0, Math.min(1, (start - stageTop) / (start - end)));
+          const stage = rectInfo(sec2Stage);
+          const sec2  = rectInfo(sec2Frame);
 
-          // Posición target del halo · .frame para X · .frame + nudge para Y
-          const sec2 = center(sec2Frame);
-          const targetSec2X = sec2.x;
-          const targetSec2Y = sec2.y + SEC2_Y_NUDGE;
-          const x = hero.x + (targetSec2X - hero.x) * progress;
-          const y = hero.y + (targetSec2Y - hero.y) * progress;
+          // Progress basado en scrollY entre 2 anchors estables del DOM:
+          //   start · scrollY donde el hero se vuelve "leaving" (40% scrolled)
+          //   end   · scrollY donde el stage sticky-activa (stage_pageY - 96)
+          // Como ambos son page-Y absolutos (rect.top + scrollY) las anclas
+          // son estables y la interpolación es continua · no hay dead zone
+          // donde hero ya salió y sec2 aún no entró (el halo seguía hero.y
+          // negativo · disappeared above viewport).
+          const heroPageY = hero.top + scrollY;
+          const stagePageY = stage.top + scrollY;
+          const startScroll = heroPageY + hero.h * HERO_KICKOFF_RATIO;
+          const endScroll = stagePageY - SEC2_STICKY_TOP;
+          const span = Math.max(1, endScroll - startScroll);
+          const progress = Math.max(0, Math.min(1, (scrollY - startScroll) / span));
+
+          // Posición target del halo · interpolada entre hero center y
+          // sec2 frame center (+nudge Y) usando las posiciones ACTUALES en
+          // viewport · cuando ambos están off-screen pero progress=0.5,
+          // halo termina en viewport center (visible) en vez de off-screen.
+          const targetSec2X = sec2.cx;
+          const targetSec2Y = sec2.cy + SEC2_Y_NUDGE;
+          const x = hero.cx + (targetSec2X - hero.cx) * progress;
+          const y = hero.cy + (targetSec2Y - hero.cy) * progress;
 
           // Interpolar escala · hero más grande (1.0) · sec2 más pequeño (0.72)
           const scaleHero = 1.0;
