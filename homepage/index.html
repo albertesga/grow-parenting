@@ -10,6 +10,13 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+  <!-- Floating halo · burbuja coral que viaja por el scroll desde detrás
+       del hero avatar hasta detrás del avatar parallax de sección 2 · su
+       posición + scale + opacity se actualizan en main.js (initHaloTraveler).
+       Position: fixed para flotar sobre el layout · z-index: 0 para quedar
+       detrás de los contenidos · pointer-events: none para no bloquear. -->
+  <div class="floating-halo" id="floating-halo" aria-hidden="true"></div>
+
   <!-- ════════════════════════════════════════════════════════════════════
        SVG SPRITE · iconos (chroma key del parallax vive en JS, no aquí)
        ════════════════════════════════════════════════════════════════════ -->

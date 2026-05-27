@@ -222,6 +222,89 @@
         updateParallax();
       }
 
+      /* 3.5 · Floating halo traveler · burbuja coral que vive en body
+         (position: fixed) y viaja desde detrás del hero avatar hasta
+         detrás del avatar parallax de sección 2 conforme el user hace
+         scroll. Cuando ambos están off-screen (después de sec 2), el
+         halo se queda en la última posición conocida.
+
+         Estrategia · cada scroll frame:
+           1. Medimos rect del hero avatar + frame del parallax
+           2. Calculamos progress 0-1 en función de la sec2.top vs vh
+              · sec2.top >= vh    → progress 0 (halo en hero)
+              · sec2.top <= 0     → progress 1 (halo en sec2)
+              · between           → interpolación lineal
+           3. Interpolamos posición + scale + opacity entre los 2 endpoints
+           4. Aplicamos transform translate(px,px) scale + opacity
+
+         Notas:
+           - Si sec2 frame no existe (mobile), halo solo sigue hero
+           - Si user prefers-reduced-motion: el halo igual viaja (es scroll
+             driven · no es animation independiente · no rompe accessibility)
+           - rAF throttle para suavidad sin saturar scroll handler */
+      (() => {
+        const halo = document.getElementById("floating-halo");
+        if (!halo) return;
+        const heroAvatar = document.getElementById("hero-avatar");
+        const sec2Frame  = document.querySelector(".avatar-stage .frame");
+        if (!heroAvatar) return;
+
+        const HALO_SIZE = 460; // matches CSS width/height
+        const HALO_HALF = HALO_SIZE / 2;
+
+        function center(el) {
+          const r = el.getBoundingClientRect();
+          return { x: r.left + r.width / 2, y: r.top + r.height / 2, w: r.width };
+        }
+
+        let ticking = false;
+        function update() {
+          ticking = false;
+          const vh = window.innerHeight;
+          const hero = center(heroAvatar);
+
+          if (!sec2Frame) {
+            // No parallax · halo siempre en hero
+            halo.style.transform =
+              `translate(${(hero.x - HALO_HALF).toFixed(1)}px, ${(hero.y - HALO_HALF).toFixed(1)}px) scale(1)`;
+            return;
+          }
+
+          const sec2 = center(sec2Frame);
+          // Progress: 0 cuando sec2 está fuera abajo · 1 cuando alcanza top viewport
+          const sec2TopVp = sec2.y - sec2.w / 2; // sec2.top
+          const progress = Math.max(0, Math.min(1, 1 - sec2TopVp / vh));
+
+          // Interpolar posición
+          const x = hero.x + (sec2.x - hero.x) * progress;
+          const y = hero.y + (sec2.y - hero.y) * progress;
+
+          // Interpolar escala · hero más grande (1.0) · sec2 más pequeño (0.78)
+          // Tamaño base del halo (460) cubre bien el hero ~520px ·
+          // sec2 frame ~320px requiere scale ~0.72 para ajustar
+          const scaleHero = 1.0;
+          const scaleSec2 = 0.72;
+          const scale = scaleHero + (scaleSec2 - scaleHero) * progress;
+
+          halo.style.transform =
+            `translate(${(x - HALO_HALF).toFixed(1)}px, ${(y - HALO_HALF).toFixed(1)}px) scale(${scale.toFixed(3)})`;
+        }
+
+        function onScroll() {
+          if (!ticking) {
+            requestAnimationFrame(update);
+            ticking = true;
+          }
+        }
+
+        update();
+        // Reveal después del primer frame (evita flash inicial en posición default)
+        requestAnimationFrame(() => halo.classList.add("is-ready"));
+
+        window.addEventListener("scroll", onScroll, { passive: true });
+        window.addEventListener("resize", onScroll, { passive: true });
+      })();
+
       /* 4 · sticky-cta visible cuando block2 entra en viewport */
       if (block2 && "IntersectionObserver" in window) {
         const io = new IntersectionObserver((entries) => {
