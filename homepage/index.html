@@ -152,15 +152,13 @@
            1.2 hace que el nuevo edge sea anti-aliased suave en lugar de
            binario. -->
       <filter id="luma-to-alpha" color-interpolation-filters="sRGB">
-        <!-- Path A · preserva source RGB intacto (ojos, sonrisa) -->
         <feColorMatrix in="SourceGraphic" type="matrix" result="orig" values="
           1 0 0 0 0
           0 1 0 0 0
           0 0 1 0 0
           0 0 0 1 0"/>
-        <!-- Path B · matte closing 15 fills eye holes en la silueta. -->
-        <feMorphology in="SourceGraphic" operator="dilate" radius="15"/>
-        <feMorphology operator="erode" radius="15"/>
+        <feMorphology in="SourceGraphic" operator="dilate" radius="12"/>
+        <feMorphology operator="erode" radius="12"/>
         <feColorMatrix type="matrix" values="
           0 0 0 0 0
           0 0 0 0 0

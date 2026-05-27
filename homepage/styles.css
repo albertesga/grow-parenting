@@ -333,13 +333,6 @@
       transition: opacity 400ms cubic-bezier(0.4, 0, 0.6, 1);
       filter: url(#luma-to-alpha);
       -webkit-filter: url(#luma-to-alpha); /* Safari < 15.4 */
-      /* Mask fade 60→64% · el kling MP4 tiene un "stand/feet" debajo del
-         head ball con una grieta dark visible (y=441-461 = video element
-         59-64%) · esta zona se ve "rara" según el user · mask transparenta
-         el bottom del video preservando el head ball completo (ojos +
-         sonrisa intactos) · transición suave 60-64% evita corte sharp. */
-      -webkit-mask-image: linear-gradient(to bottom, #000 60%, transparent 64%);
-      mask-image: linear-gradient(to bottom, #000 60%, transparent 64%);
     }
     .hero-avatar-vid--tap {
       opacity: 0;
@@ -2020,6 +2013,45 @@
       .block { padding: 56px 0; }
       .wrap { padding: 60px 22px; }
       .libros-grid { grid-template-columns: 1fr 1fr; }
+      .flow .wrap { padding: 72px 22px 80px; }
+      .flow-head { margin-bottom: 32px; }
+      .flow-rail {
+        grid-template-columns: 1fr;
+        gap: 14px;
+      }
+      .flow-rail::before {
+        top: 22px;
+        bottom: 22px;
+        left: 22px;
+        right: auto;
+        width: 2px;
+        height: auto;
+        background: linear-gradient(180deg, var(--mint-base), var(--gold-base), var(--blush-base));
+      }
+      .flow-step {
+        min-height: 0;
+        padding: 22px 20px 22px 66px;
+        border-radius: 28px;
+      }
+      .flow-step-head {
+        min-height: 0;
+        justify-content: flex-start;
+      }
+      .flow-index {
+        position: absolute;
+        top: 20px;
+        left: 0;
+        transform: translateX(-50%);
+        width: 44px;
+        height: 44px;
+      }
+      .flow-icon {
+        width: 48px;
+        height: 48px;
+        border-radius: 17px;
+      }
+      .flow-step h3 { max-width: 12ch; }
+      .flow-step p { max-width: none; }
       .threeam .wrap { grid-template-columns: 1fr; gap: 36px; }
       .comite-grid { grid-template-columns: 1fr 1fr; }
       /* Tablet/mid · stack 1-col (con 3 plans, 2-col dejaría 1 lonely) */
@@ -2036,6 +2068,29 @@
       .quote-rotator { height: 6.5em; }
       .r-book { flex: 0 0 96px; height: 144px; }
       /* .r-book.is-large mobile rule retirado · ya no hay shelves is-large */
+      .flow-rail { padding-left: 16px; }
+      .flow-rail::before { left: 16px; }
+      .flow-step { padding: 20px 18px 20px 50px; }
+      .flow-index {
+        width: 38px;
+        height: 38px;
+        font-size: 10px;
+      }
+      .flow-tag {
+        font-size: 8.5px;
+        letter-spacing: 0.12em;
+      }
+      .flow-step h3 {
+        font-size: 28px;
+        max-width: 11ch;
+      }
+      .flow-log { grid-template-columns: 1fr; }
+      .flow-agenda span,
+      .flow-books span {
+        flex-direction: column;
+        gap: 2px;
+      }
+      .flow-share span { border-radius: 24px; }
       .trust-row { grid-template-columns: 1fr; }
       .site-foot .inner { grid-template-columns: 1fr; }
       .site-foot .legal { flex-direction: column; gap: 8px; }
