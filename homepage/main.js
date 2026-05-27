@@ -78,12 +78,12 @@
       };
 
       /* Chroma key per-pixel · luminance Rec.709 → alpha con hard cut + soft ramp.
-         HARD subido a 30 (vs 18) para matar más el halo dotted dark del rim
-         de compresión MP4 · SOFT a 70 mantiene ramp suave para anti-alias.
-         Tuneables · si en runtime hay halo subir HARD a 36, si come bordes
-         bajar HARD a 24. */
-      const CHROMA_HARD = 30;
-      const CHROMA_SOFT = 70;
+         HARD a 40 (iter 2 · era 30 · 18 originalmente) para matar el rim
+         compresión MP4 más agresivamente · SOFT a 75 mantiene ramp angosto.
+         Iter 2 · user reporta que el rim aún se ve · subo HARD y aumento
+         erode passes. */
+      const CHROMA_HARD = 40;
+      const CHROMA_SOFT = 75;
       function chromaKey(d) {
         const range = CHROMA_SOFT - CHROMA_HARD;
         for (let i = 0; i < d.length; i += 4) {
@@ -93,13 +93,12 @@
         }
       }
 
-      /* Erode 1px de la alpha mask · elimina el rim de pixels boundary que
-         tienen alpha parcial Y tocan al background (alpha=0) · esos son
-         los pixels que crean la línea dotted dark visible alrededor del
-         avatar (RGB oscuro × alpha parcial = gris visible). Iteramos
-         per-pixel · si un pixel tiene alpha<240 y CUALQUIER vecino 4-conn
-         tiene alpha=0, lo hacemos alpha=0. Mantiene los píxeles interior
-         del avatar intactos (alpha=255 con vecinos también 255). */
+      /* Erode 1 ring de la alpha mask · elimina pixels boundary con alpha
+         parcial que tocan background (alpha=0) · esos son los pixels que
+         crean la línea dotted dark (RGB oscuro × alpha parcial = gris).
+         Threshold subido a <220 (vs <240) · más agresivo · acepta como
+         "edge candidate" pixels con alpha hasta 219. Llamar múltiples
+         veces para eat múltiples rings (cada pase eat 1px aprox). */
       function erodeEdge(d, w, h) {
         const a = new Uint8Array(w * h);
         for (let i = 0, j = 3; i < a.length; i++, j += 4) a[i] = d[j];
@@ -107,7 +106,7 @@
           for (let x = 0; x < w; x++) {
             const k = y * w + x;
             const av = a[k];
-            if (av === 0 || av >= 240) continue;
+            if (av === 0 || av >= 220) continue;
             // 4-neighbors
             const up = y > 0 ? a[k - w] : 0;
             const dn = y < h - 1 ? a[k + w] : 0;
@@ -157,6 +156,9 @@
                 try {
                   const img = ctx.getImageData(0, 0, w, h);
                   chromaKey(img.data);
+                  // 3 pases · eat ~3px del rim de pixels boundary dark
+                  erodeEdge(img.data, w, h);
+                  erodeEdge(img.data, w, h);
                   erodeEdge(img.data, w, h);
                   ctx.putImageData(img, 0, 0);
                 } catch (e) {
