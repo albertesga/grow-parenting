@@ -736,14 +736,50 @@
         <p class="audit">Revisado por Servicio de Urgencias Pediátricas · marco anti-shaken-baby NSBSP · información basada en NICE NG143, AEPED 2026 y AAP 2026</p>
         <p class="threeam-promise">Disponible 22:00–06:00 · gratis · sin login · sin presión.</p>
       </div>
-      <div class="mockup">
-        <div class="mp-time">03:42 · Modo 3 AM</div>
-        <div class="mp-title">Estoy aquí.</div>
-        <div class="mp-sub">Una pregunta cada vez. Sin prisa.</div>
-        <button class="mp-chip primary">No para de llorar →</button>
-        <button class="mp-chip">Le pasa algo →</button>
-        <button class="mp-chip">No puedo más →</button>
-        <div class="mp-foot">Aquí no diagnosticamos · aquí estamos.</div>
+      <!-- 3 viñetas storytelling · entrada → pregunta → resultado · cuentan
+           el flow real del Modo 3 AM en 5 segundos · estáticas (no carousel).
+           Conector .mockup-flow-link entre viñetas insinúa secuencia. -->
+      <div class="mockup-flow" role="group" aria-label="Cómo funciona el Modo 3 AM en 3 pasos">
+        <!-- Viñeta 1 · entrada (idéntica al mockup original · consistency
+             con el chip 'No para de llorar' highlighted del lado izquierdo) -->
+        <div class="mockup mockup--entry">
+          <div class="mp-time">03:42 · Modo 3 AM</div>
+          <div class="mp-title">Estoy aquí.</div>
+          <div class="mp-sub">Una pregunta cada vez. Sin prisa.</div>
+          <button class="mp-chip primary" type="button" tabindex="-1" aria-hidden="true">No para de llorar →</button>
+          <button class="mp-chip" type="button" tabindex="-1" aria-hidden="true">Le pasa algo →</button>
+          <button class="mp-chip" type="button" tabindex="-1" aria-hidden="true">No puedo más →</button>
+          <div class="mp-foot">Aquí no diagnosticamos · aquí estamos.</div>
+        </div>
+
+        <span class="mockup-flow-link" aria-hidden="true"></span>
+
+        <!-- Viñeta 2 · pregunta (1 pregunta cada vez · cadencia trauma-informed) -->
+        <div class="mockup mockup--question">
+          <div class="mp-time">03:42 · Modo 3 AM</div>
+          <div class="mp-title">¿Le notas la respiración<br>más rápida de lo normal?</div>
+          <button class="mp-chip primary" type="button" tabindex="-1" aria-hidden="true">Sí, respira muy rápido →</button>
+          <button class="mp-chip" type="button" tabindex="-1" aria-hidden="true">No estoy segura →</button>
+          <button class="mp-chip" type="button" tabindex="-1" aria-hidden="true">No, respira normal →</button>
+          <div class="mp-foot">Aquí no diagnosticamos · aquí estamos.</div>
+        </div>
+
+        <span class="mockup-flow-link" aria-hidden="true"></span>
+
+        <!-- Viñeta 3 · resultado (acción clara · imperativos estructurales ·
+             cita NICE NG143 inline para sostener el claim regulatorio) -->
+        <div class="mockup mockup--result">
+          <div class="mp-time">03:43 · Modo 3 AM</div>
+          <div class="mp-title">Casa, con vigilancia.</div>
+          <div class="mp-sub">Esperamos 30 minutos. Si empeora, 061.</div>
+          <ul class="mp-actions" aria-label="Acciones recomendadas">
+            <li>Pecho descubierto</li>
+            <li>Cuenta respiraciones por minuto</li>
+            <li>Mantén la luz baja</li>
+          </ul>
+          <button class="mp-chip" type="button" tabindex="-1" aria-hidden="true">¿Algo más? →</button>
+          <div class="mp-foot">Información basada en NICE NG143 · aquí estamos.</div>
+        </div>
       </div>
     </div>
   </section>
