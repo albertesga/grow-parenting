@@ -1218,6 +1218,20 @@
       max-width: 56ch;
       margin: 0;
     }
+    /* Section lead · sub-titular grande en Galiner Light entre el h2 y
+       el párrafo descriptivo · da una "promesa editorial" antes del body
+       text. Tamaño 24-34px responsive · line-height generoso para lectura
+       de 1-2 líneas · color ink (no soft) para mantener presencia. */
+    .section-head .section-lead {
+      font-family: var(--font-serif);
+      font-weight: 300;
+      font-size: clamp(22px, 2.4vw, 32px);
+      line-height: 1.25;
+      letter-spacing: -0.008em;
+      color: var(--ink);
+      max-width: 32ch;
+      margin: 0;
+    }
     /* (.libros-head sin overrides · ya es el patrón canónico) */
     .libros-grid {
       display: grid;
