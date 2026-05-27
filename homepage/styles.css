@@ -1791,10 +1791,16 @@
     .flow-step h3 {
       font-family: var(--font-serif);
       font-weight: 400;
-      font-size: clamp(28px, 2.7vw, 38px);
-      line-height: 1.02;
+      font-size: clamp(26px, 2.5vw, 34px);
+      line-height: 1.08;
       letter-spacing: -0.016em;
-      max-width: 10ch;
+      /* max-width holgado para que los 3 títulos quepan en 2 líneas
+         ("Recibe libros que se vuelven personales." es el más largo
+         con 40 chars · 24ch lo parte 2 líneas limpias). min-height
+         garantiza que las 3 cards estén alineadas con misma altura
+         de cabecera aunque algún título sea más corto. */
+      max-width: 24ch;
+      min-height: calc(1.08em * 2);
     }
     .flow-step p {
       font-family: var(--font-text);
