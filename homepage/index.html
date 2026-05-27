@@ -218,9 +218,14 @@
           0 0 0 0 0
           0 0 0 0 0
           1 1 1 0 -0.3"/>
-        <feComponentTransfer result="matte">
+        <feComponentTransfer>
           <feFuncA type="linear" slope="5" intercept="-0.5"/>
         </feComponentTransfer>
+        <!-- Iter 6 · erode 2px adicional sobre la matte antes del composite ·
+             come el rim de boundary dark sin blur (mantiene nitidez) ·
+             los ojos NO se afectan porque están a >12px del contorno
+             gracias al closing previo (dilate 12 + erode 12). -->
+        <feMorphology operator="erode" radius="2" result="matte"/>
         <feComposite in="orig" in2="matte" operator="in"/>
       </filter>
     </defs>
