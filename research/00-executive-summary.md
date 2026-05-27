@@ -29,7 +29,7 @@ Tras recorrer la landing como flow real (15 screenshots desktop + mobile) y audi
 | 1 | **Pricing transparente en landing** · sticky bottom CTA `Apúntate desde €1.99/mes` | 🔴 alta | low | H1 + H3 |
 | 2 | **Trust signals visuales en bloque 2-3 landing** · logos AEP · candado privacy · MDR pathway · sin pasar al bloque 9 | 🔴 alta | medium | H1 |
 | 3 | **Trial 7 días SIN tarjeta** · anti-friction onboarding | 🔴 alta | medium | H1 + H3 |
-| 4 | **"Tu peque" → "tu hij@" unificar en hero canon** del producto · brand consistency con manifesto v2 | 🟡 media | very low | brand |
+| 4 | **"Tu hij@" → "tu hij@" unificar en hero canon** del producto · brand consistency con manifesto v2 | 🟡 media | very low | brand |
 | 5 | **MDR Class IIa + privacy visible en producto** (no solo landing) · onboarding final + sección perfil | 🟡 media | low | H1 trust |
 | 6 | **Calculadora paracetamol accesible desde Quick log ⊕ central** · canon utility transversal | 🟡 media | medium | H2 findability |
 | 7 | **Microcopy hero landing** · `"De la concepción al 3er cumpleaños · ES + EN · web y móvil"` | 🟡 media | very low | H1 5-sec test |

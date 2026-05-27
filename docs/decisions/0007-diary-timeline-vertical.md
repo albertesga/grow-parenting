@@ -6,7 +6,7 @@
 
 ## Context
 
-El diario era un sheet stub (`data-open-sheet`) sin contenido real. Conceptualmente debería ser un timeline cronológico de TODOS los logs del peque (toma · biberón · pañal · sueño · síntoma · nota · foto · vacuna · hito · medida).
+El diario era un sheet stub (`data-open-sheet`) sin contenido real. Conceptualmente debería ser un timeline cronológico de TODOS los logs del hij@ (toma · biberón · pañal · sueño · síntoma · nota · foto · vacuna · hito · medida).
 
 Necesidad: componente que pueda mostrar entries de cualquier tipo agrupadas por día, con jerarquía visual clara (hora + dot tonal + card derecha).
 

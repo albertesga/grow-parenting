@@ -7,7 +7,7 @@ seguro (escapeHtml).
 ## Por qué
 
 Grow es para familias en estados emocionalmente cargados (embarazo,
-postparto, llantos del peque) · muchas veces con la mano libre, en mobile,
+postparto, llantos del hij@) · muchas veces con la mano libre, en mobile,
 con poca luz. Accesibilidad no es nice-to-have · es la baseline.
 
 ## Reglas
@@ -152,10 +152,10 @@ Si actualizas estado importante via JS · usa `aria-live`:
 
 ```html
 <!-- ❌ NO -->
-<input type="text" placeholder="Nombre del peque">
+<input type="text" placeholder="Nombre del hij@">
 
 <!-- ✓ Sí (label visible) -->
-<label for="baby-name">Nombre del peque</label>
+<label for="baby-name">Nombre del hij@</label>
 <input id="baby-name" type="text">
 
 <!-- ✓ Sí (label visualmente oculto pero presente para SR) -->

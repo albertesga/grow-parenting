@@ -5,7 +5,7 @@ día en el proyecto · o si has vuelto tras un break largo.
 
 ## Qué es Grow
 
-App para familias hispanohablantes · del embarazo a los 3 años del peque.
+App para familias hispanohablantes · del embarazo a los 3 años del hij@.
 **Trauma-informed** · sin gamification, sin urgencia, sin juicio. Diseñado
 para ser usado con poco tiempo, con la mano libre, en mobile, en momentos
 emocionalmente cargados.

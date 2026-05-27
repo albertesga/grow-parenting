@@ -71,14 +71,14 @@ Busca:
 #### Regla 5 · Lenguaje trauma-informed
 
 Busca anti-patterns:
-- `tu peque está enfermo`, `padece`, `sufre de`
+- `tu hij@ está enfermo`, `padece`, `sufre de`
 - `has fallado`, `no lo hiciste bien`
 - `patrón anormal`, `alteración`, `trastorno` sin fuente
 
 ✓ Canon:
 - "Vamos a por la otitis · día 3 de antibiótico"
 - "Hiciste lo correcto al venir aquí"
-- "Puede valer la pena hablar con tu pediatra" (NO "tu peque tiene problema")
+- "Puede valer la pena hablar con tu pediatra" (NO "tu hij@ tiene problema")
 - "Nunca sacudas al bebé. Ni siquiera 1 segundo." (NSBSP canon directo · OK)
 
 #### Regla 6 · Modo arcoíris compliance

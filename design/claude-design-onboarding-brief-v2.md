@@ -47,9 +47,9 @@ Diseña **6 pantallas hi-fi mobile-first** del onboarding mínimo de Grow + las 
 5 opciones · cada una con tonal canon de su libro principal:
 
 - 🌱 **Estoy embarazada / esperamos** → tonal coral
-- 🐣 **Acabamos de tener al peque (< 1 mes)** → tonal blush
-- 👶 **Tengo un peque en casa (1-12 m)** → tonal blush
-- 🧒 **Tengo un peque más mayor (1-3a)** → tonal mint
+- 🐣 **Acabamos de tener al hij@ (< 1 mes)** → tonal blush
+- 👶 **Tengo un hij@ en casa (1-12 m)** → tonal blush
+- 🧒 **Tengo un hij@ más mayor (1-3a)** → tonal mint
 - 🤔 **Estamos pensándolo** → modo lurker · sin perfil · paper-soft
 
 Una opción por pantalla scroll vertical mobile · grid 2×3 desktop.
@@ -72,11 +72,11 @@ CTA primary: `Continuar`.
 
 ### P3 · Nombres (opcional)
 
-> "¿Cómo te llamamos? Y al peque, ¿le habéis puesto ya nombre?"
+> "¿Cómo te llamamos? Y al hij@, ¿le habéis puesto ya nombre?"
 > Helper: *"Lo usamos solo para que la app te hable como persona. Si aún no tiene nombre, déjalo en blanco — luego lo añades."*
 
 - Input "Tu nombre" (placeholder neutro: "Tu nombre")
-- Input "Nombre del peque (opcional)"
+- Input "Nombre del hij@ (opcional)"
 - CTA primary coral: `Ver mi Timeline`.
 
 ### P4 · Timeline personalizado (Quick win)
@@ -137,12 +137,12 @@ Las tarjetas aparecen en el feed Home / Hoy como cards canon DS v0.2 (estados do
 
 ### D1-D7 · capa relacional
 
-- Es vuestro primer peque (sí/no) → tono del contenido.
+- Es vuestro primer hij@ (sí/no) → tono del contenido.
 - Hay otra persona que cuida contigo → trigger invitar co-cuidador (canon Pablo).
 - Idioma del hogar → fase 0 ES default · Fase 0.5+ multilenguaje.
 - Modo especial activo (preemie auto si <37 sem · arcoíris toggle · monoparental · adopción · subrogación · mismo sexo).
 - Notificaciones (canon §trans/notificaciones-canon): *"Para recordatorios de hitos · nunca para spam."*
-- Apodo del peque (opcional).
+- Apodo del hij@ (opcional).
 
 ### D7-D30 · capa contextual + clínica light
 
@@ -156,7 +156,7 @@ Si postparto: tipo de parto · lactancia · peso al nacer · antecedentes famili
 | EPDS | 3T + 6-8 sem postparto + 6m + 12m | *"Cómo te encuentras tú"* |
 | EPDS adaptado padre | 6-8 sem + 6m postparto | *"Y tú, ¿cómo estás llevando esto?"* |
 | M-CHAT-R | 18m + 24m | *"Hitos de comunicación"* · sin nombrar autismo |
-| ASQ-3 | 2 · 4 · 6 · 9 · 12 · 18 · 24 · 30 · 36 meses | *"Vamos a ver cómo va el peque"* |
+| ASQ-3 | 2 · 4 · 6 · 9 · 12 · 18 · 24 · 30 · 36 meses | *"Vamos a ver cómo va el hij@"* |
 | PBA-5 | 3 · 6 · 12 · 24 meses postparto | *"¿Cómo está siendo para ti ser madre/padre?"* |
 | LATCH | inicio lactancia | dentro libro Lactancia |
 | BITSS | caca tracker | dentro libro Alimentación |
@@ -207,7 +207,7 @@ Reglas canon:
 | --- | --- |
 | "Bienvenida mamá" | "Bienvenida" / "Hola" (canon Pablo / Carmen / Lucía / familias mismo sexo) |
 | "Futuro papá / futura mamá" | "Co-cuidador/a" / "Tu hij@" |
-| "Bebito" / "Mami" | "Peque" / "Tu hij@" |
+| "Bebito" / "Mami" | "Hij@" / "Tu hij@" |
 | "Tu bebé puede tener autismo" (M-CHAT) | "Hitos de comunicación" |
 | "Test de depresión postparto" (EPDS) | "Cómo te encuentras tú" |
 | "Registra tus síntomas" (formulario médico) | "¿Quieres contarnos cómo va?" |
@@ -226,7 +226,7 @@ Reglas canon:
 - [ ] **6 modos especiales canon** detectables en P2/P3 progressive profiling.
 - [ ] Modo preemie **auto-activado** si fecha nacimiento <37 sem.
 - [ ] B2B aseguradora pantalla **NO antes del Quick win** (P6 tras P4 completado).
-- [ ] Multi-perfil: 1 peque en onboarding · añadir hermanos desde dashboard.
+- [ ] Multi-perfil: 1 hij@ en onboarding · añadir hermanos desde dashboard.
 - [ ] **Lurker mode** permitido (P1 opción "Estamos pensándolo").
 - [ ] Bottom nav 5-tab + FAB central canon (no Hitos tab obsoleto).
 - [ ] Screenings clínicos como conversación · nunca formulario.

@@ -20,7 +20,7 @@ Diseña la landing hi-fi mobile-first de **Grow** — companion digital trauma-i
 ## 1 · Contexto producto
 
 **Qué es Grow**
-Companion digital trauma-informed para familias que cuidan peques desde semana 4 de embarazo hasta el 3er cumpleaños. Producto B2C con pilot B2B2C (aseguradora DKV Q3-Q4 2026).
+Companion digital trauma-informed para familias que cuidan hij@s desde semana 4 de embarazo hasta el 3er cumpleaños. Producto B2C con pilot B2B2C (aseguradora DKV Q3-Q4 2026).
 
 **Por qué ahora**
 - Mercado parenting apps $1B+ · CAGR 20%.
@@ -102,7 +102,7 @@ Los 3 tienen la **misma cara canon** (ojos negros simples + sonrisa suave). Es *
 
 ### Brand consistency
 
-- "tu hij@" en hero canon · "tu peque" libre en copy contextual.
+- "tu hij@" en hero canon · "tu hij@" libre en copy contextual.
 - "Para cualquier familia que cuida" implícito en inclusivity (sin necesidad de bloque dedicado · esta versión).
 - **0** "futuro papá" · **0** "bebito" · **0** "mami" · **0** "racha/streak" · **0** comparativos · **0** religiosidad.
 
@@ -200,7 +200,7 @@ No sé si es hambre, sueño, cólico o algo más."
 [Rotación crossfade 5s cada una · Galiner italic · pequeña]
 "Cada toma duele. Cada comentario también."
 "Le doy biberón. Y cada vez que lo digo, alguien opina."
-"'Llora por capricho', dicen. Yo solo veo a mi peque."
+"'Llora por capricho', dicen. Yo solo veo a mi hij@."
 "Vuelvo al trabajo en seis semanas. No sé cómo voy a poder."
 
 [Card · blush tint · Inter medium]

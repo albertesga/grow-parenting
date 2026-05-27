@@ -281,7 +281,7 @@ Razón: el mercado real es B2C · DKV es pilot. Una landing dispersa pierde conv
 > *"Este es un modo urgencia. Las respuestas son más rápidas, más directas y sin juzgar."*
 - 3 chips de opciones (sin desarrollar):
   - "No para de llorar"
-  - "Le pasa algo a mi peque"
+  - "Le pasa algo a mi hij@"
   - "No puedo más"
 - CTA: `Conocer el Modo madrugada →` lleva a página dedicada o expand drawer.
 
@@ -432,7 +432,7 @@ Razón: el mercado real es B2C · DKV es pilot. Una landing dispersa pierde conv
   → *"No. Acompañamos entre visitas, escalamos cuando toca."*
   2. ¿Funciona si solo está mi pareja?
   → *"Sí. La cuenta compartida funciona para ambos por igual."*
-  3. ¿Y si mi peque es prematuro?
+  3. ¿Y si mi hij@ es prematuro?
   → *"Modo preemie activa edad corregida automáticamente."*
   4. ¿Y si tuve una pérdida gestacional?
   → *"Modo arcoíris. Sin contadores celebratorios. Con cuidado."*

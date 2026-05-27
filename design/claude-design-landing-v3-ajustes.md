@@ -35,9 +35,9 @@ de lectura, no con una app con herramientas.
 CAMBIO: mantén el manifiesto canon en Galiner ("Tú cuidas a tu hij@. / Grow te cuida a ti." +
 "Sin manual, sin juicios, sin urgencia."). Añade DEBAJO una sola línea funcional en Inter que
 diga, en concreto, qué obtiene el usuario — nombrando las tres patas: SABER (contenido con
-criterio clínico), REGISTRAR (seguimiento) y PREGUNTAR (chat que conoce a tu peque). Ejemplo de
+criterio clínico), REGISTRAR (seguimiento) y PREGUNTAR (chat que conoce a tu hij@). Ejemplo de
 intención, no copy final: "Tu embarazo y la crianza, semana a semana: contenido con criterio
-clínico, seguimiento y un chat que conoce a tu peque." Ajusta el microcopy de rango de edad
+clínico, seguimiento y un chat que conoce a tu hij@." Ajusta el microcopy de rango de edad
 para que conviva con esta línea sin repetir.
 
 CRITERIOS DE ACEPTACIÓN: tras 5 segundos sobre el hero, un usuario nuevo puede decir (1) qué es,
@@ -221,7 +221,7 @@ CAMBIO: introduce una señal ligera de "estés donde estés en el camino, esto e
 Opciones:
 (a) una línea de encuadre antes o después del parallax que diga explícitamente que al recorrido
     se entra en cualquier punto, no solo al inicio;
-(b) que la Sección 3 · Libros comunique que cada libro se activa según la edad real del peque
+(b) que la Sección 3 · Libros comunique que cada libro se activa según la edad real del hij@
     (la tabla del brief ya tiene "edad activa" — hazla legible como "lo que te toca ahora");
 (c) que la frase del parallax de embarazo no quede anclada solo en el primer trimestre.
 
@@ -238,7 +238,7 @@ añadir un selector de etapa pesado en la landing. El cambio es sutil.
 
 El research detectó que la **"@" de "hij@"** y la estética abstracta de marca pierden a usuarios de baja afinidad tech y mayores (perfil abuelo-cuidador): no entienden de entrada qué es el producto.
 
-Esto **no es un ajuste de landing** — "hij@" es una decisión del manifiesto canon. Si quisieras tocarlo, es una decisión de marca tuya, no de Claude Design. Opciones: mantener "hij@" y asumir el coste en ese segmento (defendible: no es la diana), o evaluar "tu hijo o tu hija" / "tu peque" en el hero. Lo dejo señalado, no convertido en prompt.
+Esto **no es un ajuste de landing** — "hij@" es una decisión del manifiesto canon. Si quisieras tocarlo, es una decisión de marca tuya, no de Claude Design. Opciones: mantener "hij@" y asumir el coste en ese segmento (defendible: no es la diana), o evaluar "tu hijo o tu hija" / "tu hij@" en el hero. Lo dejo señalado, no convertido en prompt.
 
 ---
 

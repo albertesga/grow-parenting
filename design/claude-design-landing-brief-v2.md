@@ -22,7 +22,7 @@ Diseña la landing **hi-fi mobile-first** de **Grow** — companion digital trau
 ## 1 · Contexto
 
 **Qué es Grow**
-Companion digital trauma-informed para familias que cuidan peques desde semana 4 de embarazo hasta el 3er cumpleaños. Producto B2C con pilot B2B2C (aseguradora DKV Q3-Q4 2026). Pertenece al ecosistema **ChildLens** (BLW · Colic · Sleep · Stories · Aid).
+Companion digital trauma-informed para familias que cuidan hij@s desde semana 4 de embarazo hasta el 3er cumpleaños. Producto B2C con pilot B2B2C (aseguradora DKV Q3-Q4 2026). Pertenece al ecosistema **ChildLens** (BLW · Colic · Sleep · Stories · Aid).
 
 **Por qué ahora**
 - Mercado parenting apps $1B+ con CAGR ~20%.
@@ -50,10 +50,10 @@ Companion digital trauma-informed para familias que cuidan peques desde semana 4
 | # | Persona | Edad/Contexto | El clic que necesita ver |
 | --- | --- | --- | --- |
 | 1 | **María** | 34a · embarazo 14 sem · Madrid | Hero manifesto + "concepción al 3er cumpleaños" + libros visible |
-| 2 | **Pablo** | 38a · co-cuidador peque 4m | Hook propio de co-cuidador ("Para los dos · simétrico") |
+| 2 | **Pablo** | 38a · co-cuidador hij@ 4m | Hook propio de co-cuidador ("Para los dos · simétrico") |
 | 3 | **Carmen** | 31a · monoparental 7m · Valencia | Pricing transparente Founding €1.99 + "Para cualquier familia que cuida" |
 | 4 | **Lucía** | 36a · embarazo arcoíris sem 22 | Modo arcoíris visible explícito + tono cauto + ChildLens+ con psicóloga humana |
-| 5 | **Marta** | 33a · expat ES Berlin · 2 peques | Roadmap STIKO + i18n en waitlist + canon dual |
+| 5 | **Marta** | 33a · expat ES Berlin · 2 hij@s | Roadmap STIKO + i18n en waitlist + canon dual |
 | 6 | **Ingrid** | 35a · preemie sem 32 Berlin | Modo preemie visible + canon Fenton + edad corregida + Care tier €19.99 |
 | 7 | **Dra. Comas** | 47a · pediatra Vall d'Hebron | Comité asesor clínico visible + canon AEPED + MDR pathway + free tier robusto |
 | 8 | **Olivia** | 41a · UK HNW · Huckleberry Premium | Aesthetic premium curated + roadmap EN-UK + canon NICE Fase 1 |
@@ -134,14 +134,14 @@ Parallax canon: scroll cambia avatar progresivamente. Funciona ya en lo-fi v0.1.
 
 ### Brand consistency
 
-- **"tu hij@"** en hero canon · "tu peque" libre en copy contextual ("tu peque está aprendiendo a...").
+- **"tu hij@"** en hero canon · "tu hij@" libre en copy contextual ("tu hij@ está aprendiendo a...").
 - **"para cualquier familia que cuida"** · NO "mamá y papá" · NO "futuro papá" · NO "bebito" · NO "mami".
 - **Co-cuidador/a** simétrico · NO "ayuda al padre" · NO "para la madre principal".
 - **Modos especiales** mencionados explícitos: preemie · arcoíris · monoparental · mismo sexo · adopción · subrogación.
 
 ### Reglas de tono
 
-1. **Cero comparativos** ("X% de bebés... tu peque va atrás" → ❌).
+1. **Cero comparativos** ("X% de bebés... tu hij@ va atrás" → ❌).
 2. **Cero gamification tóxica** (streaks · rankings · "tu hijo está nivel 3").
 3. **Cero rojo médico explícito** (#FF0000) → coral-base canon.
 4. **Cero testimonios con foto de bebés** (privacy-first · canon Ingrid).
@@ -377,7 +377,7 @@ Iconografía outline · NO badges fake · NO "5 estrellas Trustpilot" si no son 
 - [ ] #1 Pricing transparente bloque 7 + sticky CTA con pricing.
 - [ ] #2 Trust signals bloque 2-3 (no esperar al 9).
 - [ ] #3 Trial 14 días sin tarjeta visible en pricing block.
-- [ ] #4 "tu hij@" en hero · "tu peque" libre en copy.
+- [ ] #4 "tu hij@" en hero · "tu hij@" libre en copy.
 - [ ] #5 MDR Class IIa pathway visible.
 - [ ] #6 Microcopy hero "concepción al 3er cumpleaños · ES".
 - [ ] #7 9 libros (no 8) con tonales canon DS v0.2.
@@ -393,7 +393,7 @@ Iconografía outline · NO badges fake · NO "5 estrellas Trustpilot" si no son 
 | --- | --- |
 | "Para mamá y papá" | "Para cualquier familia que cuida" |
 | "futuro papá" / "futura mamá" | "co-cuidador/a" / "tu hij@" |
-| "Tu bebito" / "tu peque va atrás" | "tu peque está aprendiendo" / "cada peque a su ritmo" |
+| "Tu bebito" / "tu hij@ va atrás" | "tu hij@ está aprendiendo" / "cada hij@ a su ritmo" |
 | "Hazte streak diario" | (canon · 0 streaks) |
 | "URGENTE · termina en 24h" | "Sin presión. Cuando estés lista." |
 | "Tu bebé puede tener X" (alarma fake) | "Es probable variación normal. Habla con tu pediatra si crece la duda." |

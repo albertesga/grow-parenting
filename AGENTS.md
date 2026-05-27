@@ -5,7 +5,7 @@ que toca el proyecto. **Lee este archivo primero. Siempre.**
 
 ## Qué es Grow
 
-App para familias hispanohablantes · del embarazo a los 3 años del peque ·
+App para familias hispanohablantes · del embarazo a los 3 años del hij@ ·
 trauma-informed, sin gamification, sin urgencia. Single-developer repo.
 
 - **App** · simulada en `prototype.html` (single-file HTML/CSS/JS, ~20k líneas)

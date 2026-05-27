@@ -8,7 +8,7 @@
 
 ## 0 · TL;DR
 
-El **chat de Grow** es la conversación viva del producto · una sola hebra continua donde la IA acompaña a la familia con citas clínicas siempre con fuente y año, contexto pre-cargado del peque (edad, módulos activos, modo arcoíris/preemie/3AM), y **8 chips de cribaje rápido** que disparan árboles de triage validados clínicamente (NICE, AAP, NSBSP).
+El **chat de Grow** es la conversación viva del producto · una sola hebra continua donde la IA acompaña a la familia con citas clínicas siempre con fuente y año, contexto pre-cargado del hij@ (edad, módulos activos, modo arcoíris/preemie/3AM), y **8 chips de cribaje rápido** que disparan árboles de triage validados clínicamente (NICE, AAP, NSBSP).
 
 El **Modo madrugada** es un sub-modo del chat que se activa siempre en `dark` (22:00-06:00 default · opt-in/out), abre **un thread efímero independiente** del chat principal, y arranca con el mensaje canon:
 
@@ -52,7 +52,7 @@ Tras esa apertura presenta **3 opciones edad-aware** (embarazo · 0-3 m · 3-12 
 - **Escalada inteligente** a urgencias o salud mental si hay signos canon.
 - **Sin culpabilizar** la consulta nocturna · *"este es el modo urgencia, las respuestas son más rápidas"*.
 - **Acompañamiento emocional** sin diagnosticar.
-- **Memoria persistente** del journey del peque (edad, módulos activos, eventos recientes).
+- **Memoria persistente** del journey del hij@ (edad, módulos activos, eventos recientes).
 
 ---
 
@@ -65,7 +65,7 @@ Lola lleva 1 h 20 min llorando. María durmió 2 h. Pablo trabaja mañana y duer
 
 ### 2.2 Personas secundarias
 
-- **Pablo · co-cuidador/a no gestante**: usa el chat principal de día para entender qué pasa con el peque y para coordinar con María.
+- **Pablo · co-cuidador/a no gestante**: usa el chat principal de día para entender qué pasa con el hij@ y para coordinar con María.
 - **Carmen · monoparental**: usa Modo madrugada como único interlocutor a las 4 a.m.
 - **Lucía · embarazo arcoíris previo**: usa el chat para ansiedad anticipatoria · jamás en tono celebratorio.
 - **Familia adoptiva o subrogada**: lactancia no aplica · todo lo demás sí · canon ajustado.
@@ -115,16 +115,16 @@ Lola lleva 1 h 20 min llorando. María durmió 2 h. Pablo trabaja mañana y duer
 
 ### 4.1 In scope · v0 (MVP · 6 m)
 
-- **Chat principal** único · una hebra continua por peque.
+- **Chat principal** único · una hebra continua por hij@.
 - **Modo madrugada** como sub-modo (no app aparte) · thread efímero · 3 opciones edad-aware.
 - **8 chips de cribaje rápido** con triage trees validados.
-- **Contexto pre-cargado** (edad peque, módulos activos, eventos 7 d, modos especiales).
+- **Contexto pre-cargado** (edad hij@, módulos activos, eventos 7 d, modos especiales).
 - **Citas clínicas** siempre con fuente y año · validadas en knowledge base curada.
 - **Disclaimer canon Fase 0** "Aquí no diagnosticamos. Aquí estamos." sticky.
 - **Escalada a urgencias** 112 / 911 / 999 auto-detect país · botón llamar 1-tap.
 - **Escalada salud mental** ruta dedicada con números locales.
-- **Multi-perfil**: chat por peque + chat sin peque (embarazo · sin hijos aún).
-- **Co-cuidador/a sync**: el chat es por cuenta · cada cuidador/a ve la conversación con su peque (no con la pareja).
+- **Multi-perfil**: chat por hij@ + chat sin hij@ (embarazo · sin hijos aún).
+- **Co-cuidador/a sync**: el chat es por cuenta · cada cuidador/a ve la conversación con su hij@ (no con la pareja).
 - **Idiomas v0**: ES (España) + EN (paralelo).
 
 ### 4.2 Out of scope · v0
@@ -147,7 +147,7 @@ Lola lleva 1 h 20 min llorando. María durmió 2 h. Pablo trabaja mañana y duer
 ### 4.4 v2 (escala)
 
 - Telesalud humana integrada (lactanciera DKV · pediatra de guardia).
-- Group chat familia (varios cuidadores/as alrededor del mismo peque).
+- Group chat familia (varios cuidadores/as alrededor del mismo hij@).
 - Voice analysis del cuidador/a (detectar agotamiento · burnout pre-clínico).
 
 ---
@@ -194,7 +194,7 @@ Lola lleva 1 h 20 min llorando. María durmió 2 h. Pablo trabaja mañana y duer
 
 ### 6.1 Modelo de threads
 
-**Decisión**: chat **monothread por peque** · NO subthreads.
+**Decisión**: chat **monothread por hij@** · NO subthreads.
 
 Razón: una madre/padre con privación de sueño no maneja organización conversacional. Una sola hebra continua reduce carga cognitiva y fomenta continuidad terapéutica con la IA.
 
@@ -267,7 +267,7 @@ Modo madrugada
 ### 7.1 Chat principal
 
 **Composición**:
-- Header sticky con nombre peque + edad + modo activo (arcoíris/preemie/normal).
+- Header sticky con nombre hij@ + edad + modo activo (arcoíris/preemie/normal).
 - Stream conversacional vertical · burbujas IA paper-soft + usuari@ ink filled.
 - **Disclaimer footer sticky**: *"Aquí no diagnosticamos. Aquí estamos."*
 - **8 chips de cribaje** justo encima del input · scroll horizontal.
@@ -288,14 +288,14 @@ Modo madrugada
 **Mensaje canon de apertura** (siempre, sin variación):
 > *"Este es un modo urgencia. Las respuestas son más rápidas, más directas y sin juzgar."*
 
-**3 opciones por edad del peque**:
+**3 opciones por edad del hij@**:
 
 | Etapa | Opción 1 | Opción 2 | Opción 3 |
 | --- | --- | --- | --- |
 | **Embarazo** | "Algo no va bien con mi cuerpo" | "Tengo miedo · necesito hablar" | "No puedo dormir" |
-| **0-3 m** (recién nacido) | "No para de llorar" | "Le pasa algo a mi peque" | "No puedo más" |
-| **3-12 m** (bebé) | "No duerme · y yo tampoco" | "Le pasa algo a mi peque" | "Solo necesito acompañar" |
-| **12-36 m** (toddler) | "Pesadilla nocturna" | "Le pasa algo a mi peque" | "No puedo más" |
+| **0-3 m** (recién nacido) | "No para de llorar" | "Le pasa algo a mi hij@" | "No puedo más" |
+| **3-12 m** (bebé) | "No duerme · y yo tampoco" | "Le pasa algo a mi hij@" | "Solo necesito acompañar" |
+| **12-36 m** (toddler) | "Pesadilla nocturna" | "Le pasa algo a mi hij@" | "No puedo más" |
 
 Cada opción es un **chip grande** (h ≥ 64 px · ancho 100 % · radius 12) con icono dark + label Lenia medium + sub-label Helvena 12 px caption.
 
@@ -320,7 +320,7 @@ EMBARAZO
 │   ├── Triage cólicos (Wessel · 5 S's · cry classifier)
 │   └── Cross-ref Libro de Cólicos (si activo)
 │
-├── Opción 2 · "Le pasa algo a mi peque"
+├── Opción 2 · "Le pasa algo a mi hij@"
 │   └── 8 chips de cribaje rápido (fiebre · respiratorio · vómitos · etc.)
 │
 └── Opción 3 · "No puedo más"
@@ -332,7 +332,7 @@ EMBARAZO
 ├── Opción 1 · "No duerme · y yo tampoco"
 │   └── Triage sueño (regresión 4m/8m · ventanas Huckleberry · cross-ref Sueño)
 │
-├── Opción 2 · "Le pasa algo a mi peque"
+├── Opción 2 · "Le pasa algo a mi hij@"
 │   └── 8 chips de cribaje rápido
 │
 └── Opción 3 · "Solo necesito acompañar"
@@ -342,7 +342,7 @@ EMBARAZO
 ├── Opción 1 · "Pesadilla nocturna"
 │   └── Educación pesadillas vs terrores nocturnos + estrategias
 │
-├── Opción 2 · "Le pasa algo a mi peque"
+├── Opción 2 · "Le pasa algo a mi hij@"
 │   └── 8 chips de cribaje rápido (toddler-adapted)
 │
 └── Opción 3 · "No puedo más"
@@ -353,7 +353,7 @@ EMBARAZO
 
 Disponibles desde:
 - Chips persistentes encima del input del chat principal.
-- Modo madrugada ruta 2 "Le pasa algo a mi peque".
+- Modo madrugada ruta 2 "Le pasa algo a mi hij@".
 - Quick log ⊕ → contexto.
 
 **Los 8 árboles** (con detalle clínico ya documentado en respuesta canon previa):
@@ -388,7 +388,7 @@ Cada árbol = mini-encuesta de 2-4 preguntas · output `🚨 / ⚠ / 🟢` + acc
 **System prompt** dinámico que incluye:
 
 ```
-[Contexto del peque]
+[Contexto del hij@]
 - Nombre: Lola
 - Edad: 18 meses (cronológica) · 18 meses (corregida)
 - Sexo: F
@@ -603,9 +603,9 @@ Trauma-informed:
 - Validate feelings first.
 - Offer information second.
 - Suggest action third.
-- Never "don't worry", never "tu peque está bien".
+- Never "don't worry", never "tu hij@ está bien".
 
-Use the user context provided in [Contexto del peque] dynamically.
+Use the user context provided in [Contexto del hij@] dynamically.
 
 If user mentions self-harm or harm to baby → IMMEDIATELY trigger 
 mental_health_escalation tool. Do not ask follow-up clarification.
@@ -778,7 +778,7 @@ const fiebreTree: TriageTree = {
 ### 10.8 Lo que NUNCA decimos
 
 - ❌ *"¡No te preocupes!"*
-- ❌ *"Tu peque está bien"* (no diagnosticamos)
+- ❌ *"Tu hij@ está bien"* (no diagnosticamos)
 - ❌ *"Otros bebés lo pasan peor"*
 - ❌ *"Eres una madre increíble"*
 - ❌ *"Felicidades por usar el chat"*
@@ -796,7 +796,7 @@ const fiebreTree: TriageTree = {
 ```typescript
 type ChatMessage = {
   id: string;
-  chatId: string; // un chat por peque + un chat sin peque (embarazo)
+  chatId: string; // un chat por hij@ + un chat sin hij@ (embarazo)
   role: 'user' | 'assistant' | 'tool';
   content: string;
   timestamp: Date;
@@ -834,8 +834,8 @@ type TriageRun = {
 - Conversaciones cifradas at-rest (AES-256 · Supabase encryption keys).
 - Modo madrugada thread efímero · si usuari@ pulsa "borrar", solo queda agregado anonimizado.
 - Cero entrenamiento de modelos de Anthropic con conversaciones de Grow (Anthropic API zero-retention).
-- Cero envío de PII al modelo · solo edad/etapa del peque · nunca nombre completo.
-- Derecho borrado GDPR: usuari@ puede borrar todo el chat por peque.
+- Cero envío de PII al modelo · solo edad/etapa del hij@ · nunca nombre completo.
+- Derecho borrado GDPR: usuari@ puede borrar todo el chat por hij@.
 - Export GDPR: chat completo en JSON + PDF al pedir portabilidad.
 
 ### 11.3 Compliance
@@ -883,7 +883,7 @@ type TriageRun = {
 
 ### 13.1 v0 · MVP · 6 meses
 
-- Chat principal monothread por peque.
+- Chat principal monothread por hij@.
 - Modo madrugada con 3 opciones edad-aware.
 - 8 triage trees state-machine.
 - 10 tools registradas.

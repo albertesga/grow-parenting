@@ -35,7 +35,7 @@ Necesidades canon:
 - `count(medicaciones.tipo='antibiótico' en últimos 180d) >= 3` → educación AEPED uso prudente
 - `episodios.notas mencionan ≥ 2 veces "tras comer X"` → sugerir alergia bajo investigación
 
-Tono: "puede valer la pena" no "tu peque tiene problema".
+Tono: "puede valer la pena" no "tu hij@ tiene problema".
 
 **Modo emergencia · screen `data-screen="salud-emergencia"` · full-screen:**
 - Tipografía Lenia bold extra-grande · nombre 56px · tipo sangre 84px

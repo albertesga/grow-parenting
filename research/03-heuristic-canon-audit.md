@@ -24,21 +24,21 @@
 
 ---
 
-## 1 · "Tu peque" vs canon manifesto "tu hij@"
+## 1 · "Tu hij@" vs canon manifesto "tu hij@"
 
 **Findings**:
-- "tu peque" · 12 menciones en prototype.
+- "tu hij@" · 12 menciones en prototype.
 - "tu hij@" · 1 mención en prototype.
-- Landing usa correctamente "tu hij@" · 2 menciones · 0 "tu peque".
+- Landing usa correctamente "tu hij@" · 2 menciones · 0 "tu hij@".
 
 **Análisis**:
 - Manifesto canon v2 dice "Tú cuidas a tu hij@".
-- Producto usa "tu peque" como diminutivo cálido (canon Fase 0 permite "peque" pero no "bebito").
-- Inconsistencia: hero del producto dice "Tú cuidas a tu peque" · landing hero dice "Tú cuidas a tu hij@".
+- Producto usa "tu hij@" como diminutivo cálido (canon Fase 0 permite "hij@" pero no "bebito").
+- Inconsistencia: hero del producto dice "Tú cuidas a tu hij@" · landing hero dice "Tú cuidas a tu hij@".
 
 **Severidad**: 🟡 media · brand consistency.
 
-**Fix**: unificar a "tu hij@" en hero canon · "peque" libre en copy contextual ("tu peque está aprendiendo a..."). Es 1 cambio del HTML del prototype.
+**Fix**: unificar a "tu hij@" en hero canon · "hij@" libre en copy contextual ("tu hij@ está aprendiendo a..."). Es 1 cambio del HTML del prototype.
 
 ---
 
@@ -79,7 +79,7 @@
 
 **Findings**:
 - ✅ Modo madrugada con timer visible · canon.
-- ✅ Status del peque siempre en header (edad · estado salud).
+- ✅ Status del hij@ siempre en header (edad · estado salud).
 - ⚠️ Tracker fiebre 72h: ¿muestra progreso visual claro o solo número?
 - ⚠️ Onboarding · ¿muestra step indicator (1 de 4)?
 
@@ -92,7 +92,7 @@
 **Findings**:
 - ✅ Lenguaje canon trauma-informed · sin jerga clínica innecesaria.
 - ✅ Categorías 🤰 🍼 💉 🌙 🌡 💊 🌱 💛 con emojis universales.
-- ✅ "El peque" + nombre del peque · personal.
+- ✅ "El hij@" + nombre del hij@ · personal.
 - ⚠️ Algunos textos clínicos (Wessel · Roma IV · Haizea-Llevant) sin definir entre paréntesis al primer uso.
 
 **Severidad**: 🟢 baja. **Fix**: glosario contextual en primer uso de cada escala clínica.
@@ -102,7 +102,7 @@
 ### N3 · User control and freedom
 
 **Findings**:
-- ✅ Multi-perfil canon (cambio entre peques).
+- ✅ Multi-perfil canon (cambio entre hij@s).
 - ✅ Canon switcher Haizea ↔ AAP ↔ WHO ↔ CDC.
 - ⚠️ ¿Hay undo en log de episodio?
 - ⚠️ ¿Borrar entrada del Diario es 1-tap con confirmación o entierra la acción?
@@ -213,7 +213,7 @@
 
 | # | Finding | Severidad | Impacto | Esfuerzo |
 | --- | --- | --- | --- | --- |
-| 1 | "Tu peque" vs "tu hij@" inconsistencia copy hero | 🟡 | brand | very low |
+| 1 | "Tu hij@" vs "tu hij@" inconsistencia copy hero | 🟡 | brand | very low |
 | 2 | MDR Class IIa no visible en producto (solo landing) | 🟡 | trust B2B | low |
 | 3 | Privacy first sub-representado en producto (4 vs 10 menciones) | 🟡 | trust B2C | low |
 | 4 | Calculadora paracetamol no accesible desde Quick log central | 🟡 | findability H2 | medium |

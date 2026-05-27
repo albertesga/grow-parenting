@@ -62,7 +62,7 @@ Si no hay fuente con año · NO es post canon · es nota informal.
 ### 5 · Lenguaje trauma-informed
 
 Prohibido:
-- "tu peque está enfermo", "padece", "sufre de"
+- "tu hij@ está enfermo", "padece", "sufre de"
 - "has fallado", "no lo hiciste bien"
 - "patrón anormal", "alteración", "trastorno" (sin fuente clínica)
 
@@ -92,7 +92,7 @@ ruta rápida a duelo perinatal.
 | "Racha de N hitos" | "N logrados · de M hitos" |
 | `color: red` | `color: var(--coral-strong)` |
 | "Los expertos dicen…" | "NICE NG143 · 2021" (fuente con año) |
-| "Tu peque está enfermo" | "Vamos a por la otitis · día 3 de antibiótico" |
+| "Tu hij@ está enfermo" | "Vamos a por la otitis · día 3 de antibiótico" |
 | "La lactancia materna es lo mejor" | "Como salga. Y si no sale, también." |
 | "Patrón anormal" | "Puede valer la pena hablar con tu pediatra" |
 | "¡Felicidades semana 8!" (rainbow) | "Semana 8 · estamos aquí" |

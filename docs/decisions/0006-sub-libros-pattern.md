@@ -6,7 +6,7 @@
 
 ## Context
 
-Algunos contextos clínicos son **temporales** y **acotados a una etapa** del peque:
+Algunos contextos clínicos son **temporales** y **acotados a una etapa** del hij@:
 - Cólicos (1 sem - 4 m · regla Wessel · período PURPLE NSBSP)
 - (Futuro) Alergias confirmadas (tras prueba clínica)
 - (Futuro) Dentición (1er diente hasta 24m)

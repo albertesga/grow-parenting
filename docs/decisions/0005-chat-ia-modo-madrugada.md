@@ -19,7 +19,7 @@
 ## Context
 
 PRD Fase 0 definía un Chat IA como módulo central de la app · necesidad de:
-- Conversación con peque contextualizado (edad, modos especiales)
+- Conversación con hij@ contextualizado (edad, modos especiales)
 - Triage de síntomas con árboles canon NICE/AAP/AEPED
 - Modo nocturno crisis (22-06h) sin gamification ni juicio
 - Cero diagnóstico · "aquí no diagnosticamos, aquí estamos"
@@ -59,6 +59,6 @@ DS § V · 13 sub-secciones canonical · documenta toda la architecture.
 
 ## Alternatives considered
 
-- **Chat per-libro**: fragmenta. Cada libro tiene su contexto pero el peque es uno · NO.
+- **Chat per-libro**: fragmenta. Cada libro tiene su contexto pero el hij@ es uno · NO.
 - **Wizard estructurado**: pierde calidez "doula bilingüe" · NO.
 - **Auto-trigger madrugada sin opt-in**: paternalista · resp. PRD canon · opt-in 1ª vez · NO auto.

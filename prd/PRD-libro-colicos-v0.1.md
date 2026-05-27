@@ -20,7 +20,7 @@ Los cólicos del lactante afectan a **~20 % de los bebés sanos** en los primero
 
 Todo siguiendo el DS Grow v0.2 (Lenia + Helvena · 8 categorías canon · `.cat-card` salud + estados doing/done/snoozed · paleta paper/ink + tints).
 
-**Por qué importa**: reduce ansiedad parental medible (EPDS / PBA-5), reduce consultas innecesarias a urgencias, previene tragedias evitables (sacudida del bebé), y construye memoria longitudinal del peque que sirve a otros módulos.
+**Por qué importa**: reduce ansiedad parental medible (EPDS / PBA-5), reduce consultas innecesarias a urgencias, previene tragedias evitables (sacudida del bebé), y construye memoria longitudinal del hij@ que sirve a otros módulos.
 
 ---
 
@@ -146,7 +146,7 @@ Fuente: Kurth et al. *J Adv Nurs* 2011 · canon NSBSP.
 
 ### 4.3 v1.5 (post-validación · 6-12 m post-launch)
 
-- Patrones aprendidos por peque (personalización IA local).
+- Patrones aprendidos por hij@ (personalización IA local).
 - Multi-idioma cry classifier (catalán, francés, alemán).
 - Recomendación probiótica con disclaimer.
 - Notificación inteligente al co-cuidador/a (ML "ahora deberías ofrecer relevo").
@@ -269,7 +269,7 @@ Estado del Libro
 
 ### 7.1 Cry classifier on-device
 
-**Qué**: graba 5 s de audio del peque, lo procesa **localmente** con TensorFlow Lite, devuelve probabilidad por categoría.
+**Qué**: graba 5 s de audio del hij@, lo procesa **localmente** con TensorFlow Lite, devuelve probabilidad por categoría.
 
 **Categorías** (ChatterBaby + Zoundream merged):
 1. Hambre
@@ -580,7 +580,7 @@ TRIGGER D · Modo madrugada ruta 1
 ```
 INICIO · llanto inconsolable detectado
 │
-├── EDAD del peque?
+├── EDAD del hij@?
 │   ├── < 3 meses
 │   │   ├── + Tª cualquiera ≥ 38°C → 🚨 URGENCIAS
 │   │   ├── + Vómitos verdes/sangre → 🚨 112
@@ -631,7 +631,7 @@ Si flag_semana(actual) = true para 3 sem consecutivas:
 
 - **Trauma-informed**: nunca minimizar (`"se pasará pronto"` ❌) · nunca alarmar (`"esto puede ser grave"` ❌).
 - **Sin religiosidad** (`"Dios proveerá"` ❌).
-- **Sin diminutivos forzados** (`"bebito"` ❌ · `"peque"` ✅).
+- **Sin diminutivos forzados** (`"bebito"` ❌ · `"hij@"` ✅).
 - **Sin militancia** (ni pro-lactancia · ni anti-vacunas).
 - **Profesional cálido**, como una doula, no como una influencer.
 - **Cita clínica** siempre con fuente + año (e.g. *"— NSBSP · Barr 2006"*).
@@ -751,18 +751,18 @@ type LibroColicosState = {
 
 | Evento | Properties |
 | --- | --- |
-| `colicos_libro_activado` | trigger, edad_peque_dias |
-| `colicos_episodio_iniciado` | hora_dia, edad_peque_dias |
+| `colicos_libro_activado` | trigger, edad_hijo_dias |
+| `colicos_episodio_iniciado` | hora_dia, edad_hijo_dias |
 | `colicos_episodio_cerrado` | duracion_min, intensidad, estrategias_count, tipo_final |
 | `colicos_5s_completado` | s_count, tiempo_total |
-| `colicos_cry_classifier_run` | resultado_top_categoria, top_probabilidad, edad_peque_dias |
+| `colicos_cry_classifier_run` | resultado_top_categoria, top_probabilidad, edad_hijo_dias |
 | `colicos_relevo_solicitado` | duracion_episodio_min |
 | `colicos_relevo_aceptado` | tiempo_respuesta_segundos |
 | `colicos_wessel_confirmado` | dias_total_logged |
 | `colicos_plan_ia_iniciado` | causa_que_lleva |
 | `colicos_purple_completado` | scroll_depth |
 | `colicos_safety_frame_visto` | timestamp_hora |
-| `colicos_libro_resuelto` | edad_peque_dias_al_resolver |
+| `colicos_libro_resuelto` | edad_hijo_dias_al_resolver |
 
 ### 12.2 Métricas clínicas
 
@@ -790,7 +790,7 @@ type LibroColicosState = {
 
 ### 13.2 v1.5 · 6-12 m post-launch
 
-- Patrones aprendidos por peque (personalización IA local).
+- Patrones aprendidos por hij@ (personalización IA local).
 - Multi-idioma cry classifier (CA, FR, DE).
 - Recomendación L. reuteri activa con sign-off legal y disclaimer.
 - Notificación inteligente al co-cuidador/a (ML "ahora deberías ofrecer relevo").
@@ -817,7 +817,7 @@ type LibroColicosState = {
 | **Modo coleccionista tóxico** ("debo trackear todo") | 🟡 media | Cero gamification · cero racha · "no pasa nada si no logueas" |
 | **Incumplimiento MDR Class IIa** | 🔴 alta | Sign-off legal antes de v0 · vendor cry classifier CE-marked · pathway con DKV |
 | **Privacy leak audio** | 🔴 alta | Audit técnico independiente + tests on-device + audit logs |
-| **Liability si peque tiene problema serio** | 🔴 alta | Disclaimer canon Fase 0 + escalada urgente automatizada + insurance B2C |
+| **Liability si hij@ tiene problema serio** | 🔴 alta | Disclaimer canon Fase 0 + escalada urgente automatizada + insurance B2C |
 | **L. reuteri recomendación equivocada** (formula-fed) | 🟡 media | Cross-check tipo alimentación antes de mostrar · canon "solo lactantes maternos" |
 | **Adopción baja** (padres no abren libro) | 🟢 baja | Activación auto + entry desde Modo madrugada + card persistente Hoy |
 

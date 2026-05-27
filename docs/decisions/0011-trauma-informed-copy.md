@@ -9,7 +9,7 @@
 Apps de parenting tienden a 3 anti-patterns:
 - **Gamification tóxica** · streaks, badges, "¡felicidades por X racha!"
 - **Alarmismo médico** · rojo agresivo, "¡PELIGRO!", interrupciones modales
-- **Diminutivos forzados + militancia** · "tu peque-cito", "como buena mami...", LM-vs-biberón judgmental
+- **Diminutivos forzados + militancia** · "tu hij@-cito", "como buena mami...", LM-vs-biberón judgmental
 
 Estos enfoques son contraproducentes en momentos de crisis (3AM crying, post-pérdida arcoíris, primer parto, etc.).
 
@@ -24,7 +24,7 @@ Research: NSBSP PURPLE crying canon, EPDS antenatal/postnatal validation Cox 198
 - ❌ "¡Llevas 5 días sin perder!"
 - ❌ "Racha de 12 hitos · sigue así"
 - ❌ Badges · stars · trophies
-- ❌ Comparativas con otros peques
+- ❌ Comparativas con otros hij@s
 - ✓ Estado vacío saludable es **positivo**: *"Aquí registramos lo que pasa · cuando pase. No es un libro que tenga que estar lleno."*
 
 ### 2. Cero rojo médico
@@ -54,7 +54,7 @@ Research: NSBSP PURPLE crying canon, EPDS antenatal/postnatal validation Cox 198
 
 ### 5. Lenguaje trauma-informed
 
-- ❌ "Tu peque está enfermo"
+- ❌ "Tu hij@ está enfermo"
 - ❌ "Has fallado en..."
 - ❌ "Deberías..."
 - ✓ "Aquí no diagnosticamos · aquí estamos" (sticky disclaimer chat)

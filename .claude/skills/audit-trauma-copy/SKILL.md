@@ -25,7 +25,7 @@ Buscar patrones anti-canon en `prototype.html`:
 
 ### 5 · Diagnóstico no autorizado
 
-!`cd "/Users/titoespanolgamon/Documents/Vibe Coding/Grow" && grep -nE "(tu peque tiene|tu beb[ée] tiene|est[áa] enfermo|padece|sufre de|diagn[óo]stico positivo|alteraci[óo]n|trastorno)" prototype.html | head -10`
+!`cd "/Users/titoespanolgamon/Documents/Vibe Coding/Grow" && grep -nE "(tu hij@ tiene|tu beb[ée] tiene|est[áa] enfermo|padece|sufre de|diagn[óo]stico positivo|alteraci[óo]n|trastorno)" prototype.html | head -10`
 
 ### 6 · Citas clínicas sin fuente
 
@@ -33,7 +33,7 @@ Buscar patrones anti-canon en `prototype.html`:
 
 ### 7 · Diminutivos forzados
 
-!`cd "/Users/titoespanolgamon/Documents/Vibe Coding/Grow" && grep -nE "(peque[- ]cito|mami|mam[ií]|papito|hijit[oa]|bebecit[oa])" prototype.html | head -10`
+!`cd "/Users/titoespanolgamon/Documents/Vibe Coding/Grow" && grep -nE "(hij@[- ]cito|mami|mam[ií]|papito|hijit[oa]|bebecit[oa])" prototype.html | head -10`
 
 ## Instrucciones
 
@@ -57,7 +57,7 @@ Tras los greps:
 | "Racha de N hitos" | "N logrados · de M hitos" |
 | `color: red` | `color: var(--coral-strong)` |
 | "Los expertos dicen…" | "NICE NG143 · 2021" (fuente con año) |
-| "Tu peque está enfermo" | "Vamos a por la otitis · día 3 de antibiótico" |
+| "Tu hij@ está enfermo" | "Vamos a por la otitis · día 3 de antibiótico" |
 | "La lactancia materna es lo mejor" | "Como salga. Y si no sale, también." |
 | "Patrón anormal" | "Puede valer la pena hablar con tu pediatra" |
 

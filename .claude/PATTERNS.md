@@ -105,10 +105,10 @@ Razón: ADR-0011 trauma-informed copy · el rojo médico es alarmante y contrapr
 Antes de añadir copy nuevo, verifica:
 
 - ❌ Gamification ("¡Felicidades por X racha!" · "Streak de N días")
-- ❌ Comparativas ("Tu peque va detrás del N% de niños")
-- ❌ Diminutivos forzados ("peque-cito" · "mami")
+- ❌ Comparativas ("Tu hij@ va detrás del N% de niños")
+- ❌ Diminutivos forzados ("hij@-cito" · "mami")
 - ❌ Militancia ("La lactancia materna es lo mejor")
-- ❌ "Tu peque está enfermo" (no diagnosticamos)
+- ❌ "Tu hij@ está enfermo" (no diagnosticamos)
 - ✓ "Aquí no diagnosticamos · aquí estamos"
 - ✓ "Hiciste lo correcto al venir aquí"
 - ✓ Estado vacío saludable es POSITIVO: "Aquí registramos lo que pasa · cuando pase"

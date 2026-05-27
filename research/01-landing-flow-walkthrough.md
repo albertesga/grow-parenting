@@ -83,7 +83,7 @@
 
 ✅ La frase canon *"Este es un modo urgencia. Las respuestas son más rápidas, más directas y sin juzgar."* lleva el mensaje completo.
 
-⚠️ **Hallazgo**: los chips "No para de llorar" · "Le pasa algo" · "No puedo más" son **muy específicos** sin contexto. Si nunca has tenido un peque puede sonar exagerado · si lo has tenido reconoces inmediato. Acción: A/B test con copy más universal en hero.
+⚠️ **Hallazgo**: los chips "No para de llorar" · "Le pasa algo" · "No puedo más" son **muy específicos** sin contexto. Si nunca has tenido un hij@ puede sonar exagerado · si lo has tenido reconoces inmediato. Acción: A/B test con copy más universal en hero.
 
 ---
 
