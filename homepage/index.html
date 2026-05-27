@@ -152,13 +152,15 @@
            1.2 hace que el nuevo edge sea anti-aliased suave en lugar de
            binario. -->
       <filter id="luma-to-alpha" color-interpolation-filters="sRGB">
+        <!-- Path A · preserva source RGB intacto (ojos, sonrisa) -->
         <feColorMatrix in="SourceGraphic" type="matrix" result="orig" values="
           1 0 0 0 0
           0 1 0 0 0
           0 0 1 0 0
           0 0 0 1 0"/>
-        <feMorphology in="SourceGraphic" operator="dilate" radius="12"/>
-        <feMorphology operator="erode" radius="12"/>
+        <!-- Path B · matte closing 15 fills eye holes en la silueta. -->
+        <feMorphology in="SourceGraphic" operator="dilate" radius="15"/>
+        <feMorphology operator="erode" radius="15"/>
         <feColorMatrix type="matrix" values="
           0 0 0 0 0
           0 0 0 0 0
@@ -170,6 +172,18 @@
         <feMorphology operator="erode" radius="2"/>
         <feGaussianBlur stdDeviation="1.2" result="matte"/>
         <feComposite in="orig" in2="matte" operator="in"/>
+      </filter>
+
+      <!-- Filter alpha-cleanup · post-procesa el chroma key per-pixel
+           que aplica main.js en los canvases de sección 2 (.avatar-stage
+           canvas + .mobile-avatar canvas). El JS deja un edge jagged con
+           pixels boundary dark × alpha parcial · este filter erosiona 2px
+           para comer ese rim y blurrea 1.2 para que la transición sea
+           suave anti-aliased contra el cream paper. Mismo principio que
+           el final de v8 del hero pero aplicable a cualquier RGBA-input. -->
+      <filter id="alpha-cleanup" color-interpolation-filters="sRGB">
+        <feMorphology operator="erode" radius="2"/>
+        <feGaussianBlur stdDeviation="1.2"/>
       </filter>
     </defs>
   </svg>
@@ -573,7 +587,72 @@
   </section>
 
   <!-- ════════════════════════════════════════════════════════════════════
-       § 4 · MODO 3 AM
+       § 4 · CÓMO FUNCIONA
+       ════════════════════════════════════════════════════════════════════ -->
+  <section class="full flow" id="como-funciona" data-section="3b">
+    <div class="wrap">
+      <div class="section-head flow-head">
+        <span class="eyebrow">Cómo funciona · del registro a la guía</span>
+        <h2>De lo que pasa hoy a lo que toca después.</h2>
+        <p>Grow convierte los registros diarios en una guía clara: qué ha pasado, qué toca ahora y qué información necesitas tener a mano.</p>
+      </div>
+
+      <div class="flow-rail" role="list" aria-label="Cómo Grow convierte registros en orientación">
+        <article class="flow-step t-mint" role="listitem">
+          <div class="flow-step-head">
+            <span class="flow-index">01</span>
+            <span class="flow-tag">Diario único</span>
+          </div>
+          <span class="flow-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#b-bookmark"/></svg></span>
+          <h3>Registra todo en un solo lugar.</h3>
+          <p>Tomas, sueño, pañales, fiebre, medicación o notas. Todo queda ordenado para detectar patrones, compartir con pediatría y cerrar el día con más calma.</p>
+          <div class="flow-mini flow-log" aria-hidden="true">
+            <span>Toma · 9:18</span>
+            <span>Sueño · 1h 20m</span>
+            <span>Pañal · hace 32m</span>
+            <span>Temp. · 37,8°</span>
+          </div>
+        </article>
+
+        <article class="flow-step t-gold" role="listitem">
+          <div class="flow-step-head">
+            <span class="flow-index">02</span>
+            <span class="flow-tag">Hoy claro</span>
+          </div>
+          <span class="flow-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#i-cal"/></svg></span>
+          <h3>Despierta sabiendo qué toca.</h3>
+          <p>Cada mañana ves lo importante: vacuna pendiente, revisión, actividad sugerida, síntoma a observar o rutina que conviene ajustar. Sin listas interminables.</p>
+          <div class="flow-mini flow-agenda" aria-hidden="true">
+            <span><strong>Hoy</strong> rutina de sueño 19:30</span>
+            <span><strong>7 días</strong> vacuna pendiente</span>
+            <span><strong>Esta semana</strong> probar huevo 2/3</span>
+          </div>
+        </article>
+
+        <article class="flow-step t-blush" role="listitem">
+          <div class="flow-step-head">
+            <span class="flow-index">03</span>
+            <span class="flow-tag">Libros vivos</span>
+          </div>
+          <span class="flow-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#b-heart"/></svg></span>
+          <h3>Recibe libros que se vuelven personales.</h3>
+          <p>Con tus registros, sueño, alimentación, vacunas, hitos, desarrollo y salud aterrizan en recomendaciones concretas: una rutina de sueño, cómo cortar el aguacate o qué esperar tras una vacuna.</p>
+          <div class="flow-mini flow-books" aria-hidden="true">
+            <span>Sueño · ventana de Lola</span>
+            <span>Alimentación · aguacate 7m</span>
+            <span>Vacunas · 72h esperables</span>
+          </div>
+        </article>
+      </div>
+
+      <div class="flow-share">
+        <span>Resumen listo para compartir con pediatra, familia o cuidadores.</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════════════════
+       § 5 · MODO 3 AM
        ════════════════════════════════════════════════════════════════════ -->
   <section class="full threeam" id="threeam" data-section="4">
     <div class="wrap">

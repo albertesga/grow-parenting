@@ -333,6 +333,13 @@
       transition: opacity 400ms cubic-bezier(0.4, 0, 0.6, 1);
       filter: url(#luma-to-alpha);
       -webkit-filter: url(#luma-to-alpha); /* Safari < 15.4 */
+      /* Mask fade 60→64% · el kling MP4 tiene un "stand/feet" debajo del
+         head ball con una grieta dark visible (y=441-461 = video element
+         59-64%) · esta zona se ve "rara" según el user · mask transparenta
+         el bottom del video preservando el head ball completo (ojos +
+         sonrisa intactos) · transición suave 60-64% evita corte sharp. */
+      -webkit-mask-image: linear-gradient(to bottom, #000 60%, transparent 64%);
+      mask-image: linear-gradient(to bottom, #000 60%, transparent 64%);
     }
     .hero-avatar-vid--tap {
       opacity: 0;
@@ -493,9 +500,10 @@
       margin-bottom: 32px;
     }
     .avatar-stage canvas {
-      /* Canvas con alpha real · chroma key aplicado en JS al decodear cada
-         frame del MP4 source. No necesita filter SVG ni mix-blend-mode · el
-         negro de fondo ya es transparente per-pixel desde el cache de frames. */
+      /* Canvas con alpha real · chroma key per-pixel aplicado en JS al
+         decodear cada frame del MP4 source · post-procesado con SVG filter
+         #alpha-cleanup (erode 2 + blur 1.2) para eliminar el rim jagged
+         con pixels dark × alpha parcial que dejaba el JS chroma key. */
       position: absolute;
       inset: 0;
       width: 100%;
@@ -503,6 +511,8 @@
       object-fit: contain;
       opacity: 0;
       transition: opacity var(--duration-slow) var(--ease-soft);
+      filter: url(#alpha-cleanup);
+      -webkit-filter: url(#alpha-cleanup);
     }
     .avatar-stage canvas.is-ready { opacity: 1; }
     /* .avatar-phase pill eliminado · era redundante con el label del stepper
@@ -1202,7 +1212,224 @@
     .libro-card.t-lav        { --accent-soft: var(--violet-subtle); }
 
     /* ════════════════════════════════════════════════════════════════════
-       § 10 · MODO 3 AM (oscuro)
+       § 10 · FLOW STEPPER
+       ════════════════════════════════════════════════════════════════════ */
+    .flow {
+      position: relative;
+      overflow: clip;
+      border-top: 1px solid var(--line);
+      background:
+        radial-gradient(circle at 8% 8%, rgba(191,210,176,0.34), transparent 34%),
+        radial-gradient(circle at 92% 4%, rgba(232,201,122,0.30), transparent 32%),
+        linear-gradient(180deg, var(--paper) 0%, #F7F1E6 100%);
+    }
+    .flow .wrap {
+      padding-top: 88px;
+      padding-bottom: 104px;
+    }
+    .flow-head {
+      max-width: 780px;
+      margin-bottom: 42px;
+    }
+    .flow-rail {
+      position: relative;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+      align-items: stretch;
+    }
+    .flow-rail::before {
+      content: "";
+      position: absolute;
+      top: 41px;
+      left: 9%;
+      right: 9%;
+      height: 2px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--mint-base), var(--gold-base), var(--blush-base));
+      opacity: 0.55;
+    }
+    .flow-step {
+      --flow-soft: var(--paper-soft);
+      --flow-base: var(--line-strong);
+      --flow-strong: var(--ink-soft);
+      position: relative;
+      z-index: 1;
+      min-height: 430px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      padding: 24px;
+      border-radius: 34px;
+      border: 1px solid color-mix(in srgb, var(--flow-base) 42%, var(--line));
+      background:
+        radial-gradient(circle at 88% 8%, color-mix(in srgb, var(--flow-base) 38%, transparent), transparent 42%),
+        radial-gradient(circle at 12% 0%, rgba(255,255,255,0.72), transparent 34%),
+        linear-gradient(150deg, var(--flow-soft) 0%, var(--paper-soft) 72%, var(--paper) 100%);
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,0.66),
+        0 20px 42px -26px rgba(80,60,30,0.28);
+      overflow: hidden;
+      isolation: isolate;
+    }
+    .flow-step::after {
+      content: attr(data-watermark);
+      position: absolute;
+      right: 18px;
+      bottom: -22px;
+      font-family: var(--font-serif);
+      font-size: 108px;
+      line-height: 1;
+      color: rgba(255,255,255,0.36);
+      pointer-events: none;
+      z-index: -1;
+    }
+    .flow-step.t-mint  { --flow-soft: var(--mint-subtle);  --flow-base: var(--mint-base);  --flow-strong: var(--mint-strong); }
+    .flow-step.t-gold  { --flow-soft: var(--gold-subtle);  --flow-base: var(--gold-base);  --flow-strong: var(--gold-strong); }
+    .flow-step.t-blush { --flow-soft: var(--blush-subtle); --flow-base: var(--blush-base); --flow-strong: var(--blush-strong); }
+    .flow-step-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      min-height: 38px;
+    }
+    .flow-index {
+      display: inline-grid;
+      place-items: center;
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: var(--paper);
+      border: 1px solid color-mix(in srgb, var(--flow-base) 58%, var(--line));
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      color: var(--flow-strong);
+      box-shadow: 0 8px 18px -12px rgba(80,60,30,0.28);
+    }
+    .flow-tag {
+      display: inline-flex;
+      align-items: center;
+      min-height: 34px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(250,247,240,0.72);
+      border: 1px solid rgba(201,194,178,0.72);
+      font-family: var(--font-mono);
+      font-size: 9.5px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--flow-strong);
+      white-space: nowrap;
+    }
+    .flow-icon {
+      width: 58px;
+      height: 58px;
+      border-radius: 20px;
+      display: grid;
+      place-items: center;
+      background: rgba(250,247,240,0.72);
+      color: var(--ink);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.65);
+    }
+    .flow-icon svg {
+      width: 28px;
+      height: 28px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 1.45;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    .flow-step h3 {
+      font-family: var(--font-serif);
+      font-weight: 400;
+      font-size: clamp(28px, 2.7vw, 38px);
+      line-height: 1.02;
+      letter-spacing: -0.016em;
+      max-width: 10ch;
+    }
+    .flow-step p {
+      font-family: var(--font-text);
+      font-size: 14.5px;
+      line-height: 1.55;
+      color: var(--ink-soft);
+      max-width: 34ch;
+    }
+    .flow-mini {
+      margin-top: auto;
+      padding: 14px;
+      border-radius: 22px;
+      background: rgba(250,247,240,0.64);
+      border: 1px solid rgba(201,194,178,0.56);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.56);
+    }
+    .flow-log {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+    }
+    .flow-log span,
+    .flow-agenda span,
+    .flow-books span {
+      border-radius: 999px;
+      background: var(--paper);
+      border: 1px solid rgba(201,194,178,0.60);
+      font-family: var(--font-text);
+      font-size: 12.5px;
+      color: var(--ink);
+    }
+    .flow-log span {
+      min-height: 34px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 8px 10px;
+      text-align: center;
+    }
+    .flow-agenda,
+    .flow-books {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .flow-agenda span,
+    .flow-books span {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 10px 12px;
+      border-radius: 16px;
+    }
+    .flow-agenda strong {
+      font-weight: 600;
+      color: var(--ink);
+      white-space: nowrap;
+    }
+    .flow-share {
+      margin: 22px auto 0;
+      display: flex;
+      justify-content: center;
+    }
+    .flow-share span {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      min-height: 44px;
+      padding: 11px 18px;
+      border-radius: 999px;
+      background: rgba(229,237,223,0.72);
+      border: 1px solid rgba(143,174,133,0.32);
+      color: var(--mint-ink);
+      font-family: var(--font-text);
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    /* ════════════════════════════════════════════════════════════════════
+       § 11 · MODO 3 AM (oscuro)
        ════════════════════════════════════════════════════════════════════ */
     .threeam {
       background: var(--module-dark);
@@ -1745,7 +1972,8 @@
     }
     .mobile-avatar canvas {
       /* Canvas con alpha real · misma técnica que el avatar grande
-         (ver .avatar-stage canvas) · chroma key aplicado en JS por frame. */
+         (ver .avatar-stage canvas) · chroma key per-pixel en JS + post
+         filter #alpha-cleanup para eliminar el rim jagged. */
       position: absolute;
       inset: 0;
       width: 100%;
@@ -1753,6 +1981,8 @@
       object-fit: contain;
       opacity: 0;
       transition: opacity var(--duration-slow) var(--ease-soft);
+      filter: url(#alpha-cleanup);
+      -webkit-filter: url(#alpha-cleanup);
     }
     .mobile-avatar canvas.is-ready { opacity: 1; }
 
