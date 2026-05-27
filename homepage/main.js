@@ -93,12 +93,34 @@
         }
       }
 
-      /* Erode "true" · morfología binaria · CUALQUIER pixel con alpha>0 que
-         toque un pixel con alpha=0 → se vuelve alpha=0. Iter 3 · removido
-         el threshold <220 que evitaba eat pixels alpha-altos (lo que dejaba
-         visible el rim de pixels con alpha 220-255 pero RGB oscuro · línea
-         dotted persistente). Ahora la silueta se reduce 1px por pase, sin
-         excepciones · 4-5 pases eliminan ~4-5px de rim eficazmente. */
+      /* Dilate alpha 1px · cualquier pixel con alpha=0 que toque alpha>0
+         se vuelve alpha=255. Múltiples pases expanden el alpha mask N px.
+         Usado en combinación con erodeEdge para hacer "closing" morphology
+         (dilate N → erode N) que rellena holes INTERIORES de la silueta
+         (los ojos oscuros del kling avatar que chromaKey había eliminado
+         por ser low-luma) SIN inflar el contorno exterior. */
+      function dilateAlpha(d, w, h) {
+        const a = new Uint8Array(w * h);
+        for (let i = 0, j = 3; i < a.length; i++, j += 4) a[i] = d[j];
+        for (let y = 0; y < h; y++) {
+          for (let x = 0; x < w; x++) {
+            const k = y * w + x;
+            if (a[k] !== 0) continue;
+            const up = y > 0 ? a[k - w] : 0;
+            const dn = y < h - 1 ? a[k + w] : 0;
+            const lt = x > 0 ? a[k - 1] : 0;
+            const rt = x < w - 1 ? a[k + 1] : 0;
+            if (up > 0 || dn > 0 || lt > 0 || rt > 0) {
+              d[k * 4 + 3] = 255;
+            }
+          }
+        }
+      }
+
+      /* Erode alpha 1px · morfología binaria · cualquier pixel con alpha>0
+         que toque alpha=0 se vuelve alpha=0. Iter 4 · usado tanto para
+         "cerrar" matte (dilate N → erode N) como para eat rim del contorno
+         (erode M extra). El RGB se mantiene intacto · solo cambia el alpha. */
       function erodeEdge(d, w, h) {
         const a = new Uint8Array(w * h);
         for (let i = 0, j = 3; i < a.length; i++, j += 4) a[i] = d[j];
@@ -154,9 +176,16 @@
                 try {
                   const img = ctx.getImageData(0, 0, w, h);
                   chromaKey(img.data);
-                  // 5 pases · eat ~5px del rim de pixels boundary dark
-                  // (con erode "true" cada pase reduce 1px sin excepciones)
-                  for (let p = 0; p < 5; p++) erodeEdge(img.data, w, h);
+                  // Morphological closing · dilate 15 → erode 15 rellena
+                  // los holes interiores (ojos negros del kling avatar que
+                  // chromaKey eliminó por low luma) sin inflar el contorno.
+                  // +4 erode passes extra eat el rim dark del boundary.
+                  // RGB se mantiene · ojos negros del original quedan
+                  // visibles porque alpha=255 ahora en esa zona.
+                  const CLOSE_R = 15;
+                  const RIM_EAT = 4;
+                  for (let p = 0; p < CLOSE_R; p++) dilateAlpha(img.data, w, h);
+                  for (let p = 0; p < CLOSE_R + RIM_EAT; p++) erodeEdge(img.data, w, h);
                   ctx.putImageData(img, 0, 0);
                 } catch (e) {
                   /* CORS taint · sin alpha real pero al menos pintamos algo. */
@@ -298,6 +327,7 @@
         const heroAvatar = document.getElementById("hero-avatar");
         const sec2Stage  = document.querySelector(".avatar-stage");
         const sec2Frame  = document.querySelector(".avatar-stage .frame");
+        const teamSection = document.getElementById("parenting-team");
         if (!heroAvatar) return;
 
         const HALO_SIZE = 460; // matches CSS width/height
@@ -326,6 +356,27 @@
           };
         }
 
+        function paintTeamHalo(x, y) {
+          if (!teamSection) return;
+          const r = teamSection.getBoundingClientRect();
+          const visible = r.top < window.innerHeight && r.bottom > 0;
+          if (!visible) {
+            teamSection.style.setProperty("--team-halo-opacity", "0");
+            return;
+          }
+
+          const localX = x - r.left;
+          const localY = y - r.top;
+          const sectionProgress = Math.max(0, Math.min(1, (window.innerHeight - r.top) / (window.innerHeight + r.height)));
+          const bell = Math.sin(sectionProgress * Math.PI);
+          const within = localY > -260 && localY < r.height + 260;
+          const opacity = within ? Math.min(0.72, bell * 0.64) : Math.min(0.32, bell * 0.26);
+
+          teamSection.style.setProperty("--team-halo-x", `${localX.toFixed(1)}px`);
+          teamSection.style.setProperty("--team-halo-y", `${localY.toFixed(1)}px`);
+          teamSection.style.setProperty("--team-halo-opacity", opacity.toFixed(3));
+        }
+
         let ticking = false;
         function update() {
           ticking = false;
@@ -336,6 +387,7 @@
             // No parallax · halo siempre en hero
             halo.style.transform =
               `translate(${(hero.cx - HALO_HALF).toFixed(1)}px, ${(hero.cy - HALO_HALF).toFixed(1)}px) scale(1)`;
+            paintTeamHalo(hero.cx, hero.cy);
             return;
           }
 
@@ -372,6 +424,7 @@
 
           halo.style.transform =
             `translate(${(x - HALO_HALF).toFixed(1)}px, ${(y - HALO_HALF).toFixed(1)}px) scale(${scale.toFixed(3)})`;
+          paintTeamHalo(x, y);
         }
 
         function onScroll() {
