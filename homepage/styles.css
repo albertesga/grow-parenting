@@ -305,6 +305,10 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      /* isolation: isolate · crea stacking context para que mix-blend-mode
+         de los videos hijo solo afecte al area del hero-avatar (NO blende
+         contra TODA la página). Crítico para que el blend funcione bien. */
+      isolation: isolate;
     }
     .hero-avatar::before {
       content: "";
@@ -316,28 +320,32 @@
       pointer-events: none;
       z-index: 0;
     }
-    /* Hero avatar · 2 canvas apilados con frames pre-decodificados + chroma
-       key (mismo sistema que narrative section 2). Eliminamos el fondo negro
-       del MP4 kling y mostramos alpha real · canvas 1 visible por defecto
-       (scroll-scrub) · canvas 2 fade-in al click on the invisible button. */
-    .hero-avatar-canvas {
+    /* Hero avatar · 2 videos kling apilados · CSS mix-blend-mode: lighten
+       elimina el fondo negro (cada píxel · max(source, dest) · negro pierde
+       contra paper cream). Approach CSS-only · cero canvas · zero JS chroma.
+       Funciona en todos los browsers modernos (Safari + Chrome + FF + Edge). */
+    .hero-avatar-vid {
       position: absolute;
       inset: 7%;
       width: 86%;
       height: 86%;
+      object-fit: contain;
       z-index: 1;
       pointer-events: none;
-      opacity: 0;
       transition: opacity 400ms cubic-bezier(0.4, 0, 0.6, 1);
+      /* Blend mode · "lighten" toma el pixel más claro entre video y
+         background paper-cream · negro del MP4 → paper visible · avatar
+         (más claro que paper) → avatar visible.
+         IMPORTANTE · requiere isolation:isolate en el contenedor para
+         crear stacking context (sino blende contra TODA la página). */
+      mix-blend-mode: lighten;
     }
-    .hero-avatar-canvas.is-ready { opacity: 1; }
-    /* Canvas tap · always hidden until .is-playing-tap toggle */
-    .hero-avatar-canvas--tap {
+    .hero-avatar-vid--tap {
+      opacity: 0;
       z-index: 2;
     }
-    .hero-avatar-canvas--tap.is-ready { opacity: 0; }
-    .hero-avatar.is-playing-tap .hero-avatar-canvas--scroll { opacity: 0; }
-    .hero-avatar.is-playing-tap .hero-avatar-canvas--tap.is-ready { opacity: 1; }
+    .hero-avatar.is-playing-tap .hero-avatar-vid--scroll { opacity: 0; }
+    .hero-avatar.is-playing-tap .hero-avatar-vid--tap { opacity: 1; }
     /* Botón overlay invisible · captura el click sobre el avatar entero. */
     .hero-avatar-trigger {
       position: absolute;
