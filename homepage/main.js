@@ -27,6 +27,26 @@
         });
       }
 
+      /* 2.5 · Flow stepper reveal · title + cards aparecen secuencialmente
+         al entrar en viewport. Si no hay JS o reduced-motion, el contenido
+         permanece visible por defecto. */
+      const flowSection = document.getElementById("como-funciona");
+      if (flowSection) {
+        if (reduced || !("IntersectionObserver" in window)) {
+          flowSection.classList.add("is-ready", "is-inview");
+        } else {
+          flowSection.classList.add("is-ready");
+          const flowReveal = new IntersectionObserver((entries, observer) => {
+            entries.forEach((entry) => {
+              if (!entry.isIntersecting) return;
+              flowSection.classList.add("is-inview");
+              observer.unobserve(entry.target);
+            });
+          }, { rootMargin: "0px 0px -28% 0px", threshold: 0.16 });
+          flowReveal.observe(flowSection);
+        }
+      }
+
       /* 3 · Parallax avatar · canvas chroma key + frame cache.
          Estrategia · decodear los 2 MP4 (preview-1 bolita→newborn, preview-2
          newborn→bebé) a un array de frames offscreen al cargar la página,
@@ -58,15 +78,45 @@
       };
 
       /* Chroma key per-pixel · luminance Rec.709 → alpha con hard cut + soft ramp.
-         Tuneables · si en runtime hay halo subir HARD a 25, si come bordes bajar SOFT. */
-      const CHROMA_HARD = 18;
-      const CHROMA_SOFT = 64;
+         HARD subido a 30 (vs 18) para matar más el halo dotted dark del rim
+         de compresión MP4 · SOFT a 70 mantiene ramp suave para anti-alias.
+         Tuneables · si en runtime hay halo subir HARD a 36, si come bordes
+         bajar HARD a 24. */
+      const CHROMA_HARD = 30;
+      const CHROMA_SOFT = 70;
       function chromaKey(d) {
         const range = CHROMA_SOFT - CHROMA_HARD;
         for (let i = 0; i < d.length; i += 4) {
           const lum = 0.2126 * d[i] + 0.7152 * d[i + 1] + 0.0722 * d[i + 2];
           if (lum < CHROMA_HARD)      d[i + 3] = 0;
           else if (lum < CHROMA_SOFT) d[i + 3] = ((lum - CHROMA_HARD) * 255 / range) | 0;
+        }
+      }
+
+      /* Erode 1px de la alpha mask · elimina el rim de pixels boundary que
+         tienen alpha parcial Y tocan al background (alpha=0) · esos son
+         los pixels que crean la línea dotted dark visible alrededor del
+         avatar (RGB oscuro × alpha parcial = gris visible). Iteramos
+         per-pixel · si un pixel tiene alpha<240 y CUALQUIER vecino 4-conn
+         tiene alpha=0, lo hacemos alpha=0. Mantiene los píxeles interior
+         del avatar intactos (alpha=255 con vecinos también 255). */
+      function erodeEdge(d, w, h) {
+        const a = new Uint8Array(w * h);
+        for (let i = 0, j = 3; i < a.length; i++, j += 4) a[i] = d[j];
+        for (let y = 0; y < h; y++) {
+          for (let x = 0; x < w; x++) {
+            const k = y * w + x;
+            const av = a[k];
+            if (av === 0 || av >= 240) continue;
+            // 4-neighbors
+            const up = y > 0 ? a[k - w] : 0;
+            const dn = y < h - 1 ? a[k + w] : 0;
+            const lt = x > 0 ? a[k - 1] : 0;
+            const rt = x < w - 1 ? a[k + 1] : 0;
+            if (up === 0 || dn === 0 || lt === 0 || rt === 0) {
+              d[k * 4 + 3] = 0;
+            }
+          }
         }
       }
 
@@ -107,6 +157,7 @@
                 try {
                   const img = ctx.getImageData(0, 0, w, h);
                   chromaKey(img.data);
+                  erodeEdge(img.data, w, h);
                   ctx.putImageData(img, 0, 0);
                 } catch (e) {
                   /* CORS taint · sin alpha real pero al menos pintamos algo. */
