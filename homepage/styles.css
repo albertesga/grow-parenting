@@ -748,8 +748,22 @@
       font-weight: 300;
       color: var(--coral-strong);
     }
+    /* Narrative lead · sub-titular más grande que el headline · va debajo
+       de "Cada etapa, cuando la vives" como "promesa editorial" antes del
+       parallax · tamaño 28-44px Galiner Light · jerarquía elegante. */
+    .narrative-lead {
+      font-family: var(--font-serif);
+      font-weight: 300;
+      font-size: clamp(26px, 3.2vw, 42px);
+      line-height: 1.2;
+      letter-spacing: -0.012em;
+      color: var(--ink);
+      max-width: 32ch;
+      margin: 18px auto 0;
+    }
     @media (max-width: 720px) {
       .narrative-intro { padding: 22px 22px 0; margin-bottom: 18px; }
+      .narrative-lead { font-size: clamp(22px, 5.6vw, 30px); margin-top: 14px; }
     }
 
     /* Closing del parallax · eyebrow corto + chips tonales con lean
@@ -1216,20 +1230,6 @@
       line-height: 1.55;
       color: var(--ink-soft);
       max-width: 56ch;
-      margin: 0;
-    }
-    /* Section lead · sub-titular grande en Galiner Light entre el h2 y
-       el párrafo descriptivo · da una "promesa editorial" antes del body
-       text. Tamaño 24-34px responsive · line-height generoso para lectura
-       de 1-2 líneas · color ink (no soft) para mantener presencia. */
-    .section-head .section-lead {
-      font-family: var(--font-serif);
-      font-weight: 300;
-      font-size: clamp(22px, 2.4vw, 32px);
-      line-height: 1.25;
-      letter-spacing: -0.008em;
-      color: var(--ink);
-      max-width: 32ch;
       margin: 0;
     }
     /* (.libros-head sin overrides · ya es el patrón canónico) */
