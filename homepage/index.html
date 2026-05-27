@@ -165,11 +165,30 @@
           <a class="btn-ghost" href="#narrative">Ver cómo funciona</a>
         </div>
       </div>
-      <div class="hero-avatar">
-        <!-- Avatar embarazo · single image · animación de respiración orgánica
-             (hero-breathe keyframes) · sin meta editorial debajo · solo el
-             phase tag como en el approach original del hero. -->
-        <img class="hero-avatar-img" src="assets/embarazo-hero.png" alt="Personaje del libro de embarazo">
+      <div class="hero-avatar" id="hero-avatar">
+        <!-- Avatar embarazo · 2 videos kling apilados:
+             · video 1 (hero-scroll.mp4) scroll-scrubbed · currentTime = f(progress)
+             · video 2 (hero-tap.mp4) reproducible on-click · vuelve a video 1 al end
+             Cero img estática · cero hero-breathe animation (los videos ya tienen
+             movimiento orgánico). Botón overlay invisible captura el click para a11y. -->
+        <video class="hero-avatar-vid hero-avatar-vid--scroll"
+               id="hero-vid-scroll"
+               src="assets/hero-scroll.mp4"
+               muted
+               playsinline
+               preload="auto"
+               aria-hidden="true"></video>
+        <video class="hero-avatar-vid hero-avatar-vid--tap"
+               id="hero-vid-tap"
+               src="assets/hero-tap.mp4"
+               muted
+               playsinline
+               preload="auto"
+               aria-hidden="true"></video>
+        <button class="hero-avatar-trigger"
+                id="hero-avatar-trigger"
+                type="button"
+                aria-label="Reproducir animación del avatar"></button>
         <div class="phase-tag"><span class="dot"></span> Embarazo · sem 4–40</div>
       </div>
     </div>

@@ -312,19 +312,41 @@
       pointer-events: none;
       z-index: 0;
     }
-    .hero-avatar-img {
+    /* Hero avatar videos · 2 videos kling apilados absolutamente · video 1
+       (scroll-scrub) visible por defecto · video 2 (click) fade-in cuando el
+       user pulsa el botón invisible overlay. Cero hero-breathe keyframes ·
+       los videos ya tienen el movimiento orgánico. */
+    .hero-avatar-vid {
+      position: absolute;
+      inset: 7%;
       width: 86%;
       height: 86%;
       object-fit: contain;
-      position: relative;
       z-index: 1;
-      animation: hero-breathe 5400ms var(--ease-soft) infinite;
-      transform-origin: 50% 65%;
+      pointer-events: none;
+      transition: opacity 400ms cubic-bezier(0.4, 0, 0.6, 1);
     }
-    @keyframes hero-breathe {
-      0%, 100% { transform: translateY(0) rotate(0deg); }
-      35%      { transform: translateY(-6px) rotate(-1deg); }
-      65%      { transform: translateY(-2px) rotate(0.6deg); }
+    .hero-avatar-vid--tap {
+      opacity: 0;
+      z-index: 2;
+    }
+    .hero-avatar.is-playing-tap .hero-avatar-vid--scroll { opacity: 0; }
+    .hero-avatar.is-playing-tap .hero-avatar-vid--tap { opacity: 1; }
+    /* Botón overlay invisible · captura el click sobre el avatar entero. */
+    .hero-avatar-trigger {
+      position: absolute;
+      inset: 7%;
+      z-index: 3;
+      background: transparent;
+      border: 0;
+      padding: 0;
+      cursor: pointer;
+      border-radius: 50%;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .hero-avatar-trigger:focus-visible {
+      outline: 2px solid var(--coral-base);
+      outline-offset: 4px;
     }
     .phase-tag {
       position: absolute;

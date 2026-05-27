@@ -642,4 +642,66 @@
         window.addEventListener("resize", update);
         update();
       });
+
+      /* ────────────────────────────────────────────────────────────────
+         Módulo 9 · Hero avatar videos
+         · Video 1 (hero-vid-scroll) · scroll-scrubbed · currentTime
+           proporcional al scroll de la sección hero
+         · Video 2 (hero-vid-tap) · reproducible al click sobre el botón
+           invisible overlay · al terminar vuelve al modo scroll
+         · Respeta prefers-reduced-motion · si está activo, video 1 NO
+           hace scrub (queda en frame 0 estático) y solo el click play tiene efecto
+         ──────────────────────────────────────────────────────────────── */
+      const heroAvatar = document.getElementById("hero-avatar");
+      const heroVidScroll = document.getElementById("hero-vid-scroll");
+      const heroVidTap = document.getElementById("hero-vid-tap");
+      const heroTrigger = document.getElementById("hero-avatar-trigger");
+      if (heroAvatar && heroVidScroll && heroVidTap && heroTrigger) {
+        const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        let isPlayingTap = false;
+        let scrubReady = false;
+
+        /* Pause video 1 explícitamente · solo lo "tocamos" via currentTime */
+        heroVidScroll.addEventListener("loadedmetadata", () => {
+          heroVidScroll.pause();
+          heroVidScroll.currentTime = 0;
+          scrubReady = true;
+        });
+
+        /* Scroll handler · mapea progreso del hero a currentTime del video 1.
+           Hero progress · 0 cuando top está en viewport top · 1 cuando hero
+           ha salido totalmente por arriba. Usa rAF throttling implícito por
+           passive scroll. */
+        const heroEl = document.querySelector(".hero");
+        const onScroll = () => {
+          if (!scrubReady || isPlayingTap || reduceMotion || !heroEl) return;
+          const rect = heroEl.getBoundingClientRect();
+          const heroH = heroEl.offsetHeight || 1;
+          /* scrolled = cuánto del hero ha salido por arriba */
+          const scrolled = Math.max(0, -rect.top);
+          const progress = Math.min(1, Math.max(0, scrolled / heroH));
+          heroVidScroll.currentTime = progress * (heroVidScroll.duration || 0);
+        };
+        window.addEventListener("scroll", onScroll, { passive: true });
+
+        /* Click handler · pausa video 1, reproduce video 2 desde el inicio. */
+        heroTrigger.addEventListener("click", () => {
+          if (isPlayingTap) return;
+          isPlayingTap = true;
+          heroAvatar.classList.add("is-playing-tap");
+          heroVidTap.currentTime = 0;
+          const p = heroVidTap.play();
+          if (p && typeof p.catch === "function") p.catch(() => {});
+        });
+
+        /* Video 2 termina · volvemos al modo scroll · video 2 vuelve a frame 0
+           pero queda invisible. */
+        heroVidTap.addEventListener("ended", () => {
+          isPlayingTap = false;
+          heroAvatar.classList.remove("is-playing-tap");
+          heroVidTap.currentTime = 0;
+          /* Re-aplicar scroll position al video 1 inmediatamente */
+          onScroll();
+        });
+      }
     })();
