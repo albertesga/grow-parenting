@@ -190,6 +190,39 @@
         <feMorphology operator="erode" radius="2"/>
         <feGaussianBlur stdDeviation="1.2"/>
       </filter>
+
+      <!-- Filter sec2-chroma · LEAN GPU approach iter 5 para los avatares
+           parallax de la sección recorrido · reemplaza el JS chroma key
+           per-pixel (que tardaba 2s al cargar). Mismo principio del hero v7
+           (matte closing) pero SIN feGaussianBlur final · sharpness
+           preservada · ojos negros del kling avatar visibles porque la
+           matte cerrada deja alpha=255 incluso en sus "holes" interiores.
+
+           Pipeline:
+             1) Path A · preserva SourceGraphic intacto → "orig" RGB+A
+             2) Path B · matte limpia:
+                · dilate 12 + erode 12 (closing) · fills eye holes
+                · feColorMatrix alpha = R+G+B − 0.3 (threshold halo MP4)
+                · feComponentTransfer linear · binarize matte
+             3) feComposite "in" · RGB orig + alpha de matte cerrada -->
+      <filter id="sec2-chroma" color-interpolation-filters="sRGB">
+        <feColorMatrix in="SourceGraphic" type="matrix" result="orig" values="
+          1 0 0 0 0
+          0 1 0 0 0
+          0 0 1 0 0
+          0 0 0 1 0"/>
+        <feMorphology in="SourceGraphic" operator="dilate" radius="12"/>
+        <feMorphology operator="erode" radius="12"/>
+        <feColorMatrix type="matrix" values="
+          0 0 0 0 0
+          0 0 0 0 0
+          0 0 0 0 0
+          1 1 1 0 -0.3"/>
+        <feComponentTransfer result="matte">
+          <feFuncA type="linear" slope="5" intercept="-0.5"/>
+        </feComponentTransfer>
+        <feComposite in="orig" in2="matte" operator="in"/>
+      </filter>
     </defs>
   </svg>
 
@@ -200,15 +233,17 @@
     <div class="brand">
       <a href="#"><img src="assets/grow-logo.png" alt="Grow"></a>
     </div>
-    <nav aria-label="Principal">
-      <a href="#libros">Libros</a>
-      <a href="#threeam">Modo 3 AM</a>
-      <a href="#comite">Validado</a>
-      <a href="#pricing">Precio</a>
+    <nav class="book-nav" aria-label="Libros principales">
+      <a class="book-nav-link t-coral" href="#libros" data-future-href="/embarazo/">Embarazo</a>
+      <a class="book-nav-link t-blush" href="#libros" data-future-href="/lactancia/">Lactancia</a>
+      <a class="book-nav-link t-mint" href="#libros" data-future-href="/sueno/">Sueño</a>
+      <a class="book-nav-link t-gold" href="#libros" data-future-href="/alimentacion/">Alimentación</a>
+      <a class="book-nav-link t-violet" href="#libros" data-future-href="/desarrollo/">Desarrollo</a>
+      <a class="book-nav-link nav-about-mobile" href="/about-us">Quiénes somos</a>
     </nav>
     <div class="right">
-      <span class="lang">ES · EN</span>
-      <button class="access" type="button">Acceder</button>
+      <a class="about-link" href="/about-us">Quiénes somos</a>
+      <a class="waitlist-link" href="#pricing">Únete a la waitlist</a>
     </div>
   </header>
 
@@ -229,7 +264,7 @@
         <p class="micro">Del embarazo a sus 3 años</p>
         <div class="hero-ctas">
           <a class="btn-primary btn-arrow" href="#pricing">Entra en la lista</a>
-          <a class="btn-ghost" href="#narrative">Ver cómo funciona</a>
+          <a class="btn-ghost" href="#parenting-team">Conoce el equipo</a>
         </div>
       </div>
       <div class="hero-avatar" id="hero-avatar">
@@ -291,12 +326,12 @@
         <span class="eyebrow">El equipo de Parenting</span>
         <h2>Cada familia merece un equipo a su lado.</h2>
         <p>El equipo de Parenting de Grow te ayuda a navegar la montaña rusa de tener un hijo: dudas pequeñas, noches largas y decisiones que pesan.</p>
-        <div class="parenting-team-roles" aria-label="Áreas del equipo de Parenting">
-          <span>Pediatría</span>
-          <span>Sueño</span>
-          <span>Lactancia</span>
-          <span>Alimentación</span>
-          <span>Salud mental perinatal</span>
+        <div class="parenting-team-roles closing-paths" aria-label="Profesiones del equipo de Parenting">
+          <span class="p-blush">Neonatología</span>
+          <span class="p-gold">Pediatría</span>
+          <span class="p-mint">Coach del sueño</span>
+          <span class="p-violet">Psicología perinatal</span>
+          <span class="p-coral">Enfermería</span>
         </div>
       </div>
 
@@ -310,15 +345,15 @@
         <article class="team-card team-card-call">
           <span class="team-icon"><svg viewBox="0 0 24 24"><use href="#i-user"/></svg></span>
           <div>
-            <h3>Calls 1:1</h3>
-            <p>Para ordenar una duda concreta con una persona.</p>
+            <h3>Sesiones uno a uno</h3>
+            <p>Calls 1:1 para ordenar una duda concreta con una persona.</p>
           </div>
         </article>
 
         <article class="team-card team-card-live">
           <span class="team-icon"><svg viewBox="0 0 24 24"><use href="#i-cal"/></svg></span>
           <div>
-            <h3>Live mensual</h3>
+            <h3>Directos mensuales</h3>
             <p>Sesiones prácticas sobre sueño, vacunas, alimentación, hitos y postparto.</p>
           </div>
         </article>
@@ -835,30 +870,31 @@
         <p class="tagline">Tú cuidas a tu hij@. Grow te cuida a ti.</p>
       </div>
       <div class="col">
-        <h6>Producto</h6>
+        <h6>Libros</h6>
         <ul>
-          <li><a href="#libros">Los 9 libros</a></li>
-          <li><a href="#threeam">Modo 3 AM</a></li>
-          <li><a href="#pricing">Precio</a></li>
-          <li><a href="#">Diario</a></li>
+          <li><a href="#libros" data-future-href="/embarazo/">Embarazo</a></li>
+          <li><a href="#libros" data-future-href="/lactancia/">Lactancia</a></li>
+          <li><a href="#libros" data-future-href="/sueno/">Sueño</a></li>
+          <li><a href="#libros" data-future-href="/alimentacion/">Alimentación</a></li>
+          <li><a href="#libros" data-future-href="/desarrollo/">Desarrollo</a></li>
         </ul>
       </div>
       <div class="col">
-        <h6>Validado</h6>
+        <h6>Grow</h6>
+        <ul>
+          <li><a href="/about-us">Quiénes somos</a></li>
+          <li><a href="#parenting-team">Equipo de Parenting</a></li>
+          <li><a href="#pricing">Waitlist</a></li>
+          <li><a href="mailto:hola@grow.app">Contacto</a></li>
+        </ul>
+      </div>
+      <div class="col">
+        <h6>Confianza</h6>
         <ul>
           <li><a href="#comite">Comité clínico</a></li>
-          <li><a href="#">Tests que usan los profesionales</a></li>
-          <li><a href="#">Camino a producto sanitario</a></li>
-          <li><a href="#">Privacidad · sin ads</a></li>
-        </ul>
-      </div>
-      <div class="col">
-        <h6>Compañía</h6>
-        <ul>
-          <li><a href="#">Quiénes</a></li>
-          <li><a href="#">Manifiesto</a></li>
-          <li><a href="#">Para clínicos</a></li>
-          <li><a href="mailto:hola@grow.app">hola@grow.app</a></li>
+          <li><a href="#libros">Escalas validadas</a></li>
+          <li><a href="#threeam">Sin ads</a></li>
+          <li><a href="#pricing">Datos privados</a></li>
         </ul>
       </div>
     </div>

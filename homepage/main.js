@@ -77,67 +77,13 @@
         mint:  "Bebé"
       };
 
-      /* Chroma key per-pixel · luminance Rec.709 → alpha con hard cut + soft ramp.
-         HARD a 40 (iter 2 · era 30 · 18 originalmente) para matar el rim
-         compresión MP4 más agresivamente · SOFT a 75 mantiene ramp angosto.
-         Iter 2 · user reporta que el rim aún se ve · subo HARD y aumento
-         erode passes. */
-      const CHROMA_HARD = 40;
-      const CHROMA_SOFT = 75;
-      function chromaKey(d) {
-        const range = CHROMA_SOFT - CHROMA_HARD;
-        for (let i = 0; i < d.length; i += 4) {
-          const lum = 0.2126 * d[i] + 0.7152 * d[i + 1] + 0.0722 * d[i + 2];
-          if (lum < CHROMA_HARD)      d[i + 3] = 0;
-          else if (lum < CHROMA_SOFT) d[i + 3] = ((lum - CHROMA_HARD) * 255 / range) | 0;
-        }
-      }
-
-      /* Dilate alpha 1px · cualquier pixel con alpha=0 que toque alpha>0
-         se vuelve alpha=255. Múltiples pases expanden el alpha mask N px.
-         Usado en combinación con erodeEdge para hacer "closing" morphology
-         (dilate N → erode N) que rellena holes INTERIORES de la silueta
-         (los ojos oscuros del kling avatar que chromaKey había eliminado
-         por ser low-luma) SIN inflar el contorno exterior. */
-      function dilateAlpha(d, w, h) {
-        const a = new Uint8Array(w * h);
-        for (let i = 0, j = 3; i < a.length; i++, j += 4) a[i] = d[j];
-        for (let y = 0; y < h; y++) {
-          for (let x = 0; x < w; x++) {
-            const k = y * w + x;
-            if (a[k] !== 0) continue;
-            const up = y > 0 ? a[k - w] : 0;
-            const dn = y < h - 1 ? a[k + w] : 0;
-            const lt = x > 0 ? a[k - 1] : 0;
-            const rt = x < w - 1 ? a[k + 1] : 0;
-            if (up > 0 || dn > 0 || lt > 0 || rt > 0) {
-              d[k * 4 + 3] = 255;
-            }
-          }
-        }
-      }
-
-      /* Erode alpha 1px · morfología binaria · cualquier pixel con alpha>0
-         que toque alpha=0 se vuelve alpha=0. Iter 4 · usado tanto para
-         "cerrar" matte (dilate N → erode N) como para eat rim del contorno
-         (erode M extra). El RGB se mantiene intacto · solo cambia el alpha. */
-      function erodeEdge(d, w, h) {
-        const a = new Uint8Array(w * h);
-        for (let i = 0, j = 3; i < a.length; i++, j += 4) a[i] = d[j];
-        for (let y = 0; y < h; y++) {
-          for (let x = 0; x < w; x++) {
-            const k = y * w + x;
-            if (a[k] === 0) continue;
-            const up = y > 0 ? a[k - w] : 0;
-            const dn = y < h - 1 ? a[k + w] : 0;
-            const lt = x > 0 ? a[k - 1] : 0;
-            const rt = x < w - 1 ? a[k + 1] : 0;
-            if (up === 0 || dn === 0 || lt === 0 || rt === 0) {
-              d[k * 4 + 3] = 0;
-            }
-          }
-        }
-      }
+      /* Iter 5 · LEAN approach · removed ALL per-pixel JS chroma processing
+         (chromaKey + dilateAlpha + erodeEdge) que tardaba ~2s al cargar.
+         Ahora extractFrames solo hace drawImage(vid) en cada frame · el
+         background black se mantiene en el canvas. La eliminación del bg
+         + matte closing (para preservar ojos) se delega al SVG filter
+         #sec2-chroma aplicado via CSS al .avatar-stage canvas (definido
+         en index.html · ver sprite). GPU accelerated · sin per-pixel JS. */
 
       /* Decodea N frames de un MP4 · scrub via currentTime + seeked event.
          Aplica chroma key + guarda cada frame como canvas. Promise resuelve
@@ -173,23 +119,9 @@
                 off.height = h;
                 const ctx = off.getContext("2d", { willReadFrequently: true });
                 ctx.drawImage(vid, 0, 0);
-                try {
-                  const img = ctx.getImageData(0, 0, w, h);
-                  chromaKey(img.data);
-                  // Morphological closing · dilate 15 → erode 15 rellena
-                  // los holes interiores (ojos negros del kling avatar que
-                  // chromaKey eliminó por low luma) sin inflar el contorno.
-                  // +4 erode passes extra eat el rim dark del boundary.
-                  // RGB se mantiene · ojos negros del original quedan
-                  // visibles porque alpha=255 ahora en esa zona.
-                  const CLOSE_R = 15;
-                  const RIM_EAT = 4;
-                  for (let p = 0; p < CLOSE_R; p++) dilateAlpha(img.data, w, h);
-                  for (let p = 0; p < CLOSE_R + RIM_EAT; p++) erodeEdge(img.data, w, h);
-                  ctx.putImageData(img, 0, 0);
-                } catch (e) {
-                  /* CORS taint · sin alpha real pero al menos pintamos algo. */
-                }
+                /* Lean · no per-pixel processing · frame se guarda con su
+                   background black original · CSS filter url(#sec2-chroma)
+                   se encarga de hacer chroma key + matte closing en GPU. */
                 frames.push(off);
               }
               resolve(frames);
