@@ -84,6 +84,58 @@ NO debe haber:
 Canon: tono blush-subtle · validación emocional sin alegría performativa ·
 ruta rápida a duelo perinatal.
 
+### 7 · Wording regulatorio · cero "triage" + NSBSP en contexto correcto
+
+Grow no es un dispositivo médico Class IIa. Cierto wording dispara
+MDR Rule 11 (clasificación europea de software como medical device) y
+pone toda la app en una categoría que NO queremos asumir hoy.
+
+**PROHIBIDO** · cualquier user-facing copy (landing, app, sheets, emails,
+ads, push, alt text, aria-label, error messages, meta description):
+
+| Palabra | Por qué prohibida |
+|---|---|
+| `triage`, `triaje` | Disparador directo MDR Class IIa Rule 11 |
+| `te ayuda a decidir`, `decide por ti` | Frame de "decisión clínica" |
+| `diagnostica`, `diagnóstico` | Acto médico reservado |
+| `valora clínicamente`, `evaluación clínica` | Acto médico reservado |
+| `recomendamos` (en contexto salud) | Acto profesional sanitario |
+| `protocolo de triage` | Doble triggering |
+
+**CANON · orientación informativa**:
+- "te ayudamos a entender qué dicen las guías"
+- "te orientamos"
+- "te mostramos lo que dice [NICE/AEPED/etc]"
+- "información basada en [guía + año]"
+- "decide tú qué hacer"  ← deja la agencia en el user, no en la app
+- "qué dicen las guías sobre lo que estás viendo"
+
+**NSBSP** · National Center on Shaken Baby Syndrome Prevention. Es un
+**marco de prevención educativa anti-shaken-baby** (justifica el chip
+"No puedo más" en Modo 3 AM como ruta de relevo del cuidador agotado).
+
+**NSBSP · uso correcto** (✓):
+- "marco anti-shaken-baby NSBSP"
+- "información NSBSP sobre cuidador agotado"
+- "Nunca sacudas al bebé. Ni siquiera 1 segundo." (canon directo)
+
+**NSBSP · uso incorrecto** (✗ · imprecisión clínica que un pediatra detecta):
+- "protocolo de triage NSBSP"   ← NSBSP NO es protocolo de triage
+- "escala validada NSBSP"        ← NSBSP NO es una escala
+- "estandar NSBSP de evaluación" ← NSBSP NO evalúa, previene
+
+**Citas clínicas correctas** para sostener el contenido del Modo 3 AM
+sin entrar en Class IIa:
+- `NICE NG143 (2021)` · sepsis recognition
+- `AEPED 2026` · pediatría española
+- `AAP 2026` · pediatría americana
+- `EAPM` · medicina perinatal
+- `NSBSP` (solo como marco anti-shaken-baby, ver arriba)
+
+**Si necesitas decir "triage" porque hablas del producto interno**,
+escala al user (ver `.agent/rules/escalation.md`) · es decisión legal
++ producto, no de copy. Por defecto, sustituye por "orientación".
+
 ## Tabla de sustituciones rápidas
 
 | Anti-canon | Canon |
@@ -96,6 +148,10 @@ ruta rápida a duelo perinatal.
 | "La lactancia materna es lo mejor" | "Como salga. Y si no sale, también." |
 | "Patrón anormal" | "Puede valer la pena hablar con tu pediatra" |
 | "¡Felicidades semana 8!" (rainbow) | "Semana 8 · estamos aquí" |
+| "triage en madrugadas" | "orientación en madrugadas" |
+| "Te ayuda a decidir si…" | "Te ayudamos a entender qué dicen las guías sobre…" |
+| "protocolo de triage NSBSP" | "marco anti-shaken-baby NSBSP" |
+| "escalas validadas (NSBSP, …)" | "escalas validadas (Haizea-Llevant, LATCH, EPDS, M-CHAT-R)" |
 
 ## Ejemplos
 
