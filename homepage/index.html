@@ -124,36 +124,33 @@
       <!-- (parallax: el filter SVG black-to-alpha se eliminó · ahora hacemos
            chroma key per-pixel en JS al cachear los frames · ver IIFE bottom). -->
 
-      <!-- Filter luma-to-alpha v7 · matte closing technique · preserva
-           los ojos oscuros del avatar mientras mata el halo de compresión
-           MP4 sin tocar los videos.
+      <!-- Filter luma-to-alpha v8 · matte closing + edge spill suppression ·
+           preserva ojos negros, mata el halo, Y elimina la línea dotted
+           del boundary que se veía en zoom (RGB oscuro × alpha parcial).
 
-           Estrategia: NO podemos usar luma directo como alpha porque eyes
-           (sum ~0.2-0.45) y halo (sum ~0.1-0.2) se solapan. La separación
-           viene por ESTRUCTURA: los ojos están DENTRO de la silueta, el
-           halo está FUERA. Usamos morphological closing (dilate → erode)
-           para rellenar las "islas oscuras" interiores de la silueta sin
-           inflar el contorno · luego compositamos el RGB original con
-           esa matte limpia.
+           Problema diagnosticado en v7: el matte cerrado tiene un edge
+           con alpha gradiente (0→1) en 2-3px · en esos pixels el RGB del
+           kling sigue siendo cerca de negro (compresión MP4) · resultado
+           visual = línea oscura punteada visible en zoom.
 
-           Pipeline:
+           Solución v8: tras generar el matte cerrado, EROSIONAR el alpha
+           ~2px hacia adentro para comer los pixels boundary dark, luego
+           BLUR para difundir la nueva transición:
+
              1) Path A · preserva SourceGraphic intacto → "orig" (RGB+A)
-             2) Path B · genera matte LIMPIA:
-                · dilate 12 px · expande brights · rellena ojos
-                · erode 12 px · vuelve al contorno original
-                  Resultado: silueta sin huecos interiores oscuros.
+             2) Path B · genera matte limpia + sin rim oscuro:
+                · feMorphology dilate 12 + erode 12 · closing fills ojos
                 · feColorMatrix · alpha = R+G+B − 0.3 (threshold halo)
-                · feComponentTransfer linear · slope 5 intercept -0.5
-                  → corte binario limpio para la matte
-             3) feComposite "in" · combina RGB de orig con alpha de matte
-                Resultado: avatar con ojos oscuros del original (vienen
-                del RGB intacto) pero alpha sin halo (viene de la matte
-                cerrada).
+                · feComponentTransfer linear · binarize matte
+                · feMorphology erode radius=2 · CONTRAE 2px (∗ clave)
+                · feGaussianBlur stdDeviation=1.2 · difumina nuevo edge
+             3) feComposite "in" · RGB de orig + alpha de matte erosionada
 
-           Compared to v5/v6:
-             · v5/v6 keyed alpha por pixel · ojos volvían semitransparentes
-             · v7 cierra la matte interna · ojos quedan totalmente opacos
-             · halo sigue muerto porque está fuera del cierre. -->
+           Resultado: avatar pierde ~2px de silueta (invisible @ tamaño
+           real) PERO el dotted dark edge desaparece completamente porque
+           la zona del rim oscuro queda FUERA del alpha mask. El blur
+           1.2 hace que el nuevo edge sea anti-aliased suave en lugar de
+           binario. -->
       <filter id="luma-to-alpha" color-interpolation-filters="sRGB">
         <feColorMatrix in="SourceGraphic" type="matrix" result="orig" values="
           1 0 0 0 0
@@ -167,9 +164,11 @@
           0 0 0 0 0
           0 0 0 0 0
           1 1 1 0 -0.3"/>
-        <feComponentTransfer result="matte">
+        <feComponentTransfer>
           <feFuncA type="linear" slope="5" intercept="-0.5"/>
         </feComponentTransfer>
+        <feMorphology operator="erode" radius="2"/>
+        <feGaussianBlur stdDeviation="1.2" result="matte"/>
         <feComposite in="orig" in2="matte" operator="in"/>
       </filter>
     </defs>
