@@ -391,6 +391,25 @@
 
           halo.style.transform =
             `translate(${(x - HALO_HALF).toFixed(1)}px, ${(y - HALO_HALF).toFixed(1)}px) scale(${scale.toFixed(3)})`;
+
+          // Sync color del halo con la fase del avatar parallax · coral
+          // (embarazo · default) → blush (recién nacido) → mint (bebé) ·
+          // mismos thresholds que updateParallax() (que vive en otro IIFE
+          // scope · no podemos compartir variable currentProgress). Guard
+          // evita mutación DOM redundante si la fase no cambia.
+          const shell = document.querySelector(".narrative-shell");
+          let phase = "coral";
+          if (shell) {
+            const sr = shell.getBoundingClientRect();
+            const total = Math.max(1, sr.height - vh);
+            const pProgress = Math.max(0, Math.min(1, -sr.top / total));
+            if (pProgress >= 0.70)      phase = "mint";
+            else if (pProgress >= 0.40) phase = "blush";
+          }
+          if (halo.dataset.phase !== phase) {
+            halo.dataset.phase = phase;
+          }
+
           paintTeamHalo(x, y);
         }
 

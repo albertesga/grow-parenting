@@ -112,15 +112,17 @@
     /* ════════════════════════════════════════════════════════════════════
        § 1.5 · Floating halo + avatar levitation keyframes (globales)
        ════════════════════════════════════════════════════════════════════ */
-    /* Floating halo · burbuja coral position:fixed que viaja con el scroll
-       desde detrás del hero avatar hasta detrás del avatar parallax de
-       sección 2 · controlada por main.js (initHaloTraveler) que actualiza
-       transform translate + scale + opacity en cada scroll frame.
+    /* Floating halo · burbuja position:fixed que viaja con el scroll desde
+       detrás del hero avatar hasta detrás del avatar parallax · color
+       sincronizado con la fase del avatar parallax (coral embarazo →
+       blush recién nacido → mint bebé). @property declaration permite
+       animar smooth transiciones entre gradients (de otra forma snappean).
 
-       Base size 460×460 · radial gradient coral · z-index 0 para vivir
-       DEBAJO de todos los contenidos pero ENCIMA del fondo paper · sin
-       eventos de mouse · transición rápida en transform (60ms) para no
-       quedar atrás del scroll y aún así sentirse "vivo" sutilmente. */
+       data-phase attribute lo cambia main.js cuando el avatar parallax
+       cambia de fase (mismo phaseColors que el stepper). */
+    @property --halo-r { syntax: "<number>"; inherits: false; initial-value: 242; }
+    @property --halo-g { syntax: "<number>"; inherits: false; initial-value: 165; }
+    @property --halo-b { syntax: "<number>"; inherits: false; initial-value: 122; }
     .floating-halo {
       position: fixed;
       top: 0;
@@ -128,18 +130,37 @@
       width: 460px;
       height: 460px;
       border-radius: 50%;
+      /* Coral default (avatar embarazo) · rgb (242,165,122) */
+      --halo-r: 242;
+      --halo-g: 165;
+      --halo-b: 122;
       background: radial-gradient(circle at 50% 50%,
-        rgba(242, 165, 122, 0.38) 0%,
-        rgba(242, 165, 122, 0.20) 35%,
+        rgba(var(--halo-r), var(--halo-g), var(--halo-b), 0.38) 0%,
+        rgba(var(--halo-r), var(--halo-g), var(--halo-b), 0.20) 35%,
         transparent 65%);
       pointer-events: none;
       z-index: 0;
       will-change: transform, opacity;
       transform: translate(-9999px, -9999px) scale(1);
       opacity: 0;
-      transition: opacity 600ms ease-out;
+      transition: opacity 600ms ease-out,
+        --halo-r 700ms cubic-bezier(0.4, 0, 0.2, 1),
+        --halo-g 700ms cubic-bezier(0.4, 0, 0.2, 1),
+        --halo-b 700ms cubic-bezier(0.4, 0, 0.2, 1);
     }
     .floating-halo.is-ready { opacity: 1; }
+    /* Blush · recién nacido · rgb (239,194,181) */
+    .floating-halo[data-phase="blush"] {
+      --halo-r: 239;
+      --halo-g: 194;
+      --halo-b: 181;
+    }
+    /* Mint · bebé · rgb (191,210,176) · el verde que el user quiere */
+    .floating-halo[data-phase="mint"] {
+      --halo-r: 191;
+      --halo-g: 210;
+      --halo-b: 176;
+    }
 
     /* Levitación sutil · 6px translateY · 4.4s ease-in-out infinite.
        Aplicado a hero-avatar-vid + .avatar-stage canvas + .mobile-avatar
