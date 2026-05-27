@@ -503,90 +503,64 @@
         <h2>Una biblioteca para cada etapa.</h2>
         <p>Cada libro se activa cuando te sirve: embarazo, sueño, vacunas, alimentación, hitos, desarrollo y salud. Lo que toca ahora, sin más ruido.</p>
       </div>
-      <div class="libros-grid" role="list">
-        <article class="libro-card t-coral" role="listitem">
+      <!-- Cards mini · scroll horizontal · orden cronológico por when
+           el libro entra en la vida de la familia. Eliminado: kicker
+           (título encima del icono · redundante con h4), .more (Ver libro)
+           y .libro-mode (badges + modo). Mantiene · num, ico, h4, age. -->
+      <div class="libros-rail" role="list">
+        <article class="libro-card libro-mini t-coral" role="listitem">
           <span class="num">01</span>
-          <div><div class="kicker">Embarazo</div>
-            <span class="ico"><svg viewBox="0 0 24 24"><use href="#b-belly"/></svg></span>
-            <h4>Embarazo</h4>
-            <p class="age">Sem 4 — 40</p>
-          </div>
-          <span class="more">Ver libro</span>
+          <span class="ico"><svg viewBox="0 0 24 24"><use href="#b-belly"/></svg></span>
+          <h4>Embarazo</h4>
+          <p class="age">Sem 4 — 40</p>
         </article>
-        <article class="libro-card t-coral" role="listitem">
+        <article class="libro-card libro-mini t-blush" role="listitem">
           <span class="num">02</span>
-          <div><div class="kicker">Alimentación</div>
-            <span class="ico"><svg viewBox="0 0 24 24"><use href="#b-bottle"/></svg></span>
-            <h4>Alimentación</h4>
-            <p class="age">0 — 3 años</p>
-          </div>
-          <span class="more">Ver libro</span>
+          <span class="ico"><svg viewBox="0 0 24 24"><use href="#b-breast"/></svg></span>
+          <h4>Lactancia</h4>
+          <p class="age">0 — 18 m</p>
         </article>
-        <article class="libro-card t-blush" role="listitem">
+        <article class="libro-card libro-mini t-coral" role="listitem">
           <span class="num">03</span>
-          <div><div class="kicker">Lactancia</div>
-            <span class="ico"><svg viewBox="0 0 24 24"><use href="#b-breast"/></svg></span>
-            <h4>Lactancia</h4>
-            <p class="age">0 — 18 m</p>
-          </div>
-          <span class="more">Ver libro</span>
+          <span class="ico"><svg viewBox="0 0 24 24"><use href="#b-tear"/></svg></span>
+          <h4>Cólicos</h4>
+          <p class="age">0 — 6 m</p>
         </article>
-        <article class="libro-card t-gold" role="listitem">
+        <article class="libro-card libro-mini t-mint-night" role="listitem">
           <span class="num">04</span>
-          <div><div class="kicker">Vacunas</div>
-            <span class="ico"><svg viewBox="0 0 24 24"><use href="#b-syringe"/></svg></span>
-            <h4>Vacunas</h4>
-            <p class="age">0 — 3 años</p>
-          </div>
-          <span class="more">Ver libro</span>
+          <span class="ico"><svg viewBox="0 0 24 24"><use href="#b-moon"/></svg></span>
+          <h4>Sueño</h4>
+          <p class="age">0 — 3 años</p>
         </article>
-        <article class="libro-card t-mint-night" role="listitem">
+        <article class="libro-card libro-mini t-gold" role="listitem">
           <span class="num">05</span>
-          <div><div class="kicker">Sueño</div>
-            <span class="ico"><svg viewBox="0 0 24 24"><use href="#b-moon"/></svg></span>
-            <h4>Sueño</h4>
-            <p class="age">0 — 3 años</p>
-          </div>
-          <span class="more">Ver libro</span>
+          <span class="ico"><svg viewBox="0 0 24 24"><use href="#b-syringe"/></svg></span>
+          <h4>Vacunas</h4>
+          <p class="age">0 — 3 años</p>
         </article>
-        <article class="libro-card t-salud" role="listitem">
+        <article class="libro-card libro-mini t-coral" role="listitem">
           <span class="num">06</span>
-          <div><div class="kicker">Salud</div>
-            <span class="ico"><svg viewBox="0 0 24 24"><use href="#b-thermo"/></svg></span>
-            <h4>Salud</h4>
-            <p class="age">0 — 3 años</p>
-            <p class="libro-mode">+ modo post-UCIN · follow-up neonatal</p>
-          </div>
-          <span class="more">Ver libro</span>
+          <span class="ico"><svg viewBox="0 0 24 24"><use href="#b-bottle"/></svg></span>
+          <h4>Alimentación</h4>
+          <p class="age">0 — 3 años</p>
         </article>
-        <article class="libro-card t-coral" role="listitem">
+        <article class="libro-card libro-mini t-salud" role="listitem">
           <span class="num">07</span>
-          <div><div class="kicker">Cólicos</div>
-            <span class="ico"><svg viewBox="0 0 24 24"><use href="#b-tear"/></svg></span>
-            <h4>Cólicos</h4>
-            <p class="age">0 — 6 m</p>
-          </div>
-          <span class="more">Ver libro</span>
+          <span class="ico"><svg viewBox="0 0 24 24"><use href="#b-thermo"/></svg></span>
+          <h4>Salud</h4>
+          <p class="age">0 — 3 años</p>
         </article>
-        <article class="libro-card t-mint" role="listitem">
+        <article class="libro-card libro-mini t-mint" role="listitem">
           <span class="num">08</span>
-          <div><div class="kicker">Hitos</div>
-            <span class="ico"><svg viewBox="0 0 24 24"><use href="#b-sprout"/></svg></span>
-            <h4>Hitos</h4>
-            <p class="age">0 — 3 años</p>
-            <p class="libro-mode">+ edad corregida · prematuros</p>
-          </div>
-          <span class="more">Ver libro</span>
+          <span class="ico"><svg viewBox="0 0 24 24"><use href="#b-sprout"/></svg></span>
+          <h4>Hitos</h4>
+          <p class="age">0 — 3 años</p>
         </article>
-        <article class="libro-card t-lav" role="listitem">
+        <article class="libro-card libro-mini t-lav" role="listitem">
           <span class="num">09</span>
-          <div><div class="kicker">Desarrollo</div>
-            <span class="ico"><svg viewBox="0 0 24 24"><use href="#b-heart"/></svg></span>
-            <h4>Desarrollo</h4>
-            <p class="age">0 — 3 años</p>
-            <p class="libro-mode">+ modo arcoíris · adopción</p>
-          </div>
-          <span class="more">Ver libro</span>
+          <span class="ico"><svg viewBox="0 0 24 24"><use href="#b-heart"/></svg></span>
+          <h4>Desarrollo</h4>
+          <p class="age">0 — 3 años</p>
         </article>
       </div>
     </div>
