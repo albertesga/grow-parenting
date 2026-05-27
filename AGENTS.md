@@ -10,11 +10,16 @@ trauma-informed, sin gamification, sin urgencia. Single-developer repo.
 
 - **App** · simulada en `prototype.html` (single-file HTML/CSS/JS, ~20k líneas)
 - **Landing** · marketing site en `homepage/` (3 archivos: `index.html` +
-  `styles.css` + `main.js`)
+  `styles.css` + `main.js`) · servido en `localhost:5051`
+- **About-us** · narrativa personal del founder (Inti story) en
+  `apps/about-us/` (Next.js 16 + Framer Motion) · build estático con
+  `npm run build` que sale a `homepage/about-us/` · single domain ·
+  ver ADR-0017
 - **Design System** · `design/Grow Design System v0.2.html` · single source
   of truth para tokens, primitives, copy canon
-- **Stack** · 100% vanilla HTML/CSS/JS · sin build, sin backend, sin auth ·
-  server local con `python3 -m http.server 5050`
+- **Stack** · vanilla HTML/CSS/JS (homepage + prototype) · Next.js 16
+  static export (about-us) · sin backend, sin auth · server local con
+  `python3 -m http.server 5051 --directory homepage`
 
 ## Read-order
 

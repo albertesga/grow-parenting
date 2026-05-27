@@ -1,0 +1,325 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ════════════════════════════════════════════════════════════════════
+   Fonts · Grift como fuente principal de toda la landing.
+   9 weights × normal + italic = 18 cortes · italic real disponible.
+   TTFs en /public/fonts/ (Grift-{weight}{Italic?}.ttf).
+   ════════════════════════════════════════════════════════════════════ */
+
+@font-face {
+  font-family: 'Grift';
+  src: url('/fonts/Grift-Thin.ttf') format('truetype');
+  font-weight: 100;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Grift';
+  src: url('/fonts/Grift-ThinItalic.ttf') format('truetype');
+  font-weight: 100;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Grift';
+  src: url('/fonts/Grift-ExtraLight.ttf') format('truetype');
+  font-weight: 200;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Grift';
+  src: url('/fonts/Grift-ExtraLightItalic.ttf') format('truetype');
+  font-weight: 200;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Grift';
+  src: url('/fonts/Grift-Light.ttf') format('truetype');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Grift';
+  src: url('/fonts/Grift-LightItalic.ttf') format('truetype');
+  font-weight: 300;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Grift';
+  src: url('/fonts/Grift-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Grift';
+  src: url('/fonts/Grift-Italic.ttf') format('truetype');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Grift';
+  src: url('/fonts/Grift-Medium.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Grift';
+  src: url('/fonts/Grift-MediumItalic.ttf') format('truetype');
+  font-weight: 500;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Grift';
+  src: url('/fonts/Grift-SemiBold.ttf') format('truetype');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Grift';
+  src: url('/fonts/Grift-SemiBoldItalic.ttf') format('truetype');
+  font-weight: 600;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Grift';
+  src: url('/fonts/Grift-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Grift';
+  src: url('/fonts/Grift-BoldItalic.ttf') format('truetype');
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Grift';
+  src: url('/fonts/Grift-ExtraBold.ttf') format('truetype');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Grift';
+  src: url('/fonts/Grift-ExtraBoldItalic.ttf') format('truetype');
+  font-weight: 800;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Grift';
+  src: url('/fonts/Grift-Black.ttf') format('truetype');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Grift';
+  src: url('/fonts/Grift-BlackItalic.ttf') format('truetype');
+  font-weight: 900;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* ════════════════════════════════════════════════════════════════════
+   Fonts · Galiner (display serif) · canon DS v0.2 May 2026.
+   3 cortes · 300/400/700 · sin italic (no existe en el corte).
+   Usado en headlines editoriales, eyebrows, manifesto sub.
+   ════════════════════════════════════════════════════════════════════ */
+
+@font-face {
+  font-family: 'Galiner';
+  src: url('/fonts/TBJGaliner-Light.ttf') format('truetype');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Galiner';
+  src: url('/fonts/TBJGaliner-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Galiner';
+  src: url('/fonts/TBJGaliner-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ════════════════════════════════════════════════════════════════════
+   Fonts · Inter Variable · canon DS v0.2 May 2026.
+   Variable font · 100-900 normal + italic · 2 archivos total.
+   Usado en body, micro, labels, CTAs, chips, navigation.
+   ════════════════════════════════════════════════════════════════════ */
+
+@font-face {
+  font-family: 'Inter';
+  src: url('/fonts/InterVariable.woff2') format('woff2-variations');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Inter';
+  src: url('/fonts/InterVariable-Italic.woff2') format('woff2-variations');
+  font-weight: 100 900;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* ════════════════════════════════════════════════════════════════════
+   Base · paper canvas + Inter sans default (DS canon May 2026)
+   Headlines usan .font-serif (Galiner) · todo el resto hereda Inter
+   ════════════════════════════════════════════════════════════════════ */
+
+html, body {
+  background: #FAF7F0;
+  color: #1A1A1A;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  /* Paper texture · radial gradient sutil simulando grano de papel.
+     Capa noise SVG inline para evitar request adicional. */
+  background-color: #FAF7F0;
+  background-image:
+    radial-gradient(circle at 20% 20%, rgba(232, 225, 207, 0.18), transparent 40%),
+    radial-gradient(circle at 80% 60%, rgba(232, 225, 207, 0.12), transparent 50%),
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240' viewBox='0 0 240 240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' seed='4'/><feColorMatrix values='0 0 0 0 0.10 0 0 0 0 0.08 0 0 0 0 0.06 0 0 0 0.045 0'/></filter><rect width='240' height='240' filter='url(%23n)'/></svg>");
+  background-attachment: fixed;
+  background-size: auto, auto, 240px 240px;
+  min-height: 100vh;
+}
+
+/* Selección de texto · ink sobre paper-soft */
+::selection {
+  background: #E8E1CF;
+  color: #1A1A1A;
+}
+
+/* Respeto a prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Polaroid frame · estilo limpio · sombra suave + bordes */
+.polaroid {
+  background: #FBF8EE;
+  padding: 16px 16px 56px 16px;
+  box-shadow:
+    0 1px 2px rgba(20, 18, 12, 0.06),
+    0 12px 28px rgba(20, 18, 12, 0.14),
+    0 22px 60px rgba(20, 18, 12, 0.10);
+  border-radius: 3px;
+}
+
+.polaroid-img {
+  display: block;
+  width: 100%;
+  height: auto;
+  background: #E8E1CF;
+}
+
+/* Handwritten path · stroke animado al revelar */
+.handwritten-path {
+  stroke: #1A1A1A;
+  stroke-width: 2;
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* Scroll progress · top rail for the parallax narrative.
+   Color sampled from the green "o" in the Grow logo: #B5C3B1. */
+@keyframes grow-scroll-progress-fill {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+
+@keyframes grow-scroll-progress-marker {
+  from { transform: translateX(0); }
+  to { transform: translateX(calc(100vw - 8px)); }
+}
+
+.grow-scroll-progress__hairline {
+  position: absolute;
+  inset: 0 0 auto;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(200, 216, 184, 0.55),
+    transparent
+  );
+}
+
+.grow-scroll-progress__clip {
+  position: absolute;
+  inset: 0 0 auto;
+  height: 5px;
+  overflow: hidden;
+}
+
+.grow-scroll-progress__fill {
+  height: 100%;
+  transform: scaleX(0);
+  transform-origin: left center;
+  background: linear-gradient(90deg, #DDE8D7 0%, #B5C3B1 52%, #8FAE85 100%);
+  box-shadow: 0 0 18px rgba(181, 195, 177, 0.55);
+  animation: grow-scroll-progress-fill linear both;
+  animation-timeline: scroll(root block);
+}
+
+.grow-scroll-progress__marker {
+  position: absolute;
+  top: 2px;
+  left: 0;
+  width: 8px;
+  height: 8px;
+  border: 1px solid rgba(250, 247, 240, 0.8);
+  border-radius: 999px;
+  background: #B5C3B1;
+  box-shadow: 0 0 16px rgba(181, 195, 177, 0.85);
+  animation: grow-scroll-progress-marker linear both;
+  animation-timeline: scroll(root block);
+}
+
+@supports not (animation-timeline: scroll(root block)) {
+  .grow-scroll-progress__fill,
+  .grow-scroll-progress__marker {
+    animation: none;
+  }
+
+  .grow-scroll-progress__fill {
+    transform: scaleX(var(--grow-scroll-progress, 0));
+  }
+
+  .grow-scroll-progress__marker {
+    transform: translateX(calc((100vw - 8px) * var(--grow-scroll-progress, 0)));
+  }
+}

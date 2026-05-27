@@ -1,0 +1,49 @@
+--- /tmp/grow-http/sources/components__IntroPhotoSection.tsx	2026-05-25 16:12:53
++++ /tmp/grow-http/IntroPhotoSection.codex-arrow.tsx	2026-05-25 16:27:03
+@@ -168,6 +168,12 @@
+     ]
+   );
+ 
++  // Flecha editorial · nace desde el headline y termina en la polaroid.
++  // Usa el mismo progress del bloque de texto para no crear otra timeline.
++  const arrowOpacity = useTransform(textProgress, [0.36, 0.52], [0, 1]);
++  const arrowPathLength = useTransform(textProgress, [0.38, 0.68], [0, 1]);
++  const arrowHeadOpacity = useTransform(textProgress, [0.58, 0.72], [0, 1]);
++
+   return (
+     <>
+       {/* Texto hero (capa inferior · aparece progresivo) ·
+@@ -178,6 +184,33 @@
+         </div>
+       </div>
+ 
++      {/* Flecha editorial · de "Este es Inti" hacia la foto.
++          Se mantiene fuera del flujo para no alterar composición ni lectura. */}
++      <motion.svg
++        aria-hidden="true"
++        className="pointer-events-none absolute left-[31vw] top-[31vh] z-[8] h-[170px] w-[34vw] overflow-visible xl:left-[33vw] xl:top-[30vh] 2xl:left-[32vw] 2xl:w-[32vw]"
++        viewBox="0 0 520 180"
++        fill="none"
++        style={{ opacity: arrowOpacity }}
++      >
++        <motion.path
++          d="M 8 58 C 130 4, 300 12, 486 92"
++          stroke="#1A1A1A"
++          strokeWidth="3"
++          strokeLinecap="round"
++          strokeLinejoin="round"
++          pathLength={arrowPathLength}
++        />
++        <motion.path
++          d="M 455 69 L 492 95 L 448 111"
++          stroke="#1A1A1A"
++          strokeWidth="3"
++          strokeLinecap="round"
++          strokeLinejoin="round"
++          style={{ opacity: arrowHeadOpacity }}
++        />
++      </motion.svg>
++
+       {/* Foto · capa superior · controlada por scroll */}
+       <motion.div
+         className="absolute left-1/2 top-1/2 z-10"

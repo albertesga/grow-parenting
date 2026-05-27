@@ -62,12 +62,21 @@ Grow/
 │   ├── assets/{fonts, img}/
 │   ├── v0.1/                          (histórico · solo arqueología)
 │   └── briefs *.md                    (iteración pasada · read-only)
-├── homepage/                           (marketing site público)
-│   ├── index.html
+├── homepage/                           (★ canonical public web root)
+│   ├── index.html                      (landing vanilla)
 │   ├── styles.css
 │   ├── main.js
 │   ├── assets/{fonts, img}/
-│   └── propuesta-v{2,3}.html          (drafts archivados)
+│   ├── about-us/                       (static export · output del Next build)
+│   ├── img/ frames/ fonts/ lottie/     (assets mirrored del about-us public)
+│   └── propuesta-v{2,3}.html           (drafts archivados)
+├── apps/                               (sub-app sources · ver ADR-0017)
+│   └── about-us/                       (Next.js 16 · narrativa Inti)
+│       ├── app/                        (App Router · layout + page)
+│       ├── components/                 (LandingPage + 4 sections)
+│       ├── public/                     (fonts/frames/img/lottie sources)
+│       ├── next.config.js              (output:'export' basePath /about-us)
+│       └── package.json                (build copia a homepage/about-us/)
 ├── prototype.html                     (app simulation single-file · ~20k líneas)
 ├── prd/ (3 PRDs)                      (Product Requirement Docs · read-only)
 └── research/ (6 docs)                 (User research · read-only)
