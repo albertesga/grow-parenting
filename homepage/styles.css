@@ -2234,6 +2234,12 @@
       color: rgba(232,225,207,0.62);
       margin-bottom: 22px;
     }
+    /* Chip canon en mockup dark · paper-tinted (10% bg · 18% border · 94% text)
+       en lugar de gold-tinted (que blendea con el fondo #161412 al 8%). Esto
+       deja el .primary (gold fill) como el único highlight visual y los
+       inactivos quedan claramente leíbles · ratio texto/bg ≈ 10:1 sobre el
+       composite (paper@94 sobre paper@10 sobre #161412) · pasa WCAG AA holgado.
+       Hover · sube bg+border ligeramente sin convertir al chip en primario. */
     .mp-chip {
       display: block;
       width: 100%;
@@ -2241,13 +2247,27 @@
       padding: 14px 18px;
       margin-bottom: 8px;
       border-radius: var(--radius-md);
-      background: rgba(232,201,122,0.08);
-      border: 1px solid rgba(232,201,122,0.16);
-      color: rgba(232,225,207,0.92);
+      background: rgba(232,225,207,0.10);
+      border: 1px solid rgba(232,225,207,0.18);
+      color: rgba(232,225,207,0.94);
       font-family: var(--font-text);
       font-size: 14px;
+      transition:
+        background var(--duration-fast) var(--ease),
+        border-color var(--duration-fast) var(--ease),
+        transform var(--duration-fast) var(--ease);
+    }
+    .mp-chip:hover {
+      background: rgba(232,225,207,0.14);
+      border-color: rgba(232,225,207,0.28);
+      transform: translateY(-1px);
     }
     .mp-chip.primary { background: var(--gold-base); color: var(--ink-warm); border-color: var(--gold-base); font-weight: 500; }
+    .mp-chip.primary:hover {
+      background: var(--gold-base);
+      border-color: var(--gold-base);
+      transform: translateY(-1px);
+    }
     .mockup .mp-foot {
       font-family: var(--font-serif);
       font-style: normal;
