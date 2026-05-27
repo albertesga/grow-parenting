@@ -603,7 +603,10 @@
     .avatar-progress .stop.is-active .range { color: var(--ink-soft); }
 
     /* Narrative stream */
-    .narrative-stream { padding: 24px 0; }
+    .narrative-stream {
+      padding: 24px 0;
+      min-width: 0;
+    }
 
     /* Intro del parallax · framing line que descentra el supuesto
        cronológico antes de que el user vea la historia secuencial.
@@ -1770,7 +1773,24 @@
       .hero-grid { grid-template-columns: 1fr; gap: 28px; min-height: 0; }
       .hero h1 { font-size: 38px; }
       .hero-avatar { max-width: 360px; margin: 0 auto; order: -1; }
-      .narrative-shell { grid-template-columns: 1fr; gap: 0; padding: 24px 22px 32px; }
+      .narrative-shell {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 0;
+        padding: 24px 22px 32px;
+        overflow-x: clip;
+      }
+      .narrative-stream,
+      .block,
+      .response,
+      .r-shelf,
+      .r-shelf-rail {
+        min-width: 0;
+        max-width: 100%;
+      }
+      .narrative-stream,
+      .response {
+        width: 100%;
+      }
       .avatar-stage { display: none; }
       .mobile-avatar { display: block; }
       .block { padding: 56px 0; }

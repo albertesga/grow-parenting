@@ -123,6 +123,19 @@
       </symbol>
       <!-- (parallax: el filter SVG black-to-alpha se eliminó · ahora hacemos
            chroma key per-pixel en JS al cachear los frames · ver IIFE bottom). -->
+
+      <!-- Filter luma-to-alpha · usado en el HERO avatar para eliminar el
+           fondo negro de los videos kling sin canvas/JS. feColorMatrix con
+           última fila (1 1 1 0 0) convierte alpha = R+G+B clamped a [0,1] ·
+           negro puro (0,0,0) → alpha 0 (invisible) · blanco/avatar → alpha 1.
+           Más reliable que mix-blend-mode (no depende de stacking context). -->
+      <filter id="luma-to-alpha" color-interpolation-filters="sRGB">
+        <feColorMatrix type="matrix" values="
+          1 0 0 0 0
+          0 1 0 0 0
+          0 0 1 0 0
+          1 1 1 0 0"/>
+      </filter>
     </defs>
   </svg>
 
@@ -197,19 +210,19 @@
       <div class="trust-row" role="list">
         <div class="trust-chip" role="listitem">
           <svg class="trust-icn" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-cal"/></svg>
-          <strong>El calendario que usan los pediatras</strong>
+          <strong>Basado en calendarios pediátricos oficiales</strong>
         </div>
         <div class="trust-chip" role="listitem">
           <svg class="trust-icn" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-user"/></svg>
-          <strong>Escrito por humanos validado por médicos</strong>
+          <strong>Escrito por personas · revisado por clínicos</strong>
         </div>
         <div class="trust-chip" role="listitem">
           <svg class="trust-icn" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-chart"/></svg>
-          <strong>Tests científicos para detectar a tiempo</strong>
+          <strong>Escalas validadas para observar con criterio</strong>
         </div>
         <div class="trust-chip" role="listitem">
           <svg class="trust-icn" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-lock"/></svg>
-          <strong>Privacidad y seguridad</strong>
+          <strong>Privacidad desde el diseño</strong>
         </div>
       </div>
     </div>
