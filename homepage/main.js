@@ -246,6 +246,7 @@
         const halo = document.getElementById("floating-halo");
         if (!halo) return;
         const heroAvatar = document.getElementById("hero-avatar");
+        const sec2Stage  = document.querySelector(".avatar-stage");
         const sec2Frame  = document.querySelector(".avatar-stage .frame");
         if (!heroAvatar) return;
 
@@ -257,14 +258,20 @@
           return { x: r.left + r.width / 2, y: r.top + r.height / 2, w: r.width };
         }
 
-        // Sticky offset del .avatar-stage (top: 96px en CSS) · progress=1
-        // cuando sec2 alcanza esta posición · permite que el halo aterrice
-        // perfectamente detrás del avatar sticky en vez de quedarse 11%
-        // por encima (lo que pasaba con la fórmula 1 - top/vh).
+        // Sticky offset del .avatar-stage en CSS (top: 96px) · progress=1
+        // cuando el STAGE alcanza esta posición · medimos sobre .avatar-stage
+        // (NO sobre .frame · el frame está 60px más abajo por padding y
+        // hace que progress se quede en ~0.92 perpetuamente cuando sticky
+        // está activo · el halo aparecía siempre por encima del avatar).
         const SEC2_STICKY_TOP = 96;
-        // Pequeño offset Y para alinear con el visible avatar dentro del
-        // canvas (el kling avatar puede no estar exactamente al centro
-        // del frame · este nudge lo empuja un poco hacia abajo).
+        // Empieza la interpolación antes de que el stage llegue al sticky
+        // (cuando aparece a 60% del viewport desde abajo) · así el halo
+        // llega a su posición final exactamente al activarse el sticky,
+        // no después.
+        const SEC2_START_RATIO = 0.6;
+        // Nudge Y para alinear el centro del halo con el visible avatar
+        // dentro del canvas (kling parallax mp4 no está exactamente al
+        // centro geométrico del frame · este offset lo empuja hacia abajo).
         const SEC2_Y_NUDGE = 30;
 
         let ticking = false;
@@ -273,24 +280,24 @@
           const vh = window.innerHeight;
           const hero = center(heroAvatar);
 
-          if (!sec2Frame) {
+          if (!sec2Stage || !sec2Frame) {
             // No parallax · halo siempre en hero
             halo.style.transform =
               `translate(${(hero.x - HALO_HALF).toFixed(1)}px, ${(hero.y - HALO_HALF).toFixed(1)}px) scale(1)`;
             return;
           }
 
-          const sec2 = center(sec2Frame);
-          // Progress · 0 cuando sec2.top está al fondo del viewport ·
-          // 1 cuando sec2.top alcanza la posición sticky (96px del top).
-          // Esto garantiza que el halo aterrice 100% detrás del avatar
-          // sticky en vez de quedarse interpolado a mitad de camino.
-          const sec2Top = sec2.y - sec2.w / 2;
-          const start = vh;                 // sec2 acaba de aparecer abajo
-          const end   = SEC2_STICKY_TOP;    // sec2 sticky-activated
-          const progress = Math.max(0, Math.min(1, (start - sec2Top) / (start - end)));
+          // Progress basado en .avatar-stage (no en .frame) · clave para
+          // que progress alcance 1.0 EXACTO al activarse sticky en vez de
+          // quedarse en ~0.92 (que dejaba el halo siempre por encima).
+          const stageRect = sec2Stage.getBoundingClientRect();
+          const stageTop = stageRect.top;
+          const start = vh * SEC2_START_RATIO;  // empieza interpolar antes
+          const end   = SEC2_STICKY_TOP;        // progress=1 al activarse sticky
+          const progress = Math.max(0, Math.min(1, (start - stageTop) / (start - end)));
 
-          // Interpolar posición · sec2 con nudge Y para visible avatar
+          // Posición target del halo · .frame para X · .frame + nudge para Y
+          const sec2 = center(sec2Frame);
           const targetSec2X = sec2.x;
           const targetSec2Y = sec2.y + SEC2_Y_NUDGE;
           const x = hero.x + (targetSec2X - hero.x) * progress;
