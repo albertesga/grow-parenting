@@ -124,17 +124,53 @@
       <!-- (parallax: el filter SVG black-to-alpha se eliminó · ahora hacemos
            chroma key per-pixel en JS al cachear los frames · ver IIFE bottom). -->
 
-      <!-- Filter luma-to-alpha · usado en el HERO avatar para eliminar el
-           fondo negro de los videos kling sin canvas/JS. feColorMatrix con
-           última fila (1 1 1 0 0) convierte alpha = R+G+B clamped a [0,1] ·
-           negro puro (0,0,0) → alpha 0 (invisible) · blanco/avatar → alpha 1.
-           Más reliable que mix-blend-mode (no depende de stacking context). -->
+      <!-- Filter luma-to-alpha v7 · matte closing technique · preserva
+           los ojos oscuros del avatar mientras mata el halo de compresión
+           MP4 sin tocar los videos.
+
+           Estrategia: NO podemos usar luma directo como alpha porque eyes
+           (sum ~0.2-0.45) y halo (sum ~0.1-0.2) se solapan. La separación
+           viene por ESTRUCTURA: los ojos están DENTRO de la silueta, el
+           halo está FUERA. Usamos morphological closing (dilate → erode)
+           para rellenar las "islas oscuras" interiores de la silueta sin
+           inflar el contorno · luego compositamos el RGB original con
+           esa matte limpia.
+
+           Pipeline:
+             1) Path A · preserva SourceGraphic intacto → "orig" (RGB+A)
+             2) Path B · genera matte LIMPIA:
+                · dilate 12 px · expande brights · rellena ojos
+                · erode 12 px · vuelve al contorno original
+                  Resultado: silueta sin huecos interiores oscuros.
+                · feColorMatrix · alpha = R+G+B − 0.3 (threshold halo)
+                · feComponentTransfer linear · slope 5 intercept -0.5
+                  → corte binario limpio para la matte
+             3) feComposite "in" · combina RGB de orig con alpha de matte
+                Resultado: avatar con ojos oscuros del original (vienen
+                del RGB intacto) pero alpha sin halo (viene de la matte
+                cerrada).
+
+           Compared to v5/v6:
+             · v5/v6 keyed alpha por pixel · ojos volvían semitransparentes
+             · v7 cierra la matte interna · ojos quedan totalmente opacos
+             · halo sigue muerto porque está fuera del cierre. -->
       <filter id="luma-to-alpha" color-interpolation-filters="sRGB">
-        <feColorMatrix type="matrix" values="
+        <feColorMatrix in="SourceGraphic" type="matrix" result="orig" values="
           1 0 0 0 0
           0 1 0 0 0
           0 0 1 0 0
-          1 1 1 0 0"/>
+          0 0 0 1 0"/>
+        <feMorphology in="SourceGraphic" operator="dilate" radius="12"/>
+        <feMorphology operator="erode" radius="12"/>
+        <feColorMatrix type="matrix" values="
+          0 0 0 0 0
+          0 0 0 0 0
+          0 0 0 0 0
+          1 1 1 0 -0.3"/>
+        <feComponentTransfer result="matte">
+          <feFuncA type="linear" slope="5" intercept="-0.5"/>
+        </feComponentTransfer>
+        <feComposite in="orig" in2="matte" operator="in"/>
       </filter>
     </defs>
   </svg>
@@ -171,7 +207,7 @@
              REGISTRAR (seguimiento) · PREGUNTAR (chat personalizado) ·
              ancla "app" para que el rango de edad del micro no se lea como
              material de lectura. -->
-        <p class="hero-functional">Desde el embarazo —o el día que llega—, semana a semana · <strong>contenido con criterio clínico</strong>, <strong>seguimiento del peque</strong> y un <strong>chat que ya lo conoce</strong>.</p>
+        <p class="hero-functional">Desde el embarazo —o el día que llega—, semana a semana · <strong>contenido con criterio clínico</strong>, <strong>seguimiento del hij@</strong> y un <strong>chat que ya lo conoce</strong>.</p>
         <p class="micro">Del embarazo a sus 3 años</p>
         <div class="hero-ctas">
           <a class="btn-primary btn-arrow" href="#pricing">Entra en la lista</a>
@@ -317,7 +353,7 @@
           <div class="quote-rotator" aria-live="polite">
             <p class="q-item is-active">"Cada toma duele. Cada comentario también."</p>
             <p class="q-item">"Le doy biberón. Y cada vez que lo digo, alguien opina."</p>
-            <p class="q-item">"'Llora por capricho', dicen. Yo solo veo a mi peque."</p>
+            <p class="q-item">"'Llora por capricho', dicen. Yo solo veo a mi hij@."</p>
             <p class="q-item">"Vuelvo al trabajo en seis semanas. No sé cómo voy a poder."</p>
             <p class="q-item">"Lleva cuatro horas sin pedir teta. ¿Lo despierto o lo dejo?"</p>
             <p class="q-item">"No siento bajada de leche. Llevo dos días angustiada."</p>
@@ -445,8 +481,8 @@
     <div class="wrap">
       <div class="section-head libros-head">
         <span class="eyebrow">Los libros · 9 destinos · se activan en tu ahora</span>
-        <h2>Todo lo que necesitas, en nueve libros.</h2>
-        <p>Cada libro con su color, su evidencia y su voz · se enciende cuando entra en su edad activa y se apaga cuando deja de serte útil. Lo que te toca ahora, sin más.</p>
+        <h2>Una biblioteca para cada etapa.</h2>
+        <p>Cada libro se activa cuando te sirve: embarazo, sueño, vacunas, alimentación, hitos, desarrollo y salud. Lo que toca ahora, sin más ruido.</p>
       </div>
       <div class="libros-grid" role="list">
         <article class="libro-card t-coral" role="listitem">
@@ -545,7 +581,7 @@
       <div>
         <div class="eyebrow">Modo 3 AM · cuando llega la noche difícil</div>
         <h2>A las 3 de la mañana<br>también estamos.</h2>
-        <p class="lede">Cuando llega esa noche difícil, el modo se calma para ayudarte a pensar · fondo oscuro, una pregunta cada vez, texto grande. Sin alarmas, sin prisa · te orientamos hasta saber si toca ir, o si toca respirar.</p>
+        <p class="lede">Cuando llega una noche difícil, Grow baja el ritmo: fondo oscuro, texto grande y una pregunta cada vez. Te ayuda a decidir si toca consultar, vigilar en casa o pedir relevo.</p>
         <div class="chips">
           <span class="chip is-live">No para de llorar</span>
           <span class="chip">Le pasa algo</span>
@@ -572,8 +608,8 @@
     <div class="wrap">
       <div class="section-head comite-head">
         <span class="eyebrow">Comité clínico Grow</span>
-        <h2>Validado por quien sabe.</h2>
-        <p>Pediatra de Atención Primaria, neonatólogo, psicóloga perinatal, enfermera pediátrica. Cuatro perfiles que revisan cada palabra y cada cita.</p>
+        <h2>Revisado por quienes acompañan familias cada día.</h2>
+        <p>Pediatría, neonatología, salud mental perinatal y enfermería pediátrica revisan el contenido, las escalas y las citas.</p>
       </div>
       <div class="comite-grid">
         <article class="comite-card t-mint">
@@ -659,7 +695,6 @@
             <li>Los 9 libros desbloqueados</li>
             <li>Chat IA contextual ilimitado</li>
             <li>Cuenta compartida co-cuidador</li>
-            <li>Badge Founding member permanente</li>
           </ul>
           <button class="cta coral" type="button">Reservar plaza</button>
         </article>

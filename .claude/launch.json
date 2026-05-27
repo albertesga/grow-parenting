@@ -8,11 +8,18 @@
       "port": 5050
     },
     {
+      "name": "grow-homepage",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": ["-m", "http.server", "5051", "--directory", "homepage"],
+      "port": 5051
+    },
+    {
       "name": "about-us",
       "runtimeExecutable": "npm",
       "runtimeArgs": ["run", "dev"],
       "cwd": "about-us",
-      "port": 3000
+      "port": 3000,
+      "autoPort": true
     }
   ]
 }

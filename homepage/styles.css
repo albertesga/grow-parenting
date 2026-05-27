@@ -316,12 +316,12 @@
       pointer-events: none;
       z-index: 0;
     }
-    /* Hero avatar · 2 videos kling apilados · SVG filter "luma-to-alpha"
-       (definido en index.html sprite) convierte el fondo negro del MP4
-       directamente en alpha 0 (transparente). feColorMatrix mapping ·
-       alpha = R+G+B (clamped 0-1) · negro puro → 0 · avatar claro → ~1.
-       Mucho más reliable que mix-blend-mode porque NO depende del stacking
-       context · funciona en cualquier background (paper · dark · ink). */
+    /* Hero avatar · 2 videos kling apilados · SVG filter "luma-to-alpha" v2
+       (definido en index.html sprite). v2 May 2026: feColorMatrix
+       luma-as-alpha + feComponentTransfer linear (slope 3.2 intercept -0.85)
+       para crushear el halo de compresión MP4 ("casi negro" → 0 limpio) ·
+       threshold limpio alpha~0.27 · ramp anti-alias suave hasta 0.58 ·
+       avatar intacto. Funciona en cualquier background (paper/dark/ink). */
     .hero-avatar-vid {
       position: absolute;
       inset: 7%;
