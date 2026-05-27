@@ -64,12 +64,16 @@
       --line:        #E2DDD1;
       --line-strong: #C9C2B2;
 
-      /* tonal families */
-      --coral-subtle:  #FBE5D6;  --coral-base:  #F2A57A;  --coral-strong:  #D67742;
-      --blush-subtle:  #F8E4DD;  --blush-base:  #EFC2B5;  --blush-strong:  #D89A89;
-      --mint-subtle:   #E5EDDF;  --mint-base:   #BFD2B0;  --mint-strong:   #8FAE85;
-      --gold-subtle:   #F6EBC9;  --gold-base:   #E8C97A;  --gold-strong:   #B8973F;
-      --violet-subtle: #E6DFE9;                            --violet-strong: #6A5A7E;
+      /* tonal families · 7 familias canon DS v0.2 May 2026
+         4 completas 3 tiers (coral · blush · mint · gold) + 3 parciales
+         subtle/strong (violet · sky · ochre) + ink-tonal por familia */
+      --coral-subtle:  #FBE5D6;  --coral-base:  #F2A57A;  --coral-strong:  #D67742;  --coral-ink:  #8E4A22;
+      --blush-subtle:  #F8E4DD;  --blush-base:  #EFC2B5;  --blush-strong:  #D89A89;  --blush-ink:  #7A3D2D;
+      --mint-subtle:   #E5EDDF;  --mint-base:   #BFD2B0;  --mint-strong:   #8FAE85;  --mint-ink:   #4E6A45;
+      --gold-subtle:   #F6EBC9;  --gold-base:   #E8C97A;  --gold-strong:   #B8973F;  --gold-ink:   #6E5A2A;
+      --violet-subtle: #E6DFE9;                            --violet-strong: #6A5A7E;  --violet-ink: #4A3D55;
+      --sky-subtle:    #DDE6E8;                            --sky-strong:    #4D6770;  --sky-ink:    #2E4750;
+      --ochre-subtle:  #EBE0D2;                            --ochre-strong:  #846238;  --ochre-ink:  #5A421E;
       --module-dark:   #1B1A18;
 
       /* fonts · Galiner serif único para display · Inter para body · Grift solo para precio */
@@ -1033,17 +1037,28 @@
     .block.t-dark .r-plank-dot { background: rgba(232,201,122,0.36); }
 
     /* Book tonal palette */
+    /* Mapping libro → familia tonal canon DS v0.2 May 2026:
+       · CORAL  · embarazo · alimentación · cólicos
+       · BLUSH  · lactancia · diario · parto (per chip blush DS HTML)
+       · MINT   · hitos · sueño · perfil
+       · GOLD   · vacunas
+       · VIOLET · desarrollo (ex-lavender legacy)
+       · PAPER-DEEP · salud
+       · OCHRE  · recuerdos (no formal en DS · warm earth keepsake aesthetic) */
     .r-book.b-embarazo    { --book-tint: #FBE0CB; --book-paper: #F0EADC; --book-glow: rgba(242,165,122,0.58); --b-ink: var(--ink-embarazo); }
-    .r-book.b-alimentacion{ --book-tint: #F8E4DD; --book-paper: #F1EDE1; --book-glow: rgba(216,154,137,0.50); --b-ink: #7E4438; }
-    .r-book.b-lactancia   { --book-tint: #F5DEE7; --book-paper: #EEF0E3; --book-glow: rgba(216,154,137,0.46); --b-ink: #7A4054; }
-    .r-book.b-vacunas     { --book-tint: #F7EBC7; --book-paper: #EEF0E3; --book-glow: rgba(232,201,122,0.64); --b-ink: #7C6429; }
-    .r-book.b-sueno       { --book-tint: #E5EDDF; --book-paper: #F1EDDF; --book-glow: rgba(232,201,122,0.42); --b-ink: #4F6745; }
-    .r-book.b-salud       { --book-tint: #E8E2D4; --book-paper: #F0EBDD; --book-glow: rgba(191,210,176,0.38); --b-ink: #4D4636; }
-    .r-book.b-colicos     { --book-tint: #F8DDD2; --book-paper: #F1E9DC; --book-glow: rgba(242,165,122,0.52); --b-ink: #793726; }
-    .r-book.b-hitos       { --book-tint: #EFECE2; --book-paper: #F7F3E9; --book-glow: rgba(232,201,122,0.40); --b-ink: #2B2B2B; }
-    .r-book.b-desarrollo  { --book-tint: #E9E3ED; --book-paper: #EEF0E6; --book-glow: rgba(191,210,176,0.50); --b-ink: #5A4970; }
-    .r-book.b-recuerdos   { --book-tint: #F4E0D5; --book-paper: #F5EFE2; --book-glow: rgba(232,201,122,0.34); --b-ink: #6B4A36; }
-    .r-book.b-parto       { --book-tint: #F9D8C5; --book-paper: #F0E9DB; --book-glow: rgba(214,119,66,0.50); --b-ink: #6E2F18; }
+    .r-book.b-alimentacion{ --book-tint: #FBE5D6; --book-paper: #F1EDE1; --book-glow: rgba(242,165,122,0.50); --b-ink: var(--coral-ink); }
+    .r-book.b-lactancia   { --book-tint: #F5DEE7; --book-paper: #EEF0E3; --book-glow: rgba(216,154,137,0.46); --b-ink: var(--blush-ink); }
+    .r-book.b-vacunas     { --book-tint: #F7EBC7; --book-paper: #EEF0E3; --book-glow: rgba(232,201,122,0.64); --b-ink: var(--gold-ink); }
+    .r-book.b-sueno       { --book-tint: #E5EDDF; --book-paper: #F1EDDF; --book-glow: rgba(143,174,133,0.42); --b-ink: var(--mint-ink); }
+    .r-book.b-salud       { --book-tint: #E8E1CF; --book-paper: #F0EBDD; --book-glow: rgba(191,186,168,0.42); --b-ink: #4D4636; }
+    .r-book.b-colicos     { --book-tint: #F8DDD2; --book-paper: #F1E9DC; --book-glow: rgba(242,165,122,0.52); --b-ink: var(--coral-ink); }
+    .r-book.b-hitos       { --book-tint: #E5EDDF; --book-paper: #F1EDDF; --book-glow: rgba(143,174,133,0.40); --b-ink: var(--mint-ink); }
+    .r-book.b-desarrollo  { --book-tint: var(--violet-subtle); --book-paper: #EEF0E6; --book-glow: rgba(106,90,126,0.36); --b-ink: var(--violet-ink); }
+    /* Parto · BLUSH canon (DS chip blush · transición íntima al recién nacido) */
+    .r-book.b-parto       { --book-tint: #F4DCE2; --book-paper: #F1EAE3; --book-glow: rgba(216,154,137,0.48); --b-ink: var(--blush-ink); }
+    /* Recuerdos · OCHRE (warm earth · keepsake aesthetic · no canon formal pero
+       encaja con el tono memoria/diario íntimo del libro) */
+    .r-book.b-recuerdos   { --book-tint: #EBE0D2; --book-paper: #F4ECDD; --book-glow: rgba(132,98,56,0.40); --b-ink: var(--ochre-ink); }
     /* .r-book.b-night eliminado · era el palette del falso libro "Modo 3 AM"
        en el bloque 3 · 3 AM es un chat (vive en libro de Salud), no un libro. */
 
