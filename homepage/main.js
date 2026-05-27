@@ -93,21 +93,19 @@
         }
       }
 
-      /* Erode 1 ring de la alpha mask · elimina pixels boundary con alpha
-         parcial que tocan background (alpha=0) · esos son los pixels que
-         crean la línea dotted dark (RGB oscuro × alpha parcial = gris).
-         Threshold subido a <220 (vs <240) · más agresivo · acepta como
-         "edge candidate" pixels con alpha hasta 219. Llamar múltiples
-         veces para eat múltiples rings (cada pase eat 1px aprox). */
+      /* Erode "true" · morfología binaria · CUALQUIER pixel con alpha>0 que
+         toque un pixel con alpha=0 → se vuelve alpha=0. Iter 3 · removido
+         el threshold <220 que evitaba eat pixels alpha-altos (lo que dejaba
+         visible el rim de pixels con alpha 220-255 pero RGB oscuro · línea
+         dotted persistente). Ahora la silueta se reduce 1px por pase, sin
+         excepciones · 4-5 pases eliminan ~4-5px de rim eficazmente. */
       function erodeEdge(d, w, h) {
         const a = new Uint8Array(w * h);
         for (let i = 0, j = 3; i < a.length; i++, j += 4) a[i] = d[j];
         for (let y = 0; y < h; y++) {
           for (let x = 0; x < w; x++) {
             const k = y * w + x;
-            const av = a[k];
-            if (av === 0 || av >= 220) continue;
-            // 4-neighbors
+            if (a[k] === 0) continue;
             const up = y > 0 ? a[k - w] : 0;
             const dn = y < h - 1 ? a[k + w] : 0;
             const lt = x > 0 ? a[k - 1] : 0;
@@ -156,10 +154,9 @@
                 try {
                   const img = ctx.getImageData(0, 0, w, h);
                   chromaKey(img.data);
-                  // 3 pases · eat ~3px del rim de pixels boundary dark
-                  erodeEdge(img.data, w, h);
-                  erodeEdge(img.data, w, h);
-                  erodeEdge(img.data, w, h);
+                  // 5 pases · eat ~5px del rim de pixels boundary dark
+                  // (con erode "true" cada pase reduce 1px sin excepciones)
+                  for (let p = 0; p < 5; p++) erodeEdge(img.data, w, h);
                   ctx.putImageData(img, 0, 0);
                 } catch (e) {
                   /* CORS taint · sin alpha real pero al menos pintamos algo. */
