@@ -750,16 +750,36 @@
     }
     /* Narrative lead · sub-titular más grande que el headline · va debajo
        de "Cada etapa, cuando la vives" como "promesa editorial" antes del
-       parallax · tamaño 28-44px Galiner Light · jerarquía elegante. */
+       parallax · tamaño 28-44px Galiner Light · jerarquía elegante.
+
+       Tratamiento editorial · base Light 300 ink-soft (color secundario
+       para que las palabras enfáticas SALTEN). Key nouns (Libros digitales
+       personalizados, guías mes a mes) van en weight 400 ink puro · el
+       contrast pair pequeñas / grandes con colores tonales canon (mint-ink
+       cool y coral-strong warm) sugiere el spectrum emocional: calma →
+       preocupación. Crea ritmo visual y "lectura por saltos" como un
+       título editorial. */
     .narrative-lead {
       font-family: var(--font-serif);
       font-weight: 300;
       font-size: clamp(26px, 3.2vw, 42px);
-      line-height: 1.2;
+      line-height: 1.22;
       letter-spacing: -0.012em;
-      color: var(--ink);
-      max-width: 32ch;
+      color: var(--ink-soft);
+      max-width: 34ch;
       margin: 18px auto 0;
+    }
+    .narrative-lead strong {
+      font-weight: 400;
+      color: var(--ink);
+    }
+    .narrative-lead .hl-mint {
+      color: var(--mint-ink);
+      font-weight: 400;
+    }
+    .narrative-lead .hl-coral {
+      color: var(--coral-strong);
+      font-weight: 400;
     }
     @media (max-width: 720px) {
       .narrative-intro { padding: 22px 22px 0; margin-bottom: 18px; }
@@ -1230,6 +1250,16 @@
       line-height: 1.55;
       color: var(--ink-soft);
       max-width: 56ch;
+      margin: 0;
+    }
+    .section-head .section-lead {
+      font-family: var(--font-serif);
+      font-weight: 300;
+      font-size: clamp(22px, 2.4vw, 32px);
+      line-height: 1.25;
+      letter-spacing: -0.008em;
+      color: var(--ink);
+      max-width: 34ch;
       margin: 0;
     }
     /* (.libros-head sin overrides · ya es el patrón canónico) */
