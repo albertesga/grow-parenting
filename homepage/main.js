@@ -313,6 +313,7 @@
         function update() {
           ticking = false;
           const scrollY = window.scrollY || window.pageYOffset || 0;
+          const vh = window.innerHeight;
           const hero = rectInfo(heroAvatar);
 
           if (!sec2Stage || !sec2Frame) {
@@ -325,34 +326,68 @@
 
           const stage = rectInfo(sec2Stage);
           const sec2  = rectInfo(sec2Frame);
+          const team  = teamSection ? rectInfo(teamSection) : null;
 
-          // Progress basado en scrollY entre 2 anchors estables del DOM:
-          //   start · scrollY donde el hero se vuelve "leaving" (40% scrolled)
-          //   end   · scrollY donde el stage sticky-activa (stage_pageY - 96)
-          // Como ambos son page-Y absolutos (rect.top + scrollY) las anclas
-          // son estables y la interpolación es continua · no hay dead zone
-          // donde hero ya salió y sec2 aún no entró (el halo seguía hero.y
-          // negativo · disappeared above viewport).
+          // 5-phase interpolation con team como waypoint intermedio · garantiza
+          // que el halo (a) sea más evidente al pasar por team (scale boost) y
+          // (b) quede vertically centered en viewport mientras lo cruza (en vez
+          // de interpolado linealmente entre hero.cy off-screen y sec2.cy
+          // off-screen · que daba un Y demasiado arriba).
           const heroPageY = hero.top + scrollY;
           const stagePageY = stage.top + scrollY;
           const startScroll = heroPageY + hero.h * HERO_KICKOFF_RATIO;
           const endScroll = stagePageY - SEC2_STICKY_TOP;
-          const span = Math.max(1, endScroll - startScroll);
-          const progress = Math.max(0, Math.min(1, (scrollY - startScroll) / span));
 
-          // Posición target del halo · interpolada entre hero center y
-          // sec2 frame center (+nudge Y) usando las posiciones ACTUALES en
-          // viewport · cuando ambos están off-screen pero progress=0.5,
-          // halo termina en viewport center (visible) en vez de off-screen.
           const targetSec2X = sec2.cx;
           const targetSec2Y = sec2.cy + SEC2_Y_NUDGE;
-          const x = hero.cx + (targetSec2X - hero.cx) * progress;
-          const y = hero.cy + (targetSec2Y - hero.cy) * progress;
-
-          // Interpolar escala · hero más grande (1.0) · sec2 más pequeño (0.72)
           const scaleHero = 1.0;
+          const scaleTeam = 1.18;   // más evidente al pasar por team
           const scaleSec2 = 0.72;
-          const scale = scaleHero + (scaleSec2 - scaleHero) * progress;
+
+          let x, y, scale;
+
+          if (team) {
+            const teamPageY = team.top + scrollY;
+            // Waypoints · scroll positions donde la transición cambia de fase
+            const wp1 = startScroll;                    // hero kickoff
+            const wp2 = teamPageY - vh * 0.45;          // team ~al borde inferior viewport
+            const wp3 = teamPageY + team.h - vh * 0.55; // team ~al borde superior viewport
+            const wp4 = endScroll;                      // sec2 sticky
+            // Target Y para fase team · viewport center (siempre centrado, no
+            // se sale del frame por scroll · resuelve "queda demasiado arriba")
+            const teamTargetY = vh * 0.5;
+            const teamTargetX = team.cx;
+
+            if (scrollY < wp1) {
+              x = hero.cx; y = hero.cy; scale = scaleHero;
+            } else if (scrollY < wp2) {
+              // hero → team
+              const t = (scrollY - wp1) / Math.max(1, wp2 - wp1);
+              x = hero.cx + (teamTargetX - hero.cx) * t;
+              y = hero.cy + (teamTargetY - hero.cy) * t;
+              scale = scaleHero + (scaleTeam - scaleHero) * t;
+            } else if (scrollY < wp3) {
+              // linger en team (centered) · scale boost full
+              x = teamTargetX;
+              y = teamTargetY;
+              scale = scaleTeam;
+            } else if (scrollY < wp4) {
+              // team → sec2
+              const t = (scrollY - wp3) / Math.max(1, wp4 - wp3);
+              x = teamTargetX + (targetSec2X - teamTargetX) * t;
+              y = teamTargetY + (targetSec2Y - teamTargetY) * t;
+              scale = scaleTeam + (scaleSec2 - scaleTeam) * t;
+            } else {
+              x = targetSec2X; y = targetSec2Y; scale = scaleSec2;
+            }
+          } else {
+            // Fallback · sin team waypoint · interpolación lineal hero → sec2
+            const span = Math.max(1, endScroll - startScroll);
+            const progress = Math.max(0, Math.min(1, (scrollY - startScroll) / span));
+            x = hero.cx + (targetSec2X - hero.cx) * progress;
+            y = hero.cy + (targetSec2Y - hero.cy) * progress;
+            scale = scaleHero + (scaleSec2 - scaleHero) * progress;
+          }
 
           halo.style.transform =
             `translate(${(x - HALO_HALF).toFixed(1)}px, ${(y - HALO_HALF).toFixed(1)}px) scale(${scale.toFixed(3)})`;
