@@ -2054,7 +2054,7 @@
       max-width: 44ch;
       margin-bottom: 26px;
     }
-    .threeam .chips { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 22px; }
+    .threeam .chips { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 22px; }
     .threeam .chip {
       display: inline-flex;
       align-items: center;
@@ -2072,11 +2072,55 @@
       color: var(--ink-warm);
       font-weight: 500;
     }
+    /* Variante `chip--with-sub` · chip canon ampliado con sub-línea
+       contextual debajo del título. Mismo background/border/tono · pero
+       layout column-stack, padding más generoso (chip se siente "card-like"
+       sin perder pill identity · radius reducido a 18px), title en weight
+       medium y sub-line ink-soft. Tappable como unidad (gap interno 3px). */
+    .threeam .chip.chip--with-sub {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 12px 18px;
+      gap: 3px;
+      border-radius: 18px;
+      max-width: 100%;
+      line-height: 1.25;
+    }
+    .threeam .chip--with-sub .chip-title {
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: -0.005em;
+    }
+    .threeam .chip--with-sub .chip-sub {
+      font-size: 12px;
+      font-weight: 400;
+      line-height: 1.35;
+      color: rgba(232,225,207,0.58);
+      letter-spacing: 0.005em;
+    }
+    .threeam .chip--with-sub.is-live .chip-sub {
+      color: rgba(42,33,27,0.72);
+    }
     .threeam .audit {
       font-family: var(--font-mono);
       font-size: 11px;
       letter-spacing: 0.04em;
       color: rgba(232,225,207,0.45);
+      line-height: 1.5;
+    }
+    /* Mini-promise · contesta 3 preguntas mudas del visitante (disponibilidad
+       horaria, coste, friction). Jerárquicamente entre el .audit (mono 11px
+       gris muted) y el .lede (body 15-17px ink-soft). Color rgba(232,225,207,0.82)
+       sobre --module-dark cumple WCAG AA (>6:1 ratio). */
+    .threeam-promise {
+      margin-top: 14px;
+      font-family: var(--font-text);
+      font-size: 13.5px;
+      font-weight: 400;
+      line-height: 1.5;
+      color: rgba(232,225,207,0.82);
+      letter-spacing: 0.005em;
     }
 
     .mockup {
@@ -2712,6 +2756,11 @@
       .flow-step h3 { max-width: 12ch; }
       .flow-step p { max-width: none; }
       .threeam .wrap { grid-template-columns: 1fr; gap: 36px; }
+      /* Chips with-sub en narrow · stretch full-width para que la sub-línea
+         respire (no se trunque) y los 3 chips queden vertical-stacked. */
+      .threeam .chips { flex-direction: column; align-items: stretch; gap: 8px; }
+      .threeam .chip.chip--with-sub { width: 100%; }
+      .threeam-promise { font-size: 13px; }
       .comite-grid { grid-template-columns: 1fr 1fr; }
       /* Tablet/mid · stack 1-col (con 3 plans, 2-col dejaría 1 lonely) */
       .pricing-grid { grid-template-columns: 1fr; gap: 14px; max-width: 480px; }
