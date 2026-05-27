@@ -418,7 +418,11 @@
     }
     .hero-avatar.is-playing-tap .hero-avatar-vid--scroll { opacity: 0; }
     .hero-avatar.is-playing-tap .hero-avatar-vid--tap { opacity: 1; }
-    /* Botón overlay invisible · captura el click sobre el avatar entero. */
+    /* Botón overlay invisible · captura hover/click sobre el avatar entero.
+       Cursor "grab" (mano abierta) sugiere acariciar el avatar · al hacer
+       hover el avatar arranca la animación tap-MP4 (ver main.js mod 9) ·
+       cursor cambia a "grabbing" (mano cerrada) mientras está reproduciendo
+       para feedback táctil sutil de "estás acariciando". */
     .hero-avatar-trigger {
       position: absolute;
       inset: 7%;
@@ -426,9 +430,13 @@
       background: transparent;
       border: 0;
       padding: 0;
-      cursor: pointer;
+      cursor: grab;
       border-radius: 50%;
       -webkit-tap-highlight-color: transparent;
+    }
+    .hero-avatar.is-playing-tap .hero-avatar-trigger,
+    .hero-avatar-trigger:active {
+      cursor: grabbing;
     }
     .hero-avatar-trigger:focus-visible {
       outline: 2px solid var(--coral-base);
@@ -2185,7 +2193,7 @@
         font-size: 28px;
         max-width: 11ch;
       }
-      .flow-log { grid-template-columns: 1fr; }
+      .flow-log { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .flow-agenda span,
       .flow-books span {
         flex-direction: column;

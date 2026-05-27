@@ -744,9 +744,10 @@
       /* ────────────────────────────────────────────────────────────────
          Módulo 9 · Hero avatar videos
          · Video 1 (hero-vid-scroll) · scroll-scrubbed · currentTime = f(scroll)
-         · Video 2 (hero-vid-tap) · reproducible al click · play() normal
-         · Background black eliminado via CSS mix-blend-mode: lighten en
-           .hero-avatar-vid (cero JS chroma key · cero async extraction)
+         · Video 2 (hero-vid-tap) · trigger en hover (mouseenter) · click
+           se mantiene como fallback para touch devices sin hover
+         · Background black eliminado via SVG filter luma-to-alpha v8 en
+           .hero-avatar-vid (ver index.html sprite)
          · Respeta prefers-reduced-motion · scroll-scrub se queda en frame 0
          ──────────────────────────────────────────────────────────────── */
       const heroAvatar = document.getElementById("hero-avatar");
@@ -774,14 +775,22 @@
         };
         window.addEventListener("scroll", onScroll, { passive: true });
 
-        heroTrigger.addEventListener("click", () => {
+        /* Trigger compartido · llamado tanto en hover (desktop) como
+           click (touch fallback) · guard isPlayingTap evita re-triggers
+           si el usuario mueve el mouse sobre el avatar repetidamente. */
+        const playTap = () => {
           if (isPlayingTap) return;
           isPlayingTap = true;
           heroAvatar.classList.add("is-playing-tap");
           heroVidTap.currentTime = 0;
           const p = heroVidTap.play();
           if (p && typeof p.catch === "function") p.catch(() => {});
-        });
+        };
+
+        // Hover · desktop · feels like "petting" el avatar
+        heroTrigger.addEventListener("mouseenter", playTap);
+        // Click · fallback para touch (no hover en mobile) + keyboard a11y
+        heroTrigger.addEventListener("click", playTap);
 
         heroVidTap.addEventListener("ended", () => {
           isPlayingTap = false;
