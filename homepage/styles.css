@@ -593,9 +593,9 @@
     }
     .avatar-stage canvas {
       /* Canvas con alpha real · chroma key per-pixel aplicado en JS al
-         decodear cada frame del MP4 source · post-procesado con SVG filter
-         #alpha-cleanup (erode 2 + blur 1.2) para eliminar el rim jagged
-         con pixels dark × alpha parcial que dejaba el JS chroma key.
+         decodear cada frame del MP4 source. Sin SVG filter post-procesado
+         para mantener nitidez · el rim jagged residual del chroma JS es
+         aceptable y mucho mejor que un blur visible @ 320px.
          Levitación 4.4s sincronizada con la sombra del .frame::after. */
       position: absolute;
       inset: 0;
@@ -604,8 +604,6 @@
       object-fit: contain;
       opacity: 0;
       transition: opacity var(--duration-slow) var(--ease-soft);
-      filter: url(#alpha-cleanup);
-      -webkit-filter: url(#alpha-cleanup);
       animation: avatar-float 4.4s ease-in-out infinite;
       will-change: transform;
       z-index: 1;
@@ -2068,8 +2066,8 @@
     }
     .mobile-avatar canvas {
       /* Canvas con alpha real · misma técnica que el avatar grande
-         (ver .avatar-stage canvas) · chroma key per-pixel en JS + post
-         filter #alpha-cleanup para eliminar el rim jagged. */
+         (ver .avatar-stage canvas) · sin SVG filter post-procesado
+         para mantener nitidez en mobile. */
       position: absolute;
       inset: 0;
       width: 100%;
@@ -2077,8 +2075,6 @@
       object-fit: contain;
       opacity: 0;
       transition: opacity var(--duration-slow) var(--ease-soft);
-      filter: url(#alpha-cleanup);
-      -webkit-filter: url(#alpha-cleanup);
       animation: avatar-float-mini 4.4s ease-in-out infinite;
       will-change: transform;
     }
@@ -2145,8 +2141,7 @@
       .flow-index {
         position: absolute;
         top: 20px;
-        left: 0;
-        transform: translateX(-50%);
+        left: 20px;
         width: 44px;
         height: 44px;
       }
@@ -2173,10 +2168,11 @@
       .quote-rotator { height: 6.5em; }
       .r-book { flex: 0 0 96px; height: 144px; }
       /* .r-book.is-large mobile rule retirado · ya no hay shelves is-large */
-      .flow-rail { padding-left: 16px; }
-      .flow-rail::before { left: 16px; }
+      .flow-rail { padding-left: 0; }
+      .flow-rail::before { left: 31px; }
       .flow-step { padding: 20px 18px 20px 50px; }
       .flow-index {
+        left: 12px;
         width: 38px;
         height: 38px;
         font-size: 10px;

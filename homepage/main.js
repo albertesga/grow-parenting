@@ -257,6 +257,16 @@
           return { x: r.left + r.width / 2, y: r.top + r.height / 2, w: r.width };
         }
 
+        // Sticky offset del .avatar-stage (top: 96px en CSS) · progress=1
+        // cuando sec2 alcanza esta posición · permite que el halo aterrice
+        // perfectamente detrás del avatar sticky en vez de quedarse 11%
+        // por encima (lo que pasaba con la fórmula 1 - top/vh).
+        const SEC2_STICKY_TOP = 96;
+        // Pequeño offset Y para alinear con el visible avatar dentro del
+        // canvas (el kling avatar puede no estar exactamente al centro
+        // del frame · este nudge lo empuja un poco hacia abajo).
+        const SEC2_Y_NUDGE = 30;
+
         let ticking = false;
         function update() {
           ticking = false;
@@ -271,17 +281,22 @@
           }
 
           const sec2 = center(sec2Frame);
-          // Progress: 0 cuando sec2 está fuera abajo · 1 cuando alcanza top viewport
-          const sec2TopVp = sec2.y - sec2.w / 2; // sec2.top
-          const progress = Math.max(0, Math.min(1, 1 - sec2TopVp / vh));
+          // Progress · 0 cuando sec2.top está al fondo del viewport ·
+          // 1 cuando sec2.top alcanza la posición sticky (96px del top).
+          // Esto garantiza que el halo aterrice 100% detrás del avatar
+          // sticky en vez de quedarse interpolado a mitad de camino.
+          const sec2Top = sec2.y - sec2.w / 2;
+          const start = vh;                 // sec2 acaba de aparecer abajo
+          const end   = SEC2_STICKY_TOP;    // sec2 sticky-activated
+          const progress = Math.max(0, Math.min(1, (start - sec2Top) / (start - end)));
 
-          // Interpolar posición
-          const x = hero.x + (sec2.x - hero.x) * progress;
-          const y = hero.y + (sec2.y - hero.y) * progress;
+          // Interpolar posición · sec2 con nudge Y para visible avatar
+          const targetSec2X = sec2.x;
+          const targetSec2Y = sec2.y + SEC2_Y_NUDGE;
+          const x = hero.x + (targetSec2X - hero.x) * progress;
+          const y = hero.y + (targetSec2Y - hero.y) * progress;
 
-          // Interpolar escala · hero más grande (1.0) · sec2 más pequeño (0.78)
-          // Tamaño base del halo (460) cubre bien el hero ~520px ·
-          // sec2 frame ~320px requiere scale ~0.72 para ajustar
+          // Interpolar escala · hero más grande (1.0) · sec2 más pequeño (0.72)
           const scaleHero = 1.0;
           const scaleSec2 = 0.72;
           const scale = scaleHero + (scaleSec2 - scaleHero) * progress;
