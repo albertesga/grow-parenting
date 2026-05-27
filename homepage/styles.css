@@ -1428,6 +1428,51 @@
       max-width: 780px;
       margin-bottom: 42px;
     }
+    .flow-title-line {
+      display: block;
+    }
+    .flow.is-ready .flow-head .eyebrow,
+    .flow.is-ready .flow-title-line,
+    .flow.is-ready .flow-head .section-lead,
+    .flow.is-ready .flow-head p,
+    .flow.is-ready .flow-step,
+    .flow.is-ready .flow-share {
+      opacity: 0;
+      transform: translate3d(0, 24px, 0);
+      filter: blur(8px);
+      transition:
+        opacity 760ms var(--ease-soft),
+        transform 760ms var(--ease-soft),
+        filter 760ms var(--ease-soft);
+      will-change: opacity, transform, filter;
+    }
+    .flow.is-ready .flow-rail::before {
+      transform: scaleX(0);
+      transform-origin: left center;
+      transition: transform 880ms var(--ease-soft) 520ms;
+    }
+    .flow.is-ready.is-inview .flow-head .eyebrow,
+    .flow.is-ready.is-inview .flow-title-line,
+    .flow.is-ready.is-inview .flow-head .section-lead,
+    .flow.is-ready.is-inview .flow-head p,
+    .flow.is-ready.is-inview .flow-step,
+    .flow.is-ready.is-inview .flow-share {
+      opacity: 1;
+      transform: translate3d(0, 0, 0);
+      filter: blur(0);
+    }
+    .flow.is-ready.is-inview .flow-rail::before {
+      transform: scaleX(1);
+    }
+    .flow.is-ready.is-inview .flow-head .eyebrow { transition-delay: 0ms; }
+    .flow.is-ready.is-inview .flow-title-line:nth-child(1) { transition-delay: 110ms; }
+    .flow.is-ready.is-inview .flow-title-line:nth-child(2) { transition-delay: 220ms; }
+    .flow.is-ready.is-inview .flow-head .section-lead { transition-delay: 340ms; }
+    .flow.is-ready.is-inview .flow-head p { transition-delay: 430ms; }
+    .flow.is-ready.is-inview .flow-step:nth-child(1) { transition-delay: 560ms; }
+    .flow.is-ready.is-inview .flow-step:nth-child(2) { transition-delay: 700ms; }
+    .flow.is-ready.is-inview .flow-step:nth-child(3) { transition-delay: 840ms; }
+    .flow.is-ready.is-inview .flow-share { transition-delay: 980ms; }
     .flow-rail {
       position: relative;
       display: grid;
@@ -1491,19 +1536,19 @@
       gap: 12px;
       min-height: 38px;
     }
+    /* Flow index · número grande tipo "amount" del pricing · Grift Black 900
+       con letter-spacing negativo · color del tonal del paso (mint/gold/blush)
+       · plano sin chip background · más editorial · le da al stepper sensación
+       de "capítulo" en vez de chip funcional. */
     .flow-index {
-      display: inline-grid;
-      place-items: center;
-      width: 42px;
-      height: 42px;
-      border-radius: 50%;
-      background: var(--paper);
-      border: 1px solid color-mix(in srgb, var(--flow-base) 58%, var(--line));
-      font-family: var(--font-mono);
-      font-size: 11px;
-      letter-spacing: 0.08em;
+      display: inline-block;
+      font-family: var(--font-price);
+      font-weight: 900;
+      font-size: clamp(38px, 4.6vw, 52px);
+      letter-spacing: -0.035em;
+      font-feature-settings: "tnum" 1, "ss01" 1;
+      line-height: 1;
       color: var(--flow-strong);
-      box-shadow: 0 8px 18px -12px rgba(80,60,30,0.28);
     }
     .flow-tag {
       display: inline-flex;
@@ -2232,6 +2277,13 @@
         height: auto;
         background: linear-gradient(180deg, var(--mint-base), var(--gold-base), var(--blush-base));
       }
+      .flow.is-ready .flow-rail::before {
+        transform: scaleY(0);
+        transform-origin: top center;
+      }
+      .flow.is-ready.is-inview .flow-rail::before {
+        transform: scaleY(1);
+      }
       .flow-step {
         min-height: 0;
         padding: 22px 20px 22px 66px;
@@ -2243,15 +2295,9 @@
       }
       .flow-index {
         position: absolute;
-        top: 20px;
+        top: 18px;
         left: 20px;
-        width: 44px;
-        height: 44px;
-      }
-      .flow-icon {
-        width: 48px;
-        height: 48px;
-        border-radius: 17px;
+        font-size: clamp(36px, 8vw, 46px);
       }
       .flow-step h3 { max-width: 12ch; }
       .flow-step p { max-width: none; }
@@ -2275,14 +2321,8 @@
       .flow-rail::before { left: 31px; }
       .flow-step { padding: 20px 18px 20px 50px; }
       .flow-index {
-        left: 12px;
-        width: 38px;
-        height: 38px;
-        font-size: 10px;
-      }
-      .flow-tag {
-        font-size: 8.5px;
-        letter-spacing: 0.12em;
+        left: 14px;
+        font-size: 34px;
       }
       .flow-step h3 {
         font-size: 28px;
@@ -2310,6 +2350,19 @@
         animation-iteration-count: 1 !important;
         transition-duration: 0.01ms !important;
         scroll-behavior: auto !important;
+      }
+      .flow.is-ready .flow-head .eyebrow,
+      .flow.is-ready .flow-title-line,
+      .flow.is-ready .flow-head .section-lead,
+      .flow.is-ready .flow-head p,
+      .flow.is-ready .flow-step,
+      .flow.is-ready .flow-share {
+        opacity: 1;
+        transform: none;
+        filter: none;
+      }
+      .flow.is-ready .flow-rail::before {
+        transform: none;
       }
     }
 
