@@ -802,7 +802,10 @@
       --team-float-delay: -1.4s;
       grid-column: 2 / 11;
       grid-row: 2 / 7;
-      padding: 36px;
+      /* padding-right grande confina el texto del headline a la zona
+         NO overlap con team-card-live ("Directos mensuales") que vive
+         en cols 7-12 rows 1-3 · evita que el texto quede pisado. */
+      padding: 36px 140px 36px 36px;
       border-radius: 42px;
       background:
         radial-gradient(circle at 84% 14%, rgba(191,210,176,0.52), transparent 40%),
