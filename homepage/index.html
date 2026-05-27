@@ -166,25 +166,20 @@
         </div>
       </div>
       <div class="hero-avatar" id="hero-avatar">
-        <!-- Avatar embarazo · 2 videos kling apilados:
-             · video 1 (hero-scroll.mp4) scroll-scrubbed · currentTime = f(progress)
-             · video 2 (hero-tap.mp4) reproducible on-click · vuelve a video 1 al end
-             Cero img estática · cero hero-breathe animation (los videos ya tienen
-             movimiento orgánico). Botón overlay invisible captura el click para a11y. -->
-        <video class="hero-avatar-vid hero-avatar-vid--scroll"
-               id="hero-vid-scroll"
-               src="assets/hero-scroll.mp4"
-               muted
-               playsinline
-               preload="auto"
-               aria-hidden="true"></video>
-        <video class="hero-avatar-vid hero-avatar-vid--tap"
-               id="hero-vid-tap"
-               src="assets/hero-tap.mp4"
-               muted
-               playsinline
-               preload="auto"
-               aria-hidden="true"></video>
+        <!-- Avatar embarazo · 2 canvas apilados con frames pre-decodificados +
+             chroma key (mismo sistema que la sección 2 narrative parallax)
+             para eliminar el fondo negro del MP4 kling y mostrar alpha real.
+             · canvas 1 (hero-canvas-scroll) scroll-scrubbed
+             · canvas 2 (hero-canvas-tap) reproducible on-click · 24fps
+             Botón overlay invisible captura el click para a11y. -->
+        <canvas class="hero-avatar-canvas hero-avatar-canvas--scroll"
+                id="hero-canvas-scroll"
+                width="640" height="640"
+                aria-hidden="true"></canvas>
+        <canvas class="hero-avatar-canvas hero-avatar-canvas--tap"
+                id="hero-canvas-tap"
+                width="640" height="640"
+                aria-hidden="true"></canvas>
         <button class="hero-avatar-trigger"
                 id="hero-avatar-trigger"
                 type="button"

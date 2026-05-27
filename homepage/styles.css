@@ -316,26 +316,28 @@
       pointer-events: none;
       z-index: 0;
     }
-    /* Hero avatar videos · 2 videos kling apilados absolutamente · video 1
-       (scroll-scrub) visible por defecto · video 2 (click) fade-in cuando el
-       user pulsa el botón invisible overlay. Cero hero-breathe keyframes ·
-       los videos ya tienen el movimiento orgánico. */
-    .hero-avatar-vid {
+    /* Hero avatar · 2 canvas apilados con frames pre-decodificados + chroma
+       key (mismo sistema que narrative section 2). Eliminamos el fondo negro
+       del MP4 kling y mostramos alpha real · canvas 1 visible por defecto
+       (scroll-scrub) · canvas 2 fade-in al click on the invisible button. */
+    .hero-avatar-canvas {
       position: absolute;
       inset: 7%;
       width: 86%;
       height: 86%;
-      object-fit: contain;
       z-index: 1;
       pointer-events: none;
+      opacity: 0;
       transition: opacity 400ms cubic-bezier(0.4, 0, 0.6, 1);
     }
-    .hero-avatar-vid--tap {
-      opacity: 0;
+    .hero-avatar-canvas.is-ready { opacity: 1; }
+    /* Canvas tap · always hidden until .is-playing-tap toggle */
+    .hero-avatar-canvas--tap {
       z-index: 2;
     }
-    .hero-avatar.is-playing-tap .hero-avatar-vid--scroll { opacity: 0; }
-    .hero-avatar.is-playing-tap .hero-avatar-vid--tap { opacity: 1; }
+    .hero-avatar-canvas--tap.is-ready { opacity: 0; }
+    .hero-avatar.is-playing-tap .hero-avatar-canvas--scroll { opacity: 0; }
+    .hero-avatar.is-playing-tap .hero-avatar-canvas--tap.is-ready { opacity: 1; }
     /* Botón overlay invisible · captura el click sobre el avatar entero. */
     .hero-avatar-trigger {
       position: absolute;

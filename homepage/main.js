@@ -644,64 +644,97 @@
       });
 
       /* ────────────────────────────────────────────────────────────────
-         Módulo 9 · Hero avatar videos
-         · Video 1 (hero-vid-scroll) · scroll-scrubbed · currentTime
-           proporcional al scroll de la sección hero
-         · Video 2 (hero-vid-tap) · reproducible al click sobre el botón
-           invisible overlay · al terminar vuelve al modo scroll
-         · Respeta prefers-reduced-motion · si está activo, video 1 NO
-           hace scrub (queda en frame 0 estático) y solo el click play tiene efecto
+         Módulo 9 · Hero avatar canvases (chroma-keyed)
+         Reutiliza extractFrames() + chromaKey() + paintCanvas() del módulo
+         del narrative section 2 · MP4 kling tienen fondo negro liso · el
+         chroma key (luminance < threshold → alpha 0) elimina el fondo y
+         deja el avatar con alpha real sobre cualquier background.
+
+         · Canvas 1 (hero-canvas-scroll) · scroll-scrubbed · frame = f(scroll)
+         · Canvas 2 (hero-canvas-tap) · reproducible al click · 24fps
+         · Respeta prefers-reduced-motion · scroll-scrub se queda en frame 0
          ──────────────────────────────────────────────────────────────── */
       const heroAvatar = document.getElementById("hero-avatar");
-      const heroVidScroll = document.getElementById("hero-vid-scroll");
-      const heroVidTap = document.getElementById("hero-vid-tap");
+      const heroCanvasScroll = document.getElementById("hero-canvas-scroll");
+      const heroCanvasTap = document.getElementById("hero-canvas-tap");
       const heroTrigger = document.getElementById("hero-avatar-trigger");
-      if (heroAvatar && heroVidScroll && heroVidTap && heroTrigger) {
-        const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      if (heroAvatar && heroCanvasScroll && heroCanvasTap && heroTrigger) {
+        let heroFramesScroll = null;
+        let heroFramesTap = null;
         let isPlayingTap = false;
-        let scrubReady = false;
+        let tapAnimId = null;
 
-        /* Pause video 1 explícitamente · solo lo "tocamos" via currentTime */
-        heroVidScroll.addEventListener("loadedmetadata", () => {
-          heroVidScroll.pause();
-          heroVidScroll.currentTime = 0;
-          scrubReady = true;
-        });
-
-        /* Scroll handler · mapea progreso del hero a currentTime del video 1.
-           Hero progress · 0 cuando top está en viewport top · 1 cuando hero
-           ha salido totalmente por arriba. Usa rAF throttling implícito por
-           passive scroll. */
         const heroEl = document.querySelector(".hero");
-        const onScroll = () => {
-          if (!scrubReady || isPlayingTap || reduceMotion || !heroEl) return;
+        const onHeroScroll = () => {
+          if (!heroFramesScroll || isPlayingTap || reduced || !heroEl) return;
           const rect = heroEl.getBoundingClientRect();
           const heroH = heroEl.offsetHeight || 1;
-          /* scrolled = cuánto del hero ha salido por arriba */
           const scrolled = Math.max(0, -rect.top);
           const progress = Math.min(1, Math.max(0, scrolled / heroH));
-          heroVidScroll.currentTime = progress * (heroVidScroll.duration || 0);
+          const total = heroFramesScroll.length;
+          const idx = Math.max(0, Math.min(total - 1, Math.round(progress * (total - 1))));
+          paintCanvas(heroCanvasScroll, heroFramesScroll[idx]);
         };
-        window.addEventListener("scroll", onScroll, { passive: true });
 
-        /* Click handler · pausa video 1, reproduce video 2 desde el inicio. */
+        /* Boot async · extraer frames + chroma key de ambos videos en paralelo */
+        (async () => {
+          const isMobile = window.matchMedia("(max-width: 960px)").matches;
+          const HERO_FRAMES = reduced ? 2 : (isMobile ? 20 : 36);
+          try {
+            const [fs, ft] = await Promise.all([
+              extractFrames("assets/hero-scroll.mp4", HERO_FRAMES),
+              extractFrames("assets/hero-tap.mp4", HERO_FRAMES)
+            ]);
+            heroFramesScroll = fs;
+            heroFramesTap = ft;
+            /* Ajustar canvas internal size al nativo · evita stretch borroso */
+            const ref = heroFramesScroll[0];
+            if (ref) {
+              heroCanvasScroll.width = ref.width;
+              heroCanvasScroll.height = ref.height;
+              const refTap = heroFramesTap[0] || ref;
+              heroCanvasTap.width = refTap.width;
+              heroCanvasTap.height = refTap.height;
+            }
+            /* Paint frame 0 · fade-in via .is-ready */
+            paintCanvas(heroCanvasScroll, heroFramesScroll[0]);
+            paintCanvas(heroCanvasTap, heroFramesTap[0]);
+            heroCanvasScroll.classList.add("is-ready");
+            heroCanvasTap.classList.add("is-ready");
+            /* Hook scroll listener · primer paint con progreso actual */
+            window.addEventListener("scroll", onHeroScroll, { passive: true });
+            onHeroScroll();
+          } catch (e) {
+            /* Si falla la extracción · el hero se queda sin avatar visible
+               pero el resto de la página funciona · graceful degradation. */
+          }
+        })();
+
+        /* Click handler · reproduce canvas 2 frame por frame a ~24fps */
         heroTrigger.addEventListener("click", () => {
-          if (isPlayingTap) return;
+          if (isPlayingTap || !heroFramesTap) return;
           isPlayingTap = true;
           heroAvatar.classList.add("is-playing-tap");
-          heroVidTap.currentTime = 0;
-          const p = heroVidTap.play();
-          if (p && typeof p.catch === "function") p.catch(() => {});
-        });
-
-        /* Video 2 termina · volvemos al modo scroll · video 2 vuelve a frame 0
-           pero queda invisible. */
-        heroVidTap.addEventListener("ended", () => {
-          isPlayingTap = false;
-          heroAvatar.classList.remove("is-playing-tap");
-          heroVidTap.currentTime = 0;
-          /* Re-aplicar scroll position al video 1 inmediatamente */
-          onScroll();
+          const total = heroFramesTap.length;
+          const fps = 24;
+          const frameMs = 1000 / fps;
+          const startTime = performance.now();
+          const tick = (now) => {
+            const elapsed = now - startTime;
+            const idx = Math.floor(elapsed / frameMs);
+            if (idx >= total) {
+              /* Done · vuelta al modo scroll */
+              isPlayingTap = false;
+              heroAvatar.classList.remove("is-playing-tap");
+              paintCanvas(heroCanvasTap, heroFramesTap[0]);
+              onHeroScroll();
+              tapAnimId = null;
+              return;
+            }
+            paintCanvas(heroCanvasTap, heroFramesTap[idx]);
+            tapAnimId = requestAnimationFrame(tick);
+          };
+          tapAnimId = requestAnimationFrame(tick);
         });
       }
     })();
