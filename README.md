@@ -6,7 +6,7 @@ Prototipo HTML de **Grow** — app de parenting con curvas de desarrollo OMS, Ha
 
 - **`prototype.html`** · simulación de la app (single-file HTML/CSS/JS, ~21k líneas)
 - **`homepage/`** · marketing site público canon Fase 0 (vanilla HTML/CSS/JS · 3 archivos)
-- **`about-us/`** · prototipo personal del founder (Next.js + Tailwind + Framer Motion · NO production)
+- **`apps/about-us/`** · narrativa del founder (Next.js 16 + Tailwind + Framer Motion) con export estático a `homepage/about-us/`
 - **`design/Grow Design System v0.2.html`** · DS canónico · single source of truth
 
 Cualquier discrepancia entre archivos se resuelve siempre a favor del DS canónico.
@@ -26,7 +26,8 @@ Cualquier discrepancia entre archivos se resuelve siempre a favor del DS canóni
 │       ├── TBJGaliner-{Light,Regular,Bold}.ttf    # serif display canon
 │       ├── InterVariable{,-Italic}.woff2          # body sans canon
 │       └── Grift-{18 cortes}.ttf                  # acento pricing .amt
-├── about-us/
+├── apps/
+│   └── about-us/
 │   ├── app/                                   # Next.js app dir
 │   ├── components/                            # React components
 │   ├── public/fonts/                          # mismas fonts canon
@@ -37,7 +38,7 @@ Cualquier discrepancia entre archivos se resuelve siempre a favor del DS canóni
 │   └── v0.1/                                  # histórico (no tocar)
 ├── docs/
 │   ├── HANDBOOK.md                            # onboarding humano + glosario
-│   └── decisions/                             # 16 ADRs vigentes
+│   └── decisions/                             # 18 ADRs vigentes
 ├── .agent/
 │   ├── agents.md                              # brain del proyecto
 │   ├── rules/                                 # 9 reglas duras
@@ -53,23 +54,23 @@ Cualquier discrepancia entre archivos se resuelve siempre a favor del DS canóni
 Servidor HTTP desde la raíz (las fuentes son locales · no funciona con `file://`):
 
 ```sh
-python3 -m http.server 5000
+python3 -m http.server 5050
 # luego abre:
-# http://localhost:5000/prototype.html
-# http://localhost:5000/homepage/index.html
-# http://localhost:5000/design/Grow%20Design%20System%20v0.2.html
+# http://localhost:5050/prototype.html
+# http://localhost:5050/homepage/index.html
+# http://localhost:5050/design/Grow%20Design%20System%20v0.2.html
 ```
 
 ### About-us (Next.js)
 
 ```sh
-cd about-us && npm install && npm run dev
+cd apps/about-us && npm install && npm run dev
 # luego abre http://localhost:3000
 ```
 
 ## Ejecutar en Replit
 
-El repo conserva `.replit` y `replit.nix`. El workflow `Project` ejecuta `python3 -m http.server 5000` y expone el puerto 5000 para prototype + homepage.
+El repo conserva `.replit` y `replit.nix`. El workflow `Project` ejecuta `python3 -m http.server 5050` y expone el puerto 5050 para prototype + homepage.
 
 ## Marca (resumen rápido · canon May 2026)
 
@@ -83,6 +84,6 @@ Detalle completo · `.agent/rules/typography.md` + `.agent/rules/palette-tonal.m
 
 ## Stack canon
 
-100% vanilla HTML/CSS/JS para `prototype.html` + `homepage/` + DS. **No build, no bundler, no `package.json`** en estos folders. Excepción · `about-us/` usa Next.js como prototipo personal.
+`prototype.html`, `homepage/` y DS se sirven en vanilla sin build. Excepción explícita: `apps/about-us/` usa Next.js 16 con build y export estático a `homepage/about-us/`.
 
 Detalle workflow + harness · `AGENTS.md` raíz.

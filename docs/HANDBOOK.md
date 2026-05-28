@@ -38,7 +38,7 @@ Detalle: `.agent/rules/typography.md` · `.agent/rules/palette-tonal.md`.
   `npm run build` genera static export en `homepage/about-us/` (NO editar a
   mano · ver `.agent/rules/file-structure.md` regla 9).
 - **No backend** · todo client-side · el prototipo no hace network requests.
-- **Server local** · `python3 -m http.server 5051 --directory homepage` sirve
+- **Server local** · `python3 -m http.server 5050` desde raíz sirve
   todo prod-like · dev about-us con HMR · `cd apps/about-us && npm run dev`.
 - **Single-developer** · sin PRs · commits atómicos + push directo.
 
@@ -61,7 +61,7 @@ Grow/
 │   └── settings.json, launch.json
 ├── docs/
 │   ├── HANDBOOK.md                    (este archivo)
-│   └── decisions/                     (16 ADRs + template + README)
+│   └── decisions/                     (18 ADRs + template + README)
 ├── design/
 │   ├── Grow Design System v0.2.html   ★ SINGLE SOURCE OF TRUTH ★
 │   ├── assets/{fonts, img}/
@@ -155,9 +155,9 @@ Usa el skill `/new-book`:
 ### Verificar cambios pre-commit
 
 Usa el skill `/verify-proto`:
-- HTTP 200 sobre prototype + DS
+- HTTP 200 sobre landing + prototype + DS
 - `node --check` sobre JS del prototype
-- Output canónico · `PROTO 200 · DS 200 · JS_OK`
+- Output canónico · `LAND 200 · PROTO 200 · DS 200 · JS_OK`
 
 ### Auditar drift DS ↔ prototype
 
