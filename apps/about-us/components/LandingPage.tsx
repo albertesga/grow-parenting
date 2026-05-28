@@ -4,6 +4,7 @@ import IntroPhotoSection from './IntroPhotoSection';
 import EmotionalStatementSection from './EmotionalStatementSection';
 import NarrativeRevealSection from './NarrativeRevealSection';
 import NarrativeClosingSection from './NarrativeClosingSection';
+import CofoundersCallSection from './CofoundersCallSection';
 import ScrollProgressLine from './ScrollProgressLine';
 import SiteTopbar from './SiteTopbar';
 
@@ -33,6 +34,10 @@ export default function LandingPage() {
       {/* Sección 5 · cierre narrativo · "No hay reto más grande que criar ·
           la mayor oportunidad" · fill-on-scroll + underline mint */}
       <NarrativeClosingSection />
+
+      {/* Sección 6 · cierre real · convocatoria de cofundadores · 6 perfiles
+          tonales + cómo trabajamos + filtro + CTA mailto */}
+      <CofoundersCallSection />
     </main>
   );
 }
