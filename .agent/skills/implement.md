@@ -137,7 +137,9 @@ Si push falla por rebase · `git pull --rebase` · re-test · re-push.
 2. **NO override `outline: none`** sin reemplazo de focus ring · regla a11y
 3. **NO hex literal en JS** · usar `var(--token)` · regla palette
 4. **NO `font-family` literal en CSS** salvo `@font-face` · usar tokens
-5. **NO instalar deps** · stack es vanilla, sin package.json
+5. **NO instalar deps en homepage/prototype** · son vanilla sin package.json.
+   (Excepción · `apps/about-us/` SÍ tiene package.json/deps · ahí npm es ok ·
+   no añadir deps nuevas sin razón · ver ADR-0017.)
 6. **NO modificar `.git/`, `.replit`, `replit.nix`** salvo razón explícita
 7. **NO ejecutar scripts arbitrarios** del DS HTML · es read-only para
    homepage/prototype como consumers

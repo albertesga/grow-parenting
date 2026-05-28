@@ -5,7 +5,10 @@ completo del loop, guardrails, y cuándo aplicar cada rule.
 
 ## Stack
 
-Grow es un proyecto **100% diseño** · sin backend, sin build, sin auth.
+Grow es un proyecto **design-first** · sin backend, sin auth. Dual-stack
+(ver ADR-0017): `homepage/` + `prototype.html` son vanilla sin build · la
+sub-app `apps/about-us/` es Next.js 16 CON build (genera static export en
+`homepage/about-us/`).
 
 ### 3 entry points
 

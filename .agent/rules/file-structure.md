@@ -36,7 +36,7 @@ consumer vs producer. No mezclar dominios (landing vs prototype vs DS).
 │   ├── HANDBOOK.md                   (onboarding humano + agentes)
 │   └── decisions/                    (ADRs · canon histórico)
 │       ├── 0000-template.md
-│       ├── 0001-...md  →  0016-...md (16 ADRs vigentes)
+│       ├── 0001-...md  →  0018-...md (18 ADRs vigentes)
 │       └── README.md
 ├── design/                           (Design System · single source of truth)
 │   ├── Grow Design System v0.2.html  (DS canónico · NO tocar como consumer)
@@ -46,14 +46,25 @@ consumer vs producer. No mezclar dominios (landing vs prototype vs DS).
 │   ├── IA-homepage-v0.1.md           (info architecture briefs)
 │   ├── claude-design-*.md            (briefs de iteración)
 │   └── wireframes-homepage-v0.1.html (wireframes baja fidelidad)
-├── homepage/                          (marketing site público · consumer del DS)
-│   ├── index.html
+├── homepage/                          (★ public web root · consumer del DS · vanilla, sin build)
+│   ├── index.html                     (landing marketing)
 │   ├── styles.css
 │   ├── main.js
+│   ├── waitlist.html                  (flow waitlist · 10 pasos · localStorage)
 │   ├── assets/fonts/                 (espejo de design/assets/fonts/)
 │   ├── assets/img/                   (assets específicos landing)
+│   ├── assets/grow-avatar.js          (component reusable del avatar chroma · ver doc inline)
+│   ├── about-us/                      (★ static export del build de apps/about-us · NO editar a mano)
+│   ├── img/ frames/ fonts/ lottie/    (assets mirror del about-us public · ver ADR-0017)
 │   ├── propuesta-v2.html             (drafts archivados)
 │   └── propuesta-v3.html
+├── apps/                              (sub-app sources con build · ver ADR-0017)
+│   └── about-us/                      (Next.js 16 + Tailwind + Framer Motion · narrativa Inti)
+│       ├── app/                       (App Router · layout + page + globals.css)
+│       ├── components/                (LandingPage + secciones + SiteTopbar + primitives)
+│       ├── public/                    (fonts/frames/img/lottie sources)
+│       ├── next.config.js             (output:'export' · basePath /about-us)
+│       └── tailwind.config.ts         (tokens DS · paleta tonal espejo de styles.css)
 ├── prototype.html                    (app simulation · consumer del DS · single-file ~20k líneas)
 ├── prd/                              (Product Requirement Docs · read-only para diseño)
 │   ├── PRD-chat-modo-madrugada-v0.1.md
@@ -112,11 +123,24 @@ consumer vs producer. No mezclar dominios (landing vs prototype vs DS).
 8. **Archivos draft / propuesta** · OK temporalmente con sufijo `-v2`,
    `-v3`. Cuando se canoniza · merge al canon principal y borrar el draft.
 
+9. **Dual-stack · vanilla + Next (ver ADR-0017)**:
+   - `homepage/` (index, waitlist, styles, main.js) + `prototype.html` =
+     **vanilla HTML/CSS/JS sin build** · se editan y se sirven directos.
+   - `apps/about-us/` = **Next.js 16 con build** · se edita el source aquí ·
+     `npm run build` genera el static export en `homepage/about-us/` +
+     espeja assets a `homepage/{img,frames,fonts,lottie}`.
+   - **`homepage/about-us/` es GENERADO · NUNCA editar a mano** (se pierde al
+     re-buildear). Cambios de about-us → editar `apps/about-us/` + rebuild.
+   - Dev about-us · `cd apps/about-us && npm run dev` (:3000). Todo servido
+     prod-like · `python3 -m http.server --directory homepage`.
+
 ## Glosario
 
 | Carpeta | Propósito | Read/Write para agente diseño |
 |---|---|---|
-| `homepage/` | Marketing site público | R/W |
+| `homepage/` | Public web root (landing + waitlist · vanilla) | R/W |
+| `homepage/about-us/` | Static export generado (build de apps/about-us) | R only · NUNCA editar a mano |
+| `apps/about-us/` | Sub-app Next.js (narrativa Inti · con build) | R/W (source) |
 | `prototype.html` | App simulation | R/W |
 | `design/` (DS principal) | Single source of truth visual | R/W |
 | `design/v0.1/` | Histórico | R only |

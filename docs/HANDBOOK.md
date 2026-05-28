@@ -30,12 +30,17 @@ para detectar a tiempo, conversación con criterio.
 
 Detalle: `.agent/rules/typography.md` · `.agent/rules/palette-tonal.md`.
 
-## Stack técnico
+## Stack técnico · dual (ver ADR-0017)
 
-- **100% vanilla HTML/CSS/JS** · sin frameworks, sin build, sin bundler
-- **No backend** · todo client-side · el prototipo no hace network requests
-- **Server local** · `python3 -m http.server 5050` desde raíz repo
-- **Single-developer** · sin PRs · commits atómicos + push directo
+- **homepage/ + prototype.html** · vanilla HTML/CSS/JS · sin frameworks, sin
+  build, sin bundler · se sirven directos.
+- **apps/about-us/** · Next.js 16 + Tailwind + Framer Motion · CON build ·
+  `npm run build` genera static export en `homepage/about-us/` (NO editar a
+  mano · ver `.agent/rules/file-structure.md` regla 9).
+- **No backend** · todo client-side · el prototipo no hace network requests.
+- **Server local** · `python3 -m http.server 5051 --directory homepage` sirve
+  todo prod-like · dev about-us con HMR · `cd apps/about-us && npm run dev`.
+- **Single-developer** · sin PRs · commits atómicos + push directo.
 
 ## Map de archivos
 
@@ -175,7 +180,7 @@ Spawn en paralelo si el cambio toca UI y copy a la vez.
 
 ## ADRs vigentes (canon histórico)
 
-16 decisiones formales en `docs/decisions/`. Una línea cada una:
+18 decisiones formales en `docs/decisions/`. Una línea cada una:
 
 | ADR | Decisión |
 |---|---|
@@ -195,6 +200,8 @@ Spawn en paralelo si el cambio toca UI y copy a la vez.
 | ADR-0014 | app store distribución · iOS + Android via Expo |
 | ADR-0015 | bookstate helpers · compartir state entre libros |
 | ADR-0016 | cross-libro routing · `data-goto` unificado |
+| ADR-0017 | monorepo · homepage canonical + apps/about-us static export |
+| ADR-0018 | dual-stack + deuda DS conocida (tokens/topbar/avatar dup diferida) |
 
 Read README en `docs/decisions/README.md` para cómo crear nueva ADR.
 
