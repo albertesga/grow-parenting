@@ -1,17 +1,21 @@
 ---
 description: Auditor de sincronía DS ↔ prototype. Detecta drift entre el Design System y la implementación · CSS huérfano (en uno pero no en otro), primitives documentados sin uso, primitives usados sin documentar. Reporta por categoría (book-hero, chips, navbar, timeline). Úsalo después de cualquier cambio que toque CSS de un primitive canónico o cuando sospeches que el DS está desincronizado. Trigger keywords: sync DS, sincronía, drift, audit DS, gap prototype-DS, design system drift, primitives huérfanos, DS auditoría.
-allowed-tools: Bash(grep *) Bash(rg *)
+allowed-tools: Bash(node *) Bash(rg *)
 ---
 
 ## Auditoría DS ↔ prototype
 
+### 0. Chequeo automático bloqueante
+
+!`node "/Users/titoespanolgamon/Documents/Vibe Coding/Grow/scripts/check-ds-drift.mjs"`
+
 ### 1. Primitives clave en DS
 
-!`grep -oE "^\s*\.[a-z][a-z0-9-]+\s*\{" "/Users/titoespanolgamon/Documents/Vibe Coding/Grow/design/Grow Design System v0.2.html" | sort -u | head -40`
+!`rg -o "^\s*\\.[a-z][a-z0-9-]+\\s*\\{" "/Users/titoespanolgamon/Documents/Vibe Coding/Grow/design/Grow Design System v0.2.html" | sort -u | head -40`
 
 ### 2. Primitives clave en prototype
 
-!`grep -oE "^\s*\.[a-z][a-z0-9-]+\s*\{" "/Users/titoespanolgamon/Documents/Vibe Coding/Grow/prototype.html" | sort -u | head -40`
+!`rg -o "^\s*\\.[a-z][a-z0-9-]+\\s*\\{" "/Users/titoespanolgamon/Documents/Vibe Coding/Grow/prototype.html" | sort -u | head -40`
 
 ## Tu tarea
 

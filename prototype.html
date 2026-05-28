@@ -1370,12 +1370,13 @@
   .chip:hover, .cal-chip:hover { filter: brightness(0.97); }
   /* Tilts via CSS var so the pop-in animation + :active scale preserve them. */
   .chip { transform: rotate(var(--chip-tilt, 0deg)); }
-  .chip:nth-child(1) { --chip-tilt: -3deg; }
-  .chip:nth-child(2) { --chip-bg: var(--coral-subtle); --chip-ink: #8E4A22; --chip-tilt:  2deg; }
-  .chip:nth-child(3) { --chip-bg: var(--mint-subtle);  --chip-ink: #4F6647; --chip-tilt: -2deg; }
-  .chip:nth-child(4) { --chip-bg: var(--blush-subtle); --chip-ink: #7A4A3A; --chip-tilt:  3deg; }
-  .chip:nth-child(5) { --chip-bg: var(--gold-subtle);  --chip-ink: #6E5A2A; --chip-tilt: -1deg; }
-  .chip:nth-child(6) { --chip-bg: var(--paper-soft);   --chip-ink: var(--ink); --chip-tilt:  2deg; }
+  /* Tilt + auto-tones scoped to chip strips (DS parity with chip-strip-tilt). */
+  .chips .chip:nth-child(1) { --chip-tilt: -3deg; }
+  .chips .chip:nth-child(2) { --chip-bg: var(--coral-subtle); --chip-ink: #8E4A22; --chip-tilt:  2deg; }
+  .chips .chip:nth-child(3) { --chip-bg: var(--mint-subtle);  --chip-ink: #4F6647; --chip-tilt: -2deg; }
+  .chips .chip:nth-child(4) { --chip-bg: var(--blush-subtle); --chip-ink: #7A4A3A; --chip-tilt:  3deg; }
+  .chips .chip:nth-child(5) { --chip-bg: var(--gold-subtle);  --chip-ink: #6E5A2A; --chip-tilt: -1deg; }
+  .chips .chip:nth-child(6) { --chip-bg: var(--paper-soft);   --chip-ink: var(--ink); --chip-tilt:  2deg; }
   /* § E · class-based tone overrides · scopean per-chip independiente de la posición.
      Vienen DESPUÉS de los nth-child para que ganen specificity ties por source-order.
      El tilt sigue siendo position-based (preserva el ritmo torcido del strip). */
