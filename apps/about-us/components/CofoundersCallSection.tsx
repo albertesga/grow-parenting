@@ -160,7 +160,8 @@ export default function CofoundersCallSection() {
 
   return (
     <section
-      className="relative w-full bg-paper"
+      id="trabaja"
+      className="relative w-full scroll-mt-24 bg-paper"
       aria-label="Buscamos cofundadores para construir Grow"
     >
       <div className="mx-auto max-w-[1100px] px-6 py-28 md:px-10 md:py-36 lg:px-16">
