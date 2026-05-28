@@ -125,7 +125,7 @@ export default function SiteTopbar() {
       >
         <div className="brand">
           <a href="/" aria-label="Grow · volver al inicio">
-            <img src="/img/grow-logo.png" alt="Grow" draggable={false} />
+            <img src="/about-us/img/grow-logo.png" alt="Grow" draggable={false} />
           </a>
         </div>
         <div className="right">

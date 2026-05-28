@@ -4,8 +4,9 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build && rm -rf ../../homepage/about-us && cp -R out ../../homepage/about-us && for d in img frames fonts lottie; do rm -rf ../../homepage/$d && cp -R public/$d ../../homepage/$d 2>/dev/null || true; done",
+    "build": "next build && rm -rf ../../homepage/about-us && cp -R out ../../homepage/about-us",
     "build:dry": "next build",
+    "check:export-sync": "node scripts/check-export-sync.mjs",
     "export": "npm run build",
     "start": "next start",
     "lint": "next lint"

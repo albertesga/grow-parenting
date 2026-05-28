@@ -281,7 +281,7 @@ function DesktopLayout(p: DesktopProps) {
           extraY={p.polaroid1Y}
           x={p.polaroid1X}
           rotate={p.polaroid1Rotate}
-          src="/img/titoAlone.jpg"
+          src="/about-us/img/titoAlone.jpg"
           alt="Padre · Tito · sonriendo"
           floatRotate={-4}
           zIndex={10}
@@ -303,7 +303,7 @@ function DesktopLayout(p: DesktopProps) {
           }}
         >
           <FloatingPolaroid
-            src="/img/titoKids.jpg"
+            src="/about-us/img/titoKids.jpg"
             alt="Padre con sus hijas"
             floatRotate={6}
             labelChip={
@@ -448,7 +448,7 @@ interface FloatingPolaroidProps {
 }
 
 function FloatingPolaroid({
-  src = '/img/titoAlone.jpg',
+  src = '/about-us/img/titoAlone.jpg',
   alt = 'Padre · Tito · sonriendo',
   floatRotate = 1,
   labelChip,
@@ -561,7 +561,7 @@ function MobileEditorialLayout() {
         >
           <div className="absolute left-0 top-10 z-10 w-[72%] -rotate-[8deg] opacity-95">
             <FloatingPolaroid
-              src="/img/titoAlone.jpg"
+              src="/about-us/img/titoAlone.jpg"
               alt="Padre · Tito · sonriendo"
               floatRotate={-2}
               labelChip={<Chip tono="paper" size="xs">Tito</Chip>}
@@ -570,7 +570,7 @@ function MobileEditorialLayout() {
 
           <div className="absolute right-0 top-0 z-20 w-[80%] rotate-[5deg]">
             <FloatingPolaroid
-              src="/img/titoKids.jpg"
+              src="/about-us/img/titoKids.jpg"
               alt="Padre con Inti y Llivia"
               floatRotate={3}
               labelChip={

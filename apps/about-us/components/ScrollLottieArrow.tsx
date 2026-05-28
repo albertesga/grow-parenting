@@ -121,7 +121,7 @@ export default function ScrollLottieArrow({ progress }: ScrollLottieArrowProps) 
         renderer: 'svg',
         loop: false,
         autoplay: false,
-        path: '/lottie/intro-arrow-right-hand-drawn.json',
+        path: '/about-us/lottie/intro-arrow-right-hand-drawn.json',
         rendererSettings: {
           preserveAspectRatio: 'xMidYMid meet',
         },

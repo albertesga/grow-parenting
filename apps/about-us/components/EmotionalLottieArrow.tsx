@@ -117,7 +117,7 @@ export default function EmotionalLottieArrow({ progress }: EmotionalLottieArrowP
         renderer: 'svg',
         loop: false,
         autoplay: false,
-        path: '/lottie/emotional-arrow-to-photos.json',
+        path: '/about-us/lottie/emotional-arrow-to-photos.json',
         rendererSettings: {
           preserveAspectRatio: 'xMidYMid meet',
         },
