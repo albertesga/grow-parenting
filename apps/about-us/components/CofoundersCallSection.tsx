@@ -389,7 +389,7 @@ function ProfileCard({ profile, variants }: { profile: Profile; variants: Varian
       </ul>
 
       {note && (
-        <p className="mt-4 border-t border-line pt-3 font-text text-[13px] font-light italic leading-[1.45] text-ink-faint">
+        <p className="mt-5 border-t border-line pt-4 font-text text-[13px] font-light italic leading-[1.45] text-ink-faint sm:mt-auto">
           {note}
         </p>
       )}
