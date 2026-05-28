@@ -248,7 +248,7 @@ h1,h2,h3{font-family:var(--serif);font-weight:500;line-height:1.04;letter-spacin
       <a href="#trust">Validación</a>
       <a href="#pricing">Precio</a>
     </nav>
-    <button class="btn btn-primary" onclick="document.getElementById('pricing').scrollIntoView()">Apúntate</button>
+    <a class="btn btn-primary" href="waitlist.html">Apúntate</a>
   </div>
 </header>
 
@@ -263,7 +263,7 @@ h1,h2,h3{font-family:var(--serif);font-weight:500;line-height:1.04;letter-spacin
     <h1>Tú cuidas a tu hij@. Grow <em>te cuida a ti.</em></h1>
     <p class="sub">Sin manual, sin juicios, sin urgencia. Una sola voz, basada en evidencia, para los 1.000 días que más importan.</p>
     <div class="hero-cta">
-      <button class="btn btn-primary" onclick="document.getElementById('pricing').scrollIntoView()">Apúntate desde 1,99 € →</button>
+      <a class="btn btn-primary" href="waitlist.html">Apúntate a la lista →</a>
       <button class="btn btn-ghost" onclick="document.getElementById('journey').scrollIntoView()">Ver cómo funciona</button>
     </div>
     <div class="badges">
@@ -426,7 +426,7 @@ h1,h2,h3{font-family:var(--serif);font-weight:500;line-height:1.04;letter-spacin
           <li>Para los primeros 1.000 miembros</li>
           <li>Acceso completo a Grow Plus</li>
         </ul>
-        <button class="btn btn-ghost" onclick="document.getElementById('signup').scrollIntoView()">Quiero mi plaza</button>
+        <a class="btn btn-ghost" href="waitlist.html">Quiero mi plaza</a>
       </div>
       <div class="plan hi reveal d1">
         <span class="ptag">El más elegido</span>
@@ -438,7 +438,7 @@ h1,h2,h3{font-family:var(--serif);font-weight:500;line-height:1.04;letter-spacin
           <li>Multi-perfil y cuenta compartida</li>
           <li>Export PDF para tu pediatra</li>
         </ul>
-        <button class="btn btn-primary" onclick="document.getElementById('signup').scrollIntoView()">Empezar ahora</button>
+        <a class="btn btn-primary" href="waitlist.html">Empezar ahora</a>
       </div>
       <div class="plan reveal d2">
         <span class="ptag">Premium</span>
@@ -450,7 +450,7 @@ h1,h2,h3{font-family:var(--serif);font-weight:500;line-height:1.04;letter-spacin
           <li>Psicóloga perinatal o asesora de sueño</li>
           <li>Comunidad privada</li>
         </ul>
-        <button class="btn btn-ghost" onclick="document.getElementById('signup').scrollIntoView()">Saber más</button>
+        <a class="btn btn-ghost" href="waitlist.html">Saber más</a>
       </div>
     </div>
   </div>
@@ -461,11 +461,11 @@ h1,h2,h3{font-family:var(--serif);font-weight:500;line-height:1.04;letter-spacin
   <div class="wrap">
     <h2 class="reveal">Estamos listos cuando tú lo estés.</h2>
     <p class="lead reveal d1">Déjanos tu email y te escribimos cuando podamos abrirte la puerta.</p>
-    <form class="form reveal d2" onsubmit="event.preventDefault();this.querySelector('input').value='';this.nextElementSibling.textContent='¡Gracias! Te escribiremos pronto.'">
+    <form class="form reveal d2" onsubmit="event.preventDefault();var em=this.querySelector('input').value.trim();if(em){window.location.href='waitlist.html?email='+encodeURIComponent(em);}">
       <input type="email" placeholder="tu@email.com" required aria-label="Tu email">
-      <button type="submit" class="btn btn-clay">Apúntate desde 1,99 €</button>
+      <button type="submit" class="btn btn-clay">Apúntate a la lista</button>
     </form>
-    <p class="fineprint reveal d2">Te escribimos cuando podamos abrirte la puerta · Q3 2026. Sin spam, sin presión.</p>
+    <p class="fineprint reveal d2">12 preguntas · 3 min. Te escribimos cuando podamos abrirte la puerta · Q3 2026. Sin spam, sin presión.</p>
   </div>
 </section>
 

@@ -54,10 +54,12 @@
         const root = document.getElementById("threeam");
         if (!root) return;
         const scrollArea = root.querySelector(".threeam-story-scroll");
+        const device = root.querySelector(".threeam-device");
         const panels = Array.from(root.querySelectorAll("[data-threeam-panel]"));
         const copies = Array.from(root.querySelectorAll("[data-threeam-copy]"));
         const dots = Array.from(root.querySelectorAll("[data-threeam-dot]"));
         const chips = Array.from(root.querySelectorAll("[data-threeam-chip]"));
+        const cursor = document.getElementById("threeam-cursor");
         if (!scrollArea || panels.length === 0) return;
 
         const lowHeightQuery = window.matchMedia("(max-height: 700px)");
@@ -70,8 +72,28 @@
           return 0;
         };
 
+        const placeCursorAtStep = (step) => {
+          if (!cursor || !device || dots.length === 0) return;
+          const target = dots[Math.max(0, Math.min(dots.length - 1, step))];
+          if (!target) return;
+          const deviceRect = device.getBoundingClientRect();
+          const targetRect = target.getBoundingClientRect();
+          const x = targetRect.left + targetRect.width / 2 - deviceRect.left;
+          const y = targetRect.top + targetRect.height / 2 - deviceRect.top;
+          cursor.style.setProperty("--cursor-x", `${x}px`);
+          cursor.style.setProperty("--cursor-y", `${y}px`);
+        };
+
+        const pulseCursorClick = () => {
+          if (!cursor || reduced) return;
+          cursor.classList.remove("is-clicking");
+          void cursor.offsetWidth;
+          cursor.classList.add("is-clicking");
+        };
+
         const setStep = (step) => {
           const isLowHeightFallback = lowHeightQuery.matches;
+          const previousStep = activeStep;
           if (step === activeStep && !isLowHeightFallback) return;
           activeStep = step;
           root.dataset.threeamStep = String(step);
@@ -87,10 +109,10 @@
           });
           dots.forEach((dot, index) => {
             dot.classList.toggle("is-active", index === step);
+            dot.setAttribute("aria-pressed", index === step ? "true" : "false");
           });
-          chips.forEach((chip, index) => {
-            chip.classList.toggle("is-live", index === step);
-          });
+          placeCursorAtStep(step);
+          if (previousStep !== step) pulseCursorClick();
         };
 
         const update = () => {
@@ -107,8 +129,27 @@
           requestAnimationFrame(update);
         };
 
+        const stepAnchors = [0.02, 0.5, 0.84];
+        const jumpToStep = (step) => {
+          const clampedStep = Math.max(0, Math.min(2, step));
+          const scrollable = Math.max(1, scrollArea.offsetHeight - window.innerHeight);
+          const scrollRect = scrollArea.getBoundingClientRect();
+          const scrollTopDoc = window.scrollY + scrollRect.top;
+          const targetY = scrollTopDoc + scrollable * stepAnchors[clampedStep];
+          window.scrollTo({
+            top: Math.max(0, targetY),
+            behavior: reduced ? "auto" : "smooth",
+          });
+          setStep(clampedStep);
+        };
+
+        dots.forEach((dot, index) => {
+          dot.addEventListener("click", () => jumpToStep(index));
+        });
+
         setStep(0);
         update();
+        placeCursorAtStep(0);
         window.addEventListener("scroll", requestUpdate, { passive: true });
         window.addEventListener("resize", requestUpdate);
       }
@@ -609,6 +650,7 @@
       const pageSiblings = bsOverlay
         ? Array.from(document.body.children).filter((el) => el !== bsOverlay)
         : [];
+      const previousAriaHidden = new WeakMap();
 
       function getOverlayFocusable() {
         if (!bsOverlay) return [];
@@ -631,10 +673,19 @@
       function setBackgroundInert(isInert) {
         pageSiblings.forEach((el) => {
           if (isInert) {
+            if (!previousAriaHidden.has(el)) {
+              previousAriaHidden.set(el, el.getAttribute("aria-hidden"));
+            }
             el.setAttribute("aria-hidden", "true");
             el.inert = true;
           } else {
-            el.removeAttribute("aria-hidden");
+            const prevAriaHidden = previousAriaHidden.get(el);
+            if (prevAriaHidden === null) {
+              el.removeAttribute("aria-hidden");
+            } else if (typeof prevAriaHidden === "string") {
+              el.setAttribute("aria-hidden", prevAriaHidden);
+            }
+            previousAriaHidden.delete(el);
             el.inert = false;
           }
         });

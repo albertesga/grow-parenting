@@ -5,6 +5,7 @@ import { motion, useScroll, useTransform, useSpring, MotionValue } from 'framer-
 import Chip, { ChipTono } from './Chip';
 import TonalUnderline from './TonalUnderline';
 import EmotionalLottieArrow from './EmotionalLottieArrow';
+import useIsDesktop from './useIsDesktop';
 
 /**
  * EmotionalStatementSection v2 · DS-aligned · "Probablemente / Aquí estoy yo."
@@ -39,7 +40,27 @@ const FAMILY_CHIPS: { tono: ChipTono; label: string }[] = [
 
 export default function EmotionalStatementSection() {
   const wrapperRef = useRef<HTMLElement>(null);
+  const isDesktop = useIsDesktop();
 
+  return (
+    <section
+      ref={wrapperRef}
+      className="relative w-full lg:h-[320vh]"
+      aria-label="Probablemente es el mejor niño del mundo"
+    >
+      {isDesktop ? <DesktopEmotionalSticky wrapperRef={wrapperRef} /> : null}
+
+      {/* Mobile + tablet · lectura natural, sin forzar todo en un sticky h-screen */}
+      <MobileEditorialLayout />
+    </section>
+  );
+}
+
+function DesktopEmotionalSticky({
+  wrapperRef,
+}: {
+  wrapperRef: React.RefObject<HTMLElement | null>;
+}) {
   const { scrollYProgress } = useScroll({
     target: wrapperRef,
     offset: ['start start', 'end end'],
@@ -110,76 +131,67 @@ export default function EmotionalStatementSection() {
   const closingScale = useTransform(progress, [0.80, 0.90], [0.88, 1]);
 
   return (
-    <section
-      ref={wrapperRef}
-      className="relative w-full lg:h-[320vh]"
-      aria-label="Probablemente es el mejor niño del mundo"
-    >
-      <div className="sticky top-0 hidden h-screen w-full overflow-hidden lg:block">
-        {/* Paper texture overlay sutil */}
-        <div
-          className="pointer-events-none absolute inset-0 z-0 opacity-[0.04] mix-blend-multiply"
-          style={{
-            backgroundImage:
-              "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='320' height='320' viewBox='0 0 320 320'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' seed='7'/></filter><rect width='320' height='320' filter='url(%23n)'/></svg>\")",
-            backgroundSize: '320px 320px',
-          }}
-          aria-hidden="true"
+    <div className="sticky top-0 hidden h-screen w-full overflow-hidden lg:block">
+      {/* Paper texture overlay sutil */}
+      <div
+        className="pointer-events-none absolute inset-0 z-0 opacity-[0.04] mix-blend-multiply"
+        style={{
+          backgroundImage:
+            "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='320' height='320' viewBox='0 0 320 320'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' seed='7'/></filter><rect width='320' height='320' filter='url(%23n)'/></svg>\")",
+          backgroundSize: '320px 320px',
+        }}
+        aria-hidden="true"
+      />
+
+      {/* Desktop layout · 3 columnas · lg+ (1024+) */}
+      <div className="relative h-full w-full">
+        <DesktopLayout
+          eyebrowLeftOpacity={eyebrowLeftOpacity}
+          eyebrowLeftY={eyebrowLeftY}
+          line1Opacity={line1Opacity}
+          line1Y={line1Y}
+          line2Opacity={line2Opacity}
+          line2Y={line2Y}
+          line3Opacity={line3Opacity}
+          line3Y={line3Y}
+          underlineLeftProgress={underlineLeftProgress}
+          subLeftOpacity={subLeftOpacity}
+          subLeftY={subLeftY}
+          polaroidOpacity={polaroidOpacity}
+          polaroidScale={polaroidScale}
+          polaroidY={polaroidY}
+          polaroid1X={polaroid1X}
+          polaroid1Y={polaroid1Y}
+          polaroid1Rotate={polaroid1Rotate}
+          polaroid2Opacity={polaroid2Opacity}
+          polaroid2Scale={polaroid2Scale}
+          polaroid2Y={polaroid2Y}
+          polaroid2X={polaroid2X}
+          polaroid2Rotate={polaroid2Rotate}
+          chipLabelAloneOpacity={chipLabelAloneOpacity}
+          chipLabelKidsOpacity={chipLabelKidsOpacity}
+          eyebrowRightOpacity={eyebrowRightOpacity}
+          eyebrowRightY={eyebrowRightY}
+          r1Opacity={r1Opacity}
+          r1Y={r1Y}
+          r1X={r1X}
+          underlineRightProgress={underlineRightProgress}
+          familyStripOpacity={familyStripOpacity}
+          r2Opacity={r2Opacity}
+          r2Y={r2Y}
+          r3Opacity={r3Opacity}
+          r3Y={r3Y}
+          r4Opacity={r4Opacity}
+          r4Y={r4Y}
+          r5Opacity={r5Opacity}
+          r5Y={r5Y}
+          closingOpacity={closingOpacity}
+          closingY={closingY}
+          closingScale={closingScale}
+          progress={progress}
         />
-
-        {/* Desktop layout · 3 columnas · lg+ (1024+) */}
-        <div className="relative h-full w-full">
-          <DesktopLayout
-            eyebrowLeftOpacity={eyebrowLeftOpacity}
-            eyebrowLeftY={eyebrowLeftY}
-            line1Opacity={line1Opacity}
-            line1Y={line1Y}
-            line2Opacity={line2Opacity}
-            line2Y={line2Y}
-            line3Opacity={line3Opacity}
-            line3Y={line3Y}
-            underlineLeftProgress={underlineLeftProgress}
-            subLeftOpacity={subLeftOpacity}
-            subLeftY={subLeftY}
-            polaroidOpacity={polaroidOpacity}
-            polaroidScale={polaroidScale}
-            polaroidY={polaroidY}
-            polaroid1X={polaroid1X}
-            polaroid1Y={polaroid1Y}
-            polaroid1Rotate={polaroid1Rotate}
-            polaroid2Opacity={polaroid2Opacity}
-            polaroid2Scale={polaroid2Scale}
-            polaroid2Y={polaroid2Y}
-            polaroid2X={polaroid2X}
-            polaroid2Rotate={polaroid2Rotate}
-            chipLabelAloneOpacity={chipLabelAloneOpacity}
-            chipLabelKidsOpacity={chipLabelKidsOpacity}
-            eyebrowRightOpacity={eyebrowRightOpacity}
-            eyebrowRightY={eyebrowRightY}
-            r1Opacity={r1Opacity}
-            r1Y={r1Y}
-            r1X={r1X}
-            underlineRightProgress={underlineRightProgress}
-            familyStripOpacity={familyStripOpacity}
-            r2Opacity={r2Opacity}
-            r2Y={r2Y}
-            r3Opacity={r3Opacity}
-            r3Y={r3Y}
-            r4Opacity={r4Opacity}
-            r4Y={r4Y}
-            r5Opacity={r5Opacity}
-            r5Y={r5Y}
-            closingOpacity={closingOpacity}
-            closingY={closingY}
-            closingScale={closingScale}
-            progress={progress}
-          />
-        </div>
       </div>
-
-      {/* Mobile + tablet · lectura natural, sin forzar todo en un sticky h-screen */}
-      <MobileEditorialLayout />
-    </section>
+    </div>
   );
 }
 

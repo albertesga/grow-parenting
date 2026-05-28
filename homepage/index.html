@@ -719,10 +719,10 @@
             <div class="threeam-state" aria-live="off">
               <p class="threeam-state-item is-active" data-threeam-copy="0"><span>01</span><strong>Estoy aquí.</strong> Elige qué está pasando, sin prisa.</p>
               <p class="threeam-state-item" data-threeam-copy="1"><span>02</span><strong>Una pregunta cada vez.</strong> Primero lo importante. Después lo demás.</p>
-              <p class="threeam-state-item" data-threeam-copy="2"><span>03</span><strong>Casa, con vigilancia.</strong> O te decimos cuándo toca consultar.</p>
+              <p class="threeam-state-item" data-threeam-copy="2"><span>03</span><strong>Casa, con vigilancia.</strong> O te orientamos sobre cuándo consultar.</p>
             </div>
             <div class="chips">
-              <span class="chip chip--with-sub is-live" data-threeam-chip="0">
+              <span class="chip chip--with-sub" data-threeam-chip="0">
                 <span class="chip-title">No para de llorar</span>
                 <span class="chip-sub">Cólicos, llanto inconsolable, llevas horas</span>
               </span>
@@ -736,14 +736,16 @@
               </span>
             </div>
             <p class="audit">Revisado por Servicio de Urgencias Pediátricas · marco anti-shaken-baby NSBSP · información basada en NICE NG143, AEPED 2026 y AAP 2026</p>
-            <p class="threeam-promise">Disponible 22:00–06:00 · gratis · sin login · sin presión.</p>
           </div>
 
           <div class="threeam-device" role="group" aria-label="Cómo funciona el Modo 3 AM en 3 pasos">
-            <div class="threeam-stepper" aria-hidden="true">
-              <span class="is-active" data-threeam-dot="0">Entrada</span>
-              <span data-threeam-dot="1">Pregunta</span>
-              <span data-threeam-dot="2">Resultado</span>
+            <div class="threeam-cursor" id="threeam-cursor" aria-hidden="true">
+              <span class="threeam-cursor-pointer"></span>
+            </div>
+            <div class="threeam-stepper" role="tablist" aria-label="Pasos del Modo 3 AM">
+              <button type="button" class="is-active" data-threeam-dot="0" aria-pressed="true">Entrada</button>
+              <button type="button" data-threeam-dot="1" aria-pressed="false">Pregunta</button>
+              <button type="button" data-threeam-dot="2" aria-pressed="false">Resultado</button>
             </div>
 
             <div class="threeam-phone">
@@ -768,15 +770,31 @@
 
               <div class="mockup threeam-panel mockup--result" data-threeam-panel="2" tabindex="-1" aria-hidden="true">
                 <div class="mp-time">03:43 · Modo 3 AM</div>
-                <div class="mp-title">Casa, con vigilancia.</div>
-                <div class="mp-sub">Esperamos 30 minutos. Si empeora, 061.</div>
-                <ul class="mp-actions" aria-label="Acciones recomendadas">
-                  <li>Pecho descubierto</li>
-                  <li>Cuenta respiraciones por minuto</li>
-                  <li>Mantén la luz baja</li>
-                </ul>
-                <span class="mp-chip">¿Algo más? →</span>
-                <div class="mp-foot">Información basada en NICE NG143 · aquí estamos.</div>
+                <div class="mp-status">Resultado actual</div>
+                <div class="mp-title">Puedes seguir en casa con vigilancia.</div>
+                <div class="mp-sub">Con tus respuestas, ahora mismo no vemos señales de alarma inmediatas. Aquí tienes un plan corto para esta noche.</div>
+
+                <section class="mp-result-box" aria-label="Qué hacer ahora">
+                  <h4>Qué hacer ahora (30 min)</h4>
+                  <ul class="mp-actions">
+                    <li>Pecho descubierto para observar mejor la respiración.</li>
+                    <li>Cuenta respiraciones por minuto durante 1 minuto.</li>
+                    <li>Mantén luz baja y vuelve a revisar en 30 minutos.</li>
+                  </ul>
+                </section>
+
+                <section class="mp-result-box mp-result-box--alert" aria-label="Cuándo consultar">
+                  <h4>Consulta hoy si aparece algo de esto</h4>
+                  <ul class="mp-alerts">
+                    <li>Respira cada vez más rápido o se le marcan mucho las costillas.</li>
+                    <li>Decaimiento marcado o cuesta despertarle.</li>
+                    <li>Tu intuición te dice que no está bien.</li>
+                  </ul>
+                </section>
+
+                <span class="mp-chip primary">Revisar otra situación →</span>
+                <span class="mp-chip">Necesito relevo ahora →</span>
+                <div class="mp-foot">Basado en NICE NG143 · AEPED 2026 · AAP 2026.</div>
               </div>
             </div>
           </div>
@@ -881,7 +899,6 @@
             <li>Consultas 1:1 a menor precio</li>
           </ul>
           <a class="cta coral" href="waitlist.html">Reservar plaza</a>
-          <p class="plan-note">Cuando se agoten las 100 plazas, el acceso pasa al precio de Grow Plus.</p>
         </article>
         <article class="plan">
           <span class="tier">Plus · por defecto</span>
@@ -908,6 +925,51 @@
         <p>Te escribimos cuando podamos abrirte la puerta · Q3 2026.</p>
         <p>Sin spam, sin presión.</p>
       </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════════════════
+       § 7 · CUENTA COMPARTIDA
+       ════════════════════════════════════════════════════════════════════ -->
+  <section class="full shared-account" id="cuenta-compartida" data-section="7">
+    <div class="wrap">
+      <div class="section-head shared-account-head">
+        <span class="eyebrow">Co-cuidado · cuenta compartida</span>
+        <h2>Una cuenta compartida para toda la familia.</h2>
+        <p>Invita a tu pareja cuando lo necesitéis. Sin duplicar mensajes, sin perder historial y sin empezar de cero cada vez.</p>
+      </div>
+
+      <div class="shared-account-grid">
+        <article class="shared-account-card t-mint">
+          <h4>Todo sincronizado</h4>
+          <p>Mismos libros, mismos registros.</p>
+        </article>
+        <article class="shared-account-card t-blush">
+          <h4>Relevo sin fricción</h4>
+          <p>Si necesitas parar, la otra persona lo ve...</p>
+        </article>
+        <article class="shared-account-card t-gold">
+          <h4>Un solo lugar</h4>
+          <p>Salud, vacunas, rutinas y notas en la misma cuenta.</p>
+        </article>
+      </div>
+
+      <article class="shared-account-gift">
+        <div class="shared-account-gift-top">
+          <div class="gift-copy">
+            <p class="gift-kicker">Regalar acceso</p>
+            <h3>¿Quieres hacer el mejor regalo a tu pareja?</h3>
+            <p class="gift-lead">Regala tranquilidad, tiempo y amor.</p>
+          </div>
+          <img class="gift-mood-img" src="assets/mood-contentos.png" alt="Pareja feliz compartiendo tiempo en familia">
+        </div>
+        <p>Regala un año a tu pareja (o a quien cuida contigo), compartid la cuenta y ahorrad tiempo de coordinación en el día a día.</p>
+        <div class="shared-account-ctas">
+          <a class="btn-primary btn-arrow" href="waitlist.html">Entra en la lista</a>
+          <a class="btn-ghost" href="#pricing">Ver planes</a>
+        </div>
+        <p class="shared-account-note">Cuenta compartida incluida en Founding y Grow Plus.</p>
+      </article>
     </div>
   </section>
 

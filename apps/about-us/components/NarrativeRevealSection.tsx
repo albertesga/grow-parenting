@@ -8,6 +8,7 @@ import {
   useSpring,
   MotionValue,
 } from 'framer-motion';
+import useIsDesktop from './useIsDesktop';
 
 /**
  * NarrativeRevealSection v4 · "Solo texto"
@@ -104,6 +105,12 @@ const BLOCKS: BlockSpec[] = [
 ];
 
 export default function NarrativeRevealSection() {
+  const isDesktop = useIsDesktop();
+  if (!isDesktop) return <MobileNarrativeRevealSection />;
+  return <DesktopNarrativeRevealSection />;
+}
+
+function DesktopNarrativeRevealSection() {
   const wrapperRef = useRef<HTMLElement>(null);
 
   const { scrollYProgress } = useScroll({
@@ -155,6 +162,42 @@ export default function NarrativeRevealSection() {
             ))}
           </div>
         </motion.div>
+      </div>
+    </section>
+  );
+}
+
+function MobileNarrativeRevealSection() {
+  return (
+    <section
+      className="relative w-full bg-paper py-20"
+      aria-label="Nadie me preparó para ser padre"
+    >
+      <div className="mx-auto flex w-full max-w-[900px] flex-col items-center px-6 text-center md:px-10">
+        <div
+          className="flex w-full flex-col items-center"
+          style={{ gap: 'clamp(14px, 2vh, 26px)' }}
+        >
+          {BLOCKS.map((block, i) => (
+            <p
+              key={`mobile-block-${i}`}
+              className="font-grift max-w-[52ch] text-ink"
+              style={{
+                fontSize: 'clamp(24px, 7vw, 38px)',
+                lineHeight: 1.1,
+                letterSpacing: '-0.012em',
+                fontWeight: 300,
+              }}
+            >
+              {block.words.map((w, wordIdx) => (
+                <span key={`mobile-word-${i}-${wordIdx}`} style={{ fontWeight: w.bold ? 800 : undefined }}>
+                  {w.text}
+                  {wordIdx < block.words.length - 1 ? ' ' : ''}
+                </span>
+              ))}
+            </p>
+          ))}
+        </div>
       </div>
     </section>
   );

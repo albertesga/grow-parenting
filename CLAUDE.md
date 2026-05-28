@@ -58,6 +58,9 @@ María (embarazo) usa `avatar-coral`. Resto usa `avatar-mint`.
 ## Workflow
 
 - Verificar antes de commit: `/verify-proto` (landing/prototype/DS 200 + JS OK)
+- Canon pricing único: `homepage/index.html#pricing` manda · cualquier cambio
+  de planes/precios se replica también en `homepage/waitlist.html`
+  (cards + opciones `precio_sensacion`/`tier`)
 - Commits atómicos · `feat(libro): ...` / `fix(libro): ...` / `chore(...): ...` + Co-Author Claude
 - Push después de cada commit · single-developer repo
 - Sin docs nuevas (`*.md`) salvo que el user lo pida

@@ -137,6 +137,21 @@ Cada commit debe tener:
 - Co-Author footer `Co-Authored-By: Claude Opus 4.7 <noreply@anthropic.com>`
 - Si auditor corrió · resultado mencionado o adjuntado al log
 
+### 10 · Pricing homepage y waitlist alineados
+
+Si tocas pricing en `homepage/index.html` o en `homepage/waitlist.html`:
+
+- Valida que ambos lados mantienen el mismo canon de planes y precios
+  (Gratis · Founding · Grow Plus).
+- Revisa que `precio_sensacion` y `tier` en waitlist no contradicen el pricing
+  público de homepage.
+
+Chequeo rápido (bloqueante si falla):
+
+```bash
+rg "Founding member|Grow Plus|€9,99|€69,99|100 plazas|14 días" homepage/index.html homepage/waitlist.html
+```
+
 ## Checklist pre-commit (resumen)
 
 ```
@@ -144,6 +159,7 @@ Cada commit debe tener:
 [ ] /sync-ds · si tocaste CSS primitive
 [ ] Spawn ds-auditor · si cambio visual mayor
 [ ] Spawn copy-auditor · si copy user-facing
+[ ] Pricing homepage/waitlist alineado · si tocaste planes/precios
 [ ] Visual diff manual · si cambio perceptual
 [ ] Auditor verdicts revisados · cero 🔴 sin resolver
 [ ] Commit message claro + Co-Author footer

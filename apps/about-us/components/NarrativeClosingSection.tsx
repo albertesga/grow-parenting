@@ -9,6 +9,7 @@ import {
   MotionValue,
 } from 'framer-motion';
 import TonalUnderline from './TonalUnderline';
+import useIsDesktop from './useIsDesktop';
 
 /**
  * NarrativeClosingSection · cierre de la narrativa about-us.
@@ -85,6 +86,12 @@ const BLOCK_TRIAD: BlockSpec = {
 };
 
 export default function NarrativeClosingSection() {
+  const isDesktop = useIsDesktop();
+  if (!isDesktop) return <MobileNarrativeClosingSection />;
+  return <DesktopNarrativeClosingSection />;
+}
+
+function DesktopNarrativeClosingSection() {
   const wrapperRef = useRef<HTMLElement>(null);
 
   const { scrollYProgress } = useScroll({
@@ -149,6 +156,47 @@ export default function NarrativeClosingSection() {
             <FillBlock block={BLOCK_TRIAD} progress={progress} />
           </div>
         </motion.div>
+      </div>
+    </section>
+  );
+}
+
+function MobileNarrativeClosingSection() {
+  const mobileBlocks = [BLOCK_RETO, BLOCK_OPP, BLOCK_TRIAD];
+
+  return (
+    <section
+      className="relative w-full bg-paper py-20"
+      aria-label="No hay reto más grande que criar · la mayor oportunidad"
+    >
+      <div className="mx-auto flex w-full max-w-[900px] flex-col items-center px-6 text-center md:px-10">
+        <div
+          className="flex w-full flex-col items-center"
+          style={{ gap: 'clamp(16px, 2vh, 28px)' }}
+        >
+          {mobileBlocks.map((block, index) => (
+            <p
+              key={`mobile-closing-${index}`}
+              className="font-grift max-w-[52ch] text-ink"
+              style={{
+                fontSize: 'clamp(24px, 7vw, 38px)',
+                lineHeight: 1.1,
+                letterSpacing: '-0.012em',
+                fontWeight: 300,
+              }}
+            >
+              {block.words.map((w, wordIdx) => (
+                <span key={`mobile-closing-word-${index}-${wordIdx}`} style={{ fontWeight: w.bold ? 800 : undefined }}>
+                  {w.text}
+                  {wordIdx < block.words.length - 1 ? ' ' : ''}
+                </span>
+              ))}
+            </p>
+          ))}
+          <div className="mt-2">
+            <TonalUnderline tono="mint" width="clamp(180px, 56vw, 300px)" height={3} />
+          </div>
+        </div>
       </div>
     </section>
   );

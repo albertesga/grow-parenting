@@ -47,7 +47,7 @@ Cada paso tiene una skill detallada en `.agent/skills/{step}.md`.
 
 ## Guardrails críticos (resumen)
 
-Los 5 que rompen cualquier merge:
+Los 6 que rompen cualquier merge:
 
 1. **DS canon siempre** · reusa primitives (`.book-hero`, `.chip`, `.phone-nav`,
    `.book-card`). NO crees `.{libro}-chip` propio. Detalle: `.agent/rules/ds-canon.md`
@@ -62,6 +62,10 @@ Los 5 que rompen cualquier merge:
    `.agent/rules/palette-tonal.md`
 5. **Verificación pre-commit** · HTTP 200 + JS check + auditor si tocaste
    primitive canon o copy user-facing. Detalle: `.agent/rules/verification.md`
+6. **Pricing homepage ↔ waitlist sincronizado** · `homepage/index.html#pricing`
+   es la fuente canónica. Si cambias planes/precios/copy de pricing (Gratis ·
+   Founding · Grow Plus), replica el mismo canon en `homepage/waitlist.html`
+   (bloque visual + opciones `precio_sensacion` y `tier`).
 
 ## Glosario express
 

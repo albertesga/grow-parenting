@@ -13,6 +13,7 @@ import FrameSequence from './FrameSequence';
 import Chip, { ChipTono } from './Chip';
 import ScrollLottieArrow from './ScrollLottieArrow';
 import TonalUnderline from './TonalUnderline';
+import useIsDesktop from './useIsDesktop';
 
 // Pattern para los frames extraídos del video con ffmpeg.
 // 104 frames a 20fps · paddings 3 dígitos · /public/frames/f-001.jpg ... f-104.jpg
@@ -60,7 +61,28 @@ const MOBILE_ATTRIBUTE_CHIPS: { tono: ChipTono; label: string; tilt: number }[] 
  */
 export default function IntroPhotoSection() {
   const wrapperRef = useRef<HTMLDivElement>(null);
+  const isDesktop = useIsDesktop();
 
+  return (
+    <section
+      ref={wrapperRef}
+      className="relative min-h-[100svh] w-full lg:h-[450vh] lg:min-h-0"
+      aria-label="Presentación de Inti"
+    >
+      {/* Mobile + tablet · lectura natural. Evita sticky h-screen + overflow-hidden,
+          que recortaba el copy en viewports bajos. */}
+      <MobileEditorialIntro />
+
+      {isDesktop ? <DesktopStickyIntro wrapperRef={wrapperRef} /> : null}
+    </section>
+  );
+}
+
+function DesktopStickyIntro({
+  wrapperRef,
+}: {
+  wrapperRef: React.RefObject<HTMLElement | null>;
+}) {
   const { scrollYProgress } = useScroll({
     target: wrapperRef,
     offset: ['start start', 'end end'],
@@ -96,33 +118,21 @@ export default function IntroPhotoSection() {
   // Frame sequence reemplaza video MP4 scroll-scrubbing (que tenía stuttering
   // por re-decode de H.264 en cada seek). FrameSequence preload + swap src
   // es instantáneo. wrapperRef se pasa para que calcule su propio progress.
-
   return (
-    <section
-      ref={wrapperRef}
-      className="relative min-h-[100svh] w-full lg:h-[450vh] lg:min-h-0"
-      aria-label="Presentación de Inti"
-    >
-      {/* Mobile + tablet · lectura natural. Evita sticky h-screen + overflow-hidden,
-          que recortaba el copy en viewports bajos. */}
-      <MobileEditorialIntro />
-
-      {/* Desktop sticky · ocupa 100vh mientras el wrapper se desplaza. */}
-      <div className="sticky top-0 hidden h-screen w-full overflow-hidden lg:block">
-        <DesktopChoreography
-          scale={scale}
-          xPercent={xPercent}
-          yPercent={yPercent}
-          rotate={rotate}
-          frameOpacity={frameOpacity}
-          framePadding={framePadding}
-          framePaddingBottom={framePaddingBottom}
-          shadowStrength={shadowStrength}
-          textProgress={textProgress}
-          wrapperRef={wrapperRef}
-        />
-      </div>
-    </section>
+    <div className="sticky top-0 hidden h-screen w-full overflow-hidden lg:block">
+      <DesktopChoreography
+        scale={scale}
+        xPercent={xPercent}
+        yPercent={yPercent}
+        rotate={rotate}
+        frameOpacity={frameOpacity}
+        framePadding={framePadding}
+        framePaddingBottom={framePaddingBottom}
+        shadowStrength={shadowStrength}
+        textProgress={textProgress}
+        wrapperRef={wrapperRef}
+      />
+    </div>
   );
 }
 
