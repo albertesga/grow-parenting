@@ -10,7 +10,7 @@ trauma-informed, sin gamification, sin urgencia. Single-developer repo.
 
 - **App** · simulada en `prototype.html` (single-file HTML/CSS/JS, ~20k líneas)
 - **Landing** · marketing site en `homepage/` (3 archivos: `index.html` +
-  `styles.css` + `main.js`) · servido en `localhost:5051`
+  `styles.css` + `main.js`) · servido en `localhost:5050`
 - **About-us** · narrativa personal del founder (Inti story) en
   `apps/about-us/` (Next.js 16 + Framer Motion) · build estático con
   `npm run build` que sale a `homepage/about-us/` · single domain ·
@@ -19,7 +19,7 @@ trauma-informed, sin gamification, sin urgencia. Single-developer repo.
   of truth para tokens, primitives, copy canon
 - **Stack** · vanilla HTML/CSS/JS (homepage + prototype) · Next.js 16
   static export (about-us) · sin backend, sin auth · server local con
-  `python3 -m http.server 5051 --directory homepage`
+  `python3 -m http.server 5050`
 
 ## Read-order
 
@@ -31,7 +31,7 @@ solo lo necesario (no leas todo cada vez).
 3. **`.agent/rules/{topic}.md`** · 1 min cada · reglas duras por dominio
 4. **`CLAUDE.md`** · 1 min · alias condensado para Claude Code (rápido)
 5. **`docs/HANDBOOK.md`** · 5 min · onboarding humano + glosario
-6. **`docs/decisions/*.md`** · 16 ADRs vigentes · canon histórico evaluable
+6. **`docs/decisions/*.md`** · 18 ADRs vigentes · canon histórico evaluable
 7. **Código real** · `prototype.html`, `homepage/`, `design/` · cuando ya
    sabes qué tocar
 
@@ -90,7 +90,7 @@ Los 5 que rompen cualquier merge:
 
 | Skill | Qué hace | Cuándo |
 |---|---|---|
-| `/verify-proto` | HTTP 200 + JS check sobre prototype y DS | Pre-commit, siempre |
+| `/verify-proto` | HTTP 200 sobre landing/prototype/DS + JS check | Pre-commit, siempre |
 | `/sync-ds` | Audita drift DS ↔ prototype | Tras cambio CSS primitive |
 | `/audit-trauma-copy` | Grep canon ADR-0011 en prototype | Tras cambio copy |
 | `/new-book` | Scaffold canónico libro nuevo (hero+nav+state+filter) | Añadir libro |

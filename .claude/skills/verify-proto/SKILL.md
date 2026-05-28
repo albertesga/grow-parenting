@@ -1,10 +1,11 @@
 ---
-description: Pre-commit verification del prototipo Grow. Verifica que prototype.html y design/Grow Design System v0.2.html cargan (HTTP 200) y que el JS extraído del prototype es sintácticamente válido (node --check). Úsalo SIEMPRE antes de commit. Trigger keywords: verificar, verify, check, pre-commit, validar, validate, HTTP, sintaxis, JS, syntax, smoke test, comprobar.
+description: Pre-commit verification de Grow. Verifica que landing, prototype.html y design/Grow Design System v0.2.html cargan (HTTP 200), y que el JS extraído del prototype es sintácticamente válido (node --check). Úsalo SIEMPRE antes de commit. Trigger keywords: verificar, verify, check, pre-commit, validar, validate, HTTP, sintaxis, JS, syntax, smoke test, comprobar.
 allowed-tools: Bash(curl *) Bash(node *) Bash(python3 *)
 ---
 
 ## Verificación HTTP
 
+!`curl -s -o /dev/null -w "LAND  %{http_code}\n" http://localhost:5050/homepage/index.html`
 !`curl -s -o /dev/null -w "PROTO %{http_code}\n" http://localhost:5050/prototype.html`
 !`curl -s -o /dev/null -w "DS    %{http_code}\n" "http://localhost:5050/design/Grow%20Design%20System%20v0.2.html"`
 

@@ -27,7 +27,8 @@ sub-app `apps/about-us/` es Next.js 16 CON build (genera static export en
 ### Tooling
 
 - **Server local** · `python3 -m http.server 5050` desde raíz repo
-- **No package.json, no build, no bundler**
+- **Dual stack** · vanilla directo para `homepage/` + `prototype.html` · build Next.js 16 en `apps/about-us/`
+- **Build scope** · `apps/about-us/` sí usa `package.json`, `npm run dev` y `npm run build` (exporta a `homepage/about-us/`)
 - **JS verification** · `node --check` sobre script extraído del prototype
 - **Git** · branch `main`, single-developer · push tras cada commit atómico
 

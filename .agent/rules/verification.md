@@ -102,6 +102,7 @@ El skill `.claude/skills/verify-proto/SKILL.md` automatiza HTTP + JS check.
 
 Output esperado:
 ```
+LAND  200
 PROTO 200
 DS    200
 JS_OK
@@ -114,6 +115,12 @@ el prototype divergieron:
 
 ```
 /sync-ds
+```
+
+Chequeo automatizado adicional (bloqueante si falla):
+
+```bash
+node "/Users/titoespanolgamon/Documents/Vibe Coding/Grow/scripts/check-ds-drift.mjs"
 ```
 
 ### 8 · Si auditor reporta 🔴 bloqueante

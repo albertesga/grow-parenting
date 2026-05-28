@@ -11,7 +11,7 @@ críticos.
 3. `.agent/rules/{topic}.md` · 9 reglas duras por dominio (1 min cada)
 4. `CLAUDE.md` (este archivo) · alias condensado · lectura rápida
 5. `docs/HANDBOOK.md` · onboarding humano + glosario
-6. `docs/decisions/*.md` · 16 ADRs vigentes
+6. `docs/decisions/*.md` · 18 ADRs vigentes
 7. Código real · `prototype.html`, `homepage/`, `design/`
 
 ## Loop
@@ -57,7 +57,7 @@ María (embarazo) usa `avatar-coral`. Resto usa `avatar-mint`.
 
 ## Workflow
 
-- Verificar antes de commit: `/verify-proto` (HTTP 200 + JS OK)
+- Verificar antes de commit: `/verify-proto` (landing/prototype/DS 200 + JS OK)
 - Commits atómicos · `feat(libro): ...` / `fix(libro): ...` / `chore(...): ...` + Co-Author Claude
 - Push después de cada commit · single-developer repo
 - Sin docs nuevas (`*.md`) salvo que el user lo pida
@@ -68,6 +68,6 @@ María (embarazo) usa `avatar-coral`. Resto usa `avatar-mint`.
 
 - **Skills** · `.claude/skills/` · `/verify-proto` · `/new-book` · `/sync-ds` · `/audit-trauma-copy`
 - **Subagents** · `.claude/agents/` · `ds-auditor` (visual/DS) · `copy-auditor` (tono/citas)
-- **ADRs** · `docs/decisions/` · 16 decisiones canon · ver `README.md` index
+- **ADRs** · `docs/decisions/` · 18 decisiones canon · ver `README.md` index
   (6 primitives DS · 6 arquitectura módulos · 2 tono+routing · 1 distribución · 1 centralización JS)
 - **Patterns** · `.claude/PATTERNS.md` · patrones implícitos del código (data-goto · tonal · log filter · localStorage · sheet stubs · sub-libros · cross-ref)
