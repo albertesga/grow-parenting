@@ -3,6 +3,7 @@
 import IntroPhotoSection from './IntroPhotoSection';
 import EmotionalStatementSection from './EmotionalStatementSection';
 import NarrativeRevealSection from './NarrativeRevealSection';
+import NarrativeClosingSection from './NarrativeClosingSection';
 import ScrollProgressLine from './ScrollProgressLine';
 import SiteTopbar from './SiteTopbar';
 
@@ -28,6 +29,10 @@ export default function LandingPage() {
 
       {/* Sección 4 · text reveal · "Nadie me preparó para ser padre" */}
       <NarrativeRevealSection />
+
+      {/* Sección 5 · cierre narrativo · "No hay reto más grande que criar ·
+          la mayor oportunidad" · fill-on-scroll + underline mint */}
+      <NarrativeClosingSection />
     </main>
   );
 }
