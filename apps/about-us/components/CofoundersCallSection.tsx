@@ -267,15 +267,23 @@ export default function CofoundersCallSection() {
           antes de validar.
         </motion.p>
 
-        {/* 8 · Compromiso real */}
-        <motion.p
+        {/* 8 · Compromiso real · callout destacado (no fine-print) */}
+        <motion.div
           {...enter(0.04)}
-          className="mt-5 max-w-[60ch] font-text text-[14px] font-light leading-[1.55] text-ink-faint"
+          className="mt-8 max-w-[62ch] rounded-[22px] border border-line bg-paper p-6 md:p-7"
         >
-          Durante la fase de validación: mínimo 10h/semana, 1 reunión semanal de
-          1h, flexibilidad total, mayoritariamente async. En Barcelona o con
-          intención real de estar aquí en una segunda fase.
-        </motion.p>
+          <p className="font-text text-[12px] font-semibold uppercase tracking-[0.16em] text-mint-ink">
+            El compromiso
+          </p>
+          <p className="mt-3 font-text text-[clamp(15px,1.15vw,18px)] font-light leading-[1.55] text-ink">
+            Durante la fase de validación:{' '}
+            <strong className="font-semibold">mínimo 10h/semana</strong>,{' '}
+            <strong className="font-semibold">1 reunión semanal de 1h</strong>,
+            flexibilidad total, mayoritariamente async.{' '}
+            <strong className="font-semibold">En Barcelona</strong> o con
+            intención real de estar aquí en una segunda fase.
+          </p>
+        </motion.div>
 
         {/* 9 · CTA final */}
         <div className="mt-20 border-t border-line pt-16">
