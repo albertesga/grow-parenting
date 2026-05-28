@@ -3236,6 +3236,16 @@
       font-size: 13px;
       color: var(--blush-ink);
     }
+    .shared-signup {
+      border-top: 1px solid var(--line);
+      background: var(--paper);
+    }
+    .shared-signup .wrap {
+      padding-top: 56px;
+      padding-bottom: 72px;
+    }
+    .shared-signup .trial { margin-top: 0; }
+    .shared-signup .free-dignity { margin-bottom: 28px; }
 
     /* ════════════════════════════════════════════════════════════════════
        § 13 · FOOTER
@@ -3642,6 +3652,10 @@
         justify-self: start;
         max-width: 176px;
       }
+      .shared-signup .wrap {
+        padding-top: 48px;
+        padding-bottom: 58px;
+      }
       .site-foot .inner { grid-template-columns: 1fr 1fr; gap: 32px; }
       .sticky-cta.armed { display: block; }
       .trust-row { grid-template-columns: 1fr 1fr; }
@@ -3754,6 +3768,10 @@
       .shared-account-ctas .btn-ghost {
         flex: 1 1 100%;
         min-height: 46px;
+      }
+      .shared-signup .wrap {
+        padding-top: 40px;
+        padding-bottom: 48px;
       }
       /* ── Comité grid tweaks · cards más compactas ────────────────── */
       .comite-grid { gap: 14px; }
