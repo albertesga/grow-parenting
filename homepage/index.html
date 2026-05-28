@@ -4,10 +4,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>Grow · Tú cuidas a tu hij@. Grow te cuida a ti.</title>
-  <meta name="description" content="App de crianza para familias hispanohablantes. Del embarazo o la llegada, a sus 3 años. Sin manual, sin juicios, sin prisa.">
+  <meta name="description" content="App de crianza para familias hispanohablantes. Durante los primeros 1.000 días de tu hij@. Sin manual, sin juicios, sin prisa.">
   <meta name="theme-color" content="#FAF7F0">
 
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles.css?v=20260528">
 </head>
 <body>
   <!-- Floating halo · burbuja coral que viaja por el scroll desde detrás
@@ -236,19 +236,19 @@
        ════════════════════════════════════════════════════════════════════ -->
   <header class="topbar" id="topbar">
     <div class="brand">
-      <a href="#"><img src="assets/grow-logo.png" alt="Grow"></a>
+      <a href="/"><img src="/assets/grow-logo.png" alt="Grow"></a>
     </div>
     <nav class="book-nav" aria-label="Libros principales">
-      <a class="book-nav-link t-coral" href="#libros" data-future-href="/embarazo/">Embarazo</a>
-      <a class="book-nav-link t-blush" href="#libros" data-future-href="/lactancia/">Lactancia</a>
-      <a class="book-nav-link t-mint" href="#libros" data-future-href="/sueno/">Sueño</a>
-      <a class="book-nav-link t-gold" href="#libros" data-future-href="/alimentacion/">Alimentación</a>
-      <a class="book-nav-link t-violet" href="#libros" data-future-href="/desarrollo/">Desarrollo</a>
-      <a class="book-nav-link nav-about-mobile" href="/about-us">Quiénes somos</a>
+      <a class="book-nav-link t-coral" href="/#libros" data-future-href="/embarazo/">Embarazo</a>
+      <a class="book-nav-link t-blush" href="/#libros" data-future-href="/lactancia/">Lactancia</a>
+      <a class="book-nav-link t-mint" href="/#libros" data-future-href="/sueno/">Sueño</a>
+      <a class="book-nav-link t-gold" href="/#libros" data-future-href="/alimentacion/">Alimentación</a>
+      <a class="book-nav-link t-violet" href="/#libros" data-future-href="/desarrollo/">Desarrollo</a>
+      <a class="book-nav-link nav-about-mobile" href="/about-us/">Quiénes somos</a>
     </nav>
     <div class="right">
-      <a class="about-link" href="/about-us">Quiénes somos</a>
-      <a class="waitlist-link" href="waitlist.html">Únete a la waitlist</a>
+      <a class="about-link" href="/about-us/">Quiénes somos</a>
+      <a class="waitlist-link" href="/waitlist.html">Únete a la waitlist</a>
     </div>
   </header>
 
@@ -266,7 +266,7 @@
              ancla "app" para que el rango de edad del micro no se lea como
              material de lectura. -->
         <p class="hero-functional">Te acompañamos desde el embarazo — o el día que llega. Semana a semana: <strong>información clínica clara</strong>, <strong>seguimiento sereno</strong> y un <strong>chat que ya conoce a tu hij@</strong>.</p>
-        <p class="micro">Del embarazo a sus 3 años</p>
+        <p class="micro">Durante los primeros 1.000 días de tu hij@</p>
         <div class="hero-ctas">
           <a class="btn-primary btn-arrow" href="waitlist.html">Entra en la lista</a>
           <a class="btn-ghost" href="#parenting-team">Conoce el equipo</a>
@@ -282,12 +282,12 @@
         <video class="hero-avatar-vid hero-avatar-vid--scroll"
                id="hero-vid-scroll"
                src="assets/hero-scroll.mp4"
-               muted playsinline preload="auto"
+               muted playsinline preload="metadata"
                aria-hidden="true"></video>
         <video class="hero-avatar-vid hero-avatar-vid--tap"
                id="hero-vid-tap"
                src="assets/hero-tap.mp4"
-               muted playsinline preload="auto"
+               muted playsinline preload="metadata"
                aria-hidden="true"></video>
         <button class="hero-avatar-trigger"
                 id="hero-avatar-trigger"
@@ -316,7 +316,7 @@
         </div>
         <div class="trust-chip" role="listitem">
           <svg class="trust-icn" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-lock"/></svg>
-          <strong>Privacidad desde el diseño</strong>
+          <strong>Tus datos siempre privados y seguros</strong>
         </div>
       </div>
     </div>
@@ -351,7 +351,7 @@
           <span class="team-icon"><svg viewBox="0 0 24 24"><use href="#i-user"/></svg></span>
           <div>
             <h3>Sesiones uno a uno</h3>
-            <p>Calls 1:1 para ordenar una duda concreta con una persona.</p>
+            <p>Llamadas 1:1 con un profesional cuando necesitas hablar con alguien que te entienda.</p>
           </div>
         </article>
 
@@ -366,8 +366,8 @@
         <article class="team-card team-card-guide">
           <span class="team-icon"><svg viewBox="0 0 24 24"><use href="#b-bookmark"/></svg></span>
           <div>
-            <h3>Guías validadas</h3>
-            <p>Libros digitales personalizados y guías mes a mes, desde las pequeñas preguntas a las grandes preocupaciones.</p>
+            <h3>Guías clínicas</h3>
+            <p>Contenido revisado por pediatras y matronas, adaptado a la edad de tu hij@ semana a semana.</p>
           </div>
         </article>
       </div>
@@ -395,23 +395,32 @@
                width/height intrínsecos se ajustan en runtime al videoWidth/Height. -->
           <canvas id="avatar-canvas" width="320" height="320"></canvas>
         </div>
-        <div class="avatar-progress" id="avatar-progress" aria-label="Etapas del recorrido">
+        <div class="avatar-progress journey-map" id="avatar-progress" aria-label="Etapas del recorrido">
           <div class="track" aria-hidden="true"><div class="fill" id="avatar-fill"></div></div>
           <div class="stops">
             <div class="stop is-active" data-phase="coral" id="stop-coral">
-              <span class="node"></span>
-              <span class="lbl">Embarazo</span>
-              <span class="range">Sem 4 — 40</span>
+              <span class="node" aria-hidden="true"></span>
+              <span class="copy">
+                <span class="kicker">Etapa 01</span>
+                <span class="lbl">Embarazo</span>
+                <span class="range">Sem 4 — 40</span>
+              </span>
             </div>
             <div class="stop" data-phase="blush" id="stop-blush">
-              <span class="node"></span>
-              <span class="lbl">Recién nacido</span>
-              <span class="range">0 — 6 m</span>
+              <span class="node" aria-hidden="true"></span>
+              <span class="copy">
+                <span class="kicker">Etapa 02</span>
+                <span class="lbl">Recién nacido</span>
+                <span class="range">0 — 6 m</span>
+              </span>
             </div>
             <div class="stop" data-phase="mint" id="stop-mint">
-              <span class="node"></span>
-              <span class="lbl">Bebé</span>
-              <span class="range">6 m — 3 a</span>
+              <span class="node" aria-hidden="true"></span>
+              <span class="copy">
+                <span class="kicker">Etapa 03</span>
+                <span class="lbl">Bebé</span>
+                <span class="range">6 m — 3 a</span>
+              </span>
             </div>
           </div>
         </div>
@@ -421,8 +430,8 @@
         <!-- Bloque 1 · Embarazo -->
         <article class="block t-coral" data-phase="coral">
           <div class="eyebrow">Bloque 1 · Embarazo</div>
-          <h3 class="quote-large">"Mi cuñada me dice una cosa, mi madre otra, internet quince. Y cada semana cambia el motivo."</h3>
-          <div class="quote-rotator" aria-live="polite">
+          <h3 class="quote-large">"Llevo tres horas sin notar pataditas. ¿Es para preocuparse o estoy exagerando?"</h3>
+          <div class="quote-rotator" aria-live="off">
             <p class="q-item is-active">"Llevo dos horas sin notar pataditas. ¿Es para preocuparme?"</p>
             <p class="q-item">"Mañana tengo la ecografía y no he dormido nada."</p>
             <p class="q-item">"Cada cita es una pregunta nueva que olvido cuando llego."</p>
@@ -445,7 +454,7 @@
                   <h4 class="sb-ttl">Preparación<br><em>al parto</em></h4>
                   <div class="sb-foot"><span class="count">Libro · 11</span><span>EAPM</span></div>
                 </a>
-                <a class="r-book b-recuerdos" href="#libros" aria-label="Libro 10 · Recuerdos">
+                <a class="r-book b-recuerdos" href="#libros" data-book="recuerdos" aria-label="Libro 10 · Recuerdos">
                   <div class="sb-icon"><svg viewBox="0 0 24 24"><use href="#b-bookmark"/></svg></div>
                   <h4 class="sb-ttl">Libro de<br><em>recuerdos</em></h4>
                   <div class="sb-foot"><span class="count">Libro · 10</span><span>DIARIO</span></div>
@@ -460,7 +469,7 @@
         <article class="block t-blush" data-phase="blush">
           <div class="eyebrow">Bloque 2 · Recién nacido</div>
           <h3 class="quote-large">"Lleva tres horas llorando. No sé si es hambre, sueño, cólico o algo más."</h3>
-          <div class="quote-rotator" aria-live="polite">
+          <div class="quote-rotator" aria-live="off">
             <p class="q-item is-active">"Cada toma duele. Cada comentario también."</p>
             <p class="q-item">"Le doy biberón. Y cada vez que lo digo, alguien opina."</p>
             <p class="q-item">"'Llora por capricho', dicen. Yo solo veo a mi hij@."</p>
@@ -473,32 +482,32 @@
             <div class="label">Respuesta Grow</div>
             <div class="r-shelf">
               <div class="r-shelf-rail">
-                <a class="r-book b-lactancia" href="#libros" aria-label="Libro 03 · Lactancia">
+                <a class="r-book b-lactancia" href="#libros" data-book="lactancia" aria-label="Libro 03 · Lactancia">
                   <div class="sb-icon"><svg viewBox="0 0 24 24"><use href="#b-breast"/></svg></div>
                   <h4 class="sb-ttl">Libro de<br><em>lactancia</em></h4>
                   <div class="sb-foot"><span class="count">Libro · 03</span><span>LATCH</span></div>
                 </a>
-                <a class="r-book b-colicos" href="#libros" aria-label="Libro 07 · Cólicos">
+                <a class="r-book b-colicos" href="#libros" data-book="colicos" aria-label="Libro 07 · Cólicos">
                   <div class="sb-icon"><svg viewBox="0 0 24 24"><use href="#b-tear"/></svg></div>
                   <h4 class="sb-ttl">Libro de<br><em>cólicos</em></h4>
                   <div class="sb-foot"><span class="count">Libro · 07</span><span>5 S's</span></div>
                 </a>
-                <a class="r-book b-sueno" href="#libros" aria-label="Libro 05 · Sueño">
+                <a class="r-book b-sueno" href="#libros" data-book="sueno" aria-label="Libro 05 · Sueño">
                   <div class="sb-icon"><svg viewBox="0 0 24 24"><use href="#b-moon"/></svg></div>
                   <h4 class="sb-ttl">Libro del<br><em>sueño</em></h4>
                   <div class="sb-foot"><span class="count">Libro · 05</span><span>ventanas</span></div>
                 </a>
-                <a class="r-book b-alimentacion" href="#libros" aria-label="Libro 02 · Alimentación">
+                <a class="r-book b-alimentacion" href="#libros" data-book="alimentacion" aria-label="Libro 02 · Alimentación">
                   <div class="sb-icon"><svg viewBox="0 0 24 24"><use href="#b-bottle"/></svg></div>
                   <h4 class="sb-ttl">Libro de<br><em>alimentación</em></h4>
                   <div class="sb-foot"><span class="count">Libro · 02</span><span>BLW</span></div>
                 </a>
-                <a class="r-book b-vacunas" href="#libros" aria-label="Libro 04 · Vacunas">
+                <a class="r-book b-vacunas" href="#libros" data-book="vacunas" aria-label="Libro 04 · Vacunas">
                   <div class="sb-icon"><svg viewBox="0 0 24 24"><use href="#b-syringe"/></svg></div>
                   <h4 class="sb-ttl">Libro de<br><em>vacunas</em></h4>
                   <div class="sb-foot"><span class="count">Libro · 04</span><span>AEPED</span></div>
                 </a>
-                <a class="r-book b-recuerdos" href="#libros" aria-label="Libro 10 · Recuerdos">
+                <a class="r-book b-recuerdos" href="#libros" data-book="recuerdos" aria-label="Libro 10 · Recuerdos">
                   <div class="sb-icon"><svg viewBox="0 0 24 24"><use href="#b-bookmark"/></svg></div>
                   <h4 class="sb-ttl">Libro de<br><em>recuerdos</em></h4>
                   <div class="sb-foot"><span class="count">Libro · 10</span><span>DIARIO</span></div>
@@ -516,7 +525,7 @@
         <article class="block t-mint" data-phase="mint">
           <div class="eyebrow">Bloque 3 · Bebé</div>
           <h3 class="quote-large">"Mi sobrino decía veinte palabras a su edad. El mío dice cuatro. ¿Debería preocuparme?"</h3>
-          <div class="quote-rotator" aria-live="polite">
+          <div class="quote-rotator" aria-live="off">
             <p class="q-item is-active">"Hace tres meses que no dice una palabra nueva."</p>
             <p class="q-item">"Su prima ya saluda con la mano. El mío no."</p>
             <p class="q-item">"En la guardería dicen que se aisla un poco."</p>
@@ -529,32 +538,32 @@
             <div class="label">Respuesta Grow</div>
             <div class="r-shelf">
               <div class="r-shelf-rail">
-                <a class="r-book b-hitos" href="#libros" aria-label="Libro 08 · Hitos">
+                <a class="r-book b-hitos" href="#libros" data-book="hitos" aria-label="Libro 08 · Hitos">
                   <div class="sb-icon"><svg viewBox="0 0 24 24"><use href="#b-sprout"/></svg></div>
                   <h4 class="sb-ttl">Libro de<br><em>hitos</em></h4>
                   <div class="sb-foot"><span class="count">Libro · 08</span><span>HAIZEA</span></div>
                 </a>
-                <a class="r-book b-desarrollo" href="#libros" aria-label="Libro 09 · Desarrollo">
+                <a class="r-book b-desarrollo" href="#libros" data-book="desarrollo" aria-label="Libro 09 · Desarrollo">
                   <div class="sb-icon"><svg viewBox="0 0 24 24"><use href="#b-heart"/></svg></div>
                   <h4 class="sb-ttl">Libro de<br><em>desarrollo</em></h4>
                   <div class="sb-foot"><span class="count">Libro · 09</span><span>0-3a</span></div>
                 </a>
-                <a class="r-book b-alimentacion" href="#libros" aria-label="Libro 02 · Alimentación">
+                <a class="r-book b-alimentacion" href="#libros" data-book="alimentacion" aria-label="Libro 02 · Alimentación">
                   <div class="sb-icon"><svg viewBox="0 0 24 24"><use href="#b-bottle"/></svg></div>
                   <h4 class="sb-ttl">Libro de<br><em>alimentación</em></h4>
                   <div class="sb-foot"><span class="count">Libro · 02</span><span>BLW</span></div>
                 </a>
-                <a class="r-book b-salud" href="#libros" aria-label="Libro 06 · Salud">
+                <a class="r-book b-salud" href="#libros" data-book="salud" aria-label="Libro 06 · Salud">
                   <div class="sb-icon"><svg viewBox="0 0 24 24"><use href="#b-thermo"/></svg></div>
                   <h4 class="sb-ttl">Libro de<br><em>salud</em></h4>
                   <div class="sb-foot"><span class="count">Libro · 06</span><span>AEPap</span></div>
                 </a>
-                <a class="r-book b-vacunas" href="#libros" aria-label="Libro 04 · Vacunas">
+                <a class="r-book b-vacunas" href="#libros" data-book="vacunas" aria-label="Libro 04 · Vacunas">
                   <div class="sb-icon"><svg viewBox="0 0 24 24"><use href="#b-syringe"/></svg></div>
                   <h4 class="sb-ttl">Libro de<br><em>vacunas</em></h4>
                   <div class="sb-foot"><span class="count">Libro · 04</span><span>AEPED</span></div>
                 </a>
-                <a class="r-book b-recuerdos" href="#libros" aria-label="Libro 10 · Recuerdos">
+                <a class="r-book b-recuerdos" href="#libros" data-book="recuerdos" aria-label="Libro 10 · Recuerdos">
                   <div class="sb-icon"><svg viewBox="0 0 24 24"><use href="#b-bookmark"/></svg></div>
                   <h4 class="sb-ttl">Libro de<br><em>recuerdos</em></h4>
                   <div class="sb-foot"><span class="count">Libro · 10</span><span>DIARIO</span></div>
@@ -578,7 +587,7 @@
         <span class="p-coral">Gestación</span>
         <span class="p-mint">Adopción</span>
         <span class="p-blush">Acogida</span>
-        <span class="p-violet">Pérdida antes</span>
+        <span class="p-violet">Aborto</span>
         <span class="p-gold">UCIN</span>
       </div>
     </div>
@@ -595,8 +604,8 @@
           <span class="flow-title-line">De lo que vives hoy</span>
           <span class="flow-title-line">a la guía que toca mañana.</span>
         </h2>
-        <h3 class="section-lead">Un solo flujo: registras, Grow ordena y los libros se vuelven personales.</h3>
-        <p>Diseñado como un stepper tranquilo: cada paso se apoya en el anterior para pasar de datos sueltos a orientación concreta.</p>
+        <h3 class="section-lead">Trae toda la información de tu hij@, Grow la ordena y los libros crean una visión global y compartida.</h3>
+        <p>Cada paso se apoya en el anterior para pasar de datos sueltos a orientación concreta.</p>
       </div>
 
       <div class="flow-rail" role="list" aria-label="Cómo Grow convierte registros en orientación">
@@ -623,7 +632,7 @@
           <div class="flow-mini flow-agenda" aria-hidden="true">
             <span><strong>Hoy</strong> rutina de sueño 19:30</span>
             <span><strong>7 días</strong> vacuna pendiente</span>
-            <span><strong>Esta semana</strong> probar huevo 2/3</span>
+            <span><strong>Esta semana</strong> introducir huevo a la dieta</span>
           </div>
         </article>
 
@@ -635,8 +644,8 @@
           <p><strong>Libros vivos</strong> que aterrizan en recomendaciones concretas: una rutina de sueño, cómo cortar el aguacate o qué esperar tras una vacuna.</p>
           <div class="flow-mini flow-books" aria-hidden="true">
             <span>Sueño · ventana de Lola</span>
-            <span>Alimentación · aguacate 7m</span>
-            <span>Vacunas · 72h esperables</span>
+            <span>Alimentación · cómo cortar el aguacate · 7m</span>
+            <span>Vacunas · fiebre después de vacuna · 72h</span>
           </div>
         </article>
       </div>
@@ -645,140 +654,132 @@
         <span>Resumen listo para compartir con pediatra, familia o cuidadores.</span>
       </div>
 
-      <!-- Libros rail · 9 mini cards horizontal scroll · consolidado en
-           la sección flow (antes era sección propia con eyebrow + h2 +
-           p · simplificado por user para reducir altura del scroll y
-           agrupar visualmente con las 3 flow cards). id="libros" se
-           mantiene para que sigan funcionando los 10+ anchors internos
-           desde la nav (#libros) y las r-book de la sección parallax. -->
-      <div class="libros-rail" id="libros" role="list">
-        <article class="libro-card libro-mini t-coral" role="listitem">
-          <span class="num">01</span>
-          <span class="ico"><svg viewBox="0 0 24 24"><use href="#b-belly"/></svg></span>
-          <h4>Embarazo</h4>
-          <p class="age">Sem 4 — 40</p>
-        </article>
-        <article class="libro-card libro-mini t-blush" role="listitem">
-          <span class="num">02</span>
-          <span class="ico"><svg viewBox="0 0 24 24"><use href="#b-breast"/></svg></span>
-          <h4>Lactancia</h4>
-          <p class="age">0 — 18 m</p>
-        </article>
-        <article class="libro-card libro-mini t-coral" role="listitem">
-          <span class="num">03</span>
-          <span class="ico"><svg viewBox="0 0 24 24"><use href="#b-tear"/></svg></span>
-          <h4>Cólicos</h4>
-          <p class="age">0 — 6 m</p>
-        </article>
-        <article class="libro-card libro-mini t-mint-night" role="listitem">
-          <span class="num">04</span>
-          <span class="ico"><svg viewBox="0 0 24 24"><use href="#b-moon"/></svg></span>
-          <h4>Sueño</h4>
-          <p class="age">0 — 3 años</p>
-        </article>
-        <article class="libro-card libro-mini t-gold" role="listitem">
-          <span class="num">05</span>
-          <span class="ico"><svg viewBox="0 0 24 24"><use href="#b-syringe"/></svg></span>
-          <h4>Vacunas</h4>
-          <p class="age">0 — 3 años</p>
-        </article>
-        <article class="libro-card libro-mini t-coral" role="listitem">
-          <span class="num">06</span>
-          <span class="ico"><svg viewBox="0 0 24 24"><use href="#b-bottle"/></svg></span>
-          <h4>Alimentación</h4>
-          <p class="age">0 — 3 años</p>
-        </article>
-        <article class="libro-card libro-mini t-salud" role="listitem">
-          <span class="num">07</span>
-          <span class="ico"><svg viewBox="0 0 24 24"><use href="#b-thermo"/></svg></span>
-          <h4>Salud</h4>
-          <p class="age">0 — 3 años</p>
-        </article>
-        <article class="libro-card libro-mini t-mint" role="listitem">
-          <span class="num">08</span>
-          <span class="ico"><svg viewBox="0 0 24 24"><use href="#b-sprout"/></svg></span>
-          <h4>Hitos</h4>
-          <p class="age">0 — 3 años</p>
-        </article>
-        <article class="libro-card libro-mini t-lav" role="listitem">
-          <span class="num">09</span>
-          <span class="ico"><svg viewBox="0 0 24 24"><use href="#b-heart"/></svg></span>
-          <h4>Desarrollo</h4>
-          <p class="age">0 — 3 años</p>
-        </article>
-      </div>
+      <!-- Biblioteca completa · misma metáfora visual que Respuesta Grow.
+           id="libros" se mantiene para nav/footer y anchors internos. -->
+      <section class="ordered-books" id="libros" aria-labelledby="ordered-books-title">
+        <div class="ordered-books-head">
+          <h3 id="ordered-books-title">Todos los libros ordenados.</h3>
+        </div>
+        <div class="r-shelf ordered-books-shelf">
+          <div class="r-shelf-rail" role="list" aria-label="Todos los libros de Grow">
+            <a class="r-book b-embarazo" href="#libros" data-book="embarazo" role="listitem" aria-label="Libro de embarazo">
+              <div class="sb-icon"><svg viewBox="0 0 24 24"><use href="#b-belly"/></svg></div>
+              <h4 class="sb-ttl">Libro de<br><em>embarazo</em></h4>
+            </a>
+            <a class="r-book b-lactancia" href="#libros" data-book="lactancia" role="listitem" aria-label="Libro de lactancia">
+              <div class="sb-icon"><svg viewBox="0 0 24 24"><use href="#b-breast"/></svg></div>
+              <h4 class="sb-ttl">Libro de<br><em>lactancia</em></h4>
+            </a>
+            <a class="r-book b-colicos" href="#libros" data-book="colicos" role="listitem" aria-label="Libro de cólicos">
+              <div class="sb-icon"><svg viewBox="0 0 24 24"><use href="#b-tear"/></svg></div>
+              <h4 class="sb-ttl">Libro de<br><em>cólicos</em></h4>
+            </a>
+            <a class="r-book b-sueno" href="#libros" data-book="sueno" role="listitem" aria-label="Libro del sueño">
+              <div class="sb-icon"><svg viewBox="0 0 24 24"><use href="#b-moon"/></svg></div>
+              <h4 class="sb-ttl">Libro del<br><em>sueño</em></h4>
+            </a>
+            <a class="r-book b-vacunas" href="#libros" data-book="vacunas" role="listitem" aria-label="Libro de vacunas">
+              <div class="sb-icon"><svg viewBox="0 0 24 24"><use href="#b-syringe"/></svg></div>
+              <h4 class="sb-ttl">Libro de<br><em>vacunas</em></h4>
+            </a>
+            <a class="r-book b-alimentacion" href="#libros" data-book="alimentacion" role="listitem" aria-label="Libro de alimentación">
+              <div class="sb-icon"><svg viewBox="0 0 24 24"><use href="#b-bottle"/></svg></div>
+              <h4 class="sb-ttl">Libro de<br><em>alimentación</em></h4>
+            </a>
+            <a class="r-book b-salud" href="#libros" data-book="salud" role="listitem" aria-label="Libro de salud">
+              <div class="sb-icon"><svg viewBox="0 0 24 24"><use href="#b-thermo"/></svg></div>
+              <h4 class="sb-ttl">Libro de<br><em>salud</em></h4>
+            </a>
+            <a class="r-book b-hitos" href="#libros" data-book="hitos" role="listitem" aria-label="Libro de hitos">
+              <div class="sb-icon"><svg viewBox="0 0 24 24"><use href="#b-sprout"/></svg></div>
+              <h4 class="sb-ttl">Libro de<br><em>hitos</em></h4>
+            </a>
+            <a class="r-book b-desarrollo" href="#libros" data-book="desarrollo" role="listitem" aria-label="Libro de desarrollo">
+              <div class="sb-icon"><svg viewBox="0 0 24 24"><use href="#b-heart"/></svg></div>
+              <h4 class="sb-ttl">Libro de<br><em>desarrollo</em></h4>
+            </a>
+          </div>
+          <div class="r-shelf-plank"><span class="r-plank-dot l"></span><span class="r-plank-dot r"></span></div>
+        </div>
+      </section>
     </div>
   </section>
 
   <!-- ════════════════════════════════════════════════════════════════════
        § 5 · MODO 3 AM
        ════════════════════════════════════════════════════════════════════ -->
-  <section class="full threeam" id="threeam" data-section="4">
-    <div class="wrap">
-      <div>
-        <div class="eyebrow">Modo 3 AM · cuando llega la noche difícil</div>
-        <h2>A las 3 de la mañana<br>también estamos.</h2>
-        <p class="lede">Cuando llega una noche difícil, Grow baja el ritmo: fondo oscuro, texto grande, una pregunta cada vez. Te ayudamos a entender qué dicen las guías sobre lo que estás viendo — tú decides qué hacer.</p>
-        <div class="chips">
-          <span class="chip chip--with-sub is-live">
-            <span class="chip-title">No para de llorar</span>
-            <span class="chip-sub">Cólicos, llanto inconsolable, llevas horas</span>
-          </span>
-          <span class="chip chip--with-sub">
-            <span class="chip-title">Le pasa algo</span>
-            <span class="chip-sub">Fiebre, respira raro, ha vomitado, rash</span>
-          </span>
-          <span class="chip chip--with-sub">
-            <span class="chip-title">No puedo más</span>
-            <span class="chip-sub">Cuando tú necesitas el relevo</span>
-          </span>
-        </div>
-        <p class="audit">Revisado por Servicio de Urgencias Pediátricas · marco anti-shaken-baby NSBSP · información basada en NICE NG143, AEPED 2026 y AAP 2026</p>
-        <p class="threeam-promise">Disponible 22:00–06:00 · gratis · sin login · sin presión.</p>
-      </div>
-      <!-- 3 viñetas storytelling · entrada → pregunta → resultado · cuentan
-           el flow real del Modo 3 AM en 5 segundos · estáticas (no carousel).
-           Conector .mockup-flow-link entre viñetas insinúa secuencia. -->
-      <div class="mockup-flow" role="group" aria-label="Cómo funciona el Modo 3 AM en 3 pasos">
-        <!-- Viñeta 1 · entrada (idéntica al mockup original · consistency
-             con el chip 'No para de llorar' highlighted del lado izquierdo) -->
-        <div class="mockup mockup--entry">
-          <div class="mp-time">03:42 · Modo 3 AM</div>
-          <div class="mp-title">Estoy aquí.</div>
-          <div class="mp-sub">Una pregunta cada vez. Sin prisa.</div>
-          <button class="mp-chip primary" type="button" tabindex="-1" aria-hidden="true">No para de llorar →</button>
-          <button class="mp-chip" type="button" tabindex="-1" aria-hidden="true">Le pasa algo →</button>
-          <button class="mp-chip" type="button" tabindex="-1" aria-hidden="true">No puedo más →</button>
-          <div class="mp-foot">Aquí no diagnosticamos · aquí estamos.</div>
-        </div>
+  <section class="full threeam" id="threeam" data-section="4" data-threeam-step="0">
+    <div class="threeam-story-scroll">
+      <div class="threeam-story-pin">
+        <div class="wrap threeam-story">
+          <div class="threeam-copy">
+            <div class="eyebrow">Modo 3 AM · cuando llega la noche difícil</div>
+            <h2>A las 3 de la mañana<br>también estamos.</h2>
+            <p class="lede">Cuando llega una noche difícil, Grow baja el ritmo: fondo oscuro, texto grande, una pregunta cada vez. Te ayudamos a entender qué dicen las guías sobre lo que estás viendo — tú decides qué hacer.</p>
+            <div class="threeam-state" aria-live="off">
+              <p class="threeam-state-item is-active" data-threeam-copy="0"><span>01</span><strong>Estoy aquí.</strong> Elige qué está pasando, sin prisa.</p>
+              <p class="threeam-state-item" data-threeam-copy="1"><span>02</span><strong>Una pregunta cada vez.</strong> Primero lo importante. Después lo demás.</p>
+              <p class="threeam-state-item" data-threeam-copy="2"><span>03</span><strong>Casa, con vigilancia.</strong> O te decimos cuándo toca consultar.</p>
+            </div>
+            <div class="chips">
+              <span class="chip chip--with-sub is-live" data-threeam-chip="0">
+                <span class="chip-title">No para de llorar</span>
+                <span class="chip-sub">Cólicos, llanto inconsolable, llevas horas</span>
+              </span>
+              <span class="chip chip--with-sub" data-threeam-chip="1">
+                <span class="chip-title">Le pasa algo</span>
+                <span class="chip-sub">Fiebre, respira raro, ha vomitado, rash</span>
+              </span>
+              <span class="chip chip--with-sub" data-threeam-chip="2">
+                <span class="chip-title">No puedo más</span>
+                <span class="chip-sub">Cuando tú necesitas el relevo</span>
+              </span>
+            </div>
+            <p class="audit">Revisado por Servicio de Urgencias Pediátricas · marco anti-shaken-baby NSBSP · información basada en NICE NG143, AEPED 2026 y AAP 2026</p>
+            <p class="threeam-promise">Disponible 22:00–06:00 · gratis · sin login · sin presión.</p>
+          </div>
 
-        <span class="mockup-flow-link" aria-hidden="true"></span>
+          <div class="threeam-device" role="group" aria-label="Cómo funciona el Modo 3 AM en 3 pasos">
+            <div class="threeam-stepper" aria-hidden="true">
+              <span class="is-active" data-threeam-dot="0">Entrada</span>
+              <span data-threeam-dot="1">Pregunta</span>
+              <span data-threeam-dot="2">Resultado</span>
+            </div>
 
-        <!-- Viñeta 2 · pregunta (1 pregunta cada vez · cadencia trauma-informed) -->
-        <div class="mockup mockup--question">
-          <div class="mp-time">03:42 · Modo 3 AM</div>
-          <div class="mp-title">¿Le notas la respiración<br>más rápida de lo normal?</div>
-          <button class="mp-chip primary" type="button" tabindex="-1" aria-hidden="true">Sí, respira muy rápido →</button>
-          <button class="mp-chip" type="button" tabindex="-1" aria-hidden="true">No estoy segura →</button>
-          <button class="mp-chip" type="button" tabindex="-1" aria-hidden="true">No, respira normal →</button>
-          <div class="mp-foot">Aquí no diagnosticamos · aquí estamos.</div>
-        </div>
+            <div class="threeam-phone">
+              <div class="mockup threeam-panel mockup--entry is-active" data-threeam-panel="0" tabindex="0">
+                <div class="mp-time">03:42 · Modo 3 AM</div>
+                <div class="mp-title">Estoy aquí.</div>
+                <div class="mp-sub">Una pregunta cada vez. Sin prisa.</div>
+                <span class="mp-chip primary">No para de llorar →</span>
+                <span class="mp-chip">Le pasa algo →</span>
+                <span class="mp-chip">No puedo más →</span>
+                <div class="mp-foot">Aquí no diagnosticamos · aquí estamos.</div>
+              </div>
 
-        <span class="mockup-flow-link" aria-hidden="true"></span>
+              <div class="mockup threeam-panel mockup--question" data-threeam-panel="1" tabindex="-1" aria-hidden="true">
+                <div class="mp-time">03:42 · Modo 3 AM</div>
+                <div class="mp-title">¿Le notas la respiración<br>más rápida de lo normal?</div>
+                <span class="mp-chip primary">Sí, respira muy rápido →</span>
+                <span class="mp-chip">No estoy segura →</span>
+                <span class="mp-chip">No, respira normal →</span>
+                <div class="mp-foot">Aquí no diagnosticamos · aquí estamos.</div>
+              </div>
 
-        <!-- Viñeta 3 · resultado (acción clara · imperativos estructurales ·
-             cita NICE NG143 inline para sostener el claim regulatorio) -->
-        <div class="mockup mockup--result">
-          <div class="mp-time">03:43 · Modo 3 AM</div>
-          <div class="mp-title">Casa, con vigilancia.</div>
-          <div class="mp-sub">Esperamos 30 minutos. Si empeora, 061.</div>
-          <ul class="mp-actions" aria-label="Acciones recomendadas">
-            <li>Pecho descubierto</li>
-            <li>Cuenta respiraciones por minuto</li>
-            <li>Mantén la luz baja</li>
-          </ul>
-          <button class="mp-chip" type="button" tabindex="-1" aria-hidden="true">¿Algo más? →</button>
-          <div class="mp-foot">Información basada en NICE NG143 · aquí estamos.</div>
+              <div class="mockup threeam-panel mockup--result" data-threeam-panel="2" tabindex="-1" aria-hidden="true">
+                <div class="mp-time">03:43 · Modo 3 AM</div>
+                <div class="mp-title">Casa, con vigilancia.</div>
+                <div class="mp-sub">Esperamos 30 minutos. Si empeora, 061.</div>
+                <ul class="mp-actions" aria-label="Acciones recomendadas">
+                  <li>Pecho descubierto</li>
+                  <li>Cuenta respiraciones por minuto</li>
+                  <li>Mantén la luz baja</li>
+                </ul>
+                <span class="mp-chip">¿Algo más? →</span>
+                <div class="mp-foot">Información basada en NICE NG143 · aquí estamos.</div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -846,8 +847,8 @@
     <div class="wrap">
       <div class="section-head pricing-head">
         <span class="eyebrow">Precio · canon transparente</span>
-        <h2>Te acompañamos también con el bolsillo.</h2>
-        <p>Tres formas de entrar · la primera es gratis para siempre. Empieza con 14 días de Plus completo sin tarjeta — si no es para ti, te quedas en gratis sin perder nada.</p>
+        <h2>Tres formas de entrar. La primera, siempre gratis.</h2>
+        <p>Empieza con 14 días de Plus completo sin tarjeta — si no es para ti, te quedas en gratis sin perder nada.</p>
       </div>
       <div class="pricing-grid">
         <!-- Tier Gratis · primero porque el research v0.3 marcó la inclusividad
@@ -859,39 +860,40 @@
           <div class="price"><span class="amt">€0</span><span class="per">/ siempre</span></div>
           <p class="price-foot">Sin tarjeta · sin permanencia · sin caducidad</p>
           <ul class="features">
-            <li>1 libro a elegir · embarazo, hitos o sueño</li>
-            <li>Chat IA · 5 preguntas al día</li>
-            <li>Modo 3 AM · orientación en madrugadas</li>
-            <li>Calendario · vacunas y revisiones</li>
-            <li>Diario sin límite de entradas</li>
+            <li>Información semana a semana</li>
+            <li>Calendario de vacunas y salud</li>
+            <li>Tracking básico</li>
+            <li>Modo madrugada</li>
           </ul>
           <a class="cta ghost" href="waitlist.html">Crear cuenta gratis</a>
         </article>
         <article class="plan is-featured">
-          <span class="ribbon">Solo lanzamiento · 1.000 plazas</span>
+          <span class="ribbon">Solo 100 plazas</span>
           <span class="tier">Founding</span>
           <h3>Founding member</h3>
           <div class="price"><span class="amt">€1,99</span><span class="per">/ mes</span></div>
-          <p class="price-foot"><strong>Price-lock</strong> primer año · solo primeros 1.000 en ES</p>
+          <p class="price-foot">Precio especial · solo los 100 primeros miembros</p>
+          <p class="plan-includes"><strong>Todo lo incluido en Free</strong>, y además:</p>
           <ul class="features">
-            <li>Acceso completo a Grow Plus</li>
-            <li>Los 9 libros desbloqueados</li>
-            <li>Chat IA contextual ilimitado</li>
-            <li>Cuenta compartida co-cuidador</li>
+            <li>Acceso a todos los libros</li>
+            <li>Cuenta compartida</li>
+            <li>Exportación en PDF para el pediatra</li>
+            <li>Consultas 1:1 a menor precio</li>
           </ul>
           <a class="cta coral" href="waitlist.html">Reservar plaza</a>
+          <p class="plan-note">Cuando se agoten las 100 plazas, el acceso pasa al precio de Grow Plus.</p>
         </article>
         <article class="plan">
           <span class="tier">Plus · por defecto</span>
           <h3>Grow Plus</h3>
-          <div class="price"><span class="amt">€7,99</span><span class="per">/ mes</span></div>
-          <p class="price-foot">o €69,99 al año · <strong>–27%</strong></p>
+          <div class="price"><span class="amt">€9,99</span><span class="per">/ mes</span></div>
+          <p class="price-foot">o €69,99 al año · <strong>–42%</strong></p>
+          <p class="plan-includes"><strong>Todo lo incluido en Free</strong>, y además:</p>
           <ul class="features">
-            <li>Los 9 libros desbloqueados</li>
-            <li>Chat IA contextual ilimitado</li>
-            <li>Multi-perfil ilimitado</li>
-            <li>Cuenta compartida co-cuidador</li>
-            <li>Export PDF para pediatra</li>
+            <li>Acceso a todos los libros</li>
+            <li>Cuenta compartida</li>
+            <li>Exportación en PDF para el pediatra</li>
+            <li>Consultas 1:1 a menor precio</li>
           </ul>
           <a class="cta ghost" href="waitlist.html">Empezar 14 días</a>
         </article>
@@ -971,7 +973,7 @@
        (con título + sub + badges). El TOC del libro vive en el body de la
        sheet, no dentro del libro · separación header / contenido editorial.
        ════════════════════════════════════════════════════════════════════ -->
-  <div class="bs-overlay" id="bs-overlay" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Libro de embarazo">
+  <div class="bs-overlay" id="bs-overlay" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Libro de embarazo" tabindex="-1">
     <div class="bs-backdrop" data-bs-close></div>
     <div class="bs-sheet" id="bs-sheet">
       <div class="bs-handle" aria-hidden="true"></div>
@@ -1000,8 +1002,7 @@
                    resuelve el libro · visible al completar la rotación. -->
               <div class="bs-cover-back">
                 <div class="bs-back-eyebrow">Lo que resuelve</div>
-                <h3 class="bs-back-h">"Cuando las opiniones se contradicen, la evidencia te lleva a casa."</h3>
-                <div class="bs-back-sub">Sem 4 → primeras horas · SEGO · NICE · AEPED</div>
+                <h3 class="bs-back-h">Acompañamiento clínico <em>semana a semana</em> sin comparativas ni alarmismo.</h3>
               </div>
             </div>
           </div>
@@ -1056,12 +1057,17 @@
           </ul>
         </section>
 
-        <div class="bs-aval">Avalado por · SEGO · NICE · AEPED · Comité clínico Grow</div>
+        <div class="bs-aval">
+          <span class="bs-aval-chip t-mint">SEGO</span>
+          <span class="bs-aval-chip t-coral">NICE</span>
+          <span class="bs-aval-chip t-gold">AEPED</span>
+          <span class="bs-aval-chip t-blush">Comité clínico Grow</span>
+        </div>
 
-        <section class="bs-actions">
-          <a class="btn-pri" href="waitlist.html">Entra en la lista →</a>
-          <a class="btn-ghost" href="#libros">Ver todos los libros</a>
-        </section>
+        <!-- .bs-actions removida · los CTAs "Entra en la lista" y "Ver todos
+             los libros" estaban duplicando funcionalidad ya presente en el
+             topbar (Waitlist) y en la sección libros del homepage. Cerrar el
+             sheet (X arriba a la derecha) trae al user de vuelta al flow. -->
       </div>
     </div>
   </div>

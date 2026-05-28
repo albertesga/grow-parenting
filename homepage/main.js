@@ -47,6 +47,73 @@
         }
       }
 
+      /* 2.6 · Modo 3 AM scrollytelling · una pantalla, tres estados.
+         La sección da recorrido con .threeam-story-scroll y este handler
+         sincroniza copy, stepper y mockup activo sin bloquear el scroll real. */
+      function initThreeAmStory() {
+        const root = document.getElementById("threeam");
+        if (!root) return;
+        const scrollArea = root.querySelector(".threeam-story-scroll");
+        const panels = Array.from(root.querySelectorAll("[data-threeam-panel]"));
+        const copies = Array.from(root.querySelectorAll("[data-threeam-copy]"));
+        const dots = Array.from(root.querySelectorAll("[data-threeam-dot]"));
+        const chips = Array.from(root.querySelectorAll("[data-threeam-chip]"));
+        if (!scrollArea || panels.length === 0) return;
+
+        const lowHeightQuery = window.matchMedia("(max-height: 700px)");
+        let activeStep = -1;
+        let ticking = false;
+        const clamp = (value) => Math.max(0, Math.min(1, value));
+        const stepFromProgress = (progress) => {
+          if (progress >= 0.67) return 2;
+          if (progress >= 0.34) return 1;
+          return 0;
+        };
+
+        const setStep = (step) => {
+          const isLowHeightFallback = lowHeightQuery.matches;
+          if (step === activeStep && !isLowHeightFallback) return;
+          activeStep = step;
+          root.dataset.threeamStep = String(step);
+
+          panels.forEach((panel, index) => {
+            const isActive = index === step;
+            panel.classList.toggle("is-active", isActive);
+            panel.setAttribute("aria-hidden", isLowHeightFallback || isActive ? "false" : "true");
+            panel.tabIndex = isLowHeightFallback || isActive ? 0 : -1;
+          });
+          copies.forEach((copy, index) => {
+            copy.classList.toggle("is-active", index === step);
+          });
+          dots.forEach((dot, index) => {
+            dot.classList.toggle("is-active", index === step);
+          });
+          chips.forEach((chip, index) => {
+            chip.classList.toggle("is-live", index === step);
+          });
+        };
+
+        const update = () => {
+          ticking = false;
+          const rect = scrollArea.getBoundingClientRect();
+          const scrollable = Math.max(1, scrollArea.offsetHeight - window.innerHeight);
+          const progress = clamp(-rect.top / scrollable);
+          setStep(stepFromProgress(progress));
+        };
+
+        const requestUpdate = () => {
+          if (ticking) return;
+          ticking = true;
+          requestAnimationFrame(update);
+        };
+
+        setStep(0);
+        update();
+        window.addEventListener("scroll", requestUpdate, { passive: true });
+        window.addEventListener("resize", requestUpdate);
+      }
+      initThreeAmStory();
+
       /* 3 · Parallax avatar · canvas chroma key + frame cache.
          Estrategia · decodear los 2 MP4 (preview-1 bolita→newborn, preview-2
          newborn→bebé) a un array de frames offscreen al cargar la página,
@@ -94,7 +161,7 @@
           vid.src = url;
           vid.muted = true;
           vid.playsInline = true;
-          vid.preload = "auto";
+          vid.preload = "metadata";
           vid.crossOrigin = "anonymous";
           const onError = () => reject(new Error("video load failed: " + url));
           vid.addEventListener("error", onError, { once: true });
@@ -191,7 +258,10 @@
          mostramos los canvases con opacity 0 (CSS); cuando termina pintamos
          frame 0 y añadimos .is-ready (fade in). Si falla, dejamos el canvas
          invisible · el bloque sigue narrando con el texto y el tracker. */
-      (async () => {
+      let framesBooted = false;
+      const loadParallaxFrames = async () => {
+        if (framesBooted) return;
+        framesBooted = true;
         const isMobile = window.matchMedia("(max-width: 960px)").matches;
         const FRAME_COUNT = reduced ? 2 : (isMobile ? 24 : 40);
         const URL_1 = "assets/parallax-1-bolita-to-newborn.mp4";
@@ -217,7 +287,21 @@
           /* Decode failed · log + leave canvases hidden. */
           console.warn("[parallax] frame extraction failed", e);
         }
-      })();
+      };
+
+      const narrativeShell = document.querySelector(".narrative-shell");
+      if (narrativeShell && "IntersectionObserver" in window) {
+        const preloadObserver = new IntersectionObserver((entries, observer) => {
+          entries.forEach((entry) => {
+            if (!entry.isIntersecting) return;
+            loadParallaxFrames();
+            observer.unobserve(entry.target);
+          });
+        }, { rootMargin: "280px 0px", threshold: 0.01 });
+        preloadObserver.observe(narrativeShell);
+      } else {
+        loadParallaxFrames();
+      }
 
       if (!reduced) {
         let ticking = false;
@@ -260,6 +344,7 @@
         const sec2Stage  = document.querySelector(".avatar-stage");
         const sec2Frame  = document.querySelector(".avatar-stage .frame");
         const teamSection = document.getElementById("parenting-team");
+        const trustSection = document.querySelector(".trust");
         if (!heroAvatar) return;
 
         const HALO_SIZE = 460; // matches CSS width/height
@@ -268,10 +353,13 @@
         // Sticky offset del .avatar-stage en CSS (top: 96px). Cuando el
         // scrollY hace que stage_pageY - scrollY = 96, sticky activa.
         const SEC2_STICKY_TOP = 96;
-        // Cuándo arranca la transición de halo · 40% del scroll del hero ·
-        // antes de esto halo queda anchored en hero · evita movimientos
-        // raros mientras el user está leyendo el hero.
-        const HERO_KICKOFF_RATIO = 0.4;
+        // Cuándo arranca la transición de halo · 5% del scroll del hero ·
+        // ya no esperamos a 40% · user quiere que se mueva desde el primer
+        // pixel de scroll para que el efecto sea más evidente.
+        const HERO_KICKOFF_RATIO = 0.05;
+        // Distancia de scroll en la que el halo viaja de hero hasta el centro
+        // viewport · corto · feels responsive al scroll inicial.
+        const KICKOFF_TRAVEL_PX = 220;
         // Nudge Y para alinear el centro del halo con el visible avatar
         // dentro del canvas (kling parallax mp4 no está exactamente al
         // centro geométrico del frame · este offset lo empuja hacia abajo).
@@ -309,9 +397,48 @@
           teamSection.style.setProperty("--team-halo-opacity", opacity.toFixed(3));
         }
 
+        /* Mismo paint que parenting-team pero para el trust strip · 4 chips
+           con clinical claims. El halo cruza por encima durante el scroll
+           inicial y deja un wash coral/mint sobre los chips (mismo pattern
+           radial + dotted texture, mismo blend multiply). */
+        function paintTrustHalo(x, y) {
+          if (!trustSection) return;
+          const r = trustSection.getBoundingClientRect();
+          const visible = r.top < window.innerHeight && r.bottom > 0;
+          if (!visible) {
+            trustSection.style.setProperty("--trust-halo-opacity", "0");
+            return;
+          }
+
+          const localX = x - r.left;
+          const localY = y - r.top;
+          // Trust strip es delgado (1 row · ~80px) · expandimos la "ventana
+          // útil" en Y a ±400px para que el wash sea visible mientras el
+          // halo aún está bajando hacia la sección y mientras sube saliendo.
+          const sectionProgress = Math.max(0, Math.min(1, (window.innerHeight - r.top) / (window.innerHeight + r.height)));
+          const bell = Math.sin(sectionProgress * Math.PI);
+          const within = localY > -400 && localY < r.height + 400;
+          const opacity = within ? Math.min(0.78, bell * 0.70) : Math.min(0.32, bell * 0.26);
+
+          trustSection.style.setProperty("--trust-halo-x", `${localX.toFixed(1)}px`);
+          trustSection.style.setProperty("--trust-halo-y", `${localY.toFixed(1)}px`);
+          trustSection.style.setProperty("--trust-halo-opacity", opacity.toFixed(3));
+        }
+
         let ticking = false;
         function update() {
           ticking = false;
+          /* Mobile bail · en viewport ≤960px ocultamos hero-avatar +
+             avatar-stage + mobile-avatar (decisión UX · reducir peso visual
+             en mobile y dejar el copy respirar). Sin esos targets el halo
+             no tiene a quién seguir · clear pintures y return. */
+          if (window.innerWidth <= 960) {
+            halo.style.opacity = "0";
+            if (teamSection) teamSection.style.setProperty("--team-halo-opacity", "0");
+            if (trustSection) trustSection.style.setProperty("--trust-halo-opacity", "0");
+            return;
+          }
+          halo.style.opacity = "";
           const scrollY = window.scrollY || window.pageYOffset || 0;
           const vh = window.innerHeight;
           const hero = rectInfo(heroAvatar);
@@ -321,6 +448,7 @@
             halo.style.transform =
               `translate(${(hero.cx - HALO_HALF).toFixed(1)}px, ${(hero.cy - HALO_HALF).toFixed(1)}px) scale(1)`;
             paintTeamHalo(hero.cx, hero.cy);
+            paintTrustHalo(hero.cx, hero.cy);
             return;
           }
 
@@ -328,11 +456,14 @@
           const sec2  = rectInfo(sec2Frame);
           const team  = teamSection ? rectInfo(teamSection) : null;
 
-          // 5-phase interpolation con team como waypoint intermedio · garantiza
-          // que el halo (a) sea más evidente al pasar por team (scale boost) y
-          // (b) quede vertically centered en viewport mientras lo cruza (en vez
-          // de interpolado linealmente entre hero.cy off-screen y sec2.cy
-          // off-screen · que daba un Y demasiado arriba).
+          // Trajectory revisitada · user pidió que el halo se mueva desde el
+          // primer pixel de scroll y viva en el centro del viewport durante
+          // el viaje (no anclado a avatares fuera de pantalla). Fases:
+          //  · scroll < kickoff       → halo en hero avatar (estado inicial)
+          //  · kickoff → kickoff+220  → hero → centro viewport (transición rápida)
+          //  · centro hasta team-exit → halo en centro viewport (cruza trust + team)
+          //  · team-exit → sec2-stick → centro → sec2 avatar (aterrizaje)
+          //  · sec2-stick adelante    → halo en sec2 avatar
           const heroPageY = hero.top + scrollY;
           const stagePageY = stage.top + scrollY;
           const startScroll = heroPageY + hero.h * HERO_KICKOFF_RATIO;
@@ -340,8 +471,10 @@
 
           const targetSec2X = sec2.cx;
           const targetSec2Y = sec2.cy + SEC2_Y_NUDGE;
+          const centerX = window.innerWidth * 0.5;
+          const centerY = vh * 0.5;
           const scaleHero = 1.0;
-          const scaleTeam = 1.18;   // más evidente al pasar por team
+          const scaleTeam = 1.18;   // más evidente al pasar por team/trust
           const scaleSec2 = 0.72;
 
           let x, y, scale;
@@ -349,33 +482,32 @@
           if (team) {
             const teamPageY = team.top + scrollY;
             // Waypoints · scroll positions donde la transición cambia de fase
-            const wp1 = startScroll;                    // hero kickoff
-            const wp2 = teamPageY - vh * 0.45;          // team ~al borde inferior viewport
+            const wp1 = startScroll;                    // hero kickoff (ahora 5%)
+            const wp2 = startScroll + KICKOFF_TRAVEL_PX; // arrive a centro rápido
             const wp3 = teamPageY + team.h - vh * 0.55; // team ~al borde superior viewport
             const wp4 = endScroll;                      // sec2 sticky
-            // Target Y para fase team · viewport center (siempre centrado, no
-            // se sale del frame por scroll · resuelve "queda demasiado arriba")
-            const teamTargetY = vh * 0.5;
-            const teamTargetX = team.cx;
 
             if (scrollY < wp1) {
               x = hero.cx; y = hero.cy; scale = scaleHero;
             } else if (scrollY < wp2) {
-              // hero → team
+              // hero → centro viewport · transición rápida para que el halo
+              // se sienta moviéndose desde los primeros pixels de scroll
               const t = (scrollY - wp1) / Math.max(1, wp2 - wp1);
-              x = hero.cx + (teamTargetX - hero.cx) * t;
-              y = hero.cy + (teamTargetY - hero.cy) * t;
+              x = hero.cx + (centerX - hero.cx) * t;
+              y = hero.cy + (centerY - hero.cy) * t;
               scale = scaleHero + (scaleTeam - scaleHero) * t;
             } else if (scrollY < wp3) {
-              // linger en team (centered) · scale boost full
-              x = teamTargetX;
-              y = teamTargetY;
+              // centro viewport durante todo el cruce trust + team · halo
+              // queda "screen-centered" mientras pasa por encima de chips
+              // de trust y luego de las cards del equipo · scale boost full.
+              x = centerX;
+              y = centerY;
               scale = scaleTeam;
             } else if (scrollY < wp4) {
-              // team → sec2
+              // centro → sec2 (aterrizaje en avatar parallax)
               const t = (scrollY - wp3) / Math.max(1, wp4 - wp3);
-              x = teamTargetX + (targetSec2X - teamTargetX) * t;
-              y = teamTargetY + (targetSec2Y - teamTargetY) * t;
+              x = centerX + (targetSec2X - centerX) * t;
+              y = centerY + (targetSec2Y - centerY) * t;
               scale = scaleTeam + (scaleSec2 - scaleTeam) * t;
             } else {
               x = targetSec2X; y = targetSec2Y; scale = scaleSec2;
@@ -411,6 +543,7 @@
           }
 
           paintTeamHalo(x, y);
+          paintTrustHalo(x, y);
         }
 
         function onScroll() {
@@ -438,13 +571,17 @@
         io.observe(block2);
       }
 
-      /* 5 · Signup form · changes button text to "Gracias ✓" */
+      /* 5 · Signup form · opens the progressive waitlist with email prefilled */
       const signupForm = document.getElementById("signup");
       if (signupForm) {
         signupForm.addEventListener("submit", (e) => {
           e.preventDefault();
-          const btn = signupForm.querySelector("button");
-          if (btn) { btn.textContent = "Gracias ✓"; btn.disabled = true; }
+          const input = signupForm.querySelector('input[type="email"]');
+          const email = (input?.value || "").trim();
+          const target = email
+            ? `waitlist.html?email=${encodeURIComponent(email)}`
+            : "waitlist.html";
+          window.location.href = target;
         });
       }
 
@@ -469,6 +606,39 @@
       const bsClose   = document.getElementById("bs-close");
       const bsHeader  = bsSheet ? bsSheet.querySelector(".bs-header") : null;
       const bsBody    = document.getElementById("bs-body");
+      const pageSiblings = bsOverlay
+        ? Array.from(document.body.children).filter((el) => el !== bsOverlay)
+        : [];
+
+      function getOverlayFocusable() {
+        if (!bsOverlay) return [];
+        return Array.from(
+          bsOverlay.querySelectorAll(
+            'a[href], button:not([disabled]), textarea:not([disabled]), input:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])'
+          )
+        ).filter((el) => {
+          if (el.getAttribute("aria-hidden") === "true") return false;
+          return el.offsetParent !== null;
+        });
+      }
+
+      function focusOverlayFirst() {
+        const focusables = getOverlayFocusable();
+        const target = focusables[0] || bsClose || bsOverlay;
+        target?.focus?.();
+      }
+
+      function setBackgroundInert(isInert) {
+        pageSiblings.forEach((el) => {
+          if (isInert) {
+            el.setAttribute("aria-hidden", "true");
+            el.inert = true;
+          } else {
+            el.removeAttribute("aria-hidden");
+            el.inert = false;
+          }
+        });
+      }
 
       /* Scroll forwarding · cuando el usuario hace wheel/scroll DENTRO del
          .bs-header (cover del libro · NO scrollable nativo) reenviamos el
@@ -493,50 +663,328 @@
          se populates desde aquí según la card clicada (.r-book[data-book]).
          Para añadir un libro nuevo · entrada en BOOK_DATA + data-book en
          la card. Cero cambios HTML adicionales. */
+      const BOOK_AVATARS = {
+        coral: "assets/avatar-coral.png",
+        blush: "assets/avatar-blush.png",
+        mint: "assets/avatar-mint.png",
+        gold: "assets/avatar-coral.png",
+        violet: "assets/avatar-mint.png",
+        paper: "assets/avatar-blush.png",
+        default: "assets/embarazo-hero.png"
+      };
+
       const BOOK_DATA = {
         embarazo: {
-          tone: "coral", /* clase tonal aplicada al .bs-sheet o cover · futuro */
+          tone: "coral",
           coverIcon: "#b-belly",
           coverTitle: 'Libro de<br><em>embarazo</em>',
-          coverFootCount: "Libro · 01",
+          coverFootCount: "Sem 4-40",
           coverFootMethod: "SEGO",
           backEyebrow: "Lo que resuelve",
-          backPhrase: '"Cuando las opiniones se contradicen, la evidencia te lleva a casa."',
-          backSub: "Sem 4 → primeras horas · SEGO · NICE · AEPED",
+          backPhraseHTML: 'Acompañamiento clínico <em>semana a semana</em> sin comparativas ni alarmismo.',
           pageImg: "assets/embarazo-hero.png",
           pageImgAlt: "Libro de embarazo",
           featuresLabel: "Lo que el libro hace por ti",
           features: [
-            { icon: "#b-pulse",    title: "Patadas",         copy: "Count the Kicks · 10 movimientos en 2 horas desde la semana 28." },
-            { icon: "#b-thermo",   title: "Tensión",         copy: "PPG via cámara del móvil · orientativo · alarma cuando sube." },
-            { icon: "#b-bookmark", title: "Plan de parto",   copy: "Sub-libro propio · editable · imprimible · checklist hospital." },
-            { icon: "#b-heart",    title: "Síntomas",        copy: "Qué mirar · cuándo llamar · qué decir al equipo." },
-            { icon: "#i-cal",      title: "Citas y pruebas", copy: "Ecografías · glucosa · Tdpa · qué preguntar en cada una." },
-            { icon: "#b-syringe",  title: "APILAM",          copy: "Medicación segura durante el embarazo · base actualizada." }
+            { title: "Semana a semana", copy: "FPP, días restantes, cambios maternos y fetales, y qué toca preparar ahora." },
+            { title: "Citas y pruebas", copy: "Cribado T1, morfológica, glucosa, Tdpa, eco 3T y EGB ordenados por semana." },
+            { title: "Patadas", copy: "Count the Kicks · 10 movimientos en 2 horas desde la semana 28, con ruta clara si no llegas." },
+            { title: "Tensión", copy: "Lectura PPG orientativa, histórico y señales para hablar con obstetra si sube." },
+            { title: "Parto", copy: "Plan editable, checklist hospital y contactos importantes listos para compartir." },
+            { title: "Modo arcoíris", copy: "Si vienes de una pérdida, el tono cambia: factual, sin confetti y con más cuidado." }
           ],
-          aval: "Avalado por · SEGO · NICE · AEPED · Comité clínico Grow"
+          avalChips: [
+            { tone: "coral", text: "SEGO" },
+            { tone: "mint", text: "NICE NG201" },
+            { tone: "gold", text: "ACOG" },
+            { tone: "blush", text: "EPDS" }
+          ],
+          researchOnly: {
+            competitors: ["Pregnancy+", "Ovia Pregnancy", "What to Expect"]
+          }
+        },
+        alimentacion: {
+          tone: "coral",
+          coverIcon: "#b-bottle",
+          coverTitle: 'Libro de<br><em>alimentación</em>',
+          coverFootCount: "0-3 años",
+          coverFootMethod: "EU14",
+          backEyebrow: "Lo que resuelve",
+          backPhraseHTML: 'Sólidos, BLW, purés y alérgenos <em>sin presión</em>, con señales claras cuando toca consultar.',
+          pageImg: BOOK_AVATARS.coral,
+          pageImgAlt: "Libro de alimentación",
+          featuresLabel: "Lo que el libro hace por ti",
+          features: [
+            { title: "Alimentos por edad", copy: "Cortes e ideas para 6-8m, 9-12m y 12m+, sin convertir BLW en obligación." },
+            { title: "Mapa de alérgenos", copy: "14 alérgenos EU con estado, ingestas y recordatorio de exposición regular." },
+            { title: "Recetas simples", copy: "Ideas por edad y textura para resolver una comida sin abrir diez búsquedas." },
+            { title: "Probado en diario", copy: "Marca un alimento como probado y queda guardado para toda la familia." },
+            { title: "Señales de cuidado", copy: "Atragantamiento, alergia y cuándo pedir ayuda, explicado sin dramatizar." },
+            { title: "Plan IA", copy: "Compara tu contexto con guías públicas y te ayuda a decidir el siguiente alimento." }
+          ],
+          avalChips: [
+            { tone: "coral", text: "AEPED" },
+            { tone: "gold", text: "AAP Big 9" },
+            { tone: "mint", text: "OMS" },
+            { tone: "blush", text: "UE 1169/2011" }
+          ],
+          researchOnly: {
+            competitors: ["Solid Starts", "Yuka", "NHS Start4Life"],
+            gap: "Caca tracker AI BITSS queda fuera del claim público hasta estar implementado."
+          }
+        },
+        lactancia: {
+          tone: "blush",
+          coverIcon: "#b-breast",
+          coverTitle: 'Libro de<br><em>lactancia</em>',
+          coverFootCount: "0-18 meses",
+          coverFootMethod: "LATCH",
+          backEyebrow: "Lo que resuelve",
+          backPhraseHTML: 'Dolor, agarre, extracción y medicación <em>sin lactivismo</em> ni culpa por el biberón.',
+          pageImg: BOOK_AVATARS.blush,
+          pageImgAlt: "Libro de lactancia",
+          featuresLabel: "Lo que el libro hace por ti",
+          features: [
+            { title: "Tomas y ritmo", copy: "Pecho izquierdo, derecho, duración, intervalos y últimas 24h en una vista." },
+            { title: "LATCH", copy: "Cinco preguntas, score 0-10 y recomendación de IBCLC externa si se repite bajo." },
+            { title: "Dolor y mastitis", copy: "Triage local para grietas, conducto bloqueado, fiebre o zona roja." },
+            { title: "Medicamentos", copy: "Buscador APILAM/e-lactancia mock con riesgo 0-3 y copy claro." },
+            { title: "Banco de leche", copy: "Batches FIFO, nevera, congelador y vencimientos según conservación canon." },
+            { title: "Modos sensibles", copy: "Extracción exclusiva, adopción, IGT, tándem o experiencia previa difícil." }
+          ],
+          avalChips: [
+            { tone: "blush", text: "LATCH" },
+            { tone: "mint", text: "OMS" },
+            { tone: "coral", text: "APILAM" },
+            { tone: "gold", text: "ABM" }
+          ],
+          researchOnly: {
+            competitors: ["LactApp", "Medela Family", "Baby Tracker"]
+          }
+        },
+        vacunas: {
+          tone: "gold",
+          coverIcon: "#b-syringe",
+          coverTitle: 'Libro de<br><em>vacunas</em>',
+          coverFootCount: "0-3 años",
+          coverFootMethod: "AEPED",
+          backEyebrow: "Lo que resuelve",
+          backPhraseHTML: 'Calendario vivo, fiebre 72h y carnet digital <em>sin militancia</em>, con datos para decidir con pediatría.',
+          pageImg: BOOK_AVATARS.coral,
+          pageImgAlt: "Libro de vacunas",
+          featuresLabel: "Lo que el libro hace por ti",
+          features: [
+            { title: "Calendario AEPED 2026", copy: "Hexavalente, MenB, neumococo, rotavirus, triple vírica, varicela y HepA." },
+            { title: "Switcher", copy: "AEP y AAP 2026 para familias internacionales, viajes o cambios de país." },
+            { title: "Fiebre 72h", copy: "Curva real frente a banda esperada para bajar ansiedad sin minimizar." },
+            { title: "Antitérmico", copy: "Dosis por peso y guardrails: NO alternar y NO profiláctico pre-vacuna." },
+            { title: "Carnet digital", copy: "Lote, centro, profesional y export PDF para colegio, viajes o cambio de pediatra." },
+            { title: "Qué esperar", copy: "Efectos esperables y señales para llamar, con lenguaje claro." }
+          ],
+          avalChips: [
+            { tone: "gold", text: "CAV-AEP" },
+            { tone: "mint", text: "AAP" },
+            { tone: "coral", text: "NICE NG143" },
+            { tone: "blush", text: "JMIR Fever Coach" }
+          ],
+          researchOnly: {
+            competitors: ["Mi Vacuna", "CDC Vaccine Schedule", "NHS Red Book"]
+          }
+        },
+        sueno: {
+          tone: "mint",
+          coverIcon: "#b-moon",
+          coverTitle: 'Libro del<br><em>sueño</em>',
+          coverFootCount: "0-3 años",
+          coverFootMethod: "ventanas",
+          backEyebrow: "Lo que resuelve",
+          backPhraseHTML: 'Ventanas, rutinas y noches difíciles <em>sin juicio</em> y sin extinción del llanto por defecto.',
+          pageImg: BOOK_AVATARS.mint,
+          pageImgAlt: "Libro del sueño",
+          featuresLabel: "Lo que el libro hace por ti",
+          features: [
+            { title: "Ventana óptima", copy: "Aún pronto, óptima o cansancio acumulado según edad y últimas siestas." },
+            { title: "Tracker sueño", copy: "Siestas, noche y despertares para entender el patrón sin obsesionarse." },
+            { title: "Esquema por edad", copy: "Ocho rangos de 0-2m a 2,5-3a con siestas, rutina y total esperado." },
+            { title: "Vista semana", copy: "Barras día a día para ver si una noche difícil encaja en un patrón." },
+            { title: "Regresiones", copy: "4m, 8-10m, 12m, 18m y 2a explicadas sin convertirlas en amenaza." },
+            { title: "Modo madrugada", copy: "Texto grande, fondo oscuro y una pregunta cada vez cuando estás al límite." }
+          ],
+          avalChips: [
+            { tone: "mint", text: "AAP Safe Sleep" },
+            { tone: "gold", text: "NHS" },
+            { tone: "blush", text: "Lullaby Trust" },
+            { tone: "coral", text: "Sleep Foundation" }
+          ],
+          researchOnly: {
+            competitors: ["Huckleberry", "Smart Sleep Coach", "Hatch Rest+"]
+          }
+        },
+        salud: {
+          tone: "paper",
+          coverIcon: "#b-thermo",
+          coverTitle: 'Libro de<br><em>salud</em>',
+          coverFootCount: "0-3 años",
+          coverFootMethod: "AEPap",
+          backEyebrow: "Lo que resuelve",
+          backPhraseHTML: 'Fiebre, episodios y señales para consultar <em>con criterio</em>, sin convertir cada síntoma en alarma.',
+          pageImg: BOOK_AVATARS.paper,
+          pageImgAlt: "Libro de salud",
+          featuresLabel: "Lo que el libro hace por ti",
+          features: [
+            { title: "Triage por árbol", copy: "Fiebre, respiración, vómitos, diarrea, golpe, rash, convulsión y llanto." },
+            { title: "Tres niveles", copy: "Urgencias, mismo día o casa, con explicación para hablar con pediatría." },
+            { title: "Paracetamol", copy: "Calculadora por peso según AEPED y guardrails para evitar errores comunes." },
+            { title: "Modo emergencia", copy: "Alergias críticas, 112, pediatra y hospital de referencia a mano." },
+            { title: "Historial", copy: "Episodios, visitas, medicación y pruebas con búsqueda y filtros." },
+            { title: "Patrones", copy: "Si algo se repite, Grow lo ordena para preparar la consulta." }
+          ],
+          avalChips: [
+            { tone: "mint", text: "AEPED" },
+            { tone: "coral", text: "NICE" },
+            { tone: "gold", text: "AAP" },
+            { tone: "blush", text: "DSI AEPap" }
+          ],
+          researchOnly: {
+            competitors: ["NHS 111", "Kinsa", "WebMD Baby"]
+          }
+        },
+        colicos: {
+          tone: "coral",
+          coverIcon: "#b-tear",
+          coverTitle: 'Libro de<br><em>cólicos</em>',
+          coverFootCount: "0-6 meses",
+          coverFootMethod: "PURPLE",
+          backEyebrow: "Lo que resuelve",
+          backPhraseHTML: 'Llanto inconsolable con descarte, regulación y relevo <em>sin culparte</em> por no poder más.',
+          pageImg: BOOK_AVATARS.coral,
+          pageImgAlt: "Libro de cólicos",
+          featuresLabel: "Lo que el libro hace por ti",
+          features: [
+            { title: "Episodio en curso", copy: "Timer, intensidad y qué intervención estás probando ahora." },
+            { title: "Wessel", copy: "Regla 3-3-3 monitorizada sin convertir cada tarde difícil en diagnóstico." },
+            { title: "5 S's", copy: "Swaddle, side, shush, swing y suck con seguridad y límites claros." },
+            { title: "Relevo", copy: "Avisar al co-cuidador cuando necesitas cambiar de manos." },
+            { title: "Si no puedes más", copy: "Cuatro pasos concretos para bajar riesgo y pedir ayuda." },
+            { title: "Cruces útiles", copy: "Sueño, lactancia, frenillo, APLV o sobrecansancio conectados cuando encaja." }
+          ],
+          avalChips: [
+            { tone: "coral", text: "Wessel" },
+            { tone: "blush", text: "PURPLE Crying" },
+            { tone: "mint", text: "AAP" },
+            { tone: "gold", text: "Roma IV" }
+          ],
+          researchOnly: {
+            competitors: ["ChatterBaby", "Happiest Baby", "Zoundream"]
+          }
+        },
+        hitos: {
+          tone: "mint",
+          coverIcon: "#b-sprout",
+          coverTitle: 'Libro de<br><em>hitos</em>',
+          coverFootCount: "0-3 años",
+          coverFootMethod: "Haizea",
+          backEyebrow: "Lo que resuelve",
+          backPhraseHTML: 'Hitos 0-3 años con Haizea-Llevant, edad corregida y <em>sin comparativas tóxicas</em>.',
+          pageImg: BOOK_AVATARS.mint,
+          pageImgAlt: "Libro de hitos",
+          featuresLabel: "Lo que el libro hace por ti",
+          features: [
+            { title: "97 hitos", copy: "Organizados por etapa y por área: socialización, lenguaje, manipulación y postural." },
+            { title: "Rangos P50/P75/P95", copy: "Mini-chart por hito para ver dónde está Lola sin ranking." },
+            { title: "Edad corregida", copy: "Modo preemie automático cuando la cronología no cuenta toda la historia." },
+            { title: "Marcar logrado", copy: "Fecha, foto y nota privada, sin confetti ni presión." },
+            { title: "Hito custom", copy: "Añade un logro familiar y guárdalo con área editable." },
+            { title: "Señales de consulta", copy: "Regresión, asimetría o retrasos concretos explicados para hablar con pediatría." }
+          ],
+          avalChips: [
+            { tone: "mint", text: "Haizea-Llevant" },
+            { tone: "gold", text: "AAP Bright Futures" },
+            { tone: "blush", text: "ASQ-3" },
+            { tone: "coral", text: "AEPap" }
+          ],
+          researchOnly: {
+            competitors: ["Kinedu", "CDC Milestone Tracker", "BabyCenter"]
+          }
+        },
+        desarrollo: {
+          tone: "violet",
+          coverIcon: "#b-heart",
+          coverTitle: 'Libro de<br><em>desarrollo</em>',
+          coverFootCount: "0-3 años",
+          coverFootMethod: "ASQ-3",
+          backEyebrow: "Lo que resuelve",
+          backPhraseHTML: 'Cribados, curvas y observaciones para conversar con pediatría <em>sin diagnosticar desde una app</em>.',
+          pageImg: BOOK_AVATARS.violet,
+          pageImgAlt: "Libro de desarrollo",
+          featuresLabel: "Lo que el libro hace por ti",
+          features: [
+            { title: "M-CHAT-R", copy: "Cribado 16-30m para ordenar observaciones, no para cerrar diagnósticos." },
+            { title: "ASQ-3", copy: "Selector de escala y preguntas estructuradas para preparar la consulta." },
+            { title: "Multi-escala", copy: "Haizea-Llevant, Denver II, Van Wiechen y Bayley-III como mapa comparativo." },
+            { title: "Curvas OMS", copy: "Peso, talla y perímetro craneal con histórico y edad corregida." },
+            { title: "EPDS", copy: "Chequeo rápido de salud mental perinatal con ruta directa si algo pesa demasiado." },
+            { title: "Export pediatra", copy: "Resumen PDF para CDIAT, neuropediatría o revisión ordinaria." }
+          ],
+          avalChips: [
+            { tone: "violet", text: "M-CHAT-R/F" },
+            { tone: "mint", text: "ASQ-3" },
+            { tone: "gold", text: "OMS" },
+            { tone: "blush", text: "EPDS" }
+          ],
+          researchOnly: {
+            competitors: ["Cognoa", "Pathways.org", "Kinedu"]
+          }
+        },
+        recuerdos: {
+          tone: "paper",
+          coverIcon: "#b-bookmark",
+          coverTitle: 'Libro de<br><em>recuerdos</em>',
+          coverFootCount: "diario",
+          coverFootMethod: "privado",
+          backEyebrow: "Lo que guarda",
+          backPhraseHTML: 'Lo que ya está pasando, ordenado para ti, para mañana y para compartir <em>solo si quieres</em>.',
+          pageImg: BOOK_AVATARS.paper,
+          pageImgAlt: "Libro de recuerdos",
+          featuresLabel: "Lo que el libro hace por ti",
+          features: [
+            { title: "Diario familiar", copy: "Tomas, sueño, hitos, vacunas y notas quedan en una línea de tiempo privada." },
+            { title: "Fotos y notas", copy: "Guarda contexto sin convertirlo en red social ni en álbum público." },
+            { title: "Compartir con cuidado", copy: "Exporta o comparte solo lo que quieras con familia, pediatra o cuidadores." },
+            { title: "Recuerdos útiles", copy: "No solo memorias: también datos que ayudan a explicar qué pasó." }
+          ],
+          avalChips: [
+            { tone: "mint", text: "Privacidad" },
+            { tone: "gold", text: "Diario" },
+            { tone: "blush", text: "Familia" },
+            { tone: "coral", text: "Sin ads" }
+          ]
         },
         parto: {
-          tone: "coral",
+          tone: "blush",
           coverIcon: "#b-pulse",
           coverTitle: 'Preparación<br><em>al parto</em>',
-          coverFootCount: "Libro · 11",
-          coverFootMethod: "EAPM",
+          coverFootCount: "Sem 36+",
+          coverFootMethod: "plan",
           backEyebrow: "Para llegar lista",
-          backPhrase: '"Saber qué pasa en cada fase es lo que cambia el miedo por confianza."',
-          backSub: "Sem 28 → primeras horas · EAPM · NICE · OMS",
+          backPhraseHTML: 'Plan, checklist y primeras horas para que el equipo sepa <em>qué necesitas</em> cuando llegues.',
           pageImg: "assets/parto-hero.png",
           pageImgAlt: "Libro de preparación al parto",
           featuresLabel: "Lo que el libro hace por ti",
           features: [
-            { icon: "#b-pulse",  title: "Signos de parto",   copy: "Contracciones · rotura de aguas · cuándo ir al hospital." },
-            { icon: "#i-cal",    title: "Fases del parto",   copy: "Dilatación · transición · expulsivo · alumbramiento." },
-            { icon: "#b-sprout", title: "Posiciones",        copy: "Movimiento · gravedad · cuerpo · todo el repertorio." },
-            { icon: "#b-heart",  title: "Manejo del dolor",  copy: "Respiración · epidural · masaje · agua caliente." },
-            { icon: "#b-thermo", title: "Cesárea",           copy: "Programada o de urgencia · piel a piel también." },
-            { icon: "#b-tear",   title: "Primeras horas",    copy: "Piel a piel · primer enganche · postpartum 24h." }
+            { title: "Signos de parto", copy: "Contracciones, rotura de aguas y cuándo ir al hospital." },
+            { title: "Fases", copy: "Dilatación, transición, expulsivo y alumbramiento explicados sin tecnicismos." },
+            { title: "Preferencias", copy: "Epidural, música, piel con piel, pinzamiento y acompañante." },
+            { title: "Cesárea", copy: "Si pasa algo, el plan también contempla alternativas." },
+            { title: "Checklist hospital", copy: "18 ítems editables y exportables para llevar en papel." },
+            { title: "Primeras horas", copy: "Piel con piel, primera toma y recuperación inmediata." }
           ],
-          aval: "Avalado por · EAPM · NICE · OMS · Comité clínico Grow"
+          avalChips: [
+            { tone: "blush", text: "SEGO" },
+            { tone: "mint", text: "NICE" },
+            { tone: "gold", text: "OMS" },
+            { tone: "coral", text: "APILAM" }
+          ]
         }
       };
 
@@ -547,31 +995,58 @@
       function populateModal(bookKey) {
         const data = BOOK_DATA[bookKey];
         if (!data) return false;
+        bsSheet.dataset.tone = data.tone || "coral";
         /* Cover front */
         bsOverlay.querySelector(".bs-cover-front .bs-icon svg use").setAttribute("href", data.coverIcon);
         bsOverlay.querySelector(".bs-cover-front .bs-ttl").innerHTML = data.coverTitle;
         const foot = bsOverlay.querySelectorAll(".bs-cover-front .bs-foot span");
         if (foot[0]) foot[0].textContent = data.coverFootCount;
         if (foot[1]) foot[1].textContent = data.coverFootMethod;
-        /* Cover back */
+        /* Cover back · eyebrow + headline. `.bs-back-sub` removida del HTML
+           (user request · no más línea mono "Sem 4 → primeras horas · SEGO
+           · NICE · AEPED"). Si vuelve, restablecer el setter aquí. */
         bsOverlay.querySelector(".bs-back-eyebrow").textContent = data.backEyebrow;
-        bsOverlay.querySelector(".bs-back-h").textContent = data.backPhrase;
-        bsOverlay.querySelector(".bs-back-sub").textContent = data.backSub;
+        const backH = bsOverlay.querySelector(".bs-back-h");
+        if (data.backPhraseHTML) {
+          backH.innerHTML = data.backPhraseHTML;
+        } else if (data.backPhrase) {
+          backH.textContent = data.backPhrase;
+        }
         /* Page right · img */
         const pageImg = bsOverlay.querySelector(".bs-page-img");
-        pageImg.src = data.pageImg;
+        pageImg.src = data.pageImg || BOOK_AVATARS[data.tone] || BOOK_AVATARS.default;
         pageImg.alt = data.pageImgAlt;
-        /* Body · features · checklist DS canon · check mark uniforme
-           para todos los items (no se populates · sólo title + copy). */
+        /* Body · features dinámicas · checklist DS canon reutilizable. */
         bsOverlay.querySelector(".bs-features-section .bs-eyebrow").textContent = data.featuresLabel;
-        const features = bsOverlay.querySelectorAll(".bs-feature");
-        data.features.forEach((f, i) => {
-          if (!features[i]) return;
-          features[i].querySelector("h5").textContent = f.title;
-          features[i].querySelector("p").textContent = f.copy;
-        });
-        /* Aval */
-        bsOverlay.querySelector(".bs-aval").textContent = data.aval;
+        const featuresList = bsOverlay.querySelector(".bs-features");
+        featuresList.replaceChildren(...data.features.map((f, i) => {
+          const item = document.createElement("li");
+          item.className = "bs-feature";
+          item.style.setProperty("--feature-delay", `${560 + (i * 60)}ms`);
+
+          const marker = document.createElement("span");
+          marker.className = "bs-check";
+          marker.setAttribute("aria-hidden", "true");
+          marker.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="5 13 9 17 19 7"/></svg>';
+
+          const text = document.createElement("div");
+          text.className = "bs-feature-text";
+          const title = document.createElement("h5");
+          title.textContent = f.title;
+          const copy = document.createElement("p");
+          copy.textContent = f.copy;
+          text.append(title, copy);
+          item.append(marker, text);
+          return item;
+        }));
+        const aval = bsOverlay.querySelector(".bs-aval");
+        aval.replaceChildren(...(data.avalChips || []).map((chip, i) => {
+          const el = document.createElement("span");
+          el.className = `bs-aval-chip t-${chip.tone || data.tone || "mint"}`;
+          el.style.setProperty("--chip-lean", `${[-3, 2, -2, 3, -1, 2][i % 6]}deg`);
+          el.textContent = chip.text;
+          return el;
+        }));
         /* ARIA label del overlay para SR */
         bsOverlay.setAttribute("aria-label", data.pageImgAlt);
         return true;
@@ -615,12 +1090,13 @@
 
       async function openBook() {
         if (!sourceCard || !bsOverlay) return;
-        if (bsOpen) return;
         if (bsBusy) { bsPending = "open"; return; }
+        if (bsOpen) return;
         bsBusy = true;
         lastFocused = document.activeElement;
         bsOverlay.setAttribute("aria-hidden", "false");
         document.body.classList.add("bs-locked");
+        setBackgroundInert(true);
 
         if (reduced) {
           /* Reduced motion · skip animations · sheet aparece sin transition */
@@ -631,6 +1107,7 @@
           bsClose.classList.add("is-ready");
           bsOpen = true;
           bsBusy = false;
+          focusOverlayFirst();
           bsProcessPending();
           return;
         }
@@ -703,13 +1180,14 @@
         bsClose.classList.add("is-ready");
         bsOpen = true;
         bsBusy = false;
+        focusOverlayFirst();
         bsProcessPending();
       }
 
       async function closeBook() {
         if (!sourceCard) return;
-        if (!bsOpen) return;
         if (bsBusy) { bsPending = "close"; return; }
+        if (!bsOpen) return;
         bsBusy = true;
         bsClose.classList.remove("is-ready");
 
@@ -717,6 +1195,7 @@
           bsOverlay.classList.remove("is-active");
           bsOverlay.setAttribute("aria-hidden", "true");
           document.body.classList.remove("bs-locked");
+          setBackgroundInert(false);
           sourceCard.style.opacity = "";
           sourceCard.classList.remove("is-lifting");
           bsOpen = false;
@@ -763,6 +1242,7 @@
         bsOverlay.classList.remove("is-closing");
         bsOverlay.setAttribute("aria-hidden", "true");
         document.body.classList.remove("bs-locked");
+        setBackgroundInert(false);
         bsFrame.style.opacity = "";
         bsFrame.getAnimations().forEach((a) => a.cancel());
         bsSpinner.getAnimations().forEach((a) => a.cancel());
@@ -801,9 +1281,32 @@
           el.addEventListener("click", () => closeBook());
         });
         document.addEventListener("keydown", (e) => {
-          /* Esc cierra · si todavía no está open pero estamos en mid-animation
-             del open, encolamos close → se procesará al terminar el opening. */
-          if (e.key === "Escape" && (bsOpen || bsBusy)) closeBook();
+          if (!(bsOpen || bsBusy)) return;
+          if (e.key === "Escape") {
+            /* Esc cierra · si todavía no está open pero estamos en mid-animation
+               del open, encolamos close → se procesará al terminar el opening. */
+            closeBook();
+            return;
+          }
+          if (e.key !== "Tab") return;
+          const focusables = getOverlayFocusable();
+          if (focusables.length === 0) {
+            e.preventDefault();
+            bsOverlay.focus();
+            return;
+          }
+          const first = focusables[0];
+          const last = focusables[focusables.length - 1];
+          const active = document.activeElement;
+          if (e.shiftKey && active === first) {
+            e.preventDefault();
+            last.focus();
+            return;
+          }
+          if (!e.shiftKey && active === last) {
+            e.preventDefault();
+            first.focus();
+          }
         });
       }
 
@@ -812,14 +1315,11 @@
          keyframes) · cero JS necesario · todo CSS.) */
 
       /* ────────────────────────────────────────────────────────────────
-         Módulo 8 · Shelf scroll hint
-         Para cada .r-shelf · inyecta una flecha indicadora a la derecha
-         (.r-shelf-arrow) + atacha listener al .r-shelf-rail que toggle
-         clase .is-scrolled-end cuando el scroll horizontal llega al
-         final. CSS fade out la flecha + el gradiente del edge. */
-      /* Chip-style indicator · "MÁS" en Galiner caps + chevron 1.5px stroke.
-         Hereda tonal del bloque via --accent-* vars (coral/blush/mint). */
-      const shelfArrowHTML = '<span class="r-shelf-arrow-lbl">Más</span><svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="9 6 15 12 9 18"/></svg>';
+         Módulo 8 · Shelf scroll control
+         Para cada .r-shelf · inyecta un botón tonal que avanza la
+         estantería. Mantiene la pista visual del scroll horizontal sin
+         quedarse en un indicador decorativo no clicable. */
+      const shelfArrowHTML = '<span class="r-shelf-arrow-lbl">Más</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h12"/><path d="m13 7 5 5-5 5"/></svg>';
       document.querySelectorAll(".r-shelf").forEach((shelf) => {
         const rail = shelf.querySelector(".r-shelf-rail");
         if (!rail) return;
@@ -829,10 +1329,40 @@
         let arrow = null;
         const ensureArrow = () => {
           if (arrow) return;
-          arrow = document.createElement("div");
+          arrow = document.createElement("button");
+          arrow.type = "button";
           arrow.className = "r-shelf-arrow";
-          arrow.setAttribute("aria-hidden", "true");
+          arrow.setAttribute("aria-label", "Ver más libros de Grow");
           arrow.innerHTML = shelfArrowHTML;
+          arrow.addEventListener("click", () => {
+            const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+            const distance = Math.max(rail.clientWidth * 0.72, 180);
+            const maxLeft = rail.scrollWidth - rail.clientWidth;
+            const targetLeft = Math.min(rail.scrollLeft + distance, maxLeft);
+            rail.classList.add("is-programmatic-scroll");
+            if (prefersReduced) {
+              rail.scrollLeft = targetLeft;
+              rail.classList.remove("is-programmatic-scroll");
+              update();
+              return;
+            }
+            const startLeft = rail.scrollLeft;
+            const delta = targetLeft - startLeft;
+            const startedAt = performance.now();
+            const duration = 440;
+            const easeOut = (t) => 1 - Math.pow(1 - t, 3);
+            const step = (now) => {
+              const t = Math.min(1, (now - startedAt) / duration);
+              rail.scrollLeft = startLeft + delta * easeOut(t);
+              if (t < 1) {
+                requestAnimationFrame(step);
+                return;
+              }
+              rail.classList.remove("is-programmatic-scroll");
+              update();
+            };
+            requestAnimationFrame(step);
+          });
           shelf.appendChild(arrow);
         };
         const update = () => {
