@@ -27,7 +27,9 @@
    avatar (e.g., nuevo MP4 o nueva shadow), actualiza:
      - homepage/styles.css · `.hero-avatar` rules (homepage hero)
      - este file · `GROW_AVATAR_CSS` constant (resto de surfaces)
-   Ambas fuentes deben matchear. */
+  Ambas fuentes deben matchear.
+  Nota perf (May 2026): `hero-avatar.mp4` se eliminó del bundle porque no
+  estaba referenciado; el canon activo usa `hero-scroll.mp4` + `hero-tap.mp4`. */
 
 (function () {
   'use strict';

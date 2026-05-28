@@ -244,6 +244,9 @@
       let framesB = null;
       let totalFrames = 0;
       let currentProgress = 0;
+      let parallaxBootA = false;
+      let parallaxBootB = false;
+      let parallaxBLoading = false;
 
       function paintCanvas(canvas, frame) {
         if (!canvas || !frame) return;
@@ -253,11 +256,12 @@
       }
 
       function renderFrameAt(progress) {
-        if (!framesA || !framesB || totalFrames === 0) return;
+        if (!framesA || totalFrames === 0) return;
         const idx = Math.max(0, Math.min(totalFrames - 1, Math.round(progress * (totalFrames - 1))));
         const frame = idx < framesA.length
           ? framesA[idx]
           : framesB[idx - framesA.length];
+        if (!frame) return;
         paintCanvas(avatarCanvas, frame);
         paintCanvas(mAvatarCanvas, frame);
       }
@@ -295,26 +299,21 @@
         });
       }
 
-      /* Boot async · arranca extracción de frames en paralelo. Mientras carga,
-         mostramos los canvases con opacity 0 (CSS); cuando termina pintamos
-         frame 0 y añadimos .is-ready (fade in). Si falla, dejamos el canvas
-         invisible · el bloque sigue narrando con el texto y el tracker. */
-      let framesBooted = false;
-      const loadParallaxFrames = async () => {
-        if (framesBooted) return;
-        framesBooted = true;
+      /* Boot async por fases:
+         1) Cargamos solo preview 1 (bolita→newborn) cerca de viewport.
+         2) Cargamos preview 2 (newborn→baby) únicamente cuando el closing
+            entra en viewport. Esto reduce carga inicial en mobile.
+         Nota: hero-avatar.mp4 está deprecado y no se usa en runtime. */
+      const loadParallaxFramesA = async () => {
+        if (parallaxBootA) return;
+        parallaxBootA = true;
         const isMobile = window.matchMedia("(max-width: 960px)").matches;
         const FRAME_COUNT = reduced ? 2 : (isMobile ? 24 : 40);
         const URL_1 = "assets/parallax-1-bolita-to-newborn.mp4";
-        const URL_2 = "assets/parallax-2-newborn-to-baby.mp4";
         try {
-          const [fa, fb] = await Promise.all([
-            extractFrames(URL_1, FRAME_COUNT),
-            extractFrames(URL_2, FRAME_COUNT)
-          ]);
+          const fa = await extractFrames(URL_1, FRAME_COUNT);
           framesA = fa;
-          framesB = fb;
-          totalFrames = framesA.length + framesB.length;
+          totalFrames = framesA.length + (framesB ? framesB.length : 0);
           /* Ajustar canvas size al nativo del primer frame · evita stretch borroso. */
           const refFrame = framesA[0];
           if (refFrame) {
@@ -329,19 +328,51 @@
           console.warn("[parallax] frame extraction failed", e);
         }
       };
+      const loadParallaxFramesB = async () => {
+        if (parallaxBootB || parallaxBLoading) return;
+        if (!framesA || !framesA.length) return;
+        parallaxBLoading = true;
+        const isMobile = window.matchMedia("(max-width: 960px)").matches;
+        const FRAME_COUNT = reduced ? 2 : (isMobile ? 24 : 40);
+        const URL_2 = "assets/parallax-2-newborn-to-baby.mp4";
+        try {
+          const fb = await extractFrames(URL_2, FRAME_COUNT);
+          framesB = fb;
+          totalFrames = framesA.length + framesB.length;
+          parallaxBootB = true;
+          renderFrameAt(currentProgress);
+        } catch (e) {
+          console.warn("[parallax] frame extraction failed (part 2)", e);
+        } finally {
+          parallaxBLoading = false;
+        }
+      };
 
       const narrativeShell = document.querySelector(".narrative-shell");
       if (narrativeShell && "IntersectionObserver" in window) {
         const preloadObserver = new IntersectionObserver((entries, observer) => {
           entries.forEach((entry) => {
             if (!entry.isIntersecting) return;
-            loadParallaxFrames();
+            loadParallaxFramesA();
             observer.unobserve(entry.target);
           });
         }, { rootMargin: "280px 0px", threshold: 0.01 });
         preloadObserver.observe(narrativeShell);
       } else {
-        loadParallaxFrames();
+        loadParallaxFramesA();
+      }
+      const narrativeClosing = document.querySelector(".narrative-closing");
+      if (narrativeClosing && "IntersectionObserver" in window) {
+        const loadSecondObserver = new IntersectionObserver((entries, observer) => {
+          entries.forEach((entry) => {
+            if (!entry.isIntersecting) return;
+            loadParallaxFramesB();
+            observer.unobserve(entry.target);
+          });
+        }, { rootMargin: "200px 0px", threshold: 0.1 });
+        loadSecondObserver.observe(narrativeClosing);
+      } else {
+        loadParallaxFramesB();
       }
 
       if (!reduced) {
