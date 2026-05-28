@@ -866,6 +866,16 @@
         <h2>Tres formas de entrar. La primera, siempre gratis.</h2>
         <p>Empieza con 14 días de Plus completo sin tarjeta — si no es para ti, te quedas en gratis sin perder nada.</p>
       </div>
+      <div class="billing-choice" role="group" aria-label="Periodicidad de pago">
+        <label class="billing-toggle" for="billingAnnual">
+          <input id="billingAnnual" type="checkbox" data-billing-toggle aria-controls="pricing">
+          <span class="billing-toggle-track" aria-hidden="true"><span></span></span>
+          <span class="billing-toggle-copy">
+            <strong>Pagar anual</strong>
+            <small>Ahorra 42% en Grow Plus</small>
+          </span>
+        </label>
+      </div>
       <div class="pricing-grid">
         <!-- Tier Gratis · primero porque el research v0.3 marcó la inclusividad
              del free como prerrequisito (renta baja + prescripción médica).
@@ -898,11 +908,22 @@
           </ul>
           <a class="cta coral" href="waitlist.html">Reservar plaza</a>
         </article>
-        <article class="plan">
+        <article
+          class="plan"
+          data-billing-plan="plus"
+          data-monthly-amount="€9,99"
+          data-monthly-per="/ mes"
+          data-monthly-foot="También anual: €69,99 · ahorras 42%"
+          data-monthly-href="waitlist.html?plan=plus_monthly"
+          data-annual-amount="€69,99"
+          data-annual-per="/ año"
+          data-annual-foot="Equivale a €5,83/mes · ahorras 42%"
+          data-annual-href="waitlist.html?plan=plus_annual"
+        >
           <span class="tier">Plus · por defecto</span>
           <h3>Grow Plus</h3>
-          <div class="price"><span class="amt">€9,99</span><span class="per">/ mes</span></div>
-          <p class="price-foot">o €69,99 al año · <strong>–42%</strong></p>
+          <div class="price" aria-live="polite"><span class="amt" data-billing-amount>€9,99</span><span class="per" data-billing-per>/ mes</span></div>
+          <p class="price-foot" data-billing-foot>También anual: €69,99 · ahorras 42%</p>
           <p class="plan-includes"><strong>Todo lo incluido en Free</strong>, y además:</p>
           <ul class="features">
             <li>Acceso a todos los libros</li>
@@ -910,7 +931,7 @@
             <li>Exportación en PDF para el pediatra</li>
             <li>Consultas 1:1 a menor precio</li>
           </ul>
-          <a class="cta ghost" href="waitlist.html">Empezar 14 días</a>
+          <a class="cta ghost" href="waitlist.html?plan=plus_monthly" data-billing-cta>Empezar 14 días</a>
         </article>
       </div>
     </div>

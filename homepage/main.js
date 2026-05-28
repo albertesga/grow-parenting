@@ -626,7 +626,35 @@
         });
       }
 
-      /* 6 · Book sheet · shared-element transition libro embarazo → bottom sheet
+      /* 6 · Pricing billing toggle · mensual/anual */
+      const billingToggle = document.querySelector("[data-billing-toggle]");
+      const billingPlans = Array.from(document.querySelectorAll("[data-billing-plan]"));
+      function setPricingBilling(isAnnual) {
+        billingPlans.forEach((plan) => {
+          const mode = isAnnual ? "annual" : "monthly";
+          const amount = plan.dataset[`${mode}Amount`];
+          const per = plan.dataset[`${mode}Per`];
+          const foot = plan.dataset[`${mode}Foot`];
+          const href = plan.dataset[`${mode}Href`];
+          const amountNode = plan.querySelector("[data-billing-amount]");
+          const perNode = plan.querySelector("[data-billing-per]");
+          const footNode = plan.querySelector("[data-billing-foot]");
+          const ctaNode = plan.querySelector("[data-billing-cta]");
+          plan.classList.toggle("is-annual", isAnnual);
+          if (amount && amountNode) amountNode.textContent = amount;
+          if (per && perNode) perNode.textContent = per;
+          if (foot && footNode) footNode.textContent = foot;
+          if (href && ctaNode) ctaNode.setAttribute("href", href);
+        });
+      }
+      if (billingToggle && billingPlans.length) {
+        setPricingBilling(billingToggle.checked);
+        billingToggle.addEventListener("change", () => {
+          setPricingBilling(billingToggle.checked);
+        });
+      }
+
+      /* 7 · Book sheet · shared-element transition libro embarazo → bottom sheet
          Timeline:
          · 0-150ms  · lift source card + start backdrop dim
          · 100-450ms · sheet rises (CSS transition con delay 100) ·
@@ -771,7 +799,7 @@
             { title: "Recetas simples", copy: "Ideas por edad y textura para resolver una comida sin abrir diez búsquedas." },
             { title: "Probado en diario", copy: "Marca un alimento como probado y queda guardado para toda la familia." },
             { title: "Señales de cuidado", copy: "Atragantamiento, alergia y cuándo pedir ayuda, explicado sin dramatizar." },
-            { title: "Plan IA", copy: "Compara tu contexto con guías públicas y te ayuda a decidir el siguiente alimento." }
+            { title: "Plan IA", copy: "Compara tu contexto con guías públicas y te muestra opciones para el siguiente alimento." }
           ],
           avalChips: [
             { tone: "coral", text: "AEPED" },
