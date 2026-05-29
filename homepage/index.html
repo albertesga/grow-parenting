@@ -24,7 +24,7 @@
   <meta name="twitter:description" content="App de crianza para familias hispanohablantes. Durante los primeros 1.000 días de tu hij@.">
   <meta name="twitter:image" content="https://mimo.family/assets/mimo-og.png">
 
-  <link rel="stylesheet" href="styles.css?v=20260529d">
+  <link rel="stylesheet" href="styles.css?v=20260529e">
 </head>
 <body>
   <!-- Floating halo · burbuja coral que viaja por el scroll desde detrás
@@ -376,6 +376,9 @@
           <div>
             <h3>Sesiones uno a uno</h3>
             <p>Llamadas 1:1 con un profesional cuando necesitas hablar con alguien que te entienda.</p>
+            <button class="team-card-cta" type="button" data-modal-open="llamadas">
+              Más información sobre las llamadas <span aria-hidden="true">→</span>
+            </button>
           </div>
         </article>
 
@@ -927,6 +930,7 @@
           <p class="plan-includes"><strong>Todo lo incluido en Free</strong>, y además:</p>
           <ul class="features">
             <li>Acceso a todos los libros</li>
+            <li>Libro de recuerdos con fotos ilimitadas</li>
             <li>Cuenta compartida</li>
             <li>Exportación en PDF para el pediatra</li>
             <li>Consultas 1:1 a menor precio</li>
@@ -952,6 +956,7 @@
           <p class="plan-includes"><strong>Todo lo incluido en Free</strong>, y además:</p>
           <ul class="features">
             <li>Acceso a todos los libros</li>
+            <li>Libro de recuerdos con fotos ilimitadas</li>
             <li>Cuenta compartida</li>
             <li>Exportación en PDF para el pediatra</li>
             <li>Consultas 1:1 a menor precio</li>
@@ -1051,6 +1056,51 @@
           </div>
         </div>
       </div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════════════════════════════════
+       MODAL · LLAMADAS 1:1 · precio miembro Mimo
+       Se abre desde "Más información sobre las llamadas" (.team-card-call) ·
+       misma mecánica que #datos (initSheetModals). Reusa .datos-overlay +
+       .comite-card. Cada rol muestra precio miembro (55€ tachado → 30€) y un
+       pack global de 10 llamadas. Informativo (sin checkout). -->
+  <div class="datos-overlay" id="llamadas" aria-hidden="true">
+    <div class="datos-backdrop" data-datos-close></div>
+    <div class="datos-modal datos-modal--wide" role="dialog" aria-modal="true" aria-labelledby="llamadas-title" tabindex="-1">
+      <button class="datos-close" type="button" aria-label="Cerrar" data-datos-close>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+      <span class="eyebrow">Llamadas 1:1 · precio miembro Mimo</span>
+      <h2 id="llamadas-title">Por ser miembro de Mimo, precio especial en tus llamadas 1:1.</h2>
+      <p class="datos-lead">Habla con un profesional cuando lo necesites — sin esperas, con criterio clínico.</p>
+      <div class="llamadas-grid">
+        <article class="comite-card llamada-card t-mint">
+          <div class="specialty t-mint">Coach del sueño</div>
+          <span class="avatar"><svg viewBox="0 0 32 32"><use href="#dr-3"/></svg></span>
+          <p class="center">Rutinas y ventanas de sueño por edad, a tu ritmo.</p>
+          <div class="llamada-price"><s>55 €</s><span class="amt">30 €</span><span class="per">/ llamada</span></div>
+        </article>
+        <article class="comite-card llamada-card t-gold">
+          <div class="specialty t-gold">Pediatra</div>
+          <span class="avatar"><svg viewBox="0 0 32 32"><use href="#dr-1"/></svg></span>
+          <p class="center">Dudas de salud, síntomas y qué vigilar.</p>
+          <div class="llamada-price"><s>55 €</s><span class="amt">30 €</span><span class="per">/ llamada</span></div>
+        </article>
+        <article class="comite-card llamada-card t-blush">
+          <div class="specialty t-blush">Psicólogo/a infantil</div>
+          <span class="avatar"><svg viewBox="0 0 32 32"><use href="#dr-4"/></svg></span>
+          <p class="center">Conducta, rabietas y desarrollo emocional.</p>
+          <div class="llamada-price"><s>55 €</s><span class="amt">30 €</span><span class="per">/ llamada</span></div>
+        </article>
+        <article class="comite-card llamada-card t-coral">
+          <div class="specialty t-coral">Neonatólogo/a</div>
+          <span class="avatar"><svg viewBox="0 0 32 32"><use href="#dr-2"/></svg></span>
+          <p class="center">Primeras semanas, prematuridad y UCIN.</p>
+          <div class="llamada-price"><s>55 €</s><span class="amt">30 €</span><span class="per">/ llamada</span></div>
+        </article>
+      </div>
+      <p class="llamadas-pack">¿Vas a necesitar varias? Pack de <strong>10 llamadas por 250 €</strong> — 25 €/llamada.</p>
     </div>
   </div>
 
@@ -1230,6 +1280,6 @@
     </div>
   </div>
 
-  <script src="main.js?v=20260529d" defer></script>
+  <script src="main.js?v=20260529e" defer></script>
 </body>
 </html>

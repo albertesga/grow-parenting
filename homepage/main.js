@@ -772,9 +772,7 @@
         }, { passive: false });
       }
 
-      const EASE_OUT   = "cubic-bezier(0.22, 0.61, 0.36, 1)"; /* mirror de var(--ease-sheet) · WAAPI no resuelve var() */
       const EASE_LIFT  = "cubic-bezier(0.34, 1.20, 0.64, 1)";
-      const EASE_HINGE = "cubic-bezier(0.32, 0.04, 0.24, 0.99)";
 
       /* ────────────────────────────────────────────────────────────────
          Book config · data-driven modal · single overlay HTML, contenido
@@ -1173,6 +1171,7 @@
       let bsOpen = false;
       let bsBusy = false;
       let lastFocused = null;
+      let bsRunId = 0;
       /* Pending intent · si el user toca/escapa mientras una animación está
          en curso, encolamos su intención y la procesamos al terminar.
          Evita "clicks perdidos" y permite Esc durante el opening. */
@@ -1185,6 +1184,41 @@
       }
 
       function wait(ms) { return new Promise((r) => setTimeout(r, ms)); }
+
+      function cancelBookAnimations(extra = []) {
+        [bsSheet, bsFrame, bsSpinner, sourceCard, ...extra].forEach((el) => {
+          if (el && el.getAnimations) el.getAnimations().forEach((a) => a.cancel());
+        });
+      }
+
+      function animateAndSet(el, keyframes, options, finalStyles = {}) {
+        const anim = el.animate(keyframes, options);
+        return anim.finished.then(() => {
+          Object.entries(finalStyles).forEach(([prop, value]) => {
+            el.style[prop] = value;
+          });
+          anim.cancel();
+        });
+      }
+
+      function clearBookSheetState() {
+        bsOverlay.classList.remove("is-active", "is-closing", "is-book-opening", "is-book-open", "is-content-ready");
+        bsOverlay.setAttribute("aria-hidden", "true");
+        document.body.classList.remove("bs-locked");
+        setBackgroundInert(false);
+        cancelBookAnimations();
+        bsSheet.style.transform = "";
+        bsFrame.style.opacity = "";
+        bsFrame.style.transform = "";
+        bsSpinner.style.transition = "";
+        bsSpinner.style.transform = "";
+        bsClose.classList.remove("is-ready");
+        if (sourceCard) {
+          sourceCard.style.transition = "";
+          sourceCard.style.opacity = "";
+          sourceCard.classList.remove("is-lifting");
+        }
+      }
 
       /* Mide el rect natural del cover-frame asumiendo sheet en posición FINAL
          (translate(-50%, 0)) sin disparar transitions. Necesario porque el
@@ -1210,15 +1244,21 @@
         if (!sourceCard || !bsOverlay) return;
         if (bsBusy) { bsPending = "open"; return; }
         if (bsOpen) return;
+        const runId = ++bsRunId;
         bsBusy = true;
         lastFocused = document.activeElement;
         bsOverlay.setAttribute("aria-hidden", "false");
         document.body.classList.add("bs-locked");
         setBackgroundInert(true);
+        /* El usuario queda dentro del diálogo desde el primer frame; al final
+           de la apertura movemos foco al primer control real. */
+        bsOverlay.focus();
 
         if (reduced) {
           /* Reduced motion · skip animations · sheet aparece sin transition */
-          bsOverlay.classList.add("is-active");
+          cancelBookAnimations();
+          bsOverlay.classList.add("is-active", "is-book-open", "is-content-ready");
+          bsSheet.style.transform = "translate(-50%, 0%)";
           bsSpinner.style.transform = "rotateY(-180deg)";
           bsFrame.style.transform = "none";
           bsFrame.style.opacity = "1";
@@ -1230,13 +1270,38 @@
           return;
         }
 
-        /* Reset estados por si vienen de un close incompleto */
+        cancelBookAnimations();
+        bsOverlay.classList.remove("is-closing", "is-book-opening", "is-book-open", "is-content-ready");
+        bsClose.classList.remove("is-ready");
+        bsSheet.style.transform = "translate(-50%, 100%)";
+        bsFrame.style.transform = "";
+        bsFrame.style.opacity = "0";
         bsSpinner.style.transition = "none";
         bsSpinner.style.transform = "rotateY(0deg)";
-        void bsSpinner.offsetWidth;
-        bsFrame.style.opacity = "0";
 
-        /* === Phase 1 · 0-150ms · lift source card + backdrop start dim ====== */
+        /* === Medición única (sin reflow por frame) · destino de la portada con
+           el sheet en su posición FINAL, y origen = card clicada =============== */
+        const tgtRect = measureTargetRect();
+        const srcRect = sourceCard.getBoundingClientRect();
+        const dx = (srcRect.left + srcRect.width / 2) - (tgtRect.left + tgtRect.width / 2);
+        const dy = (srcRect.top  + srcRect.height / 2) - (tgtRect.top  + tgtRect.height / 2);
+        const scale = Math.max(srcRect.width / tgtRect.width, srcRect.height / tgtRect.height);
+        /* El sheet arranca desplazado +offsetHeight (translateY 100%). La portada
+           va DENTRO del sheet, así que restamos ese desplazamiento del origen del
+           FLIP: así el viaje card→header es una recta limpia aunque el sheet suba
+           simultáneamente (sheetOffset(t) + flip(t) componen una sola recta). */
+        const sheetH = bsSheet.offsetHeight;
+
+        const SHEET_DUR = 640;
+        const COVER_DUR = 760;
+        const SHEET_EASE = "cubic-bezier(0.2, 0.72, 0.2, 1)";
+        const COVER_EASE = "cubic-bezier(0.2, 0.7, 0.2, 1)";
+
+        /* 1) Modal + libro cerrado viajan juntos. El cover NO gira todavía:
+           primero se coloca el libro cerrado dentro del header del sheet. */
+        bsOverlay.classList.add("is-active");
+        bsFrame.style.opacity = "1";
+
         sourceCard.classList.add("is-lifting");
         sourceCard.animate(
           [
@@ -1245,56 +1310,60 @@
           ],
           { duration: 150, easing: EASE_LIFT, fill: "forwards" }
         );
-
-        /* === Phase 2 · 100-450ms · sheet rises + book moves to header ======= */
-        /* Esperar hasta T=100ms para alinear con el delay de la sheet CSS transition */
-        await wait(100);
-
-        /* Medir el rect del cover-frame en su posición FINAL (sheet at translateY 0) */
-        const tgtRect = measureTargetRect();
-        const srcRect = sourceCard.getBoundingClientRect();
-        const dx = (srcRect.left + srcRect.width / 2) - (tgtRect.left + tgtRect.width / 2);
-        const dy = (srcRect.top  + srcRect.height / 2) - (tgtRect.top  + tgtRect.height / 2);
-        const sx = srcRect.width  / tgtRect.width;
-        const sy = srcRect.height / tgtRect.height;
-        const scale = Math.max(sx, sy);
-
-        /* Activar overlay · dispara backdrop fade + sheet rise (CSS transition 350ms con delay 0 ya consumido) */
-        bsOverlay.classList.add("is-active");
-        bsFrame.style.opacity = "1";
-
-        /* FLIP del cover-frame · misma duración (350ms) y easing que la sheet
-           para que el book quede sincronizado con el header rising. */
-        const moveAnim = bsFrame.animate(
-          [
-            { transform: `translate(${dx}px, ${dy}px) scale(${scale})`, offset: 0 },
-            { transform: "translate(0, 0) scale(1)", offset: 1 }
-          ],
-          { duration: 350, easing: EASE_OUT, fill: "forwards" }
-        );
-
-        /* Source card desaparece */
         sourceCard.style.transition = "opacity 140ms ease";
         sourceCard.style.opacity = "0";
 
-        /* === Phase 3 · 250-700ms · spine rotation =========================== */
-        /* Arrancar el rotate a los 150ms de phase 2 (T=250ms total) · solapa con el move */
-        await wait(150);
-        const spinAnim = bsSpinner.animate(
+        const sheetIn = animateAndSet(
+          bsSheet,
+          [{ transform: "translate(-50%, 100%)" }, { transform: "translate(-50%, 0%)" }],
+          { duration: SHEET_DUR, easing: SHEET_EASE, fill: "forwards" },
+          { transform: "translate(-50%, 0%)" }
+        );
+        const coverMove = animateAndSet(
+          bsFrame,
           [
-            { transform: "rotateY(0deg)" },
-            { transform: "rotateY(-90deg)", offset: 0.5 },
-            { transform: "rotateY(-180deg)" }
+            { transform: `translate(${dx}px, ${dy - sheetH}px) scale(${scale})` },
+            { transform: "translate(0px, 0px) scale(1)" }
           ],
-          { duration: 450, easing: EASE_HINGE, fill: "forwards" }
+          { duration: SHEET_DUR, easing: SHEET_EASE, fill: "forwards" },
+          { transform: "translate(0px, 0px) scale(1)" }
         );
 
-        /* === Phase 4 · 500-800ms · invisible swap automático via backface ==== */
+        try {
+          await Promise.all([sheetIn, coverMove]);
+          if (runId !== bsRunId) return;
+          await wait(90);
+          if (runId !== bsRunId) return;
 
-        /* === Phase 5 · 700-1000ms · body content fade in (CSS delay 600ms) === */
-        /* Body slides+fades automaticamente por CSS .bs-overlay.is-active .bs-body */
-
-        await Promise.all([moveAnim.finished, spinAnim.finished]);
+          /* 2) Con el modal ya asentado, el libro se abre. La página derecha
+             aparece durante el giro; el contenido entra solo al final. */
+          bsOverlay.classList.add("is-book-opening");
+          await animateAndSet(
+            bsSpinner,
+            [
+              { transform: "rotateY(0deg) translateX(0px) translateZ(0px)", offset: 0 },
+              { transform: "rotateY(-24deg) translateX(-2px) translateZ(8px)", offset: 0.12 },
+              { transform: "rotateY(-58deg) translateX(-5px) translateZ(18px)", offset: 0.28 },
+              { transform: "rotateY(-92deg) translateX(-7px) translateZ(24px)", offset: 0.48 },
+              { transform: "rotateY(-128deg) translateX(-5px) translateZ(18px)", offset: 0.68 },
+              { transform: "rotateY(-162deg) translateX(-2px) translateZ(7px)", offset: 0.88 },
+              { transform: "rotateY(-180deg) translateX(0px) translateZ(0px)", offset: 1 }
+            ],
+            { duration: COVER_DUR, easing: COVER_EASE, fill: "forwards" },
+            { transform: "rotateY(-180deg)" }
+          );
+          if (runId !== bsRunId) return;
+        } catch (e) {
+          if (runId === bsRunId) {
+            clearBookSheetState();
+            bsOpen = false;
+            bsBusy = false;
+            bsProcessPending();
+          }
+          return;
+        }
+        bsOverlay.classList.remove("is-book-opening");
+        bsOverlay.classList.add("is-book-open", "is-content-ready");
         bsClose.classList.add("is-ready");
         bsOpen = true;
         bsBusy = false;
@@ -1306,16 +1375,12 @@
         if (!sourceCard) return;
         if (bsBusy) { bsPending = "close"; return; }
         if (!bsOpen) return;
+        const runId = ++bsRunId;
         bsBusy = true;
         bsClose.classList.remove("is-ready");
 
         if (reduced) {
-          bsOverlay.classList.remove("is-active");
-          bsOverlay.setAttribute("aria-hidden", "true");
-          document.body.classList.remove("bs-locked");
-          setBackgroundInert(false);
-          sourceCard.style.opacity = "";
-          sourceCard.classList.remove("is-lifting");
+          clearBookSheetState();
           bsOpen = false;
           bsBusy = false;
           lastFocused?.focus?.();
@@ -1323,54 +1388,93 @@
           return;
         }
 
-        /* Close simultáneo · TODAS las animaciones disparan en T=0 ·
-           cero pausa muerta como antes (rotateSpin awaited 280ms con todo
-           lo demás quieto). Trace en DevTools Performance · close en ~300ms.
-           · is-closing aplicado primero · dispara CSS transitions del sheet,
-             body, backdrop, page-right, features (todo en paralelo).
-           · closeMove WAAPI para el cover-frame (shrink + fade al source rect).
-           · NO hay closeSpin · el cover ya no necesita un-rotate · al hacer
-             fade + shrink simultáneo el user no nota la pose final del cover.
-           · sourceCard opacity 1 sin delay (close más rápido · no necesario). */
+        cancelBookAnimations();
+        bsSheet.style.transform = "translate(-50%, 0%)";
+        bsFrame.style.transform = "translate(0px, 0px) scale(1)";
+        bsFrame.style.opacity = "1";
+        bsSpinner.style.transform = "rotateY(-180deg)";
+        bsOverlay.classList.remove("is-content-ready");
+
+        const COVER_DUR = 620;
+        const DROP_DUR = 620;
+        const COVER_EASE = "cubic-bezier(0.32, 0.02, 0.18, 1)";
+        const DROP_EASE = "cubic-bezier(0.38, 0, 0.18, 1)";
+
+        try {
+          /* 1) Primero se cierra el libro dentro del modal. El sheet no baja
+             todavía; evita la sensación de que todo se desarma a la vez. */
+          await animateAndSet(
+            bsSpinner,
+            [
+              { transform: "rotateY(-180deg) translateX(0px) translateZ(0px)", offset: 0 },
+              { transform: "rotateY(-156deg) translateX(-2px) translateZ(7px)", offset: 0.12 },
+              { transform: "rotateY(-120deg) translateX(-5px) translateZ(18px)", offset: 0.32 },
+              { transform: "rotateY(-84deg) translateX(-7px) translateZ(24px)", offset: 0.54 },
+              { transform: "rotateY(-46deg) translateX(-4px) translateZ(16px)", offset: 0.76 },
+              { transform: "rotateY(-14deg) translateX(-1px) translateZ(5px)", offset: 0.92 },
+              { transform: "rotateY(0deg) translateX(0px) translateZ(0px)", offset: 1 }
+            ],
+            { duration: COVER_DUR, easing: COVER_EASE, fill: "forwards" },
+            { transform: "rotateY(0deg)" }
+          );
+          if (runId !== bsRunId) return;
+        } catch (e) {
+          if (runId === bsRunId) {
+            clearBookSheetState();
+            bsOpen = false;
+            bsBusy = false;
+            bsProcessPending();
+          }
+          return;
+        }
+
+        bsOverlay.classList.remove("is-book-opening", "is-book-open");
+        bsOverlay.classList.add("is-closing");
+        await wait(40);
+        if (runId !== bsRunId) return;
+
+        /* 2) Con el libro ya cerrado, el modal baja y la portada cerrada vuelve
+           al rect de la card de origen. */
         const tgtRect = bsFrame.getBoundingClientRect();
         const srcRect = sourceCard.getBoundingClientRect();
         const dx = (srcRect.left + srcRect.width / 2) - (tgtRect.left + tgtRect.width / 2);
         const dy = (srcRect.top  + srcRect.height / 2) - (tgtRect.top  + tgtRect.height / 2);
-        const sx = srcRect.width  / tgtRect.width;
-        const sy = srcRect.height / tgtRect.height;
-        const scale = Math.max(sx, sy);
+        const scale = Math.max(srcRect.width / tgtRect.width, srcRect.height / tgtRect.height);
+        const sheetH = bsSheet.offsetHeight;
 
-        sourceCard.style.transition = "opacity 200ms ease 40ms";
+        const sheetOut = animateAndSet(
+          bsSheet,
+          [{ transform: "translate(-50%, 0%)" }, { transform: "translate(-50%, 100%)" }],
+          { duration: DROP_DUR, easing: DROP_EASE, fill: "forwards" },
+          { transform: "translate(-50%, 100%)" }
+        );
+        const coverBack = animateAndSet(
+          bsFrame,
+          [
+            { transform: "translate(0px, 0px) scale(1)", opacity: 1, offset: 0 },
+            { transform: `translate(${dx}px, ${dy - sheetH}px) scale(${scale})`, opacity: 1, offset: 0.72 },
+            { transform: `translate(${dx}px, ${dy - sheetH}px) scale(${scale})`, opacity: 0, offset: 1 }
+          ],
+          { duration: DROP_DUR, easing: DROP_EASE, fill: "forwards" },
+          { transform: `translate(${dx}px, ${dy - sheetH}px) scale(${scale})`, opacity: "0" }
+        );
+        sourceCard.style.transition = `opacity 220ms ease ${Math.round(DROP_DUR * 0.72)}ms`;
         sourceCard.style.opacity = "1";
 
-        bsOverlay.classList.add("is-closing");
+        try {
+          await Promise.all([sheetOut, coverBack]);
+          if (runId !== bsRunId) return;
+        } catch (e) {
+          if (runId === bsRunId) {
+            clearBookSheetState();
+            bsOpen = false;
+            bsBusy = false;
+            bsProcessPending();
+          }
+          return;
+        }
 
-        const closeMove = bsFrame.animate(
-          [
-            { transform: "translate(0, 0) scale(1)", opacity: 1 },
-            { transform: `translate(${dx}px, ${dy}px) scale(${scale})`, opacity: 0 }
-          ],
-          { duration: 300, easing: EASE_OUT, fill: "forwards" }
-        );
-
-        await closeMove.finished;
-
-        /* Cleanup · reset todo y devuelve estilos */
-        bsOverlay.classList.remove("is-active");
-        bsOverlay.classList.remove("is-closing");
-        bsOverlay.setAttribute("aria-hidden", "true");
-        document.body.classList.remove("bs-locked");
-        setBackgroundInert(false);
-        bsFrame.style.opacity = "";
-        bsFrame.getAnimations().forEach((a) => a.cancel());
-        bsSpinner.getAnimations().forEach((a) => a.cancel());
-        bsSpinner.style.transition = "";
-        bsSpinner.style.transform = "";
-        sourceCard.style.transition = "";
-        sourceCard.style.opacity = "";
-        sourceCard.classList.remove("is-lifting");
-        sourceCard.getAnimations().forEach((a) => a.cancel());
-
+        clearBookSheetState();
         bsOpen = false;
         bsBusy = false;
         lastFocused?.focus?.();
@@ -1561,45 +1665,43 @@
        Modal · Datos (data-trust) · se abre desde "Datos privados" (footer) ·
        no se muestra inline. Cierre por backdrop / X / Escape · restaura foco
        al trigger. Scroll lock reutiliza body.bs-locked. */
-    (function initDatosModal() {
-      const overlay = document.getElementById("datos");
-      if (!overlay || !overlay.classList.contains("datos-overlay")) return;
-      const modal = overlay.querySelector(".datos-modal");
-      let lastTrigger = null;
+    /* Modales tipo sheet (.datos-overlay) · reusable para #datos, #llamadas, …
+       Triggers: [data-modal-open="<id>"] o <a href="#<id>">. Cierre: backdrop/X
+       ([data-datos-close]) + Escape. Scroll lock vía body.bs-locked · restaura foco. */
+    (function initSheetModals() {
+      function wire(id, triggerSel) {
+        const overlay = document.getElementById(id);
+        if (!overlay || !overlay.classList.contains("datos-overlay")) return;
+        const modal = overlay.querySelector(".datos-modal");
+        let lastTrigger = null;
 
-      const open = (trigger) => {
-        lastTrigger = trigger || null;
-        overlay.classList.add("is-open");
-        overlay.setAttribute("aria-hidden", "false");
-        document.body.classList.add("bs-locked");
-        if (modal) { try { modal.focus(); } catch (e) {} }
-      };
-      const close = () => {
-        if (!overlay.classList.contains("is-open")) return;
-        overlay.classList.remove("is-open");
-        overlay.setAttribute("aria-hidden", "true");
-        document.body.classList.remove("bs-locked");
-        if (lastTrigger && typeof lastTrigger.focus === "function") {
-          try { lastTrigger.focus(); } catch (e) {}
-        }
-        lastTrigger = null;
-      };
+        const open = (trigger) => {
+          lastTrigger = trigger || null;
+          overlay.classList.add("is-open");
+          overlay.setAttribute("aria-hidden", "false");
+          document.body.classList.add("bs-locked");
+          if (modal) { try { modal.focus(); } catch (e) {} }
+        };
+        const close = () => {
+          if (!overlay.classList.contains("is-open")) return;
+          overlay.classList.remove("is-open");
+          overlay.setAttribute("aria-hidden", "true");
+          document.body.classList.remove("bs-locked");
+          if (lastTrigger && typeof lastTrigger.focus === "function") {
+            try { lastTrigger.focus(); } catch (e) {}
+          }
+          lastTrigger = null;
+        };
 
-      // Triggers · [data-datos-open] o cualquier <a href="#datos">
-      document.querySelectorAll('[data-datos-open], a[href="#datos"], a[href$="/#datos"]').forEach((el) => {
-        el.addEventListener("click", (e) => {
-          e.preventDefault();
-          open(el);
+        document.querySelectorAll(triggerSel).forEach((el) => {
+          el.addEventListener("click", (e) => { e.preventDefault(); open(el); });
         });
-      });
+        overlay.querySelectorAll("[data-datos-close]").forEach((el) => {
+          el.addEventListener("click", close);
+        });
+        document.addEventListener("keydown", (e) => { if (e.key === "Escape") close(); });
+      }
 
-      // Cierre · backdrop + botón X
-      overlay.querySelectorAll("[data-datos-close]").forEach((el) => {
-        el.addEventListener("click", close);
-      });
-
-      // Cierre · Escape
-      document.addEventListener("keydown", (e) => {
-        if (e.key === "Escape") close();
-      });
+      wire("datos", '[data-datos-open], [data-modal-open="datos"], a[href="#datos"], a[href$="/#datos"]');
+      wire("llamadas", '[data-modal-open="llamadas"], a[href="#llamadas"]');
     })();

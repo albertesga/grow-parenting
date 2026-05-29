@@ -55,9 +55,9 @@ font-weight: 700; /* Bold · CTAs, callouts */
 
 ### Grift (acento pricing)
 
-**Cuándo** · ÚNICAMENTE `.plan .price .amt` · el número grande del precio
-(€0 / €1,99 / €9,99). El `.per` (/mes) y `.price-foot` (€69,99 anual)
-usan Inter como el resto del body.
+**Cuándo** · ÚNICAMENTE en números de precio · `.plan .price .amt` (pricing:
+€0 / €1,99 / €9,99) y `.llamada-price .amt` (precio de llamadas 1:1: 30 €).
+El `.per` (/mes, /llamada) y `.price-foot` usan Inter como el resto del body.
 
 **Por qué exclusivo** · acento geométrico distintivo en un único punto ·
 si Grift apareciese en body habría conflicto con Inter y se perdería el

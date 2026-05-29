@@ -27,8 +27,9 @@
       font-display: swap;
     }
     /* Grift · 9 weights (Thin 100 → Black 900) × normal + italic = 18 cortes.
-       USO RESTRINGIDO · solo `.plan .price .amt` (número grande del precio).
-       Se mantiene como acento geométrico distintivo en el pricing. */
+       USO RESTRINGIDO · solo números de precio: `.plan .price .amt` (pricing)
+       y `.llamada-price .amt` (precio de llamadas 1:1). Acento geométrico
+       distintivo reservado a precios. */
     @font-face { font-family: "Grift"; src: url("assets/fonts/Grift-Thin.ttf") format("truetype"); font-weight: 100; font-style: normal; font-display: swap; }
     @font-face { font-family: "Grift"; src: url("assets/fonts/Grift-ThinItalic.ttf") format("truetype"); font-weight: 100; font-style: italic; font-display: swap; }
     @font-face { font-family: "Grift"; src: url("assets/fonts/Grift-ExtraLight.ttf") format("truetype"); font-weight: 200; font-style: normal; font-display: swap; }
@@ -83,7 +84,7 @@
       --font-serif:   "Galiner", "Bodoni Moda", "Playfair Display", Georgia, serif;
       --font-display: "Galiner", "Bodoni Moda", "Playfair Display", Georgia, serif; /* alias retrocompat */
       --font-text:    "Inter", system-ui, -apple-system, sans-serif;
-      --font-price:   "Grift", "Inter", sans-serif; /* SOLO `.plan .price .amt` (número grande €X,XX) */
+      --font-price:   "Grift", "Inter", sans-serif; /* SOLO números de precio · `.plan .price .amt` + `.llamada-price .amt` */
       --font-mono:    "JetBrains Mono", "SF Mono", ui-monospace, monospace;
 
       /* radii */
@@ -4077,10 +4078,12 @@
     }
 
     /* ════════════════════════════════════════════════════════════════════
-       § BOOK-SHEET · shared-element transition · libro embarazo → bottom sheet
-       Phases · 0-150 lift+dim · 100-450 sheet rises + book moves to header ·
-       250-700 spine rotate · 500-800 invisible content swap via backface ·
-       700-1000 body content fades in (summary / chapters / related / actions).
+       § BOOK-SHEET · shared-element transition · libro → bottom sheet
+       JS owns the sheet transform. Sequence:
+       open  · sheet + libro cerrado viajan al header · luego cover 3D abre ·
+               después aparece contenido.
+       close · contenido sale · cover 3D cierra · luego sheet baja mientras el
+               libro cerrado vuelve a la card.
        ════════════════════════════════════════════════════════════════════ */
     .bs-overlay {
       position: fixed;
@@ -4150,8 +4153,9 @@
       transform-style: preserve-3d;
       backface-visibility: hidden;
       -webkit-backface-visibility: hidden;
-      /* Phase 2 timing · sube 100-490ms (390ms con delay 100ms) · spring soft */
-      transition: transform 390ms cubic-bezier(0.32, 1.18, 0.42, 1.0) 100ms;
+      /* JS controla transform vía WAAPI. Mantener CSS sin transición evita
+         carreras entre fill:forwards y reglas .is-active/.is-closing. */
+      transition: none;
     }
     .bs-sheet[data-tone="coral"] {
       --bs-soft: var(--coral-subtle);
@@ -4196,10 +4200,6 @@
       --bs-page: var(--paper);
     }
     .bs-overlay.is-active .bs-sheet { transform: translate(-50%, 0); }
-    .bs-overlay.is-closing .bs-sheet {
-      transform: translate(-50%, 100%);
-      transition: transform 300ms cubic-bezier(0.45, 0, 0.7, 0.2);
-    }
 
     /* Drag handle visual */
     .bs-handle {
@@ -4296,14 +4296,16 @@
       outline-offset: 3px;
     }
 
-    /* El libro abierto · más compacto que en modal centrado · aspect ratio
-       16/9 para que sirva como header en lugar de hero centrado. */
+    /* El libro abierto conserva la proporción de las cards `.r-book`.
+       Card cerrada: 172×256 ≈ 0.672. Libro abierto = dos portadas lado a
+       lado: 344×256 = 43/32. Así cada página mantiene el mismo aspect ratio
+       visual que el libro de la homepage durante el shared transition. */
     .bs-book {
       position: relative;
       width: 100%;
-      max-width: 560px;
+      max-width: min(560px, 70vh);
       margin: 0 auto;
-      aspect-ratio: 16 / 9;
+      aspect-ratio: 43 / 32;
       transform-style: preserve-3d;
     }
 
@@ -4329,13 +4331,12 @@
       opacity: 0;
       overflow: hidden;
     }
-    /* Fade in con delay 400ms · alineado con el momento en que el
-       cover-spinner cruza -90° (~ T=375-400ms desde is-active añadido) ·
-       el avatar aparece exactamente cuando el cover-back se hace visible,
-       cohesivo con la animación de apertura del libro. */
-    .bs-overlay.is-active .bs-page-right {
+    /* Page-right aparece solo cuando el cover empieza a abrirse. Antes el
+       sheet sube con el libro cerrado y sin revelar la página derecha. */
+    .bs-overlay.is-book-opening .bs-page-right,
+    .bs-overlay.is-book-open .bs-page-right {
       opacity: 1;
-      transition: opacity 240ms cubic-bezier(0.22, 0.61, 0.36, 1) 400ms;
+      transition: opacity 260ms cubic-bezier(0.22, 0.61, 0.36, 1) 140ms;
     }
     .bs-page-img {
       width: 100%;
@@ -4372,9 +4373,9 @@
       will-change: transform, opacity;
       opacity: 0;
       z-index: 2;
+      transition: none;
     }
     .bs-page-right { z-index: 1; }
-    .bs-overlay.is-active .bs-cover-frame { opacity: 1; }
 
     /* Cover spinner · maneja el rotateY · hinged en el spine izquierdo */
     .bs-cover-spinner {
@@ -4384,6 +4385,7 @@
       transform-origin: 0% 50%;
       transform: rotateY(0deg);
       will-change: transform;
+      transition: none;
     }
 
     /* Cover faces · backface-visibility hace el swap invisible al cruzar -90° */
@@ -4528,7 +4530,7 @@
       transform: translateY(10px);
       transition: transform 340ms var(--ease-sheet) 460ms;
     }
-    .bs-overlay.is-active .bs-body { transform: translateY(0); }
+    .bs-overlay.is-content-ready .bs-body { transform: translateY(0); }
     .bs-overlay.is-closing .bs-body {
       transform: translateY(6px);
       transition: transform 180ms cubic-bezier(0.4,0,0.6,1);
@@ -4539,7 +4541,7 @@
        El sheet drop arrastra todo abajo pero el cover-frame va al source
        (arriba-izquierda) · esos 200-300ms de discrepancia es lo que el user
        ve como "se cierra y aún aparece el avatar". */
-    .bs-overlay.is-closing .bs-page-right {
+    .bs-overlay.is-closing:not(.is-book-open) .bs-page-right {
       opacity: 0;
       transition: opacity 200ms cubic-bezier(0.4, 0, 0.6, 1);
     }
@@ -4565,24 +4567,24 @@
         border-color var(--duration-base) var(--ease-sheet),
         background var(--duration-base) var(--ease-sheet);
     }
-    .bs-overlay.is-active .bs-features-section > .bs-eyebrow,
-    .bs-overlay.is-active .bs-feature,
-    .bs-overlay.is-active .bs-aval,
-    .bs-overlay.is-active .bs-actions {
+    .bs-overlay.is-content-ready .bs-features-section > .bs-eyebrow,
+    .bs-overlay.is-content-ready .bs-feature,
+    .bs-overlay.is-content-ready .bs-aval,
+    .bs-overlay.is-content-ready .bs-actions {
       opacity: 1;
       transform: translateY(0) scale(1);
     }
-    .bs-overlay.is-active .bs-features-section > .bs-eyebrow { transition-delay: 500ms; }
-    .bs-overlay.is-active .bs-feature { transition-delay: var(--feature-delay, 560ms); }
-    .bs-overlay.is-active .bs-feature:nth-child(1) { transition-delay: 560ms; }
-    .bs-overlay.is-active .bs-feature:nth-child(2) { transition-delay: 620ms; }
-    .bs-overlay.is-active .bs-feature:nth-child(3) { transition-delay: 680ms; }
-    .bs-overlay.is-active .bs-feature:nth-child(4) { transition-delay: 740ms; }
-    .bs-overlay.is-active .bs-feature:nth-child(5) { transition-delay: 800ms; }
-    .bs-overlay.is-active .bs-feature:nth-child(6) { transition-delay: 860ms; }
-    .bs-overlay.is-active .bs-feature { transition-delay: var(--feature-delay, 560ms); }
-    .bs-overlay.is-active .bs-aval    { transition-delay: 940ms; }
-    .bs-overlay.is-active .bs-actions { transition-delay: 1000ms; }
+    .bs-overlay.is-content-ready .bs-features-section > .bs-eyebrow { transition-delay: 80ms; }
+    .bs-overlay.is-content-ready .bs-feature { transition-delay: var(--feature-delay, 140ms); }
+    .bs-overlay.is-content-ready .bs-feature:nth-child(1) { transition-delay: 140ms; }
+    .bs-overlay.is-content-ready .bs-feature:nth-child(2) { transition-delay: 200ms; }
+    .bs-overlay.is-content-ready .bs-feature:nth-child(3) { transition-delay: 260ms; }
+    .bs-overlay.is-content-ready .bs-feature:nth-child(4) { transition-delay: 320ms; }
+    .bs-overlay.is-content-ready .bs-feature:nth-child(5) { transition-delay: 380ms; }
+    .bs-overlay.is-content-ready .bs-feature:nth-child(6) { transition-delay: 440ms; }
+    .bs-overlay.is-content-ready .bs-feature { transition-delay: var(--feature-delay, 140ms); }
+    .bs-overlay.is-content-ready .bs-aval    { transition-delay: 520ms; }
+    .bs-overlay.is-content-ready .bs-actions { transition-delay: 580ms; }
 
     /* Close · cancela delays y acelera fade-out · todo se va junto en 180ms */
     .bs-overlay.is-closing .bs-features-section > .bs-eyebrow,
@@ -4875,6 +4877,78 @@
     .datos-close svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; }
     @media (prefers-reduced-motion: reduce) {
       .datos-overlay, .datos-modal { transition: none; }
+    }
+
+    /* ── Modal · Llamadas 1:1 (precio miembro) · reusa .datos-overlay + .comite-card ── */
+    .datos-modal--wide { width: min(760px, 100%); }
+    .llamadas-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-top: 20px;
+    }
+    .llamada-card { text-align: center; }
+    .llamada-card .center { margin: 0 auto; max-width: 26ch; }
+    /* Precio miembro · 55€ tachado + 30€ grande (Grift · canon precios, ver typography.md) */
+    .llamada-price {
+      margin-top: 14px;
+      display: flex;
+      align-items: baseline;
+      justify-content: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .llamada-price s {
+      font-family: var(--font-text);
+      font-size: 15px;
+      color: var(--ink-faint);
+      text-decoration-thickness: 1.5px;
+    }
+    .llamada-price .amt {
+      font-family: var(--font-price);
+      font-weight: 400;
+      font-size: 34px;
+      line-height: 1;
+      letter-spacing: -0.01em;
+      color: var(--ink);
+    }
+    .llamada-price .per {
+      font-family: var(--font-text);
+      font-size: 12px;
+      color: var(--ink-soft);
+    }
+    .llamadas-pack {
+      margin: 22px 0 0;
+      text-align: center;
+      font-family: var(--font-text);
+      font-weight: 300;
+      font-size: 15px;
+      line-height: 1.5;
+      color: var(--ink-soft);
+    }
+    .llamadas-pack strong { font-weight: 600; color: var(--ink); }
+    /* CTA "Más información sobre las llamadas" en la card Sesiones uno a uno */
+    .team-card-cta {
+      margin-top: 12px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: none;
+      border: 0;
+      padding: 0;
+      cursor: pointer;
+      font-family: var(--font-text);
+      font-weight: 500;
+      font-size: 14px;
+      color: var(--ink-soft);
+      transition: color 160ms var(--ease-sheet);
+    }
+    .team-card-cta:hover { color: var(--ink); }
+    .team-card-cta span { transition: transform 160ms var(--ease-sheet); }
+    .team-card-cta:hover span { transform: translateX(3px); }
+    .team-card-cta:focus-visible { outline: 2px solid var(--coral-strong); outline-offset: 3px; border-radius: 4px; }
+    @media (max-width: 540px) {
+      .llamadas-grid { grid-template-columns: 1fr; }
     }
 
     @media (max-width: 720px) {
