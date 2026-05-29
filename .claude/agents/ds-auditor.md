@@ -21,7 +21,7 @@ canon documentado en:
 ### 1. Lee el contexto canon
 
 ```bash
-git -C "/Users/titoespanolgamon/Documents/Vibe Coding/Mimo" diff HEAD~1 -- prototype.html "design/Mimo Design System v0.2.html"
+git -C "/Users/titoespanolgamon/Documents/Vibe Coding/Grow" diff HEAD~1 -- prototype.html "design/Mimo Design System v0.2.html"
 ```
 
 (Si el commit aún no se hizo · `git diff` sobre staged + unstaged.)

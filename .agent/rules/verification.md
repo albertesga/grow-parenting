@@ -32,9 +32,9 @@ Si alguno ≠ 200 · NO commit. Diagnose:
 ### 2 · JS válido (`node --check`)
 
 ```bash
-cd "/Users/titoespanolgamon/Documents/Vibe Coding/Mimo"
-python3 -c "import re; html=open('prototype.html',encoding='utf-8').read(); s=re.findall(r'<script[^>]*>(.*?)</script>',html,re.DOTALL); open('/tmp/grow-extracted.js','w').write('\n'.join(s))"
-node --check /tmp/grow-extracted.js
+cd "/Users/titoespanolgamon/Documents/Vibe Coding/Grow"
+python3 -c "import re; html=open('prototype.html',encoding='utf-8').read(); s=re.findall(r'<script[^>]*>(.*?)</script>',html,re.DOTALL); open('/tmp/mimo-extracted.js','w').write('\n'.join(s))"
+node --check /tmp/mimo-extracted.js
 ```
 
 Si syntax error · localiza línea con el error · fix · re-extract · re-check.
@@ -120,7 +120,7 @@ el prototype divergieron:
 Chequeo automatizado adicional (bloqueante si falla):
 
 ```bash
-node "/Users/titoespanolgamon/Documents/Vibe Coding/Mimo/scripts/check-ds-drift.mjs"
+node "/Users/titoespanolgamon/Documents/Vibe Coding/Grow/scripts/check-ds-drift.mjs"
 ```
 
 ### 8 · Si auditor reporta 🔴 bloqueante

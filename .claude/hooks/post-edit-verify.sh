@@ -49,13 +49,13 @@ try:
     with open('prototype.html', encoding='utf-8') as f:
         html = f.read()
     scripts = re.findall(r'<script[^>]*>(.*?)</script>', html, re.DOTALL)
-    with open('/tmp/grow-extracted.js', 'w') as f:
+    with open('/tmp/mimo-extracted.js', 'w') as f:
         f.write('\n'.join(scripts))
 except Exception as e:
     pass
 " 2>/dev/null
 
-    JS_ERR=$(node --check /tmp/grow-extracted.js 2>&1)
+    JS_ERR=$(node --check /tmp/mimo-extracted.js 2>&1)
     if [ $? -ne 0 ]; then
       # Trunca a 200 chars para no spamear context
       JS_SHORT=$(echo "$JS_ERR" | head -c 200 | tr '\n' ' ')

@@ -1,4 +1,4 @@
-# grow
+# Mimo
 
 Prototipo HTML de **Mimo** — app de parenting con curvas de desarrollo OMS, Haizea-Llevant clínico y 9 libros tonales canon Fase 0.
 

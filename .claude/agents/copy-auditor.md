@@ -19,7 +19,7 @@ NO viste el plan del agente principal. NO conoces el motivo del cambio. Tu traba
 ### 1. Lee el contexto canon
 
 ```bash
-git -C "/Users/titoespanolgamon/Documents/Vibe Coding/Mimo" diff HEAD~1 -- prototype.html
+git -C "/Users/titoespanolgamon/Documents/Vibe Coding/Grow" diff HEAD~1 -- prototype.html
 ```
 
 (Si los cambios aún están staged · usa `git diff` sobre staged + unstaged.)

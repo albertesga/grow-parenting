@@ -7,15 +7,15 @@ allowed-tools: Bash(node *) Bash(rg *)
 
 ### 0. Chequeo automático bloqueante
 
-!`node "/Users/titoespanolgamon/Documents/Vibe Coding/Mimo/scripts/check-ds-drift.mjs"`
+!`node "/Users/titoespanolgamon/Documents/Vibe Coding/Grow/scripts/check-ds-drift.mjs"`
 
 ### 1. Primitives clave en DS
 
-!`rg -o "^\s*\\.[a-z][a-z0-9-]+\\s*\\{" "/Users/titoespanolgamon/Documents/Vibe Coding/Mimo/design/Mimo Design System v0.2.html" | sort -u | head -40`
+!`rg -o "^\s*\\.[a-z][a-z0-9-]+\\s*\\{" "/Users/titoespanolgamon/Documents/Vibe Coding/Grow/design/Mimo Design System v0.2.html" | sort -u | head -40`
 
 ### 2. Primitives clave en prototype
 
-!`rg -o "^\s*\\.[a-z][a-z0-9-]+\\s*\\{" "/Users/titoespanolgamon/Documents/Vibe Coding/Mimo/prototype.html" | sort -u | head -40`
+!`rg -o "^\s*\\.[a-z][a-z0-9-]+\\s*\\{" "/Users/titoespanolgamon/Documents/Vibe Coding/Grow/prototype.html" | sort -u | head -40`
 
 ## Tu tarea
 
