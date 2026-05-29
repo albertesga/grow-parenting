@@ -1,4 +1,4 @@
-# Landing flow walkthrough · Grow v0.1
+# Landing flow walkthrough · Mimo v0.1
 ## Research sintético · canon Fase 0 · abril 2026
 
 > Recorrido de la landing como si fuese un usuari@ real · cubre **A · heurística landing + H1 · download intent**. Screenshots en `/research/screenshots/homepage/` (15 PNG · desktop 1280 + mobile 390).
@@ -17,12 +17,12 @@
 
 ---
 
-## 1 · 5-second test · ¿qué es Grow?
+## 1 · 5-second test · ¿qué es Mimo?
 
 **Procedimiento**: cargo el hero y miro 5 segundos. ¿Entiendo qué es, para quién y qué resuelve?
 
 **Hero canon visible**:
-> "Tú cuidas a tu hij@, y Grow te cuida a ti."
+> "Tú cuidas a tu hij@, y Mimo te cuida a ti."
 > · La compañera que faltaba para el embarazo, la crianza y todo lo que viene en medio.
 > [Apúntate a la lista →] [Ver cómo funciona]
 
@@ -125,7 +125,7 @@
 
 **Procedimiento**: buscar pricing en la landing.
 
-**Hallazgo crítico**: ❌ **0 menciones de pricing en €** en la landing. Si soy una madre tirana del cashflow familiar, no veo si Grow es gratis, freemium, o premium. La decisión de descargar/apuntarme se posterga.
+**Hallazgo crítico**: ❌ **0 menciones de pricing en €** en la landing. Si soy una madre tirana del cashflow familiar, no veo si Mimo es gratis, freemium, o premium. La decisión de descargar/apuntarme se posterga.
 
 **Acción**: añadir bloque transparente o microcopy:
 - *"Gratis durante el beta. Founding members con €1.99/mes price-lock."*

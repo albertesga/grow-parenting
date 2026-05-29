@@ -30,7 +30,7 @@ Además faltaba un sitio canónico para:
 | 7 | Plan | Free actual + CTA Mejorar a Premium (callout coral) |
 | 8 | Privacidad | Solo local · Compartir pediatra · Analytics + Export JSON GDPR |
 | 9 | Cuenta | Email · Cambiar password · Cerrar sesión · Eliminar cuenta (danger) |
-| 10 | Sobre Grow | Versión · Privacidad · Términos · Feedback |
+| 10 | Sobre Mimo | Versión · Privacidad · Términos · Feedback |
 
 **Componentes nuevos:**
 - `.profile-section` · card paper bordered con head uppercase + list

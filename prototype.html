@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Grow - Prototipo clickable</title>
+<title>Mimo - Prototipo clickable</title>
 <style>
   /* Fonts · Galiner serif display + Inter body text · canon May 2026.
      Galiner ships con 3 cortes (Light 300 / Regular 400 / Bold 700) · sin italic.
@@ -37,7 +37,7 @@
     --paper: #FAF7F0;
     --paper-soft: #F2EDE0;
     --paper-deep: #E8E1CF;
-    --ink: #1A1A1A;
+    --ink: #34342D;
     --ink-warm: #2A211B;
     --ink-soft: #4D4D4D;
     --ink-muted: #888888;
@@ -7748,7 +7748,7 @@
   }
 
   /* ═══════════════════════════════════════════════════════════════════
-     LIBRO DE CÓLICOS · 6 frames · canon DS Grow v0.2 (categoría Salud)
+     LIBRO DE CÓLICOS · 6 frames · canon DS Mimo v0.2 (categoría Salud)
      Selectores prefijados con .colicos-* para evitar colisión.
      Cross-link a safety-frame y mental-health del módulo Chat.
      ═══════════════════════════════════════════════════════════════════ */
@@ -8769,7 +8769,7 @@
 
   /* ════════════════════════════════════════════════════════════
      DS v0.2 primitives · § H Top header · § K Timeline · § L Sleep
-     schedule · § M Callout. Copy from design/Grow Design System v0.2.html
+     schedule · § M Callout. Copy from design/Mimo Design System v0.2.html
      ════════════════════════════════════════════════════════════ */
 
   /* § H · Top header */
@@ -11288,7 +11288,7 @@
   <main class="prototype">
     <aside class="brief" aria-label="Mapa del prototipo">
       <div class="brief-card">
-        <div class="meta-kicker">Grow prototype v0.1</div>
+        <div class="meta-kicker">Mimo prototype v0.1</div>
         <h1>Registro, onboarding y el dia a dia.</h1>
         <p>Un unico HTML clickable basado en los dise&ntilde;os de `design`: primero registro y onboarding; despues Hoy, Calendario y Log.</p>
         <div class="map">
@@ -11301,22 +11301,22 @@
       </div>
     </aside>
 
-    <div class="phone" role="application" aria-label="Grow clickable prototype">
+    <div class="phone" role="application" aria-label="Mimo clickable prototype">
       <div class="device">
         <section class="screen no-nav active" data-screen="registro">
           <div class="status"><span>9:41</span><div class="status-dots"><span></span><span></span><span></span></div></div>
           <div class="content">
-            <img class="logo-lockup" src="design/assets/grow-logo.png" alt="Grow">
+            <img class="logo-lockup" src="design/assets/mimo-logo.png" alt="Mimo">
             <div class="hero-blob">
-              <h2>Tú cuidas a tu hij@ y Grow te cuida a ti.</h2>
+              <h2>Tú cuidas a tu hij@ y Mimo te cuida a ti.</h2>
               <p>Te apoyamos durante los 1000 primeros días con tu hij@.</p>
-              <img src="design/assets/avatar-mint.png" alt="Avatar Grow mint">
+              <img src="design/assets/avatar-mint.png" alt="Avatar Mimo mint">
             </div>
             <div class="button-stack">
               <button class="primary" type="button" data-goto="onboarding-fase">Crear cuenta</button>
               <button class="secondary" type="button" data-goto="onboarding-fase">Continuar con Apple</button>
             </div>
-            <p class="legal">Al continuar aceptas usar Grow como acompa&ntilde;amiento. No sustituye a tu pediatra ni a tu matrona.</p>
+            <p class="legal">Al continuar aceptas usar Mimo como acompa&ntilde;amiento. No sustituye a tu pediatra ni a tu matrona.</p>
             <button class="ghost-link" type="button" data-goto="hoy">Ver prototipo sin registrarme</button>
           </div>
         </section>
@@ -11372,8 +11372,20 @@
               <input id="child-name" type="text" value="Lola" placeholder="¿Cómo se llama?" autocomplete="off" data-child-name-input>
             </div>
 
+            <div class="input-label" style="margin-top: 14px" data-anchor-label>¿Qué fecha marca el recorrido?</div>
+            <div class="mark-selector full" role="radiogroup" aria-label="Ancla temporal del recorrido" data-anchor-selector>
+              <button class="opt mint selected" type="button" role="radio" aria-checked="true" data-anchor="nacimiento">Fecha de nacimiento</button>
+              <button class="opt coral" type="button" role="radio" aria-checked="false" data-anchor="convivencia">Inicio de convivencia</button>
+            </div>
+
             <div class="input-label" id="date-label" style="margin-top: 14px">Fecha de nacimiento</div>
             <div class="input-card" data-open-datepicker role="button" tabindex="0"><span class="value" id="date-value">9 · dic · 2024</span><span class="muted" id="date-age">18 meses</span></div>
+
+            <div data-birthdate-optional hidden>
+              <div class="input-label" style="margin-top: 14px">Fecha de nacimiento · opcional</div>
+              <div class="input-card" data-open-datepicker data-dp-target="birth" role="button" tabindex="0"><span class="value" id="birth-value">Añadir fecha</span><span class="muted" id="birth-age"></span></div>
+              <p class="input-hint">Si la sabes, la usamos para la edad y las curvas OMS. El recorrido y el diario se anclan al inicio de convivencia.</p>
+            </div>
 
             <div class="input-label" style="margin-top: 14px">Sexo registrado</div>
             <div class="mark-selector full" role="radiogroup" aria-label="Sexo registrado" data-sex-selector>
@@ -11437,7 +11449,7 @@
                   <span class="checklist-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#i-check"/></svg></span>
                   <div class="checklist-body">
                     <strong id="ready-phase">18 meses · niñez temprana</strong>
-                    <p>Curvas, rutinas e hitos según su fase.</p>
+                    <p id="ready-anchor-note">Curvas, rutinas e hitos según su fase.</p>
                   </div>
                 </li>
                 <li>
@@ -11614,7 +11626,7 @@
               <button class="fab" aria-label="Abrir registro rápido" type="button" data-log-open data-log-source="hoy"><svg viewBox="0 0 24 24"><use href="#i-plus"/></svg></button>
               <span class="lbl">Log</span>
             </div>
-            <button class="nav-tab" type="button" data-goto="chat"><svg viewBox="0 0 24 24"><use href="#i-chat"/></svg><span>Chat</span></button>
+            <button class="nav-tab" type="button" data-goto="chat"><svg viewBox="0 0 24 24"><use href="#i-chat"/></svg><span>Madrugada</span></button>
             <button class="nav-tab" type="button" data-goto="perfil"><svg viewBox="0 0 24 24"><use href="#i-user"/></svg><span>Perfil</span></button>
           </nav>
         </section>
@@ -11647,7 +11659,7 @@
               <button class="fab" aria-label="Abrir registro rápido" type="button" data-log-open data-log-source="calendario"><svg viewBox="0 0 24 24"><use href="#i-plus"/></svg></button>
               <span class="lbl">Log</span>
             </div>
-            <button class="nav-tab" type="button" data-goto="chat"><svg viewBox="0 0 24 24"><use href="#i-chat"/></svg><span>Chat</span></button>
+            <button class="nav-tab" type="button" data-goto="chat"><svg viewBox="0 0 24 24"><use href="#i-chat"/></svg><span>Madrugada</span></button>
             <button class="nav-tab" type="button" data-goto="perfil"><svg viewBox="0 0 24 24"><use href="#i-user"/></svg><span>Perfil</span></button>
           </nav>
         </section>
@@ -12450,7 +12462,7 @@
               <div class="profile-list">
                 <div class="profile-row static">
                   <span class="profile-row-label">Email</span>
-                  <span class="profile-row-value">maria@grow.app</span>
+                  <span class="profile-row-value">maria@mimo.family</span>
                 </div>
                 <button class="profile-row" type="button" data-open-sheet data-sheet-title="Cambiar contraseña" data-sheet-copy="Stub · cambio de contraseña.">
                   <span class="profile-row-label">Contraseña</span>
@@ -12465,7 +12477,7 @@
             </section>
 
             <section class="profile-about">
-              <strong>Grow · v0.4</strong>
+              <strong>Mimo · v0.4</strong>
               <span>Hecho con cero juicio. Aquí no diagnosticamos · aquí estamos.</span>
               <div class="profile-about-links">
                 <button type="button" data-open-sheet data-sheet-title="Privacidad" data-sheet-copy="Stub · política de privacidad.">Privacidad</button>
@@ -12481,7 +12493,7 @@
               <button class="fab" aria-label="Abrir registro rápido" type="button" data-log-open data-log-source="perfil"><svg viewBox="0 0 24 24"><use href="#i-plus"/></svg></button>
               <span class="lbl">Log</span>
             </div>
-            <button class="nav-tab" type="button" data-goto="chat"><svg viewBox="0 0 24 24"><use href="#i-chat"/></svg><span>Chat</span></button>
+            <button class="nav-tab" type="button" data-goto="chat"><svg viewBox="0 0 24 24"><use href="#i-chat"/></svg><span>Madrugada</span></button>
             <button class="nav-tab active" type="button" data-goto="perfil"><svg viewBox="0 0 24 24"><use href="#i-user"/></svg><span>Perfil</span></button>
           </nav>
         </section>
@@ -12648,7 +12660,7 @@
               <button class="fab" aria-label="Abrir registro rápido" type="button" data-log-open data-log-source="log"><svg viewBox="0 0 24 24"><use href="#i-plus"/></svg></button>
               <span class="lbl">Log</span>
             </div>
-            <button class="nav-tab" type="button" data-goto="chat"><svg viewBox="0 0 24 24"><use href="#i-chat"/></svg><span>Chat</span></button>
+            <button class="nav-tab" type="button" data-goto="chat"><svg viewBox="0 0 24 24"><use href="#i-chat"/></svg><span>Madrugada</span></button>
             <button class="nav-tab" type="button" data-goto="perfil"><svg viewBox="0 0 24 24"><use href="#i-user"/></svg><span>Perfil</span></button>
           </nav>
         </section>
@@ -12665,21 +12677,21 @@
           <div class="status"><span>9:42</span><div class="status-dots"><span></span><span></span><span></span></div></div>
           <header class="chat-context">
             <div>
-              <span class="eyebrow">Chat · Grow</span>
+              <span class="eyebrow">Madrugada</span>
               <strong data-chat-context>Lola · 18 m · niñez temprana</strong>
               <span class="chat-mode-badges" data-chat-mode-badges aria-label="Modos especiales activos">
                 <!-- badges injected by JS based on flags -->
               </span>
             </div>
-            <button class="chat-madrugada-toggle" type="button" data-goto="chat-madrugada" aria-label="Modo madrugada">
-              <span aria-hidden="true">🌙</span> Modo madrugada
+            <button class="chat-madrugada-toggle" type="button" data-goto="chat-madrugada" aria-label="Modo noche">
+              <span aria-hidden="true">🌙</span> Modo noche
             </button>
           </header>
           <div class="chat-thread" data-chat-thread aria-live="polite">
             <!-- messages render here -->
           </div>
           <div class="chat-input-bar">
-            <div class="chat-triage-chips" role="list" aria-label="Cribaje rápido">
+            <div class="chat-triage-chips" role="list" aria-label="Preguntas guiadas">
               <button class="chat-triage-chip" type="button" role="listitem" data-triage="fever"><span class="icon">🌡</span> Fiebre</button>
               <button class="chat-triage-chip" type="button" role="listitem" data-triage="breathing"><span class="icon">😮‍💨</span> Respira</button>
               <button class="chat-triage-chip" type="button" role="listitem" data-triage="crying"><span class="icon">😢</span> Llora</button>
@@ -12688,12 +12700,6 @@
               <button class="chat-triage-chip" type="button" role="listitem" data-triage="head"><span class="icon">💢</span> Golpe</button>
               <button class="chat-triage-chip" type="button" role="listitem" data-triage="rash"><span class="icon">🫧</span> Rash</button>
               <button class="chat-triage-chip" type="button" role="listitem" data-triage="seizure"><span class="icon">⚡</span> Convulsión</button>
-            </div>
-            <div class="chat-input-row">
-              <button class="chat-attach-btn" type="button" data-chat-attach aria-label="Adjuntar foto">📷</button>
-              <button class="chat-voice-btn" type="button" data-chat-voice aria-label="Mensaje de voz">🎙</button>
-              <input class="chat-text-input" type="text" placeholder="Pregúntale a Grow…" aria-label="Mensaje" data-chat-input>
-              <button class="chat-send-btn" type="button" data-chat-send aria-label="Enviar">→</button>
             </div>
             <p class="chat-canon-foot">Aquí no diagnosticamos · aquí estamos</p>
           </div>
@@ -12704,7 +12710,7 @@
               <button class="fab" type="button" data-log-open data-log-source="chat" aria-label="Abrir registro rápido"><svg viewBox="0 0 24 24"><use href="#i-plus"/></svg></button>
               <span class="lbl">Log</span>
             </div>
-            <button class="nav-tab active" type="button" data-goto="chat"><svg viewBox="0 0 24 24"><use href="#i-chat"/></svg><span>Chat</span></button>
+            <button class="nav-tab active" type="button" data-goto="chat"><svg viewBox="0 0 24 24"><use href="#i-chat"/></svg><span>Madrugada</span></button>
             <button class="nav-tab" type="button" data-goto="perfil"><svg viewBox="0 0 24 24"><use href="#i-user"/></svg><span>Perfil</span></button>
           </nav>
         </section>
@@ -12836,7 +12842,7 @@
           <div class="chat-madrugada-close-sheet">
             <div class="safety-frame-grabber"></div>
             <h2>¿Guardamos esta noche en el diario?</h2>
-            <p>Solo lo verás tú. Si guardas, aparecerá como nota en tu chat principal. Si no, se borra · solo queda un agregado anonimizado para mejorar Grow.</p>
+            <p>Solo lo verás tú. Si guardas, aparecerá como nota en tu chat principal. Si no, se borra · solo queda un agregado anonimizado para mejorar Mimo.</p>
             <div class="sf-actions">
               <button class="btn coral" type="button" data-madrugada-close-action="save">Sí · guardar resumen</button>
               <button class="btn soft" type="button" data-madrugada-close-action="discard">No · borrar todo</button>
@@ -13351,7 +13357,7 @@
             <div class="celebration-blob" aria-hidden="true"></div>
             <h3 data-celebration-title>¡Hito conseguido!</h3>
             <p data-celebration-copy>Lola tiene algo nuevo para recordar. Lo guardamos en Diario contigo. Solo lo verá quien tú quieras.</p>
-            <div class="celebration-quote">"Tú cuidas a tu hij@,<br>y Grow te cuida a ti."</div>
+            <div class="celebration-quote">"Tú cuidas a tu hij@,<br>y Mimo te cuida a ti."</div>
             <div class="celebration-actions">
               <button class="primary" type="button" data-goto="calendario">Ver el calendario</button>
               <button type="button" data-close-sheet>Compartir con Pablo</button>
@@ -15132,7 +15138,7 @@
     if (!milestone) return;
     openSheet(
       `${milestone.title} · mirar con calma`,
-      'Ha pasado el P95 sin registrarlo. Puede ser variación normal, una diferencia de contexto o algo que conviene comentar. Grow no etiqueta a Lola: ordena observaciones y te ayuda a hablar con el pediatra.'
+      'Ha pasado el P95 sin registrarlo. Puede ser variación normal, una diferencia de contexto o algo que conviene comentar. Mimo no etiqueta a Lola: ordena observaciones y te ayuda a hablar con el pediatra.'
     );
   }
 
@@ -15452,7 +15458,7 @@
       ${renderSleepStatusCard()}
       ${renderSleepSchedule(sleepActiveAge, { compact: true })}
       <section class="sleep-nav-grid">
-        <button class="sleep-nav-card" type="button" data-sleep-view="sweetspot"><strong>Ventana</strong><span>Grow SweetSpot y barra de ahora.</span></button>
+        <button class="sleep-nav-card" type="button" data-sleep-view="sweetspot"><strong>Ventana</strong><span>Mimo SweetSpot y barra de ahora.</span></button>
         <button class="sleep-nav-card" type="button" data-sleep-view="schedule"><strong>Esquema</strong><span>Selector por edad y próxima transición.</span></button>
         <button class="sleep-nav-card" type="button" data-sleep-view="week"><strong>Semana</strong><span>Barras de sueño por día.</span></button>
         <button class="sleep-nav-card" type="button" data-sleep-view="regressions"><strong>Regresiones</strong><span>Biblioteca educativa sin alarma.</span></button>
@@ -15596,7 +15602,7 @@
 ├─ Sleep Plans con humanos
 └─ Berry AI
 
-Grow
+Mimo
 ├─ Ventanas de sueño sin marca
 ├─ Chat IA contextual
 ├─ Bibliografía pública
@@ -15611,7 +15617,7 @@ Grow
       </section>
       <section class="callout">
         <strong>Importante</strong>
-        Sin "cry it out" por defecto. Si necesitáis consultor humano, derivamos externamente; Grow no vende coaches humanos dentro del loop.
+        Sin "cry it out" por defecto. Si necesitáis consultor humano, derivamos externamente; Mimo no vende coaches humanos dentro del loop.
       </section>
     `;
   }
@@ -15816,7 +15822,7 @@ Grow
         <button class="food-nav-card" type="button" data-food-view="foods"><strong>Alimentos</strong><span>Grid tipo Solid Starts con cortes por edad.</span></button>
         <button class="food-nav-card" type="button" data-food-view="allergens"><strong>Alérgenos</strong><span>14 EU · estados y seguimiento visual.</span></button>
         <button class="food-nav-card" type="button" data-food-view="recipes"><strong>Recetas</strong><span>Ideas rápidas para ${escapeHtml(age.short)}.</span></button>
-        <button class="food-nav-card" type="button" data-food-view="plan"><strong>Plan IA</strong><span>Comparativo y decisiones canon Grow.</span></button>
+        <button class="food-nav-card" type="button" data-food-view="plan"><strong>Plan IA</strong><span>Comparativo y decisiones canon Mimo.</span></button>
         <button class="food-nav-card" type="button" data-food-view="diary"><strong>Diario</strong><span>Probados y cuenta compartida.</span></button>
       </section>
       <section class="food-section">
@@ -15964,7 +15970,7 @@ Apps BLW clásicas
 ├─ Recetas
 └─ Poco contexto familiar
 
-Grow
+Mimo
 ├─ Alimentos + cortes por edad
 ├─ Mapa de 14 alérgenos EU
 ├─ Diario familiar compartido
@@ -16215,7 +16221,7 @@ Grow
       ${renderLactationViewHead('Toma + evaluación', 'Toma terminada · pecho izq · 14 min · 16:42. LATCH simplificado, saltarlo también vale.', 'home')}
       <section class="lactation-section">
         <div class="lactation-score-ring" style="--score:${lactationLatchScore};">${lactationLatchScore}/10</div>
-        <p class="lactation-copy" style="text-align:center;">Si baja de 6 en 3 tomas seguidas, Grow recomienda consultar IBCLC externa.</p>
+        <p class="lactation-copy" style="text-align:center;">Si baja de 6 en 3 tomas seguidas, Mimo recomienda consultar IBCLC externa.</p>
         ${latchQuestions.map((question, index) => `
           <article class="lactation-latch-card">
             <div class="lactation-mini-label">${index + 1}/5 · LATCH</div>
@@ -16355,7 +16361,7 @@ Grow
 ├─ Hardware o IBCLC humana premium
 └─ Marca / ecosistema cerrado
 
-Grow
+Mimo
 ├─ Tracker tomas + LATCH opcional
 ├─ e-lactancia/APILAM dentro del módulo
 ├─ Banco FIFO sin hardware
@@ -16369,7 +16375,7 @@ Grow
       </section>
       <section class="callout">
         <strong>Humano externo.</strong>
-        Si necesitas IBCLC humana, te derivamos a profesional certificado por IBLCE. Grow no mete expertas humanas dentro del loop.
+        Si necesitas IBCLC humana, te derivamos a profesional certificado por IBLCE. Mimo no mete expertas humanas dentro del loop.
       </section>
     `;
   }
@@ -17273,7 +17279,7 @@ Grow
 
   function renderVaccineEducation() {
     return `
-      ${renderVaccineViewHead('Educación · decisión informada', 'Grow no convence. Grow muestra evidencia 2026 y deja decidir a la familia con su pediatra.', 'home')}
+      ${renderVaccineViewHead('Educación · decisión informada', 'Mimo no convence. Mimo muestra evidencia 2026 y deja decidir a la familia con su pediatra.', 'home')}
       <section class="vaccine-section">
         <div class="vaccine-list">
           <article class="vaccine-row"><strong>Hepatitis A · Nuevo 2026</strong><span>Marcada como nueva en calendario. Educación específica de por qué se incorpora ahora · canon AEPED enero 2026.</span></article>
@@ -18314,10 +18320,24 @@ Grow
     document.getElementById('data-copy').textContent = decodeEntities(data.dataCopy);
     document.getElementById('date-label').textContent = decodeEntities(data.dateLabel);
     document.getElementById('date-value').textContent = decodeEntities(data.dateValue);
-    document.getElementById('child-name-label').textContent = decodeEntities(data.childName);
+    const childNameLabel = document.getElementById('child-name-label');
+    if (childNameLabel) childNameLabel.textContent = decodeEntities(data.childName);
     document.getElementById('data-insight').innerHTML = data.dataInsight;
     document.getElementById('ready-avatar').src = data.avatar;
     document.getElementById('ready-phase').textContent = data.readyPhase;
+    /* Temporal anchor · convivencia no aplica al embarazo (eje = fecha de parto).
+       Para el resto, mostramos el toggle y respetamos el ancla activa. */
+    const anchorLabel = document.querySelector('[data-anchor-label]');
+    const anchorSelector = document.querySelector('[data-anchor-selector]');
+    if (phase === 'embarazo') {
+      if (anchorLabel) anchorLabel.hidden = true;
+      if (anchorSelector) anchorSelector.hidden = true;
+      if (onboardingAnchor !== 'nacimiento') setOnboardingAnchor('nacimiento');
+    } else {
+      if (anchorLabel) anchorLabel.hidden = false;
+      if (anchorSelector) anchorSelector.hidden = false;
+      setOnboardingAnchor(onboardingAnchor);
+    }
     renderGrowthBook();
     renderMilestoneBook();
     renderSleepBook();
@@ -18869,15 +18889,59 @@ Grow
      Bound via delegation on document so works regardless of when DOM ready. */
   let onboardingChildName = 'Lola';
   let onboardingChildSex = 'nina';
+  /* Temporal anchor for the journey · 'nacimiento' (default) or 'convivencia'
+     (adopcion/acogida). With 'convivencia' the birth date becomes optional and
+     the recorrido/diario are referenced to the start of living together. */
+  let onboardingAnchor = 'nacimiento';
   function updateOnboardingInsight() {
     const insightEl = document.getElementById('data-insight-text');
     if (!insightEl) return;
     const ageText = (document.getElementById('date-age')?.textContent || '').trim();
     const lbl = document.getElementById('child-name-label');
     if (lbl) lbl.textContent = onboardingChildName;
-    /* Re-render insight inline keeping the existing tone */
     const sexLabel = onboardingChildSex === 'nina' ? 'Niña' : onboardingChildSex === 'nino' ? 'Niño' : 'Hij@';
-    insightEl.textContent = `${onboardingChildName} (${sexLabel}) tiene ${ageText}. Mostraremos los hitos y curvas OMS adaptadas a esa edad.`;
+    if (onboardingAnchor === 'convivencia') {
+      const birthText = (document.getElementById('birth-value')?.textContent || '').trim();
+      const hasBirth = !!dpParseDateValue(birthText);
+      const birthAge = (document.getElementById('birth-age')?.textContent || '').trim();
+      let msg = `${onboardingChildName} lleva ${ageText || '—'} con vosotros. El recorrido y el diario se ordenan desde el inicio de convivencia.`;
+      if (hasBirth && birthAge) {
+        msg += ` Con la fecha de nacimiento mostramos la edad (${birthAge}) y las curvas OMS.`;
+      }
+      insightEl.textContent = msg;
+    } else {
+      insightEl.textContent = `${onboardingChildName} (${sexLabel}) tiene ${ageText}. Mostraremos los hitos y curvas OMS adaptadas a esa edad.`;
+    }
+  }
+  function setOnboardingAnchor(anchor) {
+    onboardingAnchor = anchor === 'convivencia' ? 'convivencia' : 'nacimiento';
+    document.querySelectorAll('[data-anchor-selector] [data-anchor]').forEach((b) => {
+      const on = b.dataset.anchor === onboardingAnchor;
+      b.classList.toggle('selected', on);
+      b.setAttribute('aria-checked', on ? 'true' : 'false');
+    });
+    const dateLabel = document.getElementById('date-label');
+    if (dateLabel) {
+      dateLabel.textContent = onboardingAnchor === 'convivencia'
+        ? 'Inicio de convivencia'
+        : decodeEntities((phaseData[selectedPhase] || {}).dateLabel || 'Fecha de nacimiento');
+    }
+    const optional = document.querySelector('[data-birthdate-optional]');
+    if (optional) optional.hidden = onboardingAnchor !== 'convivencia';
+    /* Re-frame the muted duration under the primary field for the active mode */
+    const da = document.getElementById('date-age');
+    const parsed = dpParseDateValue((document.getElementById('date-value')?.textContent || '').trim());
+    if (da && parsed) {
+      da.textContent = dpFormatDuration(parsed, onboardingAnchor === 'convivencia' ? 'convivencia' : 'age');
+    }
+    /* Ready screen coherence · referencia la convivencia cuando aplica */
+    const readyNote = document.getElementById('ready-anchor-note');
+    if (readyNote) {
+      readyNote.textContent = onboardingAnchor === 'convivencia'
+        ? 'Recorrido y diario ordenados desde el inicio de convivencia.'
+        : 'Curvas, rutinas e hitos según su fase.';
+    }
+    updateOnboardingInsight();
   }
   function bindOnboardingDataScreen() {
     const nameInput = document.getElementById('child-name');
@@ -18921,13 +18985,12 @@ Grow
 
   /* ═════════════════ § V · CHAT · single thread + Modo madrugada + 8 triage trees ═════════════════ */
 
-  /* Initial chat messages — contextual welcome */
+  /* Panel inicial de Madrugada · formularios guiados, no conversación */
   let chatMessages = [
-    { role: 'system',    text: 'Conversación segura · solo tú y Grow' },
-    { role: 'companion', text: 'Hola María. Estoy aquí.', time: '21:14' },
-    { role: 'companion', text: 'Cualquier cosa que pase con Lola, o contigo, hablamos. <strong>Aquí no diagnosticamos · aquí estamos.</strong>', time: '21:14' },
-    { role: 'companion', text: 'Para esta semana te recomiendo dos cosas:', time: '21:14', tools: ['milestone_lookup', 'mchat_screening'] },
-    { role: 'companion', text: 'Si necesitas un cribaje rápido (fiebre, respira, llora…), tap en el chip de abajo. O si me cuentas qué pasa con tus palabras, también te leo.', time: '21:14' }
+    { role: 'system', text: 'Privado · solo para ti' },
+    { role: 'system', text: 'Madrugada reúne información con preguntas guiadas para que tú decidas. <strong>Aquí no diagnosticamos · aquí estamos.</strong>' },
+    { role: 'system', text: 'Para esta semana, dos cosas:', tools: ['milestone_lookup', 'mchat_screening'] },
+    { role: 'system', text: 'Elige qué está pasando (fiebre, respira, llora…) y te hacemos las preguntas necesarias.' }
   ];
 
   /* § V.A · Tool catalog · 10 tools que el chat puede sugerir.
@@ -19661,7 +19724,7 @@ Grow
 
     diarrhea: {
       id: 'diarrhea', icon: '💩', label: 'Diarrea',
-      source: 'NICE CG84 · canon Grow §10.2 BITSS scale',
+      source: 'NICE CG84 · canon Mimo §10.2 BITSS scale',
       steps: [
         { key: 'blood', q: '¿Hay sangre en las heces?', options: [
           { label: 'Sí + fiebre + tu hij@ <3m',     value: 'severe' },
@@ -19869,10 +19932,10 @@ Grow
           text: `${tree.icon} ${tree.label} · ${levelLabel}`
         });
         chatMessages.push({
-          role: 'companion',
-          text: `Te dejo el cribaje aquí por si lo necesitas mañana. <strong>${escapeHtml(result.title)}</strong> ${result.actions.map((a) => '· ' + escapeHtml(a)).join(' ')}`,
-          source: tree.source,
-          time: 'ahora'
+          role: 'system',
+          class: 'chat-note-triage',
+          text: `<strong>${escapeHtml(result.title)}</strong> ${result.actions.map((a) => '· ' + escapeHtml(a)).join(' ')}`,
+          source: tree.source
         });
         chatSaveMain();
       }
@@ -19960,7 +20023,13 @@ Grow
     root.innerHTML = chatMessages.map((msg) => {
       if (msg.role === 'system') {
         const sysClass = msg.class ? ` ${escapeHtml(msg.class)}` : '';
-        return `<div class="bubble system${sysClass}">${msg.text}</div>`;
+        const sysSource = msg.source
+          ? `<button class="cita-clinica" type="button" data-cita-source="${escapeHtml(msg.source)}" aria-label="Fuente clínica">${escapeHtml(msg.source)}</button>`
+          : '';
+        const sysTools = Array.isArray(msg.tools)
+          ? msg.tools.map((id) => renderToolCard(id)).join('')
+          : '';
+        return `<div class="bubble system${sysClass}">${msg.text}${sysSource}</div>${sysTools}`;
       }
       const sourceHtml = msg.source
         ? `<button class="cita-clinica" type="button" data-cita-source="${escapeHtml(msg.source)}" aria-label="Fuente clínica">${escapeHtml(msg.source)}</button>`
@@ -19989,25 +20058,10 @@ Grow
     /* Special-mode badges */
     chatRenderModeBadges();
   }
-  function chatSend(text) {
-    if (!text || !text.trim()) return;
-    chatMessages.push({ role: 'you', text: escapeHtml(text.trim()), time: 'ahora' });
-    renderChat();
-    chatSaveMain();
-    /* Streaming dots while "IA escribe" */
-    chatShowStreamingDots();
-    /* Echo placeholder · in production this would be IA + pediatra response */
-    window.setTimeout(() => {
-      chatHideStreamingDots();
-      chatMessages.push({
-        role: 'companion',
-        text: 'Te leo. <strong>Aquí no diagnosticamos · aquí estamos.</strong> ¿Quieres que abramos un cribaje rápido o lo cuentas con tus palabras?',
-        time: 'ahora'
-      });
-      renderChat();
-      chatSaveMain();
-    }, 700);
-  }
+  /* Madrugada es por formularios · no hay entrada de texto libre ni respuesta
+     conversacional. Las preguntas guiadas y sus resultados se registran como
+     notas en el panel. */
+  function chatSend() { /* no-op · sin chat de texto libre */ }
 
   /* madrugada render */
   let chatMadrugadaLastAction = null;  /* { type: 'safety'|'mental'|'epds'|'relay', label } */
@@ -20058,10 +20112,13 @@ Grow
   let dpView = null;
   let dpSelected = null;
   let dpToday = null;
+  /* Target field for the picker · default = primary onboarding date field.
+     'birth' target writes the optional birth date used for age/curves. */
+  let dpTarget = { valueId: 'date-value', ageId: 'date-age', ageMode: 'age' };
   function dpInit() {
     const now = new Date();
     dpToday = { year: now.getFullYear(), month: now.getMonth(), day: now.getDate() };
-    const dvText = (document.getElementById('date-value')?.textContent || '').trim();
+    const dvText = (document.getElementById(dpTarget.valueId)?.textContent || '').trim();
     const parsed = dpParseDateValue(dvText);
     dpSelected = parsed || { ...dpToday };
     dpView = { year: dpSelected.year, month: dpSelected.month };
@@ -20095,6 +20152,13 @@ Grow
     const years = Math.floor(months / 12);
     return `${years} ${years === 1 ? 'año' : 'años'}`;
   }
+  /* Muted text for a field · 'convivencia' mode reframes the elapsed time as
+     time living together rather than age. */
+  function dpFormatDuration(d, mode) {
+    const base = dpFormatAge(d);
+    if (base === '—') return base;
+    return mode === 'convivencia' ? `${base} en convivencia` : base;
+  }
   function dpIsSameDay(a, b) {
     return a && b && a.year === b.year && a.month === b.month && a.day === b.day;
   }
@@ -20106,12 +20170,15 @@ Grow
     return d.day > dpToday.day;
   }
   function openDatepicker() {
-    if (!dpView) dpInit();
-    const dvText = (document.getElementById('date-value')?.textContent || '').trim();
+    if (!dpToday) dpInit();
+    const dvText = (document.getElementById(dpTarget.valueId)?.textContent || '').trim();
     const parsed = dpParseDateValue(dvText);
     if (parsed) {
       dpSelected = parsed;
       dpView = { year: parsed.year, month: parsed.month };
+    } else {
+      dpSelected = { ...dpToday };
+      dpView = { year: dpSelected.year, month: dpSelected.month };
     }
     renderDatepicker();
     document.getElementById('datepicker-modal').classList.add('active');
@@ -20149,10 +20216,10 @@ Grow
     renderDatepicker();
   }
   function confirmDatepicker() {
-    const dv = document.getElementById('date-value');
-    const da = document.getElementById('date-age');
+    const dv = document.getElementById(dpTarget.valueId);
+    const da = document.getElementById(dpTarget.ageId);
     if (dv) dv.textContent = dpFormatDateValue(dpSelected);
-    if (da) da.textContent = dpFormatAge(dpSelected);
+    if (da) da.textContent = dpFormatDuration(dpSelected, dpTarget.ageMode);
     if (typeof updateOnboardingInsight === 'function') updateOnboardingInsight();
     closeDatepicker();
   }
@@ -20858,6 +20925,13 @@ Grow
     /* § V.C.2 · Relay handlers */
     if (event.target.closest('[data-relay-send]')) { sendRelay(); return; }
 
+    /* Onboarding · temporal anchor selector (nacimiento / convivencia) */
+    const anchorBtn = event.target.closest('[data-anchor]');
+    if (anchorBtn && anchorBtn.closest('[data-anchor-selector]')) {
+      setOnboardingAnchor(anchorBtn.dataset.anchor);
+      return;
+    }
+
     /* Onboarding · sex selector */
     const sexBtn = event.target.closest('[data-sex]');
     if (sexBtn) {
@@ -20877,6 +20951,11 @@ Grow
     const openDpTrigger = event.target.closest('[data-open-datepicker]');
     if (openDpTrigger) {
       event.preventDefault();
+      if (openDpTrigger.dataset.dpTarget === 'birth') {
+        dpTarget = { valueId: 'birth-value', ageId: 'birth-age', ageMode: 'age' };
+      } else {
+        dpTarget = { valueId: 'date-value', ageId: 'date-age', ageMode: onboardingAnchor === 'convivencia' ? 'convivencia' : 'age' };
+      }
       openDatepicker();
       return;
     }

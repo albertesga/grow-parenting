@@ -191,7 +191,7 @@
 
 html, body {
   background: #FAF7F0;
-  color: #1A1A1A;
+  color: #34342D;
   font-family: 'Inter', system-ui, -apple-system, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -214,7 +214,7 @@ body {
 /* Selección de texto · ink sobre paper-soft */
 ::selection {
   background: #E8E1CF;
-  color: #1A1A1A;
+  color: #34342D;
 }
 
 /* Respeto a prefers-reduced-motion */
@@ -247,7 +247,7 @@ body {
 
 /* Handwritten path · stroke animado al revelar */
 .handwritten-path {
-  stroke: #1A1A1A;
+  stroke: #34342D;
   stroke-width: 2;
   fill: none;
   stroke-linecap: round;
@@ -255,7 +255,7 @@ body {
 }
 
 /* Scroll progress · top rail for the parallax narrative.
-   Color sampled from the green "o" in the Grow logo: #B5C3B1. */
+   Color sampled from the green "o" in the Mimo logo: #B5C3B1. */
 @keyframes grow-scroll-progress-fill {
   from { transform: scaleX(0); }
   to { transform: scaleX(1); }

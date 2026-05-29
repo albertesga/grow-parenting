@@ -24,7 +24,7 @@ import useIsDesktop from './useIsDesktop';
  *    · titoAlone label "Tito" · titoKids cluster "Inti+Llivia+Tito"
  *  - Bloque DER · eyebrow "EL PADRE" + headline "Aquí estoy yo." +
  *    TonalUnderline ink + chip-strip family + body + closing callout
- *    "Y de eso nace Grow."
+ *    "Y de eso nace Mimo."
  *
  * Wrapper sticky 320vh · timeline 0→0.95 cambios · 0.95→1.0 HOLD.
  *
@@ -400,7 +400,7 @@ function DesktopLayout(p: DesktopProps) {
         >
           <Chip tono="ink" size="md" className="px-5">
             <span className="mr-2 inline-block h-1.5 w-1.5 rounded-full bg-paper" aria-hidden="true" />
-            Y de eso nace Grow.
+            Y de eso nace Mimo.
           </Chip>
         </motion.div>
       </div>
@@ -647,7 +647,7 @@ function MobileEditorialLayout() {
                 className="mr-2 inline-block h-1.5 w-1.5 rounded-full bg-paper"
                 aria-hidden="true"
               />
-              Y de eso nace Grow.
+              Y de eso nace Mimo.
             </Chip>
           </div>
         </div>

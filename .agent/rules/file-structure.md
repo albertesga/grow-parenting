@@ -17,7 +17,7 @@ consumer vs producer. No mezclar dominios (landing vs prototype vs DS).
 
 ```
 /Users/titoespanolgamon/Documents/Vibe Coding/Grow/
-├── AGENTS.md                         (root entry · qué es Grow)
+├── AGENTS.md                         (root entry · qué es Mimo)
 ├── CLAUDE.md                         (alias pointer Claude Code)
 ├── README.md                         (humano · 30s overview)
 ├── .agent/                           (brain orquestador)
@@ -39,7 +39,7 @@ consumer vs producer. No mezclar dominios (landing vs prototype vs DS).
 │       ├── 0001-...md  →  0018-...md (18 ADRs vigentes)
 │       └── README.md
 ├── design/                           (Design System · single source of truth)
-│   ├── Grow Design System v0.2.html  (DS canónico · NO tocar como consumer)
+│   ├── Mimo Design System v0.2.html  (DS canónico · NO tocar como consumer)
 │   ├── assets/fonts/                 (Galiner, Inter Variable, Grift)
 │   ├── assets/img/                   (avatares, covers, ilustraciones)
 │   ├── v0.1/                         (histórico · arqueología solo)
@@ -53,7 +53,7 @@ consumer vs producer. No mezclar dominios (landing vs prototype vs DS).
 │   ├── waitlist.html                  (flow waitlist · 10 pasos · localStorage)
 │   ├── assets/fonts/                 (espejo de design/assets/fonts/)
 │   ├── assets/img/                   (assets específicos landing)
-│   ├── assets/grow-avatar.js          (component reusable del avatar chroma · ver doc inline)
+│   ├── assets/mimo-avatar.js          (component reusable del avatar chroma · ver doc inline)
 │   ├── about-us/                      (★ static export del build de apps/about-us · NO editar a mano)
 │   ├── img/ frames/ fonts/ lottie/    (assets mirror del about-us public · ver ADR-0017)
 │   ├── propuesta-v2.html             (drafts archivados)
@@ -174,7 +174,7 @@ consumer vs producer. No mezclar dominios (landing vs prototype vs DS).
 ## Workflow
 
 1. Necesito tocar X
-2. ¿Es un primitive visual? · empieza en `design/Grow Design System v0.2.html`
+2. ¿Es un primitive visual? · empieza en `design/Mimo Design System v0.2.html`
 3. ¿Es copy del app? · `prototype.html`
 4. ¿Es copy de marketing? · `homepage/index.html`
 5. ¿Es spec / requirement? · NO toques · lee `prd/`

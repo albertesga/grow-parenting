@@ -11,7 +11,7 @@ FILE_PATH=$(echo "$INPUT" | grep -oE '"file_path"[^"]*"[^"]*"' | grep -oE '"[^"]
 
 # Solo continúa si el edit toca prototype.html o el DS
 case "$FILE_PATH" in
-  *prototype.html|*"Grow Design System v0.2.html")
+  *prototype.html|*"Mimo Design System v0.2.html")
     ;;
   *)
     exit 0
@@ -24,7 +24,7 @@ cd "$REPO_DIR" || exit 0
 
 # HTTP check · ambos archivos
 PROTO_CODE=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:5050/prototype.html 2>/dev/null)
-DS_CODE=$(curl -s -o /dev/null -w "%{http_code}" "http://localhost:5050/design/Grow%20Design%20System%20v0.2.html" 2>/dev/null)
+DS_CODE=$(curl -s -o /dev/null -w "%{http_code}" "http://localhost:5050/design/Mimo%20Design%20System%20v0.2.html" 2>/dev/null)
 
 # Server caído · skip silent (no es error del edit · es ambiental)
 if [ -z "$PROTO_CODE" ] || [ "$PROTO_CODE" = "000" ]; then

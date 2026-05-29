@@ -3,7 +3,7 @@
 import { readFileSync } from 'node:fs';
 
 const repoRoot = '/Users/titoespanolgamon/Documents/Vibe Coding/Grow';
-const dsPath = `${repoRoot}/design/Grow Design System v0.2.html`;
+const dsPath = `${repoRoot}/design/Mimo Design System v0.2.html`;
 const prototypePath = `${repoRoot}/prototype.html`;
 
 const ds = readFileSync(dsPath, 'utf8');

@@ -42,7 +42,7 @@ Si sí · ADR primero · luego implementación.
 Listado preciso:
 - `homepage/styles.css` · líneas {X-Y} · cambio · {descripción}
 - `prototype.html` · líneas {X-Y} · cambio · {descripción}
-- `design/Grow Design System v0.2.html` · sección {X} · cambio · {descripción}
+- `design/Mimo Design System v0.2.html` · sección {X} · cambio · {descripción}
 
 Si tocas 3+ archivos críticos · valida con `escalation.md` rule 6.
 

@@ -1,5 +1,5 @@
 /* ════════════════════════════════════════════════════════════════════════
-   grow-avatar.js · component reusable del avatar Grow (chroma kling MP4)
+   mimo-avatar.js · component reusable del avatar Mimo (chroma kling MP4)
    ════════════════════════════════════════════════════════════════════════
 
    El avatar coral del homepage hero también vive (visualmente) en otras
@@ -12,9 +12,9 @@
 
    Uso:
      <div id="my-avatar"></div>
-     <script src="/assets/grow-avatar.js"></script>
+     <script src="/assets/mimo-avatar.js"></script>
      <script>
-       GrowAvatar.mount(document.getElementById('my-avatar'), {
+       MimoAvatar.mount(document.getElementById('my-avatar'), {
          interactive: true,         // hover/tap dispara el tap MP4
          phaseTag: 'Embarazo · sem 4–40', // opcional · null = sin tag
          size: 'md',                // 'sm' | 'md' | 'lg' (default 'md')
@@ -34,11 +34,11 @@
 (function () {
   'use strict';
 
-  /* CSS del avatar · namespace `.grow-avatar*` distinto de `.hero-avatar*`
+  /* CSS del avatar · namespace `.mimo-avatar*` distinto de `.hero-avatar*`
      para no chocar con el homepage hero. Mismas keyframes (levitate +
      shadow pulse inverso) que la original. */
   var GROW_AVATAR_CSS = [
-    '.grow-avatar {',
+    '.mimo-avatar {',
     '  position: relative;',
     '  width: 100%;',
     '  aspect-ratio: 1 / 1;',
@@ -46,15 +46,15 @@
     '  display: flex;',
     '  align-items: center;',
     '  justify-content: center;',
-    '  --grow-avatar-max: 280px;',
-    '  max-width: var(--grow-avatar-max);',
+    '  --mimo-avatar-max: 280px;',
+    '  max-width: var(--mimo-avatar-max);',
     '}',
-    '.grow-avatar--sm { --grow-avatar-max: 180px; }',
-    '.grow-avatar--md { --grow-avatar-max: 280px; }',
-    '.grow-avatar--lg { --grow-avatar-max: 520px; }',
+    '.mimo-avatar--sm { --mimo-avatar-max: 180px; }',
+    '.mimo-avatar--md { --mimo-avatar-max: 280px; }',
+    '.mimo-avatar--lg { --mimo-avatar-max: 520px; }',
     /* Drop shadow ovalada bajo el avatar · pulsa inversa a la levitación
        para crear ilusión de "elevación" (cuando sube, sombra se reduce). */
-    '.grow-avatar::after {',
+    '.mimo-avatar::after {',
     '  content: "";',
     '  position: absolute;',
     '  bottom: 18%;',
@@ -70,10 +70,10 @@
     '  pointer-events: none;',
     '  z-index: 0;',
     '  transform: translateX(-50%);',
-    '  animation: grow-avatar-shadow 4.4s ease-in-out infinite;',
+    '  animation: mimo-avatar-shadow 4.4s ease-in-out infinite;',
     '  will-change: transform, opacity;',
     '}',
-    '.grow-avatar-vid {',
+    '.mimo-avatar-vid {',
     '  position: absolute;',
     '  inset: 7%;',
     '  width: 86%;',
@@ -84,16 +84,16 @@
     '  transition: opacity 400ms cubic-bezier(0.4, 0, 0.6, 1);',
     '  filter: url(#luma-to-alpha);',
     '  -webkit-filter: url(#luma-to-alpha);',
-    '  animation: grow-avatar-float 4.4s ease-in-out infinite;',
+    '  animation: mimo-avatar-float 4.4s ease-in-out infinite;',
     '  will-change: transform;',
     '}',
-    '.grow-avatar-vid--tap {',
+    '.mimo-avatar-vid--tap {',
     '  opacity: 0;',
     '  z-index: 2;',
     '}',
-    '.grow-avatar.is-playing-tap .grow-avatar-vid--scroll { opacity: 0; }',
-    '.grow-avatar.is-playing-tap .grow-avatar-vid--tap { opacity: 1; }',
-    '.grow-avatar-trigger {',
+    '.mimo-avatar.is-playing-tap .mimo-avatar-vid--scroll { opacity: 0; }',
+    '.mimo-avatar.is-playing-tap .mimo-avatar-vid--tap { opacity: 1; }',
+    '.mimo-avatar-trigger {',
     '  position: absolute;',
     '  inset: 7%;',
     '  z-index: 3;',
@@ -104,13 +104,13 @@
     '  border-radius: 50%;',
     '  -webkit-tap-highlight-color: transparent;',
     '}',
-    '.grow-avatar.is-playing-tap .grow-avatar-trigger,',
-    '.grow-avatar-trigger:active { cursor: grabbing; }',
-    '.grow-avatar-trigger:focus-visible {',
+    '.mimo-avatar.is-playing-tap .mimo-avatar-trigger,',
+    '.mimo-avatar-trigger:active { cursor: grabbing; }',
+    '.mimo-avatar-trigger:focus-visible {',
     '  outline: 2px solid #F2A57A;',
     '  outline-offset: 4px;',
     '}',
-    '.grow-avatar-phase {',
+    '.mimo-avatar-phase {',
     '  position: absolute;',
     '  bottom: 12px;',
     '  left: 50%;',
@@ -131,22 +131,22 @@
     '  z-index: 4;',
     '  white-space: nowrap;',
     '}',
-    '.grow-avatar-phase .dot {',
+    '.mimo-avatar-phase .dot {',
     '  width: 8px;',
     '  height: 8px;',
     '  border-radius: 50%;',
     '  background: #F2A57A;',
     '}',
-    '@keyframes grow-avatar-float {',
+    '@keyframes mimo-avatar-float {',
     '  0%, 100% { transform: translateY(0); }',
     '  50%      { transform: translateY(-6px); }',
     '}',
-    '@keyframes grow-avatar-shadow {',
+    '@keyframes mimo-avatar-shadow {',
     '  0%, 100% { transform: translateX(-50%) scale(1);    opacity: 0.32; }',
     '  50%      { transform: translateX(-50%) scale(0.74); opacity: 0.15; }',
     '}',
     '@media (prefers-reduced-motion: reduce) {',
-    '  .grow-avatar-vid, .grow-avatar::after { animation: none !important; }',
+    '  .mimo-avatar-vid, .mimo-avatar::after { animation: none !important; }',
     '}'
   ].join('\n');
 
@@ -173,10 +173,10 @@
   function ensureGlobals() {
     if (injected) return;
     injected = true;
-    /* CSS · siempre inject (las clases .grow-avatar* son del namespace
+    /* CSS · siempre inject (las clases .mimo-avatar* son del namespace
        del component · no chocan con homepage hero). */
     var style = document.createElement('style');
-    style.setAttribute('data-grow-avatar', '');
+    style.setAttribute('data-mimo-avatar', '');
     style.textContent = GROW_AVATAR_CSS;
     document.head.appendChild(style);
     /* SVG filter · solo si #luma-to-alpha aún no existe (homepage hero
@@ -191,9 +191,9 @@
   /* Wire interactivity · hover/click sobre el trigger arranca el tap MP4
      (mismo behavior que homepage hero · ver main.js mod 9). */
   function wireInteractive(root) {
-    var scroll = root.querySelector('.grow-avatar-vid--scroll');
-    var tap = root.querySelector('.grow-avatar-vid--tap');
-    var trigger = root.querySelector('.grow-avatar-trigger');
+    var scroll = root.querySelector('.mimo-avatar-vid--scroll');
+    var tap = root.querySelector('.mimo-avatar-vid--tap');
+    var trigger = root.querySelector('.mimo-avatar-trigger');
     if (!scroll || !tap || !trigger) return;
 
     var playing = false;
@@ -214,7 +214,7 @@
     trigger.addEventListener('touchstart', function (e) { e.preventDefault(); playTap(); }, { passive: false });
   }
 
-  function mountGrowAvatar(container, opts) {
+  function mountMimoAvatar(container, opts) {
     if (!container) return null;
     opts = opts || {};
     ensureGlobals();
@@ -226,16 +226,16 @@
     var tapSrc = opts.tapSrc || '/assets/hero-tap.mp4';
 
     var root = document.createElement('div');
-    root.className = 'grow-avatar grow-avatar--' + size;
+    root.className = 'mimo-avatar mimo-avatar--' + size;
 
     var html = '';
-    html += '<video class="grow-avatar-vid grow-avatar-vid--scroll" src="' + scrollSrc + '" muted playsinline preload="auto" aria-hidden="true"></video>';
+    html += '<video class="mimo-avatar-vid mimo-avatar-vid--scroll" src="' + scrollSrc + '" muted playsinline preload="auto" aria-hidden="true"></video>';
     if (interactive) {
-      html += '<video class="grow-avatar-vid grow-avatar-vid--tap" src="' + tapSrc + '" muted playsinline preload="auto" aria-hidden="true"></video>';
-      html += '<button class="grow-avatar-trigger" type="button" aria-label="Reproducir animación del avatar"></button>';
+      html += '<video class="mimo-avatar-vid mimo-avatar-vid--tap" src="' + tapSrc + '" muted playsinline preload="auto" aria-hidden="true"></video>';
+      html += '<button class="mimo-avatar-trigger" type="button" aria-label="Reproducir animación del avatar"></button>';
     }
     if (phaseTag) {
-      html += '<div class="grow-avatar-phase"><span class="dot"></span>' + phaseTag + '</div>';
+      html += '<div class="mimo-avatar-phase"><span class="dot"></span>' + phaseTag + '</div>';
     }
     root.innerHTML = html;
 
@@ -245,7 +245,7 @@
 
     /* Cuando el scroll video carga su primer frame · arranca pausado en t=0
        para que el avatar se vea estable desde el primer paint (no negro). */
-    var scroll = root.querySelector('.grow-avatar-vid--scroll');
+    var scroll = root.querySelector('.mimo-avatar-vid--scroll');
     if (scroll) {
       scroll.addEventListener('loadedmetadata', function () {
         try { scroll.currentTime = 0; } catch (e) {}
@@ -255,5 +255,5 @@
     return root;
   }
 
-  window.GrowAvatar = { mount: mountGrowAvatar };
+  window.MimoAvatar = { mount: mountMimoAvatar };
 })();

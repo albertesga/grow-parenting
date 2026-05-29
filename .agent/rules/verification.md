@@ -21,7 +21,7 @@ HTTP 200 + JS check + spawn auditor si aplica + visual diff si aplica.
 ```bash
 curl -s -o /dev/null -w "landing:    %{http_code}\n" "http://localhost:5050/homepage/index.html"
 curl -s -o /dev/null -w "prototype:  %{http_code}\n" "http://localhost:5050/prototype.html"
-curl -s -o /dev/null -w "DS:         %{http_code}\n" "http://localhost:5050/design/Grow%20Design%20System%20v0.2.html"
+curl -s -o /dev/null -w "DS:         %{http_code}\n" "http://localhost:5050/design/Mimo%20Design%20System%20v0.2.html"
 ```
 
 Si alguno ≠ 200 · NO commit. Diagnose:
@@ -142,14 +142,14 @@ Cada commit debe tener:
 Si tocas pricing en `homepage/index.html` o en `homepage/waitlist.html`:
 
 - Valida que ambos lados mantienen el mismo canon de planes y precios
-  (Gratis · Founding · Grow Plus).
+  (Gratis · Founding · Mimo Plus).
 - Revisa que `precio_sensacion` y `tier` en waitlist no contradicen el pricing
   público de homepage.
 
 Chequeo rápido (bloqueante si falla):
 
 ```bash
-rg "Founding member|Grow Plus|€9,99|€69,99|100 plazas|14 días" homepage/index.html homepage/waitlist.html
+rg "Founding member|Mimo Plus|€9,99|€69,99|100 plazas|14 días" homepage/index.html homepage/waitlist.html
 ```
 
 ## Checklist pre-commit (resumen)

@@ -1,5 +1,5 @@
 /** @type {import('next').NextConfig} */
-// Static export configuration · Grow about-us sub-app
+// Static export configuration · Mimo about-us sub-app
 //
 // Estrategia · Next.js static export · el build produce HTML estático en
 // `homepage/about-us/` que el python http.server del root sirve junto al

@@ -76,8 +76,8 @@ function getAllowedOrigins() {
     [
       "http://localhost:5050",
       "http://127.0.0.1:5050",
-      "https://wegrow.family",
-      "https://www.wegrow.family",
+      "https://mimo.family",
+      "https://www.mimo.family",
       ...fromEnv,
     ].filter(Boolean),
   );

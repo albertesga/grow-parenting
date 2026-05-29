@@ -1,9 +1,9 @@
-# Grow · AGENTS.md
+# Mimo · AGENTS.md
 
 Entry-point canónico para cualquier agente (Claude Code, Codex, sub-agents)
 que toca el proyecto. **Lee este archivo primero. Siempre.**
 
-## Qué es Grow
+## Qué es Mimo
 
 App para familias hispanohablantes · del embarazo a los 3 años del hij@ ·
 trauma-informed, sin gamification, sin urgencia. Single-developer repo.
@@ -15,7 +15,7 @@ trauma-informed, sin gamification, sin urgencia. Single-developer repo.
   `apps/about-us/` (Next.js 16 + Framer Motion) · build estático con
   `npm run build` que sale a `homepage/about-us/` · single domain ·
   ver ADR-0017
-- **Design System** · `design/Grow Design System v0.2.html` · single source
+- **Design System** · `design/Mimo Design System v0.2.html` · single source
   of truth para tokens, primitives, copy canon
 - **Stack** · vanilla HTML/CSS/JS (homepage + prototype) · Next.js 16
   static export (about-us) · sin backend, sin auth · server local con
@@ -26,7 +26,7 @@ trauma-informed, sin gamification, sin urgencia. Single-developer repo.
 Lee en este orden cuando arrancas. **Para una tarea concreta** · profundiza
 solo lo necesario (no leas todo cada vez).
 
-1. **`AGENTS.md`** (este archivo) · 1 min · qué es Grow y dónde mirar
+1. **`AGENTS.md`** (este archivo) · 1 min · qué es Mimo y dónde mirar
 2. **`.agent/agents.md`** · 3 min · brain del proyecto · loop + guardrails
 3. **`.agent/rules/{topic}.md`** · 1 min cada · reglas duras por dominio
 4. **`CLAUDE.md`** · 1 min · alias condensado para Claude Code (rápido)
@@ -64,7 +64,7 @@ Los 6 que rompen cualquier merge:
    primitive canon o copy user-facing. Detalle: `.agent/rules/verification.md`
 6. **Pricing homepage ↔ waitlist sincronizado** · `homepage/index.html#pricing`
    es la fuente canónica. Si cambias planes/precios/copy de pricing (Gratis ·
-   Founding · Grow Plus), replica el mismo canon en `homepage/waitlist.html`
+   Founding · Mimo Plus), replica el mismo canon en `homepage/waitlist.html`
    (bloque visual + opciones `precio_sensacion` y `tier`).
 
 ## Glosario express
@@ -128,4 +128,4 @@ Detalle: `.agent/rules/escalation.md`.
 - **Push** · después de cada commit (single-developer)
 - **Server local** · `python3 -m http.server 5050` desde la raíz del repo
 - **URLs** · `http://localhost:5050/homepage/` · `/prototype.html` ·
-  `/design/Grow%20Design%20System%20v0.2.html`
+  `/design/Mimo%20Design%20System%20v0.2.html`

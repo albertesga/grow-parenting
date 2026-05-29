@@ -76,7 +76,7 @@ Research: NSBSP PURPLE crying canon, EPDS antenatal/postnatal validation Cox 198
 - ✓ Familias en momentos vulnerables se sienten acompañadas, no juzgadas
 - ✓ Pediatras valoran el lenguaje preciso con citas
 - ⚠ Tentación de "softness" excesiva · canon requiere también directez cuando aplica (NSBSP "nunca sacudas")
-- ⚠ Pasa de moda si llega "Grow Premium" con gamification · resistir
+- ⚠ Pasa de moda si llega "Mimo Premium" con gamification · resistir
 
 ## Alternatives considered
 

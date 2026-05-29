@@ -1,7 +1,7 @@
-# Arquitectura de información · Homepage Grow
+# Arquitectura de información · Homepage Mimo
 ## v0.1 · canon Fase 0 · DS v0.2
 
-> Producto: **Grow by The Child Lens** · Landing pública (no la app autenticada).
+> Producto: **Mimo by The Child Lens** · Landing pública (no la app autenticada).
 > Audiencias: B2C familias 1.000 días · B2B aseguradoras (DKV pilot) · partners clínicos · prensa/inversores.
 > Estética guía: **editorial calmo · paper cream · Galiner + Inter · ilustración minimalista** (canon DS v0.2 · referencia tonal `reasonal.co`).
 
@@ -16,7 +16,7 @@
 
 ## 0 · TL;DR
 
-La homepage tiene **un solo objetivo primario**: convertir visitas en `Acceder a Grow` / `Waitlist v0` con **tono editorial calmo trauma-informed**, no agresivo. Estructura vertical larga · scroll generoso · sin pop-ups · sin tarjetas de tiempo limitado · sin testimonios falsos.
+La homepage tiene **un solo objetivo primario**: convertir visitas en `Acceder a Mimo` / `Waitlist v0` con **tono editorial calmo trauma-informed**, no agresivo. Estructura vertical larga · scroll generoso · sin pop-ups · sin tarjetas de tiempo limitado · sin testimonios falsos.
 
 13 bloques canon top-to-bottom + header global + footer. Cada bloque cumple una promesa concreta del manifesto. El mismo journey de la app (1.000 días desde embarazo hasta 3 años) estructura también la landing.
 
@@ -145,8 +145,8 @@ Razón: el mercado real es B2C · DKV es pilot. Una landing dispersa pierde conv
 **Propósito**: navegación · acceso · branding.
 
 **Composición**:
-- Logo Grow (Galiner bold) izquierda · tap → `top`.
-- Centro · 3 links: `Libros` · `Para clínicos` · `Por qué Grow`.
+- Logo Mimo (Galiner bold) izquierda · tap → `top`.
+- Centro · 3 links: `Libros` · `Para clínicos` · `Por qué Mimo`.
 - Derecha: selector idioma `ES / EN` · botón `Acceder` (ink fill).
 
 **Comportamiento**:
@@ -163,18 +163,18 @@ Razón: el mercado real es B2C · DKV es pilot. Una landing dispersa pierde conv
 **Composición**:
 ```
 [ eyebrow · uppercase 11px · ink-muted ]
- GROW · LOS 1.000 PRIMEROS DÍAS
+ MIMO · LOS 1.000 PRIMEROS DÍAS
 
 [ hero claim · Galiner bold 56-72px · ink ]
  Tú cuidas a tu hij@,
- y Grow te cuida a ti.
+ y Mimo te cuida a ti.
 
 [ sub-claim · Inter 18px · ink-soft · 2 líneas max ]
  La compañera que faltaba para el embarazo,
  la crianza y todo lo que viene en medio.
 
 [ CTA primaria · ink fill ]      [ CTA secundaria · ghost ]
- Probar Grow gratis             Ver cómo funciona
+ Probar Mimo gratis             Ver cómo funciona
 
 [ Avatar 3 fases · 3 imágenes 3D apiladas o lado a lado ]
   blush (bebé) · coral (embarazo) · mint (toddler)
@@ -310,7 +310,7 @@ Razón: el mercado real es B2C · DKV es pilot. Una landing dispersa pierde conv
 
 **Composición**:
 - H2: `Hay muchas maneras de empezar.`
-- Sub: `Embarazo arcoíris, preemie, monoparental, adopción. Grow se adapta sin que tengas que pedirlo.`
+- Sub: `Embarazo arcoíris, preemie, monoparental, adopción. Mimo se adapta sin que tengas que pedirlo.`
 - **6 cards horizontal scroll** o grid:
   - 🌈 Modo arcoíris (post-pérdida) · *"Sin contadores celebratorios. Acompañamiento que respeta tu duelo."*
   - 🐣 Modo preemie · *"Edad corregida en hitos, vacunas y cribados."*
@@ -411,7 +411,7 @@ Razón: el mercado real es B2C · DKV es pilot. Una landing dispersa pierde conv
 **Composición**:
 - Background `paper-deep` o diferenciado del flujo B2C.
 - H2: `Si trabajas con familias, hablemos.`
-- Sub: `Grow está en pilot con aseguradoras y centros pediátricos. Aplicaciones clínicas + reducción de visitas innecesarias + activación de cribados validados.`
+- Sub: `Mimo está en pilot con aseguradoras y centros pediátricos. Aplicaciones clínicas + reducción de visitas innecesarias + activación de cribados validados.`
 - 3 columnas mini:
   - **Aseguradoras** · "Pilot DKV-style · CE-marked roadmap · MDR Class IIa."
   - **Pediatras** · "Tu paciente llega con el carnet sanitario listo. Tú decides cómo usarlo."
@@ -428,7 +428,7 @@ Razón: el mercado real es B2C · DKV es pilot. Una landing dispersa pierde conv
 - H2: `Preguntas frecuentes.`
 - 8-10 preguntas como accordion (Inter 15):
 
-  1. ¿Sustituye Grow al pediatra?
+  1. ¿Sustituye Mimo al pediatra?
   → *"No. Acompañamos entre visitas, escalamos cuando toca."*
   2. ¿Funciona si solo está mi pareja?
   → *"Sí. La cuenta compartida funciona para ambos por igual."*
@@ -457,7 +457,7 @@ Razón: el mercado real es B2C · DKV es pilot. Una landing dispersa pierde conv
 
 ```
 ╔════════════════════════════════════════════╗
-║ Grow                                       ║
+║ Mimo                                       ║
 ║ Los 1.000 primeros días · contigo.         ║
 ║                                            ║
 ║ Producto    Compañía     Legal             ║
@@ -467,7 +467,7 @@ Razón: el mercado real es B2C · DKV es pilot. Una landing dispersa pierde conv
 ║ Co-cuidado  Prensa       Compliance MDR    ║
 ║                                            ║
 ║ Para clínicos      Contacto                ║
-║ Pediatras          hola@grow.app           ║
+║ Pediatras          hola@mimo.family           ║
 ║ Aseguradoras       LinkedIn                ║
 ║ Doulas             X / Bluesky             ║
 ║                                            ║
@@ -488,7 +488,7 @@ Razón: el mercado real es B2C · DKV es pilot. Una landing dispersa pierde conv
 
 | ID | Claim | Sub-claim |
 | --- | --- | --- |
-| A · canon | *"Tú cuidas a tu hij@, y Grow te cuida a ti."* | *"La compañera que faltaba para el embarazo, la crianza y todo lo que viene en medio."* |
+| A · canon | *"Tú cuidas a tu hij@, y Mimo te cuida a ti."* | *"La compañera que faltaba para el embarazo, la crianza y todo lo que viene en medio."* |
 | B · 1000d | *"Los primeros 1.000 días, contigo."* | *"Embarazo, sueño, vacunas, cólicos. En un sitio. Sin juzgar."* |
 | C · honest | *"Información honesta. Tono cuidado."* | *"La compañera clínica que faltaba para los primeros 1.000 días."* |
 | D · noche | *"A las 3 de la mañana, también."* | *"Hecha para los días largos y las noches que parecen no acabar."* |
@@ -497,7 +497,7 @@ Mi recomendación firme: **A** como default · es la canon Fase 0 ya pulida.
 
 ### 5.2 CTAs · jerarquía
 
-- Primaria · `Probar Grow gratis` (ink fill · pill 14px Inter medium).
+- Primaria · `Probar Mimo gratis` (ink fill · pill 14px Inter medium).
 - Secundaria · `Ver cómo funciona` (ghost ink border).
 - Terciaria · `Apúntate a la lista` (link underline · Inter 14).
 - B2B · `Solicitar demo o pilot →` (ghost paper-deep border).
@@ -529,7 +529,7 @@ Mi recomendación firme: **A** como default · es la canon Fase 0 ya pulida.
 - Background alterno secciones · `paper-soft` `#F2EDE0`.
 - Background dark (sólo bloque 6 Modo madrugada) · `night-bg` `#1A1D24`.
 - Acentos por categoría (en bloque Libros) · 8 tints DS v0.2.
-- Ink principal · `#1A1A1A`.
+- Ink principal · `#34342D`.
 
 ### 6.2 Tipografía
 
@@ -582,8 +582,8 @@ Mi recomendación firme: **A** como default · es la canon Fase 0 ya pulida.
 
 ### 8.1 Title canon
 
-- ES: `Grow · La compañera para los 1.000 primeros días · embarazo, crianza y bienestar familiar`
-- EN: `Grow · The first 1,000 days companion · pregnancy, parenting, and family wellbeing`
+- ES: `Mimo · La compañera para los 1.000 primeros días · embarazo, crianza y bienestar familiar`
+- EN: `Mimo · The first 1,000 days companion · pregnancy, parenting, and family wellbeing`
 
 ### 8.2 Meta description
 
@@ -608,7 +608,7 @@ Mi recomendación firme: **A** como default · es la canon Fase 0 ya pulida.
 
 ### 8.5 Schema.org
 
-- `WebApplication` para la app · `Organization` para Grow · `MedicalEntity` referenced for clinical credibility (no usar `Hospital` ni `Physician`).
+- `WebApplication` para la app · `Organization` para Mimo · `MedicalEntity` referenced for clinical credibility (no usar `Hospital` ni `Physician`).
 
 ---
 
@@ -637,10 +637,10 @@ Mi recomendación firme: **A** como default · es la canon Fase 0 ya pulida.
 
 ## 11 · Decisiones abiertas
 
-1. **CTA hero**: "Probar Grow gratis" vs "Apúntate a la lista" para v0 (depende de si hay app pública o solo waitlist). Recomendación: si solo waitlist → "Apúntate".
+1. **CTA hero**: "Probar Mimo gratis" vs "Apúntate a la lista" para v0 (depende de si hay app pública o solo waitlist). Recomendación: si solo waitlist → "Apúntate".
 2. **Bloque pricing**: incluir desde v0 o solo "free durante beta"? Recomendación: solo "gratis durante beta · te avisaremos si cambia".
 3. **Bloque testimonios**: ¿incluir si no hay todavía? Recomendación: NO · solo cuando haya genuine.
-4. **Video hero**: ¿hacer 30s de "cómo se siente Grow"? Recomendación: NO en v0 · v1.5 si producto está maduro.
+4. **Video hero**: ¿hacer 30s de "cómo se siente Mimo"? Recomendación: NO en v0 · v1.5 si producto está maduro.
 5. **Blog**: ¿enlazar desde header? Recomendación: NO en v0 · v1.5 con content fase 5.
 6. **Galería screenshots app**: ¿incluir? Recomendación: NO en hero · sí en bloque "Los libros" como mini-mockups.
 7. **Mascot vs producto en hero**: ¿el avatar 3 fases es protagonista o el screenshot del producto? Recomendación: avatar 3 fases · más editorial · más diferenciador.
@@ -658,7 +658,7 @@ Mi recomendación firme: **A** como default · es la canon Fase 0 ya pulida.
 - `arc.net` · paleta cream + avatares blandos.
 - `framer.com` · grid limpio · estética profesional.
 
-### 12.2 Componentes DS Grow v0.2 referenciados
+### 12.2 Componentes DS Mimo v0.2 referenciados
 
 - `book-shelf` · grid de libros canon (existe ya en `prototype.html`).
 - `book-card` con tonal categoría.
@@ -676,19 +676,19 @@ Mi recomendación firme: **A** como default · es la canon Fase 0 ya pulida.
 - `PRD-libro-colicos-v0.1.md` (sub-libro · mencionable en bloque 6).
 - `PRD-chat-modo-madrugada-v0.1.md` (bloque 6 Modo madrugada).
 - `prototype.html` · libros canon en producto autenticado.
-- `Grow Foundations v0.1` · tokens.
-- `Grow Product Components v0.1` · cat-card, chips, callouts.
+- `Mimo Foundations v0.1` · tokens.
+- `Mimo Product Components v0.1` · cat-card, chips, callouts.
 - `grow-landing.html` · iteración previa de landing · servirá de base hi-fi.
 - `Notion · Manifiesto v2.10 · Fase 0` (canon textos).
 
 ### 12.4 Stack técnico landing
 
-- Next.js 15 (canon Grow).
+- Next.js 15 (canon Mimo).
 - Static / ISR (la mayoría del contenido es estático).
 - Tailwind + shadcn/ui (canon DS).
 - Image · Avif/Webp · responsive · Next/Image.
 - Form submit · Supabase Auth waitlist.
-- Analytics · PostHog autohosted (canon Grow stack).
+- Analytics · PostHog autohosted (canon Mimo stack).
 - Sin chat-bot proactivo · sin pop-ups.
 
 ---
@@ -715,4 +715,4 @@ Mi recomendación firme: **A** como default · es la canon Fase 0 ya pulida.
 
 ---
 
-*IA homepage Grow v0.1 · canon Fase 0 · alineado DS v0.2 + prototype canon libros · abril 2026*
+*IA homepage Mimo v0.1 · canon Fase 0 · alineado DS v0.2 + prototype canon libros · abril 2026*

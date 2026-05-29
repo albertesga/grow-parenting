@@ -1,4 +1,4 @@
-# Task flow validation · Grow v0.1
+# Task flow validation · Mimo v0.1
 ## Research sintético · 8 tasks core · canon Fase 0 · abril 2026
 
 > Validación de 8 tasks core en el `prototype.html` · cubre **B · task-flow validation + H2 · frequency of use**. Playwright capturó 8 screenshots + análisis directo del código (SPA con JS router).
@@ -227,7 +227,7 @@ alimentacion    1
 
 **Internal triggers (emocionales del usuario · disparan apertura sin push)**:
 
-| Trigger emocional | Etapa hij@ | Frecuencia esperada | Cómo Grow responde |
+| Trigger emocional | Etapa hij@ | Frecuencia esperada | Cómo Mimo responde |
 | --- | --- | --- | --- |
 | Ansiedad clínica ("¿es normal?") | Todas | Diaria 0-3m · semanal 3-12m | Chat IA + triage trees · 8 chips |
 | Curiosidad anticipatoria ("¿qué viene?") | T2 embarazo + 1-12m | Semanal | Card "qué pasa esta semana" + libros |
@@ -266,7 +266,7 @@ alimentacion    1
 - Kinedu ~22% DAU/MAU.
 - BabyCenter ~12% (community-first).
 - Bubu sin datos (50 WAU sobre 500 DLs = 10% WAU/DLs).
-- **Target Grow v0** · target ≥ 30% DAU/MAU · alcanzable con los 6 triggers + Modo madrugada.
+- **Target Mimo v0** · target ≥ 30% DAU/MAU · alcanzable con los 6 triggers + Modo madrugada.
 
 ### 10.5 · Score H2 sintético
 

@@ -1,6 +1,6 @@
 # Brief Claude Code · nueva sección Cofounders en about-us
 
-> Pegar este prompt entero a Claude Code. Asume que ya conoce el repo Grow, el DS v0.2, el canon Fase 0 y la arquitectura Next.js + Framer Motion + Tailwind del subproyecto `apps/about-us/`.
+> Pegar este prompt entero a Claude Code. Asume que ya conoce el repo Mimo, el DS v0.2, el canon Fase 0 y la arquitectura Next.js + Framer Motion + Tailwind del subproyecto `apps/about-us/`.
 
 ---
 
@@ -164,9 +164,9 @@ ESTRUCTURA DEL COMPONENTE (en orden de scroll)
    - Título emocional (font-grift, grande):
      "Cuéntanos quién eres."
    - Subtítulo:
-     "Escríbenos a hola@growbythechildlens.com con dos frases sobre ti
+     "Escríbenos a hola@mimo.family con dos frases sobre ti
      y por qué te interesa esto. Te respondemos en menos de una semana."
-   - Botón primario (mailto): "Escribir a hola@growbythechildlens.com"
+   - Botón primario (mailto): "Escribir a hola@mimo.family"
    - Línea final, pequeña, ink-faint:
      "Sin formularios. Sin proceso. Solo una primera conversación honesta."
 
@@ -259,7 +259,7 @@ feat(about-us): añadir CofoundersCallSection como cierre real de la página
 
 ## Notas para revisar antes de mergear
 
-- **Email**: el prompt usa `hola@growbythechildlens.com`. Verificar si es el dominio canon real o si conviene cambiar a `equipo@`, `cofounders@`, etc. Es cambio de 1 string.
+- **Email**: el prompt usa `hola@mimo.family`. Verificar si es el dominio canon real o si conviene cambiar a `equipo@`, `cofounders@`, etc. Es cambio de 1 string.
 - **Tonal por perfil**: el mapping (gold·CTO / blush·Medical / coral·GTM / violet·Designer / mint·Junior Content / sage·Junior Builder) es propuesta — no canon establecido. Si tienes preferencia, reordena en el prompt antes de pegar.
 - **Animaciones**: la decisión de **no** usar fill-on-scroll aquí es deliberada (las narrativas ya hacen ese trabajo emocional; esta sección informa y convoca). Si lo quieres aplicar, modifica la sección "PATRÓN VISUAL".
 

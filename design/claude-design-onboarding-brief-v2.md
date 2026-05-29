@@ -1,7 +1,7 @@
-# Claude Design brief · Grow Onboarding v2 (hi-fi)
+# Claude Design brief · Mimo Onboarding v2 (hi-fi)
 ## canon mayo 2026 · derivado de trans/onboarding-canon + DS v0.2 + Fase 0
 
-> Brief pegable a Claude Design para producir los wireframes hi-fi del onboarding de Grow. Implementa el onboarding mínimo de 3 preguntas (≤60s) + progressive profiling + screenings clínicos en momentos canon + capa B2B opcional.
+> Brief pegable a Claude Design para producir los wireframes hi-fi del onboarding de Mimo. Implementa el onboarding mínimo de 3 preguntas (≤60s) + progressive profiling + screenings clínicos en momentos canon + capa B2B opcional.
 
 > [!NOTE]
 > **Typography canon May 2026** · Brief migrado de tipografía legacy
@@ -13,14 +13,14 @@
 
 ## 0 · TL;DR (≤200 palabras)
 
-Diseña **6 pantallas hi-fi mobile-first** del onboarding mínimo de Grow + las **tarjetas de progressive profiling** que aparecen en el feed durante las primeras 4 semanas. Base canónica: notion `📝 trans/onboarding-canon`. Aplica **DS v0.2 canon** (paper-cream + 8 tonales + Galiner/Inter + avatares 3D blandos coral/blush/mint). Manifesto canon mayo 2026: *"No hay una manera correcta. Hay la tuya. Y la tuya nace del amor. Para cualquier familia que cuida."* Principios: (1) Una sola pregunta por pantalla. (2) Anónimo first 24h (no login obligatorio · canon §auth-canon). (3) Sin password nunca · Apple/Google/magic link. (4) Quick win garantizado en pantalla 4 (Timeline visible con avatar canon en su fase). (5) Tarjetas de progressive profiling no bloqueantes en el feed posterior. (6) Screenings clínicos validados (EPDS · M-CHAT-R · ASQ-3 · PBA-5) embebidos como conversación, nunca como "test médico". (7) Capa B2B (DKV pilot) opcional con consentimiento granular y solo después del primer Quick win. Output: HTML single-file responsive + CSS inline + sin librerías externas excepto Google Fonts (Galiner + Inter).
+Diseña **6 pantallas hi-fi mobile-first** del onboarding mínimo de Mimo + las **tarjetas de progressive profiling** que aparecen en el feed durante las primeras 4 semanas. Base canónica: notion `📝 trans/onboarding-canon`. Aplica **DS v0.2 canon** (paper-cream + 8 tonales + Galiner/Inter + avatares 3D blandos coral/blush/mint). Manifesto canon mayo 2026: *"No hay una manera correcta. Hay la tuya. Y la tuya nace del amor. Para cualquier familia que cuida."* Principios: (1) Una sola pregunta por pantalla. (2) Anónimo first 24h (no login obligatorio · canon §auth-canon). (3) Sin password nunca · Apple/Google/magic link. (4) Quick win garantizado en pantalla 4 (Timeline visible con avatar canon en su fase). (5) Tarjetas de progressive profiling no bloqueantes en el feed posterior. (6) Screenings clínicos validados (EPDS · M-CHAT-R · ASQ-3 · PBA-5) embebidos como conversación, nunca como "test médico". (7) Capa B2B (DKV pilot) opcional con consentimiento granular y solo después del primer Quick win. Output: HTML single-file responsive + CSS inline + sin librerías externas excepto Google Fonts (Galiner + Inter).
 
 ---
 
 ## 1 · Inputs obligatorios
 
 1. **Spec canon**: notion [📝 trans/onboarding-canon](https://www.notion.so/34d55399748a81c4945bd6dffa44bb30) (decisiones D1-D6 cerradas · screenings con timing · copy ES+EN).
-2. **DS v0.2 canon**: `design/Grow Design System v0.2.html` (8 tonales · Galiner/Inter · avatares 3D blandos · estados card).
+2. **DS v0.2 canon**: `design/Mimo Design System v0.2.html` (8 tonales · Galiner/Inter · avatares 3D blandos · estados card).
 3. **Fase 0 source of truth**: notion `🌱 Fase 0 — Manifiesto + Arquitectura` (manifesto v2 mayo · 9 libros · 6 modos especiales · auth canon).
 4. **Pricing canon**: notion `💰 Pricing strategy + GTM` (free tier robusto · trial 14d sin tarjeta · Founding €1.99).
 5. **Research v0.1**: notion `🔬 Research sintético deep dive v0.2` (canon Pablo/Carmen friction-killer + canon Ingrid contexto preemie + canon Lucía modo arcoíris).
@@ -32,7 +32,7 @@ Diseña **6 pantallas hi-fi mobile-first** del onboarding mínimo de Grow + las 
 ### P0 · Welcome (sin pregunta)
 
 - Background paper-cream canon.
-- Logo Grow + manifesto canon v2 completo en Galiner italic:
+- Logo Mimo + manifesto canon v2 completo en Galiner italic:
   > *"No hay una manera correcta. Hay la tuya. Y la tuya nace del amor."*
   > *"Para cualquier familia que cuida."*
 - Avatares 3 fases canon flotando suavemente (coral · blush · mint).
@@ -111,7 +111,7 @@ Errores trauma-informed: *"Este enlace ya caducó · no es nada que hayas hecho 
 
 > ⚠️ **Solo aparece** si el usuario llega vía link DKV/Sanitas/Adeslas. **Después de timeline + sesión 1 completada** (canon D4).
 
-> "Tu aseguradora [DKV] paga Grow para ti."
+> "Tu aseguradora [DKV] paga Mimo para ti."
 > Sub: *"Tú decides qué compartir con ellos. Puedes cambiarlo cuando quieras."*
 
 Toggles granulares · default = mínimo necesario:
@@ -124,7 +124,7 @@ Toggles granulares · default = mínimo necesario:
 - ☐ Nada por ahora *— puedes activarlo más tarde*
 
 Disclaimer trauma-informed prominente:
-> *"Línea roja: Grow nunca comparte datos individuales con tu aseguradora para ajuste de prima. Solo agregados anónimos para reporting de programa."*
+> *"Línea roja: Mimo nunca comparte datos individuales con tu aseguradora para ajuste de prima. Solo agregados anónimos para reporting de programa."*
 
 CTA primary: `Activar y empezar`.
 CTA secondary: `Saltar`.
@@ -177,7 +177,7 @@ Reglas canon:
 - `--paper #FAF7F0` fondo principal.
 - `--paper-soft #F2EDE0` cards y surfaces.
 - `--paper-deep #E8E1CF` modo lurker / fondo secundario.
-- `--ink #1A1A1A` texto principal.
+- `--ink #34342D` texto principal.
 - Tonal por contexto fase: coral (embarazo) · blush (bebé 0-12m) · mint (toddler 1-3a) · paper-deep (lurker).
 
 ### Tipografía (canon)
@@ -303,4 +303,4 @@ Reglas canon:
 
 ---
 
-*Brief Claude Design · Grow Onboarding v0.2 hi-fi · 18 mayo 2026 · canon Fase 0 · trauma-informed · supersede onboarding wireframes v0.1.*
+*Brief Claude Design · Mimo Onboarding v0.2 hi-fi · 18 mayo 2026 · canon Fase 0 · trauma-informed · supersede onboarding wireframes v0.1.*

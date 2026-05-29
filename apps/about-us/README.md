@@ -1,4 +1,4 @@
-# Grow · About Us (source)
+# Mimo · About Us (source)
 
 Sub-app narrativa en `apps/about-us/` (Next.js 16 + Tailwind + Framer Motion).
 El source vive aquí y el output estático se exporta a `homepage/about-us/`.

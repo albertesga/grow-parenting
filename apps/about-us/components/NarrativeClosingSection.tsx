@@ -16,7 +16,7 @@ import useIsDesktop from './useIsDesktop';
  *
  * Viene DESPUÉS de NarrativeRevealSection ("Nadie me preparó para ser
  * padre...") · recoge ese peso emocional y lo convierte en el por qué de
- * Grow: criar es el reto más grande de la vida, y por eso la mayor
+ * Mimo: criar es el reto más grande de la vida, y por eso la mayor
  * oportunidad de ayudar a otras familias.
  *
  * Mismo vocabulario de animación que NarrativeRevealSection · fill-on-scroll
@@ -38,7 +38,7 @@ import useIsDesktop from './useIsDesktop';
 
 // Color tokens DS (string interpolables para framer-motion)
 const COLOR_OFF = '#BFBAA8'; // var(--ink-faint)
-const COLOR_ON = '#1A1A1A'; // var(--ink)
+const COLOR_ON = '#34342D'; // var(--ink)
 
 interface WordTok {
   text: string;

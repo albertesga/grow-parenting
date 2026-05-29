@@ -102,13 +102,14 @@ hex literal en código aplicación · todo via CSS variables.
 | `--paper` | `#FAF7F0` | Background principal |
 | `--paper-soft` | `#F2EDE0` | Cards background suave |
 | `--paper-deep` | `#E8E1CF` | Cards background deep / hero Salud |
-| `--ink` | `#1A1A1A` | Texto principal |
+| `--ink` | `#34342D` | Texto principal |
 | `--ink-warm` | `#2A211B` | Texto warm sobre tonal |
 | `--ink-soft` | `#4D4D4D` | Texto secundario, eyebrows |
 | `--ink-muted` | `#888888` | Texto muted, captions |
 | `--ink-faint` | `#BFBAA8` | Texto faint, placeholders |
 | `--line` | `#E2DDD1` | Borders sutiles |
 | `--line-strong` | `#C9C2B2` | Borders dividers |
+| `--sage-egg` | `#C4D3C3` | Acento de marca Mimo (logo/halo) · NO sustituye familias tonales |
 | `--module-dark` | `#1B1A18` | Backgrounds dark modules (poster, etc.) |
 
 ## Mapping libro → tono (canon fijo)

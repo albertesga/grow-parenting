@@ -13,7 +13,7 @@ aplica + visual diff si aplica. Cero commit sin pasar por aquí.
 ### 1 · `/verify-proto` (HTTP + JS)
 
 Skill canónica · ejecuta:
-- `curl` sobre `homepage/index.html`, `prototype.html`, `design/Grow DS v0.2.html`
+- `curl` sobre `homepage/index.html`, `prototype.html`, `design/Mimo DS v0.2.html`
 - `node --check` sobre JS del prototype
 
 Output esperado:

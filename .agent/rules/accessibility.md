@@ -6,7 +6,7 @@ seguro (escapeHtml).
 
 ## Por qué
 
-Grow es para familias en estados emocionalmente cargados (embarazo,
+Mimo es para familias en estados emocionalmente cargados (embarazo,
 postparto, llantos del hij@) · muchas veces con la mano libre, en mobile,
 con poca luz. Accesibilidad no es nice-to-have · es la baseline.
 
@@ -76,7 +76,7 @@ Usa `:focus-visible` (no `:focus`) para evitar mostrar ring en click mouse.
 ### 6 · Contraste AA+ (≥ 4.5:1 body · ≥ 3:1 large)
 
 Combinaciones validadas:
-- `--ink` (#1A1A1A) sobre `--paper` (#FAF7F0) · 14.8:1 ✓
+- `--ink` (#34342D) sobre `--paper` (#FAF7F0) · 14.8:1 ✓
 - `--ink` sobre cualquier `--{tono}-subtle` · validado en DS
 - `--ink-soft` (#4D4D4D) sobre `--paper` · 7.4:1 ✓
 - `--ink-muted` (#888) sobre `--paper` · 3.6:1 · solo para captions ≥18px

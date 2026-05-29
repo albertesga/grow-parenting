@@ -9,7 +9,7 @@
 | 3 | 3 viñetas demostrando entrada → pregunta → resultado | 🟡 media · comprensión | medium |
 | 4 | Subir contraste de chips inactivos en mockup | 🟢 baja · visual | very low |
 
-Contexto compartido (Claude Code ya lo tiene): repo Grow, DS v0.2, canon Fase 0, sección Modo 3 AM en `homepage/index.html`, ADR-0005 (Chat IA single-thread + Modo madrugada efímero). Antes de cualquier cambio, leer ADR-0005 y `.claude/PATTERNS.md`.
+Contexto compartido (Claude Code ya lo tiene): repo Mimo, DS v0.2, canon Fase 0, sección Modo 3 AM en `homepage/index.html`, ADR-0005 (Chat IA single-thread + Modo madrugada efímero). Antes de cualquier cambio, leer ADR-0005 y `.claude/PATTERNS.md`.
 
 ---
 
@@ -43,12 +43,12 @@ CAMBIO
 En index.html, sustituir:
 
 [línea 707] de:
-"Cuando llega una noche difícil, Grow baja el ritmo: fondo oscuro,
+"Cuando llega una noche difícil, Mimo baja el ritmo: fondo oscuro,
 texto grande y una pregunta cada vez. Te ayuda a decidir si toca
 consultar, vigilar en casa o pedir relevo."
 
 a:
-"Cuando llega una noche difícil, Grow baja el ritmo: fondo oscuro,
+"Cuando llega una noche difícil, Mimo baja el ritmo: fondo oscuro,
 texto grande, una pregunta cada vez. Te ayudamos a entender qué
 dicen las guías sobre lo que estás viendo — tú decides qué hacer."
 
@@ -155,7 +155,7 @@ CRITERIOS DE ACEPTACIÓN
 NO HACER
 - No crear clases .threeam-chip / .modo3am-chip propias. Reusar
   .chip canon. Si necesita variante, .chip--with-sub o similar.
-- No añadir iconos a los chips. El DS de Grow no los usa aquí.
+- No añadir iconos a los chips. El DS de Mimo no los usa aquí.
 - No usar "gratis siempre" ni "100% gratis" en la mini-promesa
   (claim regulatorio + comercial impreciso vs estructura
   freemium real).

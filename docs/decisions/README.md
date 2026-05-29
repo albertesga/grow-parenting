@@ -1,4 +1,4 @@
-# Architecture Decision Records · Grow
+# Architecture Decision Records · Mimo
 
 Decisiones canónicas del producto y del DS · cortas, evaluables por
 agentes, resistentes a la rotación. Reemplaza prose en CLAUDE.md.

@@ -13,13 +13,15 @@ const config: Config = {
         'paper-soft': '#F2EDE0',
         'paper-deep': '#E8E1CF',
         // Ink hierarchy · DS canon
-        ink: '#1A1A1A',
+        ink: '#34342D',
         'ink-warm': '#2A211B',
         'ink-soft': '#4D4D4D',
         'ink-muted': '#888888',
         'ink-faint': '#BFBAA8',
         line: '#E2DDD1',
         'line-strong': '#C9C2B2',
+        // Mimo brand accent · sage-egg
+        'sage-egg': '#C4D3C3',
         // Coral · embarazo, alimentación, cólicos
         'coral-subtle': '#FBE5D6',
         'coral-base': '#F2A57A',

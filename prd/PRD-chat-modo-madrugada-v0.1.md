@@ -1,14 +1,14 @@
 # PRD · Chat IA + Modo madrugada
-## Grow · v0.1 · canon Fase 0
+## Mimo · v0.1 · canon Fase 0
 
-> Producto: **Grow by The Child Lens** · Módulo: **Chat IA contextual con triage trees + Modo madrugada** · Categoría DS: cross-categoría (chat es transversal · triage trees pintan el color de su categoría · Modo madrugada = paleta dark dedicada).
-> Status: ready for Claude Design + ingeniería · siguiendo `Grow Design System v0.2`.
+> Producto: **Mimo by The Child Lens** · Módulo: **Chat IA contextual con triage trees + Modo madrugada** · Categoría DS: cross-categoría (chat es transversal · triage trees pintan el color de su categoría · Modo madrugada = paleta dark dedicada).
+> Status: ready for Claude Design + ingeniería · siguiendo `Mimo Design System v0.2`.
 
 ---
 
 ## 0 · TL;DR
 
-El **chat de Grow** es la conversación viva del producto · una sola hebra continua donde la IA acompaña a la familia con citas clínicas siempre con fuente y año, contexto pre-cargado del hij@ (edad, módulos activos, modo arcoíris/preemie/3AM), y **8 chips de cribaje rápido** que disparan árboles de triage validados clínicamente (NICE, AAP, NSBSP).
+El **chat de Mimo** es la conversación viva del producto · una sola hebra continua donde la IA acompaña a la familia con citas clínicas siempre con fuente y año, contexto pre-cargado del hij@ (edad, módulos activos, modo arcoíris/preemie/3AM), y **8 chips de cribaje rápido** que disparan árboles de triage validados clínicamente (NICE, AAP, NSBSP).
 
 El **Modo madrugada** es un sub-modo del chat que se activa siempre en `dark` (22:00-06:00 default · opt-in/out), abre **un thread efímero independiente** del chat principal, y arranca con el mensaje canon:
 
@@ -44,7 +44,7 @@ Tras esa apertura presenta **3 opciones edad-aware** (embarazo · 0-3 m · 3-12 
 | "Tengo miedo de hacerle daño" | Privación sueño extrema | Pico de ansiedad SBS |
 | "Necesito hablar con alguien YA" | Crisis emocional | Salud mental sin acceso |
 
-### 1.3 Lo que Grow resuelve
+### 1.3 Lo que Mimo resuelve
 
 - **Marco clínico evidence-based** activado en 2 taps · canon NICE/AAP/NSBSP.
 - **Tono trauma-informed** · ni alarmismo ni minimización.
@@ -61,7 +61,7 @@ Tras esa apertura presenta **3 opciones edad-aware** (embarazo · 0-3 m · 3-12 
 ### 2.1 Persona primaria
 
 **María · 34 a · Lola 7 sem · 03:42 a.m.**
-Lola lleva 1 h 20 min llorando. María durmió 2 h. Pablo trabaja mañana y duerme. María googleó "fiebre 38° bebé recién nacido cuándo urgencias" y encontró 14 resultados contradictorios. Abre Grow en modo 3AM.
+Lola lleva 1 h 20 min llorando. María durmió 2 h. Pablo trabaja mañana y duerme. María googleó "fiebre 38° bebé recién nacido cuándo urgencias" y encontró 14 resultados contradictorios. Abre Mimo en modo 3AM.
 
 ### 2.2 Personas secundarias
 
@@ -93,7 +93,7 @@ Lola lleva 1 h 20 min llorando. María durmió 2 h. Pablo trabaja mañana y duer
 
 | Outcome | Métrica | Target v0 |
 | --- | --- | --- |
-| Reducción visitas urgencias innecesarias | Self-report "consulté Grow en lugar de urgencias y resolví" | ≥ 30 % usuarios mensuales |
+| Reducción visitas urgencias innecesarias | Self-report "consulté Mimo en lugar de urgencias y resolví" | ≥ 30 % usuarios mensuales |
 | Reducción ansiedad nocturna | EPDS/PBA-5 pre/post · diff | -1.5 puntos vs cohorte sin chat |
 | Confianza en marco clínico | Encuesta NPS clínico chat | ≥ 50 NPS |
 | Apertura conversación emocional | % usuari@s que activan ruta 3 Modo madrugada al menos 1 vez | ≥ 15 % |
@@ -563,7 +563,7 @@ Las citas se renderizan como tag pill `paper-soft` con fuente + año · tap abre
 
 ```
 Front
-├── Next.js 15 (canon Grow)
+├── Next.js 15 (canon Mimo)
 ├── Tailwind + shadcn/ui (DS v0.2)
 └── Web Streams API (streaming responses)
 
@@ -581,7 +581,7 @@ Back
 ### 9.2 System prompt canon (chat principal)
 
 ```
-You are Grow's clinical companion. Behave like a doula or a senior 
+You are Mimo's clinical companion. Behave like a doula or a senior 
 maternal-child nurse: warm, professional, calm, never alarmist, 
 never minimizing.
 
@@ -833,7 +833,7 @@ type TriageRun = {
 
 - Conversaciones cifradas at-rest (AES-256 · Supabase encryption keys).
 - Modo madrugada thread efímero · si usuari@ pulsa "borrar", solo queda agregado anonimizado.
-- Cero entrenamiento de modelos de Anthropic con conversaciones de Grow (Anthropic API zero-retention).
+- Cero entrenamiento de modelos de Anthropic con conversaciones de Mimo (Anthropic API zero-retention).
 - Cero envío de PII al modelo · solo edad/etapa del hij@ · nunca nombre completo.
 - Derecho borrado GDPR: usuari@ puede borrar todo el chat por hij@.
 - Export GDPR: chat completo en JSON + PDF al pedir portabilidad.
@@ -948,7 +948,7 @@ type TriageRun = {
 
 (Mismas que Libro de Cólicos PRD · más todas las NICE guidelines listadas en §5.1)
 
-### 16.2 Componentes DS Grow v0.2 referenciados
+### 16.2 Componentes DS Mimo v0.2 referenciados
 
 - `.cat-card` (mensajes IA con cita clínica)
 - `.chip` con variantes categoría (chips cribaje)
@@ -968,8 +968,8 @@ type TriageRun = {
 - `wireframes-v2.html · §16 Settings` (toggle Modo madrugada auto / manual).
 - `PRD-libro-colicos-v0.1.md` (cross-ref bidireccional).
 - `prototype.html · landing` (entry chat desde web).
-- `Notion · Diferenciales Grow` (canon trauma-informed).
-- `Notion · Journey Grow` (contexto pre-cargado).
+- `Notion · Diferenciales Mimo` (canon trauma-informed).
+- `Notion · Journey Mimo` (contexto pre-cargado).
 
 ---
 
@@ -994,4 +994,4 @@ type TriageRun = {
 
 ---
 
-*PRD · Chat IA + Modo madrugada · Grow v0.1 · canon Fase 0 · alineado con DS Grow v0.2 · abril 2026*
+*PRD · Chat IA + Modo madrugada · Mimo v0.1 · canon Fase 0 · alineado con DS Mimo v0.2 · abril 2026*

@@ -133,7 +133,7 @@ motion** (no confetti, no streak animations, no celebraciones performativas).
 
 ## Cita ADR
 
-- (Sin ADR formal · canon documentado aquí + en `design/Grow Design System v0.2.html`
+- (Sin ADR formal · canon documentado aquí + en `design/Mimo Design System v0.2.html`
   § motion tokens)
 - ADR-0011 · trauma-informed copy (motion debe alinearse al mismo tono)
 

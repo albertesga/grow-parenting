@@ -1,6 +1,6 @@
-# Brief · Waitlist form Grow
+# Brief · Waitlist form Mimo
 
-> Tú ya conoces Grow, el DS v0.2 y el canon Fase 0. Este brief solo te da **qué tiene que pasar, qué copy usar y por qué**. La implementación (tokens, layout exacto, animaciones, JS) la decides tú alineado al canon.
+> Tú ya conoces Mimo, el DS v0.2 y el canon Fase 0. Este brief solo te da **qué tiene que pasar, qué copy usar y por qué**. La implementación (tokens, layout exacto, animaciones, JS) la decides tú alineado al canon.
 
 ---
 
@@ -54,7 +54,7 @@ Persistencia local entre sesiones (si abandonan, vuelven al mismo paso). Submit 
 
 ```
 EYEBROW    Estamos en validación · mayo 2026
-TITLE      Estamos construyendo Grow. Ayúdanos a hacerlo bien.
+TITLE      Estamos construyendo Mimo. Ayúdanos a hacerlo bien.
 LEAD       12 preguntas. Unos 3 minutos. Cada respuesta nos ayuda
            a construir algo que de verdad encaje con tu familia
            — no con la media.
@@ -141,7 +141,7 @@ SKIP    prefiero no decir
 
 ## Pantalla 5 · Modos especiales (multi, opcional, "ninguno" exclusivo)
 
-**Por qué crítico**: el research v0.3 detectó que el moat de Grow es servir bien a los modos especiales (preemie, arcoíris, mono, etc.) donde la competencia falla. Pero **preguntarlo mal hace daño**. Por eso es opcional, sin imágenes, sin emojis, con sub-labels que evitan asumir.
+**Por qué crítico**: el research v0.3 detectó que el moat de Mimo es servir bien a los modos especiales (preemie, arcoíris, mono, etc.) donde la competencia falla. Pero **preguntarlo mal hace daño**. Por eso es opcional, sin imágenes, sin emojis, con sub-labels que evitan asumir.
 
 ```
 TAG     5 de 12 · contexto
@@ -255,7 +255,7 @@ HELP    Estamos pensando en un modelo freemium. La mayor parte funciona
 
 CARD FREE                        CARD PREMIUM
   Gratis                            Premium
-  Grow                              Grow Plus
+  Mimo                              Mimo Plus
   0 € siempre                       9,99 € / mes
   - Calendario semana a semana      - Los 9 libros desbloqueados
   - 1 libro activo según edad       - Chat con IA ilimitado · modo madrugada
@@ -335,7 +335,7 @@ SKIP  enviar sin contestar
 
 ## Pantalla 13 · Gracias (sin contador)
 
-**Por qué**: cierre cálido, no celebratorio (canon: no streak, no confetti). Opt-in newsletter aquí — no antes — porque ya completó, ya ganamos confianza. Y un email de contacto humano (`hola@growbythechildlens.com`) cumple GDPR sin sonar legal.
+**Por qué**: cierre cálido, no celebratorio (canon: no streak, no confetti). Opt-in newsletter aquí — no antes — porque ya completó, ya ganamos confianza. Y un email de contacto humano (`hola@mimo.family`) cumple GDPR sin sonar legal.
 
 ```
 ARTE       Orb sage pequeño (replica chica del orb de la landing)
@@ -350,9 +350,9 @@ OPT-IN CARD (checkbox default checked)
     Cero spam, baja con un clic.
 
 FINEPRINT  Si más adelante quieres editar tu respuesta o borrarla del
-           todo, escríbenos a hola@growbythechildlens.com · Tus datos. Tuyos.
+           todo, escríbenos a hola@mimo.family · Tus datos. Tuyos.
 
-CTA        Volver a Grow ↗   →   anchor a index.html
+CTA        Volver a Mimo ↗   →   anchor a index.html
 ```
 
 ---
@@ -372,7 +372,7 @@ CTA        Volver a Grow ↗   →   anchor a index.html
 
 - "¡Reserva tu plaza antes de que se agoten!" (urgencia falsa)
 - "Solo quedan 47 plazas." (urgencia falsa)
-- "Felicidades por unirte a la familia Grow!" (celebratorio)
+- "Felicidades por unirte a la familia Mimo!" (celebratorio)
 - "Nuestro equipo de expertos…" (corporate)
 - "Cuéntanos tu historia" (demasiado terapéutico para un form de waitlist)
 - "Futuro papá", "mami", "bebito", "mi pequeño guerrero" (canon Fase 0)

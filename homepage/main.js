@@ -857,7 +857,7 @@
           features: [
             { title: "Tomas y ritmo", copy: "Pecho izquierdo, derecho, duración, intervalos y últimas 24h en una vista." },
             { title: "LATCH", copy: "Cinco preguntas, score 0-10 y recomendación de IBCLC externa si se repite bajo." },
-            { title: "Dolor y mastitis", copy: "Triage local para grietas, conducto bloqueado, fiebre o zona roja." },
+            { title: "Dolor y mastitis", copy: "Preguntas guiadas para grietas, conducto bloqueado, fiebre o zona roja." },
             { title: "Medicamentos", copy: "Buscador APILAM/e-lactancia mock con riesgo 0-3 y copy claro." },
             { title: "Banco de leche", copy: "Batches FIFO, nevera, congelador y vencimientos según conservación canon." },
             { title: "Modos sensibles", copy: "Extracción exclusiva, adopción, IGT, tándem o experiencia previa difícil." }
@@ -942,12 +942,12 @@
           pageImgAlt: "Libro de salud",
           featuresLabel: "Lo que el libro hace por ti",
           features: [
-            { title: "Triage por árbol", copy: "Fiebre, respiración, vómitos, diarrea, golpe, rash, convulsión y llanto." },
+            { title: "Preguntas guiadas por síntoma", copy: "Fiebre, respiración, vómitos, diarrea, golpe, rash, convulsión y llanto." },
             { title: "Tres niveles", copy: "Urgencias, mismo día o casa, con explicación para hablar con pediatría." },
             { title: "Paracetamol", copy: "Calculadora por peso según AEPED y guardrails para evitar errores comunes." },
             { title: "Modo emergencia", copy: "Alergias críticas, 112, pediatra y hospital de referencia a mano." },
             { title: "Historial", copy: "Episodios, visitas, medicación y pruebas con búsqueda y filtros." },
-            { title: "Patrones", copy: "Si algo se repite, Grow lo ordena para preparar la consulta." }
+            { title: "Patrones", copy: "Si algo se repite, Mimo lo ordena para preparar la consulta." }
           ],
           avalChips: [
             { tone: "mint", text: "AEPED" },
@@ -1442,7 +1442,7 @@
           arrow = document.createElement("button");
           arrow.type = "button";
           arrow.className = "r-shelf-arrow";
-          arrow.setAttribute("aria-label", "Ver más libros de Grow");
+          arrow.setAttribute("aria-label", "Ver más libros de Mimo");
           arrow.innerHTML = shelfArrowHTML;
           arrow.addEventListener("click", () => {
             const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -1547,4 +1547,51 @@
           onScroll();
         });
       }
+    })();
+
+    /* ════════════════════════════════════════════════════════════════════
+       Modal · Datos (data-trust) · se abre desde "Datos privados" (footer) ·
+       no se muestra inline. Cierre por backdrop / X / Escape · restaura foco
+       al trigger. Scroll lock reutiliza body.bs-locked. */
+    (function initDatosModal() {
+      const overlay = document.getElementById("datos");
+      if (!overlay || !overlay.classList.contains("datos-overlay")) return;
+      const modal = overlay.querySelector(".datos-modal");
+      let lastTrigger = null;
+
+      const open = (trigger) => {
+        lastTrigger = trigger || null;
+        overlay.classList.add("is-open");
+        overlay.setAttribute("aria-hidden", "false");
+        document.body.classList.add("bs-locked");
+        if (modal) { try { modal.focus(); } catch (e) {} }
+      };
+      const close = () => {
+        if (!overlay.classList.contains("is-open")) return;
+        overlay.classList.remove("is-open");
+        overlay.setAttribute("aria-hidden", "true");
+        document.body.classList.remove("bs-locked");
+        if (lastTrigger && typeof lastTrigger.focus === "function") {
+          try { lastTrigger.focus(); } catch (e) {}
+        }
+        lastTrigger = null;
+      };
+
+      // Triggers · [data-datos-open] o cualquier <a href="#datos">
+      document.querySelectorAll('[data-datos-open], a[href="#datos"], a[href$="/#datos"]').forEach((el) => {
+        el.addEventListener("click", (e) => {
+          e.preventDefault();
+          open(el);
+        });
+      });
+
+      // Cierre · backdrop + botón X
+      overlay.querySelectorAll("[data-datos-close]").forEach((el) => {
+        el.addEventListener("click", close);
+      });
+
+      // Cierre · Escape
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") close();
+      });
     })();

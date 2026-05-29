@@ -11,7 +11,7 @@ allowed-tools: Bash(node *) Bash(rg *)
 
 ### 1. Primitives clave en DS
 
-!`rg -o "^\s*\\.[a-z][a-z0-9-]+\\s*\\{" "/Users/titoespanolgamon/Documents/Vibe Coding/Grow/design/Grow Design System v0.2.html" | sort -u | head -40`
+!`rg -o "^\s*\\.[a-z][a-z0-9-]+\\s*\\{" "/Users/titoespanolgamon/Documents/Vibe Coding/Grow/design/Mimo Design System v0.2.html" | sort -u | head -40`
 
 ### 2. Primitives clave en prototype
 

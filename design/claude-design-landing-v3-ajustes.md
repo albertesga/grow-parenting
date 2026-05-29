@@ -1,4 +1,4 @@
-# Ajustes a la landing v3 de Grow · prompts para Claude Design
+# Ajustes a la landing v3 de Mimo · prompts para Claude Design
 ## 8 cambios derivados del research de validación de propuesta de valor · mayo 2026
 
 > Estos 8 prompts corrigen la landing **v3** (`design/claude-design-landing-brief-v3.md`) a partir de los hallazgos del research de 24 usuarios sintéticos — ver Notion *3.1 · Validación de propuesta de valor · Homepage*. Cada prompt es **autónomo y pegable**: aplícalo actualizando primero el brief v3, o pásalo directo a Claude Design al generar `design/wireframes-homepage-v0.3-hi-fi.html`. No reescriben la arquitectura de 6 secciones — solo ajustan dentro de ella.
@@ -25,14 +25,14 @@ Al final hay una **decisión de canon** señalada (la "@" de "hij@") que no es u
 ## 🔴 Prompt 1 · Hero funcional
 
 ```
-Ajuste a la landing v3 de Grow (ver design/claude-design-landing-brief-v3.md, Sección 1 · Hero).
+Ajuste a la landing v3 de Mimo (ver design/claude-design-landing-brief-v3.md, Sección 1 · Hero).
 
-PROBLEMA (research v0.3, 24 usuarios): el hero comunica un sentimiento ("Grow te cuida a ti")
+PROBLEMA (research v0.3, 24 usuarios): el hero comunica un sentimiento ("Mimo te cuida a ti")
 pero no qué HACE la app. Casi nadie supo decir si es un tracker, contenido, un chat o las tres
 cosas. El test de 5 segundos pasa solo a medias. Además "los 9 libros" se confunde con material
 de lectura, no con una app con herramientas.
 
-CAMBIO: mantén el manifiesto canon en Galiner ("Tú cuidas a tu hij@. / Grow te cuida a ti." +
+CAMBIO: mantén el manifiesto canon en Galiner ("Tú cuidas a tu hij@. / Mimo te cuida a ti." +
 "Sin manual, sin juicios, sin urgencia."). Añade DEBAJO una sola línea funcional en Inter que
 diga, en concreto, qué obtiene el usuario — nombrando las tres patas: SABER (contenido con
 criterio clínico), REGISTRAR (seguimiento) y PREGUNTAR (chat que conoce a tu hij@). Ejemplo de
@@ -53,7 +53,7 @@ No meter bullets de features en el hero. No tocar el tono trauma-informed.
 ## 🔴 Prompt 2 · Precio fuera del CTA + tier gratuito visible
 
 ```
-Ajuste a la landing v3 de Grow (Sección 1 · Hero CTA + Sección 6 · Pricing).
+Ajuste a la landing v3 de Mimo (Sección 1 · Hero CTA + Sección 6 · Pricing).
 
 PROBLEMA (research v0.3): el CTA del hero "Apúntate desde €1.99/mes" pone el precio antes de que
 el valor aterrice. Usuarios de renta baja lo leen como "producto de pago, no es para mí" y
@@ -79,7 +79,7 @@ countdown ni FOMO. No pintar el free como una versión "lite" frustrante.
 ## 🔴 Prompt 3 · Señal de inclusividad para familias no estándar
 
 ```
-Ajuste a la landing v3 de Grow (Sección 2 · Parallax + Sección 3 · Libros).
+Ajuste a la landing v3 de Mimo (Sección 2 · Parallax + Sección 3 · Libros).
 
 PROBLEMA (research v0.3, hallazgo #1): v3 quitó el bloque "Para cualquier familia que cuida" y
 el de modos especiales apostando por "inclusividad implícita". No funciona: preemie, adopción,
@@ -94,7 +94,7 @@ CAMBIO: reintroduce UNA señal honesta de que esas familias están vistas, SIN v
 (b) en una card de libro relevante (Hitos, Salud, Desarrollo) muestra una etiqueta sutil
     tipo "edad corregida" o "modo arcoíris" como prueba de que el producto los contempla;
 (c) una línea honesta al cierre del parallax: "Vengas de donde vengas tu historia — gestación,
-    adopción, acogida, una pérdida antes — Grow se adapta a la tuya."
+    adopción, acogida, una pérdida antes — Mimo se adapta a la tuya."
 
 CRITERIOS DE ACEPTACIÓN: una persona de familia no estándar encuentra al menos un punto
 explícito de la landing donde se reconoce su caso. Sin bloque dedicado tipo grid.
@@ -109,7 +109,7 @@ el producto distinto para ellos), no estética.
 ## 🟡 Prompt 4 · Reformular "desde la concepción"
 
 ```
-Ajuste a la landing v3 de Grow (microcopy del Hero y cualquier mención del rango de edad).
+Ajuste a la landing v3 de Mimo (microcopy del Hero y cualquier mención del rango de edad).
 
 PROBLEMA (research v0.3): "De la concepción al 3er cumpleaños" excluye en seco a las familias
 adoptivas — no hubo concepción en su historia y se incorporan más tarde. Es un gatillo de
@@ -132,12 +132,12 @@ crianza"). No alargar el microcopy.
 ## 🟡 Prompt 5 · Comité asesor con nombres reales
 
 ```
-Ajuste a la landing v3 de Grow (Sección 5 · Validado por quien sabe).
+Ajuste a la landing v3 de Mimo (Sección 5 · Validado por quien sabe).
 
 PROBLEMA (research v0.3): la pediatra prescriptora — el usuario más valioso del flywheel B2B —
 rechazó la sección: un "comité asesor" con avatares placeholder y sin nombres es marketing, no
 credibilidad. Sin nombres reales, la sección RESTA en vez de sumar para quien más puede
-recomendar Grow.
+recomendar Mimo.
 
 CAMBIO:
 - Si hay comité asesor real cerrado: muéstralo con nombre y apellidos, especialidad y
@@ -160,7 +160,7 @@ No logos de hospitales sin acuerdo real.
 ## 🟡 Prompt 6 · Coherencia "sin urgencia" vs "Modo emergencia"
 
 ```
-Ajuste a la landing v3 de Grow (Hero/manifiesto + Sección 4 · Modo madrugada).
+Ajuste a la landing v3 de Mimo (Hero/manifiesto + Sección 4 · Modo madrugada).
 
 PROBLEMA (research v0.3): el manifiesto promete "sin urgencia" y la Sección 4 va sobre un "modo
 emergencia / urgencia". Una usuaria escéptica detectó la contradicción en segundos: "¿en qué
@@ -184,7 +184,7 @@ rojo médico. El ajuste es de lenguaje y encuadre, no de función.
 ## 🟡 Prompt 7 · Jerga clínica accesible a todo nivel socioeconómico
 
 ```
-Ajuste a la landing v3 de Grow (Sección 1 · trust signals + Sección 5 · micro-badges).
+Ajuste a la landing v3 de Mimo (Sección 1 · trust signals + Sección 5 · micro-badges).
 
 PROBLEMA (research v0.3): "MDR Class IIa pathway" y los nombres de escalas (EPDS, M-CHAT-R,
 ASQ-3, LATCH, BITSS...) tranquilizan a la diana informada y a la pediatra, pero a usuarias de
@@ -210,7 +210,7 @@ clave en tooltips que en móvil no se ven.
 ## 🟢 Prompt 8 · Narrativa stage-aware
 
 ```
-Ajuste a la landing v3 de Grow (Sección 2 · Parallax + Sección 3 · Libros).
+Ajuste a la landing v3 de Mimo (Sección 2 · Parallax + Sección 3 · Libros).
 
 PROBLEMA (research v0.3): el parallax cuenta tan bien una historia cronológica
 (embarazo → bebé → toddler) que quien no está al principio se siente descentrado. La embarazada

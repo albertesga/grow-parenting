@@ -1,9 +1,9 @@
-# Grow · HANDBOOK
+# Mimo · HANDBOOK
 
 Onboarding doc para humano nuevo + agente fresco. Lee esto si es tu primer
 día en el proyecto · o si has vuelto tras un break largo.
 
-## Qué es Grow
+## Qué es Mimo
 
 App para familias hispanohablantes · del embarazo a los 3 años del hij@.
 **Trauma-informed** · sin gamification, sin urgencia, sin juicio. Diseñado
@@ -21,7 +21,7 @@ para detectar a tiempo, conversación con criterio.
 ## Stack visual
 
 - **Paper** · papel crema cálido (`#FAF7F0`) · evita el blanco quirúrgico
-- **Ink** · negro suave (`#1A1A1A`) · evita el negro hospital
+- **Ink** · negro suave (`#34342D`) · evita el negro hospital
 - **Galiner** (serif TBJ) · display único · pesos 300/400/700 sin italic
 - **Inter** Variable · body, micro, CTAs · 100-900 normal + italic
 - **Grift** · acento geométrico · SOLO en el número grande del pricing
@@ -45,7 +45,7 @@ Detalle: `.agent/rules/typography.md` · `.agent/rules/palette-tonal.md`.
 ## Map de archivos
 
 ```
-Grow/
+Mimo/
 ├── AGENTS.md                          (entry-point canónico para agentes)
 ├── CLAUDE.md                          (alias pointer Claude Code)
 ├── README.md                          (overview humano · 30s)
@@ -63,7 +63,7 @@ Grow/
 │   ├── HANDBOOK.md                    (este archivo)
 │   └── decisions/                     (18 ADRs + template + README)
 ├── design/
-│   ├── Grow Design System v0.2.html   ★ SINGLE SOURCE OF TRUTH ★
+│   ├── Mimo Design System v0.2.html   ★ SINGLE SOURCE OF TRUTH ★
 │   ├── assets/{fonts, img}/
 │   ├── v0.1/                          (histórico · solo arqueología)
 │   └── briefs *.md                    (iteración pasada · read-only)
@@ -102,7 +102,7 @@ Detalle completo: `.agent/rules/file-structure.md`.
 | **FAB** | Floating Action Button central del navbar · log primario del libro. |
 | **ADR** | Architecture Decision Record · `docs/decisions/{NNNN}-{slug}.md`. |
 | **Trauma-informed** | Tono que respeta carga emocional · no urgencia, no juicio, no gamification. |
-| **DS** | Design System · `design/Grow Design System v0.2.html`. |
+| **DS** | Design System · `design/Mimo Design System v0.2.html`. |
 | **Sheet** | Bottom sheet modal · pattern documentado en prototype y landing. |
 | **Avatar** | Personaje circular en hero · mint default · coral solo embarazo. |
 
@@ -118,7 +118,7 @@ python3 -m http.server 5050
 URLs:
 - Landing · http://localhost:5050/homepage/
 - Prototype · http://localhost:5050/prototype.html
-- DS · http://localhost:5050/design/Grow%20Design%20System%20v0.2.html
+- DS · http://localhost:5050/design/Mimo%20Design%20System%20v0.2.html
 
 ### Hot reload manual
 
@@ -224,13 +224,13 @@ Detalle: `AGENTS.md` (root) y `.agent/agents.md` (brain).
 
 ## Decisiones business pendientes
 
-- **Pricing final** · €0 / €1,99 / €7,99 mensual · plan anual €69,99 · OK
+- **Pricing final** · €0 / €1,99 (founding, 100 plazas) / €9,99 mensual · plan anual €69,99 (−42%) · OK
   según research 04, pero pending lock-in de partners
 - **Paywall** · qué features son gated · pending finalizar con producto
 - **Comité clínico** · listado de doctores · OK firmado, pending refresh
   fotos
 - **Store distribution** · iOS primero · Android Q2 · ADR-0014
-- **App store name** · "Grow" disponible en App Store según verificación
+- **App store name** · "Mimo" disponible en App Store según verificación
   v0.3 · pending registro
 
 ## Contacto / ownership

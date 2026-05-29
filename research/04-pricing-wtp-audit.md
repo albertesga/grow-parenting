@@ -1,4 +1,4 @@
-# Pricing + WTP audit · Grow v0.1
+# Pricing + WTP audit · Mimo v0.1
 ## Research sintético · Van Westendorp + benchmark competitivo · canon · abril 2026
 
 > Cubre **H3 · ¿pagarían? ¿cuánto?**. Combina benchmark objetivo de competidores + Van Westendorp Price Sensitivity Meter sintético aplicado a las 6 personas canon + audit del paywall.
@@ -19,12 +19,12 @@
 | Flo Health Premium | Global | Premium | ~$11.49 | ~$40-50 | Freemium |
 | Ovia (sunset) | US | Consumer | ~$22 | ~$150 | B2B2C |
 | **BubuAI** | ES/IT | Sub | **€4.99-9.99** | **€60-120** | Sub + commerce |
-| **Grow ES launch** | ES | Premium | **€1.99** | — | Founding |
-| **Grow ES steady** | ES | Premium | **€7.99** | **€69.99** | Freemium |
-| **Grow UK steady** | UK | Premium | **£6.99** | **£59.99** | Freemium |
+| **Mimo ES launch** | ES | Premium | **€1.99** | — | Founding |
+| **Mimo ES steady** | ES | Premium | **€7.99** | **€69.99** | Freemium |
+| **Mimo UK steady** | UK | Premium | **£6.99** | **£59.99** | Freemium |
 | **ChildLens+ bundle** | ES | Bundle | **€9.99** | **€99.99** | Bundle |
 
-### 1.1 · Posicionamiento de Grow en el mapa
+### 1.1 · Posicionamiento de Mimo en el mapa
 
 ```
 PRICE/MES (€/mes)
@@ -32,20 +32,20 @@ $20 ┤   Ovia (legacy)
     │   ★ BabySparks Premium ($19.99) ━━ Premium content alto
 $15 ┤   ★ Huckleberry Premium ($14.99) ━━ Tier alto AI + experts
     │   ★ Flo Premium (~$11.49)
-$10 ┤   ★ ChildLens+ bundle (€9.99) ━━ Grow + apps verticales
+$10 ┤   ★ ChildLens+ bundle (€9.99) ━━ Mimo + apps verticales
     │   ★ Bubu top (€9.99) ━━ AI + storytelling + sleep dashboard
     │   ★ Huckleberry Plus ($9.99)
-    │   ★ Grow steady-state (€7.99) ★ ━━ TARGET sweet spot
+    │   ★ Mimo steady-state (€7.99) ★ ━━ TARGET sweet spot
     │   ★ Kinedu Premium (~$7.50)
     │   ★ Bubu mid (€7.49)
  $5 ┤   ★ BabySparks Basic ($4.99) ━━ Tier bajo entrada
     │   ★ Bubu launch (€4.99)
- $2 ┤   ★ Grow launch (€1.99) ★ ━━ Founding members price-lock
+ $2 ┤   ★ Mimo launch (€1.99) ★ ━━ Founding members price-lock
  $0 ┤   ★ Pathways.org · NHS · CDC (free)
     │   ★ BabyCenter (free + ads)
 ```
 
-✅ **Posicionamiento canon Grow**:
+✅ **Posicionamiento canon Mimo**:
 - Steady-state €7.99 entre BabySparks Basic ($4.99) y Huckleberry Plus ($9.99). **Sweet spot psicológico**.
 - Launch €1.99 es **el más bajo del mercado de pago** · maximiza adopción + reviews.
 - ChildLens+ bundle €9.99 compite directamente con Bubu top tier + Huckleberry Plus.
@@ -70,7 +70,7 @@ $10 ┤   ★ ChildLens+ bundle (€9.99) ━━ Grow + apps verticales
 **OPP (Optimal Price Point) sintético**: €7-8/mes.
 **Indifference Price Point**: €5-6/mes.
 
-✅ Grow steady-state €7.99 cae en el OPP de María.
+✅ Mimo steady-state €7.99 cae en el OPP de María.
 
 ---
 
@@ -85,7 +85,7 @@ $10 ┤   ★ ChildLens+ bundle (€9.99) ━━ Grow + apps verticales
 
 **OPP**: €8/mes.
 
-✅ Grow steady-state €7.99 cae en el OPP de Pablo.
+✅ Mimo steady-state €7.99 cae en el OPP de Pablo.
 
 ---
 
@@ -100,7 +100,7 @@ $10 ┤   ★ ChildLens+ bundle (€9.99) ━━ Grow + apps verticales
 
 **OPP**: €5-6/mes.
 
-⚠️ Grow steady-state €7.99 está **borderline** para Carmen. **El launch €1.99 es exactamente para ella** · founding member price-lock canon.
+⚠️ Mimo steady-state €7.99 está **borderline** para Carmen. **El launch €1.99 es exactamente para ella** · founding member price-lock canon.
 
 ---
 
@@ -130,7 +130,7 @@ $10 ┤   ★ ChildLens+ bundle (€9.99) ━━ Grow + apps verticales
 
 **OPP**: €25/mes (pricing B2B distinto).
 
-✅ Grow no le vende a Dra. Comas directo · le vende el carnet sanitario del paciente · ella recomienda gratis.
+✅ Mimo no le vende a Dra. Comas directo · le vende el carnet sanitario del paciente · ella recomienda gratis.
 
 ---
 
@@ -145,13 +145,13 @@ $10 ┤   ★ ChildLens+ bundle (€9.99) ━━ Grow + apps verticales
 
 **OPP**: £12/mes.
 
-✅ Grow UK steady-state £6.99 está **por debajo del OPP** de Olivia. Puede ser señal de "demasiado barato" para HNW. **Acción canon**: Olivia paga ChildLens+ bundle £8.99/mes que cae más cerca.
+✅ Mimo UK steady-state £6.99 está **por debajo del OPP** de Olivia. Puede ser señal de "demasiado barato" para HNW. **Acción canon**: Olivia paga ChildLens+ bundle £8.99/mes que cae más cerca.
 
 ---
 
 ## 3 · Síntesis Van Westendorp · 6 personas canon
 
-| Persona | OPP sintético | Grow steady cabe? | Bundle ChildLens+ cabe? |
+| Persona | OPP sintético | Mimo steady cabe? | Bundle ChildLens+ cabe? |
 | --- | --- | --- | --- |
 | María (T1 embarazo) | €7-8 | ✅ | 🟡 limite |
 | Pablo (co-cuidador) | €8 | ✅ | 🟡 limite |
@@ -191,12 +191,12 @@ $10 ┤   ★ ChildLens+ bundle (€9.99) ━━ Grow + apps verticales
 
 ## 5 · Bundle strategy · ChildLens+
 
-**Premise**: Grow + apps verticales (BLW · Colic · Sleep · Stories) = bundle €9.99/mes · €99.99/año.
+**Premise**: Mimo + apps verticales (BLW · Colic · Sleep · Stories) = bundle €9.99/mes · €99.99/año.
 
 **Análisis**:
-- vs comprar individuales: Grow €7.99 + 2 apps verticales €3.99 cada = €15.97/mes. Bundle ahorra €5.98/mes (-37%).
+- vs comprar individuales: Mimo €7.99 + 2 apps verticales €3.99 cada = €15.97/mes. Bundle ahorra €5.98/mes (-37%).
 - vs Huckleberry Premium $14.99: bundle ChildLens+ €9.99 es 30% más barato con MÁS scope (embarazo · canon ES · 8 libros).
-- vs Bubu top €9.99: precio paralelo · diferencial es CLÍNICO (Grow) vs COMMERCE (Bubu).
+- vs Bubu top €9.99: precio paralelo · diferencial es CLÍNICO (Mimo) vs COMMERCE (Bubu).
 
 ✅ **Bundle es defendible** · target sería 30-40% de usuari@s pagos.
 
@@ -233,7 +233,7 @@ $10 ┤   ★ ChildLens+ bundle (€9.99) ━━ Grow + apps verticales
 
 1. **A/B pricing launch** · 50/50 traffic split entre €1.99 vs €4.99 launch · medir conversion + 30d retention. Si €4.99 mantiene > 70% del conversion de €1.99, doble revenue por mismo CAC.
 2. **A/B trial con/sin tarjeta** · medir churn post-trial · si trial sin tarjeta da > 50% conversion, mantener.
-3. **Cohort bundle uptake** · ¿% que toma ChildLens+ vs single Grow? · target 30-40%.
+3. **Cohort bundle uptake** · ¿% que toma ChildLens+ vs single Mimo? · target 30-40%.
 4. **Price increase test** · si tras 3 meses subimos a €9.99 nuevos · medir churn pre-existentes con price-lock.
 5. **Van Westendorp real** · n=200 con cohort beta · canon Q3 2026.
 

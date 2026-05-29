@@ -1,11 +1,11 @@
-# Grow · .agent/agents.md (brain)
+# Mimo · .agent/agents.md (brain)
 
 Brain del proyecto. Lee este archivo después de `AGENTS.md` para el detalle
 completo del loop, guardrails, y cuándo aplicar cada rule.
 
 ## Stack
 
-Grow es un proyecto **design-first** · sin backend, sin auth. Dual-stack
+Mimo es un proyecto **design-first** · sin backend, sin auth. Dual-stack
 (ver ADR-0017): `homepage/` + `prototype.html` son vanilla sin build · la
 sub-app `apps/about-us/` es Next.js 16 CON build (genera static export en
 `homepage/about-us/`).
@@ -16,7 +16,7 @@ sub-app `apps/about-us/` es Next.js 16 CON build (genera static export en
 |---|---|---|
 | `prototype.html` | Single-file app prototype (HTML + CSS + JS inline) | ~20k líneas |
 | `homepage/index.html` + `homepage/styles.css` + `homepage/main.js` | Marketing site | 3 archivos |
-| `design/Grow Design System v0.2.html` | DS canónico · single source of truth | ~5k líneas |
+| `design/Mimo Design System v0.2.html` | DS canónico · single source of truth | ~5k líneas |
 
 ### Assets compartidos
 
@@ -37,7 +37,7 @@ sub-app `apps/about-us/` es Next.js 16 CON build (genera static export en
 ### Cambio CSS sobre primitive existente
 
 1. `.agent/rules/ds-canon.md` (¿estoy reusando primitive existente?)
-2. `design/Grow Design System v0.2.html` · sección del primitive (grep)
+2. `design/Mimo Design System v0.2.html` · sección del primitive (grep)
 3. `docs/decisions/*.md` · ADR del primitive si existe
 4. CSS actual del primitive en `prototype.html` o `homepage/styles.css`
 5. Edit
@@ -128,7 +128,7 @@ Tras implementar · actualiza la memoria del proyecto:
 
 ### G1 · DS canon siempre primero
 
-`design/Grow Design System v0.2.html` es la single source of truth. Antes
+`design/Mimo Design System v0.2.html` es la single source of truth. Antes
 de crear cualquier primitive nuevo · grep en DS y prototype. Si existe ·
 reusa. Si no · valora si justifica ADR. Detalle: `.agent/rules/ds-canon.md`.
 

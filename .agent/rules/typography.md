@@ -7,7 +7,7 @@ grande del pricing.
 ## Por qué
 
 - **Galiner** (TBJ Studio) · serif elegante editorial · ancla el tono
-  emocional de Grow (calma + dignidad)
+  emocional de Mimo (calma + dignidad)
 - **Inter Variable** (Rasmus Andersson) · industry standard para UI ·
   optimizado para legibility en pantalla · 18 cortes en 2 woff2
 - **Grift** · acento geométrico distintivo · usado puntualmente en el
@@ -56,7 +56,7 @@ font-weight: 700; /* Bold · CTAs, callouts */
 ### Grift (acento pricing)
 
 **Cuándo** · ÚNICAMENTE `.plan .price .amt` · el número grande del precio
-(€0 / €1,99 / €7,99). El `.per` (/mes) y `.price-foot` (€69,99 anual)
+(€0 / €1,99 / €9,99). El `.per` (/mes) y `.price-foot` (€69,99 anual)
 usan Inter como el resto del body.
 
 **Por qué exclusivo** · acento geométrico distintivo en un único punto ·
@@ -135,7 +135,7 @@ design/assets/fonts/
 ## Cita ADR
 
 - (Sin ADR formal del swap typography May 2026 · canon documentado aquí
-  + en `design/Grow Design System v0.2.html` § A.1)
+  + en `design/Mimo Design System v0.2.html` § A.1)
 - ADR-0011 · referencia indirecta (copy canon influye en typography choices)
 
 ## Workflow

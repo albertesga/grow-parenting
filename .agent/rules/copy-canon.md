@@ -1,12 +1,12 @@
 # Rule · Copy canon
 
-Todo copy user-facing en Grow sigue el canon **trauma-informed** definido
+Todo copy user-facing en Mimo sigue el canon **trauma-informed** definido
 en ADR-0011. Aplica a microcopy, headlines, body text, sheet copy, error
 messages, aria-labels, alt text.
 
 ## Por qué
 
-Grow trata temas con carga emocional alta · embarazo, parto, pérdida,
+Mimo trata temas con carga emocional alta · embarazo, parto, pérdida,
 lactancia, primeros 3 años. El copy convencional de productos digitales
 (gamification, urgencia, juicio implícito) hace daño real a usuarios en
 estados vulnerables. Trauma-informed es una decisión de producto, no de
@@ -86,7 +86,7 @@ ruta rápida a duelo perinatal.
 
 ### 7 · Wording regulatorio · cero "triage" + NSBSP en contexto correcto
 
-Grow no es un dispositivo médico Class IIa. Cierto wording dispara
+Mimo no es un dispositivo médico Class IIa. Cierto wording dispara
 MDR Rule 11 (clasificación europea de software como medical device) y
 pone toda la app en una categoría que NO queremos asumir hoy.
 

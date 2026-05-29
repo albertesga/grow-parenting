@@ -17,7 +17,7 @@ el próximo agente (humano o claude) parta del conocimiento actualizado.
 | Descubres anti-pattern nuevo (resolved o vivo) | `CLAUDE.md` (sección "Anti-patrones") | Bullet de 1 línea con ref a commit |
 | Descubres patrón implícito en código no canon | `.claude/PATTERNS.md` | Sección nueva o append |
 | Cambia stack o workflow | `docs/HANDBOOK.md` | Actualizar sección relevante |
-| Añades primitive al DS | DS HTML · sección documentada + demo | Add a `design/Grow Design System v0.2.html` |
+| Añades primitive al DS | DS HTML · sección documentada + demo | Add a `design/Mimo Design System v0.2.html` |
 | Cambias mapping libro → tono / libro → fuente | `CLAUDE.md` tabla + `.agent/rules/palette-tonal.md` | Edit ambas |
 | Cambias rule del harness | `.agent/rules/{rule}.md` + propaga si aplica | Edit + revisa AGENTS.md |
 
@@ -80,7 +80,7 @@ Cuándo:
 - Implementaste primitive nuevo y lo canonizaste (con ADR previa)
 
 Cómo:
-1. Edit `design/Grow Design System v0.2.html`
+1. Edit `design/Mimo Design System v0.2.html`
 2. Encuentra la sección correcta (§A heros, §B navbar, §E chips, §G landing, etc.)
 3. Añade markup demo + CSS canónico + spec annotation
 4. Verifica HTTP 200 sobre DS post-edit

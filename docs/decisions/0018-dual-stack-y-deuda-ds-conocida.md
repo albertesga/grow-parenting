@@ -16,7 +16,7 @@ acumulada tras varias iteraciones rápidas single-dev:
 - **Topbar triplicado** · homepage (styles.css `.topbar`) + waitlist.html
   (CSS inline copiado) + `apps/about-us/components/SiteTopbar.tsx` (`<style jsx>`).
 - **Avatar duplicado** · hero homepage (`.hero-avatar*` + filtro `#luma-to-alpha`
-  inline en index.html) vs `homepage/assets/grow-avatar.js` (`.grow-avatar*` +
+  inline en index.html) vs `homepage/assets/mimo-avatar.js` (`.mimo-avatar*` +
   el mismo filtro re-inyectado). El hero NO usa el componente.
 - **Fill-on-scroll duplicado** · `FillBlock/FillWord/FillLine` + `COLOR_OFF/ON`
   + scaffolding `useScroll/useSpring` re-declarados en `NarrativeRevealSection`
@@ -47,7 +47,7 @@ estructurado · solo había drift documental (file-structure.md no mencionaba
      SiteTopbar → tailwind tokens · tailwind.config documenta que deriva de la
      misma paleta.
    - Topbar a un solo source por stack.
-   - Hero homepage usa `GrowAvatar.mount()` (1 avatar, 1 filtro SVG).
+   - Hero homepage usa `MimoAvatar.mount()` (1 avatar, 1 filtro SVG).
    - `<ScrollFillText>` / `useScrollFill` + `useNarrativeScroll(ref)` en about-us.
 
 ## Consequences
@@ -58,8 +58,8 @@ estructurado · solo había drift documental (file-structure.md no mencionaba
 - ⚠ La paleta sigue duplicada · cambiar un color requiere editar varios sitios
   hasta que se haga el refactor de `tokens.css`. Mitigación · `palette-tonal.md`
   documenta los valores canon · auditar con `/sync-ds` antes de tocar color.
-- ⚠ El hero homepage y `grow-avatar.js` deben mantenerse en sync a mano hasta
-  el refactor (documentado en el header de `grow-avatar.js`).
+- ⚠ El hero homepage y `mimo-avatar.js` deben mantenerse en sync a mano hasta
+  el refactor (documentado en el header de `mimo-avatar.js`).
 
 ## Alternatives considered
 

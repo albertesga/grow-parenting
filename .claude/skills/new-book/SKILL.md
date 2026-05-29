@@ -1,12 +1,12 @@
 ---
-description: Scaffold canónico de un libro nuevo en el prototipo Grow · genera shelf-book entry + screen + book-hero tonal + navbar dedicado con tabs + FAB Log central + CSS tonal + state JS + dispatch hook + log filter + opción de ADR. Sigue ADR-0001 (book-hero), ADR-0002 (navbar), ADR-0010 (log filter). Úsalo cuando el user pida añadir un libro nuevo o un módulo nuevo a la app. Trigger keywords: nuevo libro, new book, scaffold, libro nuevo, módulo nuevo, canon, libro de X, añadir libro, crear módulo.
+description: Scaffold canónico de un libro nuevo en el prototipo Mimo · genera shelf-book entry + screen + book-hero tonal + navbar dedicado con tabs + FAB Log central + CSS tonal + state JS + dispatch hook + log filter + opción de ADR. Sigue ADR-0001 (book-hero), ADR-0002 (navbar), ADR-0010 (log filter). Úsalo cuando el user pida añadir un libro nuevo o un módulo nuevo a la app. Trigger keywords: nuevo libro, new book, scaffold, libro nuevo, módulo nuevo, canon, libro de X, añadir libro, crear módulo.
 argument-hint: [nombre-libro] [tono] [tabs...]
 arguments: bookName tone tabs
 ---
 
 ## Tu tarea
 
-Crear un libro nuevo siguiendo el canon Grow. Pide al user (si no lo
+Crear un libro nuevo siguiendo el canon Mimo. Pide al user (si no lo
 sabes ya):
 
 1. **Nombre del libro** (kebab-case · ej: `salud`, `lactancia`)

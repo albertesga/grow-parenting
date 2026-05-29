@@ -1,14 +1,20 @@
-# Pricing strategy + GTM canon · Grow v0.2
+# Pricing strategy + GTM canon · Mimo v0.2
 ## mayo 2026 · supersede 04-pricing-wtp-audit.md
 
 > Documento canónico de estrategia de pricing. Cualquier otra página que mencione pricing debe linkear aquí. Si hay contradicción, gana esta página.
+
+> **[ACTUALIZACIÓN CANON · mayo 2026]** Decisión vigente sobre el análisis original de este doc:
+> - **Mimo Plus €9.99/mes · €69.99/año (−42%)** (antes €7.99/−27%).
+> - **Founding member €1.99/mes · primeros 100 miembros** (antes 1.000).
+> - **Estructura canon = solo 3 tiers: Free · Founding · Mimo Plus.** Los tiers **ChildLens+ (€9.99)** y **ChildLens+ Care (€19.99)** quedan **diferidos / fuera del canon Fase 0** (se mantienen abajo solo como análisis histórico).
+> - Trial 14 días sin tarjeta: sin cambios.
 
 ---
 
 ## 0 · TL;DR
 
 **Recomendación canon:**
-- **Modelo:** Freemium con free tier robusto + premium tier €7.99/mes + Bundle ChildLens+ €9.99/mes.
+- **Modelo:** Freemium con free tier robusto + premium tier €9.99/mes (Mimo Plus). [Bundle ChildLens+ diferido · fuera de canon Fase 0]
 - **Trial:** 14 días premium sin tarjeta (NO 7 días) · reverse trial → degrada a free tier después.
 - **GTM:** Product-Led Growth (PLG) primario · B2B2C (DKV pilot) secundario.
 - **NO:** pay-per-libro one-off ni mensual. Rompe journey integrado y crea fricción de pricing.
@@ -85,15 +91,15 @@
 | Tier | Precio | Para quién | Qué incluye |
 | --- | --- | --- | --- |
 | **Free** | €0 | Carmen-tipo · primer contacto · skeptics | 1 libro core a elegir + Chat IA limitado (5 preg/día) + Modo madrugada completo + Calendario básico + Diario (1 foto/día) + multi-perfil 1 hij@ |
-| **Grow Plus** | €7.99/mes · €69.99/año (-27%) | María-tipo · Pablo-tipo · Marta-tipo · base masiva | TODO desbloqueado: 9 libros + Chat IA ilimitado contextual + Quick log completo + Curva ponderal + Export PDF pediatra + Multi-perfil ilimitado + Co-cuidador cuenta compartida + Vitales sin hardware + Cry classifier |
-| **ChildLens+** | €9.99/mes · €89.99/año | Lucía-tipo · Olivia-tipo · HNW · usuarios premium | Plus + 1 sesión/mes consultora HUMANA (psicóloga perinatal o sleep consultant) + Comunidad privada + Cross-app ecosistema ChildLens (BLW · Colic · Sleep · Stories · Aid) |
-| **ChildLens+ Care** | €19.99/mes | Ingrid-tipo · preemie · arcoíris · necesidad-driven | ChildLens+ + 3 sesiones/mes con especialista perinatal + tier preemie/arcoíris con escalas específicas + comunidad nicho moderada |
+| **Mimo Plus** | €9.99/mes · €69.99/año (-42%) | María-tipo · Pablo-tipo · Marta-tipo · base masiva | TODO desbloqueado: 9 libros + Chat IA ilimitado contextual + Quick log completo + Curva ponderal + Export PDF pediatra + Multi-perfil ilimitado + Co-cuidador cuenta compartida + Vitales sin hardware + Cry classifier |
+| **ChildLens+** *(diferido · fuera de canon Fase 0)* | €9.99/mes · €89.99/año | Lucía-tipo · Olivia-tipo · HNW · usuarios premium | Plus + 1 sesión/mes consultora HUMANA (psicóloga perinatal o sleep consultant) + Comunidad privada + Cross-app ecosistema ChildLens (BLW · Colic · Sleep · Stories · Aid) |
+| **ChildLens+ Care** *(diferido · fuera de canon Fase 0)* | €19.99/mes | Ingrid-tipo · preemie · arcoíris · necesidad-driven | ChildLens+ + 3 sesiones/mes con especialista perinatal + tier preemie/arcoíris con escalas específicas + comunidad nicho moderada |
 
 ### Pricing internacional canon (Fase 1)
 
 | País | Free | Plus | ChildLens+ | Care |
 | --- | --- | --- | --- | --- |
-| 🇪🇸 ES (Fase 0) | €0 | €7.99 | €9.99 | €19.99 |
+| 🇪🇸 ES (Fase 0) | €0 | €9.99 | — diferido — | — diferido — |
 | 🇮🇹 IT (Fase 1 Q2 2027) | €0 | €7.99 | €9.99 | €19.99 |
 | 🇬🇧 UK (Fase 1 Q3 2027) | £0 | £6.99 | £9.99 | £19.99 |
 | 🇩🇪 DE (Fase 1 Q3 2027) | €0 | €8.99 | €11.99 | €22.99 |
@@ -101,13 +107,13 @@
 
 ### Launch promo canon (Founding members)
 
-- **€1.99/mes price-lock primer año** para los primeros 1.000 founding members españoles.
+- **€1.99/mes price-lock primer año** para los primeros 100 founding members españoles.
 - Comunicación trauma-informed: *"Te acompañamos también con el bolsillo."*
 - Validación research: Carmen acepta €3-5/mes · €1.99 launch entra dentro · price-lock es lever fuerte de retención.
 
 ### Trial canon
 
-- **14 días de Grow Plus completo SIN tarjeta** (no 7 días).
+- **14 días de Mimo Plus completo SIN tarjeta** (no 7 días).
 - Reverse trial: día 15 degrada automático a free tier (no expira la cuenta).
 - Justificación: hábito parental requiere ciclo descubrimiento valor 21-30d. 7d es Netflix entertainment; parenting es habit-formation.
 - Comparable: Notion (free indefinido + premium opt-in) · Duolingo Super (14d trial) · Calm (7-30d según canal).
@@ -149,13 +155,13 @@
 3. **Annual discount canon: -25% a -30%** (€7.99×12 = €95.88 → €69.99 = -27%).
 4. **Premium tier sweet spot $7-12** USD-equivalent. €7.99 cae en sweet spot.
 5. **Humano-tier (consultora real) puede ir 2-3× premium**. Calm Premium $12.99 vs BetterHelp $260+.
-6. **Bundle ecosystem (Apple One, Microsoft 365 Family) funciona si ≥3 productos relacionados**. ChildLens+ tiene 5 (BLW · Colic · Sleep · Stories · Aid + Grow).
+6. **Bundle ecosystem (Apple One, Microsoft 365 Family) funciona si ≥3 productos relacionados**. ChildLens+ tiene 5 (BLW · Colic · Sleep · Stories · Aid + Mimo).
 
 ---
 
 ## 4 · GTM canon · Product-Led Growth (PLG) primario
 
-### Por qué PLG es la apuesta correcta para Grow
+### Por qué PLG es la apuesta correcta para Mimo
 
 | Razón | Evidencia |
 | --- | --- |
@@ -180,7 +186,7 @@ TOPO funnel · awareness
 MID funnel · activation
 ├── Landing → email waitlist (smoke test Q2 2026)
 ├── Onboarding sin password (Apple/Google/magic link)
-├── 14d Grow Plus trial sin tarjeta (reverse trial)
+├── 14d Mimo Plus trial sin tarjeta (reverse trial)
 ├── First-day value: Modo madrugada activable + 1 hito celebrado + Diario primera foto
 └── Day-7 in-app: review trial benefits + Carmen-tipo: "puedes seguir gratis"
 
@@ -202,13 +208,13 @@ RETENTION + expansion
 ### B2B2C como canal secundario (NO primario)
 
 **Pilot DKV Q3-Q4 2026**:
-- Modelo: DKV paga sub Grow Plus para sus familias mutualistas (€4.99/mes/familia con descuento volumen).
+- Modelo: DKV paga sub Mimo Plus para sus familias mutualistas (€4.99/mes/familia con descuento volumen).
 - Target: 200-500 familias en pilot · 5.000 en fase steady-state.
-- Métricas Grow: cohort retention 90d · NPS asegurados · upgrade rate ChildLens+ orgánico.
+- Métricas Mimo: cohort retention 90d · NPS asegurados · upgrade rate ChildLens+ orgánico.
 - Métricas DKV: reducción llamadas teleasistencia pediátrica · NPS mutualistas · retention asegurados.
 
 **Programa embajador 100 pediatras AP (Q4 2026)**:
-- Pediatras AP early adopters recomendando Grow a sus familias.
+- Pediatras AP early adopters recomendando Mimo a sus familias.
 - Reward: acceso ChildLens+ gratis + visibilidad como advisor + early features.
 - Validación research: Dra. Comas score 5/5 recomendación si MDR validado.
 
@@ -282,12 +288,12 @@ RETENTION + expansion
 
 ## 7 · Riesgos pricing canon identificados
 
-### Riesgo #1 · Bubu launches cheaper (€2.99/mes) y posiciona Grow como "premium caro"
+### Riesgo #1 · Bubu launches cheaper (€2.99/mes) y posiciona Mimo como "premium caro"
 
 **Probabilidad**: media (Bubu tiene €1.5M ronda · presión rápida market).
 **Mitigación**:
 - Founding members €1.99/mes price-lock como contraataque defensivo.
-- Narrative trust: "Grow = clínico defendible · Bubu = consumer commerce".
+- Narrative trust: "Mimo = clínico defendible · Bubu = consumer commerce".
 - MDR Class IIa pathway visible Q3 2026 → trust premium justifica precio.
 
 ### Riesgo #2 · Carmen-tipo (price-sensitive) no paga ni €7.99 ni €1.99
@@ -416,4 +422,4 @@ RETENTION + expansion
 
 ---
 
-*Pricing strategy canon · Grow v0.2 · mayo 2026 · supersede 04-pricing-wtp-audit.md*
+*Pricing strategy canon · Mimo v0.2 · mayo 2026 · supersede 04-pricing-wtp-audit.md*

@@ -69,7 +69,7 @@ export default function SiteTopbar() {
           transition: color 150ms cubic-bezier(0.2, 0.8, 0.2, 1);
         }
         .nav-link:hover {
-          color: #1a1a1a;
+          color: #34342D;
         }
         .waitlist-link {
           background: #2a211b;
@@ -90,7 +90,7 @@ export default function SiteTopbar() {
             transform 150ms cubic-bezier(0.2, 0.8, 0.2, 1);
         }
         .waitlist-link:hover {
-          background: #1a1a1a;
+          background: #34342D;
           transform: translateY(-1px);
         }
         @media (max-width: 960px) {
@@ -124,8 +124,8 @@ export default function SiteTopbar() {
         id="topbar"
       >
         <div className="brand">
-          <a href="/" aria-label="Grow · volver al inicio">
-            <img src="/about-us/img/grow-logo.png" alt="Grow" draggable={false} />
+          <a href="/" aria-label="Mimo · volver al inicio">
+            <img src="/about-us/img/mimo-logo.png" alt="Mimo" draggable={false} />
           </a>
         </div>
         <div className="right">

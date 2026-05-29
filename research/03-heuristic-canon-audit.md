@@ -1,4 +1,4 @@
-# Heuristic canon audit · Grow v0.1
+# Heuristic canon audit · Mimo v0.1
 ## Research sintético · canon Fase 0 + Nielsen 10 · abril 2026
 
 > Audit del `prototype.html` (872 KB · ~9 libros canon) contra los 10 heurísticos de Nielsen + 10 chequeos canon Fase 0. Output: 20 evaluaciones objetivas + severidad + fix.
@@ -48,7 +48,7 @@
 - Prototype: **0 menciones** de MDR / Class IIa.
 - Landing: 3 menciones canon B2B.
 
-**Análisis**: el prototype es B2C-only en superficie. El bloque B2B vive en la landing. Pero los pediatras / partners DKV que pueden probar Grow esperan ver el pathway clínico **dentro de la app** (típicamente en Settings/About).
+**Análisis**: el prototype es B2C-only en superficie. El bloque B2B vive en la landing. Pero los pediatras / partners DKV que pueden probar Mimo esperan ver el pathway clínico **dentro de la app** (típicamente en Settings/About).
 
 **Severidad**: 🟡 media · B2B trust signal.
 

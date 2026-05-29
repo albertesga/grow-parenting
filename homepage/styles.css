@@ -56,7 +56,10 @@
       --paper:       #FAF7F0;
       --paper-soft:  #F2EDE0;
       --paper-deep:  #E8E1CF;
-      --ink:         #1A1A1A;
+      --ink:         #34342D;
+      /* Mimo brand · charcoal ink + sage-egg como acento de marca (logo/halo).
+         Las 7 familias tonales se mantienen intactas. */
+      --sage-egg:    #C4D3C3;
       --ink-warm:    #2A211B;
       --ink-soft:    #4D4D4D;
       --ink-muted:   #888888;
@@ -619,7 +622,7 @@
       transition: opacity 120ms linear;
     }
     /* .trust-head eliminado · ya no mostramos título "Lo que respalda cada palabra"
-       ni source "Comité clínico Grow · 2026" · los chips se sostienen solos. */
+       ni source "Comité clínico Mimo · 2026" · los chips se sostienen solos. */
     .trust-row {
       position: relative;
       z-index: 1;
@@ -1032,7 +1035,7 @@
     /* ════════════════════════════════════════════════════════════════════
        § Avatar progress · journey cards · 3 etapas del recorrido
        Mantiene los hooks JS existentes (#avatar-fill + .stop states), pero
-       abandona el stepper plano en favor de cards tonales tipo Grow.
+       abandona el stepper plano en favor de cards tonales tipo Mimo.
        ════════════════════════════════════════════════════════════════════ */
     .avatar-progress {
       margin-top: 24px;
@@ -1660,7 +1663,7 @@
       margin-top: 8px;
     }
     .r-book .sb-foot .count { opacity: 1; }
-    /* sb-foot oculto en los libros dentro de los 3 bloques "Respuesta Grow"
+    /* sb-foot oculto en los libros dentro de los 3 bloques "Respuesta Mimo"
        · queda solo el ícono + título · más limpio en mobile donde los
        textos "Libro · 01 SEGO" no caben bien en las cards estrechas.
        En la sección "Todos los libros ordenados" (.ordered-books-shelf)
@@ -4731,6 +4734,115 @@
 
     /* Body lock · evita scroll del documento mientras la sheet está open */
     body.bs-locked { overflow: hidden; }
+
+    /* ── Modal · Datos (data-trust) ──────────────────────────────────────
+       Modal centrado que se abre desde "Datos privados" (footer) · NO inline.
+       Reusa tokens DS + el primitive .trust para el contenido · scroll lock
+       vía body.bs-locked. z-index 100 (sobre topbar y book-sheet). */
+    .datos-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      pointer-events: none;
+      opacity: 0;
+      /* visibility:hidden saca al botón de cerrar (y resto del modal) del tab
+         order cuando está cerrado · delay = duración del fade para no cortar
+         la animación de salida. */
+      visibility: hidden;
+      transition: opacity 280ms var(--ease-sheet), visibility 0s linear 280ms;
+    }
+    .datos-overlay.is-open {
+      pointer-events: auto;
+      opacity: 1;
+      visibility: visible;
+      transition: opacity 280ms var(--ease-sheet), visibility 0s;
+    }
+    .datos-backdrop {
+      position: absolute;
+      inset: 0;
+      background: rgba(26, 22, 18, 0.42);
+      backdrop-filter: blur(6px) saturate(120%);
+      -webkit-backdrop-filter: blur(6px) saturate(120%);
+    }
+    .datos-modal {
+      position: relative;
+      width: min(560px, 100%);
+      max-height: 88vh;
+      overflow-y: auto;
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-xl);
+      box-shadow: 0 30px 70px -30px rgba(42, 33, 27, 0.5);
+      padding: 38px 34px 30px;
+      transform: translateY(14px) scale(0.985);
+      transition: transform 320ms var(--ease-sheet);
+    }
+    .datos-overlay.is-open .datos-modal { transform: translateY(0) scale(1); }
+    .datos-modal .eyebrow { display: block; margin-bottom: 12px; }
+    .datos-modal h2 {
+      font-family: var(--font-serif);
+      font-weight: 400;
+      font-size: clamp(24px, 3.4vw, 32px);
+      line-height: 1.08;
+      letter-spacing: -0.015em;
+      color: var(--ink);
+      margin: 0 0 10px;
+      max-width: 22ch;
+    }
+    .datos-lead {
+      font-family: var(--font-text);
+      font-weight: 300;
+      font-size: 15.5px;
+      line-height: 1.55;
+      color: var(--ink-soft);
+      margin: 0;
+      max-width: 46ch;
+    }
+    /* .trust dentro del modal · pierde el chrome de card (el modal YA es la
+       card) y apila los 4 claims en columna con divisores horizontales. */
+    .datos-modal .trust {
+      margin-top: 18px;
+      padding: 0;
+      background: none;
+      border: 0;
+      border-radius: 0;
+      overflow: visible;
+      isolation: auto;
+    }
+    .datos-modal .trust::before,
+    .datos-modal .trust::after { display: none; }
+    .datos-modal .trust-row { grid-template-columns: 1fr; gap: 0; }
+    .datos-modal .trust-chip { padding: 16px 2px; gap: 14px; align-items: flex-start; }
+    .datos-modal .trust-chip + .trust-chip { border-top: 1px solid var(--line); }
+    .datos-modal .trust-chip + .trust-chip::before { display: none; }
+    .datos-modal .trust-icn { margin-top: 1px; }
+    .datos-close {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      width: 38px;
+      height: 38px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: var(--paper-soft);
+      color: var(--ink);
+      cursor: pointer;
+      transition: background 200ms var(--ease-sheet), transform 200ms var(--ease-sheet);
+    }
+    .datos-close:hover { background: var(--paper); transform: scale(1.05); }
+    .datos-close:active { transform: scale(0.96); }
+    .datos-close:focus-visible { outline: 2px solid var(--coral-strong); outline-offset: 3px; }
+    .datos-close svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; }
+    @media (prefers-reduced-motion: reduce) {
+      .datos-overlay, .datos-modal { transition: none; }
+    }
 
     @media (max-width: 720px) {
       .bs-sheet { width: 100vw; height: 92vh; max-height: 92vh; border-radius: 32px 32px 0 0; }

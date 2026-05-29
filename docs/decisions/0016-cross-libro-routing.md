@@ -6,7 +6,7 @@
 
 ## Context
 
-Grow tiene 11 libros + screens auxiliares (chat, chat-3am, salud-emergencia, log-registro, etc.). Navegar entre ellos requiere un mecanismo único:
+Mimo tiene 11 libros + screens auxiliares (chat, chat-3am, salud-emergencia, log-registro, etc.). Navegar entre ellos requiere un mecanismo único:
 - Dispatch screen activation
 - Reset scroll
 - Trigger render del libro destino
@@ -96,7 +96,7 @@ goTo(name, {
 - ✓ Markup declarativo · cero JS inline
 - ✓ Cross-ref bidireccional trivial (cualquier botón a cualquier screen)
 - ✓ Test E2E facilísimo · `[data-goto]` es un selector canónico
-- ✓ Deep-linking ready · URL pattern `grow.app/X` → mapea a `data-goto="X"` (canon ADR-0014 App Clips)
+- ✓ Deep-linking ready · URL pattern `mimo.family/X` → mapea a `data-goto="X"` (canon ADR-0014 App Clips)
 - ⚠ El dispatch table crece con cada libro nuevo · vive en una sola function `goTo()` · OK
 - ⚠ `data-X-view-set` proliferation · 5+ atributos hoy (vaccineView, pregnancyView, foodView, sleepView, etc.) · podría unificarse a `data-view-set` genérico v2 (no urgente)
 
@@ -109,9 +109,9 @@ goTo(name, {
 
 ## Pattern v1.5+ (cuando migre a React)
 
-Cuando Grow migre a framework (Next/Astro), el pattern se traduce a:
+Cuando Mimo migre a framework (Next/Astro), el pattern se traduce a:
 - `<Link to="/hitos">` (React Router)
 - `data-goto` se queda como semántica del producto (analytics, e2e tests)
 - bookState se mueve a Zustand/Jotai con misma shape
 
-ADR-0014 (App Store distribución) ya prepara este path · App Clips también usan URLs `grow.app/X`.
+ADR-0014 (App Store distribución) ya prepara este path · App Clips también usan URLs `mimo.family/X`.

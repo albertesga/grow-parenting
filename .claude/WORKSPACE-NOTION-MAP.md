@@ -1,4 +1,4 @@
-# Workspace Notion map · Grow canon mayo 2026
+# Workspace Notion map · Mimo canon mayo 2026
 ## Handoff doc para Claude Code spec-driven development
 
 > Pegable directo a prompt Claude Code para que sepa la estructura canónica del workspace Notion + cómo navegarlo. Ver también `CLAUDE.md` en la raíz del repo.
@@ -9,7 +9,7 @@
 
 ## 0 · TL;DR (≤200 palabras)
 
-El workspace Notion de Grow está **organizado spec-driven** desde mayo 2026. **Master directory**: `📍 _index canon`. Architecture decision records: `📜 adrs-index` (16 ADRs activas mapeadas a líneas del prototype.html). 4 niveles canónicos: **specs/** (8 specs core: manifiesto · arquitectura · DS · clínico AEPED · trauma-informed · auth · i18n · privacy), **libros/** (9: Embarazo · Alimentación · Lactancia · Vacunas · Sueño · Salud · Cólicos · Hitos · Desarrollo), **transversales/** (10: quick-log · modo-madrugada · chat-IA · cuenta-compartida · ChildLens-ID · export-PDF · screening · modos-especiales · notificaciones · onboarding), y páginas operativas (Pricing canon · Architecture v0 · 4. Competitive · 7. Business Model · 8. Roadmap · 1. Overview · 2.1 Lean Canvas · Research v0.2). Cada spec tiene frontmatter + TL;DR ≤200 palabras + Goal + Acceptance + Anti-patterns + Implementation pointer (líneas reales prototype.html) + Changelog. Si hay contradicción entre páginas, las specs canon ganan.
+El workspace Notion de Mimo está **organizado spec-driven** desde mayo 2026. **Master directory**: `📍 _index canon`. Architecture decision records: `📜 adrs-index` (16 ADRs activas mapeadas a líneas del prototype.html). 4 niveles canónicos: **specs/** (8 specs core: manifiesto · arquitectura · DS · clínico AEPED · trauma-informed · auth · i18n · privacy), **libros/** (9: Embarazo · Alimentación · Lactancia · Vacunas · Sueño · Salud · Cólicos · Hitos · Desarrollo), **transversales/** (10: quick-log · modo-madrugada · chat-IA · cuenta-compartida · ChildLens-ID · export-PDF · screening · modos-especiales · notificaciones · onboarding), y páginas operativas (Pricing canon · Architecture v0 · 4. Competitive · 7. Business Model · 8. Roadmap · 1. Overview · 2.1 Lean Canvas · Research v0.2). Cada spec tiene frontmatter + TL;DR ≤200 palabras + Goal + Acceptance + Anti-patterns + Implementation pointer (líneas reales prototype.html) + Changelog. Si hay contradicción entre páginas, las specs canon ganan.
 
 ---
 
@@ -31,7 +31,7 @@ El workspace Notion de Grow está **organizado spec-driven** desde mayo 2026. **
 ## 2 · Jerarquía canon del workspace
 
 ```
-🌱 Grow (hub)
+🌱 Mimo (hub)
 │
 ├── 📍 _index canon — master directory + matriz pregunta → spec
 ├── 📜 adrs-index — 16 ADRs + mapa screen → línea prototype.html
@@ -80,7 +80,7 @@ El workspace Notion de Grow está **organizado spec-driven** desde mayo 2026. **
 │   ├── 💰 7. Business Model (pricing delegado)
 │   ├── 🗺️ 8. Roadmap & Decisiones (canon)
 │   ├── 🔬 Research sintético v0.2 (8 entrevistas + findings)
-│   └── 🧬 Content Journey de Grow
+│   └── 🧬 Content Journey de Mimo
 │
 ├── Histórico refactored a pointer
 │   ├── 🧩 5. Features / Módulos → pointer a specs/ + libros/ + transversales/
@@ -91,7 +91,7 @@ El workspace Notion de Grow está **organizado spec-driven** desde mayo 2026. **
 └── 📦 Archived · pre-mayo-2026
     ├── GR-9 Sign-off (cancelado)
     ├── 2.2 Insights & Recalibraciones (research v1 histórico)
-    ├── 🏃 Grow Execution Board F1-F8
+    ├── 🏃 Mimo Execution Board F1-F8
     ├── Funneles Captación 2027 (otro proyecto)
     └── 🎯 GR-19 MVP v0 Scope + RICE Matrix 58 features
 ```
@@ -233,8 +233,8 @@ ADRs pendientes (backlog): 0017-0023 para canon-clinico · auth · i18n · priva
 
 ## 8 · Briefs Claude Design existentes
 
-- `/Grow/design/claude-design-landing-brief-v2.md` — landing v0.2 hi-fi brief.
-- `/Grow/design/claude-design-onboarding-brief-v2.md` — onboarding v0.2 hi-fi brief.
+- `/Mimo/design/claude-design-landing-brief-v2.md` — landing v0.2 hi-fi brief.
+- `/Mimo/design/claude-design-onboarding-brief-v2.md` — onboarding v0.2 hi-fi brief.
 
 Ambos pegables directos a Claude Design.
 
@@ -242,12 +242,12 @@ Ambos pegables directos a Claude Design.
 
 ## 9 · Research artifacts
 
-- `/Grow/research/00-executive-summary.md`
-- `/Grow/research/01-landing-flow-walkthrough.md`
-- `/Grow/research/02-task-flow-validation.md`
-- `/Grow/research/03-heuristic-canon-audit.md`
-- `/Grow/research/04-pricing-wtp-audit.md`
-- `/Grow/research/05-pricing-strategy-canon.md`
+- `/Mimo/research/00-executive-summary.md`
+- `/Mimo/research/01-landing-flow-walkthrough.md`
+- `/Mimo/research/02-task-flow-validation.md`
+- `/Mimo/research/03-heuristic-canon-audit.md`
+- `/Mimo/research/04-pricing-wtp-audit.md`
+- `/Mimo/research/05-pricing-strategy-canon.md`
 
 ---
 
@@ -270,4 +270,4 @@ Ambos pegables directos a Claude Design.
 
 ---
 
-*WORKSPACE-NOTION-MAP · Grow canon mayo 2026 · pegable a prompt Claude Code para handoff spec-driven.*
+*WORKSPACE-NOTION-MAP · Mimo canon mayo 2026 · pegable a prompt Claude Code para handoff spec-driven.*

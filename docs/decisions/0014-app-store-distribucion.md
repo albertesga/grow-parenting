@@ -6,7 +6,7 @@
 
 ## Context
 
-Idea inicial: Grow como "app de apps" · una app general con todos los
+Idea inicial: Mimo como "app de apps" · una app general con todos los
 libros + cada libro descargable como app standalone independiente.
 
 Apple Guideline 4.3(a) Design: Spam (enforced desde 2017) prohíbe apps
@@ -20,12 +20,12 @@ Huckleberry, Sprout, Solid Starts, Glow Inc.). Detalle completo en
 
 ## Decision
 
-**v0-v1.5 · Grow se distribuye como single app + App Clips.**
+**v0-v1.5 · Mimo se distribuye como single app + App Clips.**
 
 ### Single main app
 
 Todos los 10 libros (Hitos, Vacunas, Desarrollo, Embarazo, Alimentación,
-Lactancia, Sueño, Salud, Cólicos, Diario, Perfil) viven dentro de Grow.
+Lactancia, Sueño, Salud, Cólicos, Diario, Perfil) viven dentro de Mimo.
 Un solo bundle ID · `com.grow.parenting` · cuenta compartida única ·
 cross-ref trivial entre libros.
 
@@ -37,9 +37,9 @@ papel · Safari Smart App Banner · iMessage link · Spotlight/Siri.
 
 URL pattern canónico:
 ```
-grow.app/{libro}            → App Clip experience del libro
-grow.app/{libro}/{view}     → drill-down a tab específica
-grow.app/emergencia         → modo emergencia full-screen Salud
+mimo.family/{libro}            → App Clip experience del libro
+mimo.family/{libro}/{view}     → drill-down a tab específica
+mimo.family/emergencia         → modo emergencia full-screen Salud
 ```
 
 App Clips priorizados v0:
@@ -50,7 +50,7 @@ App Clips priorizados v0:
 
 ### Universal links
 
-`grow.app/*` → si la app está instalada, abre tab directa · si no,
+`mimo.family/*` → si la app está instalada, abre tab directa · si no,
 App Clip 10MB de esa experiencia. Discovery cero-fricción.
 
 ### Cuándo re-evaluar
@@ -62,11 +62,11 @@ App Clip 10MB de esa experiencia. Discovery cero-fricción.
 
 **v3 (2028+) · considerar standalone app** SOLO para libros con audiencia
 genuinamente diferenciada:
-- 🤰 **Grow Embarazo** · ciclo cerrado pre-parto · transición clara
+- 🤰 **Mimo Embarazo** · ciclo cerrado pre-parto · transición clara
   al main app post-nacimiento. Precedente: Sprout Pregnancy + Sprout Baby.
-- 🎯 **Grow Pediatra (B2B)** · partner-facing, audiencia profesional, no
+- 🎯 **Mimo Pediatra (B2B)** · partner-facing, audiencia profesional, no
   consumer. Equivale a apps administrativas, no compite con main.
-- 🌡 **Grow Cólicos** · scope acotado 0-4m + crisis · retención corta ·
+- 🌡 **Mimo Cólicos** · scope acotado 0-4m + crisis · retención corta ·
   audiencia distinguible. Riesgo medio.
 
 **NO separar nunca** (alto riesgo 4.3):
@@ -108,7 +108,7 @@ genuinamente diferenciada:
 Re-abrir esta ADR cuando:
 1. Apple cambia la guideline 4.3 (probable nunca · es regla canon desde 2017)
 2. Un libro alcanza >30% DAU exclusivo · justifica standalone real
-3. B2B opportunity clara con pediatras / hospitales · justifica Grow Pediatra
+3. B2B opportunity clara con pediatras / hospitales · justifica Mimo Pediatra
 4. Embarazo arcoíris audiencia justifica app standalone post-pérdida sensible
 5. App size pasa 200MB y bundle splitting no resuelve
 

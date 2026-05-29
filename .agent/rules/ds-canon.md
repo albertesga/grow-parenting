@@ -1,6 +1,6 @@
 # Rule · DS canon
 
-Regla #1 de Grow. El Design System (`design/Grow Design System v0.2.html`)
+Regla #1 de Mimo. El Design System (`design/Mimo Design System v0.2.html`)
 es la **single source of truth** para todos los primitives visuales. Casi
 todo está documentado · si lo necesitas, busca antes de crear.
 
@@ -16,7 +16,7 @@ todo está documentado · si lo necesitas, busca antes de crear.
 1. **Antes de crear cualquier `.{algo}` nuevo en CSS** · grep el DS y el
    prototype:
    ```bash
-   grep -n "\.{primitive}" "design/Grow Design System v0.2.html" prototype.html homepage/styles.css
+   grep -n "\.{primitive}" "design/Mimo Design System v0.2.html" prototype.html homepage/styles.css
    ```
    Si existe en cualquier sitio · **reusa**, no recrees.
 

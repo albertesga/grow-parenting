@@ -74,7 +74,7 @@ resolver: `/img/...` (preload absoluto) y `/about-us/img/...` (basePath).
 
 ## Alternatives considered
 
-- **Subdomain external** (e.g. `about.grow.app`) · rejected · UX
+- **Subdomain external** (e.g. `about.mimo.family`) · rejected · UX
   cambio de dominio rompe la sensación de unidad · DNS extra config
 - **Reverse proxy Vercel/CloudFront** con rewrites `/about-us/* → about-us app` ·
   rejected · over-engineer para single-dev prototype · requiere

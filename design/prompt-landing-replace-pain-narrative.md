@@ -1,7 +1,7 @@
 # Prompt · Reemplazo de la sección "Voces de padres / preocupaciones" en la landing
-## Grow · canon Fase 0 · v0.1
+## Mimo · canon Fase 0 · v0.1
 
-> Briefing para Claude Design / Claude Code / quien implemente la landing pública de Grow. Lee el contexto y aplica el reemplazo descrito al pie de letra.
+> Briefing para Claude Design / Claude Code / quien implemente la landing pública de Mimo. Lee el contexto y aplica el reemplazo descrito al pie de letra.
 
 > [!NOTE]
 > **Typography canon May 2026** · Este brief fue migrado de tipografía legacy
@@ -15,7 +15,7 @@
 
 ## 0 · Lo que tenemos hoy en la landing (sección a reemplazar)
 
-En la iteración previa de la landing pusimos una **sección de scroll narrative con frases de preocupación parental** seguidas, cada una, de **cómo Grow las atiende**. La sección se llamaba internamente "Voces de padres" / "Frases que escuchamos" / "Lo que te quita el sueño".
+En la iteración previa de la landing pusimos una **sección de scroll narrative con frases de preocupación parental** seguidas, cada una, de **cómo Mimo las atiende**. La sección se llamaba internamente "Voces de padres" / "Frases que escuchamos" / "Lo que te quita el sueño".
 
 Su estructura era una columna larga vertical con pares pregunta/respuesta tipo:
 
@@ -54,11 +54,11 @@ Su estructura era una columna larga vertical con pares pregunta/respuesta tipo:
 
 ## 1 · Por qué lo cambiamos
 
-Esa sección era **transaccional** y **catálogo de features**: "Tienes este miedo → Grow tiene esta función". Funcionaba como objection-handling, pero:
+Esa sección era **transaccional** y **catálogo de features**: "Tienes este miedo → Mimo tiene esta función". Funcionaba como objection-handling, pero:
 
 - Choca con el canon editorial reasonal-style de la landing v0.1 (calmo · no vendedor).
 - Activa el miedo del cuidador/a antes de ofrecer paz · no es trauma-informed canon Fase 0.
-- Convierte a Grow en *solucionador de problemas* en lugar de *compañera*.
+- Convierte a Mimo en *solucionador de problemas* en lugar de *compañera*.
 - Cada frase de pain implícitamente afirma que la familia está en crisis · no respeta a las familias que sí están bien.
 - Apila 9 features distintos · diluye el mensaje.
 
@@ -135,13 +135,13 @@ Donde estaba la sección "Voces de padres / preocupaciones", **insertar estas DO
 INCLUSIVIDAD · SIN GÉNERO FORZADO
 ```
 
-- **H2 principal** · Galiner Medium 36-44 px (desktop) · 28 px (mobile) · color `ink` (`#1A1A1A`) · line-height 1.2 · letter-spacing -0.005em:
+- **H2 principal** · Galiner Medium 36-44 px (desktop) · 28 px (mobile) · color `ink` (`#34342D`) · line-height 1.2 · letter-spacing -0.005em:
 
 > Para cualquier familia que cuida.
 
 - **Sub-bajada** Inter regular 15-16 px · `ink-soft` · max 480 px:
 
-> Madre · padre · pareja del mismo sexo · adopción · subrogación · monoparental · acogimiento · abuel@s tutor@s. Si en tu casa hay alguien pequeño a quien cuidas, Grow es para ti.
+> Madre · padre · pareja del mismo sexo · adopción · subrogación · monoparental · acogimiento · abuel@s tutor@s. Si en tu casa hay alguien pequeño a quien cuidas, Mimo es para ti.
 
 - **Grid de 6 configuraciones familiares**, cada una como tarjeta minimalista paper bg + borde fino `line`:
 
@@ -208,7 +208,7 @@ En mobile (< 600 px) el grid pasa a 2 columnas × 3 filas.
 ```
 [ HEADER GLOBAL · sticky ]
    ↓
-[ 1 · HERO · "Tú cuidas a tu hij@, y Grow te cuida a ti." ]
+[ 1 · HERO · "Tú cuidas a tu hij@, y Mimo te cuida a ti." ]
    ↓
 [ A · MANIFESTO EXTENDIDO · "No hay una manera correcta..."  ] ← NUEVO
    ↓
@@ -390,7 +390,7 @@ En mobile (< 600 px) el grid pasa a 2 columnas × 3 filas.
 
 **Sub-bajada** (Inter regular):
 
-> Madre · padre · pareja del mismo sexo · adopción · subrogación · monoparental · acogimiento · abuel@s tutor@s. Si en tu casa hay alguien pequeño a quien cuidas, Grow es para ti.
+> Madre · padre · pareja del mismo sexo · adopción · subrogación · monoparental · acogimiento · abuel@s tutor@s. Si en tu casa hay alguien pequeño a quien cuidas, Mimo es para ti.
 
 **Labels de las 6 tarjetas** (Inter medium):
 
@@ -426,12 +426,12 @@ En mobile (< 600 px) el grid pasa a 2 columnas × 3 filas.
 
 ## 8 · Cross-ref canon
 
-- `/Grow/design/IA-homepage-v0.1.md` · estos dos bloques son **02 · Manifesto extendido** y **03 · ¿Para quién?** del sitemap canon.
-- `/Grow/design/wireframes-homepage-v0.1.html` · ya están materializados en lo-fi.
-- `/Grow/prd/PRD-libro-colicos-v0.1.md` · canon trauma-informed copy.
-- `/Grow/prd/PRD-chat-modo-madrugada-v0.1.md` · canon "Aquí no diagnosticamos. Aquí estamos."
-- Manifesto v2.10 canon Fase 0 (Notion · Hub Grow).
-- DS Grow v0.2 · Foundations + Product Components.
+- `/Mimo/design/IA-homepage-v0.1.md` · estos dos bloques son **02 · Manifesto extendido** y **03 · ¿Para quién?** del sitemap canon.
+- `/Mimo/design/wireframes-homepage-v0.1.html` · ya están materializados en lo-fi.
+- `/Mimo/prd/PRD-libro-colicos-v0.1.md` · canon trauma-informed copy.
+- `/Mimo/prd/PRD-chat-modo-madrugada-v0.1.md` · canon "Aquí no diagnosticamos. Aquí estamos."
+- Manifesto v2.10 canon Fase 0 (Notion · Hub Mimo).
+- DS Mimo v0.2 · Foundations + Product Components.
 
 ---
 

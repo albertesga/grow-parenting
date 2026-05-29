@@ -53,7 +53,7 @@ Si necesitas un primitive visual que el DS no documenta:
 
 ### 4 · Decisión business (pricing, paywall, partner)
 
-- NO decides el precio ni el modelo (€1,99 vs €7,99 vs €0)
+- NO decides el precio ni el modelo (€1,99 vs €9,99 vs €0)
 - NO decides qué features son gated vs free
 - NO decides qué partners listar (comité, certificaciones)
 - Si la tarea toca esto · escala 100%
@@ -73,7 +73,7 @@ Ejemplo:
 ### 6 · Cambio que afecta a ≥3 archivos críticos
 
 Si el cambio toca 3+ de los entry points principales (`prototype.html`,
-`homepage/*`, `design/Grow Design System v0.2.html`) simultáneamente:
+`homepage/*`, `design/Mimo Design System v0.2.html`) simultáneamente:
 
 - Pausa y propone un plan
 - Spawn `Plan` agent si la complejidad lo justifica

@@ -3,11 +3,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Grow · Apúntate a la lista</title>
-<meta name="description" content="Estamos construyendo Grow contigo. 11 preguntas. Unos 3 minutos.">
+<title>Mimo · Apúntate a la lista</title>
+<meta name="description" content="Estamos construyendo Mimo contigo. 11 preguntas. Unos 3 minutos.">
 <meta name="robots" content="noindex">
-<link rel="icon" type="image/png" href="assets/favicon-grow-o.png">
-<link rel="shortcut icon" href="assets/favicon-grow-o.ico">
+<link rel="icon" type="image/x-icon" href="assets/favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16x16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png">
+<link rel="manifest" href="assets/site.webmanifest">
 <style>
 @font-face{font-family:"Galiner";src:url("assets/fonts/TBJGaliner-Light.ttf") format("truetype");font-weight:300;font-display:swap}
 @font-face{font-family:"Galiner";src:url("assets/fonts/TBJGaliner-Regular.ttf") format("truetype");font-weight:400;font-display:swap}
@@ -17,7 +20,8 @@
 :root{
   --paper:#FAF7F0; --paper-soft:#F2EDE0; --paper-deep:#E8E1CF;
   --paper-2:var(--paper-soft); --paper-3:var(--paper-deep);
-  --ink:#1A1A1A; --ink-warm:#2A211B; --ink-soft:#4D4D4D; --ink-muted:#888888; --ink-faint:#BFBAA8; --line:#E2DDD1; --line-strong:#C9C2B2;
+  --ink:#34342D; --ink-warm:#2A211B; --ink-soft:#4D4D4D; --ink-muted:#888888; --ink-faint:#BFBAA8; --line:#E2DDD1; --line-strong:#C9C2B2;
+  --sage-egg:#C4D3C3;
   --coral-subtle:#FBE5D6; --coral-base:#F2A57A; --coral-strong:#D67742; --coral-ink:#8E4A22;
   --blush-subtle:#F8E4DD; --blush-base:#EFC2B5; --blush-strong:#D89A89; --blush-ink:#7A3D2D;
   --mint-subtle:#E5EDDF; --mint-base:#BFD2B0; --mint-strong:#8FAE85; --mint-ink:#4E6A45;
@@ -440,7 +444,7 @@ textarea.in::placeholder{font-style:italic;color:#bdb1a0}
 }
 .meta-row span:hover{transform:rotate(0) translateY(-1px)}
 
-/* final · contenedor del avatar Grow (component grow-avatar.js).
+/* final · contenedor del avatar Mimo (component mimo-avatar.js).
    El component se monta dentro de .final-avatar-mount con tamaño 'md'
    (max-width 280px). El wrapper .final-art centra y añade el margen
    inferior antes del título "Gracias". */
@@ -505,7 +509,7 @@ textarea.in::placeholder{font-style:italic;color:#bdb1a0}
      cualquier ruta. -->
 <header class="topbar" id="topbar">
   <div class="brand">
-    <a href="/" aria-label="Grow · volver al inicio"><img src="/assets/grow-logo.png" alt="Grow"></a>
+    <a href="/" aria-label="Mimo · volver al inicio"><img src="/assets/mimo-logo.png" alt="Mimo"></a>
   </div>
   <!-- Step progress · reemplaza el book-nav del homepage en este contexto.
        El user está en un flow secuencial (10 preguntas · ver data-step)
@@ -533,8 +537,8 @@ textarea.in::placeholder{font-style:italic;color:#bdb1a0}
   <!-- 0 · WELCOME -->
   <section class="step active in" data-step="0" data-no-counter="1">
     <div class="hero-screen">
-      <p class="preface">Validando Grow · mayo 2026</p>
-      <h1>Grow se construye <em>contigo.</em></h1>
+      <p class="preface">Validando Mimo · mayo 2026</p>
+      <h1>Mimo se construye <em>contigo.</em></h1>
       <p class="lead">Tus respuestas nos ayudan a decidir qué construir primero para familias reales.</p>
       <!-- Acceso founding · destacado fuera de los chips porque es el
            gancho diferencial · serif italic + ink-warm para look editorial. -->
@@ -657,7 +661,7 @@ textarea.in::placeholder{font-style:italic;color:#bdb1a0}
   <section class="step" data-step="7">
     <span class="q-tag">7 de 9 · precio</span>
     <h2 class="q-title">¿Cómo te suena?</h2>
-    <p class="q-help">En homepage mostramos 3 vías claras: Gratis, Founding member (100 plazas) y Grow Plus. Queremos validar cuál te encaja más.</p>
+    <p class="q-help">En homepage mostramos 3 vías claras: Gratis, Founding member (100 plazas) y Mimo Plus. Queremos validar cuál te encaja más.</p>
     <div class="price-card">
       <div class="price-tier">
         <span class="ptag">Para empezar</span>
@@ -683,7 +687,7 @@ textarea.in::placeholder{font-style:italic;color:#bdb1a0}
       </div>
       <div class="price-tier">
         <span class="ptag">Plus · por defecto</span>
-        <div class="pname">Grow Plus</div>
+        <div class="pname">Mimo Plus</div>
         <div class="cost">9,99 € <small>/ mes</small></div>
         <p class="in-hint" style="margin-top:8px">o 69,99 € / año · −42%</p>
         <ul>
@@ -737,9 +741,9 @@ textarea.in::placeholder{font-style:italic;color:#bdb1a0}
 
   <!-- 10 · FINAL -->
   <section class="step" data-step="10" data-no-counter="1">
-    <!-- Avatar Grow · reemplaza la orb verde antigua con el avatar canon
+    <!-- Avatar Mimo · reemplaza la orb verde antigua con el avatar canon
          del homepage hero (mismo MP4 + chroma key + levitación + drop
-         shadow). Mounted via GrowAvatar.mount() · ver /assets/grow-avatar.js -->
+         shadow). Mounted via MimoAvatar.mount() · ver /assets/mimo-avatar.js -->
     <div class="final-art">
       <div class="final-avatar-mount" id="final-avatar-mount"></div>
     </div>
@@ -753,9 +757,9 @@ textarea.in::placeholder{font-style:italic;color:#bdb1a0}
         <small>Lo que aprendemos hablando con familias y avances del producto. Baja con un clic.</small>
       </label>
     </div>
-    <p class="fineprint">Para editar o borrar tu respuesta, escríbenos a <strong>hola@wegrow.family</strong>. Tus datos son tuyos.</p>
+    <p class="fineprint">Para editar o borrar tu respuesta, escríbenos a <strong>hola@mimo.family</strong>. Tus datos son tuyos.</p>
     <div class="nav-row">
-      <a class="btn btn-primary" href="index.html">Volver a Grow <span class="arr">↗</span></a>
+      <a class="btn btn-primary" href="index.html">Volver a Mimo <span class="arr">↗</span></a>
       <button type="button" class="skip" data-action="reset">Rellenar de nuevo</button>
     </div>
   </section>
@@ -763,10 +767,10 @@ textarea.in::placeholder{font-style:italic;color:#bdb1a0}
 </div>
 </main>
 
-<!-- Avatar component canon (grow-avatar.js) · mismo avatar que homepage hero.
-     Cargado antes del script principal para que GrowAvatar esté disponible
+<!-- Avatar component canon (mimo-avatar.js) · mismo avatar que homepage hero.
+     Cargado antes del script principal para que MimoAvatar esté disponible
      cuando el step 12 (gracias) lo monte. -->
-<script src="/assets/grow-avatar.js"></script>
+<script src="/assets/mimo-avatar.js"></script>
 
 <script>
 (function(){
@@ -826,15 +830,15 @@ var DATA = {
   tier: [
     {v:'free', l:'Gratis'},
     {v:'founding', l:'Founding member (1,99 €/mes · 100 plazas)'},
-    {v:'premium', l:'Grow Plus (9,99 €/mes o 69,99 €/año)'},
+    {v:'premium', l:'Mimo Plus (9,99 €/mes o 69,99 €/año)'},
     {v:'aun_no', l:'Necesito verlo'},
     {v:'no', l:'Ahora no'}
   ],
   features: [
-    {v:'libros', icon:'wl-book', tone:'coral', bg:'var(--coral-subtle)', l:'Biblioteca Grow', p:'Libros por etapa: embarazo, sueño, vacunas, alimentación, hitos y desarrollo.'},
+    {v:'libros', icon:'wl-book', tone:'coral', bg:'var(--coral-subtle)', l:'Biblioteca Mimo', p:'Libros por etapa: embarazo, sueño, vacunas, alimentación, hitos y desarrollo.'},
     {v:'calendario', icon:'wl-calendar', tone:'mint', bg:'var(--mint-subtle)', l:'Calendario semanal', p:'Lo que toca esta semana, sin adelantar ruido.'},
     {v:'hitos', icon:'wl-growth', tone:'mint', bg:'var(--mint-subtle)', l:'Hitos con criterio', p:'Rangos validados para observar sin comparar de más.'},
-    {v:'chat3am', icon:'wl-moon', tone:'sky', bg:'var(--sky-subtle)', l:'Modo madrugada', p:'Una pregunta cada vez cuando necesitas claridad.'},
+    {v:'madrugada3am', icon:'wl-moon', tone:'sky', bg:'var(--sky-subtle)', l:'Modo madrugada', p:'Una pregunta cada vez cuando necesitas claridad.'},
     {v:'diario', icon:'wl-heart', tone:'blush', bg:'var(--blush-subtle)', l:'Diario privado', p:'Registros y recuerdos en un solo lugar.'},
     {v:'comite', icon:'wl-clinic', tone:'violet', bg:'var(--violet-subtle)', l:'Contenido revisado', p:'Pediatría, neonatología, salud mental y enfermería.'},
     {v:'llamadas', icon:'wl-phone', tone:'gold', bg:'var(--gold-subtle)', l:'Calls 1:1', p:'Cuando necesites hablar con una persona.'},
@@ -1490,19 +1494,19 @@ document.getElementById('exitBtn').addEventListener('click', function(){
   }, { passive:true });
 })();
 
-/* -------- Avatar Grow en step gracias · mount via component grow-avatar.js.
+/* -------- Avatar Mimo en step gracias · mount via component mimo-avatar.js.
    Lazy mount · solo creamos el avatar la primera vez que el user llega al
    step 12 (gracias) para no descargar los MP4 si aún no ha enviado el form.
    Si el state._submitted ya está set al cargar (user vuelve a la página
    tras enviar) · mount inmediato. */
 (function(){
   var mountEl = document.getElementById('final-avatar-mount');
-  if(!mountEl || !window.GrowAvatar) return;
+  if(!mountEl || !window.MimoAvatar) return;
   var mounted = false;
   function mountIfNeeded(){
     if(mounted) return;
     mounted = true;
-    GrowAvatar.mount(mountEl, {
+    MimoAvatar.mount(mountEl, {
       interactive: true,
       size: 'md',
       // Sin phaseTag · el step gracias ya tiene su propio q-tag "listo"

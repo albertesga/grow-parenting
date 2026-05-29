@@ -1,7 +1,7 @@
-# Claude Design brief · Grow landing v2 (hi-fi)
+# Claude Design brief · Mimo landing v2 (hi-fi)
 ## canon mayo 2026 · derivado de research sintético v0.1 + Fase 0 + DS v0.2 + pricing canon
 
-> Brief pegable a Claude Design para producir la landing hi-fi de Grow. Resuelve los 10 fixes prioritarios del landing walkthrough research (top score H1 — download intent) sin romper canon Fase 0 / DS v0.2 / trauma-informed.
+> Brief pegable a Claude Design para producir la landing hi-fi de Mimo. Resuelve los 10 fixes prioritarios del landing walkthrough research (top score H1 — download intent) sin romper canon Fase 0 / DS v0.2 / trauma-informed.
 
 > [!NOTE]
 > **Superseded** · ver `claude-design-landing-brief-v3.md` (arquitectura 6
@@ -15,13 +15,13 @@
 
 ## 0 · TL;DR (≤200 palabras · pegable a prompt)
 
-Diseña la landing **hi-fi mobile-first** de **Grow** — companion digital trauma-informed para familias desde la concepción hasta los 3 años. Base lo-fi: `design/wireframes-homepage-v0.1.html` (13 bloques + parallax avatar 3 fases). Aplica **DS v0.2 canon** (paper-cream + 8 tonales + Galiner/Inter + avatares 3D blandos coral/blush/mint). Manifiesto canon: *"No hay una manera correcta. Hay la tuya. Y la tuya nace del amor. Para cualquier familia que cuida."* Hero canon: *"Tú cuidas a tu hij@, y Grow te cuida a ti."* Cambios obligatorios vs v0.1: (1) subir trust signals al bloque 2-3 (no esperar al 9). (2) Añadir microcopy hero `"De la concepción al 3er cumpleaños · ES"`. (3) Añadir sticky CTA bottom mobile post-hero. (4) Mostrar 9 libros canon (no 8). (5) Pricing transparente visible: *"Gratis durante beta · Founding members €1.99/mes price-lock"*. Tono trauma-informed: 0 comparativos, 0 streaks, 0 rojo médico, 0 ads visuales, 0 testimonios con foto. Target: 5-second test passing + sticky scroll. Output: HTML single-file + assets inline + CSS inline. NO librerías externas más que Google Fonts (Galiner + Inter).
+Diseña la landing **hi-fi mobile-first** de **Mimo** — companion digital trauma-informed para familias desde la concepción hasta los 3 años. Base lo-fi: `design/wireframes-homepage-v0.1.html` (13 bloques + parallax avatar 3 fases). Aplica **DS v0.2 canon** (paper-cream + 8 tonales + Galiner/Inter + avatares 3D blandos coral/blush/mint). Manifiesto canon: *"No hay una manera correcta. Hay la tuya. Y la tuya nace del amor. Para cualquier familia que cuida."* Hero canon: *"Tú cuidas a tu hij@, y Mimo te cuida a ti."* Cambios obligatorios vs v0.1: (1) subir trust signals al bloque 2-3 (no esperar al 9). (2) Añadir microcopy hero `"De la concepción al 3er cumpleaños · ES"`. (3) Añadir sticky CTA bottom mobile post-hero. (4) Mostrar 9 libros canon (no 8). (5) Pricing transparente visible: *"Gratis durante beta · Founding members €1.99/mes price-lock"*. Tono trauma-informed: 0 comparativos, 0 streaks, 0 rojo médico, 0 ads visuales, 0 testimonios con foto. Target: 5-second test passing + sticky scroll. Output: HTML single-file + assets inline + CSS inline. NO librerías externas más que Google Fonts (Galiner + Inter).
 
 ---
 
 ## 1 · Contexto
 
-**Qué es Grow**
+**Qué es Mimo**
 Companion digital trauma-informed para familias que cuidan hij@s desde semana 4 de embarazo hasta el 3er cumpleaños. Producto B2C con pilot B2B2C (aseguradora DKV Q3-Q4 2026). Pertenece al ecosistema **ChildLens** (BLW · Colic · Sleep · Stories · Aid).
 
 **Por qué ahora**
@@ -70,7 +70,7 @@ Companion digital trauma-informed para familias que cuidan hij@s desde semana 4 
 --paper      #FAF7F0   fondo principal
 --paper-soft #F2EDE0   surfaces cards
 --paper-deep #E8E1CF   libro salud + dividers profundos
---ink        #1A1A1A   texto principal
+--ink        #34342D   texto principal
 ```
 
 ### 8 tonales canon por categoría/libro
@@ -128,7 +128,7 @@ Parallax canon: scroll cambia avatar progresivamente. Funciona ya en lo-fi v0.1.
 
 ### Hero canon
 
-> *"Tú cuidas a tu hij@, y Grow te cuida a ti."*
+> *"Tú cuidas a tu hij@, y Mimo te cuida a ti."*
 > Sub: *"La compañera que faltaba para el embarazo, la crianza y todo lo que viene en medio."*
 > Microcopy nuevo (top fix research): *"De la concepción al 3er cumpleaños · ES · web y móvil."*
 
@@ -156,7 +156,7 @@ Parallax canon: scroll cambia avatar progresivamente. Funciona ya en lo-fi v0.1.
 
 ### Bloque 1 · Hero (full viewport mobile · 70vh desktop)
 
-- **Hero claim canon**: *"Tú cuidas a tu hij@, y Grow te cuida a ti."*
+- **Hero claim canon**: *"Tú cuidas a tu hij@, y Mimo te cuida a ti."*
 - Sub canon: *"La compañera que faltaba para el embarazo, la crianza y todo lo que viene en medio."*
 - **Microcopy nuevo (top fix)**: *"De la concepción al 3er cumpleaños · ES · web y móvil."*
 - 3 avatares 3 fases canon (coral · blush · mint) flotando · parallax con scroll.
@@ -215,7 +215,7 @@ CTA secundario en cada card (top fix #8): `Ver libro →` que abre drawer/modal 
 
 ### Bloque 6 · Modo madrugada (highlight emocional · fondo dark)
 
-- Background ink #1A1A1A · texto paper.
+- Background ink #34342D · texto paper.
 - Mockup phone con apertura canon textual.
 - Frase canon: *"Este es un modo urgencia. Las respuestas son más rápidas, más directas y sin juzgar."*
 - 3 chips edad-aware canon (NO 5 rutas):
@@ -342,7 +342,7 @@ Iconografía outline · NO badges fake · NO "5 estrellas Trustpilot" si no son 
 
 - WCAG 2.2 AA mínimo.
 - `prefers-reduced-motion: reduce` desactiva parallax avatar.
-- Contrast ratio: paper #FAF7F0 + ink #1A1A1A = 15.7:1 ✅.
+- Contrast ratio: paper #FAF7F0 + ink #34342D = 15.7:1 ✅.
 - Touch targets ≥44pt.
 
 ---
@@ -352,7 +352,7 @@ Iconografía outline · NO badges fake · NO "5 estrellas Trustpilot" si no son 
 ### Inputs obligatorios
 
 1. **Lo-fi base**: `design/wireframes-homepage-v0.1.html` (13 bloques · 9.897px desktop · 16.023px mobile).
-2. **DS v0.2 canon**: `design/Grow Design System v0.2.html`.
+2. **DS v0.2 canon**: `design/Mimo Design System v0.2.html`.
 3. **Prototype real**: `prototype.html` (single-file · 9 libros vivos · canon Fase 0 sólido 10/10).
 
 ### Inputs de contexto
@@ -360,7 +360,7 @@ Iconografía outline · NO badges fake · NO "5 estrellas Trustpilot" si no son 
 4. Manifesto + arquitectura canon: notion `🌱 Fase 0`.
 5. Research v0.1 (8 entrevistas + findings transversales): notion `🔬 Research sintético deep dive v0.2`.
 6. Pricing canon: notion `💰 Pricing strategy + GTM (source of truth)`.
-7. Landing walkthrough findings: `/Grow/research/01-landing-flow-walkthrough.md`.
+7. Landing walkthrough findings: `/Mimo/research/01-landing-flow-walkthrough.md`.
 
 ### Output esperado
 
@@ -424,4 +424,4 @@ Iconografía outline · NO badges fake · NO "5 estrellas Trustpilot" si no son 
 
 ---
 
-*Brief Claude Design · Grow landing v0.2 hi-fi · 18 mayo 2026 · canon Fase 0 · trauma-informed · supersede prompt-landing-replace-pain-narrative.md*
+*Brief Claude Design · Mimo landing v0.2 hi-fi · 18 mayo 2026 · canon Fase 0 · trauma-informed · supersede prompt-landing-replace-pain-narrative.md*

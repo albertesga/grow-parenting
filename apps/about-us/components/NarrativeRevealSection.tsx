@@ -44,7 +44,7 @@ import useIsDesktop from './useIsDesktop';
 
 // Color tokens DS (string interpolables para framer-motion)
 const COLOR_OFF = '#BFBAA8'; // var(--ink-faint)
-const COLOR_ON = '#1A1A1A';  // var(--ink)
+const COLOR_ON = '#34342D';  // var(--ink)
 
 interface WordTok { text: string; bold?: boolean; }
 interface BlockSpec {

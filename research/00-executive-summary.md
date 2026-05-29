@@ -1,5 +1,5 @@
 # Research sintético · Executive Summary
-## Grow v0.1 · canon Fase 0 · abril 2026
+## Mimo v0.1 · canon Fase 0 · abril 2026
 
 > Síntesis de 4 entregables del research sintético (A heurística + B task-flows + H1 download + H2 frequency + H3 WTP). Foco: **qué hacer hoy** + **qué necesita validación real**.
 
@@ -90,7 +90,7 @@ Tras recorrer la landing como flow real (15 screenshots desktop + mobile) y audi
 
 **Validación real necesaria**: beta cerrada 50-100 familias × 4 semanas · target ≥ 30% DAU/MAU.
 
-**Benchmark realista**: Huckleberry ~45% · Kinedu ~22% · Bubu ~10%. Grow target ≥ 30%.
+**Benchmark realista**: Huckleberry ~45% · Kinedu ~22% · Bubu ~10%. Mimo target ≥ 30%.
 
 ---
 
@@ -117,14 +117,14 @@ Tras recorrer la landing como flow real (15 screenshots desktop + mobile) y audi
 ## 4 · Riesgo competitivo · BubuAI (recordatorio canon)
 
 - BubuAI cierra €1.5M ronda 2026 con foco España + Italy + Malta.
-- Su pricing (€4.99-9.99/mes) overlaps con Grow steady-state.
+- Su pricing (€4.99-9.99/mes) overlaps con Mimo steady-state.
 - Su pillar es **commerce-first** (storytelling + voice + marketplace + AI toy).
-- Grow pillar es **clínico-first** (canon AEPED + escalas + MDR pathway).
+- Mimo pillar es **clínico-first** (canon AEPED + escalas + MDR pathway).
 
 **Acción defensiva canon**:
 1. Acelerar pilot DKV (B2B revenue independiente).
 2. Cerrar Dana/Joy como partners estratégicos antes que Bubu las absorba.
-3. Narrative inversor: *"Grow = clínico defendible · Bubu = consumer commerce"*.
+3. Narrative inversor: *"Mimo = clínico defendible · Bubu = consumer commerce"*.
 4. GTM canon: *"Spanish parents deserve a companion that follows CAV-AEP 2026 — not a voice-cloned story generator"*.
 
 ---
@@ -161,13 +161,13 @@ H1 2027 · steady-state + scale
 
 | Archivo | Descripción | Foco |
 | --- | --- | --- |
-| `/Grow/research/00-executive-summary.md` | Este doc | Síntesis + plan |
-| `/Grow/research/01-landing-flow-walkthrough.md` | Landing como flow real | H1 · A |
-| `/Grow/research/02-task-flow-validation.md` | 8 tasks core + H2 análisis | B · H2 |
-| `/Grow/research/03-heuristic-canon-audit.md` | Canon Fase 0 + Nielsen 10 | A |
-| `/Grow/research/04-pricing-wtp-audit.md` | Pricing + Van Westendorp sintético | H3 |
-| `/Grow/research/screenshots/homepage/` | 15 PNG · desktop + mobile | visual proof |
-| `/Grow/research/screenshots/prototype/` | 9 PNG · pantalla inicial + flows mock | visual proof |
+| `/Mimo/research/00-executive-summary.md` | Este doc | Síntesis + plan |
+| `/Mimo/research/01-landing-flow-walkthrough.md` | Landing como flow real | H1 · A |
+| `/Mimo/research/02-task-flow-validation.md` | 8 tasks core + H2 análisis | B · H2 |
+| `/Mimo/research/03-heuristic-canon-audit.md` | Canon Fase 0 + Nielsen 10 | A |
+| `/Mimo/research/04-pricing-wtp-audit.md` | Pricing + Van Westendorp sintético | H3 |
+| `/Mimo/research/screenshots/homepage/` | 15 PNG · desktop + mobile | visual proof |
+| `/Mimo/research/screenshots/prototype/` | 9 PNG · pantalla inicial + flows mock | visual proof |
 
 ---
 

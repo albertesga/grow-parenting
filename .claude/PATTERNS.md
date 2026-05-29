@@ -1,4 +1,4 @@
-# Grow · patrones implícitos del código
+# Mimo · patrones implícitos del código
 
 Pointer para agentes sin context. Patrones que están en el código pero NO documentados en ADRs ni CLAUDE.md. Si un patrón canon merece ADR, créalo en `docs/decisions/`.
 

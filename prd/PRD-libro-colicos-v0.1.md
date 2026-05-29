@@ -1,14 +1,14 @@
 # PRD · Libro de Cólicos
-## Grow · v0.1 · canon Fase 0
+## Mimo · v0.1 · canon Fase 0
 
-> Producto: **Grow by The Child Lens** · Módulo: **Libro de Cólicos** · Categoría DS: **🌡 Salud** (`--cat-salud-tint #E6E2D6` · `--cat-salud-ink #5C5648`).
-> Status: ready for Claude Design + ingeniería · siguiendo `Grow Design System v0.2`.
+> Producto: **Mimo by The Child Lens** · Módulo: **Libro de Cólicos** · Categoría DS: **🌡 Salud** (`--cat-salud-tint #E6E2D6` · `--cat-salud-ink #5C5648`).
+> Status: ready for Claude Design + ingeniería · siguiendo `Mimo Design System v0.2`.
 
 ---
 
 ## 0 · TL;DR
 
-Los cólicos del lactante afectan a **~20 % de los bebés sanos** en los primeros 4 meses. Son la causa más frecuente de consulta pediátrica de urgencia en ese rango y el principal driver de **agotamiento parental severo** y de eventos de **shaken baby syndrome** en el mundo. Grow construye un **Libro de Cólicos** —análogo al Libro de Vacunas en su entidad propia, pero **temporal y accionable** durante 1 sem – 4 m— que combina:
+Los cólicos del lactante afectan a **~20 % de los bebés sanos** en los primeros 4 meses. Son la causa más frecuente de consulta pediátrica de urgencia en ese rango y el principal driver de **agotamiento parental severo** y de eventos de **shaken baby syndrome** en el mundo. Mimo construye un **Libro de Cólicos** —análogo al Libro de Vacunas en su entidad propia, pero **temporal y accionable** durante 1 sem – 4 m— que combina:
 
 1. **Cry classifier on-device** (90-92 % accuracy) para identificar el tipo de llanto.
 2. **5 S's interactivo guiado** (Karp · Happiest Baby).
@@ -18,7 +18,7 @@ Los cólicos del lactante afectan a **~20 % de los bebés sanos** en los primero
 6. **Relevo de co-cuidador/a** vía cuenta compartida.
 7. **Modo madrugada** ruta canónica "No para de llorar".
 
-Todo siguiendo el DS Grow v0.2 (Lenia + Helvena · 8 categorías canon · `.cat-card` salud + estados doing/done/snoozed · paleta paper/ink + tints).
+Todo siguiendo el DS Mimo v0.2 (Lenia + Helvena · 8 categorías canon · `.cat-card` salud + estados doing/done/snoozed · paleta paper/ink + tints).
 
 **Por qué importa**: reduce ansiedad parental medible (EPDS / PBA-5), reduce consultas innecesarias a urgencias, previene tragedias evitables (sacudida del bebé), y construye memoria longitudinal del hij@ que sirve a otros módulos.
 
@@ -54,7 +54,7 @@ Todo siguiendo el DS Grow v0.2 (Lenia + Helvena · 8 categorías canon · `.cat-
 
 Fuente: Kurth et al. *J Adv Nurs* 2011 · canon NSBSP.
 
-### 1.4 Lo que Grow resuelve
+### 1.4 Lo que Mimo resuelve
 
 - **Marco clínico claro** sin alarmismo: distingue cólico clásico (variación normal) de causas tratables (APLV, frenillo, reflujo) y de alarma real (fiebre <3m, vómitos verdes, letargia).
 - **Estrategias evidence-based**: 5 S's con evidencia RCT + sonido blanco AAP-compliant + cry classifier validado.
@@ -104,7 +104,7 @@ Fuente: Kurth et al. *J Adv Nurs* 2011 · canon NSBSP.
 | Outcome | Métrica | Baseline | Target v0 |
 | --- | --- | --- | --- |
 | Reducción ansiedad parental | EPDS score promedio en familias activas | n/a | -2 puntos vs cohorte sin libro |
-| Reducción consultas urgencias | Self-report "no llamé a urgencias gracias a Grow" | n/a | ≥ 30 % usuarios reportan al menos 1 vez |
+| Reducción consultas urgencias | Self-report "no llamé a urgencias gracias a Mimo" | n/a | ≥ 30 % usuarios reportan al menos 1 vez |
 | Empoderamiento clínico | Wessel auto-confirmado / sospechado | n/a | ≥ 50 % cólicos sospechados confirmados |
 | Co-cuidado activo | Episodios con relevo registrado / total | 0 | ≥ 25 % cuentas compartidas |
 | Prevención SBS | PURPLE Crying education completion | n/a | ≥ 70 % familias activas |
@@ -201,7 +201,7 @@ Fuente: Kurth et al. *J Adv Nurs* 2011 · canon NSBSP.
 
 ### 6.1 Cómo encaja en el navbar canon
 
-El bottom nav canon de Grow es **5-tab + FAB central coral**:
+El bottom nav canon de Mimo es **5-tab + FAB central coral**:
 `Hoy · Calendario · ⊕ · Chat · Yo`
 
 **Decisión**: el Libro de Cólicos **NO es una pestaña top-level**. Es un **módulo accionable temporal** (1 sem - 4 m) que vive como vista expandida con 4 entry points:
@@ -747,7 +747,7 @@ type LibroColicosState = {
 
 ## 12 · Métricas · dashboard
 
-### 12.1 Métricas de producto (PostHog · canon Grow stack)
+### 12.1 Métricas de producto (PostHog · canon Mimo stack)
 
 | Evento | Properties |
 | --- | --- |
@@ -854,7 +854,7 @@ type LibroColicosState = {
 - NICE NG143. *Fever in under 5s: assessment and initial management*. 2021.
 - NICE NG9. *Bronchiolitis in children: diagnosis and management*. 2021.
 
-### 16.2 Componentes del DS Grow v0.2 referenciados
+### 16.2 Componentes del DS Mimo v0.2 referenciados
 
 - `.cat-card.cat-salud` (estado base, doing, done, snoozed)
 - `.chip.salud`
@@ -872,11 +872,11 @@ type LibroColicosState = {
 - `wireframes-v2.html · §14 Cuenta compartida` (relevo).
 - `wireframes-v2.html · §10.2 Caca tracker` (BITSS · descartar APLV).
 - `wireframes-v2.html · §10.3 Lactancia` (LATCH · descartar frenillo).
-- `Notion · Journey Grow · Postparto y reci nacido (0-3m)` (cuándo se activa).
-- `Notion · Diferenciales Grow vs referencia comercial` (canon trauma-informed).
+- `Notion · Journey Mimo · Postparto y reci nacido (0-3m)` (cuándo se activa).
+- `Notion · Diferenciales Mimo vs referencia comercial` (canon trauma-informed).
 - `prototype.html · landing` (entry point B2C).
-- `design/v0.1/Grow Product Components v0.1.html` (cat-card · chips · estados).
-- `design/Grow Design System v0.2.html` (tokens · primitives).
+- `design/v0.1/Mimo Product Components v0.1.html` (cat-card · chips · estados).
+- `design/Mimo Design System v0.2.html` (tokens · primitives).
 
 ---
 
@@ -898,4 +898,4 @@ type LibroColicosState = {
 
 ---
 
-*PRD · Libro de Cólicos · Grow v0.1 · canon Fase 0 · alineado con DS Grow v0.2 · abril 2026*
+*PRD · Libro de Cólicos · Mimo v0.1 · canon Fase 0 · alineado con DS Mimo v0.2 · abril 2026*

@@ -1,157 +1,158 @@
-# Grow · Waitlist form
+# Mimo · Waitlist form
 
 ## Qué es
-`waitlist.html` es un formulario progressive (estilo Typeform · 1 pregunta por pantalla) que captura leads cualificados para la beta. Construido en HTML/CSS/JS vanilla con DS canon Grow (Fraunces + Inter, paleta clay/rose/sage, paper-cream).
+`waitlist.html` es un formulario progresivo (1 pregunta por pantalla) para capturar intención real y feedback de familias. Está implementado en HTML/CSS/JS vanilla y ahora envía eventos a un endpoint serverless (`/api/waitlist`) para persistir en Notion.
 
-## Archivos
-- `waitlist.html` · página completa, self-contained.
-- `propuesta-v3.html` · landing v3, todos los CTAs apuntan a `waitlist.html`.
-- `index.html` (legacy) · si lo mantienes, repetir los mismos cambios de CTA.
+## Archivos clave
+- `homepage/waitlist.html` · UI + lógica del flujo + tracking.
+- `api/waitlist.js` · endpoint Vercel para validación, dedupe y escritura en Notion.
+- `.env.example` · variables de entorno necesarias.
+- `vercel.json` · runtime para functions.
 
-## Flow (14 pantallas)
-| # | Pregunta | Tipo | Req |
+## Flujo actual (11 pantallas visuales)
+Hay 9 preguntas reales, más welcome y gracias:
+
+| Step UI | Pantalla | Tipo | Requerido |
 |---|---|---|---|
-| 0 | Welcome | hero | — |
-| 1 | Nombre | text | opcional |
+| 0 | Welcome | portada | no |
+| 1 | Nombre | text | no |
 | 2 | Email | email | **sí** |
-| 3 | Rol (madre/padre/co-cuidador/abuel@/adopción/otro) | single | sí |
-| 4 | Fecha nacimiento/parto previsto + toggle | date | opcional |
-| 5 | Modos especiales (preemie/arcoíris/mono/mismo sexo/adopción/subrogación) | multi (exclusivo: ninguno) | opcional |
-| 6 | Top problemas (10 opciones, max 3) | multi | sí |
-| 7 | Intensidad por problema (poco/bastante/mucho/muchísimo) | single per item | opcional |
-| 8 | Rating de 9 features (no me sirve / útil / imprescindible) | tri-state | opcional |
-| 9 | Sensación de precio 9,99 € (Van Westendorp simplificado) | single | sí |
-| 10 | Tier elegido (Free / Premium / aún no sé / no) + porqué | single + textarea | sí |
-| 11 | Qué falta en lo que ya usas (texto libre) | textarea | opcional |
-| 12 | Cómo nos encontraste | single | sí |
-| 13 | Gracias + opt-in newsletter | confirmation | — |
+| 3 | Rol cuidador | single choice | no |
+| 4 | Fecha + tipo (nacido / en camino) | date + toggle | no |
+| 5 | Intensidad por tema + comentario | grid + textarea | no |
+| 6 | Rating de features + comentario | rating + textarea | no |
+| 7 | Sensación de precio | single choice | no |
+| 8 | Tier elegido + por qué | single + textarea | no |
+| 9 | Gap de herramientas actuales | textarea | no |
+| 10 | Gracias + newsletter | confirmación | no |
 
-## Estado y persistencia
-- LocalStorage key: `grow_waitlist_v1` · guarda en cada cambio.
-- Si el usuario sale y vuelve desde el mismo navegador, retoma donde lo dejó.
-- Después de submit, el state se conserva (no se borra) para que un refresh no pierda confirmación.
+## Persistencia local
+- Clave de estado: `grow_waitlist_v1`.
+- Mantiene progreso, respuestas, timestamps y flags de envío.
+- Si el usuario vuelve desde el mismo navegador, retoma en el último paso.
 
-## Conectar a Tally + Notion
+## Endpoint de datos reales
+El frontend resuelve el destino así:
+1. Si existe `window.GROW_WEBHOOK_URL`, usa ese valor.
+2. Si no existe, usa `'/api/waitlist'` por defecto.
 
-### Opción A · Tally embebido (más rápido, recomendado para Tito)
-1. Crea un form en Tally con los mismos campos. Mapping sugerido (campo Tally → propiedad Notion DB User Research):
-   - **nombre** → Title `Nombre`
-   - **email** → Email `Email`
-   - **rol** → Select `Rol cuidador`
-   - **fecha + fechaTipo** → Date `Fecha hij@` + Select `Estado embarazo`
-   - **modos** (multi) → Multi-select `Modos especiales`
-   - **problemas** (multi) → Multi-select `Top 3 problemas`
-   - **intensidad** (object) → Text `Intensidad problemas` (JSON pegado)
-   - **features** (object) → Text `Rating features` (JSON pegado)
-   - **precio_sensacion** → Select `Sensación precio`
-   - **tier** → Select `Tier intent`
-   - **porque** → Long text `Por qué precio`
-   - **gap** → Long text `Gap competencia`
-   - **origen** → Select `Origen`
-   - **newsletter** → Checkbox `Opt-in newsletter`
-   - **_started / _submitted** → Created at automático
-2. En Tally → integrations → **Notion** → conecta tu workspace y target la DB `User Research` (o crea una nueva DB `Waitlist leads` separada).
-3. Tally genera un webhook URL. Pégala en `waitlist.html` así (línea 1 del último `<script>` o vía global):
-   ```html
-   <script>window.GROW_WEBHOOK_URL = 'https://api.tally.so/...';</script>
-   ```
-   Pónlo justo **antes** del `<script>` principal.
+## Variables de entorno
+Configurar en Vercel:
 
-### Opción B · Notion API directa
-Más limpio pero requiere serverless function (Vercel / Netlify) porque la API de Notion requiere `Authorization: Bearer <token>` y CORS — no se puede llamar desde HTML estático sin exponer el token.
-- Crea Vercel function `/api/waitlist.js` con el SDK `@notionhq/client`.
-- Apunta `window.GROW_WEBHOOK_URL = '/api/waitlist'`.
-- Mapping de propiedades en la función.
-
-### Opción C · Formspree (más simple, no estructurado)
-Si quieres lanzar **hoy** sin Tally:
-1. Crea form en formspree.io → te dan endpoint `https://formspree.io/f/xxx`.
-2. `window.GROW_WEBHOOK_URL = 'https://formspree.io/f/xxx';`
-3. Las respuestas llegan como JSON a tu email + dashboard. Luego se puede migrar a Notion manualmente o con Zapier.
-
-## Configurar el webhook
-Edita `waitlist.html`, busca esta línea y añade tu URL:
-
-```js
-var url = window.GROW_WEBHOOK_URL || ''; // leave empty for now; see README
+```bash
+NOTION_TOKEN=secret_xxx
+NOTION_DATABASE_ID=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+NOTION_EVENTS_DATABASE_ID=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+WAITLIST_ALLOWED_ORIGINS=http://localhost:5050,https://mimo.family,https://www.mimo.family
 ```
 
-O mejor, inyecta el global desde el `<head>` para no tocar el JS:
+- `NOTION_EVENTS_DATABASE_ID` es opcional, pero recomendado para análisis de abandono por evento.
+- Si no se define `NOTION_EVENTS_DATABASE_ID`, solo se actualizan leads en la DB principal.
 
-```html
-<head>
-  ...
-  <script>window.GROW_WEBHOOK_URL = 'https://api.tally.so/r/XXXXXX';</script>
-</head>
-```
+## Eventos emitidos
+`waitlist.html` emite:
+- `step_viewed` (cada cambio de pantalla, con `elapsedPrevStepMs`)
+- `step_completed`
+- `step_skipped`
+- `waitlist_submitted`
+- `waitlist_hidden` (al ocultar pestaña)
+- `waitlist_abandoned` (salida de sesión: `visibilitychange`, `pagehide`, `beforeunload`)
+- `session_heartbeat` (cada 15s mientras la sesión está activa)
 
-Mientras no haya webhook, el form **funciona visualmente** y hace `console.log` del payload — útil en dev pero los datos se pierden.
+Todos incluyen:
+- `sessionId`
+- `step`, `stepInfo`
+- `action`
+- `answers` (snapshot actual)
+- `source` (`path`, `referrer`, `query`, `utm`)
+- `timestamp`
 
-## Schema del payload
-El submit envía JSON con esta forma:
-
+## Payload ejemplo
 ```json
 {
-  "nombre": "Tito",
-  "email": "tito@example.com",
-  "rol": "padre",
-  "fechaTipo": "born",
-  "fecha": "2024-11-12",
-  "modos": ["preemie"],
-  "problemas": ["sueno","colicos","salud"],
-  "intensidad": {"sueno":"muchisimo","colicos":"mucho","salud":"bastante"},
-  "features": {"libros":2,"chat3am":2,"comite":1,"llamadas":0,"diario":1},
-  "precio_sensacion": "ok",
-  "tier": "premium",
-  "porque": "Si me ahorra ir a urgencias 1 vez, ya está pagado.",
-  "gap": "Huckleberry es solo sueño. Falta vacunas y desarrollo en un solo sitio.",
-  "origen": "linkedin",
-  "newsletter": true,
-  "_started": "2026-05-27T10:14:00Z",
-  "_submitted": "2026-05-27T10:17:42Z",
-  "_lastSave": "2026-05-27T10:17:42Z",
-  "_step": 12
+  "event": "step_completed",
+  "sessionId": "gw_lxw2p5k3_7s92ab1f",
+  "step": 5,
+  "stepInfo": { "step": 5, "tag": "5 de 9 · prioridades", "title": "¿Qué te preocupa más ahora?" },
+  "action": "next",
+  "fromStep": 5,
+  "toStep": 6,
+  "stepDurationMs": 18473,
+  "answers": {
+    "nombre": "Tito",
+    "email": "tito@example.com",
+    "rol": "padre",
+    "fechaTipo": "born",
+    "fecha": "2025-11-12",
+    "problemas": ["sueno", "salud"],
+    "intensidad": { "sueno": "mucho", "salud": "bastante" },
+    "problemas_comentario": "",
+    "features_comentario": "",
+    "features": {},
+    "precio_sensacion": "",
+    "tier": "",
+    "porque": "",
+    "gap": "",
+    "newsletter": true
+  },
+  "source": {
+    "path": "/homepage/waitlist.html",
+    "referrer": "https://mimo.family/homepage/",
+    "query": "?utm_source=ig",
+    "utm": { "utm_source": "ig" }
+  },
+  "timestamp": "2026-05-28T15:02:12.456Z"
 }
 ```
 
-## Privacidad
-- Los datos viven en localStorage del navegador hasta submit.
-- No hay analytics third-party en `waitlist.html` (sí los hay en la landing si los añades).
-- Email es el único campo obligatorio. Cualquier otro se puede saltar.
-- Microcopy de salida menciona `hola@growbythechildlens.com` para edición/borrado.
+## Notion: mapeo recomendado
+DB principal (`NOTION_DATABASE_ID`) para leads:
+- `Nombre` (title)
+- `Email` (email)
+- `Rol cuidador` (select)
+- `Estado embarazo` (select)
+- `Fecha hij@` (date)
+- `Top 3 problemas` (multi-select) o `Problemas` (rich text)
+- `Intensidad problemas` (rich text JSON)
+- `Rating features` (rich text JSON)
+- `Sensación precio` (select)
+- `Tier intent` (select)
+- `Por qué precio` (rich text)
+- `Gap competencia` (rich text)
+- `Opt-in newsletter` (checkbox)
+- `Session ID` (rich text)
+- `Último evento` (rich text/select)
+- `Último step` (number)
+- `Payload` (rich text)
 
-## Accesibilidad
-- `prefers-reduced-motion` respetado.
-- Keyboard nav completo: `Enter` siguiente, `←` atrás, `1-9` selecciona opción rápida en listas single.
-- `aria-label` en botones de salida, contraste >= AA en todos los pares.
-- Focus visible heredado del browser.
+DB opcional de eventos (`NOTION_EVENTS_DATABASE_ID`):
+- `Event` (title)
+- `Evento` (select/rich text)
+- `Session ID` (rich text)
+- `Step` (number)
+- `Action` (select/rich text)
+- `Email` (email/rich text)
+- `Timestamp` (date/rich text)
+- `Payload` (rich text)
 
-## Testing local
-```sh
-cd homepage/
+## Verificación local
+1. Levanta estático:
+```bash
+cd homepage
 python3 -m http.server 5050
-# http://localhost:5050/propuesta-v3.html → click "Apúntate" → flow
-# http://localhost:5050/waitlist.html → directo
 ```
+2. En otra terminal, corre endpoint:
+```bash
+vercel dev
+```
+3. Abre `http://localhost:5050/waitlist.html` y verifica:
+- avanzar pasos registra `step_viewed`/`step_completed`
+- cerrar pestaña en mitad del flujo registra `waitlist_abandoned`
+- submit final crea/actualiza lead
 
-## Métricas a trackear (cuando conectes)
-- **Completion rate** por paso (drop-off heatmap)
-- **Time-to-submit** mediano
-- **Email validity rate** (descartar typos)
-- **% por tier elegido** (free vs premium vs no)
-- **% por sensación precio**
-- **Top 3 problemas** distribución
-- **Top 3 features con `imprescindible`**
-
-Target benchmarks (SaaS B2C waitlist):
-- Visit → start (paso 1): 25-40 %
-- Start → email (paso 2): 70-85 %
-- Email → submit: 35-55 %
-- Visit → submit final: 5-12 %
-
-## TODO posteriores
-- [ ] Crear DB `Waitlist leads` en Notion (separar de `User Research`)
-- [ ] Conectar webhook Tally / Vercel function
-- [ ] A/B precio: 9,99 € vs 7,99 € vs 12,99 €
-- [ ] Versión EN (i18n) cuando se abra mercado UK
-- [ ] Email transaccional de confirmación al submit (Resend / Postmark)
+## Métricas mínimas a revisar
+- `visit → email` (step 2)
+- `email → submit`
+- drop-off por paso (`step_viewed` sin siguiente `step_completed`)
+- mediana de `stepDurationMs` por paso
+- distribución de `tier` y `precio_sensacion`

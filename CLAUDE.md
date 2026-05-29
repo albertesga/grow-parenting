@@ -1,4 +1,4 @@
-# Grow · Claude instructions
+# Mimo · Claude instructions
 
 **GENERATED POINTER.** Fuente canónica: `.agent/agents.md`. Si actualizas
 reglas profundas · edita `.agent/agents.md` y propaga aquí los puntos
@@ -6,7 +6,7 @@ críticos.
 
 ## Read-order
 
-1. `AGENTS.md` raíz · qué es Grow (1 min)
+1. `AGENTS.md` raíz · qué es Mimo (1 min)
 2. `.agent/agents.md` · brain · loop + guardrails (3 min)
 3. `.agent/rules/{topic}.md` · 9 reglas duras por dominio (1 min cada)
 4. `CLAUDE.md` (este archivo) · alias condensado · lectura rápida
@@ -21,7 +21,7 @@ críticos.
 ## Stack
 
 - `prototype.html` · single-file HTML (~20k líneas) con todos los libros + JS inline.
-- `design/Grow Design System v0.2.html` · DS canónico.
+- `design/Mimo Design System v0.2.html` · DS canónico.
 - Server local: `python3 -m http.server 5050` · http://localhost:5050/.
 
 ## Regla #1 · DS canon siempre

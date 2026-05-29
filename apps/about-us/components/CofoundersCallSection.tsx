@@ -20,7 +20,7 @@ import { ReactNode } from 'react';
  * sin urgencia falsa · sin emojis · solo tokens DS existentes.
  */
 
-const EMAIL = 'hola@growbythechildlens.com';
+const EMAIL = 'hola@mimo.family';
 
 interface Profile {
   num: string;
@@ -162,7 +162,7 @@ export default function CofoundersCallSection() {
     <section
       id="trabaja"
       className="relative w-full scroll-mt-24 bg-paper"
-      aria-label="Buscamos cofundadores para construir Grow"
+      aria-label="Buscamos cofundadores para construir Mimo"
     >
       <div className="mx-auto max-w-[1100px] px-6 py-28 md:px-10 md:py-36 lg:px-16">
         {/* 1 · Eyebrow */}

@@ -1,8 +1,8 @@
 # PRD · Libro de Salud
-## Grow · v0.1 · canon Fase 0
+## Mimo · v0.1 · canon Fase 0
 
-> Producto: **Grow by The Child Lens** · Módulo: **Libro de Salud** (expediente clínico episódico del hij@) · Categoría DS: **🌡 Salud** (`--cat-salud-tint #E6E2D6` · `--cat-salud-ink #5C5648`).
-> Status: ready for Claude Design + ingeniería · siguiendo `Grow Design System v0.2` y canon de libros del `prototype.html`.
+> Producto: **Mimo by The Child Lens** · Módulo: **Libro de Salud** (expediente clínico episódico del hij@) · Categoría DS: **🌡 Salud** (`--cat-salud-tint #E6E2D6` · `--cat-salud-ink #5C5648`).
+> Status: ready for Claude Design + ingeniería · siguiendo `Mimo Design System v0.2` y canon de libros del `prototype.html`.
 
 ---
 
@@ -33,7 +33,7 @@ Sigue el canon de libros del prototype: **navbar dedicado tonal `salud` (paper-d
 
 ### 1.1 Lo que ya existe en papel
 
-| País | Documento | Equivalente digital Grow |
+| País | Documento | Equivalente digital Mimo |
 | --- | --- | --- |
 | España | Cartilla de Salud Infantil AEPap · Documento de Salud Infantil (DSI) por CCAA | 📕 Libro de Salud + 💉 Libro de Vacunas + 📊 Libro de Desarrollo |
 | Suecia | BVC-journal (Barnavårdcentralen) | igual |
@@ -43,7 +43,7 @@ Sigue el canon de libros del prototype: **navbar dedicado tonal `salud` (paper-d
 | Francia | Carnet de santé | igual |
 | Alemania | Untersuchungsheft + U-Heft | igual |
 
-**Conclusión**: el carnet de salud infantil es un canon institucional global. Hoy es papel · Grow lo digitaliza con valor añadido (sync, export, búsqueda, cross-ref, educación contextual).
+**Conclusión**: el carnet de salud infantil es un canon institucional global. Hoy es papel · Mimo lo digitaliza con valor añadido (sync, export, búsqueda, cross-ref, educación contextual).
 
 ### 1.2 Referentes digitales
 
@@ -67,7 +67,7 @@ Sigue el canon de libros del prototype: **navbar dedicado tonal `salud` (paper-d
 | Tipo sanguíneo desconocido | emergencias | No se hace estudio rutinario hasta los 6 a |
 | Medicación crónica · gestión recetas | TDAH · asma · alergias | Mezcla con vida diaria sin estructura |
 
-### 1.4 Lo que Grow resuelve
+### 1.4 Lo que Mimo resuelve
 
 - **Carnet sanitario digital** con info de emergencia siempre a mano.
 - **Historial episódico** searchable y exportable.
@@ -94,7 +94,7 @@ Sigue el canon de libros del prototype: **navbar dedicado tonal `salud` (paper-d
 ### 2.1 Persona primaria
 
 **Pablo · 38 a · Lola 18 m · consulta pediátrica martes 11:30**
-La pediatra le pregunta: *"¿Cuándo fue la última otitis y qué antibiótico le pusieron?"*. Pablo abre Grow → Libro de Salud → busca *"otitis"* → 3 episodios este año + medicación. La consulta cierra en 8 minutos en lugar de 25.
+La pediatra le pregunta: *"¿Cuándo fue la última otitis y qué antibiótico le pusieron?"*. Pablo abre Mimo → Libro de Salud → busca *"otitis"* → 3 episodios este año + medicación. La consulta cierra en 8 minutos en lugar de 25.
 
 ### 2.2 Personas secundarias
 
@@ -210,7 +210,7 @@ La pediatra le pregunta: *"¿Cuándo fue la última otitis y qué antibiótico l
 | --- | --- |
 | **Apple Health Records** | Adoptamos estructura PHR · NO sincronización HealthKit en v0 |
 | **NHS Red Book** | Adoptamos secciones canónicas · adaptamos a digital |
-| **MyChart Epic** | Concepto historial longitudinal · UI propia DS Grow |
+| **MyChart Epic** | Concepto historial longitudinal · UI propia DS Mimo |
 
 ### 5.3 Descartado
 
@@ -223,9 +223,9 @@ La pediatra le pregunta: *"¿Cuándo fue la última otitis y qué antibiótico l
 
 ---
 
-## 6 · Arquitectura del libro · canon de libros Grow
+## 6 · Arquitectura del libro · canon de libros Mimo
 
-### 6.1 Anatomy canon del libro Grow (patrón del prototype)
+### 6.1 Anatomy canon del libro Mimo (patrón del prototype)
 
 Todos los libros respetan este patrón:
 
@@ -496,7 +496,7 @@ PATRÓN_ALERGIA_BAJO_INVESTIGACIÓN:
 7. **Alergias críticas** (si confirmadas): sticky banner naranja muted (no rojo) + acceso rápido emergencia.
 8. **Quick actions**: chips `Registrar episodio` · `Ver historial` · `Carnet sanitario`.
 9. **Navbar Libro Salud**: Hoy active · Historial · ⊕ · Carnet · Educación.
-10. **Bottom nav canon Grow**.
+10. **Bottom nav canon Mimo**.
 
 ### 8.3 Frame B · Tab Historial
 
@@ -949,7 +949,7 @@ type CarnetSanitario = {
 - EAACI · European Academy of Allergy guidelines.
 - MedDRA · Medical Dictionary for Regulatory Activities.
 
-### 16.2 Componentes DS Grow v0.2 referenciados
+### 16.2 Componentes DS Mimo v0.2 referenciados
 
 - `.book-screen` · pattern canon de libro
 - `.book-back` (X dismiss)
@@ -969,10 +969,10 @@ type CarnetSanitario = {
 - `prototype.html · libros existentes` (patrón navbar canon).
 - `PRD-libro-colicos-v0.1.md` (sub-libro detallado).
 - `PRD-chat-modo-madrugada-v0.1.md` (cross-ref triage trees).
-- `Notion · Journey Grow · Postparto + Crianza` (eventos clínicos por etapa).
-- `Notion · Diferenciales Grow vs referencia comercial` (canon trauma-informed).
-- `design/v0.1/Grow Product Components v0.1.html` (cat-card · chips · estados).
-- `design/Grow Design System v0.2.html` (tokens · primitives).
+- `Notion · Journey Mimo · Postparto + Crianza` (eventos clínicos por etapa).
+- `Notion · Diferenciales Mimo vs referencia comercial` (canon trauma-informed).
+- `design/v0.1/Mimo Product Components v0.1.html` (cat-card · chips · estados).
+- `design/Mimo Design System v0.2.html` (tokens · primitives).
 
 ---
 
@@ -996,4 +996,4 @@ type CarnetSanitario = {
 
 ---
 
-*PRD · Libro de Salud · Grow v0.1 · canon Fase 0 · alineado con DS Grow v0.2 + canon libros del prototype · abril 2026*
+*PRD · Libro de Salud · Mimo v0.1 · canon Fase 0 · alineado con DS Mimo v0.2 + canon libros del prototype · abril 2026*
