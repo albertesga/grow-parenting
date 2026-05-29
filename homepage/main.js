@@ -250,11 +250,17 @@
 
       let framesA = null;
       let framesB = null;
-      let totalFrames = 0;
       let currentProgress = 0;
       let parallaxBootA = false;
       let parallaxBootB = false;
       let parallaxBLoading = false;
+      /* Vídeo A cubre el scroll [0, SPLIT] (bolita→recién nacido) · vídeo B
+         cubre [SPLIT, 1] (recién nacido→bebé). Mapeo DESACOPLADO por vídeo:
+         antes se concatenaban A+B en un índice plano sobre totalFrames, y como
+         B carga tarde, totalFrames = solo A → todo el recorrido se comprimía en
+         el vídeo 1 y la 2ª animación no salía (bug intermitente). Ahora cada
+         vídeo mapea su mitad de forma independiente. */
+      const PARALLAX_SPLIT = 0.5;
 
       function paintCanvas(canvas, frame) {
         if (!canvas || !frame) return;
@@ -263,12 +269,23 @@
         ctx.drawImage(frame, 0, 0, canvas.width, canvas.height);
       }
 
+      function frameFromArray(arr, sub) {
+        const t = Math.max(0, Math.min(1, sub));
+        const idx = Math.max(0, Math.min(arr.length - 1, Math.round(t * (arr.length - 1))));
+        return arr[idx];
+      }
+
       function renderFrameAt(progress) {
-        if (!framesA || totalFrames === 0) return;
-        const idx = Math.max(0, Math.min(totalFrames - 1, Math.round(progress * (totalFrames - 1))));
-        const frame = idx < framesA.length
-          ? framesA[idx]
-          : framesB[idx - framesA.length];
+        if (!framesA || !framesA.length) return;
+        let frame;
+        if (progress <= PARALLAX_SPLIT || !framesB || !framesB.length) {
+          /* 1ª mitad → vídeo A. Si B aún no decodificó y estamos en la 2ª
+             mitad, sub > 1 → frameFromArray clampa al último frame de A
+             (recién nacido) en vez de comprimir todo el recorrido en A. */
+          frame = frameFromArray(framesA, progress / PARALLAX_SPLIT);
+        } else {
+          frame = frameFromArray(framesB, (progress - PARALLAX_SPLIT) / (1 - PARALLAX_SPLIT));
+        }
         if (!frame) return;
         paintCanvas(avatarCanvas, frame);
         paintCanvas(mAvatarCanvas, frame);
@@ -321,7 +338,6 @@
         try {
           const fa = await extractFrames(URL_1, FRAME_COUNT);
           framesA = fa;
-          totalFrames = framesA.length + (framesB ? framesB.length : 0);
           /* Ajustar canvas size al nativo del primer frame · evita stretch borroso. */
           const refFrame = framesA[0];
           if (refFrame) {
@@ -331,6 +347,10 @@
           renderFrameAt(currentProgress);
           avatarCanvas?.classList.add("is-ready");
           mAvatarCanvas?.classList.add("is-ready");
+          /* Eager · empieza a decodificar el vídeo 2 inmediatamente (no
+             esperamos al IntersectionObserver del closing) para que la 2ª
+             animación esté lista antes de que el user llegue a esa fase. */
+          loadParallaxFramesB();
         } catch (e) {
           /* Decode failed · log + leave canvases hidden. */
           console.warn("[parallax] frame extraction failed", e);
@@ -346,7 +366,6 @@
         try {
           const fb = await extractFrames(URL_2, FRAME_COUNT);
           framesB = fb;
-          totalFrames = framesA.length + framesB.length;
           parallaxBootB = true;
           renderFrameAt(currentProgress);
         } catch (e) {
