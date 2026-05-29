@@ -6,6 +6,8 @@
 <title>Grow · Apúntate a la lista</title>
 <meta name="description" content="Estamos construyendo Grow contigo. 11 preguntas. Unos 3 minutos.">
 <meta name="robots" content="noindex">
+<link rel="icon" type="image/png" href="assets/favicon-grow-o.png">
+<link rel="shortcut icon" href="assets/favicon-grow-o.ico">
 <style>
 @font-face{font-family:"Galiner";src:url("assets/fonts/TBJGaliner-Light.ttf") format("truetype");font-weight:300;font-display:swap}
 @font-face{font-family:"Galiner";src:url("assets/fonts/TBJGaliner-Regular.ttf") format("truetype");font-weight:400;font-display:swap}
@@ -597,7 +599,7 @@ textarea.in::placeholder{font-style:italic;color:#bdb1a0}
   <!-- 4 · FECHA -->
   <section class="step" data-step="4">
     <span class="q-tag">4 de 9 · edad</span>
-    <h2 class="q-title">¿Qué edad tendrá tu peque?</h2>
+    <h2 class="q-title">¿Qué edad tendrá tu hij@?</h2>
     <p class="q-help">Una fecha aproximada basta. Así sabemos qué libros activar primero.</p>
     <div class="date-wrap">
       <div class="date-toggle" role="tablist" id="dateToggle">
@@ -751,7 +753,7 @@ textarea.in::placeholder{font-style:italic;color:#bdb1a0}
         <small>Lo que aprendemos hablando con familias y avances del producto. Baja con un clic.</small>
       </label>
     </div>
-    <p class="fineprint">Para editar o borrar tu respuesta, escríbenos a <strong>hola@growbythechildlens.com</strong>. Tus datos son tuyos.</p>
+    <p class="fineprint">Para editar o borrar tu respuesta, escríbenos a <strong>hola@wegrow.family</strong>. Tus datos son tuyos.</p>
     <div class="nav-row">
       <a class="btn btn-primary" href="index.html">Volver a Grow <span class="arr">↗</span></a>
       <button type="button" class="skip" data-action="reset">Rellenar de nuevo</button>
@@ -771,6 +773,10 @@ textarea.in::placeholder{font-style:italic;color:#bdb1a0}
 'use strict';
 var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 var LS_KEY = 'grow_waitlist_v1';
+var HEARTBEAT_MS = 15000;
+var WEBHOOK_URL = (typeof window.GROW_WEBHOOK_URL === 'string' && window.GROW_WEBHOOK_URL.trim())
+  ? window.GROW_WEBHOOK_URL.trim()
+  : '/api/waitlist';
 
 /* Reset via URL param · `?reset=1` o `?restart=1` borra el state guardado
    ANTES de que loadState() se ejecute · útil para dev/QA o para que el user
@@ -861,6 +867,19 @@ if(!state._sessionId){
 if(!state._started){
   state._started = new Date().toISOString();
 }
+if(state._submitted) state._submittedSent = true;
+if(state._submittedSent !== true) state._submittedSent = false;
+if(!state._submitted) state._abandonSent = false;
+if(state._abandonSent !== true) state._abandonSent = false;
+if(!state._events) state._events = {};
+if(!state._events.lastStepViewedAt) state._events.lastStepViewedAt = null;
+if(!state._events.lastStepViewed) state._events.lastStepViewed = null;
+if(!state._events.lastHeartbeatAt) state._events.lastHeartbeatAt = null;
+
+var activeStep = (typeof state._step === 'number') ? state._step : 0;
+var activeStepEnterTs = Date.now();
+var heartbeatTimer = null;
+var pageHiddenLogged = false;
 
 function saveState(){
   state._lastSave = new Date().toISOString();
@@ -894,6 +913,13 @@ function getStepLabel(i){
   };
 }
 
+function getStepDurationMs(now){
+  var current = typeof now === 'number' ? now : Date.now();
+  var delta = current - activeStepEnterTs;
+  if(!Number.isFinite(delta) || delta < 0) return 0;
+  return delta;
+}
+
 function snapshotAnswers(){
   return {
     nombre: state.nombre || '',
@@ -914,7 +940,7 @@ function snapshotAnswers(){
   };
 }
 
-function sendWaitlistEvent(eventName, meta){
+function buildWaitlistPayload(eventName, meta){
   var payload = {
     event: eventName,
     sessionId: state._sessionId,
@@ -935,19 +961,101 @@ function sendWaitlistEvent(eventName, meta){
       payload[key] = meta[key];
     });
   }
-  var url = window.GROW_WEBHOOK_URL || '';
-  if(url){
-    try{
-      fetch(url, {
-        method:'POST',
-        headers:{'Content-Type':'application/json'},
-        body: JSON.stringify(payload),
-        keepalive:true
-      }).catch(function(){});
-    }catch(e){}
-  } else {
+  return payload;
+}
+
+function postEventPayload(payload, opts){
+  var options = opts || {};
+  var allowBeacon = options.beacon === true;
+  var keepalive = options.keepalive !== false;
+  if(!WEBHOOK_URL){
     console.log('[grow waitlist] event:', payload);
+    return;
   }
+  if(allowBeacon && navigator.sendBeacon){
+    try{
+      var blob = new Blob([JSON.stringify(payload)], { type: 'application/json' });
+      var sent = navigator.sendBeacon(WEBHOOK_URL, blob);
+      if(sent) return;
+    }catch(e){}
+  }
+  try{
+    fetch(WEBHOOK_URL, {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify(payload),
+      keepalive: keepalive
+    }).catch(function(){});
+  }catch(e){}
+}
+
+function sendWaitlistEvent(eventName, meta, opts){
+  var payload = buildWaitlistPayload(eventName, meta);
+  postEventPayload(payload, opts);
+}
+
+function trackStepViewed(prevStep, nextStep){
+  if(nextStep == null) return;
+  var now = Date.now();
+  var elapsedPrev = prevStep == null ? 0 : getStepDurationMs(now);
+  activeStep = nextStep;
+  activeStepEnterTs = now;
+  state._events.lastStepViewedAt = new Date(now).toISOString();
+  state._events.lastStepViewed = nextStep;
+  sendWaitlistEvent('step_viewed', {
+    action: 'view',
+    fromStep: prevStep,
+    toStep: nextStep,
+    elapsedPrevStepMs: elapsedPrev
+  });
+}
+
+function sendAbandonEvent(reason, opts){
+  if(state._submittedSent || state._abandonSent) return;
+  state._abandonSent = true;
+  saveState();
+  sendWaitlistEvent('waitlist_abandoned', {
+    action:'abandon',
+    reason: reason,
+    fromStep: state._step,
+    toStep: state._step,
+    stepDurationMs: getStepDurationMs()
+  }, opts);
+}
+
+function setupSessionWatchers(){
+  document.addEventListener('visibilitychange', function(){
+    if(document.visibilityState === 'hidden'){
+      if(!pageHiddenLogged){
+        pageHiddenLogged = true;
+        sendWaitlistEvent('waitlist_hidden', {
+          action:'visibility_hidden',
+          fromStep: state._step,
+          toStep: state._step,
+          stepDurationMs: getStepDurationMs()
+        }, { keepalive:true });
+      }
+      sendAbandonEvent('visibility_hidden', { beacon:true, keepalive:true });
+      return;
+    }
+    pageHiddenLogged = false;
+  });
+  window.addEventListener('pagehide', function(){
+    sendAbandonEvent('pagehide', { beacon:true, keepalive:true });
+  });
+  window.addEventListener('beforeunload', function(){
+    sendAbandonEvent('beforeunload', { beacon:true, keepalive:true });
+  });
+  heartbeatTimer = setInterval(function(){
+    if(state._submittedSent || state._abandonSent) return;
+    state._events.lastHeartbeatAt = new Date().toISOString();
+    sendWaitlistEvent('session_heartbeat', {
+      action:'heartbeat',
+      fromStep: state._step,
+      toStep: state._step,
+      stepDurationMs: getStepDurationMs()
+    }, { keepalive:true });
+  }, HEARTBEAT_MS);
 }
 
 /* -------- esc HTML -------- */
@@ -1141,6 +1249,7 @@ function showStep(i){
   if(i === 5) renderIntensity();
   updateNextEnabled();
   saveState();
+  trackStepViewed(prev, i);
 }
 
 function isStepValid(i){
@@ -1198,11 +1307,21 @@ function next(){
   if(!isStepValid(i)) return;
 
   if(i === TOTAL - 2){
-    sendWaitlistEvent('step_completed', {action:'next', fromStep:i, toStep:TOTAL - 1});
+    sendWaitlistEvent('step_completed', {
+      action:'next',
+      fromStep:i,
+      toStep:TOTAL - 1,
+      stepDurationMs: getStepDurationMs()
+    });
     submit();
     return;
   }
-  sendWaitlistEvent(i === 0 ? 'waitlist_started' : 'step_completed', {action:'next', fromStep:i, toStep:i + 1});
+  sendWaitlistEvent(i === 0 ? 'waitlist_started' : 'step_completed', {
+    action:'next',
+    fromStep:i,
+    toStep:i + 1,
+    stepDurationMs: getStepDurationMs()
+  });
   showStep(i + 1);
 }
 
@@ -1224,11 +1343,21 @@ function skipStep(){
   if(i === 8){ state.tier = ''; state.porque = ''; }
   if(i === 9){
     state.gap = '';
-    sendWaitlistEvent('step_skipped', {action:'skip', fromStep:i, toStep:TOTAL - 1});
+    sendWaitlistEvent('step_skipped', {
+      action:'skip',
+      fromStep:i,
+      toStep:TOTAL - 1,
+      stepDurationMs: getStepDurationMs()
+    });
     submit();
     return;
   }
-  sendWaitlistEvent('step_skipped', {action:'skip', fromStep:i, toStep:i + 1});
+  sendWaitlistEvent('step_skipped', {
+    action:'skip',
+    fromStep:i,
+    toStep:i + 1,
+    stepDurationMs: getStepDurationMs()
+  });
   showStep(i + 1);
 }
 
@@ -1236,8 +1365,16 @@ function skipStep(){
 function submit(){
   state.newsletter = (document.getElementById('f_newsletter')||{}).checked !== false;
   state._submitted = new Date().toISOString();
+  state._submittedSent = true;
+  state._abandonSent = false;
+  if(heartbeatTimer){ clearInterval(heartbeatTimer); heartbeatTimer = null; }
   saveState();
-  sendWaitlistEvent('waitlist_submitted', {action:'submit', fromStep:state._step, toStep:TOTAL - 1});
+  sendWaitlistEvent('waitlist_submitted', {
+    action:'submit',
+    fromStep:state._step,
+    toStep:TOTAL - 1,
+    stepDurationMs: getStepDurationMs()
+  }, { keepalive:true });
 
   showStep(TOTAL - 1); // final
   // dont clearState immediately so user can refresh and see thanks
@@ -1411,6 +1548,7 @@ if(state.newsletter === false) (document.getElementById('f_newsletter')||{}).che
 var startStep = state._step || 0;
 if(state._submitted){ startStep = TOTAL - 1; } // resumed after submit
 startStep = Math.max(0, Math.min(startStep, TOTAL - 1));
+setupSessionWatchers();
 showStep(startStep);
 
 })();

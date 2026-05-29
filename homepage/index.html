@@ -6,6 +6,8 @@
   <title>Grow · Tú cuidas a tu hij@. Grow te cuida a ti.</title>
   <meta name="description" content="App de crianza para familias hispanohablantes. Durante los primeros 1.000 días de tu hij@. Sin manual, sin juicios, sin prisa.">
   <meta name="theme-color" content="#FAF7F0">
+  <link rel="icon" type="image/png" href="assets/favicon-grow-o.png">
+  <link rel="shortcut icon" href="assets/favicon-grow-o.ico">
 
   <link rel="stylesheet" href="styles.css?v=20260528">
 </head>
@@ -659,6 +661,7 @@
       <section class="ordered-books" id="libros" aria-labelledby="ordered-books-title">
         <div class="ordered-books-head">
           <h3 id="ordered-books-title">Todos los libros ordenados.</h3>
+          <p>Cada libro se activa según la edad de tu hij@. Empieces cuando empieces, Grow te coge donde estás — no pagas por lo que todavía no usas.</p>
         </div>
         <div class="r-shelf ordered-books-shelf">
           <div class="r-shelf-rail" role="list" aria-label="Todos los libros de Grow">
@@ -955,13 +958,19 @@
         </article>
         <article class="shared-account-card t-blush">
           <h4>Relevo sin fricción</h4>
-          <p>Si necesitas parar, la otra persona lo ve...</p>
+          <p>Si necesitas parar, la otra persona retoma sin perder el hilo.</p>
         </article>
         <article class="shared-account-card t-gold">
           <h4>Un solo lugar</h4>
-          <p>Salud, vacunas, notas... en la misma cuenta.</p>
+          <p>Salud, vacunas y notas, todo en la misma cuenta.</p>
         </article>
       </div>
+
+      <!-- Reconocimiento crianza en solitario · pre-empt el "esto no es para mí"
+           del ~10% que cría sin pareja (mismo movimiento que .narrative-intro).
+           Sin clase nueva · el estilo lo da la regla section-local
+           `.shared-account-grid + p` en styles.css (warm body, no fineprint). -->
+      <p>¿Crías en solitario? Grow también está contigo. Invita a quien te apoye solo cuando quieras.</p>
 
       <article class="shared-account-gift">
         <div class="shared-account-gift-top">
@@ -979,6 +988,45 @@
         </div>
         <p class="shared-account-note">Cuenta compartida incluida en Founding y Grow Plus.</p>
       </article>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════════════════
+       § 8 · DATOS · respuestas concretas (data-trust)
+       Reusa el primitive .trust del hero (sin clases nuevas). Responde la
+       objeción "son datos de salud de mi hij@: dónde / quién / qué pasa si
+       cerráis". Copy verificable (hechos confirmados por el user · sin razón
+       social aún, hosting UE, RGPD+Art.9+cifrado, export+borrado si cierre).
+       Va antes de .shared-signup para tranquilizar ANTES del último CTA email.
+       Nota: main.js querySelector(".trust") engancha solo el .trust del hero ·
+       este 2º bloque no recibe halo travel (solo el visual del primitive). -->
+  <section class="full" id="datos" data-section="8">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Tus datos · respuestas concretas</span>
+        <h2>Son los datos de salud de tu hij@. Esto hacemos con ellos.</h2>
+        <p>Dónde están, quién responde y qué pasa si algún día cerramos.</p>
+      </div>
+      <div class="trust" role="region" aria-label="Garantías sobre tus datos">
+        <div class="trust-row" role="list">
+          <div class="trust-chip" role="listitem">
+            <svg class="trust-icn" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-user"/></svg>
+            <strong>El equipo de Grow responde por tus datos como responsable del tratamiento.</strong>
+          </div>
+          <div class="trust-chip" role="listitem">
+            <svg class="trust-icn" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-shield"/></svg>
+            <strong>Se alojan en servidores de la Unión Europea.</strong>
+          </div>
+          <div class="trust-chip" role="listitem">
+            <svg class="trust-icn" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-lock"/></svg>
+            <strong>RGPD y datos de salud como categoría especial · cifrados en tránsito y en reposo.</strong>
+          </div>
+          <div class="trust-chip" role="listitem">
+            <svg class="trust-icn" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-doc"/></svg>
+            <strong>Si Grow cierra, exportas todo y lo borramos definitivamente.</strong>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -1024,7 +1072,7 @@
           <li><a href="/about-us">Quiénes somos</a></li>
           <li><a href="#parenting-team">Equipo de Parenting</a></li>
           <li><a href="waitlist.html">Waitlist</a></li>
-          <li><a href="mailto:hola@grow.app">Contacto</a></li>
+          <li><a href="mailto:hola@wegrow.family">Contacto</a></li>
         </ul>
       </div>
       <div class="col">
@@ -1032,8 +1080,8 @@
         <ul>
           <li><a href="#comite">Comité clínico</a></li>
           <li><a href="#libros">Escalas validadas</a></li>
-          <li><a href="#threeam">Sin ads</a></li>
-          <li><a href="#pricing">Datos privados</a></li>
+          <li><a href="#threeam">Modo madrugada</a></li>
+          <li><a href="#datos">Datos privados</a></li>
         </ul>
       </div>
     </div>

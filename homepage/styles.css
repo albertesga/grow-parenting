@@ -1755,9 +1755,9 @@
     }
     .ordered-books-head {
       display: flex;
-      align-items: baseline;
-      justify-content: space-between;
-      gap: 18px;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 10px;
       margin-bottom: 18px;
     }
     .ordered-books-head h3 {
@@ -1767,6 +1767,15 @@
       line-height: 1.04;
       letter-spacing: -0.014em;
       color: var(--ink);
+      margin: 0;
+    }
+    .ordered-books-head p {
+      font-family: var(--font-text);
+      font-weight: 300;
+      font-size: 16.5px;
+      line-height: 1.55;
+      color: var(--ink-soft);
+      max-width: 56ch;
       margin: 0;
     }
     .ordered-books-shelf {
@@ -3200,6 +3209,21 @@
       grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 14px;
       margin-bottom: 24px;
+    }
+    /* Línea de reconocimiento de la crianza en solitario · va bajo el grid de
+       cards y antes de la gift card. Selector de contexto (no clase DS nueva):
+       reutiliza el peso warm-body de .section-head p. Hairline superior para
+       leerse como aside cálido, no como fineprint/disclaimer. */
+    .shared-account-grid + p {
+      font-family: var(--font-text);
+      font-weight: 300;
+      font-size: 16.5px;
+      line-height: 1.55;
+      color: var(--ink-soft);
+      max-width: 58ch;
+      margin: 4px 0 26px;
+      padding-top: 18px;
+      border-top: 1px solid var(--line);
     }
     .shared-account-card {
       --sa-soft: var(--paper-soft);
