@@ -1464,7 +1464,7 @@
         radial-gradient(circle at 18% 0%, rgba(255,255,255,0.82), transparent 48%),
         linear-gradient(145deg, color-mix(in srgb, var(--accent-soft, var(--paper-soft)) 72%, var(--paper) 28%), rgba(250,247,240,0.82));
       color: var(--accent-label, var(--ink-soft));
-      font-family: var(--font-sans);
+      font-family: var(--font-text);
       font-size: 13px;
       font-weight: 700;
       letter-spacing: 0.045em;
@@ -1639,7 +1639,7 @@
       outline-offset: 3px;
     }
     .r-shelf-arrow .r-shelf-arrow-lbl {
-      font-family: var(--font-sans);
+      font-family: var(--font-text);
       font-size: 10px;
       font-weight: 700;
       letter-spacing: 0.13em;
@@ -4915,7 +4915,7 @@
       .datos-overlay, .datos-modal { transition: none; }
     }
 
-    /* ── Modal · Llamadas 1.2.1 (precio miembro) · reusa .datos-overlay +
+    /* ── Modal · Llamadas 1:1 (precio miembro) · reusa .datos-overlay +
        .comite-card. Las tarjetas mantienen estructura del comité clínico:
        num · specialty · avatar · h4 · center · credencial/precio al pie. */
     .datos-modal--wide { width: min(820px, 100%); }
@@ -4927,30 +4927,52 @@
       align-items: stretch;
     }
     .llamada-card {
-      min-height: 260px;
       text-align: left;
-      aspect-ratio: 1 / 1.08;
       padding: 20px;
+      gap: 0;
+      justify-content: flex-start;
+      /* Sin aspect-ratio ni min-height fijo: con una altura definida el grid no
+         puede igualar las cards y el precio "salta" según el largo del texto.
+         Dejándolo en auto, `align-items: stretch` iguala todas a la más alta de
+         su fila y el precio (anclado abajo con margin-top:auto) queda alineado. */
+      aspect-ratio: auto;
+      min-height: 0;
     }
     .llamada-card .avatar {
       width: 56px;
       height: 56px;
       margin-bottom: 12px;
     }
+    /* Badge en 1 sola línea siempre · evita que el avatar/título/precio
+       "salten" entre cards por un badge que envuelve a 2 líneas. El tracking
+       se afloja un pelín respecto al comité para dar holgura en cards estrechas. */
+    .llamada-card .specialty {
+      letter-spacing: 0.13em;
+      white-space: nowrap;
+      max-width: 100%;
+    }
     .llamada-card h4 {
       font-size: 20px;
-      max-width: 9ch;
+      line-height: 1.12;
+      /* Reserva 2 líneas · títulos de 1 o 2 líneas alinean la descripción y
+         el avatar en todas las cards (alineado abajo del box reservado). */
+      min-height: 2.24em;
+      display: flex;
+      align-items: flex-end;
+      margin-bottom: 3px;
     }
     .llamada-card .center {
-      max-width: 20ch;
+      max-width: 100%;
     }
     /* Precio miembro · 55€ tachado + 30€ grande (Grift · canon precios, ver typography.md) */
     .llamada-price {
-      display: inline-flex;
+      display: flex;
       align-items: baseline;
       justify-content: flex-start;
       gap: 7px;
       flex-wrap: wrap;
+      margin-top: auto; /* ancla el precio al pie · alinea las 4 cards */
+      padding-top: 14px;
       font-family: var(--font-text);
       color: var(--ink);
     }
@@ -4987,8 +5009,12 @@
       .llamadas-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     }
     @media (max-width: 540px) {
-      .llamadas-grid { grid-template-columns: 1fr; }
-      .llamada-card { aspect-ratio: auto; min-height: 220px; }
+      .llamadas-grid { grid-template-columns: 1fr; gap: 12px; }
+      /* 1 col · cada card es independiente · que abrace el contenido y el
+         título vuelva a 1 línea (sin reservar 2) para no dejar huecos. */
+      .llamada-card { min-height: 0; padding: 18px; }
+      .llamada-card h4 { min-height: 0; display: block; }
+      .llamada-price { padding-top: 12px; }
     }
 
     @media (max-width: 720px) {
