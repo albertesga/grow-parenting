@@ -14,6 +14,12 @@
       "port": 5051
     },
     {
+      "name": "homepage-node",
+      "runtimeExecutable": "node",
+      "runtimeArgs": [".claude/preview-server.cjs"],
+      "port": 5052
+    },
+    {
       "name": "about-us",
       "runtimeExecutable": "npm",
       "runtimeArgs": ["run", "dev"],
