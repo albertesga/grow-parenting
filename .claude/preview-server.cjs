@@ -1,10 +1,13 @@
 // Minimal static file server for Claude preview (sandbox-safe; no os.getcwd CLI).
-// Serves the repo root so /homepage/ and its assets resolve like the python server.
+// Serves homepage/ AS THE WEB ROOT — this is the canonical layout the site is
+// built for (about-us is a Next export with basePath:/about-us; waitlist.html
+// and about-us/ live at the root). So: localhost:PORT/ = homepage,
+// /about-us/ = quiénes somos, /waitlist.html = waitlist. Mirrors deploy.
 const http = require("http");
 const fs = require("fs");
 const path = require("path");
 
-const ROOT = path.resolve(__dirname, "..");
+const ROOT = path.resolve(__dirname, "..", "homepage");
 const PORT = Number(process.env.PORT || 5052);
 
 const TYPES = {
