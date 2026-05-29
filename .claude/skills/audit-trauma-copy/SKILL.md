@@ -9,31 +9,31 @@ Buscar patrones anti-canon en `prototype.html`:
 
 ### 1 · Gamification tóxica
 
-!`cd "/Users/titoespanolgamon/Documents/Vibe Coding/Grow" && grep -nE "(racha|streak|llevas [0-9]+ d[ií]as|sigue as[ií]|enhorabuena|¡felicidades|felicitations|congrats|achievement unlocked|level up|points|puntos|badge|insignia)" prototype.html | head -20`
+!`grep -nE "(racha|streak|llevas [0-9]+ d[ií]as|sigue as[ií]|enhorabuena|¡felicidades|felicitations|congrats|achievement unlocked|level up|points|puntos|badge|insignia)" prototype.html | head -20`
 
 ### 2 · Rojo médico (color literal #FF, red puro, red en CSS)
 
-!`cd "/Users/titoespanolgamon/Documents/Vibe Coding/Grow" && grep -nE "(#FF0000|#F00|color: red|background: red|background-color: red)" prototype.html | head -10`
+!`grep -nE "(#FF0000|#F00|color: red|background: red|background-color: red)" prototype.html | head -10`
 
 ### 3 · Comparativas estigmatizantes
 
-!`cd "/Users/titoespanolgamon/Documents/Vibe Coding/Grow" && grep -nE "(detr[áa]s del [0-9]+%|por debajo del [0-9]+%|m[áa]s lento que|peor que|menos que la media|debajo de la media)" prototype.html | head -10`
+!`grep -nE "(detr[áa]s del [0-9]+%|por debajo del [0-9]+%|m[áa]s lento que|peor que|menos que la media|debajo de la media)" prototype.html | head -10`
 
 ### 4 · Militancia
 
-!`cd "/Users/titoespanolgamon/Documents/Vibe Coding/Grow" && grep -nE "(es lo mejor|es lo correcto|deber[íi]as|tienes que|necesitas|el [úu]nico m[ée]todo|el m[ée]todo correcto|la verdad es|la realidad es)" prototype.html | head -15`
+!`grep -nE "(es lo mejor|es lo correcto|deber[íi]as|tienes que|necesitas|el [úu]nico m[ée]todo|el m[ée]todo correcto|la verdad es|la realidad es)" prototype.html | head -15`
 
 ### 5 · Diagnóstico no autorizado
 
-!`cd "/Users/titoespanolgamon/Documents/Vibe Coding/Grow" && grep -nE "(tu hij@ tiene|tu beb[ée] tiene|est[áa] enfermo|padece|sufre de|diagn[óo]stico positivo|alteraci[óo]n|trastorno)" prototype.html | head -10`
+!`grep -nE "(tu hij@ tiene|tu beb[ée] tiene|est[áa] enfermo|padece|sufre de|diagn[óo]stico positivo|alteraci[óo]n|trastorno)" prototype.html | head -10`
 
 ### 6 · Citas clínicas sin fuente
 
-!`cd "/Users/titoespanolgamon/Documents/Vibe Coding/Grow" && grep -nE "(los expertos dicen|estudios demuestran|seg[úu]n los estudios|ciencia demuestra|cient[íi]ficamente probado|investigaciones recientes)" prototype.html | head -10`
+!`grep -nE "(los expertos dicen|estudios demuestran|seg[úu]n los estudios|ciencia demuestra|cient[íi]ficamente probado|investigaciones recientes)" prototype.html | head -10`
 
 ### 7 · Diminutivos forzados
 
-!`cd "/Users/titoespanolgamon/Documents/Vibe Coding/Grow" && grep -nE "(hij@[- ]cito|mami|mam[ií]|papito|hijit[oa]|bebecit[oa])" prototype.html | head -10`
+!`grep -nE "(hij@[- ]cito|mami|mam[ií]|papito|hijit[oa]|bebecit[oa])" prototype.html | head -10`
 
 ## Instrucciones
 

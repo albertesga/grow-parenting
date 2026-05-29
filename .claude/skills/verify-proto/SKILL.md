@@ -11,7 +11,7 @@ allowed-tools: Bash(curl *) Bash(node *) Bash(python3 *)
 
 ## Verificación JS
 
-!`cd "/Users/titoespanolgamon/Documents/Vibe Coding/Grow" && python3 -c "import re; html=open('prototype.html',encoding='utf-8').read(); s=re.findall(r'<script[^>]*>(.*?)</script>',html,re.DOTALL); open('/tmp/mimo-extracted.js','w').write('\n'.join(s))" && node --check /tmp/mimo-extracted.js && echo "JS_OK"`
+!`python3 -c "import re; html=open('prototype.html',encoding='utf-8').read(); s=re.findall(r'<script[^>]*>(.*?)</script>',html,re.DOTALL); open('/tmp/mimo-extracted.js','w').write('\n'.join(s))" && node --check /tmp/mimo-extracted.js && echo "JS_OK"`
 
 ## Instrucciones
 

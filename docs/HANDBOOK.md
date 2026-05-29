@@ -111,7 +111,7 @@ Detalle completo: `.agent/rules/file-structure.md`.
 ### Server
 
 ```bash
-cd "/Users/titoespanolgamon/Documents/Vibe Coding/Grow"
+cd "$(git rev-parse --show-toplevel)"
 python3 -m http.server 5050
 ```
 

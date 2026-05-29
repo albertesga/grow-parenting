@@ -32,7 +32,7 @@ Si alguno ≠ 200 · NO commit. Diagnose:
 ### 2 · JS válido (`node --check`)
 
 ```bash
-cd "/Users/titoespanolgamon/Documents/Vibe Coding/Grow"
+cd "$(git rev-parse --show-toplevel)"
 python3 -c "import re; html=open('prototype.html',encoding='utf-8').read(); s=re.findall(r'<script[^>]*>(.*?)</script>',html,re.DOTALL); open('/tmp/mimo-extracted.js','w').write('\n'.join(s))"
 node --check /tmp/mimo-extracted.js
 ```
@@ -120,7 +120,7 @@ el prototype divergieron:
 Chequeo automatizado adicional (bloqueante si falla):
 
 ```bash
-node "/Users/titoespanolgamon/Documents/Vibe Coding/Grow/scripts/check-ds-drift.mjs"
+node "scripts/check-ds-drift.mjs"
 ```
 
 ### 8 · Si auditor reporta 🔴 bloqueante
