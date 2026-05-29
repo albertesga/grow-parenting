@@ -19,7 +19,7 @@ import useIsDesktop from './useIsDesktop';
 // 104 frames a 20fps · paddings 3 dígitos · /public/frames/f-001.jpg ... f-104.jpg
 const FRAME_COUNT = 104;
 const frameSrc = (i: number) =>
-  `/about-us/frames/f-${String(i).padStart(3, '0')}.jpg`;
+  `/homepage/about-us/frames/f-${String(i).padStart(3, '0')}.jpg`;
 
 const MOBILE_ATTRIBUTE_CHIPS: { tono: ChipTono; label: string; tilt: number }[] = [
   { tono: 'mint', label: 'feliz', tilt: -3 },

@@ -10,126 +10,126 @@
 
 @font-face {
   font-family: 'Grift';
-  src: url('/about-us/fonts/Grift-Thin.ttf') format('truetype');
+  src: url('/homepage/about-us/fonts/Grift-Thin.ttf') format('truetype');
   font-weight: 100;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
   font-family: 'Grift';
-  src: url('/about-us/fonts/Grift-ThinItalic.ttf') format('truetype');
+  src: url('/homepage/about-us/fonts/Grift-ThinItalic.ttf') format('truetype');
   font-weight: 100;
   font-style: italic;
   font-display: swap;
 }
 @font-face {
   font-family: 'Grift';
-  src: url('/about-us/fonts/Grift-ExtraLight.ttf') format('truetype');
+  src: url('/homepage/about-us/fonts/Grift-ExtraLight.ttf') format('truetype');
   font-weight: 200;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
   font-family: 'Grift';
-  src: url('/about-us/fonts/Grift-ExtraLightItalic.ttf') format('truetype');
+  src: url('/homepage/about-us/fonts/Grift-ExtraLightItalic.ttf') format('truetype');
   font-weight: 200;
   font-style: italic;
   font-display: swap;
 }
 @font-face {
   font-family: 'Grift';
-  src: url('/about-us/fonts/Grift-Light.ttf') format('truetype');
+  src: url('/homepage/about-us/fonts/Grift-Light.ttf') format('truetype');
   font-weight: 300;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
   font-family: 'Grift';
-  src: url('/about-us/fonts/Grift-LightItalic.ttf') format('truetype');
+  src: url('/homepage/about-us/fonts/Grift-LightItalic.ttf') format('truetype');
   font-weight: 300;
   font-style: italic;
   font-display: swap;
 }
 @font-face {
   font-family: 'Grift';
-  src: url('/about-us/fonts/Grift-Regular.ttf') format('truetype');
+  src: url('/homepage/about-us/fonts/Grift-Regular.ttf') format('truetype');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
   font-family: 'Grift';
-  src: url('/about-us/fonts/Grift-Italic.ttf') format('truetype');
+  src: url('/homepage/about-us/fonts/Grift-Italic.ttf') format('truetype');
   font-weight: 400;
   font-style: italic;
   font-display: swap;
 }
 @font-face {
   font-family: 'Grift';
-  src: url('/about-us/fonts/Grift-Medium.ttf') format('truetype');
+  src: url('/homepage/about-us/fonts/Grift-Medium.ttf') format('truetype');
   font-weight: 500;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
   font-family: 'Grift';
-  src: url('/about-us/fonts/Grift-MediumItalic.ttf') format('truetype');
+  src: url('/homepage/about-us/fonts/Grift-MediumItalic.ttf') format('truetype');
   font-weight: 500;
   font-style: italic;
   font-display: swap;
 }
 @font-face {
   font-family: 'Grift';
-  src: url('/about-us/fonts/Grift-SemiBold.ttf') format('truetype');
+  src: url('/homepage/about-us/fonts/Grift-SemiBold.ttf') format('truetype');
   font-weight: 600;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
   font-family: 'Grift';
-  src: url('/about-us/fonts/Grift-SemiBoldItalic.ttf') format('truetype');
+  src: url('/homepage/about-us/fonts/Grift-SemiBoldItalic.ttf') format('truetype');
   font-weight: 600;
   font-style: italic;
   font-display: swap;
 }
 @font-face {
   font-family: 'Grift';
-  src: url('/about-us/fonts/Grift-Bold.ttf') format('truetype');
+  src: url('/homepage/about-us/fonts/Grift-Bold.ttf') format('truetype');
   font-weight: 700;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
   font-family: 'Grift';
-  src: url('/about-us/fonts/Grift-BoldItalic.ttf') format('truetype');
+  src: url('/homepage/about-us/fonts/Grift-BoldItalic.ttf') format('truetype');
   font-weight: 700;
   font-style: italic;
   font-display: swap;
 }
 @font-face {
   font-family: 'Grift';
-  src: url('/about-us/fonts/Grift-ExtraBold.ttf') format('truetype');
+  src: url('/homepage/about-us/fonts/Grift-ExtraBold.ttf') format('truetype');
   font-weight: 800;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
   font-family: 'Grift';
-  src: url('/about-us/fonts/Grift-ExtraBoldItalic.ttf') format('truetype');
+  src: url('/homepage/about-us/fonts/Grift-ExtraBoldItalic.ttf') format('truetype');
   font-weight: 800;
   font-style: italic;
   font-display: swap;
 }
 @font-face {
   font-family: 'Grift';
-  src: url('/about-us/fonts/Grift-Black.ttf') format('truetype');
+  src: url('/homepage/about-us/fonts/Grift-Black.ttf') format('truetype');
   font-weight: 900;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
   font-family: 'Grift';
-  src: url('/about-us/fonts/Grift-BlackItalic.ttf') format('truetype');
+  src: url('/homepage/about-us/fonts/Grift-BlackItalic.ttf') format('truetype');
   font-weight: 900;
   font-style: italic;
   font-display: swap;
@@ -143,21 +143,21 @@
 
 @font-face {
   font-family: 'Galiner';
-  src: url('/about-us/fonts/TBJGaliner-Light.ttf') format('truetype');
+  src: url('/homepage/about-us/fonts/TBJGaliner-Light.ttf') format('truetype');
   font-weight: 300;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
   font-family: 'Galiner';
-  src: url('/about-us/fonts/TBJGaliner-Regular.ttf') format('truetype');
+  src: url('/homepage/about-us/fonts/TBJGaliner-Regular.ttf') format('truetype');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
   font-family: 'Galiner';
-  src: url('/about-us/fonts/TBJGaliner-Bold.ttf') format('truetype');
+  src: url('/homepage/about-us/fonts/TBJGaliner-Bold.ttf') format('truetype');
   font-weight: 700;
   font-style: normal;
   font-display: swap;
@@ -171,14 +171,14 @@
 
 @font-face {
   font-family: 'Inter';
-  src: url('/about-us/fonts/InterVariable.woff2') format('woff2-variations');
+  src: url('/homepage/about-us/fonts/InterVariable.woff2') format('woff2-variations');
   font-weight: 100 900;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
   font-family: 'Inter';
-  src: url('/about-us/fonts/InterVariable-Italic.woff2') format('woff2-variations');
+  src: url('/homepage/about-us/fonts/InterVariable-Italic.woff2') format('woff2-variations');
   font-weight: 100 900;
   font-style: italic;
   font-display: swap;

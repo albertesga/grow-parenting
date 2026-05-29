@@ -1,13 +1,14 @@
 // Minimal static file server for Claude preview (sandbox-safe; no os.getcwd CLI).
-// Serves homepage/ AS THE WEB ROOT — this is the canonical layout the site is
-// built for (about-us is a Next export with basePath:/about-us; waitlist.html
-// and about-us/ live at the root). So: localhost:PORT/ = homepage,
-// /about-us/ = quiénes somos, /waitlist.html = waitlist. Mirrors deploy.
+// Serves the REPO ROOT — that's how the project is actually served (.replit:
+// `python3 -m http.server` from root; local: localhost:5050/homepage/). So the
+// landing lives at /homepage/, about-us at /homepage/about-us/, prototype at
+// /prototype.html. about-us se construye con basePath /homepage/about-us para
+// que sus assets resuelvan bajo este layout.
 const http = require("http");
 const fs = require("fs");
 const path = require("path");
 
-const ROOT = path.resolve(__dirname, "..", "homepage");
+const ROOT = path.resolve(__dirname, "..");
 const PORT = Number(process.env.PORT || 5052);
 
 const TYPES = {

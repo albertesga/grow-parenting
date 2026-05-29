@@ -124,18 +124,18 @@ export default function SiteTopbar() {
         id="topbar"
       >
         <div className="brand">
-          <a href="/" aria-label="Mimo · volver al inicio">
-            <img src="/about-us/img/mimo-logo.png" alt="Mimo" draggable={false} />
+          <a href="/homepage/" aria-label="Mimo · volver al inicio">
+            <img src="/homepage/about-us/img/mimo-logo.png" alt="Mimo" draggable={false} />
           </a>
         </div>
         <div className="right">
-          <a className="nav-link about" href="/about-us/">
+          <a className="nav-link about" href="/homepage/about-us/">
             Quiénes somos
           </a>
           <a className="nav-link" href="#trabaja">
             Trabaja con nosotros
           </a>
-          <a className="waitlist-link" href="/waitlist.html">
+          <a className="waitlist-link" href="/homepage/waitlist.html">
             Únete a la waitlist
           </a>
         </div>
