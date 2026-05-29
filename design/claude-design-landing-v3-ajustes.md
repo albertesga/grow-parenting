@@ -63,7 +63,7 @@ inclusividad y de prescripción médica — no aparece en ninguna parte de la la
 CAMBIO:
 1. CTA primario del hero → orientado a valor, SIN precio: "Entra en la lista" o "Apúntate gratis".
 2. En la Sección 6 · Pricing, añade visible el TIER GRATUITO como primer bloque, con lo que
-   incluye sin pagar (mínimo canon: 1 libro core, chat IA limitado, Modo madrugada, calendario básico,
+   incluye sin pagar (mínimo canon: 1 libro core, Modo madrugada limitado, Modo madrugada, calendario básico,
    diario). Founding €1.99 y Plus €7.99 se mantienen, pero el free deja de ser invisible.
 3. Microcopy bajo el pricing: que quedarse en gratis sea una opción digna, no un castigo.
 

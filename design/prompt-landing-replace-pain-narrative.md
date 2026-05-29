@@ -27,7 +27,7 @@ Su estructura era una columna larga vertical con pares pregunta/respuesta tipo:
 → Libro de Alimentación · BLW + tomas + caca tracker BITSS.
 
 "¿Es algo grave?"
-→ Chat IA con triage tree · NICE NG143/NG9/NG232 · escalada 112 si toca.
+→ Modo madrugada con triage tree · NICE NG143/NG9/NG232 · escalada 112 si toca.
 
 "Llevo tres noches sin dormir."
 → Modo madrugada · 3 rutas edad-aware · sin juzgar.
@@ -36,7 +36,7 @@ Su estructura era una columna larga vertical con pares pregunta/respuesta tipo:
 → "Aquí no diagnosticamos. Te decimos si toca llamar."
 
 "Mi pediatra no responde hasta el lunes."
-→ Chat IA con citas clínicas siempre con fuente y año · 24/7.
+→ Modo madrugada con citas clínicas siempre con fuente y año · 24/7.
 
 "Mi pareja y yo no nos ponemos de acuerdo."
 → Cuenta compartida co-cuidador/a · sin género forzado · push síncrono.
@@ -429,7 +429,7 @@ En mobile (< 600 px) el grid pasa a 2 columnas × 3 filas.
 - `/Mimo/design/IA-homepage-v0.1.md` · estos dos bloques son **02 · Manifesto extendido** y **03 · ¿Para quién?** del sitemap canon.
 - `/Mimo/design/wireframes-homepage-v0.1.html` · ya están materializados en lo-fi.
 - `/Mimo/prd/PRD-libro-colicos-v0.1.md` · canon trauma-informed copy.
-- `/Mimo/prd/PRD-chat-modo-madrugada-v0.1.md` · canon "Aquí no diagnosticamos. Aquí estamos."
+- `/Mimo/prd/PRD-modo-madrugada-v0.1.md` · canon "Aquí no diagnosticamos. Aquí estamos."
 - Manifesto v2.10 canon Fase 0 (Notion · Hub Mimo).
 - DS Mimo v0.2 · Foundations + Product Components.
 

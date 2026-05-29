@@ -197,7 +197,7 @@ La pediatra le pregunta: *"¿Cuándo fue la última otitis y qué antibiótico l
 | **AEPap · DSI** Documento de Salud Infantil (España) | Estructura del carnet sanitario · secciones canónicas | Carnet (tab) |
 | **AEPap "EnFamilia"** | Educación familias canónica | Tab Educación · síntomas a vigilar |
 | **AAP Bright Futures** | Personal record + Anticipatory Guidance | Tab Educación · paralelo EN |
-| **NICE NG143/NG9/NG232/NG217/CG84/CG102** | Triage clínico | Cross-ref con Chat IA + alertas |
+| **NICE NG143/NG9/NG232/NG217/CG84/CG102** | Triage clínico | Cross-ref con Modo madrugada + alertas |
 | **WHO ICD-10** (subset pediátrico común) | Categorización episodios | Estructura datos · diagnósticos |
 | **MedDRA** | Reacciones adversas medicamentos | Sección medicación |
 | **EAACI** (European Academy Allergy) | Cribado alergias · protocolo | Sub-libro Alergias v1.5 |
@@ -280,7 +280,7 @@ Libro de Salud · Lola · 18 m
 | Origen | Cómo entra a Libro de Salud |
 | --- | --- |
 | 💉 Libro de Vacunas · tracker fiebre 72h | Auto-crea episodio Salud "Fiebre post-vacuna" |
-| 💬 Chat IA · triage tree con resultado | Botón "Guardar al Libro de Salud" |
+| 💬 Modo madrugada · triage tree con resultado | Botón "Guardar al Libro de Salud" |
 | ⊕ Quick log · tipo "Salud" | Va al FAB Log del libro |
 | 🌱 Libro de Hitos · cribado con alerta | Sugiere abrir Libro de Salud |
 | 📕 Libro de Cólicos (sub-libro) | Vive bajo Libro de Salud · entry destacado en Hoy del libro |
@@ -409,7 +409,7 @@ Sheet bottom al pulsar FAB · 5 opciones:
 | Trigger | Auto-acción |
 | --- | --- |
 | Vacuna administrada en Libro Vacunas + fiebre > 38 °C en tracker 72h | Auto-crea episodio "Fiebre post-vacuna [tipo]" en Libro Salud |
-| Chat IA · triage tree con outcome `⚠ pediatra mañana` | Sugiere "guardar episodio al Libro de Salud" |
+| Modo madrugada · triage tree con outcome `⚠ pediatra mañana` | Sugiere "guardar episodio al Libro de Salud" |
 | Recetas en visita pediátrica | Auto-añade a Medicación |
 | Caca tracker BITSS · patrón sospechoso APLV | Sugiere registrar como "alergia bajo investigación" |
 | Quick log "Llanto > 3h" recurrente | Sugiere activar sub-libro Cólicos |
@@ -641,7 +641,7 @@ Trigger nightly batch:
         severidad: "moderada",
         sugerencia: "Lola: 3 otitis en 6 meses · puede valer la pena hablar con ORL",
         cta_principal: "Exportar resumen para pediatra",
-        cta_secundaria: "Hablar con chat IA"
+        cta_secundaria: "Hablar con Modo madrugada"
       }
 ```
 
@@ -659,7 +659,7 @@ Si edad_hijo entre 1 sem y 4 m:
     CTA: "Conocer · activar si lo necesitas"
 ```
 
-### 9.4 Cross-ref con Chat IA
+### 9.4 Cross-ref con Modo madrugada
 
 ```
 Trigger en chat: triage_tree.outcome = "⚠ pediatra mañana" o "🚨 urgencias"
@@ -879,7 +879,7 @@ type CarnetSanitario = {
 - FAB Log con 5 tipos.
 - Sub-libro Cólicos integrado (vive bajo Salud · entry destacado).
 - Auto-creación episodios desde Vacunas tracker fiebre.
-- Cross-ref chat IA triage tree → guardar.
+- Cross-ref Modo madrugada triage tree → guardar.
 - Detección patrones (otitis recurrente · fiebre sin foco · antibióticos repetidos).
 - Export PDF 3 plantillas (pediatra · colegio · viaje).
 - Modo emergencia full-screen.
@@ -968,7 +968,7 @@ type CarnetSanitario = {
 - `wireframes-v2.html · §10.5 Cólicos` (sub-libro).
 - `prototype.html · libros existentes` (patrón navbar canon).
 - `PRD-libro-colicos-v0.1.md` (sub-libro detallado).
-- `PRD-chat-modo-madrugada-v0.1.md` (cross-ref triage trees).
+- `PRD-modo-madrugada-v0.1.md` (cross-ref triage trees).
 - `Notion · Journey Mimo · Postparto + Crianza` (eventos clínicos por etapa).
 - `Notion · Diferenciales Mimo vs referencia comercial` (canon trauma-informed).
 - `design/v0.1/Mimo Product Components v0.1.html` (cat-card · chips · estados).

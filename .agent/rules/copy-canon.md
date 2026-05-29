@@ -183,5 +183,5 @@ warning: '<span style="color: red">¡Urgente!</span>'  // rojo médico literal
 ## Cita ADR
 
 - **ADR-0011** · trauma-informed copy canon (master · 6 reglas completas)
-- **ADR-0005** · chat IA modo 3am (cuándo copy adopta tono nocturno)
+- **ADR-0005** · Modo madrugada modo 3am (cuándo copy adopta tono nocturno)
 - **ADR-0009** · libro salud emergencia (NSBSP canon directo)

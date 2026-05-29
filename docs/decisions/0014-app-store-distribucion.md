@@ -78,7 +78,7 @@ genuinamente diferenciada:
 
 - ✓ Cero riesgo App Store rejection 4.3
 - ✓ 1 codebase · 1 ciclo de release · 1 certificación MDR
-- ✓ Cross-ref entre libros trivial (chat IA con contexto, sub-libro
+- ✓ Cross-ref entre libros trivial (Modo madrugada con contexto, sub-libro
   Cólicos bajo Salud, fiebre post-vacuna auto-import, etc.)
 - ✓ Cuenta compartida cuidadores · 1 login · datos unified
 - ✓ App Clips dan el sentimiento de "app per libro" sin el cost legal

@@ -352,7 +352,7 @@ Te acompañamos también con el bolsillo.
 #### Card 2 · Mimo Plus (default)
 - **€7.99/mes** · €69.99/año (–27%)
 - Los 9 libros desbloqueados
-- Chat IA contextual ilimitado
+- Modo madrugada sin límite
 - Multi-perfil ilimitado
 - Cuenta compartida co-cuidador
 - Export PDF pediatra

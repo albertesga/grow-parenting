@@ -223,7 +223,7 @@ FEATURES (icon + tonal según libro · 9 cards)
       Te avisamos de lo relevante esa semana — sin abrumar con lo que aún no toca
   🌱  Calendario de hitos
       97 hitos de Haizea-Llevant, la escala validada en España
-  🌙  Chat de madrugada
+  🌙  Modo madrugada
       A las 3am: fondo oscuro, texto grande, una pregunta por pantalla. Triage auditado
   💛  Diario · libro de recuerdos
       Lo que ya estás viviendo, guardado. Para ti, para mañana
@@ -258,8 +258,8 @@ CARD FREE                        CARD PREMIUM
   Mimo                              Mimo Plus
   0 € siempre                       9,99 € / mes
   - Calendario semana a semana      - Los 9 libros desbloqueados
-  - 1 libro activo según edad       - Chat con IA ilimitado · modo madrugada
-  - Chat con IA limitado            - Multi-perfil · cuenta compartida
+  - 1 libro activo según edad       - Los 9 libros desbloqueados · modo madrugada
+  - Modo madrugada limitado            - Multi-perfil · cuenta compartida
   - Diario · libro de recuerdos     - Llamadas 1:1 con pediatra (add-on)
 
 OPCIONES

@@ -231,7 +231,7 @@ CTA secundario en cada card (top fix #8): `Ver libro →` que abre drawer/modal 
 - **Tarjeta pricing canónica trauma-informed**:
   - Headline: *"Te acompañamos también con el bolsillo."*
   - Pricing visible:
-    - **Gratis** durante beta · 1 libro + Modo madrugada + Chat IA limited.
+    - **Gratis** durante beta · 1 libro + Modo madrugada + Modo madrugada completo.
     - **Plus €7.99/mes** · todos los libros desbloqueados.
     - **Founding members €1.99/mes price-lock** primer año (primeros 1.000).
   - 14 días Plus sin tarjeta · trial reverse (degrada a free).

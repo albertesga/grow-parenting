@@ -16,7 +16,7 @@ consumer vs producer. No mezclar dominios (landing vs prototype vs DS).
 ## Mapa de archivos
 
 ```
-/Users/titoespanolgamon/Documents/Vibe Coding/Grow/
+/Users/titoespanolgamon/Documents/Vibe Coding/Mimo/
 ├── AGENTS.md                         (root entry · qué es Mimo)
 ├── CLAUDE.md                         (alias pointer Claude Code)
 ├── README.md                         (humano · 30s overview)

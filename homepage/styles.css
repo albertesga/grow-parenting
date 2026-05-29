@@ -303,10 +303,10 @@
     }
     .topbar.scrolled { border-bottom: 1px solid var(--line); }
 
-    /* ── Topbar night-mode · al entrar en la sección Modo 3 AM el header se
-       "apaga": fade a oscuro + un flicker breve tipo apagado de luz. La clase
-       .is-night la activa el scrollytelling cuando el header queda sobre la
-       sección oscura (homepage/main.js · initThreeAmStory). ── */
+    /* ── Topbar night-mode · fade suave a oscuro mientras el header queda
+       sobre la sección del Modo 3 AM. La clase .is-night la activa el
+       scrollytelling (homepage/main.js · initThreeAmStory) y la suavidad la
+       dan las transiciones de background/color del topbar. ── */
     .topbar.is-night {
       background: rgba(27, 26, 24, 0.88);
       color: var(--paper-deep);
@@ -335,43 +335,16 @@
       color: var(--module-dark);
     }
     .topbar.is-night .waitlist-link:hover { filter: brightness(1.08); }
-    .topbar .brand img,
-    .topbar .book-nav,
-    .topbar .book-nav-link,
-    .topbar .about-link,
-    .topbar .waitlist-link {
+    /* Fade night solo en logo y contenedor nav (sin hover) · los links usan
+       su propia transición y conservan su hover-lift intacto. */
+    .topbar .brand img {
+      transition: filter 620ms var(--ease), opacity 620ms var(--ease);
+    }
+    .topbar .book-nav {
       transition:
-        color var(--duration-base) var(--ease),
-        background-color var(--duration-base) var(--ease),
-        border-color var(--duration-base) var(--ease),
-        filter var(--duration-base) var(--ease);
-    }
-    /* ── Oil-drop veil · gota negra one-shot al entrar al Modo 3 AM ──
-       Crece desde el centro hasta cubrir todo el viewport (incluido el
-       top menu, z60 > topbar z50) y al final hace fade para asentar en la
-       UI dark. La dispara homepage/main.js · initThreeAmStory. ── */
-    .threeam-veil {
-      position: fixed;
-      inset: 0;
-      z-index: 60;
-      background: var(--module-dark);
-      pointer-events: none;
-      visibility: hidden;
-      opacity: 0;
-      clip-path: circle(0 at 50% 50%);
-      will-change: clip-path, opacity;
-    }
-    .threeam-veil.is-playing {
-      visibility: visible;
-      animation: threeam-oildrop 900ms var(--ease) forwards;
-    }
-    @keyframes threeam-oildrop {
-      0%   { clip-path: circle(0 at 50% 50%);       opacity: 1; }
-      68%  { clip-path: circle(150vmax at 50% 50%); opacity: 1; }
-      100% { clip-path: circle(150vmax at 50% 50%); opacity: 0; }
-    }
-    @media (prefers-reduced-motion: reduce) {
-      .threeam-veil.is-playing { animation: none; visibility: hidden; }
+        background-color 620ms var(--ease),
+        border-color 620ms var(--ease),
+        box-shadow 620ms var(--ease);
     }
     .topbar .brand { display: flex; align-items: center; }
     .topbar .brand img { height: 26px; width: auto; }
@@ -635,6 +608,90 @@
       z-index: 2;
     }
     .phase-tag .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--coral-base); }
+
+    /* ── Hero floating chips ───────────────────────────────────────────
+       5 libros orbitando el avatar. Patrón visual = .phase-tag (pill paper
+       translúcido + dot tonal) para mantener canon DS. Profundidad real:
+       --front (z 4, sobre los videos) y --back (z 0, detrás de los videos
+       z 1 · el avatar los tapa parcialmente). Wrapper display:contents para
+       que el z-index de cada chip viva en el stacking del avatar. Movimiento
+       solo en transform/opacity (float continuo + fade-in escalonado). */
+    .hero-chips { display: contents; }
+    .hero-chip {
+      position: absolute;
+      z-index: 4;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 15px 9px 13px;
+      background: rgba(250, 247, 240, 0.82);
+      -webkit-backdrop-filter: blur(10px) saturate(150%);
+      backdrop-filter: blur(10px) saturate(150%);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-pill);
+      font-family: var(--font-text);
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: -0.005em;
+      color: var(--ink);
+      white-space: nowrap;
+      pointer-events: none;
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.6),
+        0 16px 30px -16px rgba(42, 33, 27, 0.42);
+      animation:
+        hero-chip-in 720ms var(--ease) var(--in-delay, 0s) both,
+        hero-chip-float var(--dur, 6.5s) ease-in-out var(--delay, 0s) infinite;
+      will-change: transform, opacity;
+    }
+    .hero-chip .dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: var(--tone, var(--coral-base));
+      box-shadow: 0 0 0 4px color-mix(in srgb, var(--tone, var(--coral-base)) 24%, transparent);
+    }
+    /* Tono canon por libro · mapping del nav de la homepage */
+    .hero-chip.c-coral  { --tone: var(--coral-base); }
+    .hero-chip.c-blush  { --tone: var(--blush-base); }
+    .hero-chip.c-mint   { --tone: var(--mint-base); }
+    .hero-chip.c-gold   { --tone: var(--gold-base); }
+    .hero-chip.c-violet { --tone: var(--violet-strong); }
+    /* Delante / detrás · back recede tras los videos del avatar */
+    .hero-chip--front { z-index: 4; }
+    .hero-chip--back {
+      z-index: 0;
+      font-size: 12px;
+      padding: 8px 13px 8px 11px;
+      background: rgba(250, 247, 240, 0.72);
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.5),
+        0 12px 22px -14px rgba(42, 33, 27, 0.32);
+      animation-name: hero-chip-in-back, hero-chip-float;
+    }
+    /* Posiciones · órbita alrededor del avatar, alternando profundidad */
+    .hero-chip[data-book="embarazo"]     { top: 11%;    left: -2%; }
+    .hero-chip[data-book="lactancia"]    { top: 7%;     right: 1%; }
+    .hero-chip[data-book="alimentacion"] { top: 44%;    left: -7%; }
+    .hero-chip[data-book="desarrollo"]   { top: 39%;    right: -3%; }
+    .hero-chip[data-book="sueno"]        { bottom: 20%; left: 12%; }
+
+    @keyframes hero-chip-in {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+    @keyframes hero-chip-in-back {
+      from { opacity: 0; }
+      to   { opacity: 0.92; }
+    }
+    @keyframes hero-chip-float {
+      0%, 100% { transform: translateY(0); }
+      50%      { transform: translateY(var(--shift, -10px)); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .hero-chip { animation: none; opacity: 1; }
+      .hero-chip--back { opacity: 0.92; }
+    }
 
     /* ════════════════════════════════════════════════════════════════════
        § 6 · TRUST STRIP

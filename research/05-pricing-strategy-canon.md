@@ -90,8 +90,8 @@
 
 | Tier | Precio | Para quién | Qué incluye |
 | --- | --- | --- | --- |
-| **Free** | €0 | Carmen-tipo · primer contacto · skeptics | 1 libro core a elegir + Chat IA limitado (5 preg/día) + Modo madrugada completo + Calendario básico + Diario (1 foto/día) + multi-perfil 1 hij@ |
-| **Mimo Plus** | €9.99/mes · €69.99/año (-42%) | María-tipo · Pablo-tipo · Marta-tipo · base masiva | TODO desbloqueado: 9 libros + Chat IA ilimitado contextual + Quick log completo + Curva ponderal + Export PDF pediatra + Multi-perfil ilimitado + Co-cuidador cuenta compartida + Vitales sin hardware + Cry classifier |
+| **Free** | €0 | Carmen-tipo · primer contacto · skeptics | 1 libro core a elegir + Modo madrugada limitado (5 preg/día) + Modo madrugada completo + Calendario básico + Diario (1 foto/día) + multi-perfil 1 hij@ |
+| **Mimo Plus** | €9.99/mes · €69.99/año (-42%) | María-tipo · Pablo-tipo · Marta-tipo · base masiva | TODO desbloqueado: 9 libros + Modo madrugada ilimitado contextual + Quick log completo + Curva ponderal + Export PDF pediatra + Multi-perfil ilimitado + Co-cuidador cuenta compartida + Vitales sin hardware + Cry classifier |
 | **ChildLens+** *(diferido · fuera de canon Fase 0)* | €9.99/mes · €89.99/año | Lucía-tipo · Olivia-tipo · HNW · usuarios premium | Plus + 1 sesión/mes consultora HUMANA (psicóloga perinatal o sleep consultant) + Comunidad privada + Cross-app ecosistema ChildLens (BLW · Colic · Sleep · Stories · Aid) |
 | **ChildLens+ Care** *(diferido · fuera de canon Fase 0)* | €19.99/mes | Ingrid-tipo · preemie · arcoíris · necesidad-driven | ChildLens+ + 3 sesiones/mes con especialista perinatal + tier preemie/arcoíris con escalas específicas + comunidad nicho moderada |
 
@@ -193,7 +193,7 @@ MID funnel · activation
 BOTTOM funnel · monetization
 ├── Day-14: reverse trial → degrada a free tier (no expira cuenta)
 ├── Trigger 1: pediatric appointment prep PDF (libro premium)
-├── Trigger 2: hito alarma → "ver canon completo + chat IA ilimitado"
+├── Trigger 2: hito alarma → "ver canon completo + Modo madrugada ilimitado"
 ├── Trigger 3: 2do hij@ → multi-perfil ilimitado (premium)
 ├── Trigger 4: ChildLens+ uptake (consultora humana sesión mensual)
 └── Trigger 5: cuenta compartida → co-cuidador upgrade
@@ -300,7 +300,7 @@ RETENTION + expansion
 
 **Probabilidad**: alta (research canon: ingreso €1.8k Carmen · alquiler compartido).
 **Mitigación**:
-- Free tier robusto (1 libro + Modo madrugada + Chat IA limited) cubre necesidad Carmen.
+- Free tier robusto (1 libro + Modo madrugada + Modo madrugada completo) cubre necesidad Carmen.
 - Carmen es activo PR/inclusivity, no revenue.
 - Si Carmen paga eventualmente €1.99/mes en momento crítico (cita pediatra preparation, etc.), excelente.
 

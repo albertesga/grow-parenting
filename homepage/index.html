@@ -269,9 +269,6 @@
     </div>
   </header>
 
-  <!-- Oil-drop veil · gota negra one-shot del Modo 3 AM (ver styles.css + main.js) -->
-  <div class="threeam-veil" aria-hidden="true"></div>
-
   <!-- ════════════════════════════════════════════════════════════════════
        § 1 · HERO
        ════════════════════════════════════════════════════════════════════ -->
@@ -313,6 +310,19 @@
                 id="hero-avatar-trigger"
                 type="button"
                 aria-label="Reproducir animación del avatar"></button>
+        <!-- Chips flotantes · 5 libros orbitando el avatar · mezcla delante
+             (z 4) / detrás (z 0, tras los videos z 1) para profundidad.
+             Decorativos (aria-hidden) · refuerzan los libros del nav ·
+             display:contents en el wrapper para que el z-index de cada chip
+             se intercale con las capas del avatar. Float en transform +
+             fade-in escalonado (vars inline). -->
+        <div class="hero-chips" aria-hidden="true">
+          <span class="hero-chip hero-chip--front c-coral" data-book="embarazo" style="--dur:6.5s; --delay:0s; --in-delay:.20s; --shift:-12px"><span class="dot"></span>Embarazo</span>
+          <span class="hero-chip hero-chip--back c-blush" data-book="lactancia" style="--dur:7.4s; --delay:.5s; --in-delay:.35s; --shift:-9px"><span class="dot"></span>Lactancia</span>
+          <span class="hero-chip hero-chip--back c-gold" data-book="alimentacion" style="--dur:6.9s; --delay:1s; --in-delay:.50s; --shift:-10px"><span class="dot"></span>Alimentación</span>
+          <span class="hero-chip hero-chip--front c-violet" data-book="desarrollo" style="--dur:6.2s; --delay:.8s; --in-delay:.65s; --shift:-11px"><span class="dot"></span>Desarrollo</span>
+          <span class="hero-chip hero-chip--front c-mint" data-book="sueno" style="--dur:7.1s; --delay:.3s; --in-delay:.80s; --shift:-13px"><span class="dot"></span>Sueño</span>
+        </div>
         <div class="phase-tag"><span class="dot"></span> Embarazo · sem 4–40</div>
       </div>
     </div>

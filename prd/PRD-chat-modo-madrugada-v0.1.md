@@ -1,7 +1,7 @@
-# PRD · Chat IA + Modo madrugada
+# PRD · Modo madrugada + Modo madrugada
 ## Mimo · v0.1 · canon Fase 0
 
-> Producto: **Mimo by The Child Lens** · Módulo: **Chat IA contextual con triage trees + Modo madrugada** · Categoría DS: cross-categoría (chat es transversal · triage trees pintan el color de su categoría · Modo madrugada = paleta dark dedicada).
+> Producto: **Mimo by The Child Lens** · Módulo: **Modo madrugada con triage trees + Modo madrugada** · Categoría DS: cross-categoría (chat es transversal · triage trees pintan el color de su categoría · Modo madrugada = paleta dark dedicada).
 > Status: ready for Claude Design + ingeniería · siguiendo `Mimo Design System v0.2`.
 
 ---
@@ -552,7 +552,7 @@ Las citas se renderizan como tag pill `paper-soft` con fuente + año · tap abre
    - Cita clínica: `— NICE NG143 · 2021`.
 7. **Botones acción**:
    - Si 🚨 → `Llamar 112` primario.
-   - Si ⚠ → `Programar cita mañana` primario · `Hablar con chat IA` secundario.
+   - Si ⚠ → `Programar cita mañana` primario · `Hablar con Modo madrugada` secundario.
    - Si 🟢 → `Volver a dormir` primario · `Anotar en diario` secundario.
 
 ---
@@ -961,7 +961,7 @@ type TriageRun = {
 
 ### 16.3 Cross-ref con otros docs canon
 
-- `wireframes-v2.html · §11 Chat IA contextual` (frames lo-fi base).
+- `wireframes-v2.html · §11 Modo madrugada` (frames lo-fi base).
 - `wireframes-v2.html · §12 Modo madrugada` (5 rutas canónicas previas · ahora canónico 3 rutas edad-aware).
 - `wireframes-v2.html · §13 Screening EPDS` (cribado embebido).
 - `wireframes-v2.html · §14 Cuenta compartida` (relevo + visibilidad).
@@ -994,4 +994,4 @@ type TriageRun = {
 
 ---
 
-*PRD · Chat IA + Modo madrugada · Mimo v0.1 · canon Fase 0 · alineado con DS Mimo v0.2 · abril 2026*
+*PRD · Modo madrugada + Modo madrugada · Mimo v0.1 · canon Fase 0 · alineado con DS Mimo v0.2 · abril 2026*

@@ -1,7 +1,7 @@
 # About us · sección 2 · mejora de legibilidad
 
 ## Estado
-Codex no puede sobrescribir `components/EmotionalStatementSection.tsx` por permisos TCC de macOS sobre archivos existentes en `Documents/Vibe Coding/Grow`. Sí ha podido crear archivos nuevos.
+Codex no puede sobrescribir `components/EmotionalStatementSection.tsx` por permisos TCC de macOS sobre archivos existentes en `Documents/Vibe Coding/Mimo`. Sí ha podido crear archivos nuevos.
 
 ## Archivos generados
 - `components/EmotionalStatementSection.codex-backup-from-sourcemap.tsx`: copia del componente actual reconstruida desde el sourcemap del servidor Next.

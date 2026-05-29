@@ -258,7 +258,7 @@ Estado del Libro
 | **§10.2 Alimentación + Caca tracker** | BITSS scale → descartar APLV/FPIES |
 | **§10.3 Lactancia** | LATCH score → descartar frenillo · descartar agarre |
 | **§10.5 Salud** | Tabla síntomas alarma vs cólicos clásicos |
-| **§11 Chat IA** | Contexto pre-cargado "+ episodio cólicos en curso" |
+| **§11 Modo madrugada** | Contexto pre-cargado "+ episodio cólicos en curso" |
 | **§12 Modo madrugada** | Ruta "No para de llorar" entry directo |
 | **§13 EPDS** | Trigger EPDS si Wessel + agotamiento severo |
 | **§14 Cuenta compartida** | Push síncrono "María lleva 30 min · ¿paso a Pablo?" |
@@ -309,7 +309,7 @@ Estado del Libro
 
 **Lógica**:
 - Aplicarlas **en orden**.
-- Si después de las 5 S's en 10-15 min sigue inconsolable → escalada (Plan IA / chat IA / urgencias si síntoma alarma).
+- Si después de las 5 S's en 10-15 min sigue inconsolable → escalada (Plan IA / Modo madrugada / urgencias si síntoma alarma).
 - Marcar cuáles funcionan para personalizar a futuro (v1.5).
 
 ### 7.3 Diario de episodios
@@ -832,7 +832,7 @@ type LibroColicosState = {
 5. **Modo arcoíris específico** para cólicos: ¿cambiar copy si activado? Recomendación: sí, atemperar manifiesto + sin "pasará a los 4 meses" agresivo.
 6. **Score Wessel relajado** (Roma IV ≥ 1h vs Wessel ≥ 3h): ¿activar libro con criterio Roma IV más sensible? Recomendación: usar Roma IV para activación · Wessel para confirmación.
 7. **Comunidad MVP**: ¿incluir grupos de apoyo en v0? Recomendación: NO · v2.
-8. **Telesalud**: ¿botón directo a lactanciera/asesora en v0? Recomendación: NO · solo cross-ref a chat IA.
+8. **Telesalud**: ¿botón directo a lactanciera/asesora en v0? Recomendación: NO · solo cross-ref a Modo madrugada.
 
 ---
 

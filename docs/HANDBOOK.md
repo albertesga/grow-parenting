@@ -111,7 +111,7 @@ Detalle completo: `.agent/rules/file-structure.md`.
 ### Server
 
 ```bash
-cd "/Users/titoespanolgamon/Documents/Vibe Coding/Grow"
+cd "/Users/titoespanolgamon/Documents/Vibe Coding/Mimo"
 python3 -m http.server 5050
 ```
 
@@ -188,7 +188,7 @@ Spawn en paralelo si el cambio toca UI y copy a la vez.
 | ADR-0002 | navbar dedicado por libro · `.phone-nav .{libro}-phone-nav` |
 | ADR-0003 | chip primitive · 1 sola clase `.chip` + tono + active "vacío" |
 | ADR-0004 | bottom nav perfil · acceso global a configuración |
-| ADR-0005 | chat IA Modo madrugada · tono nocturno cuando aplica |
+| ADR-0005 | Modo madrugada Modo madrugada · tono nocturno cuando aplica |
 | ADR-0006 | sub-libros pattern · navegación interna jerárquica |
 | ADR-0007 | diary timeline vertical · pattern de lanes calculadas |
 | ADR-0008 | pantalla perfil · estructura canon |

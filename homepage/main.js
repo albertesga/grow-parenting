@@ -115,31 +115,19 @@
           if (previousStep !== step) pulseCursorClick();
         };
 
-        const veil = document.querySelector(".threeam-veil");
-        let veilPlayed = false;
-
         const update = () => {
           ticking = false;
           const rect = scrollArea.getBoundingClientRect();
           const scrollable = Math.max(1, scrollArea.offsetHeight - window.innerHeight);
           const progress = clamp(-rect.top / scrollable);
           setStep(stepFromProgress(progress));
-          /* Gota de aceite one-shot · al quedar la sección fija a pantalla
-             completa (progress >= 0.03) se dispara una vez: header a night +
-             veil radial que crece y asienta en dark. Al salir (<= 0.005) se
-             resetea para poder re-dispararse al volver. */
-          if (progress >= 0.03 && !veilPlayed) {
-            veilPlayed = true;
-            if (topbar) topbar.classList.add("is-night");
-            if (veil && !reduced) {
-              veil.classList.remove("is-playing");
-              void veil.offsetWidth;
-              veil.classList.add("is-playing");
-            }
-          } else if (progress <= 0.005 && veilPlayed) {
-            veilPlayed = false;
-            if (topbar) topbar.classList.remove("is-night");
-            if (veil) veil.classList.remove("is-playing");
+          /* Header night-mode · fade suave a oscuro mientras el header queda
+             sobre la sección del Modo 3 AM, y vuelta a day al salir. La
+             suavidad la da la transición CSS de .topbar (background/color). */
+          if (topbar) {
+            const headerH = topbar.offsetHeight || 64;
+            const overNight = rect.top <= headerH && rect.bottom > headerH;
+            topbar.classList.toggle("is-night", overNight);
           }
         };
 
@@ -841,7 +829,7 @@
           coverFootMethod: "EU14",
           backEyebrow: "Lo que resuelve",
           backPhraseHTML: 'Sólidos, BLW, purés y alérgenos <em>sin presión</em>, con señales claras cuando toca consultar.',
-          pageImg: BOOK_AVATARS.coral,
+          pageImg: "assets/avatar-alimentacion.png",
           pageImgAlt: "Libro de alimentación",
           featuresLabel: "Lo que el libro hace por ti",
           features: [
@@ -871,7 +859,7 @@
           coverFootMethod: "LATCH",
           backEyebrow: "Lo que resuelve",
           backPhraseHTML: 'Dolor, agarre, extracción y medicación <em>sin lactivismo</em> ni culpa por el biberón.',
-          pageImg: BOOK_AVATARS.blush,
+          pageImg: "assets/avatar-lactancia.png",
           pageImgAlt: "Libro de lactancia",
           featuresLabel: "Lo que el libro hace por ti",
           features: [
@@ -900,7 +888,7 @@
           coverFootMethod: "AEPED",
           backEyebrow: "Lo que resuelve",
           backPhraseHTML: 'Calendario vivo, fiebre 72h y carnet digital <em>sin militancia</em>, con datos para decidir con pediatría.',
-          pageImg: BOOK_AVATARS.coral,
+          pageImg: "assets/avatar-vacunas.png",
           pageImgAlt: "Libro de vacunas",
           featuresLabel: "Lo que el libro hace por ti",
           features: [
@@ -929,7 +917,7 @@
           coverFootMethod: "ventanas",
           backEyebrow: "Lo que resuelve",
           backPhraseHTML: 'Ventanas, rutinas y noches difíciles <em>sin juicio</em> y sin extinción del llanto por defecto.',
-          pageImg: BOOK_AVATARS.mint,
+          pageImg: "assets/avatar-sueno.png",
           pageImgAlt: "Libro del sueño",
           featuresLabel: "Lo que el libro hace por ti",
           features: [
@@ -958,7 +946,7 @@
           coverFootMethod: "AEPap",
           backEyebrow: "Lo que resuelve",
           backPhraseHTML: 'Fiebre, episodios y señales para consultar <em>con criterio</em>, sin convertir cada síntoma en alarma.',
-          pageImg: BOOK_AVATARS.paper,
+          pageImg: "assets/avatar-salud.png",
           pageImgAlt: "Libro de salud",
           featuresLabel: "Lo que el libro hace por ti",
           features: [
@@ -987,7 +975,7 @@
           coverFootMethod: "PURPLE",
           backEyebrow: "Lo que resuelve",
           backPhraseHTML: 'Llanto inconsolable con descarte, regulación y relevo <em>sin culparte</em> por no poder más.',
-          pageImg: BOOK_AVATARS.coral,
+          pageImg: "assets/avatar-colicos.png",
           pageImgAlt: "Libro de cólicos",
           featuresLabel: "Lo que el libro hace por ti",
           features: [
@@ -1016,7 +1004,7 @@
           coverFootMethod: "Haizea",
           backEyebrow: "Lo que resuelve",
           backPhraseHTML: 'Hitos 0-3 años con Haizea-Llevant, edad corregida y <em>sin comparativas tóxicas</em>.',
-          pageImg: BOOK_AVATARS.mint,
+          pageImg: "assets/avatar-hitos.png",
           pageImgAlt: "Libro de hitos",
           featuresLabel: "Lo que el libro hace por ti",
           features: [
@@ -1045,7 +1033,7 @@
           coverFootMethod: "ASQ-3",
           backEyebrow: "Lo que resuelve",
           backPhraseHTML: 'Cribados, curvas y observaciones para conversar con pediatría <em>sin diagnosticar desde una app</em>.',
-          pageImg: BOOK_AVATARS.violet,
+          pageImg: "assets/avatar-desarrollo.png",
           pageImgAlt: "Libro de desarrollo",
           featuresLabel: "Lo que el libro hace por ti",
           features: [

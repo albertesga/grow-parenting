@@ -46,7 +46,7 @@ Tono: "puede valer la pena" no "tu hij@ tiene problema".
 
 **Cross-ref canon:**
 - Vacuna + fiebre tracker 72h → auto-crea episodio salud "Fiebre post-vacuna"
-- Chat IA triage outcome `⚠ pediatra` → sugiere "guardar al libro de salud"
+- Modo madrugada triage outcome `⚠ pediatra` → sugiere "guardar al libro de salud"
 - Sub-libro Cólicos (ADR-0006) vive bajo Salud · entry destacado en Hoy
 
 **Schema TS** documentado en PRD §11.1: `EpisodioSalud · VisitaPediatrica · Medicacion · AlergiaConfirmada · PruebaAnalisis · CarnetSanitario`.

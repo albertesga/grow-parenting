@@ -9,7 +9,7 @@
 
 ## 0 · TL;DR (≤200 palabras)
 
-El workspace Notion de Mimo está **organizado spec-driven** desde mayo 2026. **Master directory**: `📍 _index canon`. Architecture decision records: `📜 adrs-index` (16 ADRs activas mapeadas a líneas del prototype.html). 4 niveles canónicos: **specs/** (8 specs core: manifiesto · arquitectura · DS · clínico AEPED · trauma-informed · auth · i18n · privacy), **libros/** (9: Embarazo · Alimentación · Lactancia · Vacunas · Sueño · Salud · Cólicos · Hitos · Desarrollo), **transversales/** (10: quick-log · modo-madrugada · chat-IA · cuenta-compartida · ChildLens-ID · export-PDF · screening · modos-especiales · notificaciones · onboarding), y páginas operativas (Pricing canon · Architecture v0 · 4. Competitive · 7. Business Model · 8. Roadmap · 1. Overview · 2.1 Lean Canvas · Research v0.2). Cada spec tiene frontmatter + TL;DR ≤200 palabras + Goal + Acceptance + Anti-patterns + Implementation pointer (líneas reales prototype.html) + Changelog. Si hay contradicción entre páginas, las specs canon ganan.
+El workspace Notion de Mimo está **organizado spec-driven** desde mayo 2026. **Master directory**: `📍 _index canon`. Architecture decision records: `📜 adrs-index` (16 ADRs activas mapeadas a líneas del prototype.html). 4 niveles canónicos: **specs/** (8 specs core: manifiesto · arquitectura · DS · clínico AEPED · trauma-informed · auth · i18n · privacy), **libros/** (9: Embarazo · Alimentación · Lactancia · Vacunas · Sueño · Salud · Cólicos · Hitos · Desarrollo), **transversales/** (10: quick-log · modo-madrugada · modo-madrugada · cuenta-compartida · ChildLens-ID · export-PDF · screening · modos-especiales · notificaciones · onboarding), y páginas operativas (Pricing canon · Architecture v0 · 4. Competitive · 7. Business Model · 8. Roadmap · 1. Overview · 2.1 Lean Canvas · Research v0.2). Cada spec tiene frontmatter + TL;DR ≤200 palabras + Goal + Acceptance + Anti-patterns + Implementation pointer (líneas reales prototype.html) + Changelog. Si hay contradicción entre páginas, las specs canon ganan.
 
 ---
 
@@ -120,7 +120,7 @@ El workspace Notion de Mimo está **organizado spec-driven** desde mayo 2026. **
 | ¿Privacy / GDPR? | spec/privacy-canon |
 | ¿Modo madrugada? | trans/modo-madrugada |
 | ¿Quick log? | trans/quick-log |
-| ¿Chat IA? | trans/chat-ia-contextual |
+| ¿Modo madrugada? | trans/chat-ia-contextual |
 | ¿Cuenta compartida? | trans/cuenta-compartida |
 | ¿Export PDF pediatra? | trans/export-pdf-pediatra |
 | ¿Screening clínico? | trans/screening-clinico |
@@ -197,7 +197,7 @@ implementation: prototype.html [linea] | docs/decisions/ADR-XXXX.md
 Ver `📜 adrs-index` para tabla completa. Resumen por categoría:
 
 - **Primitives DS** (6): 0001 book-hero · 0002 navbar · 0003 chip · 0007 diary timeline · 0012 action CTAs · 0013 post primitives.
-- **Arquitectura módulos** (7): 0004 bottom nav Perfil · 0005 chat IA + Modo madrugada · 0006 sub-libros · 0008 Pantalla Perfil · 0009 libro Salud + emergencia · 0010 log filter · 0016 cross-libro routing.
+- **Arquitectura módulos** (7): 0004 bottom nav Perfil · 0005 Modo madrugada + Modo madrugada · 0006 sub-libros · 0008 Pantalla Perfil · 0009 libro Salud + emergencia · 0010 log filter · 0016 cross-libro routing.
 - **Tono** (1): 0011 trauma-informed copy canon.
 - **Distribución** (1): 0014 App Store single + App Clips.
 - **JS centralización** (1): 0015 bookState + helpers.

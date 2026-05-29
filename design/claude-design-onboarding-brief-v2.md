@@ -163,7 +163,7 @@ Si postparto: tipo de parto · lactancia · peso al nacer · antecedentes famili
 | Wessel + Roma IV | inicio cólicos | dentro libro Cólicos |
 
 Reglas canon:
-- Nunca como formulario · siempre como conversación con el avatar / Chat IA.
+- Nunca como formulario · siempre como conversación con el avatar / Modo madrugada.
 - Resultados positivos → trauma-informed. Nunca "tienes depresión". Siempre: *"Lo que cuentas merece que hables con alguien. Aquí tienes recursos."*
 - Skip permitido siempre · vuelve a ofrecer en 2 semanas.
 - Si EPDS score alto → derivación profesional automática trauma-informed.

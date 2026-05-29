@@ -9,7 +9,7 @@
 | 3 | 3 viñetas demostrando entrada → pregunta → resultado | 🟡 media · comprensión | medium |
 | 4 | Subir contraste de chips inactivos en mockup | 🟢 baja · visual | very low |
 
-Contexto compartido (Claude Code ya lo tiene): repo Mimo, DS v0.2, canon Fase 0, sección Modo 3 AM en `homepage/index.html`, ADR-0005 (Chat IA single-thread + Modo madrugada efímero). Antes de cualquier cambio, leer ADR-0005 y `.claude/PATTERNS.md`.
+Contexto compartido (Claude Code ya lo tiene): repo Mimo, DS v0.2, canon Fase 0, sección Modo 3 AM en `homepage/index.html`, ADR-0005 (Modo madrugada single-thread + Modo madrugada efímero). Antes de cualquier cambio, leer ADR-0005 y `.claude/PATTERNS.md`.
 
 ---
 

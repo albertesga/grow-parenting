@@ -23,7 +23,7 @@ La navegación Playwright cayó porque el prototype usa **router JS controlado p
 data-goto entry points · ranking:
 ─────────────────────────────
 hoy            23  ← hub principal · destino default
-chat           10  ← chat IA contextual
+chat           10  ← Modo madrugada
 colicos         8  ← Libro de cólicos canónico ✓
 calendario      7
 vacunacion      5  ← Libro de vacunas canónico ✓
@@ -157,7 +157,7 @@ alimentacion    1
 1. Si solo se accede vía Vacunas + Salud + Chat, es discoverable solo en contexto · una madre buscando "dosis ibuprofeno" puede no encontrarla.
 2. Canon PRD propone calculadora como utility transversal accesible desde 5 puntos · prototype solo desde 2-3.
 
-**Acción Claude Design hi-fi**: hacer la calculadora **shortcut accesible desde Quick log** ⊕ central como acción rápida + chip permanente en Chat IA.
+**Acción Claude Design hi-fi**: hacer la calculadora **shortcut accesible desde Quick log** ⊕ central como acción rápida + chip permanente en Modo madrugada.
 
 **Score**: 🟡 medio. Existe pero no es findable.
 
@@ -229,7 +229,7 @@ alimentacion    1
 
 | Trigger emocional | Etapa hij@ | Frecuencia esperada | Cómo Mimo responde |
 | --- | --- | --- | --- |
-| Ansiedad clínica ("¿es normal?") | Todas | Diaria 0-3m · semanal 3-12m | Chat IA + triage trees · 8 chips |
+| Ansiedad clínica ("¿es normal?") | Todas | Diaria 0-3m · semanal 3-12m | Modo madrugada + triage trees · 8 chips |
 | Curiosidad anticipatoria ("¿qué viene?") | T2 embarazo + 1-12m | Semanal | Card "qué pasa esta semana" + libros |
 | Culpa parental ("¿lo estoy haciendo bien?") | Todas | Cuasi-diaria 0-6m | Manifesto + EPDS + apoyo emocional |
 | Cansancio nocturno | 0-12m | Nocturna semanal | Modo madrugada |

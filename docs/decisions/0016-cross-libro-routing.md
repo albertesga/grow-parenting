@@ -23,7 +23,7 @@ El prototype ya usa `data-goto="X"` como pattern de facto en TODAS las navegacio
 ```html
 <button data-goto="hitos">→ Libro de hitos</button>
 <button data-goto="salud-emergencia">📱 Modo emergencia</button>
-<button data-goto="chat">Hablar con chat IA</button>
+<button data-goto="chat">Hablar con Modo madrugada</button>
 ```
 
 Cualquier element interactivo (button, a, div role=button) puede usar `data-goto`. Sin lógica embebida.

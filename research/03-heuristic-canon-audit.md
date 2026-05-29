@@ -140,7 +140,7 @@
 **Findings**:
 - ✅ Bottom nav siempre visible · no requiere recordar dónde está cada sección.
 - ✅ Cards categorizadas con emoji + label uppercase canon.
-- ⚠️ El chat IA debería tener historial visible (últimas 5 conversaciones) sin recordar qué preguntaste.
+- ⚠️ El Modo madrugada debería tener historial visible (últimas 5 conversaciones) sin recordar qué preguntaste.
 
 **Severidad**: 🟢 baja. **Fix**: histórico chat visible en sub-tab del Chat.
 
@@ -185,7 +185,7 @@
 ### N10 · Help and documentation
 
 **Findings**:
-- ✅ Chat IA contextual con citas clínicas siempre con fuente + año.
+- ✅ Modo madrugada con citas clínicas siempre con fuente + año.
 - ✅ Cada libro tiene sub-tab "Educación" (canon PRD salud · vacunas).
 - ⚠️ ¿Hay onboarding tour reactivable desde Settings?
 - ⚠️ ¿Documentación legal accesible (Términos · Privacy · MDR)?
