@@ -1084,7 +1084,7 @@
           coverFootMethod: "plan",
           backEyebrow: "Para llegar lista",
           backPhraseHTML: 'Plan, checklist y primeras horas para que el equipo sepa <em>qué necesitas</em> cuando llegues.',
-          pageImg: "assets/parto-hero.png",
+          pageImg: "assets/avatar-parto.png",
           pageImgAlt: "Libro de preparación al parto",
           featuresLabel: "Lo que el libro hace por ti",
           features: [
