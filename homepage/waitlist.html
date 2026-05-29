@@ -778,10 +778,10 @@ textarea.in::placeholder{font-style:italic;color:#bdb1a0}
 (function(){
 'use strict';
 var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-var LS_KEY = 'grow_waitlist_v1';
+var LS_KEY = 'mimo_waitlist_v1';
 var HEARTBEAT_MS = 15000;
-var WEBHOOK_URL = (typeof window.GROW_WEBHOOK_URL === 'string' && window.GROW_WEBHOOK_URL.trim())
-  ? window.GROW_WEBHOOK_URL.trim()
+var WEBHOOK_URL = (typeof window.MIMO_WEBHOOK_URL === 'string' && window.MIMO_WEBHOOK_URL.trim())
+  ? window.MIMO_WEBHOOK_URL.trim()
   : '/api/waitlist';
 
 /* Reset via URL param · `?reset=1` o `?restart=1` borra el state guardado
@@ -975,7 +975,7 @@ function postEventPayload(payload, opts){
   var allowBeacon = options.beacon === true;
   var keepalive = options.keepalive !== false;
   if(!WEBHOOK_URL){
-    console.log('[grow waitlist] event:', payload);
+    console.log('[mimo waitlist] event:', payload);
     return;
   }
   if(allowBeacon && navigator.sendBeacon){

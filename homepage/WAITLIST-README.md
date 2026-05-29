@@ -27,13 +27,13 @@ Hay 9 preguntas reales, más welcome y gracias:
 | 10 | Gracias + newsletter | confirmación | no |
 
 ## Persistencia local
-- Clave de estado: `grow_waitlist_v1`.
+- Clave de estado: `mimo_waitlist_v1`.
 - Mantiene progreso, respuestas, timestamps y flags de envío.
 - Si el usuario vuelve desde el mismo navegador, retoma en el último paso.
 
 ## Endpoint de datos reales
 El frontend resuelve el destino así:
-1. Si existe `window.GROW_WEBHOOK_URL`, usa ese valor.
+1. Si existe `window.MIMO_WEBHOOK_URL`, usa ese valor.
 2. Si no existe, usa `'/api/waitlist'` por defecto.
 
 ## Variables de entorno
