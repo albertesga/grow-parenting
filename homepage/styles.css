@@ -292,7 +292,7 @@
       -webkit-backdrop-filter: saturate(150%) blur(16px);
       padding: 12px 40px;
       display: grid;
-      grid-template-columns: auto minmax(0, 1fr) auto;
+      grid-template-columns: 1fr auto;
       align-items: center;
       gap: clamp(18px, 3vw, 34px);
       transition:
@@ -316,18 +316,6 @@
       filter: brightness(0) invert(1);
       opacity: 0.92;
     }
-    .topbar.is-night .book-nav {
-      background: rgba(232, 225, 207, 0.06);
-      border-color: rgba(232, 225, 207, 0.14);
-      box-shadow:
-        inset 0 1px 0 rgba(255, 255, 255, 0.05),
-        0 12px 28px -24px rgba(0, 0, 0, 0.6);
-    }
-    .topbar.is-night .book-nav-link { color: rgba(232, 225, 207, 0.62); }
-    .topbar.is-night .book-nav-link:hover {
-      color: var(--paper-deep);
-      background: rgba(232, 225, 207, 0.10);
-    }
     .topbar.is-night .about-link { color: rgba(232, 225, 207, 0.66); }
     .topbar.is-night .about-link:hover { color: var(--paper-deep); }
     .topbar.is-night .waitlist-link {
@@ -335,84 +323,13 @@
       color: var(--module-dark);
     }
     .topbar.is-night .waitlist-link:hover { filter: brightness(1.08); }
-    /* Fade night solo en logo y contenedor nav (sin hover) · los links usan
-       su propia transición y conservan su hover-lift intacto. */
+    /* Fade night solo en el logo · los links usan su propia transición y
+       conservan su hover intacto. */
     .topbar .brand img {
       transition: filter 620ms var(--ease), opacity 620ms var(--ease);
     }
-    .topbar .book-nav {
-      transition:
-        background-color 620ms var(--ease),
-        border-color 620ms var(--ease),
-        box-shadow 620ms var(--ease);
-    }
     .topbar .brand { display: flex; align-items: center; }
     .topbar .brand img { height: 26px; width: auto; }
-    .book-nav {
-      justify-self: center;
-      display: flex;
-      align-items: center;
-      gap: 4px;
-      justify-content: center;
-      min-width: 0;
-      max-width: 100%;
-      padding: 5px;
-      border: 1px solid rgba(201,194,178,0.72);
-      border-radius: var(--radius-pill);
-      background: rgba(244,239,226,0.76);
-      box-shadow:
-        inset 0 1px 0 rgba(255,255,255,0.62),
-        0 12px 28px -24px rgba(42,33,27,0.28);
-    }
-    .book-nav-link {
-      --nav-soft: var(--paper-soft);
-      --nav-ink: var(--ink-soft);
-      position: relative;
-      display: inline-flex;
-      min-height: 44px;
-      align-items: center;
-      justify-content: center;
-      border-radius: var(--radius-pill);
-      padding: 10px 14px;
-      font-family: var(--font-text);
-      font-size: 13px;
-      font-weight: 500;
-      color: var(--nav-ink);
-      white-space: nowrap;
-      transition:
-        color var(--duration-fast) var(--ease),
-        background var(--duration-fast) var(--ease),
-        transform var(--duration-fast) var(--ease);
-    }
-    .book-nav-link::after {
-      content: "";
-      position: absolute;
-      left: 16px;
-      right: 16px;
-      bottom: 5px;
-      height: 2px;
-      border-radius: 999px;
-      background: var(--mint-base);
-      transform: scaleX(0);
-      transform-origin: center;
-      opacity: 0.9;
-      transition: transform var(--duration-fast) var(--ease);
-    }
-    .book-nav-link:hover {
-      color: var(--ink);
-      background: var(--nav-soft);
-      transform: translateY(-1px);
-    }
-    .book-nav-link:hover::after,
-    .book-nav-link:focus-visible::after {
-      transform: scaleX(1);
-    }
-    .book-nav-link.t-coral { --nav-soft: var(--coral-subtle); --nav-ink: var(--coral-ink); }
-    .book-nav-link.t-blush { --nav-soft: var(--blush-subtle); --nav-ink: var(--blush-ink); }
-    .book-nav-link.t-mint { --nav-soft: var(--mint-subtle); --nav-ink: var(--mint-ink); }
-    .book-nav-link.t-gold { --nav-soft: var(--gold-subtle); --nav-ink: var(--gold-ink); }
-    .book-nav-link.t-violet { --nav-soft: var(--violet-subtle); --nav-ink: var(--violet-ink); }
-    .nav-about-mobile { display: none; }
     .topbar .right { display: flex; align-items: center; gap: 14px; justify-content: flex-end; }
     .about-link {
       font-family: var(--font-text);
@@ -609,17 +526,31 @@
     }
     .phase-tag .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--coral-base); }
 
-    /* ── Hero floating chips ───────────────────────────────────────────
-       5 libros orbitando el avatar. Patrón visual = .phase-tag (pill paper
-       translúcido + dot tonal) para mantener canon DS. Profundidad real:
-       --front (z 4, sobre los videos) y --back (z 0, detrás de los videos
-       z 1 · el avatar los tapa parcialmente). Wrapper display:contents para
-       que el z-index de cada chip viva en el stacking del avatar. Movimiento
-       solo en transform/opacity (float continuo + fade-in escalonado). */
+    /* ── Hero orbiting chips ───────────────────────────────────────────
+       5 libros girando alrededor del avatar. Diseño = pill paper translúcido
+       (frosted) + dot tonal (patrón .phase-tag). Cada chip tiene su PROPIA
+       elipse (rx/ry/cy distintos)
+       y su propia velocidad → órbitas desalineadas y orgánicas, no un anillo
+       único. Profundidad 3D en un único @keyframes paramétrico (lee
+       var(--rx/--ry/--cy/--depth) del chip):
+         · mitad inferior (delante) → scale ↑ · z 4 · opacity 1 · sobre los
+           videos del avatar.
+         · mitad superior (detrás)  → scale ↓ · z 0 · opacity baja · tras los
+           videos (z 1) · el avatar los tapa.
+       Wrapper display:contents para que el z-index de cada chip se intercale
+       con las capas del avatar. Centro de la órbita ≈ centro del avatar; el
+       offset orbital + scale van en el transform (el chip no rota · texto
+       siempre horizontal). */
     .hero-chips { display: contents; }
     .hero-chip {
       position: absolute;
+      top: 50%;
+      left: 50%;
       z-index: 4;
+      --rx: 190px;
+      --ry: 64px;
+      --cy: 0px;
+      --depth: 0.18;
       display: inline-flex;
       align-items: center;
       gap: 8px;
@@ -639,9 +570,8 @@
       box-shadow:
         inset 0 1px 0 rgba(255, 255, 255, 0.6),
         0 16px 30px -16px rgba(42, 33, 27, 0.42);
-      animation:
-        hero-chip-in 720ms var(--ease) var(--in-delay, 0s) both,
-        hero-chip-float var(--dur, 6.5s) ease-in-out var(--delay, 0s) infinite;
+      animation: hero-chip-orbit var(--dur, 38s) linear infinite;
+      animation-delay: var(--orbit-delay, 0s);
       will-change: transform, opacity;
     }
     .hero-chip .dot {
@@ -651,46 +581,70 @@
       background: var(--tone, var(--coral-base));
       box-shadow: 0 0 0 4px color-mix(in srgb, var(--tone, var(--coral-base)) 24%, transparent);
     }
-    /* Tono canon por libro · mapping del nav de la homepage */
+    /* Tono canon por libro · mapping del nav de la homepage (dot tonal) */
     .hero-chip.c-coral  { --tone: var(--coral-base); }
     .hero-chip.c-blush  { --tone: var(--blush-base); }
     .hero-chip.c-mint   { --tone: var(--mint-base); }
     .hero-chip.c-gold   { --tone: var(--gold-base); }
     .hero-chip.c-violet { --tone: var(--violet-strong); }
-    /* Delante / detrás · back recede tras los videos del avatar */
-    .hero-chip--front { z-index: 4; }
-    .hero-chip--back {
-      z-index: 0;
-      font-size: 12px;
-      padding: 8px 13px 8px 11px;
-      background: rgba(250, 247, 240, 0.72);
-      box-shadow:
-        inset 0 1px 0 rgba(255, 255, 255, 0.5),
-        0 12px 22px -14px rgba(42, 33, 27, 0.32);
-      animation-name: hero-chip-in-back, hero-chip-float;
-    }
-    /* Posiciones · órbita alrededor del avatar, alternando profundidad */
-    .hero-chip[data-book="embarazo"]     { top: 11%;    left: -2%; }
-    .hero-chip[data-book="lactancia"]    { top: 7%;     right: 1%; }
-    .hero-chip[data-book="alimentacion"] { top: 44%;    left: -7%; }
-    .hero-chip[data-book="desarrollo"]   { top: 39%;    right: -3%; }
-    .hero-chip[data-book="sueno"]        { bottom: 20%; left: 12%; }
+    /* Elipse + fase + velocidad propias por chip → desalineadas */
+    .hero-chip:nth-child(1) { --rx: 205px; --ry: 74px; --cy: -10px; --depth: 0.20; --dur: 34s; --orbit-delay:   0s; }
+    .hero-chip:nth-child(2) { --rx: 160px; --ry: 52px; --cy:  54px; --depth: 0.15; --dur: 41s; --orbit-delay: -11s; }
+    .hero-chip:nth-child(3) { --rx: 222px; --ry: 84px; --cy:  16px; --depth: 0.22; --dur: 47s; --orbit-delay: -26s; }
+    .hero-chip:nth-child(4) { --rx: 150px; --ry: 62px; --cy: -40px; --depth: 0.16; --dur: 38s; --orbit-delay:  -6s; }
+    .hero-chip:nth-child(5) { --rx: 188px; --ry: 46px; --cy:  78px; --depth: 0.18; --dur: 44s; --orbit-delay: -30s; }
 
-    @keyframes hero-chip-in {
-      from { opacity: 0; }
-      to   { opacity: 1; }
+    /* Órbita elíptica paramétrica · 8 muestras (cada 45°). El z-index salta
+       en los laterales (donde el chip no solapa la figura → invisible).
+       sin(a) > 0 = mitad inferior = delante. */
+    @keyframes hero-chip-orbit {
+      0% {
+        transform: translate(calc(-50% + var(--rx)), calc(-50% + var(--cy))) scale(1);
+        opacity: 0.85; z-index: 4;
+      }
+      12.5% {
+        transform: translate(calc(-50% + var(--rx) * 0.707), calc(-50% + var(--cy) + var(--ry) * 0.707)) scale(calc(1 + var(--depth) * 0.707));
+        opacity: 0.95; z-index: 4;
+      }
+      25% {
+        transform: translate(-50%, calc(-50% + var(--cy) + var(--ry))) scale(calc(1 + var(--depth)));
+        opacity: 1; z-index: 4;
+      }
+      37.5% {
+        transform: translate(calc(-50% - var(--rx) * 0.707), calc(-50% + var(--cy) + var(--ry) * 0.707)) scale(calc(1 + var(--depth) * 0.707));
+        opacity: 0.95; z-index: 4;
+      }
+      50% {
+        transform: translate(calc(-50% - var(--rx)), calc(-50% + var(--cy))) scale(1);
+        opacity: 0.85; z-index: 0;
+      }
+      62.5% {
+        transform: translate(calc(-50% - var(--rx) * 0.707), calc(-50% + var(--cy) - var(--ry) * 0.707)) scale(calc(1 - var(--depth) * 0.707));
+        opacity: 0.72; z-index: 0;
+      }
+      75% {
+        transform: translate(-50%, calc(-50% + var(--cy) - var(--ry))) scale(calc(1 - var(--depth)));
+        opacity: 0.68; z-index: 0;
+      }
+      87.5% {
+        transform: translate(calc(-50% + var(--rx) * 0.707), calc(-50% + var(--cy) - var(--ry) * 0.707)) scale(calc(1 - var(--depth) * 0.707));
+        opacity: 0.72; z-index: 0;
+      }
+      100% {
+        transform: translate(calc(-50% + var(--rx)), calc(-50% + var(--cy))) scale(1);
+        opacity: 0.85; z-index: 4;
+      }
     }
-    @keyframes hero-chip-in-back {
-      from { opacity: 0; }
-      to   { opacity: 0.92; }
-    }
-    @keyframes hero-chip-float {
-      0%, 100% { transform: translateY(0); }
-      50%      { transform: translateY(var(--shift, -10px)); }
-    }
+
+    /* Reduced motion · sin órbita · 5 posiciones estáticas repartidas (si no
+       se apilarían en el centro). */
     @media (prefers-reduced-motion: reduce) {
-      .hero-chip { animation: none; opacity: 1; }
-      .hero-chip--back { opacity: 0.92; }
+      .hero-chip { animation: none; }
+      .hero-chip:nth-child(1) { transform: translate(-50%,                calc(-50% + 60px)) scale(1.16); z-index: 4; opacity: 1; }
+      .hero-chip:nth-child(2) { transform: translate(calc(-50% - 150px),  calc(-50% + 92px)) scale(1.02); z-index: 4; opacity: 0.95; }
+      .hero-chip:nth-child(3) { transform: translate(calc(-50% - 132px),  calc(-50% - 36px)) scale(0.84); z-index: 0; opacity: 0.70; }
+      .hero-chip:nth-child(4) { transform: translate(calc(-50% + 118px),  calc(-50% - 70px)) scale(0.82); z-index: 0; opacity: 0.70; }
+      .hero-chip:nth-child(5) { transform: translate(calc(-50% + 168px),  calc(-50% + 78px)) scale(1.02); z-index: 4; opacity: 0.95; }
     }
 
     /* ════════════════════════════════════════════════════════════════════
@@ -3608,76 +3562,18 @@
        § 15 · RESPONSIVE
        ════════════════════════════════════════════════════════════════════ */
     @media (max-width: 960px) {
+      /* Topbar móvil · una sola fila · marca a la izquierda · "Quiénes
+         somos" + botón waitlist juntos a la derecha (sin segunda línea de
+         nav, los 5 libros ya no viven en el menú top). */
       .topbar {
         grid-template-columns: 1fr auto;
-        grid-template-areas:
-          "brand actions"
-          "nav nav";
-        gap: 8px 14px;
-        padding: 10px 0 8px 16px;
+        align-items: center;
+        gap: 10px;
+        padding: 10px 16px;
       }
-      .topbar .brand { grid-area: brand; }
       .topbar .brand img { height: 22px; }
-      .topbar .right {
-        grid-area: actions;
-        padding-right: 16px;
-      }
-      .about-link { display: none; }
-      /* Mobile book-nav · scroll horizontal con fade hint en el borde derecho
-         para que el user sepa que hay más chips · scroll-snap-align para
-         snapping suave al swipear · padding lateral start 16px (matchea el
-         brand row) y end 28px para dejar espacio al fade gradient. */
-      .book-nav {
-        grid-area: nav;
-        position: relative;
-        justify-self: stretch;
-        justify-content: flex-start;
-        overflow-x: auto;
-        overflow-y: hidden;
-        padding: 2px 28px 2px 16px;
-        margin-left: -16px; /* compensa el padding del topbar para que la primera chip arranque al borde */
-        border: 0;
-        border-radius: 0;
-        background: transparent;
-        box-shadow: none;
-        scrollbar-width: none;
-        -webkit-overflow-scrolling: touch;
-        scroll-snap-type: x proximity;
-        /* Fade right · mask-image difumina el último ~32px del row para
-           sugerir "hay más a la derecha" sin necesitar arrow icon · si el
-           row no overflowea el fade es invisible visualmente. */
-        mask-image: linear-gradient(90deg, #000 0, #000 calc(100% - 32px), transparent 100%);
-        -webkit-mask-image: linear-gradient(90deg, #000 0, #000 calc(100% - 32px), transparent 100%);
-      }
-      .book-nav::-webkit-scrollbar { display: none; }
-      .book-nav-link {
-        flex: 0 0 auto;
-        min-height: 44px;
-        padding: 10px 14px;
-        font-size: 12.5px;
-        scroll-snap-align: start;
-        border: 1px solid rgba(201,194,178,0.55);
-        background: rgba(250,247,240,0.7);
-        box-shadow: inset 0 1px 0 rgba(255,255,255,0.5);
-      }
-      .book-nav-link::after {
-        left: 14px;
-        right: 14px;
-        bottom: 4px;
-      }
-      .book-nav-link:hover {
-        transform: none;
-      }
-      /* "Quiénes somos" · sin tono book asignado · damos un look neutro
-         pero diferenciado (paper bg + ink text + thin ring) para que se
-         lea como "complementario" y no compita con los 5 books tonal. */
-      .nav-about-mobile {
-        display: inline-flex;
-        background: var(--paper);
-        color: var(--ink-warm);
-        border-color: rgba(42,33,27,0.22);
-        font-weight: 500;
-      }
+      .topbar .right { gap: 10px; }
+      .about-link { font-size: 12.5px; }
       /* ── Mobile · avatares OFF ───────────────────────────────────────
          Decisión UX · mobile prioriza lectura sobre decoración. Ocultamos
          hero-avatar (kling MP4), avatar-stage (parallax recorrido) y

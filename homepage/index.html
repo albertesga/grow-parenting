@@ -24,7 +24,7 @@
   <meta name="twitter:description" content="App de crianza para familias hispanohablantes. Durante los primeros 1.000 días de tu hij@.">
   <meta name="twitter:image" content="https://mimo.family/assets/mimo-og.png">
 
-  <link rel="stylesheet" href="styles.css?v=20260529c">
+  <link rel="stylesheet" href="styles.css?v=20260529d">
 </head>
 <body>
   <!-- Floating halo · burbuja coral que viaja por el scroll desde detrás
@@ -255,14 +255,6 @@
     <div class="brand">
       <a href="/"><img src="assets/mimo-logo.png" alt="Mimo"></a>
     </div>
-    <nav class="book-nav" aria-label="Libros principales">
-      <a class="book-nav-link t-coral" href="/#libros" data-future-href="/embarazo/">Embarazo</a>
-      <a class="book-nav-link t-blush" href="/#libros" data-future-href="/lactancia/">Lactancia</a>
-      <a class="book-nav-link t-mint" href="/#libros" data-future-href="/sueno/">Sueño</a>
-      <a class="book-nav-link t-gold" href="/#libros" data-future-href="/alimentacion/">Alimentación</a>
-      <a class="book-nav-link t-violet" href="/#libros" data-future-href="/desarrollo/">Desarrollo</a>
-      <a class="book-nav-link nav-about-mobile" href="/about-us/">Quiénes somos</a>
-    </nav>
     <div class="right">
       <a class="about-link" href="/about-us/">Quiénes somos</a>
       <a class="waitlist-link" href="/waitlist.html">Únete a la waitlist</a>
@@ -310,18 +302,20 @@
                 id="hero-avatar-trigger"
                 type="button"
                 aria-label="Reproducir animación del avatar"></button>
-        <!-- Chips flotantes · 5 libros orbitando el avatar · mezcla delante
-             (z 4) / detrás (z 0, tras los videos z 1) para profundidad.
-             Decorativos (aria-hidden) · refuerzan los libros del nav ·
-             display:contents en el wrapper para que el z-index de cada chip
-             se intercale con las capas del avatar. Float en transform +
-             fade-in escalonado (vars inline). -->
+        <!-- Chips orbitando el avatar · 5 libros girando en una elipse
+             horizontal alrededor del cuerpo: pasan por delante (escala
+             grande · z 4 · sobre los videos) y por detrás (escala pequeña ·
+             z 0 · tras los videos z 1, el avatar los tapa) creando
+             profundidad 3D. Decorativos (aria-hidden) · display:contents en
+             el wrapper para que el z-index de cada chip se intercale con las
+             capas del avatar. La órbita (transform+z+opacity+scale) vive en
+             @keyframes; cada chip se reparte con animation-delay negativo. -->
         <div class="hero-chips" aria-hidden="true">
-          <span class="hero-chip hero-chip--front c-coral" data-book="embarazo" style="--dur:6.5s; --delay:0s; --in-delay:.20s; --shift:-12px"><span class="dot"></span>Embarazo</span>
-          <span class="hero-chip hero-chip--back c-blush" data-book="lactancia" style="--dur:7.4s; --delay:.5s; --in-delay:.35s; --shift:-9px"><span class="dot"></span>Lactancia</span>
-          <span class="hero-chip hero-chip--back c-gold" data-book="alimentacion" style="--dur:6.9s; --delay:1s; --in-delay:.50s; --shift:-10px"><span class="dot"></span>Alimentación</span>
-          <span class="hero-chip hero-chip--front c-violet" data-book="desarrollo" style="--dur:6.2s; --delay:.8s; --in-delay:.65s; --shift:-11px"><span class="dot"></span>Desarrollo</span>
-          <span class="hero-chip hero-chip--front c-mint" data-book="sueno" style="--dur:7.1s; --delay:.3s; --in-delay:.80s; --shift:-13px"><span class="dot"></span>Sueño</span>
+          <span class="hero-chip c-coral" data-book="embarazo"><span class="dot"></span>Embarazo</span>
+          <span class="hero-chip c-blush" data-book="lactancia"><span class="dot"></span>Lactancia</span>
+          <span class="hero-chip c-gold" data-book="alimentacion"><span class="dot"></span>Alimentación</span>
+          <span class="hero-chip c-violet" data-book="desarrollo"><span class="dot"></span>Desarrollo</span>
+          <span class="hero-chip c-mint" data-book="sueno"><span class="dot"></span>Sueño</span>
         </div>
         <div class="phase-tag"><span class="dot"></span> Embarazo · sem 4–40</div>
       </div>
@@ -1236,6 +1230,6 @@
     </div>
   </div>
 
-  <script src="main.js?v=20260529c" defer></script>
+  <script src="main.js?v=20260529d" defer></script>
 </body>
 </html>
