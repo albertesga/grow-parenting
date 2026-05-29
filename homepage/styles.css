@@ -1542,15 +1542,6 @@
     .block.t-coral { --accent-soft: var(--coral-subtle); --accent-base: var(--coral-base); --accent-strong: var(--coral-strong); --accent-glow: rgba(242,165,122,0.40); --accent-line: rgba(214,119,66,0.20); --accent-label: var(--coral-strong); }
     .block.t-blush { --accent-soft: var(--blush-subtle); --accent-base: var(--blush-base); --accent-strong: var(--blush-strong); --accent-glow: rgba(216,154,137,0.40); --accent-line: rgba(216,154,137,0.24); --accent-label: var(--blush-strong); }
     .block.t-mint  { --accent-soft: var(--mint-subtle);  --accent-base: var(--mint-base);  --accent-strong: var(--mint-strong);  --accent-glow: rgba(191,210,176,0.40); --accent-line: rgba(143,174,133,0.24); --accent-label: var(--mint-strong); }
-    .block.t-dark .response {
-      background: linear-gradient(155deg, #1F1D1B, #14120F);
-      color: var(--paper);
-      box-shadow: inset 0 0 0 1px rgba(232,201,122,0.18);
-    }
-    .block.t-dark .response::before { background: radial-gradient(circle at 88% 8%, rgba(232,201,122,0.30), transparent 60%); }
-    .block.t-dark .response .label { color: var(--gold-base); }
-    .block.t-dark .response p strong { color: var(--paper); }
-    .block.t-dark .response p { color: rgba(250,247,240,0.84); }
 
     /* ════════════════════════════════════════════════════════════════════
        § 8 · R-SHELF (estantería dentro de cada .response)
@@ -1660,15 +1651,6 @@
     .r-shelf.is-scrolled-end .r-shelf-arrow {
       opacity: 0;
       pointer-events: none;
-    }
-    .block.t-dark .r-shelf::after {
-      background: linear-gradient(90deg, transparent 0%, var(--module-dark) 80%);
-    }
-    .block.t-dark .r-shelf-arrow {
-      background: linear-gradient(145deg, rgba(33,32,29,0.92), rgba(33,32,29,0.72));
-      color: var(--gold-base);
-      border-color: rgba(232, 201, 122, 0.34);
-      box-shadow: 0 14px 26px -20px rgba(0, 0, 0, 0.52);
     }
     /* @property registered custom props · permiten interpolar las posiciones
        de los radial gradients del fondo de cada libro · sin @property el
@@ -1835,15 +1817,6 @@
     .r-plank-dot.l { left: 14px; }
     .r-plank-dot.r { right: 14px; }
 
-    .block.t-dark .r-shelf-plank {
-      background: linear-gradient(180deg, rgba(80,68,56,0.92) 0%, rgba(58,48,38,0.94) 50%, rgba(38,32,26,0.94) 100%);
-      box-shadow:
-        inset 0 1px 0 rgba(232,201,122,0.18),
-        inset 0 -1px 0 rgba(0,0,0,0.32),
-        0 8px 14px -8px rgba(0,0,0,0.45);
-    }
-    .block.t-dark .r-plank-dot { background: rgba(232,201,122,0.36); }
-
     /* Book tonal palette */
     /* Mapping libro → familia tonal canon DS v0.2 May 2026:
        · CORAL  · embarazo · alimentación · cólicos
@@ -1873,7 +1846,6 @@
     /* ════════════════════════════════════════════════════════════════════
        § 9 · LIBROS GRID (sección 3)
        ════════════════════════════════════════════════════════════════════ */
-    .libros { border-top: 1px solid var(--line); }
     .ordered-books {
       margin-top: 54px;
       padding-top: 16px;
@@ -1972,154 +1944,6 @@
       max-width: 34ch;
       margin: 0;
     }
-    /* (.libros-head sin overrides · ya es el patrón canónico) */
-    .libros-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 14px;
-    }
-    /* Libros rail · scroll horizontal con cards mini · 9 libros en
-       orden cronológico (embarazo → desarrollo) · padding lateral
-       generoso para que las cards de los extremos respiren · scroll-snap
-       suave para que cada card se "ancle" al posicionar el scroll.
-       Bleed a los extremos (margen negativo + padding) para que las cards
-       arranquen pegadas al edge de .wrap sin recortarlas. */
-    .libros-rail {
-      display: flex;
-      gap: 12px;
-      overflow-x: auto;
-      overflow-y: hidden;
-      scroll-snap-type: x proximity;
-      padding: 6px 4px 18px;
-      margin: 0 -4px;
-      /* Scrollbar invisible · UX limpia · usa swipe / arrow keys */
-      scrollbar-width: none;
-      -ms-overflow-style: none;
-    }
-    .libros-rail::-webkit-scrollbar { display: none; }
-    /* Cuando .libros-rail vive dentro de .flow (consolidación con las 3
-       step cards) lleva margin-top para separarse del .flow-share. */
-    .flow .libros-rail { margin-top: 40px; }
-    /* Libro-card mini · override de la card grande · más compacta para
-       caber en rail horizontal · sin Ver libro (more), sin kicker, sin
-       libro-mode badge · solo num + ico + h4 + age. */
-    .libro-card.libro-mini {
-      flex: 0 0 168px;
-      aspect-ratio: auto;
-      height: 200px;
-      padding: 18px 16px 16px;
-      gap: 8px;
-      justify-content: flex-start;
-      scroll-snap-align: start;
-    }
-    .libro-card.libro-mini .num {
-      top: 10px;
-      right: 12px;
-      font-size: 10px;
-    }
-    .libro-card.libro-mini .ico {
-      width: 48px;
-      height: 48px;
-      margin-bottom: 10px;
-    }
-    .libro-card.libro-mini .ico svg { width: 22px; height: 22px; }
-    .libro-card.libro-mini h4 {
-      font-size: 19px;
-      line-height: 1.05;
-      margin: 0;
-    }
-    .libro-card.libro-mini .age {
-      font-size: 11.5px;
-      margin-top: 2px;
-    }
-    .libro-card {
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      gap: 16px;
-      aspect-ratio: 1 / 1.05;
-      padding: 22px;
-      border-radius: var(--radius-xl);
-      background: linear-gradient(155deg, var(--accent-soft, var(--paper-soft)) 0%, var(--paper-soft) 100%);
-      box-shadow: 0 10px 28px -16px rgba(42,33,27,0.18);
-      border: 1px solid var(--line);
-      transition: transform var(--duration-base) var(--ease), filter var(--duration-base) var(--ease), box-shadow var(--duration-base) var(--ease);
-    }
-    .libro-card:hover {
-      transform: translateY(-3px);
-      filter: brightness(0.985);
-      box-shadow: 0 18px 36px -16px rgba(42,33,27,0.26);
-    }
-    .libro-card .num {
-      position: absolute;
-      top: 16px;
-      right: 18px;
-      font-family: var(--font-mono);
-      font-size: 11px;
-      color: var(--ink-faint);
-    }
-    .libro-card .kicker {
-      font-family: var(--font-mono);
-      font-size: 10px;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--ink-soft);
-      margin-bottom: 14px;
-    }
-    .libro-card .ico {
-      width: 64px;
-      height: 64px;
-      border-radius: 50%;
-      background: var(--paper);
-      display: grid;
-      place-items: center;
-      margin-bottom: 14px;
-      color: var(--ink);
-      box-shadow: inset 0 1px 0 rgba(255,255,255,0.7);
-    }
-    .libro-card .ico svg { width: 28px; height: 28px; stroke: currentColor; fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
-    .libro-card h4 {
-      font-family: var(--font-serif);
-      font-weight: 400;
-      font-size: 24px;
-      letter-spacing: -0.01em;
-      line-height: 1.1;
-    }
-    .libro-card .age {
-      font-family: var(--font-text);
-      font-size: 12.5px;
-      color: var(--ink-soft);
-      margin-top: 4px;
-    }
-    /* Libro-mode badge · señal funcional discreta para libros que tienen
-       modos especiales · prematuros/adopción/post-UCIN (research v0.3
-       hallazgo #1). Tiny mono uppercase · inherita color del tono del
-       libro padre · no compite con la jerarquía visual del card. */
-    .libro-card .libro-mode {
-      font-family: var(--font-mono);
-      font-size: 10px;
-      letter-spacing: 0.05em;
-      color: var(--ink-soft);
-      margin-top: 8px;
-      padding-top: 6px;
-      border-top: 1px dashed rgba(80, 60, 30, 0.18);
-      opacity: 0.86;
-    }
-    .libro-card .more {
-      font-family: var(--font-text);
-      font-size: 13px;
-      font-weight: 500;
-      color: var(--ink);
-    }
-    .libro-card .more::after { content: " →"; }
-    .libro-card.t-coral      { --accent-soft: var(--coral-subtle); }
-    .libro-card.t-blush      { --accent-soft: var(--blush-subtle); }
-    .libro-card.t-mint       { --accent-soft: var(--mint-subtle); }
-    .libro-card.t-gold       { --accent-soft: var(--gold-subtle); }
-    .libro-card.t-mint-night { --accent-soft: #C9D5C0; }
-    .libro-card.t-salud      { --accent-soft: var(--paper-deep); }
-    .libro-card.t-lav        { --accent-soft: var(--violet-subtle); }
 
     /* ════════════════════════════════════════════════════════════════════
        § 10 · FLOW STEPPER
@@ -3747,7 +3571,6 @@
         width: 100%;
         margin: 0 auto;
       }
-      .libros-grid { grid-template-columns: 1fr 1fr; }
       .flow .wrap { padding: 72px 22px 80px; }
       .flow-head { margin-bottom: 32px; }
       .flow-rail {
@@ -4023,7 +3846,6 @@
         padding: 18px;
         border-radius: 24px;
       }
-      .libros-grid { grid-template-columns: 1fr; }
       .comite-grid { grid-template-columns: 1fr; }
       .quote-rotator { margin-bottom: 10px; }
       /* ≤540 · card .r-book unificada para TODOS los shelves (ordered + bloques).
