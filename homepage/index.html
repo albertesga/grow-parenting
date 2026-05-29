@@ -24,7 +24,7 @@
   <meta name="twitter:description" content="App de crianza para familias hispanohablantes. Durante los primeros 1.000 días de tu hij@.">
   <meta name="twitter:image" content="https://mimo.family/assets/mimo-og.png">
 
-  <link rel="stylesheet" href="styles.css?v=20260529b">
+  <link rel="stylesheet" href="styles.css?v=20260529c">
 </head>
 <body>
   <!-- Floating halo · burbuja coral que viaja por el scroll desde detrás
@@ -268,6 +268,9 @@
       <a class="waitlist-link" href="/waitlist.html">Únete a la waitlist</a>
     </div>
   </header>
+
+  <!-- Oil-drop veil · gota negra one-shot del Modo 3 AM (ver styles.css + main.js) -->
+  <div class="threeam-veil" aria-hidden="true"></div>
 
   <!-- ════════════════════════════════════════════════════════════════════
        § 1 · HERO
@@ -927,7 +930,7 @@
           <a class="cta coral" href="waitlist.html">Reservar plaza</a>
         </article>
         <article
-          class="plan"
+          class="plan is-annual"
           data-billing-plan="plus"
           data-monthly-amount="€9,99"
           data-monthly-per="/ mes"
@@ -940,8 +943,8 @@
         >
           <span class="tier">Plus · por defecto</span>
           <h3>Mimo Plus</h3>
-          <div class="price" aria-live="polite"><span class="amt" data-billing-amount>€9,99</span><span class="per" data-billing-per>/ mes</span></div>
-          <p class="price-foot" data-billing-foot>También anual: €69,99 · ahorras 42%</p>
+          <div class="price" aria-live="polite"><span class="amt" data-billing-amount>€5,83</span><span class="per" data-billing-per>/ mes</span></div>
+          <p class="price-foot" data-billing-foot>€69,99 al año · ahorras 42%</p>
           <p class="plan-includes"><strong>Todo lo incluido en Free</strong>, y además:</p>
           <ul class="features">
             <li>Acceso a todos los libros</li>
@@ -949,7 +952,7 @@
             <li>Exportación en PDF para el pediatra</li>
             <li>Consultas 1:1 a menor precio</li>
           </ul>
-          <a class="cta ghost" href="waitlist.html?plan=plus_monthly" data-billing-cta>Empezar 14 días</a>
+          <a class="cta ghost" href="waitlist.html?plan=plus_annual" data-billing-cta>Empezar 14 días</a>
         </article>
       </div>
     </div>
@@ -1223,6 +1226,6 @@
     </div>
   </div>
 
-  <script src="main.js?v=20260529b" defer></script>
+  <script src="main.js?v=20260529c" defer></script>
 </body>
 </html>

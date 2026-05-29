@@ -115,12 +115,32 @@
           if (previousStep !== step) pulseCursorClick();
         };
 
+        const veil = document.querySelector(".threeam-veil");
+        let veilPlayed = false;
+
         const update = () => {
           ticking = false;
           const rect = scrollArea.getBoundingClientRect();
           const scrollable = Math.max(1, scrollArea.offsetHeight - window.innerHeight);
           const progress = clamp(-rect.top / scrollable);
           setStep(stepFromProgress(progress));
+          /* Gota de aceite one-shot · al quedar la sección fija a pantalla
+             completa (progress >= 0.03) se dispara una vez: header a night +
+             veil radial que crece y asienta en dark. Al salir (<= 0.005) se
+             resetea para poder re-dispararse al volver. */
+          if (progress >= 0.03 && !veilPlayed) {
+            veilPlayed = true;
+            if (topbar) topbar.classList.add("is-night");
+            if (veil && !reduced) {
+              veil.classList.remove("is-playing");
+              void veil.offsetWidth;
+              veil.classList.add("is-playing");
+            }
+          } else if (progress <= 0.005 && veilPlayed) {
+            veilPlayed = false;
+            if (topbar) topbar.classList.remove("is-night");
+            if (veil) veil.classList.remove("is-playing");
+          }
         };
 
         const requestUpdate = () => {

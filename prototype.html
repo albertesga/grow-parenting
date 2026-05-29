@@ -10901,8 +10901,7 @@
   .chat-madrugada-close-sheet em { font-style: italic; color: var(--ink); }
 
 
-  /* § V.E.1 · Streaming dots indicator · "IA escribiendo" placeholder.
-     Render entre push del user message y push del companion message (~600ms). */
+  /* § V.E.1 · Streaming dots indicator · placeholder de carga (legacy · sin uso). */
   .chat-streaming-dots {
     display: inline-flex; align-items: center; gap: 4px;
     padding: 12px 16px;
@@ -11856,7 +11855,7 @@
                 <p><strong>Lola: 3 otitis en 6 meses.</strong> Es común a esta edad, pero quizás vale la pena que tu pediatra eche un vistazo.</p>
                 <div class="health-pattern-actions">
                   <button class="health-action coral" type="button" data-open-sheet data-sheet-title="Exportar resumen ORL" data-sheet-copy="Stub · resumen para llevar a derivación ORL.">Exportar resumen</button>
-                  <button class="health-action ghost" type="button" data-goto="chat">Hablar con chat IA</button>
+                  <button class="health-action ghost" type="button" data-goto="chat">Abrir preguntas guiadas</button>
                 </div>
               </section>
 
@@ -12432,7 +12431,7 @@
                 <div class="profile-plan-stack">
                   <div class="profile-plan-tag">Free</div>
                   <h3>Acceso a todos los libros core</h3>
-                  <p>Vacunas · Hitos · Sueño · Alimentación · Lactancia · Embarazo · Diario · Chat IA.</p>
+                  <p>Vacunas · Hitos · Sueño · Alimentación · Lactancia · Embarazo · Diario · Madrugada.</p>
                 </div>
                 <button class="profile-action coral" type="button" data-open-sheet data-sheet-title="Mejorar a Premium" data-sheet-copy="Stub · upgrade a Premium · escalas premium (Bayley-III) + Plan IA avanzado + export PDF ilimitado.">Mejorar a Premium</button>
               </article>
@@ -12720,10 +12719,10 @@
              ═══════════════════════════════════════════════════════════ -->
         <section class="screen no-nav chat-madrugada" data-screen="chat-madrugada">
           <div class="status"><span>3:14</span><div class="status-dots"><span></span><span></span><span></span></div></div>
-          <button class="chat-madrugada-back" type="button" data-madrugada-close-trigger aria-label="Volver al chat">← Volver al chat</button>
+          <button class="chat-madrugada-back" type="button" data-madrugada-close-trigger aria-label="Volver">← Volver</button>
           <div class="chat-madrugada-header">
-            <h1>Modo urgencia</h1>
-            <p>Las respuestas son más rápidas, más directas y sin juzgar.</p>
+            <h1>Modo noche</h1>
+            <p>Las preguntas son más directas, más grandes y sin juzgar.</p>
           </div>
           <div class="chat-madrugada-options" data-madrugada-options aria-label="Opciones madrugada">
             <!-- options render here based on baby age -->
@@ -12734,7 +12733,7 @@
         <!-- ═══════════════════════════════════════════════════════════
              Triage sheet · sequential Q&A tree · 8 trees
              ═══════════════════════════════════════════════════════════ -->
-        <aside class="triage-sheet-shell" id="triage-modal" aria-label="Cribaje rápido">
+        <aside class="triage-sheet-shell" id="triage-modal" aria-label="Preguntas guiadas">
           <div class="triage-sheet" data-triage-root>
             <!-- triage-step OR triage-result render here -->
           </div>
@@ -12842,7 +12841,7 @@
           <div class="chat-madrugada-close-sheet">
             <div class="safety-frame-grabber"></div>
             <h2>¿Guardamos esta noche en el diario?</h2>
-            <p>Solo lo verás tú. Si guardas, aparecerá como nota en tu chat principal. Si no, se borra · solo queda un agregado anonimizado para mejorar Mimo.</p>
+            <p>Solo lo verás tú. Si guardas, aparecerá como nota en Madrugada. Si no, se borra · solo queda un agregado anonimizado para mejorar Mimo.</p>
             <div class="sf-actions">
               <button class="btn coral" type="button" data-madrugada-close-action="save">Sí · guardar resumen</button>
               <button class="btn soft" type="button" data-madrugada-close-action="discard">No · borrar todo</button>
@@ -12986,7 +12985,7 @@
             <div class="colicos-episode-footer">
               <button class="primary coral" type="button" data-colicos-close>Cerrar episodio · guardar</button>
               <button class="ghost-link" type="button" data-open-safety-frame>Si no puedes más</button>
-              <button class="ghost-link colicos-pediatra-link" type="button" data-sheet-title="Algo va mal" data-sheet-copy="Si crees que algo va mal — fiebre &lt; 3m, vómitos verdes, letargia, llanto agudo súbito — abre el triage de salud o llama a tu pediatra. Aquí no diagnosticamos." data-open-sheet>Algo va mal · pediatra</button>
+              <button class="ghost-link colicos-pediatra-link" type="button" data-sheet-title="Algo va mal" data-sheet-copy="Si crees que algo va mal — fiebre &lt; 3m, vómitos verdes, letargia, llanto agudo súbito — abre las preguntas guiadas de salud o llama a tu pediatra. Aquí no diagnosticamos." data-open-sheet>Algo va mal · pediatra</button>
             </div>
           </div>
         </section>
@@ -15594,9 +15593,9 @@
   function renderSleepPlan() {
     const problems = ['Despertares múltiples por la noche', 'Se despierta muy temprano antes de las 6', 'Siestas demasiado cortas, menos de 30 min', 'Resistencia a acostarse', 'Estamos en una transición de siestas', 'Estoy en plena regresión', 'Otra cosa · descríbelo'];
     return `
-      ${renderSleepViewHead('¿Te ayudo a hacer un plan?', 'No es un sleep coach humano. Es nuestro chat IA con contexto y bibliografía pública.')}
+      ${renderSleepViewHead('¿Te ayudo a hacer un plan?', 'No es un sleep coach humano. Es un árbol de decisión con contexto y bibliografía pública.')}
       <section class="sleep-plan-card">
-        <div class="sleep-mini-label">IA tree comparativo</div>
+        <div class="sleep-mini-label">Árbol comparativo</div>
         <pre>Huckleberry
 ├─ SweetSpot®
 ├─ Sleep Plans con humanos
@@ -15604,7 +15603,7 @@
 
 Mimo
 ├─ Ventanas de sueño sin marca
-├─ Chat IA contextual
+├─ Preguntas guiadas contextuales
 ├─ Bibliografía pública
 └─ Sin coach humano pagado</pre>
       </section>
@@ -15613,7 +15612,7 @@ Mimo
         1. Cuéntanos qué pasa. 2. Te damos un plan de 3-6 semanas con pasos pequeños. 3. Lo ajustamos cada semana, sin culpa si tarda más.
       </section>
       <section class="sleep-plan-list">
-        ${problems.map((problem) => `<button class="sleep-plan-problem" type="button" data-sheet-title="Plan de sueño" data-sheet-copy="Abriríamos el chat IA contextual para: ${escapeHtml(problem)}. Sin cry-it-out por defecto y con derivación externa si hace falta." data-open-sheet>${escapeHtml(problem)}</button>`).join('')}
+        ${problems.map((problem) => `<button class="sleep-plan-problem" type="button" data-sheet-title="Plan de sueño" data-sheet-copy="Abriríamos las preguntas guiadas contextuales para: ${escapeHtml(problem)}. Sin cry-it-out por defecto y con derivación externa si hace falta." data-open-sheet>${escapeHtml(problem)}</button>`).join('')}
       </section>
       <section class="callout">
         <strong>Importante</strong>
@@ -15959,7 +15958,7 @@ Mimo
     return `
       ${renderFoodViewHead('Plan IA de alimentación', 'Árbol comparativo para dejar clara la diferencia entre base de alimentos, alérgenos y diario contextual.', 'home')}
       <section class="food-plan-card">
-        <div class="food-mini-label">IA tree comparativo</div>
+        <div class="food-mini-label">Árbol comparativo</div>
         <pre>Solid Starts
 ├─ Base de alimentos
 ├─ Cortes por edad
@@ -15975,7 +15974,7 @@ Mimo
 ├─ Mapa de 14 alérgenos EU
 ├─ Diario familiar compartido
 ├─ Reglas de seguridad sin juicio
-└─ Chat IA contextual sin sustituir pediatra</pre>
+└─ Preguntas guiadas contextuales sin sustituir pediatra</pre>
       </section>
       <section class="callout">
         <strong>Cero juicio.</strong>
@@ -16195,9 +16194,9 @@ Mimo
       <section class="lactation-detector-card">
         <div class="lactation-mini-label">¿Te duele? · nuevo</div>
         <h3>Detector de complicaciones</h3>
-        <p class="lactation-copy">Foto del pecho + 5 preguntas → triage. No diagnostica: te decimos qué mirar.</p>
+        <p class="lactation-copy">Foto del pecho + 5 preguntas → orientación. No diagnostica: te decimos qué mirar.</p>
         <div class="lactation-actions" style="margin-top:12px;">
-          <button class="lactation-action primary" type="button" data-lactation-view="detector">Empezar diagnóstico</button>
+          <button class="lactation-action primary" type="button" data-lactation-view="detector">Empezar revisión</button>
         </div>
       </section>
       <section class="lactation-nav-grid">
@@ -16243,7 +16242,7 @@ Mimo
 
   function renderPainDetector() {
     return `
-      ${renderLactationViewHead('¿Qué notas?', '5 preguntas + foto opcional. La AI mock clasifica señales y mantiene la foto en el móvil.', 'home')}
+      ${renderLactationViewHead('¿Qué notas?', '5 preguntas + foto opcional. Las preguntas clasifican señales y la foto se queda en tu móvil.', 'home')}
       <section class="lactation-detector-card">
         <div class="lactation-mini-label">Detector dolor · privacy on-device</div>
         <h3>Cuestionario rápido</h3>
@@ -16352,9 +16351,9 @@ Mimo
   function renderLactationPlan() {
     const problems = ['Empezar lactancia · primeros días', 'Me duele al amamantar', 'Sospecho frenillo en el hij@', 'Vuelta al trabajo + extracción', 'Pasar a lactancia mixta o biberón', 'Destete respetuoso', 'Mi lactancia anterior fue traumática', 'Otra cosa · cuéntame'];
     return `
-      ${renderLactationViewHead('¿Te ayudo a hacer un plan?', 'No es IBCLC humana. Es nuestro chat IA con tu contexto y bibliografía pública.', 'home')}
+      ${renderLactationViewHead('¿Te ayudo a hacer un plan?', 'No es IBCLC humana. Es un árbol de decisión con tu contexto y bibliografía pública.', 'home')}
       <section class="lactation-plan-card">
-        <div class="lactation-mini-label">IA tree comparativo</div>
+        <div class="lactation-mini-label">Árbol comparativo</div>
         <pre>LactApp / Medela
 ├─ Tracker tomas
 ├─ Respuestas educativas
@@ -16370,7 +16369,7 @@ Mimo
       </section>
       <section class="lactation-section">
         <div class="lactation-plan-list">
-          ${problems.map((problem) => `<button class="lactation-action" type="button" data-sheet-title="Plan lactancia" data-sheet-copy="Abriríamos chat IA contextual para: ${escapeHtml(problem)}. Sin lactivism, sin culpa." data-open-sheet>${escapeHtml(problem)}</button>`).join('')}
+          ${problems.map((problem) => `<button class="lactation-action" type="button" data-sheet-title="Plan lactancia" data-sheet-copy="Abriríamos preguntas guiadas contextuales para: ${escapeHtml(problem)}. Sin lactivism, sin culpa." data-open-sheet>${escapeHtml(problem)}</button>`).join('')}
         </div>
       </section>
       <section class="callout">
@@ -16768,11 +16767,11 @@ Mimo
 
   function renderPregnancyPlan() {
     return `
-      ${renderPregnancyViewHead('¿Qué necesitas?', 'No es obstetra humana. Es nuestro chat IA con tu contexto y bibliografía SEGO, NICE, ACOG, OMS, APILAM, Dana.', 'home')}
+      ${renderPregnancyViewHead('¿Qué necesitas?', 'No es obstetra humana. Es un árbol de decisión con tu contexto y bibliografía SEGO, NICE, ACOG, OMS, APILAM, Dana.', 'home')}
       <section class="pregnancy-section">
         <h3>¿Qué quieres trabajar?</h3>
         <div class="pregnancy-plan-list">
-          ${pregnancyPlanProblems.map((problem) => `<button class="pregnancy-choice" type="button" data-open-sheet data-sheet-title="Plan embarazo" data-sheet-copy="Abriríamos chat IA contextual para: ${escapeHtml(problem)}. Sin prescripción; derivación a tu obstetra cuando aplique.">[ ] ${escapeHtml(problem)}</button>`).join('')}
+          ${pregnancyPlanProblems.map((problem) => `<button class="pregnancy-choice" type="button" data-open-sheet data-sheet-title="Plan embarazo" data-sheet-copy="Abriríamos preguntas guiadas contextuales para: ${escapeHtml(problem)}. Sin prescripción; derivación a tu obstetra cuando aplique.">[ ] ${escapeHtml(problem)}</button>`).join('')}
         </div>
       </section>
       <section class="pregnancy-plan-card">
@@ -17247,8 +17246,8 @@ Mimo
         </div>
       </section>
       <section class="callout">
-        <strong>Lectura IA</strong>
-        Curva normal post-hexavalente. Comer un poco menos en las primeras 24h es esperable. Si pasa de 39.5° o dura >48h, te aviso para llamar.
+        <strong>Lectura guiada</strong>
+        Curva normal post-hexavalente. Comer un poco menos en las primeras 24h es esperable. Si pasa de 39.5° o dura >48h, te avisamos para llamar.
       </section>
     `;
   }
@@ -18270,11 +18269,6 @@ Mimo
     }
     if (name === 'chat') {
       renderChat();
-      /* Auto-focus input · accesibilidad · solo si no es restore tras refresh */
-      requestAnimationFrame(() => {
-        const input = document.querySelector('[data-chat-input]');
-        if (input && document.activeElement !== input) input.focus({ preventScroll: true });
-      });
     }
     if (name === 'chat-madrugada') {
       renderChatMadrugada();
@@ -19152,10 +19146,10 @@ Mimo
       <div class="tag">🌙 Noche</div>
       <h3>No estás sola.</h3>
       <div class="meta-line">Modo madrugada · disponible ahora</div>
-      <p class="context">Las respuestas son más rápidas, más directas y sin juzgar. Si necesitas algo, estoy aquí.</p>
-      <button class="card-button" type="button" data-goto="chat-madrugada">Abrir Modo madrugada</button>
+      <p class="context">Las preguntas son más directas, más grandes y sin juzgar. Si necesitas algo, aquí estamos.</p>
+      <button class="card-button" type="button" data-goto="chat-madrugada">Abrir Modo noche</button>
       <div class="soft-actions">
-        <button type="button" data-goto="chat">Chat normal</button>
+        <button type="button" data-goto="chat">Ir a Madrugada</button>
       </div>
     `;
     label.insertAdjacentElement('afterend', card);
@@ -19173,20 +19167,20 @@ Mimo
     if (months < 3) {
       return [
         { title: '"No para de llorar"',         sub: 'Llanto inconsolable · cólicos',         action: 'crying' },
-        { title: '"Le pasa algo a mi hij@"',   sub: 'Triage clínico · árboles científicos',   action: 'triage-menu' },
+        { title: '"Le pasa algo a mi hij@"',   sub: 'Preguntas guiadas · árboles científicos',   action: 'triage-menu' },
         { title: '"No puedo más"',              sub: 'Anti-shaken-baby · acompañamiento',     action: 'support' }
       ];
     }
     if (months < 12) {
       return [
         { title: '"No duerme · y yo tampoco"',  sub: 'Regresiones · regulación · ventanas',   action: 'sleep' },
-        { title: '"Le pasa algo a mi hij@"',   sub: 'Triage clínico · árboles científicos',   action: 'triage-menu' },
+        { title: '"Le pasa algo a mi hij@"',   sub: 'Preguntas guiadas · árboles científicos',   action: 'triage-menu' },
         { title: '"Solo necesito acompañar"',   sub: 'Sin acción · solo presencia',           action: 'support' }
       ];
     }
     return [  /* 12-36m */
       { title: '"Pesadilla nocturna"',          sub: 'Terror nocturno vs pesadilla · cómo actuar', action: 'nightmare' },
-      { title: '"Le pasa algo a mi hij@"',     sub: 'Triage clínico · árboles científicos',        action: 'triage-menu' },
+      { title: '"Le pasa algo a mi hij@"',     sub: 'Preguntas guiadas · árboles científicos',        action: 'triage-menu' },
       { title: '"No puedo más"',                sub: 'Anti-burnout · acompañamiento',              action: 'support' }
     ];
   }
@@ -19401,7 +19395,7 @@ Mimo
     if (existing) existing.remove();
     const wrap = document.createElement('div');
     wrap.className = 'bubble-row';
-    wrap.innerHTML = '<div class="chat-streaming-dots" aria-label="IA escribiendo"><span></span><span></span><span></span></div>';
+    wrap.innerHTML = '<div class="chat-streaming-dots" aria-label="Cargando"><span></span><span></span><span></span></div>';
     root.appendChild(wrap);
     root.scrollTop = root.scrollHeight;
   }
@@ -19497,7 +19491,7 @@ Mimo
       'embarazo-sleep': 'no puedo dormir',
       'sleep': 'sueño',
       'nightmare': 'pesadilla nocturna',
-      'triage-menu': 'cribaje rápido'
+      'triage-menu': 'preguntas guiadas'
     };
     const label = routeLabels[chatMadrugadaSession.route] || chatMadrugadaSession.route;
     return `Anoche madrugada · ${label} · resuelto`;
@@ -19516,11 +19510,11 @@ Mimo
     const summary = chatMadrugadaSummary();
     if (summary) {
       chatMessages.push({ role: 'system', text: summary, class: 'chat-note-madrugada' });
-      /* Companion follow-up · trauma-informed canon · NO juzgar, presencia */
+      /* Follow-up · trauma-informed canon · NO juzgar, presencia · nota, no conversación */
       chatMessages.push({
-        role: 'companion',
-        text: 'Hiciste lo correcto al venir aquí. Cuando quieras, te leo.',
-        time: 'ahora'
+        role: 'system',
+        text: 'Hiciste lo correcto al venir aquí.',
+        class: 'chat-note-madrugada'
       });
       chatSaveMain();
     }
@@ -19847,9 +19841,9 @@ Mimo
                    body: 'Cuidado en casa.',
                    actions: ['Cambios frecuentes · piel al aire si posible', 'Crema barrera (óxido de zinc)', 'Llama si persiste >7 días o aparecen ampollas'] };
         }
-        return { level: 'safe', title: '🟢 Foto al chat · valorar con pediatra.',
-                 body: 'Rash sin identificar pero hij@ con buen aspecto · subir foto al chat o consulta no urgente.',
-                 actions: ['Foto al chat para valoración', 'Llama si fiebre + rash o cambios rápidos'] };
+        return { level: 'safe', title: '🟢 Foto para tu pediatra · valorar sin prisa.',
+                 body: 'Rash sin identificar pero hij@ con buen aspecto · guarda una foto para enseñársela a tu pediatra o consulta no urgente.',
+                 actions: ['Guarda una foto para tu pediatra', 'Llama si fiebre + rash o cambios rápidos'] };
       }
     },
 
@@ -20088,7 +20082,7 @@ Mimo
       banner.className = 'chat-madrugada-last-action';
       banner.innerHTML = `
         <span class="icon" aria-hidden="true">${chatMadrugadaLastAction.icon}</span>
-        <div><strong>${escapeHtml(chatMadrugadaLastAction.label)}.</strong> Si quieres, sigue · o vuelve al chat principal.</div>
+        <div><strong>${escapeHtml(chatMadrugadaLastAction.label)}.</strong> Si quieres, sigue · o vuelve a Madrugada.</div>
         <button class="dismiss" type="button" data-madrugada-dismiss-action aria-label="Cerrar nota">×</button>
       `;
       root.parentNode.insertBefore(banner, root);
