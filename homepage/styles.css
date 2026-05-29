@@ -833,6 +833,42 @@
       max-width: 34ch;
       margin: 30px 0 0;
     }
+    .parenting-team-cta {
+      margin-top: 22px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      min-height: 42px;
+      padding: 10px 16px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-pill);
+      background: rgba(250,247,240,0.74);
+      color: var(--ink);
+      font-family: var(--font-text);
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,0.62),
+        0 10px 24px -18px rgba(42,33,27,0.32);
+      transition:
+        background var(--duration-fast) var(--ease),
+        border-color var(--duration-fast) var(--ease),
+        transform var(--duration-fast) var(--ease);
+    }
+    .parenting-team-cta:hover {
+      background: var(--paper);
+      border-color: var(--line-strong);
+      transform: translateY(-1px);
+    }
+    .parenting-team-cta span {
+      transition: transform var(--duration-fast) var(--ease);
+    }
+    .parenting-team-cta:hover span { transform: translateX(3px); }
+    .parenting-team-cta:focus-visible {
+      outline: 2px solid var(--mint-strong);
+      outline-offset: 3px;
+    }
     .parenting-team-roles {
       display: flex;
       flex-wrap: wrap;
@@ -4879,42 +4915,62 @@
       .datos-overlay, .datos-modal { transition: none; }
     }
 
-    /* ── Modal · Llamadas 1:1 (precio miembro) · reusa .datos-overlay + .comite-card ── */
-    .datos-modal--wide { width: min(760px, 100%); }
+    /* ── Modal · Llamadas 1.2.1 (precio miembro) · reusa .datos-overlay +
+       .comite-card. Las tarjetas mantienen estructura del comité clínico:
+       num · specialty · avatar · h4 · center · credencial/precio al pie. */
+    .datos-modal--wide { width: min(820px, 100%); }
     .llamadas-grid {
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
       gap: 14px;
-      margin-top: 20px;
+      margin-top: 22px;
+      align-items: stretch;
     }
-    .llamada-card { text-align: center; }
-    .llamada-card .center { margin: 0 auto; max-width: 26ch; }
+    .llamada-card {
+      min-height: 260px;
+      text-align: left;
+      aspect-ratio: 1 / 1.08;
+      padding: 20px;
+    }
+    .llamada-card .avatar {
+      width: 56px;
+      height: 56px;
+      margin-bottom: 12px;
+    }
+    .llamada-card h4 {
+      font-size: 20px;
+      max-width: 9ch;
+    }
+    .llamada-card .center {
+      max-width: 20ch;
+    }
     /* Precio miembro · 55€ tachado + 30€ grande (Grift · canon precios, ver typography.md) */
     .llamada-price {
-      margin-top: 14px;
-      display: flex;
+      display: inline-flex;
       align-items: baseline;
-      justify-content: center;
-      gap: 8px;
+      justify-content: flex-start;
+      gap: 7px;
       flex-wrap: wrap;
+      font-family: var(--font-text);
+      color: var(--ink);
     }
     .llamada-price s {
       font-family: var(--font-text);
-      font-size: 15px;
+      font-size: 13px;
       color: var(--ink-faint);
       text-decoration-thickness: 1.5px;
     }
     .llamada-price .amt {
       font-family: var(--font-price);
       font-weight: 400;
-      font-size: 34px;
+      font-size: 22px;
       line-height: 1;
       letter-spacing: -0.01em;
       color: var(--ink);
     }
     .llamada-price .per {
       font-family: var(--font-text);
-      font-size: 12px;
+      font-size: 11.5px;
       color: var(--ink-soft);
     }
     .llamadas-pack {
@@ -4927,28 +4983,12 @@
       color: var(--ink-soft);
     }
     .llamadas-pack strong { font-weight: 600; color: var(--ink); }
-    /* CTA "Más información sobre las llamadas" en la card Sesiones uno a uno */
-    .team-card-cta {
-      margin-top: 12px;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      background: none;
-      border: 0;
-      padding: 0;
-      cursor: pointer;
-      font-family: var(--font-text);
-      font-weight: 500;
-      font-size: 14px;
-      color: var(--ink-soft);
-      transition: color 160ms var(--ease-sheet);
+    @media (max-width: 840px) {
+      .llamadas-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     }
-    .team-card-cta:hover { color: var(--ink); }
-    .team-card-cta span { transition: transform 160ms var(--ease-sheet); }
-    .team-card-cta:hover span { transform: translateX(3px); }
-    .team-card-cta:focus-visible { outline: 2px solid var(--coral-strong); outline-offset: 3px; border-radius: 4px; }
     @media (max-width: 540px) {
       .llamadas-grid { grid-template-columns: 1fr; }
+      .llamada-card { aspect-ratio: auto; min-height: 220px; }
     }
 
     @media (max-width: 720px) {
