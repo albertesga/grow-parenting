@@ -9890,7 +9890,7 @@
     font-size: var(--fs-body); color: var(--ink);
     letter-spacing: -0.005em;
   }
-  .chat-madrugada-toggle {
+  .madrugada-toggle {
     background: var(--paper-soft);
     border: 1px solid var(--line);
     border-radius: var(--radius-pill);
@@ -9900,7 +9900,7 @@
     display: inline-flex; align-items: center; gap: 6px;
     transition: filter 150ms var(--ease);
   }
-  .chat-madrugada-toggle:hover { filter: brightness(0.97); }
+  .madrugada-toggle:hover { filter: brightness(0.97); }
 
   .chat-thread {
     flex: 1 1 auto;
@@ -10044,14 +10044,14 @@
   }
 
   /* ─── Modo madrugada · variante dark ─── */
-  .chat-madrugada {
+  .modo-madrugada {
     background: #0E0F12;
     color: #E6E2DC;
   }
-  .chat-madrugada .status,
-  .chat-madrugada .status span,
-  .chat-madrugada .status .status-dots span { color: #E6E2DC; background: transparent; }
-  .chat-madrugada .chat-madrugada-back {
+  .modo-madrugada .status,
+  .modo-madrugada .status span,
+  .modo-madrugada .status .status-dots span { color: #E6E2DC; background: transparent; }
+  .modo-madrugada .modo-madrugada-back {
     background: transparent;
     border: 0;
     color: #B7B0A4;
@@ -10060,10 +10060,10 @@
     text-align: left;
     cursor: pointer;
   }
-  .chat-madrugada-header {
+  .modo-madrugada-header {
     padding: 14px 22px 18px;
   }
-  .chat-madrugada-header h1 {
+  .modo-madrugada-header h1 {
     font-family: "Galiner"; font-weight: 500;
     font-size: var(--fs-h2);
     line-height: 1.05;
@@ -10071,18 +10071,18 @@
     color: #F2A57A;
     margin: 0 0 8px;
   }
-  .chat-madrugada-header p {
+  .modo-madrugada-header p {
     font-family: "Inter"; font-size: var(--fs-body-sm);
     color: #B7B0A4; line-height: 1.5;
     margin: 0; max-width: 32ch;
   }
-  .chat-madrugada-options {
+  .modo-madrugada-options {
     flex: 1 1 auto;
     display: flex; flex-direction: column;
     gap: 12px;
     padding: 6px 22px 16px;
   }
-  .chat-madrugada-option {
+  .modo-madrugada-option {
     display: block;
     width: 100%;
     text-align: left;
@@ -10097,11 +10097,11 @@
     cursor: pointer;
     transition: background 180ms var(--ease), transform 180ms var(--ease);
   }
-  .chat-madrugada-option:hover {
+  .modo-madrugada-option:hover {
     background: rgba(242,165,122,0.10);
     transform: translateY(-1px);
   }
-  .chat-madrugada-option .sub {
+  .modo-madrugada-option .sub {
     display: block;
     margin-top: 4px;
     font-family: "Inter";
@@ -10109,7 +10109,7 @@
     color: #B7B0A4;
     font-weight: 400;
   }
-  .chat-madrugada .chat-canon-foot {
+  .modo-madrugada .chat-canon-foot {
     color: rgba(183,176,164,0.5);
     padding: 14px 22px 18px;
   }
@@ -10363,27 +10363,27 @@
   .tool-card.ink   .tc-action { color: var(--coral-strong); font-weight: 500; }
 
   /* In dark madrugada thread · contrast adjusted */
-  .chat-madrugada .tool-card {
+  .modo-madrugada .tool-card {
     background: rgba(255,255,255,0.04);
     border-color: rgba(255,255,255,0.08);
     color: #E6E2DC;
   }
-  .chat-madrugada .tool-card .tc-icon { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.08); }
-  .chat-madrugada .tool-card .tc-title { color: #E6E2DC; }
-  .chat-madrugada .tool-card .tc-sub { color: #B7B0A4; }
+  .modo-madrugada .tool-card .tc-icon { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.08); }
+  .modo-madrugada .tool-card .tc-title { color: #E6E2DC; }
+  .modo-madrugada .tool-card .tc-sub { color: #B7B0A4; }
 
 
   /* § V.B · Night mode visual cues
      Real-time check de getHours(). Si 22:00-06:00 → indicador visible
      en chat header + card "🌙 No estás sola" inyectada al feed Hoy. */
-  .chat-context.is-night .chat-madrugada-toggle {
+  .chat-context.is-night .madrugada-toggle {
     border-color: var(--coral-base);
     background: linear-gradient(135deg, rgba(242,165,122,0.10), var(--paper-soft));
     color: var(--coral-strong);
     font-weight: 500;
     position: relative;
   }
-  .chat-context.is-night .chat-madrugada-toggle::before {
+  .chat-context.is-night .madrugada-toggle::before {
     content: "";
     width: 6px; height: 6px;
     border-radius: 999px;
@@ -10859,7 +10859,7 @@
 
 
   /* § V.D · madrugada close-flow sheet · ofrece guardar / borrar / quedarse */
-  .chat-madrugada-close-shell {
+  .modo-madrugada-close-shell {
     position: absolute;
     left: 12px; right: 12px; bottom: 10px;
     z-index: 38;
@@ -10868,12 +10868,12 @@
     transition: transform 260ms var(--ease), opacity 180ms ease, visibility 0s linear 260ms;
     max-height: 80%;
   }
-  .chat-madrugada-close-shell.active {
+  .modo-madrugada-close-shell.active {
     opacity: 1; visibility: visible; pointer-events: auto;
     transform: translateY(0);
     transition: transform 260ms var(--ease), opacity 180ms ease, visibility 0s;
   }
-  .chat-madrugada-close-sheet {
+  .modo-madrugada-close-sheet {
     background: var(--paper);
     border: 1px solid var(--line);
     border-radius: var(--radius-xl);
@@ -10884,21 +10884,21 @@
     display: flex; flex-direction: column;
     gap: 14px;
   }
-  .chat-madrugada-close-sheet h2 {
+  .modo-madrugada-close-sheet h2 {
     font-family: "Galiner"; font-weight: 500;
     font-size: var(--fs-h4);
     line-height: 1.2;
     margin: 0;
     color: var(--ink);
   }
-  .chat-madrugada-close-sheet p {
+  .modo-madrugada-close-sheet p {
     font-family: "Inter";
     font-size: var(--fs-body-sm);
     color: var(--ink-soft);
     line-height: 1.5;
     margin: 0;
   }
-  .chat-madrugada-close-sheet em { font-style: italic; color: var(--ink); }
+  .modo-madrugada-close-sheet em { font-style: italic; color: var(--ink); }
 
 
   /* § V.E.1 · Streaming dots indicator · placeholder de carga (legacy · sin uso). */
@@ -11024,7 +11024,7 @@
 
   /* § V.revision · Last-action banner en Modo madrugada
      Muestra contexto después de safety/mental para no dejar al usuario sin pista. */
-  .chat-madrugada-last-action {
+  .modo-madrugada-last-action {
     margin: 12px 22px;
     padding: 12px 14px;
     background: rgba(242,165,122,0.10);
@@ -11035,9 +11035,9 @@
     line-height: 1.45;
     display: flex; align-items: center; gap: 10px;
   }
-  .chat-madrugada-last-action .icon { font-size: 18px; line-height: 1; flex-shrink: 0; }
-  .chat-madrugada-last-action strong { color: #F2A57A; font-weight: 500; }
-  .chat-madrugada-last-action .dismiss {
+  .modo-madrugada-last-action .icon { font-size: 18px; line-height: 1; flex-shrink: 0; }
+  .modo-madrugada-last-action strong { color: #F2A57A; font-weight: 500; }
+  .modo-madrugada-last-action .dismiss {
     margin-left: auto; flex-shrink: 0;
     background: transparent; border: 0; color: rgba(183,176,164,0.6);
     cursor: pointer; font-size: 18px; line-height: 1; padding: 0 4px;
@@ -12682,7 +12682,7 @@
                 <!-- badges injected by JS based on flags -->
               </span>
             </div>
-            <button class="chat-madrugada-toggle" type="button" data-goto="chat-madrugada" aria-label="Modo noche">
+            <button class="madrugada-toggle" type="button" data-goto="modo-madrugada" aria-label="Modo noche">
               <span aria-hidden="true">🌙</span> Modo noche
             </button>
           </header>
@@ -12717,14 +12717,14 @@
         <!-- ═══════════════════════════════════════════════════════════
              § V.2 · Modo madrugada · dark, ephemeral, 3 age-aware options
              ═══════════════════════════════════════════════════════════ -->
-        <section class="screen no-nav chat-madrugada" data-screen="chat-madrugada">
+        <section class="screen no-nav modo-madrugada" data-screen="modo-madrugada">
           <div class="status"><span>3:14</span><div class="status-dots"><span></span><span></span><span></span></div></div>
-          <button class="chat-madrugada-back" type="button" data-madrugada-close-trigger aria-label="Volver">← Volver</button>
-          <div class="chat-madrugada-header">
+          <button class="modo-madrugada-back" type="button" data-madrugada-close-trigger aria-label="Volver">← Volver</button>
+          <div class="modo-madrugada-header">
             <h1>Modo noche</h1>
             <p>Las preguntas son más directas, más grandes y sin juzgar.</p>
           </div>
-          <div class="chat-madrugada-options" data-madrugada-options aria-label="Opciones madrugada">
+          <div class="modo-madrugada-options" data-madrugada-options aria-label="Opciones madrugada">
             <!-- options render here based on baby age -->
           </div>
           <p class="chat-canon-foot">Aquí no diagnosticamos · aquí estamos</p>
@@ -12837,8 +12837,8 @@
         <!-- ═══════════════════════════════════════════════════════════
              § V.D · Close-flow sheet para Modo madrugada
              ═══════════════════════════════════════════════════════════ -->
-        <aside class="chat-madrugada-close-shell" id="chat-madrugada-close-modal" aria-label="Cerrar Modo madrugada">
-          <div class="chat-madrugada-close-sheet">
+        <aside class="modo-madrugada-close-shell" id="modo-madrugada-close-modal" aria-label="Cerrar Modo madrugada">
+          <div class="modo-madrugada-close-sheet">
             <div class="safety-frame-grabber"></div>
             <h2>¿Guardamos esta noche en el diario?</h2>
             <p>Solo lo verás tú. Si guardas, aparecerá como nota en Madrugada. Si no, se borra · solo queda un agregado anonimizado para mejorar Mimo.</p>
@@ -18264,14 +18264,14 @@ Mimo
       updatePregnancyNavActive();
     }
     /* Cleanup streaming dots si dejamos chat */
-    if (name !== 'chat' && name !== 'chat-madrugada') {
+    if (name !== 'chat' && name !== 'modo-madrugada') {
       if (typeof chatCleanupOnLeave === 'function') chatCleanupOnLeave();
     }
     if (name === 'chat') {
       renderChat();
     }
-    if (name === 'chat-madrugada') {
-      renderChatMadrugada();
+    if (name === 'modo-madrugada') {
+      renderMadrugada();
     }
     if (name === 'hoy') {
       chatInjectHoyNightCard();
@@ -18972,7 +18972,7 @@ Mimo
     if (epdsMod) epdsMod.classList.remove('active');
     const relayMod = document.getElementById('relay-modal');
     if (relayMod) relayMod.classList.remove('active');
-    const cmadrugadaMod = document.getElementById('chat-madrugada-close-modal');
+    const cmadrugadaMod = document.getElementById('modo-madrugada-close-modal');
     if (cmadrugadaMod) cmadrugadaMod.classList.remove('active');
     scrim.classList.remove('active');
   }
@@ -19099,11 +19099,11 @@ Mimo
     return h >= 22 || h < 6;
   }
   function chatGetmadrugadaOptedIn() {
-    try { return localStorage.getItem('grow.chat.madrugada.optedIn') === '1'; }
+    try { return localStorage.getItem('mimo.madrugada.optedIn') === '1'; }
     catch (e) { return false; }
   }
   function chatSetmadrugadaOptedIn(v) {
-    try { localStorage.setItem('grow.chat.madrugada.optedIn', v ? '1' : '0'); }
+    try { localStorage.setItem('mimo.madrugada.optedIn', v ? '1' : '0'); }
     catch (e) {}
   }
   function chatUpdateNightState() {
@@ -19147,7 +19147,7 @@ Mimo
       <h3>No estás sola.</h3>
       <div class="meta-line">Modo madrugada · disponible ahora</div>
       <p class="context">Las preguntas son más directas, más grandes y sin juzgar. Si necesitas algo, aquí estamos.</p>
-      <button class="card-button" type="button" data-goto="chat-madrugada">Abrir Modo noche</button>
+      <button class="card-button" type="button" data-goto="modo-madrugada">Abrir Modo noche</button>
       <div class="soft-actions">
         <button type="button" data-goto="chat">Ir a Madrugada</button>
       </div>
@@ -19156,7 +19156,7 @@ Mimo
   }
 
   /* madrugada options · 4 age buckets (returns array of {title, sub, action}) */
-  function chatMadrugadaOptionsForAge(months) {
+  function madrugadaOptionsForAge(months) {
     if (months < 0) {  /* embarazo · negative semantics not used; placeholder */
       return [
         { title: '"Algo no va bien con mi cuerpo"', sub: 'Síntomas físicos · sangrados · contracciones', action: 'embarazo-body' },
@@ -19440,7 +19440,7 @@ Mimo
   /* § V.D · Persistencia · localStorage para chat principal (resilient)
      y para madrugada (ephemeral · solo durante sesión). */
   const CHAT_MAIN_KEY = 'grow.chat.main.v1';
-  const CHAT_MADRUGADA_KEY  = 'grow.chat.madrugada.v1';
+  const MADRUGADA_KEY  = 'mimo.madrugada.v1';
 
   function chatSaveMain() {
     try {
@@ -19471,18 +19471,18 @@ Mimo
   }
 
   /* madrugada session tracking · array de actions hechas en esta sesión */
-  let chatMadrugadaSession = null;  /* { startedAt, route, actions: [] } */
-  function chatMadrugadaStart(route) {
-    chatMadrugadaSession = { startedAt: Date.now(), route: route || 'unknown', actions: [] };
+  let madrugadaSession = null;  /* { startedAt, route, actions: [] } */
+  function madrugadaStart(route) {
+    madrugadaSession = { startedAt: Date.now(), route: route || 'unknown', actions: [] };
   }
-  function chatMadrugadaLogAction(action) {
-    if (!chatMadrugadaSession) chatMadrugadaStart('manual');
-    chatMadrugadaSession.actions.push({ action, at: Date.now() });
+  function madrugadaLogAction(action) {
+    if (!madrugadaSession) madrugadaStart('manual');
+    madrugadaSession.actions.push({ action, at: Date.now() });
   }
 
   /* Genera un resumen sintético de la sesión madrugada para sticky en chat main */
-  function chatMadrugadaSummary() {
-    if (!chatMadrugadaSession) return null;
+  function madrugadaSummary() {
+    if (!madrugadaSession) return null;
     const routeLabels = {
       'crying': 'llanto inconsolable',
       'support': 'acompañamiento · no puedo más',
@@ -19493,21 +19493,21 @@ Mimo
       'nightmare': 'pesadilla nocturna',
       'triage-menu': 'preguntas guiadas'
     };
-    const label = routeLabels[chatMadrugadaSession.route] || chatMadrugadaSession.route;
+    const label = routeLabels[madrugadaSession.route] || madrugadaSession.route;
     return `Anoche madrugada · ${label} · resuelto`;
   }
 
   /* Sheet de cierre madrugada · 3 botones (guardar / borrar / quedarme) */
   function openChatMadrugadaClose() {
-    document.getElementById('chat-madrugada-close-modal')?.classList.add('active');
+    document.getElementById('modo-madrugada-close-modal')?.classList.add('active');
     scrim.classList.add('active');
   }
   function closeChatMadrugadaClose() {
-    document.getElementById('chat-madrugada-close-modal')?.classList.remove('active');
+    document.getElementById('modo-madrugada-close-modal')?.classList.remove('active');
     scrim.classList.remove('active');
   }
-  function chatMadrugadaSaveAndExit() {
-    const summary = chatMadrugadaSummary();
+  function madrugadaSaveAndExit() {
+    const summary = madrugadaSummary();
     if (summary) {
       chatMessages.push({ role: 'system', text: summary, class: 'chat-note-madrugada' });
       /* Follow-up · trauma-informed canon · NO juzgar, presencia · nota, no conversación */
@@ -19518,13 +19518,13 @@ Mimo
       });
       chatSaveMain();
     }
-    chatMadrugadaSession = null;
+    madrugadaSession = null;
     closeChatMadrugadaClose();
     document.querySelector('[data-goto="chat"]')?.click();
   }
-  function chatMadrugadaDiscardAndExit() {
+  function madrugadaDiscardAndExit() {
     /* Solo agregado anonimizado en métricas (placeholder · no-op) */
-    chatMadrugadaSession = null;
+    madrugadaSession = null;
     closeChatMadrugadaClose();
     document.querySelector('[data-goto="chat"]')?.click();
   }
@@ -20058,37 +20058,37 @@ Mimo
   function chatSend() { /* no-op · sin chat de texto libre */ }
 
   /* madrugada render */
-  let chatMadrugadaLastAction = null;  /* { type: 'safety'|'mental'|'epds'|'relay', label } */
-  function chatMadrugadaSetLastAction(type) {
+  let madrugadaLastAction = null;  /* { type: 'safety'|'mental'|'epds'|'relay', label } */
+  function madrugadaSetLastAction(type) {
     const labels = {
       safety: { icon: '🤲', label: 'Has revisado el safety frame' },
       mental: { icon: '🤲', label: 'Has visto la línea 024' },
       epds:   { icon: '📋', label: 'Has hecho el EPDS rápido' },
       relay:  { icon: '👋', label: 'Has avisado a Pablo' }
     };
-    chatMadrugadaLastAction = labels[type] || null;
-    renderChatMadrugada();
+    madrugadaLastAction = labels[type] || null;
+    renderMadrugada();
   }
-  function renderChatMadrugada() {
+  function renderMadrugada() {
     const root = document.querySelector('[data-madrugada-options]');
     if (!root) return;
     const months = chatGetBabyMonths();
-    const opts = chatMadrugadaOptionsForAge(months);
+    const opts = madrugadaOptionsForAge(months);
     /* Remove previous last-action banner */
-    document.querySelectorAll('.chat-madrugada-last-action').forEach((el) => el.remove());
+    document.querySelectorAll('.modo-madrugada-last-action').forEach((el) => el.remove());
     /* Inject last-action banner before options if exists */
-    if (chatMadrugadaLastAction) {
+    if (madrugadaLastAction) {
       const banner = document.createElement('div');
-      banner.className = 'chat-madrugada-last-action';
+      banner.className = 'modo-madrugada-last-action';
       banner.innerHTML = `
-        <span class="icon" aria-hidden="true">${chatMadrugadaLastAction.icon}</span>
-        <div><strong>${escapeHtml(chatMadrugadaLastAction.label)}.</strong> Si quieres, sigue · o vuelve a Madrugada.</div>
+        <span class="icon" aria-hidden="true">${madrugadaLastAction.icon}</span>
+        <div><strong>${escapeHtml(madrugadaLastAction.label)}.</strong> Si quieres, sigue · o vuelve a Madrugada.</div>
         <button class="dismiss" type="button" data-madrugada-dismiss-action aria-label="Cerrar nota">×</button>
       `;
       root.parentNode.insertBefore(banner, root);
     }
     root.innerHTML = opts.map((opt) => `
-      <button class="chat-madrugada-option" type="button" data-madrugada-action="${escapeHtml(opt.action)}">
+      <button class="modo-madrugada-option" type="button" data-madrugada-action="${escapeHtml(opt.action)}">
         ${escapeHtml(opt.title)}
         <span class="sub">${escapeHtml(opt.sub)}</span>
       </button>
@@ -20773,9 +20773,9 @@ Mimo
     if (event.target.closest('[data-madrugada-opt-in]')) {
       chatSetmadrugadaOptedIn(true);
       document.querySelectorAll('.chat-night-banner').forEach((el) => el.remove());
-      /* Route to chat-madrugada immediately */
+      /* Route to modo-madrugada immediately */
       const btn = document.createElement('button');
-      btn.dataset.goto = 'chat-madrugada';
+      btn.dataset.goto = 'modo-madrugada';
       document.body.appendChild(btn);
       btn.click();
       btn.remove();
@@ -20844,8 +20844,8 @@ Mimo
     const cAct = event.target.closest('[data-madrugada-close-action]');
     if (cAct) {
       const t = cAct.dataset['madrugadaCloseAction'];
-      if (t === 'save')        chatMadrugadaSaveAndExit();
-      else if (t === 'discard') chatMadrugadaDiscardAndExit();
+      if (t === 'save')        madrugadaSaveAndExit();
+      else if (t === 'discard') madrugadaDiscardAndExit();
       else if (t === 'stay')    closeChatMadrugadaClose();
       return;
     }
@@ -20854,8 +20854,8 @@ Mimo
     const tamOpt = event.target.closest('[data-madrugada-action]');
     if (tamOpt) {
       const action = tamOpt.dataset['madrugadaAction'];
-      chatMadrugadaStart(action);
-      chatMadrugadaLogAction(action);
+      madrugadaStart(action);
+      madrugadaLogAction(action);
       if (action === 'triage-menu') {
         document.querySelector('[data-goto="chat"]')?.click();
       } else if (action === 'support' || action === 'crying') {
@@ -20877,15 +20877,15 @@ Mimo
     if (sfAction) {
       const t = sfAction.dataset.safetyAction;
       document.getElementById('safety-frame-modal')?.classList.remove('active');
-      chatMadrugadaSetLastAction('safety');
-      if (t === 'mental') { openMentalHealth(); chatMadrugadaSetLastAction('mental'); }
-      else if (t === 'relay') { openRelay(); chatMadrugadaSetLastAction('relay'); }
+      madrugadaSetLastAction('safety');
+      if (t === 'mental') { openMentalHealth(); madrugadaSetLastAction('mental'); }
+      else if (t === 'relay') { openRelay(); madrugadaSetLastAction('relay'); }
       return;
     }
     /* Dismiss last-action banner */
     if (event.target.closest('[data-madrugada-dismiss-action]')) {
-      chatMadrugadaLastAction = null;
-      renderChatMadrugada();
+      madrugadaLastAction = null;
+      renderMadrugada();
       return;
     }
     if (event.target.closest('[data-mental-call]')) {
@@ -20903,8 +20903,8 @@ Mimo
     if (epdsAct) {
       const t = epdsAct.dataset.epdsAction;
       closeEpds();
-      chatMadrugadaSetLastAction('epds');
-      if (t === 'mental') { openMentalHealth(); chatMadrugadaSetLastAction('mental'); }
+      madrugadaSetLastAction('epds');
+      if (t === 'mental') { openMentalHealth(); madrugadaSetLastAction('mental'); }
       else if (t === 'library') {
         if (typeof sheet !== 'undefined' && sheetTitle && sheetCopy) {
           sheetTitle.textContent = 'Libro de bienestar materno';
