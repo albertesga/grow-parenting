@@ -4805,11 +4805,14 @@
       text-decoration-thickness: 1.5px;
     }
     .llamada-price .amt {
+      /* Mismo "tipo" que el precio del Pricing (.plan .price .amt): Grift 900
+         + tracking cerrado + cifras tabulares. Tamaño menor por el contexto card. */
       font-family: var(--font-price);
-      font-weight: 400;
-      font-size: 22px;
+      font-weight: 900;
+      font-size: 24px;
       line-height: 1;
-      letter-spacing: -0.01em;
+      letter-spacing: -0.035em;
+      font-feature-settings: "tnum" 1, "ss01" 1;
       color: var(--ink);
     }
     .llamada-price .per {
@@ -4867,11 +4870,12 @@
       gap: 6px;
     }
     .pack-amt {
-      font-family: var(--font-price); /* Grift · número de precio (canon) */
+      font-family: var(--font-price); /* Grift · número de precio (canon, mismo tipo que Pricing) */
       font-weight: 900;
       font-size: 30px;
       line-height: 1;
-      letter-spacing: -0.01em;
+      letter-spacing: -0.035em;
+      font-feature-settings: "tnum" 1, "ss01" 1;
       color: var(--ink);
     }
     .pack-save {
