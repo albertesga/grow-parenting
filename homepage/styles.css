@@ -27,9 +27,9 @@
       font-display: swap;
     }
     /* Grift · 9 weights (Thin 100 → Black 900) × normal + italic = 18 cortes.
-       USO RESTRINGIDO · solo números de precio: `.plan .price .amt` (pricing)
-       y `.llamada-price .amt` (precio de llamadas 1:1). Acento geométrico
-       distintivo reservado a precios. */
+       USO RESTRINGIDO · solo números de precio: `.plan .price .amt` (pricing),
+       `.llamada-price .amt` (llamadas 1:1) y `.llamadas-pack .pack-amt` (pack).
+       Acento geométrico distintivo reservado a precios. */
     @font-face { font-family: "Grift"; src: url("assets/fonts/Grift-Thin.ttf") format("truetype"); font-weight: 100; font-style: normal; font-display: swap; }
     @font-face { font-family: "Grift"; src: url("assets/fonts/Grift-ThinItalic.ttf") format("truetype"); font-weight: 100; font-style: italic; font-display: swap; }
     @font-face { font-family: "Grift"; src: url("assets/fonts/Grift-ExtraLight.ttf") format("truetype"); font-weight: 200; font-style: normal; font-display: swap; }
@@ -84,7 +84,7 @@
       --font-serif:   "Galiner", "Bodoni Moda", "Playfair Display", Georgia, serif;
       --font-display: "Galiner", "Bodoni Moda", "Playfair Display", Georgia, serif; /* alias retrocompat */
       --font-text:    "Inter", system-ui, -apple-system, sans-serif;
-      --font-price:   "Grift", "Inter", sans-serif; /* SOLO números de precio · `.plan .price .amt` + `.llamada-price .amt` */
+      --font-price:   "Grift", "Inter", sans-serif; /* SOLO números de precio · `.plan .price .amt` + `.llamada-price .amt` + `.llamadas-pack .pack-amt` */
       --font-mono:    "JetBrains Mono", "SF Mono", ui-monospace, monospace;
 
       /* radii */
@@ -4817,16 +4817,79 @@
       font-size: 11.5px;
       color: var(--ink-soft);
     }
+    /* Pack ahorro · banner destacado al pie del modal. Tinte sage-egg
+       (secundario Mimo) para diferenciarlo de las 4 cards tonales sin salirse
+       del sistema. Precio en Grift (--font-price · canon precios). */
     .llamadas-pack {
-      margin: 22px 0 0;
-      text-align: center;
+      margin: 24px auto 0;
+      max-width: 460px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      flex-wrap: wrap;
+      padding: 16px 20px;
+      border-radius: var(--radius-lg);
+      background: linear-gradient(135deg,
+        color-mix(in srgb, var(--sage-egg) 52%, var(--paper)) 0%,
+        var(--paper-soft) 100%);
+      border: 1px solid color-mix(in srgb, var(--sage-egg) 62%, var(--line));
+    }
+    .pack-text {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      text-align: left;
+    }
+    .pack-tag {
+      font-family: var(--font-mono);
+      font-size: 9.5px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--mint-ink);
+    }
+    .pack-headline {
+      font-family: var(--font-serif);
+      font-weight: 400;
+      font-size: 20px;
+      line-height: 1.1;
+      color: var(--ink);
+    }
+    .pack-unit {
       font-family: var(--font-text);
-      font-weight: 300;
-      font-size: 15px;
-      line-height: 1.5;
+      font-size: 12.5px;
       color: var(--ink-soft);
     }
-    .llamadas-pack strong { font-weight: 600; color: var(--ink); }
+    .pack-deal {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 6px;
+    }
+    .pack-amt {
+      font-family: var(--font-price); /* Grift · número de precio (canon) */
+      font-weight: 900;
+      font-size: 30px;
+      line-height: 1;
+      letter-spacing: -0.01em;
+      color: var(--ink);
+    }
+    .pack-save {
+      font-family: var(--font-text);
+      font-weight: 600;
+      font-size: 11.5px;
+      color: var(--mint-ink);
+      background: color-mix(in srgb, var(--mint-subtle) 82%, var(--paper));
+      border: 1px solid var(--mint-base);
+      padding: 3px 10px;
+      border-radius: 999px;
+      white-space: nowrap;
+    }
+    @media (max-width: 540px) {
+      .llamadas-pack { justify-content: center; text-align: center; }
+      .pack-text { align-items: center; text-align: center; }
+      .pack-deal { align-items: center; }
+    }
     @media (max-width: 840px) {
       .llamadas-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     }
