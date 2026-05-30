@@ -598,6 +598,7 @@
     .hero-chip:nth-child(5) { --rx: 188px; --ry: 46px; --cy:  78px; --depth: 0.18; --dur: 44s; --orbit-delay: -30s; }
     .hero-chip:nth-child(6) { --rx: 172px; --ry: 70px; --cy: -58px; --depth: 0.19; --dur: 40s; --orbit-delay: -18s; }
     .hero-chip:nth-child(7) { --rx: 214px; --ry: 56px; --cy: 102px; --depth: 0.21; --dur: 50s; --orbit-delay: -39s; }
+    .hero-chip:nth-child(8) { --rx: 196px; --ry: 64px; --cy: -92px; --depth: 0.17; --dur: 43s; --orbit-delay: -14s; }
 
     /* Órbita elíptica paramétrica · 8 muestras (cada 45°). El z-index salta
        en los laterales (donde el chip no solapa la figura → invisible).
@@ -652,6 +653,7 @@
       .hero-chip:nth-child(5) { transform: translate(calc(-50% + 168px),  calc(-50% + 78px)) scale(1.02); z-index: 4; opacity: 0.95; }
       .hero-chip:nth-child(6) { transform: translate(calc(-50% - 78px),   calc(-50% - 98px)) scale(0.86); z-index: 1; opacity: 0.75; }
       .hero-chip:nth-child(7) { transform: translate(calc(-50% + 60px),   calc(-50% + 124px)) scale(0.98); z-index: 3; opacity: 0.92; }
+      .hero-chip:nth-child(8) { transform: translate(calc(-50% + 196px),  calc(-50% - 22px)) scale(0.84); z-index: 0; opacity: 0.72; }
     }
 
     /* ════════════════════════════════════════════════════════════════════
