@@ -588,12 +588,16 @@
     .hero-chip.c-mint   { --tone: var(--mint-base); }
     .hero-chip.c-gold   { --tone: var(--gold-base); }
     .hero-chip.c-violet { --tone: var(--violet-strong); }
+    .hero-chip.c-sky    { --tone: var(--sky-strong); }
+    .hero-chip.c-ochre  { --tone: var(--ochre-strong); }
     /* Elipse + fase + velocidad propias por chip → desalineadas */
     .hero-chip:nth-child(1) { --rx: 205px; --ry: 74px; --cy: -10px; --depth: 0.20; --dur: 34s; --orbit-delay:   0s; }
     .hero-chip:nth-child(2) { --rx: 160px; --ry: 52px; --cy:  54px; --depth: 0.15; --dur: 41s; --orbit-delay: -11s; }
     .hero-chip:nth-child(3) { --rx: 222px; --ry: 84px; --cy:  16px; --depth: 0.22; --dur: 47s; --orbit-delay: -26s; }
     .hero-chip:nth-child(4) { --rx: 150px; --ry: 62px; --cy: -40px; --depth: 0.16; --dur: 38s; --orbit-delay:  -6s; }
     .hero-chip:nth-child(5) { --rx: 188px; --ry: 46px; --cy:  78px; --depth: 0.18; --dur: 44s; --orbit-delay: -30s; }
+    .hero-chip:nth-child(6) { --rx: 172px; --ry: 70px; --cy: -58px; --depth: 0.19; --dur: 40s; --orbit-delay: -18s; }
+    .hero-chip:nth-child(7) { --rx: 214px; --ry: 56px; --cy: 102px; --depth: 0.21; --dur: 50s; --orbit-delay: -39s; }
 
     /* Órbita elíptica paramétrica · 8 muestras (cada 45°). El z-index salta
        en los laterales (donde el chip no solapa la figura → invisible).
@@ -646,6 +650,8 @@
       .hero-chip:nth-child(3) { transform: translate(calc(-50% - 132px),  calc(-50% - 36px)) scale(0.84); z-index: 0; opacity: 0.70; }
       .hero-chip:nth-child(4) { transform: translate(calc(-50% + 118px),  calc(-50% - 70px)) scale(0.82); z-index: 0; opacity: 0.70; }
       .hero-chip:nth-child(5) { transform: translate(calc(-50% + 168px),  calc(-50% + 78px)) scale(1.02); z-index: 4; opacity: 0.95; }
+      .hero-chip:nth-child(6) { transform: translate(calc(-50% - 78px),   calc(-50% - 98px)) scale(0.86); z-index: 1; opacity: 0.75; }
+      .hero-chip:nth-child(7) { transform: translate(calc(-50% + 60px),   calc(-50% + 124px)) scale(0.98); z-index: 3; opacity: 0.92; }
     }
 
     /* ════════════════════════════════════════════════════════════════════
