@@ -1,0 +1,1319 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Mimo · Homepage v2</title>
+  <meta name="description" content="App de crianza para familias hispanohablantes. Durante los primeros 1.000 días de tu hij@. Sin manual, sin juicios, sin prisa.">
+  <meta name="theme-color" content="#FAF7F0">
+  <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png">
+  <link rel="manifest" href="assets/site.webmanifest">
+
+  <!-- Open Graph / Twitter · marca Mimo -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Mimo">
+  <meta property="og:title" content="Mimo · Tú cuidas a tu hij@. Mimo te cuida a ti.">
+  <meta property="og:description" content="App de crianza para familias hispanohablantes. Durante los primeros 1.000 días de tu hij@. Sin manual, sin juicios, sin prisa.">
+  <meta property="og:image" content="https://mimo.family/assets/mimo-og.png">
+  <meta property="og:url" content="https://mimo.family/">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Mimo · Tú cuidas a tu hij@. Mimo te cuida a ti.">
+  <meta name="twitter:description" content="App de crianza para familias hispanohablantes. Durante los primeros 1.000 días de tu hij@.">
+  <meta name="twitter:image" content="https://mimo.family/assets/mimo-og.png">
+
+  <link rel="stylesheet" href="styles-v2.css?v=v2-1">
+</head>
+<body>
+  <!-- Floating halo · burbuja coral que viaja por el scroll desde detrás
+       del hero avatar hasta detrás del avatar parallax de sección 2 · su
+       posición + scale + opacity se actualizan en main.js (initHaloTraveler).
+       Position: fixed para flotar sobre el layout · z-index: 0 para quedar
+       detrás de los contenidos · pointer-events: none para no bloquear. -->
+  <div class="floating-halo" id="floating-halo" aria-hidden="true"></div>
+
+  <!-- ════════════════════════════════════════════════════════════════════
+       SVG SPRITE · iconos (chroma key del parallax vive en JS, no aquí)
+       ════════════════════════════════════════════════════════════════════ -->
+  <svg style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true">
+    <defs>
+      <!-- Trust chip icons -->
+      <symbol id="i-shield" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 3 4 6v6c0 5 3.5 8.5 8 9.5 4.5-1 8-4.5 8-9.5V6l-8-3z"/>
+        <path d="m9 12 2 2 4-4"/>
+      </symbol>
+      <symbol id="i-lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="4" y="11" width="16" height="10" rx="2"/>
+        <path d="M8 11V7a4 4 0 0 1 8 0v4"/>
+      </symbol>
+      <symbol id="i-doc" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/>
+        <path d="M14 3v6h6"/>
+        <path d="M8 13h7M8 17h6"/>
+      </symbol>
+      <symbol id="i-leaf" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M11 20A7 7 0 0 1 4 13c0-5 4-9 16-9 0 8-3 16-9 16z"/>
+        <path d="M4 13c0-1 1-3 5-3"/>
+      </symbol>
+      <symbol id="i-cal" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="4" y="5" width="16" height="16" rx="2"/>
+        <line x1="4" y1="10" x2="20" y2="10"/>
+        <line x1="9" y1="3" x2="9" y2="7"/>
+        <line x1="15" y1="3" x2="15" y2="7"/>
+      </symbol>
+      <symbol id="i-user" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="8" r="4"/>
+        <path d="M4 21a8 8 0 0 1 16 0"/>
+      </symbol>
+      <symbol id="i-chart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M3 3v18h18"/>
+        <path d="M7 14l3-4 4 3 5-7"/>
+      </symbol>
+
+      <!-- Book icons -->
+      <symbol id="b-belly" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M5 12a7 7 0 0 1 14 0c0 5-4 8-7 8s-7-3-7-8z"/>
+        <circle cx="13" cy="11" r="1.2" fill="currentColor"/>
+      </symbol>
+      <symbol id="b-bottle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M9 2h6"/>
+        <path d="M10 2v3"/>
+        <path d="M14 2v3"/>
+        <path d="M8 7h8v12a3 3 0 0 1-3 3h-2a3 3 0 0 1-3-3z"/>
+        <path d="M8 12h8"/>
+      </symbol>
+      <symbol id="b-breast" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 21s-7-4-7-10a5 5 0 0 1 10-1 4 4 0 0 1 4 4c0 4-4 7-7 7Z"/>
+        <path d="M8 10c1.5 0 2.5 1 2.5 2.5"/>
+      </symbol>
+      <symbol id="b-syringe" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="m18 2 4 4-1.5 1.5"/>
+        <path d="m13 7 4 4"/>
+        <path d="m11 9 4 4"/>
+        <path d="m8 12 4 4"/>
+        <path d="m6 14 4 4"/>
+        <path d="M19 5 7 17l-3 1 1-3L17 3z"/>
+      </symbol>
+      <symbol id="b-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/>
+        <circle cx="18" cy="5" r="0.8" fill="currentColor"/>
+        <circle cx="20" cy="9" r="0.6" fill="currentColor"/>
+      </symbol>
+      <symbol id="b-thermo" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M14 14.76V5a2 2 0 0 0-4 0v9.76a4 4 0 1 0 4 0z"/>
+      </symbol>
+      <symbol id="b-tear" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 3c3 4 6 8 6 12a6 6 0 1 1-12 0c0-4 3-8 6-12z"/>
+      </symbol>
+      <symbol id="b-sprout" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 21V11"/>
+        <path d="M12 11c-3-2-6-1-7-4 4-1 7 1 7 4z"/>
+        <path d="M12 11c3-2 6-1 7-4-4-1-7 1-7 4z"/>
+      </symbol>
+      <symbol id="b-heart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 21s-8-4.5-8-11a5 5 0 0 1 8-4 5 5 0 0 1 8 4c0 6.5-8 11-8 11z"/>
+      </symbol>
+      <symbol id="b-bookmark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M7 3h10a1 1 0 0 1 1 1v17l-6-4-6 4V4a1 1 0 0 1 1-1z"/>
+        <path d="M9 8h6"/>
+      </symbol>
+      <symbol id="b-pulse" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M3 12h4l2-6 4 12 2-6h6"/>
+      </symbol>
+
+      <!-- Comité avatars -->
+      <symbol id="dr-1" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="16" cy="12" r="5"/>
+        <path d="M6 26a10 10 0 0 1 20 0"/>
+      </symbol>
+      <symbol id="dr-2" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="16" cy="12" r="5"/>
+        <path d="M13 13c1 1 5 1 6 0"/>
+        <path d="M6 26a10 10 0 0 1 20 0"/>
+      </symbol>
+      <symbol id="dr-3" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="16" cy="12" r="5"/>
+        <path d="M14 14h4"/>
+        <path d="M6 26a10 10 0 0 1 20 0"/>
+      </symbol>
+      <symbol id="dr-4" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="16" cy="12" r="5"/>
+        <circle cx="14" cy="11" r="1.5"/>
+        <circle cx="18" cy="11" r="1.5"/>
+        <path d="M15.5 11h1"/>
+        <path d="M6 26a10 10 0 0 1 20 0"/>
+      </symbol>
+      <!-- (parallax: el filter SVG black-to-alpha se eliminó · ahora hacemos
+           chroma key per-pixel en JS al cachear los frames · ver IIFE bottom). -->
+
+      <!-- Filter luma-to-alpha v8 · matte closing + edge spill suppression ·
+           preserva ojos negros, mata el halo, Y elimina la línea dotted
+           del boundary que se veía en zoom (RGB oscuro × alpha parcial).
+
+           Problema diagnosticado en v7: el matte cerrado tiene un edge
+           con alpha gradiente (0→1) en 2-3px · en esos pixels el RGB del
+           kling sigue siendo cerca de negro (compresión MP4) · resultado
+           visual = línea oscura punteada visible en zoom.
+
+           Solución v8: tras generar el matte cerrado, EROSIONAR el alpha
+           ~2px hacia adentro para comer los pixels boundary dark, luego
+           BLUR para difundir la nueva transición:
+
+             1) Path A · preserva SourceGraphic intacto → "orig" (RGB+A)
+             2) Path B · genera matte limpia + sin rim oscuro:
+                · feMorphology dilate 12 + erode 12 · closing fills ojos
+                · feColorMatrix · alpha = R+G+B − 0.3 (threshold halo)
+                · feComponentTransfer linear · binarize matte
+                · feMorphology erode radius=2 · CONTRAE 2px (∗ clave)
+                · feGaussianBlur stdDeviation=1.2 · difumina nuevo edge
+             3) feComposite "in" · RGB de orig + alpha de matte erosionada
+
+           Resultado: avatar pierde ~2px de silueta (invisible @ tamaño
+           real) PERO el dotted dark edge desaparece completamente porque
+           la zona del rim oscuro queda FUERA del alpha mask. El blur
+           1.2 hace que el nuevo edge sea anti-aliased suave en lugar de
+           binario. -->
+      <filter id="luma-to-alpha" color-interpolation-filters="sRGB">
+        <feColorMatrix in="SourceGraphic" type="matrix" result="orig" values="
+          1 0 0 0 0
+          0 1 0 0 0
+          0 0 1 0 0
+          0 0 0 1 0"/>
+        <feMorphology in="SourceGraphic" operator="dilate" radius="12"/>
+        <feMorphology operator="erode" radius="12"/>
+        <feColorMatrix type="matrix" values="
+          0 0 0 0 0
+          0 0 0 0 0
+          0 0 0 0 0
+          1 1 1 0 -0.3"/>
+        <feComponentTransfer>
+          <feFuncA type="linear" slope="5" intercept="-0.5"/>
+        </feComponentTransfer>
+        <feMorphology operator="erode" radius="2"/>
+        <feGaussianBlur stdDeviation="1.2" result="matte"/>
+        <feComposite in="orig" in2="matte" operator="in"/>
+      </filter>
+
+      <!-- Filter alpha-cleanup · post-procesa el chroma key per-pixel
+           que aplica main.js en los canvases de sección 2 (.avatar-stage
+           canvas + .mobile-avatar canvas). El JS deja un edge jagged con
+           pixels boundary dark × alpha parcial · este filter erosiona 2px
+           para comer ese rim y blurrea 1.2 para que la transición sea
+           suave anti-aliased contra el cream paper. Mismo principio que
+           el final de v8 del hero pero aplicable a cualquier RGBA-input. -->
+      <filter id="alpha-cleanup" color-interpolation-filters="sRGB">
+        <feMorphology operator="erode" radius="2"/>
+        <feGaussianBlur stdDeviation="1.2"/>
+      </filter>
+
+      <!-- Filter sec2-chroma · LEAN GPU approach iter 5 para los avatares
+           parallax de la sección recorrido · reemplaza el JS chroma key
+           per-pixel (que tardaba 2s al cargar). Mismo principio del hero v7
+           (matte closing) pero SIN feGaussianBlur final · sharpness
+           preservada · ojos negros del kling avatar visibles porque la
+           matte cerrada deja alpha=255 incluso en sus "holes" interiores.
+
+           Pipeline:
+             1) Path A · preserva SourceGraphic intacto → "orig" RGB+A
+             2) Path B · matte limpia:
+                · dilate 12 + erode 12 (closing) · fills eye holes
+                · feColorMatrix alpha = R+G+B − 0.3 (threshold halo MP4)
+                · feComponentTransfer linear · binarize matte
+             3) feComposite "in" · RGB orig + alpha de matte cerrada -->
+      <filter id="sec2-chroma" color-interpolation-filters="sRGB">
+        <feColorMatrix in="SourceGraphic" type="matrix" result="orig" values="
+          1 0 0 0 0
+          0 1 0 0 0
+          0 0 1 0 0
+          0 0 0 1 0"/>
+        <feMorphology in="SourceGraphic" operator="dilate" radius="12"/>
+        <feMorphology operator="erode" radius="12"/>
+        <feColorMatrix type="matrix" values="
+          0 0 0 0 0
+          0 0 0 0 0
+          0 0 0 0 0
+          1 1 1 0 -0.3"/>
+        <feComponentTransfer>
+          <feFuncA type="linear" slope="5" intercept="-0.5"/>
+        </feComponentTransfer>
+        <!-- Iter 6 · erode 2px adicional sobre la matte antes del composite ·
+             come el rim de boundary dark sin blur (mantiene nitidez) ·
+             los ojos NO se afectan porque están a >12px del contorno
+             gracias al closing previo (dilate 12 + erode 12). -->
+        <feMorphology operator="erode" radius="2" result="matte"/>
+        <feComposite in="orig" in2="matte" operator="in"/>
+      </filter>
+    </defs>
+  </svg>
+
+  <!-- ════════════════════════════════════════════════════════════════════
+       TOPBAR
+       ════════════════════════════════════════════════════════════════════ -->
+  <header class="topbar" id="topbar">
+    <div class="brand">
+      <a href="index-v2.html"><img src="assets/mimo-logo.png" alt="Mimo"></a>
+    </div>
+    <nav class="book-nav" aria-label="Libros principales">
+      <a class="book-nav-link t-mint" href="#libros" data-future-href="/sueno/">Sueño</a>
+      <a class="book-nav-link t-gold" href="#libros" data-future-href="/alimentacion/">Alimentación</a>
+      <a class="book-nav-link t-violet" href="#libros" data-future-href="/educacion/">Educación</a>
+    </nav>
+    <div class="right">
+      <a class="about-link" href="about-us/">Quiénes somos</a>
+      <a class="waitlist-link" href="waitlist.html">Únete a la waitlist</a>
+    </div>
+  </header>
+
+  <!-- ════════════════════════════════════════════════════════════════════
+       § 1 · HERO
+       ════════════════════════════════════════════════════════════════════ -->
+  <section class="hero wrap" data-section="1">
+    <div class="hero-grid">
+      <div>
+        <h1>Tú cuidas a tu hij@.<br><em>Mimo te cuida a ti.</em></h1>
+        <p class="manifesto-sub">Sin manual, sin juicios, sin prisa.</p>
+        <!-- Línea funcional · responde "qué hace la app" en una sola frase ·
+             nombra las tres patas SABER (contenido criterio clínico) ·
+             REGISTRAR (seguimiento) · PREGUNTAR (preguntas guiadas) ·
+             ancla "app" para que el rango de edad del micro no se lea como
+             material de lectura. -->
+        <p class="hero-functional">Te acompañamos desde el embarazo — o el día que llega. Semana a semana: <strong>información clínica clara</strong>, <strong>seguimiento sereno</strong> y <strong>orientación que ya conoce a tu hij@</strong>.</p>
+        <p class="micro">Durante los primeros 1.000 días de tu hij@</p>
+        <div class="hero-ctas">
+          <a class="btn-primary btn-arrow" href="waitlist.html">Entra en la lista</a>
+          <a class="btn-ghost" href="#parenting-team">Conoce el equipo</a>
+        </div>
+      </div>
+      <div class="hero-avatar" id="hero-avatar">
+        <!-- Avatar embarazo · 2 videos kling apilados · fondo negro eliminado
+             via CSS mix-blend-mode: lighten (los píxeles negros del video
+             se "lighten" contra el paper cream del fondo y desaparecen).
+             · Video 1 (hero-vid-scroll) · scroll-scrubbed (currentTime = f(scroll))
+             · Video 2 (hero-vid-tap) · play normal al click · vuelve al fin
+             Approach CSS-only · cero canvas · cero async extraction · instant render. -->
+        <video class="hero-avatar-vid hero-avatar-vid--scroll"
+               id="hero-vid-scroll"
+               src="assets/hero-scroll.mp4"
+               muted playsinline preload="metadata"
+               aria-hidden="true"></video>
+        <video class="hero-avatar-vid hero-avatar-vid--tap"
+               id="hero-vid-tap"
+               src="assets/hero-tap.mp4"
+               muted playsinline preload="metadata"
+               aria-hidden="true"></video>
+        <button class="hero-avatar-trigger"
+                id="hero-avatar-trigger"
+                type="button"
+                aria-label="Reproducir animación del avatar"></button>
+        <!-- Chips orbitando el avatar · 5 libros girando en una elipse
+             horizontal alrededor del cuerpo: pasan por delante (escala
+             grande · z 4 · sobre los videos) y por detrás (escala pequeña ·
+             z 0 · tras los videos z 1, el avatar los tapa) creando
+             profundidad 3D. Decorativos (aria-hidden) · display:contents en
+             el wrapper para que el z-index de cada chip se intercale con las
+             capas del avatar. La órbita (transform+z+opacity+scale) vive en
+             @keyframes; cada chip se reparte con animation-delay negativo. -->
+        <div class="hero-chips" aria-hidden="true">
+          <span class="hero-chip c-coral" data-book="embarazo"><span class="dot"></span>Embarazo</span>
+          <span class="hero-chip c-blush" data-book="lactancia"><span class="dot"></span>Lactancia</span>
+          <span class="hero-chip c-gold" data-book="alimentacion"><span class="dot"></span>Alimentación</span>
+          <span class="hero-chip c-violet" data-book="desarrollo"><span class="dot"></span>Desarrollo</span>
+          <span class="hero-chip c-mint" data-book="sueno"><span class="dot"></span>Sueño</span>
+          <span class="hero-chip c-sky" data-book="salud"><span class="dot"></span>Salud</span>
+          <span class="hero-chip c-ochre" data-book="recuerdos"><span class="dot"></span>Recuerdos</span>
+          <span class="hero-chip c-violet" data-book="educacion"><span class="dot"></span>Educación</span>
+        </div>
+        <div class="phase-tag"><span class="dot"></span> Embarazo · sem 4–40</div>
+      </div>
+    </div>
+
+    <!-- TRUST STRIP · 4 titulares plain language, sin descripciones extras.
+         Iconos DS inline en ink (sin medal circular) para máximo contraste
+         editorial. Each chip es UNA AFIRMACIÓN clara · cero ruido visual. -->
+    <div class="trust" role="region" aria-label="Respaldo clínico de Mimo">
+      <div class="trust-row" role="list">
+        <div class="trust-chip" role="listitem">
+          <svg class="trust-icn" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-cal"/></svg>
+          <strong>Basado en calendarios pediátricos oficiales</strong>
+        </div>
+        <div class="trust-chip" role="listitem">
+          <svg class="trust-icn" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-user"/></svg>
+          <strong>Escrito por personas · revisado por clínicos</strong>
+        </div>
+        <div class="trust-chip" role="listitem">
+          <svg class="trust-icn" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-chart"/></svg>
+          <strong>Escalas validadas para observar con criterio</strong>
+        </div>
+        <div class="trust-chip" role="listitem">
+          <svg class="trust-icn" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-lock"/></svg>
+          <strong>Tus datos siempre privados y seguros</strong>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════════════════
+       § 2 · EQUIPO DE PARENTING
+       ════════════════════════════════════════════════════════════════════ -->
+  <section class="parenting-team" id="parenting-team" data-section="1b">
+    <div class="parenting-team-wrap">
+      <div class="parenting-team-copy">
+        <span class="eyebrow">El equipo de Parenting</span>
+        <h2>Cada familia merece un equipo a su lado.</h2>
+        <p>El equipo de Parenting de Mimo te ayuda a navegar la montaña rusa de tener un hijo: dudas pequeñas, noches largas y decisiones que pesan.</p>
+        <button class="parenting-team-cta" type="button" data-modal-open="llamadas">
+          Información llamadas 1:1 <span aria-hidden="true">→</span>
+        </button>
+        <div class="parenting-team-roles closing-paths" aria-label="Profesiones del equipo de Parenting">
+          <span class="p-blush">Neonatología</span>
+          <span class="p-gold">Pediatría</span>
+          <span class="p-mint">Coach del sueño</span>
+          <span class="p-violet">Psicología perinatal</span>
+          <span class="p-coral">Enfermería</span>
+        </div>
+      </div>
+
+      <div class="parenting-team-panel" aria-label="Acompañamiento humano de Mimo">
+        <article class="team-card team-card-main">
+          <span class="team-card-kicker">Mimo Parenting Team</span>
+          <h3>Personas, criterio clínico y calma.</h3>
+          <p>Pediatría, neonatología, salud mental perinatal y enfermería pediátrica revisan cómo Mimo acompaña cada etapa.</p>
+        </article>
+
+        <article class="team-card team-card-call">
+          <span class="team-icon"><svg viewBox="0 0 24 24"><use href="#i-user"/></svg></span>
+          <div>
+            <h3>Sesiones uno a uno</h3>
+            <p>Llamadas 1:1 con un profesional cuando necesitas hablar con alguien que te entienda.</p>
+          </div>
+        </article>
+
+        <article class="team-card team-card-live">
+          <span class="team-icon"><svg viewBox="0 0 24 24"><use href="#i-cal"/></svg></span>
+          <div>
+            <h3>Directos mensuales</h3>
+            <p>Sesiones prácticas sobre sueño, vacunas, alimentación, hitos y postparto.</p>
+          </div>
+        </article>
+
+        <article class="team-card team-card-guide">
+          <span class="team-icon"><svg viewBox="0 0 24 24"><use href="#b-bookmark"/></svg></span>
+          <div>
+            <h3>Guías clínicas</h3>
+            <p>Contenido revisado por pediatras y matronas, adaptado a la edad de tu hij@ semana a semana.</p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════════════════
+       § 3 · PARALLAX NARRATIVE
+       ════════════════════════════════════════════════════════════════════ -->
+  <section class="narrative" id="narrative" data-section="2">
+    <!-- Framing line · señal que descentra el supuesto cronológico (research
+         v0.3 · embarazada de 34 sem siente que "la web le habla a la semana 8";
+         madre de toddler casi-3 siente que "se acaba pronto"). El parallax
+         sigue contando la historia en orden, pero esta línea pre-empt el
+         "esto no es para mí ahora" de quien no está al principio. -->
+    <div class="narrative-intro">
+      <span class="eyebrow">El recorrido</span>
+      <p class="narrative-headline">Cada etapa, <em>cuando la vives</em>.</p>
+    </div>
+    <div class="narrative-shell">
+      <aside class="avatar-stage" aria-hidden="true">
+        <div class="frame" id="avatar-frame">
+          <!-- Canvas único · JS decodea ambos MP4 a frame cache offscreen
+               con chroma key, luego pinta el frame correcto por scroll progress.
+               width/height intrínsecos se ajustan en runtime al videoWidth/Height. -->
+          <canvas id="avatar-canvas" width="320" height="320"></canvas>
+        </div>
+        <div class="avatar-progress journey-map" id="avatar-progress" aria-label="Etapas del recorrido">
+          <div class="track" aria-hidden="true"><div class="fill" id="avatar-fill"></div></div>
+          <div class="stops">
+            <div class="stop is-active" data-phase="coral" id="stop-coral">
+              <span class="node" aria-hidden="true"></span>
+              <span class="copy">
+                <span class="kicker">Etapa 01</span>
+                <span class="lbl">Embarazo</span>
+                <span class="range">Sem 4 — 40</span>
+              </span>
+            </div>
+            <div class="stop" data-phase="blush" id="stop-blush">
+              <span class="node" aria-hidden="true"></span>
+              <span class="copy">
+                <span class="kicker">Etapa 02</span>
+                <span class="lbl">Recién nacido</span>
+                <span class="range">0 — 6 m</span>
+              </span>
+            </div>
+            <div class="stop" data-phase="mint" id="stop-mint">
+              <span class="node" aria-hidden="true"></span>
+              <span class="copy">
+                <span class="kicker">Etapa 03</span>
+                <span class="lbl">Bebé</span>
+                <span class="range">6 m — 3 a</span>
+              </span>
+            </div>
+          </div>
+        </div>
+      </aside>
+
+      <div class="narrative-stream">
+        <!-- Bloque 1 · Embarazo -->
+        <article class="block t-coral" data-phase="coral">
+          <div class="eyebrow">Bloque 1 · Embarazo</div>
+          <h3 class="quote-large">"Llevo tres horas sin notar pataditas. ¿Es para preocuparse o estoy exagerando?"</h3>
+          <div class="quote-rotator" aria-live="off">
+            <p class="q-item is-active">"Llevo dos horas sin notar pataditas. ¿Es para preocuparme?"</p>
+            <p class="q-item">"Mañana tengo la ecografía y no he dormido nada."</p>
+            <p class="q-item">"Cada cita es una pregunta nueva que olvido cuando llego."</p>
+            <p class="q-item">"He visto sangrado. ¿Llamo a urgencias o espero?"</p>
+            <p class="q-item">"Tres semanas con náuseas y nadie me dice si es normal."</p>
+            <p class="q-item">"He subido kilo y medio en siete días. La báscula me asusta."</p>
+            <p class="q-item">"Soñé que no llegaba al parto. Me desperté llorando."</p>
+          </div>
+          <div class="response">
+            <div class="label">Respuesta Mimo</div>
+            <div class="r-shelf">
+              <div class="r-shelf-rail">
+                <a class="r-book b-embarazo" href="#libros" data-book="embarazo" aria-label="Libro 01 · Embarazo">
+                  <div class="sb-icon"><svg viewBox="0 0 24 24"><use href="#b-belly"/></svg></div>
+                  <h4 class="sb-ttl">Libro de<br><em>embarazo</em></h4>
+                  <div class="sb-foot"><span class="count">Libro · 01</span><span>SEGO</span></div>
+                </a>
+                <a class="r-book b-parto" href="#libros" data-book="parto" aria-label="Libro 11 · Preparación al parto">
+                  <div class="sb-icon"><svg viewBox="0 0 24 24"><use href="#b-pulse"/></svg></div>
+                  <h4 class="sb-ttl">Preparación<br><em>al parto</em></h4>
+                  <div class="sb-foot"><span class="count">Libro · 11</span><span>EAPM</span></div>
+                </a>
+                <a class="r-book b-recuerdos" href="#libros" data-book="recuerdos" aria-label="Libro 10 · Recuerdos">
+                  <div class="sb-icon"><svg viewBox="0 0 24 24"><use href="#b-bookmark"/></svg></div>
+                  <h4 class="sb-ttl">Libro de<br><em>recuerdos</em></h4>
+                  <div class="sb-foot"><span class="count">Libro · 10</span><span>DIARIO</span></div>
+                </a>
+              </div>
+              <div class="r-shelf-plank"><span class="r-plank-dot l"></span><span class="r-plank-dot r"></span></div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Bloque 2 · Recién nacido -->
+        <article class="block t-blush" data-phase="blush">
+          <div class="eyebrow">Bloque 2 · Recién nacido</div>
+          <h3 class="quote-large">"Lleva tres horas llorando. No sé si es hambre, sueño, cólico o algo más."</h3>
+          <div class="quote-rotator" aria-live="off">
+            <p class="q-item is-active">"Cada toma duele. Cada comentario también."</p>
+            <p class="q-item">"Le doy biberón. Y cada vez que lo digo, alguien opina."</p>
+            <p class="q-item">"'Llora por capricho', dicen. Yo solo veo a mi hij@."</p>
+            <p class="q-item">"Vuelvo al trabajo en seis semanas. No sé cómo voy a poder."</p>
+            <p class="q-item">"Lleva cuatro horas sin pedir teta. ¿Lo despierto o lo dejo?"</p>
+            <p class="q-item">"No siento bajada de leche. Llevo dos días angustiada."</p>
+            <p class="q-item">"Solo duerme encima de mí. Yo no he cerrado los ojos."</p>
+          </div>
+          <div class="response">
+            <div class="label">Respuesta Mimo</div>
+            <div class="r-shelf">
+              <div class="r-shelf-rail">
+                <a class="r-book b-lactancia" href="#libros" data-book="lactancia" aria-label="Libro 03 · Lactancia">
+                  <div class="sb-icon"><svg viewBox="0 0 24 24"><use href="#b-breast"/></svg></div>
+                  <h4 class="sb-ttl">Libro de<br><em>lactancia</em></h4>
+                  <div class="sb-foot"><span class="count">Libro · 03</span><span>LATCH</span></div>
+                </a>
+                <a class="r-book b-colicos" href="#libros" data-book="colicos" aria-label="Libro 07 · Cólicos">
+                  <div class="sb-icon"><svg viewBox="0 0 24 24"><use href="#b-tear"/></svg></div>
+                  <h4 class="sb-ttl">Libro de<br><em>cólicos</em></h4>
+                  <div class="sb-foot"><span class="count">Libro · 07</span><span>5 S's</span></div>
+                </a>
+                <a class="r-book b-sueno" href="#libros" data-book="sueno" aria-label="Libro 05 · Sueño">
+                  <div class="sb-icon"><svg viewBox="0 0 24 24"><use href="#b-moon"/></svg></div>
+                  <h4 class="sb-ttl">Libro del<br><em>sueño</em></h4>
+                  <div class="sb-foot"><span class="count">Libro · 05</span><span>ventanas</span></div>
+                </a>
+                <a class="r-book b-alimentacion" href="#libros" data-book="alimentacion" aria-label="Libro 02 · Alimentación">
+                  <div class="sb-icon"><svg viewBox="0 0 24 24"><use href="#b-bottle"/></svg></div>
+                  <h4 class="sb-ttl">Libro de<br><em>alimentación</em></h4>
+                  <div class="sb-foot"><span class="count">Libro · 02</span><span>BLW</span></div>
+                </a>
+                <a class="r-book b-vacunas" href="#libros" data-book="vacunas" aria-label="Libro 04 · Vacunas">
+                  <div class="sb-icon"><svg viewBox="0 0 24 24"><use href="#b-syringe"/></svg></div>
+                  <h4 class="sb-ttl">Libro de<br><em>vacunas</em></h4>
+                  <div class="sb-foot"><span class="count">Libro · 04</span><span>AEPED</span></div>
+                </a>
+                <a class="r-book b-recuerdos" href="#libros" data-book="recuerdos" aria-label="Libro 10 · Recuerdos">
+                  <div class="sb-icon"><svg viewBox="0 0 24 24"><use href="#b-bookmark"/></svg></div>
+                  <h4 class="sb-ttl">Libro de<br><em>recuerdos</em></h4>
+                  <div class="sb-foot"><span class="count">Libro · 10</span><span>DIARIO</span></div>
+                </a>
+              </div>
+              <div class="r-shelf-plank"><span class="r-plank-dot l"></span><span class="r-plank-dot r"></span></div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Bloque 3 · Bebé · hitos
+             (Antes existían bloques de Madrugada/Modo 3 AM y Bebé·conducta ·
+             el parallax se simplificó a las 3 etapas canon · embarazo,
+             recién nacido y bebé). -->
+        <article class="block t-mint" data-phase="mint">
+          <div class="eyebrow">Bloque 3 · Bebé</div>
+          <h3 class="quote-large">"Mi sobrino decía veinte palabras a su edad. El mío dice cuatro. ¿Debería preocuparme?"</h3>
+          <div class="quote-rotator" aria-live="off">
+            <p class="q-item is-active">"Hace tres meses que no dice una palabra nueva."</p>
+            <p class="q-item">"Su prima ya saluda con la mano. El mío no."</p>
+            <p class="q-item">"En la guardería dicen que se aisla un poco."</p>
+            <p class="q-item">"El pediatra habla de derivar. No sé si entendí bien."</p>
+            <p class="q-item">"Tiene dieciséis meses y aún no anda. Me dicen que espere."</p>
+            <p class="q-item">"No señala lo que quiere. Solo grita y yo adivino."</p>
+            <p class="q-item">"En clase dicen que no busca contacto visual."</p>
+          </div>
+          <div class="response">
+            <div class="label">Respuesta Mimo</div>
+            <div class="r-shelf">
+              <div class="r-shelf-rail">
+                <a class="r-book b-hitos" href="#libros" data-book="hitos" aria-label="Libro 08 · Hitos">
+                  <div class="sb-icon"><svg viewBox="0 0 24 24"><use href="#b-sprout"/></svg></div>
+                  <h4 class="sb-ttl">Libro de<br><em>hitos</em></h4>
+                  <div class="sb-foot"><span class="count">Libro · 08</span><span>HAIZEA</span></div>
+                </a>
+                <a class="r-book b-desarrollo" href="#libros" data-book="desarrollo" aria-label="Libro 09 · Desarrollo">
+                  <div class="sb-icon"><svg viewBox="0 0 24 24"><use href="#b-heart"/></svg></div>
+                  <h4 class="sb-ttl">Libro de<br><em>desarrollo</em></h4>
+                  <div class="sb-foot"><span class="count">Libro · 09</span><span>0-3a</span></div>
+                </a>
+                <a class="r-book b-alimentacion" href="#libros" data-book="alimentacion" aria-label="Libro 02 · Alimentación">
+                  <div class="sb-icon"><svg viewBox="0 0 24 24"><use href="#b-bottle"/></svg></div>
+                  <h4 class="sb-ttl">Libro de<br><em>alimentación</em></h4>
+                  <div class="sb-foot"><span class="count">Libro · 02</span><span>BLW</span></div>
+                </a>
+                <a class="r-book b-salud" href="#libros" data-book="salud" aria-label="Libro 06 · Salud">
+                  <div class="sb-icon"><svg viewBox="0 0 24 24"><use href="#b-thermo"/></svg></div>
+                  <h4 class="sb-ttl">Libro de<br><em>salud</em></h4>
+                  <div class="sb-foot"><span class="count">Libro · 06</span><span>AEPap</span></div>
+                </a>
+                <a class="r-book b-vacunas" href="#libros" data-book="vacunas" aria-label="Libro 04 · Vacunas">
+                  <div class="sb-icon"><svg viewBox="0 0 24 24"><use href="#b-syringe"/></svg></div>
+                  <h4 class="sb-ttl">Libro de<br><em>vacunas</em></h4>
+                  <div class="sb-foot"><span class="count">Libro · 04</span><span>AEPED</span></div>
+                </a>
+                <a class="r-book b-recuerdos" href="#libros" data-book="recuerdos" aria-label="Libro 10 · Recuerdos">
+                  <div class="sb-icon"><svg viewBox="0 0 24 24"><use href="#b-bookmark"/></svg></div>
+                  <h4 class="sb-ttl">Libro de<br><em>recuerdos</em></h4>
+                  <div class="sb-foot"><span class="count">Libro · 10</span><span>DIARIO</span></div>
+                </a>
+              </div>
+              <div class="r-shelf-plank"><span class="r-plank-dot l"></span><span class="r-plank-dot r"></span></div>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </div>
+
+    <!-- Closing del parallax · FUERA del .narrative-shell (que es grid
+         360px 1fr con avatar-stage sticky) · si vive dentro, el avatar
+         tracker se solapa visualmente con el texto del closing. Aquí
+         queda como sibling de .narrative-shell, full width, sin overlap. -->
+    <div class="narrative-closing">
+      <span class="eyebrow">Se adapta a tu historia</span>
+      <div class="closing-paths">
+        <span class="p-coral">Gestación</span>
+        <span class="p-mint">Adopción</span>
+        <span class="p-blush">Acogida</span>
+        <span class="p-violet">Aborto</span>
+        <span class="p-gold">UCIN</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════════════════
+       § 3 · CÓMO FUNCIONA + LIBROS (consolidado)
+       ════════════════════════════════════════════════════════════════════ -->
+  <section class="full flow" id="como-funciona" data-section="3b">
+    <div class="wrap">
+      <div class="section-head flow-head">
+        <span class="eyebrow">Tres pasos · del registro a la guía</span>
+        <h2 class="flow-title">
+          <span class="flow-title-line">De lo que vives hoy</span>
+          <span class="flow-title-line">a la guía que toca mañana.</span>
+        </h2>
+        <h3 class="section-lead">Trae toda la información de tu hij@, Mimo la ordena y los libros crean una visión global y compartida.</h3>
+        <p>Cada paso se apoya en el anterior para pasar de datos sueltos a orientación concreta.</p>
+      </div>
+
+      <div class="flow-rail" role="list" aria-label="Cómo Mimo convierte registros en orientación">
+        <article class="flow-step t-mint" role="listitem" data-watermark="01">
+          <div class="flow-step-head">
+            <span class="flow-index">01</span>
+          </div>
+          <h3>Registra todo en un solo lugar.</h3>
+          <p><strong>Tracker</strong> de tomas, sueño, pañales y notas. Ordenado para detectar patrones y compartir con tu pediatra.</p>
+          <div class="flow-mini flow-log" aria-hidden="true">
+            <span>Toma · 9:18</span>
+            <span>Sueño · 1h 20m</span>
+            <span>Pañal · hace 32m</span>
+            <span>Temp. · 37,8°</span>
+          </div>
+        </article>
+
+        <article class="flow-step t-gold" role="listitem" data-watermark="02">
+          <div class="flow-step-head">
+            <span class="flow-index">02</span>
+          </div>
+          <h3>Despierta sabiendo qué toca.</h3>
+          <p><strong>Calendario y alertas</strong> con lo que toca hoy: vacuna pendiente, revisión, síntoma a observar o rutina que ajustar.</p>
+          <div class="flow-mini flow-agenda" aria-hidden="true">
+            <span><strong>Hoy</strong> rutina de sueño 19:30</span>
+            <span><strong>7 días</strong> vacuna pendiente</span>
+            <span><strong>Esta semana</strong> introducir huevo a la dieta</span>
+          </div>
+        </article>
+
+        <article class="flow-step t-blush" role="listitem" data-watermark="03">
+          <div class="flow-step-head">
+            <span class="flow-index">03</span>
+          </div>
+          <h3>Centraliza libros de salud.</h3>
+          <p><strong>Libros vivos</strong> que aterrizan en recomendaciones concretas: una rutina de sueño, cómo cortar el aguacate o qué esperar tras una vacuna.</p>
+          <div class="flow-mini flow-books" aria-hidden="true">
+            <span>Sueño · ventana de Lola</span>
+            <span>Alimentación · cómo cortar el aguacate · 7m</span>
+            <span>Vacunas · fiebre después de vacuna · 72h</span>
+          </div>
+        </article>
+      </div>
+
+      <div class="flow-share">
+        <span>Resumen listo para compartir con pediatra, familia o cuidadores.</span>
+      </div>
+
+      <!-- Biblioteca completa · misma metáfora visual que Respuesta Mimo.
+           id="libros" se mantiene para nav/footer y anchors internos. -->
+      <section class="ordered-books" id="libros" aria-labelledby="ordered-books-title">
+        <div class="ordered-books-head">
+          <h3 id="ordered-books-title">Todos los libros ordenados.</h3>
+          <p>Cada libro se activa según la edad de tu hij@. Empieces cuando empieces, Mimo te coge donde estás — no pagas por lo que todavía no usas.</p>
+        </div>
+        <div class="r-shelf ordered-books-shelf">
+          <div class="r-shelf-rail" role="list" aria-label="Todos los libros de Mimo">
+            <a class="r-book b-embarazo" href="#libros" data-book="embarazo" role="listitem" aria-label="Libro de embarazo">
+              <div class="sb-icon"><svg viewBox="0 0 24 24"><use href="#b-belly"/></svg></div>
+              <h4 class="sb-ttl">Libro de<br><em>embarazo</em></h4>
+            </a>
+            <a class="r-book b-lactancia" href="#libros" data-book="lactancia" role="listitem" aria-label="Libro de lactancia">
+              <div class="sb-icon"><svg viewBox="0 0 24 24"><use href="#b-breast"/></svg></div>
+              <h4 class="sb-ttl">Libro de<br><em>lactancia</em></h4>
+            </a>
+            <a class="r-book b-colicos" href="#libros" data-book="colicos" role="listitem" aria-label="Libro de cólicos">
+              <div class="sb-icon"><svg viewBox="0 0 24 24"><use href="#b-tear"/></svg></div>
+              <h4 class="sb-ttl">Libro de<br><em>cólicos</em></h4>
+            </a>
+            <a class="r-book b-sueno" href="#libros" data-book="sueno" role="listitem" aria-label="Libro del sueño">
+              <div class="sb-icon"><svg viewBox="0 0 24 24"><use href="#b-moon"/></svg></div>
+              <h4 class="sb-ttl">Libro del<br><em>sueño</em></h4>
+            </a>
+            <a class="r-book b-vacunas" href="#libros" data-book="vacunas" role="listitem" aria-label="Libro de vacunas">
+              <div class="sb-icon"><svg viewBox="0 0 24 24"><use href="#b-syringe"/></svg></div>
+              <h4 class="sb-ttl">Libro de<br><em>vacunas</em></h4>
+            </a>
+            <a class="r-book b-alimentacion" href="#libros" data-book="alimentacion" role="listitem" aria-label="Libro de alimentación">
+              <div class="sb-icon"><svg viewBox="0 0 24 24"><use href="#b-bottle"/></svg></div>
+              <h4 class="sb-ttl">Libro de<br><em>alimentación</em></h4>
+            </a>
+            <a class="r-book b-salud" href="#libros" data-book="salud" role="listitem" aria-label="Libro de salud">
+              <div class="sb-icon"><svg viewBox="0 0 24 24"><use href="#b-thermo"/></svg></div>
+              <h4 class="sb-ttl">Libro de<br><em>salud</em></h4>
+            </a>
+            <a class="r-book b-hitos" href="#libros" data-book="hitos" role="listitem" aria-label="Libro de hitos">
+              <div class="sb-icon"><svg viewBox="0 0 24 24"><use href="#b-sprout"/></svg></div>
+              <h4 class="sb-ttl">Libro de<br><em>hitos</em></h4>
+            </a>
+            <a class="r-book b-desarrollo" href="#libros" data-book="desarrollo" role="listitem" aria-label="Libro de desarrollo">
+              <div class="sb-icon"><svg viewBox="0 0 24 24"><use href="#b-heart"/></svg></div>
+              <h4 class="sb-ttl">Libro de<br><em>desarrollo</em></h4>
+            </a>
+          </div>
+          <div class="r-shelf-plank"><span class="r-plank-dot l"></span><span class="r-plank-dot r"></span></div>
+        </div>
+      </section>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════════════════
+       § 5 · MODO 3 AM
+       ════════════════════════════════════════════════════════════════════ -->
+  <section class="full threeam" id="threeam" data-section="4" data-threeam-step="0">
+    <div class="threeam-story-scroll">
+      <div class="threeam-story-pin">
+        <div class="wrap threeam-story">
+          <div class="threeam-copy">
+            <div class="eyebrow">Modo 3 AM · cuando llega la noche difícil</div>
+            <h2>A las 3 de la mañana<br>también estamos.</h2>
+            <p class="lede">Cuando llega una noche difícil, Mimo baja el ritmo: fondo oscuro, texto grande, una pregunta cada vez. Te ayudamos a entender qué dicen las guías clínicas sobre lo que estás viendo — tú decides qué hacer.</p>
+            <div class="threeam-state" aria-live="off">
+              <p class="threeam-state-item is-active" data-threeam-copy="0"><span>01</span><strong>Estoy aquí.</strong> Elige qué está pasando, sin prisa.</p>
+              <p class="threeam-state-item" data-threeam-copy="1"><span>02</span><strong>Una pregunta cada vez.</strong> Primero lo importante. Después lo demás.</p>
+              <p class="threeam-state-item" data-threeam-copy="2"><span>03</span><strong>Casa, con vigilancia.</strong> O te orientamos sobre cuándo consultar.</p>
+            </div>
+            <div class="chips">
+              <span class="chip chip--with-sub" data-threeam-chip="0">
+                <span class="chip-title">No para de llorar</span>
+                <span class="chip-sub">Cólicos, llanto inconsolable, llevas horas</span>
+              </span>
+              <span class="chip chip--with-sub" data-threeam-chip="1">
+                <span class="chip-title">Le pasa algo</span>
+                <span class="chip-sub">Fiebre, respira raro, ha vomitado, rash</span>
+              </span>
+              <span class="chip chip--with-sub" data-threeam-chip="2">
+                <span class="chip-title">No puedo más</span>
+                <span class="chip-sub">Cuando tú necesitas el relevo</span>
+              </span>
+            </div>
+            <p class="audit">Revisado por Servicio de Urgencias Pediátricas · marco anti-shaken-baby NSBSP · información basada en NICE NG143, AEPED 2026 y AAP 2026</p>
+          </div>
+
+          <div class="threeam-device" role="group" aria-label="Cómo funciona el Modo 3 AM en 3 pasos">
+            <div class="threeam-cursor" id="threeam-cursor" aria-hidden="true">
+              <span class="threeam-cursor-pointer"></span>
+            </div>
+            <div class="threeam-stepper" role="tablist" aria-label="Pasos del Modo 3 AM">
+              <button type="button" class="is-active" data-threeam-dot="0" aria-pressed="true">Entrada</button>
+              <button type="button" data-threeam-dot="1" aria-pressed="false">Pregunta</button>
+              <button type="button" data-threeam-dot="2" aria-pressed="false">Resultado</button>
+            </div>
+
+            <div class="threeam-phone">
+              <div class="mockup threeam-panel mockup--entry is-active" data-threeam-panel="0" tabindex="0">
+                <div class="mp-time">03:42 · Modo 3 AM</div>
+                <div class="mp-title">Estoy aquí.</div>
+                <div class="mp-sub">Una pregunta cada vez. Sin prisa.</div>
+                <span class="mp-chip primary">No para de llorar →</span>
+                <span class="mp-chip">Le pasa algo →</span>
+                <span class="mp-chip">No puedo más →</span>
+                <div class="mp-foot">Aquí no diagnosticamos · aquí estamos.</div>
+              </div>
+
+              <div class="mockup threeam-panel mockup--question" data-threeam-panel="1" tabindex="-1" aria-hidden="true">
+                <div class="mp-time">03:42 · Modo 3 AM</div>
+                <div class="mp-title">¿Le notas la respiración<br>más rápida de lo normal?</div>
+                <span class="mp-chip primary">Sí, respira muy rápido →</span>
+                <span class="mp-chip">No estoy segura →</span>
+                <span class="mp-chip">No, respira normal →</span>
+                <div class="mp-foot">Aquí no diagnosticamos · aquí estamos.</div>
+              </div>
+
+              <div class="mockup threeam-panel mockup--result" data-threeam-panel="2" tabindex="-1" aria-hidden="true">
+                <div class="mp-time">03:43 · Modo 3 AM</div>
+                <div class="mp-status">Resultado actual</div>
+                <div class="mp-title">Puedes seguir en casa con vigilancia.</div>
+                <section class="mp-result-box" aria-label="Qué hacer ahora">
+                  <h4>Qué hacer ahora (30 min)</h4>
+                  <ul class="mp-actions">
+                    <li>Pecho descubierto para observar mejor la respiración.</li>
+                    <li>Cuenta respiraciones por minuto durante 1 minuto.</li>
+                    <li>Mantén luz baja y vuelve a revisar en 30 minutos.</li>
+                  </ul>
+                </section>
+
+                <section class="mp-result-box mp-result-box--alert" aria-label="Cuándo consultar">
+                  <h4>Consulta hoy si aparece algo de esto</h4>
+                  <ul class="mp-alerts">
+                    <li>Respira cada vez más rápido o se le marcan mucho las costillas.</li>
+                    <li>Decaimiento marcado o cuesta despertarle.</li>
+                    <li>Tu intuición te dice que no está bien.</li>
+                  </ul>
+                </section>
+
+                <span class="mp-chip primary">Revisar otra situación →</span>
+                <span class="mp-chip">Necesito relevo ahora →</span>
+                <div class="mp-foot">Basado en NICE NG143 · AEPED 2026 · AAP 2026.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════════════════
+       § 5 · COMITÉ ASESOR
+       ════════════════════════════════════════════════════════════════════ -->
+  <section class="full comite" id="comite" data-section="5">
+    <div class="wrap">
+      <div class="section-head comite-head">
+        <span class="eyebrow">Comité clínico Mimo</span>
+        <h2>Revisado por quienes acompañan familias cada día.</h2>
+        <p>Pediatría, neonatología, salud mental perinatal y enfermería pediátrica revisan el contenido, las escalas y las citas.</p>
+      </div>
+      <div class="comite-grid">
+        <article class="comite-card t-mint">
+          <span class="num">01</span>
+          <div>
+            <div class="specialty t-mint">Pediatra · AP</div>
+            <span class="avatar"><svg viewBox="0 0 32 32"><use href="#dr-1"/></svg></span>
+            <h4>Dra. Laia Bonet</h4>
+            <p class="center">ICS Barcelona · Eixample</p>
+          </div>
+          <span class="creds">CAV-AEP · AEPED</span>
+        </article>
+        <article class="comite-card t-coral">
+          <span class="num">02</span>
+          <div>
+            <div class="specialty t-coral">Neonatología</div>
+            <span class="avatar"><svg viewBox="0 0 32 32"><use href="#dr-2"/></svg></span>
+            <h4>Dr. Andrés Vidal</h4>
+            <p class="center">UCI Neonatal · Sant Joan de Déu</p>
+          </div>
+          <span class="creds">SEN · NICE</span>
+        </article>
+        <article class="comite-card t-blush">
+          <span class="num">03</span>
+          <div>
+            <div class="specialty t-blush">Psicología perinatal</div>
+            <span class="avatar"><svg viewBox="0 0 32 32"><use href="#dr-3"/></svg></span>
+            <h4>Mariana Cifuentes</h4>
+            <p class="center">Salud Mental Perinatal · La Paz</p>
+          </div>
+          <span class="creds">EPDS · MARES</span>
+        </article>
+        <article class="comite-card t-gold">
+          <span class="num">04</span>
+          <div>
+            <div class="specialty t-gold">Enfermería pediátrica</div>
+            <span class="avatar"><svg viewBox="0 0 32 32"><use href="#dr-4"/></svg></span>
+            <h4>Júlia Romá</h4>
+            <p class="center">Pediatría Comunitaria · CAP Sant Andreu</p>
+          </div>
+          <span class="creds">AENPED · LATCH</span>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════════════════
+       § 6 · PRICING
+       ════════════════════════════════════════════════════════════════════ -->
+  <section class="full pricing" id="pricing" data-section="6">
+    <div class="wrap">
+      <div class="section-head pricing-head">
+        <span class="eyebrow">Precio · canon transparente</span>
+        <h2>Un precio para todas las familias.</h2>
+        <p>Empieza con 14 días de Plus completo sin tarjeta — si no es para ti, te quedas en gratis sin perder nada.</p>
+      </div>
+      <div class="billing-choice" role="group" aria-label="Periodicidad de pago">
+        <label class="billing-toggle" for="billingAnnual">
+          <input id="billingAnnual" type="checkbox" data-billing-toggle aria-controls="pricing" checked>
+          <span class="billing-toggle-track" aria-hidden="true"><span></span></span>
+          <span class="billing-toggle-copy">
+            <strong>Pagar anual</strong>
+            <small>Ahorra 42% en Mimo Plus</small>
+          </span>
+        </label>
+      </div>
+      <div class="pricing-grid">
+        <!-- Tier Gratis · primero porque el research v0.3 marcó la inclusividad
+             del free como prerrequisito (renta baja + prescripción médica).
+             Visualmente igual de digno que los pagos · cero "lite" framing. -->
+        <article class="plan plan-free">
+          <span class="tier">Para empezar</span>
+          <h3>Gratis</h3>
+          <div class="price"><span class="amt">0 €</span><span class="per">/ siempre</span></div>
+          <p class="price-foot">Sin tarjeta · sin permanencia · sin caducidad</p>
+          <ul class="features">
+            <li>Información semana a semana</li>
+            <li>Calendario de vacunas y salud</li>
+            <li>Tracking básico</li>
+            <li>Modo madrugada</li>
+          </ul>
+          <a class="cta ghost" href="waitlist.html">Crear cuenta gratis</a>
+        </article>
+        <article class="plan is-featured">
+          <span class="ribbon">Solo 100 plazas</span>
+          <span class="tier">Founding</span>
+          <h3>Founding member</h3>
+          <div class="price"><span class="amt">1,99 €</span><span class="per">/ mes</span></div>
+          <p class="price-foot">Solo los 100 primeros miembros</p>
+          <p class="plan-includes"><strong>Todo lo incluido en Free</strong>, y además:</p>
+          <ul class="features">
+            <li>Acceso a todos los libros</li>
+            <li>Libro de recuerdos con fotos ilimitadas</li>
+            <li>Cuenta compartida</li>
+            <li>Exportación en PDF para el pediatra</li>
+            <li>Consultas 1:1 a menor precio</li>
+          </ul>
+          <a class="cta coral" href="waitlist.html">Reservar plaza</a>
+        </article>
+        <article
+          class="plan is-annual"
+          data-billing-plan="plus"
+          data-monthly-amount="9,99 €"
+          data-monthly-per="/ mes"
+          data-monthly-foot="También anual: 69,99 € · ahorras 42%"
+          data-monthly-href="waitlist.html?plan=plus_monthly"
+          data-annual-amount="5,83 €"
+          data-annual-per="/ mes"
+          data-annual-foot="69,99 € al año · ahorras 42%"
+          data-annual-href="waitlist.html?plan=plus_annual"
+        >
+          <span class="tier">Plus · por defecto</span>
+          <h3>Mimo Plus</h3>
+          <div class="price" aria-live="polite"><span class="amt" data-billing-amount>5,83 €</span><span class="per" data-billing-per>/ mes</span></div>
+          <p class="price-foot" data-billing-foot>69,99 € al año · ahorras 42%</p>
+          <p class="plan-includes"><strong>Todo lo incluido en Free</strong>, y además:</p>
+          <ul class="features">
+            <li>Acceso a todos los libros</li>
+            <li>Libro de recuerdos con fotos ilimitadas</li>
+            <li>Cuenta compartida</li>
+            <li>Exportación en PDF para el pediatra</li>
+            <li>Consultas 1:1 a menor precio</li>
+          </ul>
+          <a class="cta ghost" href="waitlist.html?plan=plus_annual" data-billing-cta>Empezar 14 días</a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════════════════
+       § 7 · CUENTA COMPARTIDA
+       ════════════════════════════════════════════════════════════════════ -->
+  <section class="full shared-account" id="cuenta-compartida" data-section="7">
+    <div class="wrap">
+      <div class="section-head shared-account-head">
+        <span class="eyebrow">Co-cuidado · cuenta compartida</span>
+        <h2>Una cuenta compartida para toda la familia.</h2>
+        <p>Invita a tu pareja cuando lo necesitéis. Sin duplicar mensajes, sin perder historial y sin empezar de cero cada vez.</p>
+      </div>
+
+      <div class="shared-account-grid">
+        <article class="shared-account-card t-mint">
+          <h4>Todo sincronizado</h4>
+          <p>Mismos libros, mismos registros.</p>
+        </article>
+        <article class="shared-account-card t-blush">
+          <h4>Relevo sin fricción</h4>
+          <p>Si necesitas parar, la otra persona retoma sin perder el hilo.</p>
+        </article>
+        <article class="shared-account-card t-gold">
+          <h4>Un solo lugar</h4>
+          <p>Salud, vacunas y notas, todo en la misma cuenta.</p>
+        </article>
+      </div>
+
+      <!-- Reconocimiento crianza en solitario · pre-empt el "esto no es para mí"
+           del ~10% que cría sin pareja (mismo movimiento que .narrative-intro).
+           Sin clase nueva · el estilo lo da la regla section-local
+           `.shared-account-grid + p` en styles.css (warm body, no fineprint). -->
+      <p>¿Crías en solitario? Mimo también está contigo. Invita a quien te apoye solo cuando quieras.</p>
+
+      <article class="shared-account-gift">
+        <div class="shared-account-gift-top">
+          <div class="gift-copy">
+            <p class="gift-kicker">Regalar acceso</p>
+            <h3>¿Quieres hacer el mejor regalo a tu pareja?</h3>
+            <p class="gift-lead">Regala tranquilidad, tiempo y amor.</p>
+          </div>
+          <img class="gift-mood-img" src="assets/mood-contentos.png" alt="Pareja feliz compartiendo tiempo en familia">
+        </div>
+        <p>Regala un año a tu pareja (o a quien cuida contigo), compartid la cuenta y ahorrad tiempo de coordinación en el día a día.</p>
+        <div class="shared-account-ctas">
+          <a class="btn-primary btn-arrow" href="waitlist.html">Entra en la lista</a>
+          <a class="btn-ghost" href="#pricing">Ver planes</a>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════════════════
+       MODAL · DATOS · respuestas concretas (data-trust)
+       NO se muestra inline · se abre al click en "Datos privados" (footer).
+       Trigger: cualquier [data-datos-open] o <a href="#datos">. Mecánica en
+       main.js (initDatosModal): toggle .is-open + aria-hidden, body.bs-locked
+       (scroll lock reutilizado), cierre por backdrop/X/Escape, restaura foco al
+       trigger. Copy verificable (responsable, hosting UE, RGPD+Art.9+cifrado,
+       export+borrado si cierre). El .trust pierde el chrome de card aquí (el
+       modal YA es la card) y apila los 4 claims en columna · ver styles.css.
+       id="datos" se mantiene para el href="#datos" del footer (fallback). -->
+  <div class="datos-overlay" id="datos" aria-hidden="true">
+    <div class="datos-backdrop" data-datos-close></div>
+    <div class="datos-modal" role="dialog" aria-modal="true" aria-labelledby="datos-title" tabindex="-1">
+      <button class="datos-close" type="button" aria-label="Cerrar" data-datos-close>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+      <span class="eyebrow">Tus datos · respuestas concretas</span>
+      <h2 id="datos-title">Son los datos de salud de tu hij@. Esto hacemos con ellos.</h2>
+      <p class="datos-lead">Dónde están, quién responde y qué pasa si algún día cerramos.</p>
+      <div class="trust" role="region" aria-label="Garantías sobre tus datos">
+        <div class="trust-row" role="list">
+          <div class="trust-chip" role="listitem">
+            <svg class="trust-icn" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-user"/></svg>
+            <strong>El equipo de Mimo responde por tus datos como responsable del tratamiento.</strong>
+          </div>
+          <div class="trust-chip" role="listitem">
+            <svg class="trust-icn" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-shield"/></svg>
+            <strong>Se alojan en servidores de la Unión Europea.</strong>
+          </div>
+          <div class="trust-chip" role="listitem">
+            <svg class="trust-icn" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-lock"/></svg>
+            <strong>RGPD y datos de salud como categoría especial · cifrados en tránsito y en reposo.</strong>
+          </div>
+          <div class="trust-chip" role="listitem">
+            <svg class="trust-icn" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-doc"/></svg>
+            <strong>Si Mimo cierra, exportas todo y lo borramos definitivamente.</strong>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════════════════════════════════
+       MODAL · LLAMADAS 1:1 · precio miembro Mimo
+       Se abre desde el CTA de la sección Parenting Team · misma mecánica que
+       #datos (initSheetModals). Reusa la estructura visual de .comite-card:
+       número, badge, avatar, h4, texto corto y precio como credencial al pie. -->
+  <div class="datos-overlay" id="llamadas" aria-hidden="true">
+    <div class="datos-backdrop" data-datos-close></div>
+    <div class="datos-modal datos-modal--wide" role="dialog" aria-modal="true" aria-labelledby="llamadas-title" tabindex="-1">
+      <button class="datos-close" type="button" aria-label="Cerrar" data-datos-close>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+      <span class="eyebrow">Llamadas 1:1 · precio miembro Mimo</span>
+      <h2 id="llamadas-title">Por ser miembro de Mimo, precio especial en tus llamadas 1:1.</h2>
+      <p class="datos-lead">Habla con un profesional cuando lo necesites — con disponibilidad según agenda y criterio clínico.</p>
+      <div class="llamadas-grid">
+        <article class="comite-card llamada-card t-mint">
+          <span class="num">01</span>
+          <div>
+            <div class="specialty t-mint">Coach del sueño</div>
+            <span class="avatar"><svg viewBox="0 0 32 32"><use href="#dr-3"/></svg></span>
+            <h4>Sueño</h4>
+            <p class="center">Rutinas y ventanas por edad, con margen para vuestra realidad.</p>
+          </div>
+          <div class="llamada-price"><s>55 €</s><span class="amt">30 €</span><span class="per">/ llamada</span></div>
+        </article>
+        <article class="comite-card llamada-card t-gold">
+          <span class="num">02</span>
+          <div>
+            <div class="specialty t-gold">Pediatría</div>
+            <span class="avatar"><svg viewBox="0 0 32 32"><use href="#dr-1"/></svg></span>
+            <h4>Pediatra</h4>
+            <p class="center">Dudas de salud, síntomas y qué conviene vigilar.</p>
+          </div>
+          <div class="llamada-price"><s>55 €</s><span class="amt">30 €</span><span class="per">/ llamada</span></div>
+        </article>
+        <article class="comite-card llamada-card t-blush">
+          <span class="num">03</span>
+          <div>
+            <div class="specialty t-blush">Psicología</div>
+            <span class="avatar"><svg viewBox="0 0 32 32"><use href="#dr-4"/></svg></span>
+            <h4>Psicólogo/a infantil</h4>
+            <p class="center">Conducta, rabietas y desarrollo emocional sin juicio.</p>
+          </div>
+          <div class="llamada-price"><s>55 €</s><span class="amt">30 €</span><span class="per">/ llamada</span></div>
+        </article>
+        <article class="comite-card llamada-card t-coral">
+          <span class="num">04</span>
+          <div>
+            <div class="specialty t-coral">Neonatología</div>
+            <span class="avatar"><svg viewBox="0 0 32 32"><use href="#dr-2"/></svg></span>
+            <h4>Neonatólogo/a</h4>
+            <p class="center">Primeras semanas, prematuridad y dudas de UCIN.</p>
+          </div>
+          <div class="llamada-price"><s>55 €</s><span class="amt">30 €</span><span class="per">/ llamada</span></div>
+        </article>
+      </div>
+      <div class="llamadas-pack">
+        <div class="pack-text">
+          <span class="pack-tag">Pack · mejor precio</span>
+          <span class="pack-headline">10 llamadas</span>
+          <span class="pack-unit">25 € por llamada</span>
+        </div>
+        <div class="pack-deal">
+          <span class="pack-amt">250 €</span>
+          <span class="pack-save">Ahorras 50 €</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <section class="full shared-signup" id="shared-signup">
+    <div class="wrap">
+      <p class="trial">14 días de Plus completo sin tarjeta · si decides quedarte en gratis, sigues con todo lo esencial.</p>
+      <p class="free-dignity">Gratis no es una versión "lite". Es Mimo contigo desde el día uno con lo que necesitas para el día a día. Pagar es opcional · no condiciona el cuidado.</p>
+      <form class="signup" id="signup" autocomplete="off" onsubmit="return false;">
+        <input type="email" placeholder="tu@email.com" aria-label="Email" required>
+        <button type="submit">Entrar en la lista</button>
+      </form>
+      <div class="signup-foot">
+        <p>Te escribimos cuando podamos abrirte la puerta · Q3 2026.</p>
+        <p>Sin spam, sin presión.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════════════════
+       FOOTER
+       ════════════════════════════════════════════════════════════════════ -->
+  <footer class="site-foot">
+    <div class="inner">
+      <div class="brand-block">
+        <!-- alt="" decorativo · "Mimo" ya aparece como texto en el topbar
+             y en el tagline · evita lectura duplicada por screen readers (P5). -->
+        <img src="assets/mimo-logo.png" alt="">
+        <p class="tagline">Tú cuidas a tu hij@. Mimo te cuida a ti.</p>
+      </div>
+      <div class="col">
+        <h6>Libros</h6>
+        <ul>
+          <li><a href="#libros" data-future-href="/embarazo/">Embarazo</a></li>
+          <li><a href="#libros" data-future-href="/lactancia/">Lactancia</a></li>
+          <li><a href="#libros" data-future-href="/sueno/">Sueño</a></li>
+          <li><a href="#libros" data-future-href="/alimentacion/">Alimentación</a></li>
+          <li><a href="#libros" data-future-href="/desarrollo/">Desarrollo</a></li>
+        </ul>
+      </div>
+      <div class="col">
+        <h6>Mimo</h6>
+        <ul>
+          <li><a href="about-us/">Quiénes somos</a></li>
+          <li><a href="#parenting-team">Equipo de Parenting</a></li>
+          <li><a href="#llamadas" data-modal-open="llamadas">Llamadas 1:1</a></li>
+          <li><a href="waitlist.html">Waitlist</a></li>
+          <li><a href="mailto:hola@mimo.family">Contacto</a></li>
+        </ul>
+      </div>
+      <div class="col">
+        <h6>Confianza</h6>
+        <ul>
+          <li><a href="#comite">Comité clínico</a></li>
+          <li><a href="#libros">Escalas validadas</a></li>
+          <li><a href="#threeam">Modo madrugada</a></li>
+          <li><a href="#datos">Datos privados</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="legal">
+      <span>Hecho con cuidado en Barcelona · 2026</span>
+      <span>Avalado por pediatría española (AEPap, CAV-AEP), guías clínicas internacionales (NICE, OMS) y escalas validadas (Haizea-Llevant, LATCH, EPDS, M-CHAT-R)</span>
+    </div>
+  </footer>
+
+  <!-- ════════════════════════════════════════════════════════════════════
+       STICKY ELEMENTS (mobile)
+       ════════════════════════════════════════════════════════════════════ -->
+  <a class="sticky-cta" id="sticky-cta" href="waitlist.html">Entra en la lista →</a>
+  <div class="mobile-avatar" aria-hidden="true">
+    <!-- Canvas mobile · misma estrategia que el desktop · ver #avatar-canvas. -->
+    <canvas id="m-avatar-canvas" width="168" height="168"></canvas>
+  </div>
+
+  <!-- ════════════════════════════════════════════════════════════════════
+       BOOK SHEET · bottom sheet con el libro como header
+       Cover-front clona el artwork del small card embarazo · cover-back es
+       el endpaper warmth · page-right es la página derecha del libro abierto
+       (con título + sub + badges). El TOC del libro vive en el body de la
+       sheet, no dentro del libro · separación header / contenido editorial.
+       ════════════════════════════════════════════════════════════════════ -->
+  <div class="bs-overlay" id="bs-overlay" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Libro de embarazo" tabindex="-1">
+    <div class="bs-backdrop" data-bs-close></div>
+    <div class="bs-sheet" id="bs-sheet">
+      <div class="bs-handle" aria-hidden="true"></div>
+      <header class="bs-header">
+        <button class="bs-close" id="bs-close" type="button" aria-label="Cerrar libro" data-bs-close>
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M6 6l12 12M18 6L6 18"/>
+          </svg>
+        </button>
+        <div class="bs-book" id="bs-book">
+          <!-- Lado derecho del libro abierto · imagen del personaje embarazo
+               · single asset (sin 2-frame) · alpha real del PNG deja ver el
+               cream gradient del page-right padre. Animación de flotación
+               vive en bs-img-float (translate + rotate orgánico). -->
+          <div class="bs-page-right" aria-hidden="true">
+            <img class="bs-page-img" src="assets/embarazo-hero.png" alt="Libro de embarazo">
+          </div>
+          <div class="bs-cover-frame" id="bs-cover-frame" aria-hidden="true">
+            <div class="bs-cover-spinner" id="bs-cover-spinner">
+              <div class="bs-cover-front">
+                <div class="bs-icon"><svg viewBox="0 0 24 24"><use href="#b-belly"/></svg></div>
+                <h4 class="bs-ttl">Libro de<br><em>embarazo</em></h4>
+                <div class="bs-foot"><span>Libro · 01</span><span>SEGO</span></div>
+              </div>
+              <!-- Lado izquierdo del libro abierto · frase clave de qué
+                   resuelve el libro · visible al completar la rotación. -->
+              <div class="bs-cover-back">
+                <div class="bs-back-eyebrow">Lo que resuelve</div>
+                <h3 class="bs-back-h">Acompañamiento clínico <em>semana a semana</em> sin comparativas ni alarmismo.</h3>
+              </div>
+            </div>
+          </div>
+        </div>
+      </header>
+      <div class="bs-body" id="bs-body">
+        <section class="bs-features-section">
+          <span class="bs-eyebrow">Lo que el libro hace por ti</span>
+          <ul class="bs-features">
+            <li class="bs-feature">
+              <span class="bs-check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="5 13 9 17 19 7"/></svg></span>
+              <div class="bs-feature-text">
+                <h5>Patadas</h5>
+                <p>Count the Kicks · 10 movimientos en 2 horas desde la semana 28.</p>
+              </div>
+            </li>
+            <li class="bs-feature">
+              <span class="bs-check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="5 13 9 17 19 7"/></svg></span>
+              <div class="bs-feature-text">
+                <h5>Tensión</h5>
+                <p>PPG via cámara del móvil · orientativo · alarma cuando sube.</p>
+              </div>
+            </li>
+            <li class="bs-feature">
+              <span class="bs-check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="5 13 9 17 19 7"/></svg></span>
+              <div class="bs-feature-text">
+                <h5>Plan de parto</h5>
+                <p>Editable · imprimible · checklist hospital incluido.</p>
+              </div>
+            </li>
+            <li class="bs-feature">
+              <span class="bs-check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="5 13 9 17 19 7"/></svg></span>
+              <div class="bs-feature-text">
+                <h5>Síntomas</h5>
+                <p>Qué mirar · cuándo llamar · qué decir al equipo.</p>
+              </div>
+            </li>
+            <li class="bs-feature">
+              <span class="bs-check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="5 13 9 17 19 7"/></svg></span>
+              <div class="bs-feature-text">
+                <h5>Citas y pruebas</h5>
+                <p>Ecografías · glucosa · Tdpa · qué preguntar en cada una.</p>
+              </div>
+            </li>
+            <li class="bs-feature">
+              <span class="bs-check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="5 13 9 17 19 7"/></svg></span>
+              <div class="bs-feature-text">
+                <h5>APILAM</h5>
+                <p>Medicación segura durante el embarazo · base actualizada.</p>
+              </div>
+            </li>
+          </ul>
+        </section>
+
+        <div class="bs-aval">
+          <span class="bs-aval-chip t-mint">SEGO</span>
+          <span class="bs-aval-chip t-coral">NICE</span>
+          <span class="bs-aval-chip t-gold">AEPED</span>
+          <span class="bs-aval-chip t-blush">Comité clínico Mimo</span>
+        </div>
+
+        <!-- .bs-actions removida · los CTAs "Entra en la lista" y "Ver todos
+             los libros" estaban duplicando funcionalidad ya presente en el
+             topbar (Waitlist) y en la sección libros del homepage. Cerrar el
+             sheet (X arriba a la derecha) trae al user de vuelta al flow. -->
+      </div>
+    </div>
+  </div>
+
+  <script src="main-v2.js?v=v2-1" defer></script>
+</body>
+</html>
